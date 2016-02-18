@@ -1,0 +1,69 @@
+/.idea
+/web/bundles/
+/app/bootstrap.php.cache
+/app/cache/*
+/app/config/parameters.yml
+/app/logs/*
+!app/cache/.gitkeep
+!app/logs/.gitkeep
+/build/
+/vendor/
+/bin/
+/composer.phar
+/composer.lock
+/error_log
+/.htaccess
+/web/.htaccess
+/web/uploads
+chmod
+cache
+#
+# Symfony 2 related
+#
+
+# cache, logs, etc
+app/bootstrap.php.cache
+app/bootstrap_cache.php.cache
+app/cache/*
+app/logs/*
+
+# vendor
+vendor/*
+
+# bundle static
+web/bundles/*
+
+# doctrine entities generation backup
+*.php~
+
+# environment sensitive
+web/.htaccess               # see web/.htaccess.dist
+web/app.php                 # see web/app.php.dist
+web/app_dev.php             # see web/app_dev.php.dist
+app/config/parameters.ini   # see app/config/parameters.ini.dist
+
+#
+# OS garbage, Editors, IDEs, etc
+#
+.DS_Store
+.svn
+code_coverage
+*~
+*.swp
+coverage
+.coverage
+nbproject
+.nbproject
+build
+.build
+.settings
+.settings/.*
+.project
+project
+*.project
+.buildpath
+*.db
+*.tmproj
+*.sublime-project
+.idea
+*.idea/*
