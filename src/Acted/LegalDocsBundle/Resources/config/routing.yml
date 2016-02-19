@@ -1,0 +1,3 @@
+acted_legal_docs_homepage:
+    path:     /
+    defaults: { _controller: ActedLegalDocsBundle:Default:index }
