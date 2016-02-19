@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Template list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Template</th>
+                <th>Is_active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for template in templates %}
+            <tr>
+                <td><a href="{{ path('template_show', { 'id': template.id }) }}">{{ template.id }}</a></td>
+                <td>{{ template.template }}</td>
+                <td>{% if template.isactive %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('template_show', { 'id': template.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('template_edit', { 'id': template.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('template_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

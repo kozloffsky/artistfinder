@@ -1,3 +1,7 @@
+acted_legal_docs_template:
+    resource: "@ActedLegalDocsBundle/Resources/config/routing/template.yml"
+    prefix:   /template
+
 acted_legal_docs_homepage:
     path:     /
     defaults: { _controller: ActedLegalDocsBundle:Default:index }

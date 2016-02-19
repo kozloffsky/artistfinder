@@ -1,0 +1,24 @@
+template_index:
+    path:     /
+    defaults: { _controller: "ActedLegalDocsBundle:Template:index" }
+    methods:  GET
+
+template_show:
+    path:     /{id}/show
+    defaults: { _controller: "ActedLegalDocsBundle:Template:show" }
+    methods:  GET
+
+template_new:
+    path:     /new
+    defaults: { _controller: "ActedLegalDocsBundle:Template:new" }
+    methods:  [GET, POST]
+
+template_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ActedLegalDocsBundle:Template:edit" }
+    methods:  [GET, POST]
+
+template_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ActedLegalDocsBundle:Template:delete" }
+    methods:  DELETE

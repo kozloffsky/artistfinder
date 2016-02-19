@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Acted\LegalDocsBundle\Repository\TemplateRepository")
  */
 class Template
+
 {
     /**
      * @var int
@@ -29,7 +30,7 @@ class Template
     private $template;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="is_active", type="boolean")
      */
@@ -72,10 +73,10 @@ class Template
     /**
      * Set is_active
      *
-     * @param \boolean $isActive
+     * @param bool $isActive
      * @return Template
      */
-    public function setIsActive(\boolean $isActive)
+    public function setIsActive($isActive)
     {
         $this->is_active = $isActive;
 
@@ -85,7 +86,7 @@ class Template
     /**
      * Get is_active
      *
-     * @return \boolean
+     * @return bool
      */
     public function getIsActive()
     {
