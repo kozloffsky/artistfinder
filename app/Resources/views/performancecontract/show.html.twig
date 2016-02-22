@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>PerformanceContract</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ performanceContract.id }}</td>
+            </tr>
+            <tr>
+                <th>Artist_address</th>
+                <td>{{ performanceContract.artistaddress }}</td>
+            </tr>
+            <tr>
+                <th>Today_date</th>
+                <td>{% if performanceContract.todaydate %}{{ performanceContract.todaydate|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Artist_details</th>
+                <td>{{ performanceContract.artistdetails }}</td>
+            </tr>
+            <tr>
+                <th>Client_details</th>
+                <td>{{ performanceContract.clientdetails }}</td>
+            </tr>
+            <tr>
+                <th>Event_date</th>
+                <td>{% if performanceContract.eventdate %}{{ performanceContract.eventdate|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Event_location</th>
+                <td>{{ performanceContract.eventlocation }}</td>
+            </tr>
+            <tr>
+                <th>Performance_description</th>
+                <td>{{ performanceContract.performancedescription }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('performancecontract_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('performancecontract_edit', { 'id': performanceContract.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

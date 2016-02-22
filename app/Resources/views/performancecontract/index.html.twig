@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>PerformanceContract list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Artist_address</th>
+                <th>Today_date</th>
+                <th>Artist_details</th>
+                <th>Client_details</th>
+                <th>Event_date</th>
+                <th>Event_location</th>
+                <th>Performance_description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for performanceContract in performanceContracts %}
+            <tr>
+                <td><a href="{{ path('performancecontract_show', { 'id': performanceContract.id }) }}">{{ performanceContract.id }}</a></td>
+                <td>{{ performanceContract.artistaddress }}</td>
+                <td>{% if performanceContract.todaydate %}{{ performanceContract.todaydate|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ performanceContract.artistdetails }}</td>
+                <td>{{ performanceContract.clientdetails }}</td>
+                <td>{% if performanceContract.eventdate %}{{ performanceContract.eventdate|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ performanceContract.eventlocation }}</td>
+                <td>{{ performanceContract.performancedescription }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('performancecontract_show', { 'id': performanceContract.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('performancecontract_edit', { 'id': performanceContract.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('performancecontract_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
