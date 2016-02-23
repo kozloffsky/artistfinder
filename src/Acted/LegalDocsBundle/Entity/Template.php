@@ -7,12 +7,14 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Template
  *
- * @ORM\Table(name="template")
+ * @ORM\Table(name="Template")
  * @ORM\Entity(repositoryClass="Acted\LegalDocsBundle\Repository\TemplateRepository")
  */
 class Template
-
 {
+    const TYPE_PERFORMANCE_CONTRACT = '1';
+    const TYPE_QUOTATION = '2';
+    const TYPE_INVOICE = '3';
     /**
      * @var int
      *
@@ -21,6 +23,13 @@ class Template
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="type_id", type="integer")
+     */
+    private $type_id;
 
     /**
      * @var string
@@ -36,6 +45,14 @@ class Template
      */
     private $is_active;
 
+    public static function listTypes()
+    {
+        return [
+            self::TYPE_PERFORMANCE_CONTRACT => 'Performance Contract',
+            self::TYPE_QUOTATION => 'Quotation',
+            self::TYPE_INVOICE => 'Invoice',
+        ];
+    }
 
     /**
      * Get id
@@ -91,5 +108,42 @@ class Template
     public function getIsActive()
     {
         return $this->is_active;
+    }
+
+    /**
+     * Set type_id
+     *
+     * @param integer $typeId
+     * @return Template
+     */
+    public function setTypeId($typeId)
+    {
+        if (!in_array($typeId, self::listTypes())) {
+            throw new \InvalidArgumentException("Invalid status");
+        }
+
+        $this->type_id = $typeId;
+
+        return $this;
+    }
+
+    /**
+     * Get type_id
+     *
+     * @return integer 
+     */
+    public function getTypeId()
+    {
+        return $this->type_id;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer
+     */
+    public function getType()
+    {
+        return self::listTypes()[$this->type_id];
     }
 }

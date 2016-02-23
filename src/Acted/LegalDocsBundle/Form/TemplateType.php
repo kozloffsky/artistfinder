@@ -15,6 +15,7 @@ class TemplateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('type_id')
             ->add('template')
             ->add('is_active')
         ;

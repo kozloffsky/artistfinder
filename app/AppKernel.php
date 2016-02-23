@@ -7,6 +7,8 @@ class AppKernel extends Kernel
 {
     public function registerBundles()
     {
+//        https://github.com/sonata-project/SonataAdminBundle/issues/3468
+
         $bundles = array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
@@ -17,6 +19,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
             new Acted\LegalDocsBundle\ActedLegalDocsBundle(),
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
