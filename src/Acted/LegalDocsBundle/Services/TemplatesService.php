@@ -215,4 +215,94 @@ class TemplatesService
 
         return $this->_data->getDepositPercent();
     }
+
+    public function balance_amount()
+    {
+        if (empty($this->_data->getBalanceAmount())) {
+            throw new TemplateDataMissingException(__FUNCTION__);
+        }
+
+        return $this->_data->getBalanceAmount();
+    }
+
+    public function balance_percent()
+    {
+        if (empty($this->_data->getBalancePercent())) {
+            throw new TemplateDataMissingException(__FUNCTION__);
+        }
+
+        return $this->_data->getBalancePercent();
+    }
+
+    public function balance_mode()
+    {
+        if (empty($this->_data->getBalanceMode())) {
+            throw new TemplateDataMissingException(__FUNCTION__);
+        }
+
+        return $this->_data->getBalanceMode();
+    }
+
+    public function balance_when()
+    {
+        if (empty($this->_data->getBalanceWhen())) {
+            throw new TemplateDataMissingException(__FUNCTION__);
+        }
+
+        return $this->_data->getBalanceWhen();
+    }
+
+    public function transportation()
+    {
+        if (empty($this->_data->getTransportation())) {
+            throw new TemplateDataMissingException(__FUNCTION__);
+        }
+
+        return $this->_data->getTransportation();
+    }
+
+    public function accomodation()
+    {
+        if (empty($this->_data->getAccomodation())) {
+            throw new TemplateDataMissingException(__FUNCTION__);
+        }
+
+        return $this->_data->getAccomodation();
+    }
+
+    public function special_terms()
+    {
+        if (empty($this->_data->getSpecialTerms())) {
+            throw new TemplateDataMissingException(__FUNCTION__);
+        }
+
+        return $this->_data->getSpecialTerms();
+    }
+
+    public function last_call_date()
+    {
+        if (empty($this->_data->getLastCallDate())) {
+            throw new TemplateDataMissingException(__FUNCTION__);
+        }
+
+        return $this->_data->getLastCallDate()->format('Y-m-d');
+    }
+
+    public function artist_name()
+    {
+        if (empty($this->_data->getArtistName())) {
+            throw new TemplateDataMissingException(__FUNCTION__);
+        }
+
+        return $this->_data->getArtistName();
+    }
+
+    public function client_name()
+    {
+        if (empty($this->_data->getClientName())) {
+            throw new TemplateDataMissingException(__FUNCTION__);
+        }
+
+        return $this->_data->getClientName();
+    }
 }

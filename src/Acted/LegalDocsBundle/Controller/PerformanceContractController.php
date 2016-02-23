@@ -52,7 +52,7 @@ class PerformanceContractController extends Controller
                 ->setTemplateId(Template::TYPE_PERFORMANCE_CONTRACT)
                 ->setData($data)
                 ->getParsedTemplate();
-            var_dump($parsed); die;
+            echo $parsed; die;
 
             return $this->redirectToRoute('performancecontract_show', array('id' => $performanceContract->getId()));
         }
