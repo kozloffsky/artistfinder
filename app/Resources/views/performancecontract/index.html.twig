@@ -14,6 +14,20 @@
                 <th>Event_date</th>
                 <th>Event_location</th>
                 <th>Performance_description</th>
+                <th>Event_amount</th>
+                <th>Currency</th>
+                <th>Deposit_amount</th>
+                <th>Deposit_percent</th>
+                <th>Balance_amount</th>
+                <th>Balance_percent</th>
+                <th>Balance_mode</th>
+                <th>Balance_when</th>
+                <th>Transportation</th>
+                <th>Accomodation</th>
+                <th>Special_terms</th>
+                <th>Last_call_date</th>
+                <th>Artist_name</th>
+                <th>Client_name</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -28,6 +42,20 @@
                 <td>{% if performanceContract.eventdate %}{{ performanceContract.eventdate|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ performanceContract.eventlocation }}</td>
                 <td>{{ performanceContract.performancedescription }}</td>
+                <td>{{ performanceContract.eventamount }}</td>
+                <td>{{ performanceContract.currency }}</td>
+                <td>{{ performanceContract.depositamount }}</td>
+                <td>{{ performanceContract.depositpercent }}</td>
+                <td>{{ performanceContract.balanceamount }}</td>
+                <td>{{ performanceContract.balancepercent }}</td>
+                <td>{{ performanceContract.balancemode }}</td>
+                <td>{{ performanceContract.balancewhen }}</td>
+                <td>{{ performanceContract.transportation }}</td>
+                <td>{{ performanceContract.accomodation }}</td>
+                <td>{{ performanceContract.specialterms }}</td>
+                <td>{% if performanceContract.lastcalldate %}{{ performanceContract.lastcalldate|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ performanceContract.artistname }}</td>
+                <td>{{ performanceContract.clientname }}</td>
                 <td>
                     <ul>
                         <li>

@@ -37,6 +37,62 @@
                 <th>Performance_description</th>
                 <td>{{ performanceContract.performancedescription }}</td>
             </tr>
+            <tr>
+                <th>Event_amount</th>
+                <td>{{ performanceContract.eventamount }}</td>
+            </tr>
+            <tr>
+                <th>Currency</th>
+                <td>{{ performanceContract.currency }}</td>
+            </tr>
+            <tr>
+                <th>Deposit_amount</th>
+                <td>{{ performanceContract.depositamount }}</td>
+            </tr>
+            <tr>
+                <th>Deposit_percent</th>
+                <td>{{ performanceContract.depositpercent }}</td>
+            </tr>
+            <tr>
+                <th>Balance_amount</th>
+                <td>{{ performanceContract.balanceamount }}</td>
+            </tr>
+            <tr>
+                <th>Balance_percent</th>
+                <td>{{ performanceContract.balancepercent }}</td>
+            </tr>
+            <tr>
+                <th>Balance_mode</th>
+                <td>{{ performanceContract.balancemode }}</td>
+            </tr>
+            <tr>
+                <th>Balance_when</th>
+                <td>{{ performanceContract.balancewhen }}</td>
+            </tr>
+            <tr>
+                <th>Transportation</th>
+                <td>{{ performanceContract.transportation }}</td>
+            </tr>
+            <tr>
+                <th>Accomodation</th>
+                <td>{{ performanceContract.accomodation }}</td>
+            </tr>
+            <tr>
+                <th>Special_terms</th>
+                <td>{{ performanceContract.specialterms }}</td>
+            </tr>
+            <tr>
+                <th>Last_call_date</th>
+                <td>{% if performanceContract.lastcalldate %}{{ performanceContract.lastcalldate|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Artist_name</th>
+                <td>{{ performanceContract.artistname }}</td>
+            </tr>
+            <tr>
+                <th>Client_name</th>
+                <td>{{ performanceContract.clientname }}</td>
+            </tr>
         </tbody>
     </table>
 

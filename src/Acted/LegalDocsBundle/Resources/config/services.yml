@@ -1,4 +1,4 @@
 services:
-#    acted_legal_docs.example:
-#        class: Acted\LegalDocsBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+    templates:
+        class: Acted\LegalDocsBundle\Services\TemplatesService
+        arguments: ["@service_container"]

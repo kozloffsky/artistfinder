@@ -22,6 +22,20 @@ class PerformanceContractType extends AbstractType
             ->add('event_date', 'date')
             ->add('event_location')
             ->add('performance_description')
+            ->add('event_amount')
+            ->add('currency')
+            ->add('deposit_amount')
+            ->add('deposit_percent')
+            ->add('balance_amount')
+            ->add('balance_percent')
+            ->add('balance_mode')
+            ->add('balance_when')
+            ->add('transportation')
+            ->add('accomodation')
+            ->add('special_terms')
+            ->add('last_call_date', 'date')
+            ->add('artist_name')
+            ->add('client_name')
         ;
     }
     

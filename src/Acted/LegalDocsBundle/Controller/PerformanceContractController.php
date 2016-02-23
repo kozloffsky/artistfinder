@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Controller;
 
+use Acted\LegalDocsBundle\Entity\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -43,6 +44,15 @@ class PerformanceContractController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($performanceContract);
             $em->flush();
+
+            $data = $form->getData();
+//            var_dump(__FUNCTION__); die;
+
+            $parsed = $this->get('templates')
+                ->setTemplateId(Template::TYPE_PERFORMANCE_CONTRACT)
+                ->setData($data)
+                ->getParsedTemplate();
+            var_dump($parsed); die;
 
             return $this->redirectToRoute('performancecontract_show', array('id' => $performanceContract->getId()));
         }
