@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Acted\LegalDocsBundle\Entity\PerformanceContract;
 use Acted\LegalDocsBundle\Entity\Template;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use TFox\MpdfPortBundle\Service\MpdfService;
 
 /**
  * Class InvoiceService
@@ -18,6 +19,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class TemplatesService
 {
+    public $folder;
+    public $_container;
     /**
      * @var \Doctrine\Common\Persistence\ObjectManager|object
      */
@@ -47,11 +50,13 @@ class TemplatesService
 
     /**
      * @param ContainerInterface $container
+     * @param MpdfService $mpdf
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, MpdfService $mpdf)
     {
-//        $this->container = $container;
+        $this->_container = $container;
         $this->_em = $container->get('doctrine')->getManager();
+        $this->_mpdfService = $mpdf;
     }
 
     public function setData(PerformanceContract $data)
@@ -80,7 +85,30 @@ class TemplatesService
         }
 
         $this->parse();
-        return $this->_parsedTemplate;
+        return $this;
+    }
+
+    /**
+     * GeneratePDF
+     * @param integer $documentId
+     * @return boolean
+     *
+     * @author Alex Makhorin
+     */
+    public function generatePdf($documentId)
+    {
+        $fileName = $documentId . '.pdf';
+
+        return $this->_mpdfService->generatePdf($this->_parsedTemplate, [
+            'outputFilename' => $this->getSavePath($fileName),
+            'outputDest' => 'F',
+        ]);
+    }
+
+    private function getSavePath($fileName)
+    {
+        $path = $this->_container->get('kernel')->getRootDir();
+        return realpath($path . '/../web/docs/performace_contract') . '/' . $fileName;
     }
 
     /**

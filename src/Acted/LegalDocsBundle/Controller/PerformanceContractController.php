@@ -46,13 +46,12 @@ class PerformanceContractController extends Controller
             $em->flush();
 
             $data = $form->getData();
-//            var_dump(__FUNCTION__); die;
 
-            $parsed = $this->get('templates')
+            $this->get('templates')
                 ->setTemplateId(Template::TYPE_PERFORMANCE_CONTRACT)
                 ->setData($data)
-                ->getParsedTemplate();
-            echo $parsed; die;
+                ->getParsedTemplate()
+                ->generatePdf($performanceContract->getId());
 
             return $this->redirectToRoute('performancecontract_show', array('id' => $performanceContract->getId()));
         }

@@ -1,4 +1,5 @@
 services:
     templates:
         class: Acted\LegalDocsBundle\Services\TemplatesService
-        arguments: ["@service_container"]
+        arguments: ["@service_container", "@tfox.mpdfport"]
+        folder: %kernel.root_dir%
