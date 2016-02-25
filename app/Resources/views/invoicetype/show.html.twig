@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>InvoiceType</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ invoiceType.id }}</td>
+            </tr>
+            <tr>
+                <th>Company_name</th>
+                <td>{{ invoiceType.companyname }}</td>
+            </tr>
+            <tr>
+                <th>Street_address</th>
+                <td>{{ invoiceType.streetaddress }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ invoiceType.city }}</td>
+            </tr>
+            <tr>
+                <th>Zipcode</th>
+                <td>{{ invoiceType.zipcode }}</td>
+            </tr>
+            <tr>
+                <th>Phone_num</th>
+                <td>{{ invoiceType.phonenum }}</td>
+            </tr>
+            <tr>
+                <th>Fax_num</th>
+                <td>{{ invoiceType.faxnum }}</td>
+            </tr>
+            <tr>
+                <th>Email_address</th>
+                <td>{{ invoiceType.emailaddress }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ invoiceType.name }}</td>
+            </tr>
+            <tr>
+                <th>Company_name2</th>
+                <td>{{ invoiceType.companyname2 }}</td>
+            </tr>
+            <tr>
+                <th>Street_address2</th>
+                <td>{{ invoiceType.streetaddress2 }}</td>
+            </tr>
+            <tr>
+                <th>City2</th>
+                <td>{{ invoiceType.city2 }}</td>
+            </tr>
+            <tr>
+                <th>Zipcode2</th>
+                <td>{{ invoiceType.zipcode2 }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ invoiceType.phone }}</td>
+            </tr>
+            <tr>
+                <th>Today_date</th>
+                <td>{% if invoiceType.todaydate %}{{ invoiceType.todaydate|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Invoice_id</th>
+                <td>{{ invoiceType.invoiceid }}</td>
+            </tr>
+            <tr>
+                <th>Acted_id</th>
+                <td>{{ invoiceType.actedid }}</td>
+            </tr>
+            <tr>
+                <th>Due_date</th>
+                <td>{% if invoiceType.duedate %}{{ invoiceType.duedate|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Description_service1</th>
+                <td>{{ invoiceType.descriptionservice1 }}</td>
+            </tr>
+            <tr>
+                <th>Description_service2</th>
+                <td>{{ invoiceType.descriptionservice2 }}</td>
+            </tr>
+            <tr>
+                <th>Service1_unitprice</th>
+                <td>{{ invoiceType.service1unitprice }}</td>
+            </tr>
+            <tr>
+                <th>Service2_unitprice</th>
+                <td>{{ invoiceType.service2unitprice }}</td>
+            </tr>
+            <tr>
+                <th>Service1_qty</th>
+                <td>{{ invoiceType.service1qty }}</td>
+            </tr>
+            <tr>
+                <th>Service2_qty</th>
+                <td>{{ invoiceType.service2qty }}</td>
+            </tr>
+            <tr>
+                <th>Is_service1_taxed</th>
+                <td>{% if invoiceType.isservice1taxed %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Is_service2_taxed</th>
+                <td>{% if invoiceType.isservice2taxed %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Service1_amount</th>
+                <td>{{ invoiceType.service1amount }}</td>
+            </tr>
+            <tr>
+                <th>Service2_amount</th>
+                <td>{{ invoiceType.service2amount }}</td>
+            </tr>
+            <tr>
+                <th>Subtotal_amount</th>
+                <td>{{ invoiceType.subtotalamount }}</td>
+            </tr>
+            <tr>
+                <th>Taxable_amount</th>
+                <td>{{ invoiceType.taxableamount }}</td>
+            </tr>
+            <tr>
+                <th>Tax_rate</th>
+                <td>{{ invoiceType.taxrate }}</td>
+            </tr>
+            <tr>
+                <th>Tax_amount</th>
+                <td>{{ invoiceType.taxamount }}</td>
+            </tr>
+            <tr>
+                <th>Other_amount</th>
+                <td>{{ invoiceType.otheramount }}</td>
+            </tr>
+            <tr>
+                <th>Total_amount</th>
+                <td>{{ invoiceType.totalamount }}</td>
+            </tr>
+            <tr>
+                <th>Acted_company_name</th>
+                <td>{{ invoiceType.actedcompanyname }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('invoicetype_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('invoicetype_edit', { 'id': invoiceType.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -47,8 +47,7 @@ class PerformanceContractController extends Controller
 
             $data = $form->getData();
 
-            $this->get('templates')
-                ->setTemplateId(Template::TYPE_PERFORMANCE_CONTRACT)
+            $this->get('contract_type')
                 ->setData($data)
                 ->getParsedTemplate()
                 ->generatePdf($performanceContract->getId());

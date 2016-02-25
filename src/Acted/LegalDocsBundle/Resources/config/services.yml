@@ -1,5 +1,9 @@
 services:
-    templates:
-        class: Acted\LegalDocsBundle\Services\TemplatesService
+    contract_type:
+        class: Acted\LegalDocsBundle\Services\ContractTypeService
+        arguments: ["@service_container", "@tfox.mpdfport"]
+        folder: %kernel.root_dir%
+    invoice_type:
+        class: Acted\LegalDocsBundle\Services\InvoiceTypeService
         arguments: ["@service_container", "@tfox.mpdfport"]
         folder: %kernel.root_dir%

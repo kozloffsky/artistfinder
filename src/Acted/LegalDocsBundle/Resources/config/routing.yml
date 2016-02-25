@@ -6,6 +6,10 @@ acted_legal_docs_performancecontract:
     resource: "@ActedLegalDocsBundle/Resources/config/routing/performancecontract.yml"
     prefix:   /performancecontract
 
+acted_legal_docs_invoicetype:
+    resource: "@ActedLegalDocsBundle/Resources/config/routing/invoicetype.yml"
+    prefix:   /invoicetype
+
 acted_legal_docs_homepage:
     path:     /
     defaults: { _controller: ActedLegalDocsBundle:Default:index }

@@ -1,0 +1,24 @@
+invoicetype_index:
+    path:     /
+    defaults: { _controller: "ActedLegalDocsBundle:InvoiceType:index" }
+    methods:  GET
+
+invoicetype_show:
+    path:     /{id}/show
+    defaults: { _controller: "ActedLegalDocsBundle:InvoiceType:show" }
+    methods:  GET
+
+invoicetype_new:
+    path:     /new
+    defaults: { _controller: "ActedLegalDocsBundle:InvoiceType:new" }
+    methods:  [GET, POST]
+
+invoicetype_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ActedLegalDocsBundle:InvoiceType:edit" }
+    methods:  [GET, POST]
+
+invoicetype_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ActedLegalDocsBundle:InvoiceType:delete" }
+    methods:  DELETE

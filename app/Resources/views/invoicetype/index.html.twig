@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Invoices list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Invoice_id</th>
+                <th>Acted_id</th>
+                <th>Company_name</th>
+                <th>Email_address</th>
+                <th>Due_date</th>
+                <th>Total_amount</th>
+                <th>Acted_company_name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for invoiceType in invoiceTypes %}
+            <tr>
+                <td><a href="{{ path('invoicetype_show', { 'id': invoiceType.id }) }}">{{ invoiceType.id }}</a></td>
+                <td>{{ invoiceType.invoiceid }}</td>
+                <td>{{ invoiceType.actedid }}</td>
+                <td>{{ invoiceType.companyname }}</td>
+                <td>{{ invoiceType.emailaddress }}</td>
+                <td>{% if invoiceType.duedate %}{{ invoiceType.duedate|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ invoiceType.totalamount }}</td>
+                <td>{{ invoiceType.actedcompanyname }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('invoicetype_show', { 'id': invoiceType.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('invoicetype_edit', { 'id': invoiceType.id }) }}">edit</a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="/docs/invoice_type/{{ invoiceType.id }}.pdf">view PDF</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('invoicetype_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
