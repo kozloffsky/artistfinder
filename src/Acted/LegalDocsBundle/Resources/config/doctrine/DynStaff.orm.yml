@@ -1,0 +1,21 @@
+Acted\LegalDocsBundle\Entity\DynStaff:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\DynStaffRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        userId:
+          type: bigint(20)
+          primary: true
+          notnull: true
+        roleId:
+          type: int(11)
+          notnull: true
+        signature:
+          type: varchar(512)
+    lifecycleCallbacks: {  }

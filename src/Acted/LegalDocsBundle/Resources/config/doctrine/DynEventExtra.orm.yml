@@ -1,0 +1,31 @@
+Acted\LegalDocsBundle\Entity\DynEventExtra:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\DynEventExtraRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        extraId:
+          type: bigint(20)
+          primary: true
+          autoincrement: true
+          notnull: true
+        eventId:
+          type: bigint(20)
+          notnull: true
+        name:
+          type: varchar(128)
+          notnull: true
+        price:
+          type: double
+          notnull: true
+        currencyId:
+          type: int(11)
+          notnull: true
+        comments:
+          type: varchar(256)
+    lifecycleCallbacks: {  }

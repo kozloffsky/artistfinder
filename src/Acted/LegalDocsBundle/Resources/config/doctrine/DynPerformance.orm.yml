@@ -1,0 +1,25 @@
+Acted\LegalDocsBundle\Entity\DynPerformance:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\DynPerformanceRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        performanceId:
+          type: bigint(20)
+          primary: true
+          autoincrement: true
+          notnull: true
+        profileId:
+          type: bigint(20)
+          notnull: true
+        title:
+          type: varchar(128)
+          notnull: true
+        techRequirement:
+          type: varchar(512)
+    lifecycleCallbacks: {  }

@@ -1,0 +1,30 @@
+Acted\LegalDocsBundle\Entity\DynDocument:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\DynDocumentRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        documentId:
+          type: bigint(20)
+          primary: true
+          autoincrement: true
+          notnull: true
+        eventId:
+          type: bigint(20)
+          notnull: true
+        documentType:
+          type: varchar(32)
+          notnull: true
+        documentName:
+          type: varchar(256)
+          notnull: true
+          unique: true
+        documentSize:
+          type: mediumint(9)
+          notnull: true
+    lifecycleCallbacks: {  }

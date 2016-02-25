@@ -1,0 +1,30 @@
+Acted\LegalDocsBundle\Entity\DynArtistRating:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\DynArtistRatingRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        eventId:
+          type: bigint(20)
+          primary: true
+          notnull: true
+        artistId:
+          type: bigint(20)
+          primary: true
+          notnull: true
+        rating:
+          type: int(3)
+          notnull: true
+        title:
+          type: varchar(128)
+        comments:
+          type: varchar(512)
+        ratingDateTime:
+          type: datetime
+          notnull: true
+    lifecycleCallbacks: {  }

@@ -1,0 +1,20 @@
+Acted\LegalDocsBundle\Entity\RefRoleRight:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\RefRoleRightRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        roleId:
+          type: int(11)
+          primary: true
+          notnull: true
+        rightId:
+          type: int(11)
+          primary: true
+          notnull: true
+    lifecycleCallbacks: {  }

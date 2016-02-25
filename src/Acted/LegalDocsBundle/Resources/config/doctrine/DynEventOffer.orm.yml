@@ -1,0 +1,44 @@
+Acted\LegalDocsBundle\Entity\DynEventOffer:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\DynEventOfferRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        eventId:
+          type: bigint(20)
+          primary: true
+          notnull: true
+        offerId:
+          type: bigint(20)
+          primary: true
+          notnull: true
+        status:
+          type: varchar(32)
+          notnull: true
+        price:
+          type: double
+          notnull: true
+        currencyId:
+          type: int(11)
+          notnull: true
+        depositValue:
+          type: double
+          notnull: true
+        depositType:
+          type: varchar(32)
+          notnull: true
+        paymentTerms:
+          type: varchar(256)
+        comments:
+          type: varchar(256)
+        sendDateTime:
+          type: datetime
+          notnull: true
+        readDateTime:
+          type: datetime
+    lifecycleCallbacks: {  }

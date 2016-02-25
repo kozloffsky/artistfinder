@@ -1,0 +1,20 @@
+Acted\LegalDocsBundle\Entity\DynProfileMedia:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\DynProfileMediaRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        mediaId:
+          type: bigint(20)
+          primary: true
+          notnull: true
+        profileId:
+          type: bigint(20)
+          primary: true
+          notnull: true
+    lifecycleCallbacks: {  }

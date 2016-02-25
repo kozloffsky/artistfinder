@@ -1,0 +1,24 @@
+Acted\LegalDocsBundle\Entity\RefCity:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\RefCityRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        cityId:
+          type: int(11)
+          primary: true
+          autoincrement: true
+          notnull: true
+        name:
+          type: varchar(128)
+          notnull: true
+          unique: true
+        countryId:
+          type: int(11)
+          notnull: true
+    lifecycleCallbacks: {  }

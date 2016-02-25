@@ -1,0 +1,30 @@
+Acted\LegalDocsBundle\Entity\DynArtistAgenda:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\DynArtistAgendaRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        agendaId:
+          type: bigint(20)
+          primary: true
+          autoincrement: true
+          notnull: true
+        profileId:
+          type: bigint(20)
+          notnull: true
+        title:
+          type: varchar(128)
+          notnull: true
+        description:
+          type: varchar(512)
+          notnull: true
+        startingDatetime:
+          type: datetime
+        endingDatetime:
+          type: datetime
+    lifecycleCallbacks: {  }

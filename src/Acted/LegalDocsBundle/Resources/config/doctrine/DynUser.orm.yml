@@ -1,0 +1,39 @@
+Acted\LegalDocsBundle\Entity\DynUser:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\DynUserRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        userId:
+          type: bigint(20)
+          primary: true
+          autoincrement: true
+          notnull: true
+        firstname:
+          type: varchar(128)
+          notnull: true
+        lastname:
+          type: varchar(128)
+          notnull: true
+        email:
+          type: varchar(256)
+          notnull: true
+          unique: true
+        passwordHash:
+          type: varchar(256)
+          notnull: true
+        primaryPhone:
+          type: varchar(32)
+          notnull: true
+          unique: true
+        secondaryPhone:
+          type: varchar(32)
+        active:
+          type: boolean
+          notnull: true
+    lifecycleCallbacks: {  }

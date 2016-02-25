@@ -1,0 +1,29 @@
+Acted\LegalDocsBundle\Entity\DynClient:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\DynClientRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        userId:
+          type: bigint(20)
+          primary: true
+          notnull: true
+        clientType:
+          type: varchar(32)
+          notnull: true
+        company:
+          type: varchar(128)
+        comments:
+          type: varchar(512)
+        address:
+          type: varchar(256)
+          notnull: true
+        cityId:
+          type: int(11)
+          notnull: true
+    lifecycleCallbacks: {  }

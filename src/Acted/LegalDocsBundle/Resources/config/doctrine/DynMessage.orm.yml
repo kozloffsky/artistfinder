@@ -1,0 +1,34 @@
+Acted\LegalDocsBundle\Entity\DynMessage:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\DynMessageRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        messageId:
+          type: bigint(20)
+          primary: true
+          autoincrement: true
+          notnull: true
+        senderUserId:
+          type: bigint(20)
+          notnull: true
+        receiverUserId:
+          type: bigint(20)
+          notnull: true
+        subject:
+          type: varchar(128)
+          notnull: true
+        messageText:
+          type: varchar(512)
+          notnull: true
+        sendDateTime:
+          type: datetime
+          notnull: true
+        readDateTime:
+          type: datetime
+    lifecycleCallbacks: {  }

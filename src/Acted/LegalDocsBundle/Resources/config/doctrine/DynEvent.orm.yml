@@ -1,0 +1,53 @@
+Acted\LegalDocsBundle\Entity\DynEvent:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\DynEventRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        eventId:
+          type: bigint(20)
+          primary: true
+          autoincrement: true
+          notnull: true
+        eventRef:
+          type: varchar(64)
+          notnull: true
+          unique: true
+        userId:
+          type: bigint(20)
+          notnull: true
+        title:
+          type: varchar(128)
+          notnull: true
+        description:
+          type: varchar(512)
+        eventTypeId:
+          type: int(11)
+          notnull: true
+        isInternational:
+          type: boolean
+          notnull: true
+        address:
+          type: varchar(256)
+          notnull: true
+        cityId:
+          type: int(11)
+          notnull: true
+        budget:
+          type: double
+        currencyId:
+          type: int(11)
+        startingDate:
+          type: datetime
+        endingDate:
+          type: datetime
+        timing:
+          type: varchar(128)
+        comments:
+          type: varchar(512)
+    lifecycleCallbacks: {  }

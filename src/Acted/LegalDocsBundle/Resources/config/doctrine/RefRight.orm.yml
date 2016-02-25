@@ -1,0 +1,24 @@
+Acted\LegalDocsBundle\Entity\RefRight:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\RefRightRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        rightId:
+          type: int(11)
+          primary: true
+          autoincrement: true
+          notnull: true
+        code:
+          type: varchar(32)
+          notnull: true
+          unique: true
+        name:
+          type: varchar(64)
+          notnull: true
+    lifecycleCallbacks: {  }

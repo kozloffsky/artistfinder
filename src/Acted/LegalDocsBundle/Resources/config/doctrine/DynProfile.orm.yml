@@ -1,0 +1,38 @@
+Acted\LegalDocsBundle\Entity\DynProfile:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\DynProfileRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        profileId:
+          type: bigint(20)
+          primary: true
+          autoincrement: true
+          notnull: true
+        userId:
+          type: bigint(20)
+          notnull: true
+        title:
+          type: varchar(128)
+          notnull: true
+        header:
+          type: varchar(512)
+        description:
+          type: text
+        isInternational:
+          type: boolean
+          notnull: true
+        performanceRange:
+          type: int(8)
+        paymentTypeId:
+          type: int(11)
+          notnull: true
+        active:
+          type: boolean
+          notnull: true
+    lifecycleCallbacks: {  }

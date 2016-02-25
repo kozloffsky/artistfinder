@@ -1,0 +1,23 @@
+Acted\LegalDocsBundle\Entity\RefTranslation:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\RefTranslationRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        translationId:
+          type: mediumint(9)
+          primary: true
+          autoincrement: true
+          notnull: true
+        en:
+          type: varchar(512)
+          notnull: true
+        fr:
+          type: varchar(512)
+          notnull: true
+    lifecycleCallbacks: {  }

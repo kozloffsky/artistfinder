@@ -1,0 +1,32 @@
+Acted\LegalDocsBundle\Entity\DynArtist:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\DynArtistRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        userId:
+          type: bigint(20)
+          primary: true
+          notnull: true
+        name:
+          type: varchar(128)
+          notnull: true
+        assistantName:
+          type: varchar(128)
+        website:
+          type: varchar(256)
+        paymentDetails:
+          type: varchar(512)
+        vatRate:
+          type: double
+        comments:
+          type: varchar(512)
+        cityId:
+          type: int(11)
+          notnull: true
+    lifecycleCallbacks: {  }
