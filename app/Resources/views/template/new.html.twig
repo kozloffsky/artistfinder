@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {{ tinymce_init() }}
     <h1>Template creation</h1>
 
     {{ form_start(form) }}

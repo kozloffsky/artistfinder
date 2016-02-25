@@ -1,33 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>PerformanceContract list</h1>
+    <h1>Performance Contracts list</h1>
 
     <table>
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Artist_address</th>
-                <th>Today_date</th>
-                <th>Artist_details</th>
-                <th>Client_details</th>
-                <th>Event_date</th>
-                <th>Event_location</th>
-                <th>Performance_description</th>
-                <th>Event_amount</th>
+                <th>Event date</th>
+                <th>Event location</th>
+                <th>Event amount</th>
                 <th>Currency</th>
-                <th>Deposit_amount</th>
-                <th>Deposit_percent</th>
-                <th>Balance_amount</th>
-                <th>Balance_percent</th>
-                <th>Balance_mode</th>
-                <th>Balance_when</th>
-                <th>Transportation</th>
-                <th>Accomodation</th>
-                <th>Special_terms</th>
-                <th>Last_call_date</th>
-                <th>Artist_name</th>
-                <th>Client_name</th>
+                <th>Last Call Date</th>
+                <th>Artist Name</th>
+                <th>Client Name</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -35,24 +21,10 @@
         {% for performanceContract in performanceContracts %}
             <tr>
                 <td><a href="{{ path('performancecontract_show', { 'id': performanceContract.id }) }}">{{ performanceContract.id }}</a></td>
-                <td>{{ performanceContract.artistaddress }}</td>
-                <td>{% if performanceContract.todaydate %}{{ performanceContract.todaydate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ performanceContract.artistdetails }}</td>
-                <td>{{ performanceContract.clientdetails }}</td>
                 <td>{% if performanceContract.eventdate %}{{ performanceContract.eventdate|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ performanceContract.eventlocation }}</td>
-                <td>{{ performanceContract.performancedescription }}</td>
                 <td>{{ performanceContract.eventamount }}</td>
                 <td>{{ performanceContract.currency }}</td>
-                <td>{{ performanceContract.depositamount }}</td>
-                <td>{{ performanceContract.depositpercent }}</td>
-                <td>{{ performanceContract.balanceamount }}</td>
-                <td>{{ performanceContract.balancepercent }}</td>
-                <td>{{ performanceContract.balancemode }}</td>
-                <td>{{ performanceContract.balancewhen }}</td>
-                <td>{{ performanceContract.transportation }}</td>
-                <td>{{ performanceContract.accomodation }}</td>
-                <td>{{ performanceContract.specialterms }}</td>
                 <td>{% if performanceContract.lastcalldate %}{{ performanceContract.lastcalldate|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ performanceContract.artistname }}</td>
                 <td>{{ performanceContract.clientname }}</td>
@@ -63,6 +35,9 @@
                         </li>
                         <li>
                             <a href="{{ path('performancecontract_edit', { 'id': performanceContract.id }) }}">edit</a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="/docs/performace_contract/{{ performanceContract.id }}.pdf">view PDF</a>
                         </li>
                     </ul>
                 </td>

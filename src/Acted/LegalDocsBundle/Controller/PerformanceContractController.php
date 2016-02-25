@@ -53,7 +53,8 @@ class PerformanceContractController extends Controller
                 ->getParsedTemplate()
                 ->generatePdf($performanceContract->getId());
 
-            return $this->redirectToRoute('performancecontract_show', array('id' => $performanceContract->getId()));
+//            return $this->redirectToRoute('performancecontract_show', array('id' => $performanceContract->getId()));
+            return $this->redirectToRoute('performancecontract_index');
         }
 
         return $this->render('performancecontract/new.html.twig', array(

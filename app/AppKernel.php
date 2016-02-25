@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Acted\LegalDocsBundle\ActedLegalDocsBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new TFox\MpdfPortBundle\TFoxMpdfPortBundle(),
+            new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
