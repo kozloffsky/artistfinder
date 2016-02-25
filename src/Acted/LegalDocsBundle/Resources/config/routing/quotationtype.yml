@@ -1,0 +1,24 @@
+quotationtype_index:
+    path:     /
+    defaults: { _controller: "ActedLegalDocsBundle:QuotationType:index" }
+    methods:  GET
+
+quotationtype_show:
+    path:     /{id}/show
+    defaults: { _controller: "ActedLegalDocsBundle:QuotationType:show" }
+    methods:  GET
+
+quotationtype_new:
+    path:     /new
+    defaults: { _controller: "ActedLegalDocsBundle:QuotationType:new" }
+    methods:  [GET, POST]
+
+quotationtype_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ActedLegalDocsBundle:QuotationType:edit" }
+    methods:  [GET, POST]
+
+quotationtype_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ActedLegalDocsBundle:QuotationType:delete" }
+    methods:  DELETE

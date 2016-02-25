@@ -10,6 +10,10 @@ acted_legal_docs_invoicetype:
     resource: "@ActedLegalDocsBundle/Resources/config/routing/invoicetype.yml"
     prefix:   /invoicetype
 
+acted_legal_docs_quotationtype:
+    resource: "@ActedLegalDocsBundle/Resources/config/routing/quotationtype.yml"
+    prefix:   /quotationtype
+
 acted_legal_docs_homepage:
     path:     /
     defaults: { _controller: ActedLegalDocsBundle:Default:index }

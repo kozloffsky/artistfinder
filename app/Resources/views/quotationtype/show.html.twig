@@ -1,0 +1,188 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>QuotationType</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ quotationType.id }}</td>
+            </tr>
+            <tr>
+                <th>Company_name</th>
+                <td>{{ quotationType.companyname }}</td>
+            </tr>
+            <tr>
+                <th>Artist_name</th>
+                <td>{{ quotationType.artistname }}</td>
+            </tr>
+            <tr>
+                <th>Street_address</th>
+                <td>{{ quotationType.streetaddress }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ quotationType.city }}</td>
+            </tr>
+            <tr>
+                <th>Zipcode</th>
+                <td>{{ quotationType.zipcode }}</td>
+            </tr>
+            <tr>
+                <th>Phone_num</th>
+                <td>{{ quotationType.phonenum }}</td>
+            </tr>
+            <tr>
+                <th>Fax_num</th>
+                <td>{{ quotationType.faxnum }}</td>
+            </tr>
+            <tr>
+                <th>Email_address</th>
+                <td>{{ quotationType.emailaddress }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ quotationType.name }}</td>
+            </tr>
+            <tr>
+                <th>Company_name2</th>
+                <td>{{ quotationType.companyname2 }}</td>
+            </tr>
+            <tr>
+                <th>Street_address2</th>
+                <td>{{ quotationType.streetaddress2 }}</td>
+            </tr>
+            <tr>
+                <th>City2</th>
+                <td>{{ quotationType.city2 }}</td>
+            </tr>
+            <tr>
+                <th>Zipcode2</th>
+                <td>{{ quotationType.zipcode2 }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ quotationType.phone }}</td>
+            </tr>
+            <tr>
+                <th>Location</th>
+                <td>{{ quotationType.location }}</td>
+            </tr>
+            <tr>
+                <th>Timing</th>
+                <td>{{ quotationType.timing }}</td>
+            </tr>
+            <tr>
+                <th>Special_instructions</th>
+                <td>{{ quotationType.specialinstructions }}</td>
+            </tr>
+            <tr>
+                <th>Today_date</th>
+                <td>{% if quotationType.todaydate %}{{ quotationType.todaydate|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Quotation_id</th>
+                <td>{{ quotationType.quotationid }}</td>
+            </tr>
+            <tr>
+                <th>Acted_id</th>
+                <td>{{ quotationType.actedid }}</td>
+            </tr>
+            <tr>
+                <th>Expire_date</th>
+                <td>{% if quotationType.expiredate %}{{ quotationType.expiredate|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Description_service1</th>
+                <td>{{ quotationType.descriptionservice1 }}</td>
+            </tr>
+            <tr>
+                <th>Description_service2</th>
+                <td>{{ quotationType.descriptionservice2 }}</td>
+            </tr>
+            <tr>
+                <th>Is_service1_taxed</th>
+                <td>{% if quotationType.isservice1taxed %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Is_service2_taxed</th>
+                <td>{% if quotationType.isservice2taxed %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Service1_amount</th>
+                <td>{{ quotationType.service1amount }}</td>
+            </tr>
+            <tr>
+                <th>Service2_amount</th>
+                <td>{{ quotationType.service2amount }}</td>
+            </tr>
+            <tr>
+                <th>Deposit_percent</th>
+                <td>{{ quotationType.depositpercent }}</td>
+            </tr>
+            <tr>
+                <th>Deposit_amount</th>
+                <td>{{ quotationType.depositamount }}</td>
+            </tr>
+            <tr>
+                <th>Balance_percent</th>
+                <td>{{ quotationType.balancepercent }}</td>
+            </tr>
+            <tr>
+                <th>Balance_amount</th>
+                <td>{{ quotationType.balanceamount }}</td>
+            </tr>
+            <tr>
+                <th>Balance_when</th>
+                <td>{{ quotationType.balancewhen }}</td>
+            </tr>
+            <tr>
+                <th>Balance_mode</th>
+                <td>{{ quotationType.balancemode }}</td>
+            </tr>
+            <tr>
+                <th>Additional_comments</th>
+                <td>{{ quotationType.additionalcomments }}</td>
+            </tr>
+            <tr>
+                <th>Subtotal_amount</th>
+                <td>{{ quotationType.subtotalamount }}</td>
+            </tr>
+            <tr>
+                <th>Taxable_amount</th>
+                <td>{{ quotationType.taxableamount }}</td>
+            </tr>
+            <tr>
+                <th>Tax_rate</th>
+                <td>{{ quotationType.taxrate }}</td>
+            </tr>
+            <tr>
+                <th>Tax_amount</th>
+                <td>{{ quotationType.taxamount }}</td>
+            </tr>
+            <tr>
+                <th>Other_amount</th>
+                <td>{{ quotationType.otheramount }}</td>
+            </tr>
+            <tr>
+                <th>Total_amount</th>
+                <td>{{ quotationType.totalamount }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('quotationtype_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('quotationtype_edit', { 'id': quotationType.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

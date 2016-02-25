@@ -115,7 +115,7 @@ abstract class TemplatesService
             }
 
             if (!$this->_templateEntity) {
-                throw new \Exception('Template entity was not found. Probably _templateTypeId is not valid.', 500);
+                throw new \Exception('Template entity was not found. Probably _templateTypeId is not valid or such template is absent in DB.', 500);
             }
         }
 

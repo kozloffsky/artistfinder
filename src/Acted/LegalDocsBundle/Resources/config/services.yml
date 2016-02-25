@@ -7,3 +7,7 @@ services:
         class: Acted\LegalDocsBundle\Services\InvoiceTypeService
         arguments: ["@service_container", "@tfox.mpdfport"]
         folder: %kernel.root_dir%
+    quotation_type:
+        class: Acted\LegalDocsBundle\Services\QuotationTypeService
+        arguments: ["@service_container", "@tfox.mpdfport"]
+        folder: %kernel.root_dir%

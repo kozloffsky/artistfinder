@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>QuotationType list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Quotation_id</th>
+                <th>Acted_id</th>
+                <th>Company_name</th>
+                <th>Artist_name</th>
+                <th>Email_address</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Expire_date</th>
+                <th>Total_amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for quotationType in quotationTypes %}
+            <tr>
+                <td><a href="{{ path('quotationtype_show', { 'id': quotationType.id }) }}">{{ quotationType.id }}</a></td>
+                <td>{{ quotationType.quotationid }}</td>
+                <td>{{ quotationType.actedid }}</td>
+                <td>{{ quotationType.companyname }}</td>
+                <td>{{ quotationType.artistname }}</td>
+                <td>{{ quotationType.emailaddress }}</td>
+                <td>{{ quotationType.name }}</td>
+                <td>{{ quotationType.location }}</td>
+                <td>{% if quotationType.expiredate %}{{ quotationType.expiredate|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ quotationType.totalamount }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('quotationtype_show', { 'id': quotationType.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('quotationtype_edit', { 'id': quotationType.id }) }}">edit</a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="/docs/quotation_type/{{ quotationType.id }}.pdf">view PDF</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('quotationtype_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
