@@ -1,0 +1,222 @@
+Acted\LegalDocsBundle\Entity\InvoiceType:
+    type: entity
+    table: InvoiceType
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        company_name:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: company_name
+        street_address:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: street_address
+        city:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        zipcode:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        phone_num:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: phone_num
+        fax_num:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: fax_num
+        email_address:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: email_address
+        name:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        company_name2:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: company_name2
+        street_address2:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: street_address2
+        city2:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        zipcode2:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        phone:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        today_date:
+            type: date
+            nullable: false
+            column: today_date
+        invoice_id:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: invoice_id
+        acted_id:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: acted_id
+        due_date:
+            type: date
+            nullable: false
+            column: due_date
+        description_service1:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: description_service1
+        description_service2:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: description_service2
+        service1_unitprice:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: service1_unitprice
+        service2_unitprice:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: service2_unitprice
+        service1_qty:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: service1_qty
+        service2_qty:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: service2_qty
+        is_service1_taxed:
+            type: boolean
+            nullable: false
+            column: is_service1_taxed
+        is_service2_taxed:
+            type: boolean
+            nullable: false
+            column: is_service2_taxed
+        service1_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: service1_amount
+        service2_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: service2_amount
+        subtotal_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: subtotal_amount
+        taxable_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: taxable_amount
+        tax_rate:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            column: tax_rate
+        tax_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: tax_amount
+        other_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: other_amount
+        total_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: total_amount
+        acted_company_name:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: acted_company_name
+    lifecycleCallbacks: {  }

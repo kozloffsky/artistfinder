@@ -1,0 +1,262 @@
+Acted\LegalDocsBundle\Entity\QuotationType:
+    type: entity
+    table: QuotationType
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        company_name:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: company_name
+        artist_name:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: artist_name
+        street_address:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: street_address
+        city:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        zipcode:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        phone_num:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: phone_num
+        fax_num:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: fax_num
+        email_address:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: email_address
+        name:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        company_name2:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: company_name2
+        street_address2:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: street_address2
+        city2:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        zipcode2:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        phone:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        location:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        timing:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        special_instructions:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: special_instructions
+        today_date:
+            type: date
+            nullable: false
+            column: today_date
+        quotation_id:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: quotation_id
+        acted_id:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: acted_id
+        expire_date:
+            type: date
+            nullable: false
+            column: expire_date
+        description_service1:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: description_service1
+        description_service2:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: description_service2
+        is_service1_taxed:
+            type: boolean
+            nullable: false
+            column: is_service1_taxed
+        is_service2_taxed:
+            type: boolean
+            nullable: false
+            column: is_service2_taxed
+        service1_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: service1_amount
+        service2_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: service2_amount
+        deposit_percent:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            column: deposit_percent
+        deposit_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: deposit_amount
+        balance_percent:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            column: balance_percent
+        balance_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: balance_amount
+        balance_when:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: balance_when
+        balance_mode:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: balance_mode
+        additional_comments:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: additional_comments
+        subtotal_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: subtotal_amount
+        taxable_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: taxable_amount
+        tax_rate:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            column: tax_rate
+        tax_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: tax_amount
+        other_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: other_amount
+        total_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: total_amount
+    lifecycleCallbacks: {  }

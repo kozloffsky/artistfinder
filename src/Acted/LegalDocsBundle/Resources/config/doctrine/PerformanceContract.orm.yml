@@ -1,0 +1,144 @@
+Acted\LegalDocsBundle\Entity\PerformanceContract:
+    type: entity
+    table: PerformanceContract
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        artist_address:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: artist_address
+        today_date:
+            type: date
+            nullable: false
+            column: today_date
+        artist_details:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: artist_details
+        client_details:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: client_details
+        event_date:
+            type: date
+            nullable: false
+            column: event_date
+        event_location:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: event_location
+        performance_description:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: performance_description
+        event_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: event_amount
+        currency:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        deposit_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: deposit_amount
+        deposit_percent:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            column: deposit_percent
+        balance_amount:
+            type: decimal
+            nullable: false
+            precision: 9
+            scale: 2
+            column: balance_amount
+        balance_percent:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            column: balance_percent
+        balance_mode:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: balance_mode
+        balance_when:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: balance_when
+        transportation:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        accomodation:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        special_terms:
+            type: text
+            nullable: false
+            length: null
+            options:
+                fixed: false
+            column: special_terms
+        last_call_date:
+            type: date
+            nullable: false
+            column: last_call_date
+        artist_name:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: artist_name
+        client_name:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: client_name
+    lifecycleCallbacks: {  }
