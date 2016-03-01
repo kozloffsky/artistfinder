@@ -17,13 +17,13 @@ Acted\LegalDocsBundle\Entity\Service:
           notnull: true
           unique: true
         price:
-          type: double
+          type: float
           notnull: true
         currencyId:
           type: integer(11)
           notnull: true
         depositValue:
-          type: double
+          type: float
           notnull: true
         depositType:
           type: string(32)

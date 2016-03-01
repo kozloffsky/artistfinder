@@ -22,7 +22,7 @@ Acted\LegalDocsBundle\Entity\Artist:
         paymentDetails:
           type: string(512)
         vatRate:
-          type: double
+          type: float
         comments:
           type: string(512)
         cityId:

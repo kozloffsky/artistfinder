@@ -8,63 +8,34 @@ namespace Acted\LegalDocsBundle\Entity;
 class RefCountry
 {
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
-
     /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-    /**
-     * @var int
-     */
-    private $countryId;
-
-    /**
-     * @var varchar
+     * @var string
      */
     private $name;
 
 
     /**
-     * Set countryId
+     * Get id
      *
-     * @param \int $countryId
-     *
-     * @return RefCountry
+     * @return integer
      */
-    public function setCountryId(\int $countryId)
+    public function getId()
     {
-        $this->countryId = $countryId;
-
-        return $this;
-    }
-
-    /**
-     * Get countryId
-     *
-     * @return \int
-     */
-    public function getCountryId()
-    {
-        return $this->countryId;
+        return $this->id;
     }
 
     /**
      * Set name
      *
-     * @param \varchar $name
+     * @param string $name
      *
      * @return RefCountry
      */
-    public function setName(\varchar $name)
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -74,7 +45,7 @@ class RefCountry
     /**
      * Get name
      *
-     * @return \varchar
+     * @return string
      */
     public function getName()
     {

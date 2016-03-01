@@ -8,39 +8,39 @@ namespace Acted\LegalDocsBundle\Entity;
 class RefRoleRight
 {
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
-
     /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-    /**
-     * @var int
+     * @var integer
      */
     private $roleId;
 
     /**
-     * @var int
+     * @var integer
      */
     private $rightId;
 
 
     /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Set roleId
      *
-     * @param \int $roleId
+     * @param integer $roleId
      *
      * @return RefRoleRight
      */
-    public function setRoleId(\int $roleId)
+    public function setRoleId($roleId)
     {
         $this->roleId = $roleId;
 
@@ -50,7 +50,7 @@ class RefRoleRight
     /**
      * Get roleId
      *
-     * @return \int
+     * @return integer
      */
     public function getRoleId()
     {
@@ -60,11 +60,11 @@ class RefRoleRight
     /**
      * Set rightId
      *
-     * @param \int $rightId
+     * @param integer $rightId
      *
      * @return RefRoleRight
      */
-    public function setRightId(\int $rightId)
+    public function setRightId($rightId)
     {
         $this->rightId = $rightId;
 
@@ -74,7 +74,7 @@ class RefRoleRight
     /**
      * Get rightId
      *
-     * @return \int
+     * @return integer
      */
     public function getRightId()
     {

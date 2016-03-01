@@ -10,9 +10,9 @@ Acted\LegalDocsBundle\Entity\ProfileMedia:
                 strategy: AUTO
     fields:
         mediaId:
-          type: bigint(20)
+          type: integer(20)
           notnull: true
         profileId:
-          type: bigint(20)
+          type: integer(20)
           notnull: true
     lifecycleCallbacks: {  }

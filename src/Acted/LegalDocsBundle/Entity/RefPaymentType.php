@@ -8,63 +8,34 @@ namespace Acted\LegalDocsBundle\Entity;
 class RefPaymentType
 {
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
-
     /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-    /**
-     * @var int
-     */
-    private $paymentId;
-
-    /**
-     * @var varchar
+     * @var string
      */
     private $paymentType;
 
 
     /**
-     * Set paymentId
+     * Get id
      *
-     * @param \int $paymentId
-     *
-     * @return RefPaymentType
+     * @return integer
      */
-    public function setPaymentId(\int $paymentId)
+    public function getId()
     {
-        $this->paymentId = $paymentId;
-
-        return $this;
-    }
-
-    /**
-     * Get paymentId
-     *
-     * @return \int
-     */
-    public function getPaymentId()
-    {
-        return $this->paymentId;
+        return $this->id;
     }
 
     /**
      * Set paymentType
      *
-     * @param \varchar $paymentType
+     * @param string $paymentType
      *
      * @return RefPaymentType
      */
-    public function setPaymentType(\varchar $paymentType)
+    public function setPaymentType($paymentType)
     {
         $this->paymentType = $paymentType;
 
@@ -74,7 +45,7 @@ class RefPaymentType
     /**
      * Get paymentType
      *
-     * @return \varchar
+     * @return string
      */
     public function getPaymentType()
     {

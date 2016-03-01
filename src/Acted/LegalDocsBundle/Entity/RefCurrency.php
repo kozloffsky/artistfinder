@@ -8,68 +8,39 @@ namespace Acted\LegalDocsBundle\Entity;
 class RefCurrency
 {
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
-
     /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-    /**
-     * @var int
-     */
-    private $currencyId;
-
-    /**
-     * @var varchar
+     * @var string
      */
     private $isoCode;
 
     /**
-     * @var varchar
+     * @var string
      */
     private $symbol;
 
 
     /**
-     * Set currencyId
+     * Get id
      *
-     * @param \int $currencyId
-     *
-     * @return RefCurrency
+     * @return integer
      */
-    public function setCurrencyId(\int $currencyId)
+    public function getId()
     {
-        $this->currencyId = $currencyId;
-
-        return $this;
-    }
-
-    /**
-     * Get currencyId
-     *
-     * @return \int
-     */
-    public function getCurrencyId()
-    {
-        return $this->currencyId;
+        return $this->id;
     }
 
     /**
      * Set isoCode
      *
-     * @param \varchar $isoCode
+     * @param string $isoCode
      *
      * @return RefCurrency
      */
-    public function setIsoCode(\varchar $isoCode)
+    public function setIsoCode($isoCode)
     {
         $this->isoCode = $isoCode;
 
@@ -79,7 +50,7 @@ class RefCurrency
     /**
      * Get isoCode
      *
-     * @return \varchar
+     * @return string
      */
     public function getIsoCode()
     {
@@ -89,11 +60,11 @@ class RefCurrency
     /**
      * Set symbol
      *
-     * @param \varchar $symbol
+     * @param string $symbol
      *
      * @return RefCurrency
      */
-    public function setSymbol(\varchar $symbol)
+    public function setSymbol($symbol)
     {
         $this->symbol = $symbol;
 
@@ -103,7 +74,7 @@ class RefCurrency
     /**
      * Get symbol
      *
-     * @return \varchar
+     * @return string
      */
     public function getSymbol()
     {

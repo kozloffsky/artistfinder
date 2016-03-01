@@ -8,68 +8,39 @@ namespace Acted\LegalDocsBundle\Entity;
 class RefTranslation
 {
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
-
     /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-    /**
-     * @var integer
-     */
-    private $translationId;
-
-    /**
-     * @var varchar
+     * @var string
      */
     private $en;
 
     /**
-     * @var varchar
+     * @var string
      */
     private $fr;
 
 
     /**
-     * Set translationId
+     * Get id
      *
-     * @param \integer $translationId
-     *
-     * @return RefTranslation
+     * @return integer
      */
-    public function setTranslationId( $translationId)
+    public function getId()
     {
-        $this->translationId = $translationId;
-
-        return $this;
-    }
-
-    /**
-     * Get translationId
-     *
-     * @return \integer
-     */
-    public function getTranslationId()
-    {
-        return $this->translationId;
+        return $this->id;
     }
 
     /**
      * Set en
      *
-     * @param \varchar $en
+     * @param string $en
      *
      * @return RefTranslation
      */
-    public function setEn(\varchar $en)
+    public function setEn($en)
     {
         $this->en = $en;
 
@@ -79,7 +50,7 @@ class RefTranslation
     /**
      * Get en
      *
-     * @return \varchar
+     * @return string
      */
     public function getEn()
     {
@@ -89,11 +60,11 @@ class RefTranslation
     /**
      * Set fr
      *
-     * @param \varchar $fr
+     * @param string $fr
      *
      * @return RefTranslation
      */
-    public function setFr(\varchar $fr)
+    public function setFr($fr)
     {
         $this->fr = $fr;
 
@@ -103,7 +74,7 @@ class RefTranslation
     /**
      * Get fr
      *
-     * @return \varchar
+     * @return string
      */
     public function getFr()
     {

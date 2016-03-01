@@ -8,68 +8,39 @@ namespace Acted\LegalDocsBundle\Entity;
 class RefRole
 {
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
-
     /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-    /**
-     * @var int
-     */
-    private $roleId;
-
-    /**
-     * @var varchar
+     * @var string
      */
     private $code;
 
     /**
-     * @var varchar
+     * @var string
      */
     private $name;
 
 
     /**
-     * Set roleId
+     * Get id
      *
-     * @param \int $roleId
-     *
-     * @return RefRole
+     * @return integer
      */
-    public function setRoleId(\int $roleId)
+    public function getId()
     {
-        $this->roleId = $roleId;
-
-        return $this;
-    }
-
-    /**
-     * Get roleId
-     *
-     * @return \int
-     */
-    public function getRoleId()
-    {
-        return $this->roleId;
+        return $this->id;
     }
 
     /**
      * Set code
      *
-     * @param \varchar $code
+     * @param string $code
      *
      * @return RefRole
      */
-    public function setCode(\varchar $code)
+    public function setCode($code)
     {
         $this->code = $code;
 
@@ -79,7 +50,7 @@ class RefRole
     /**
      * Get code
      *
-     * @return \varchar
+     * @return string
      */
     public function getCode()
     {
@@ -89,11 +60,11 @@ class RefRole
     /**
      * Set name
      *
-     * @param \varchar $name
+     * @param string $name
      *
      * @return RefRole
      */
-    public function setName(\varchar $name)
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -103,7 +74,7 @@ class RefRole
     /**
      * Get name
      *
-     * @return \varchar
+     * @return string
      */
     public function getName()
     {

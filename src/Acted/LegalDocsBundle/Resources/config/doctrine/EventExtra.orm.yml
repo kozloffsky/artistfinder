@@ -16,7 +16,7 @@ Acted\LegalDocsBundle\Entity\EventExtra:
           type: string(128)
           notnull: true
         price:
-          type: double
+          type: float
           notnull: true
         currencyId:
           type: integer(11)

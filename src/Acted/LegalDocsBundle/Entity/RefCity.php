@@ -8,68 +8,39 @@ namespace Acted\LegalDocsBundle\Entity;
 class RefCity
 {
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
-
     /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-    /**
-     * @var int
-     */
-    private $cityId;
-
-    /**
-     * @var varchar
+     * @var string
      */
     private $name;
 
     /**
-     * @var int
+     * @var integer
      */
     private $countryId;
 
 
     /**
-     * Set cityId
+     * Get id
      *
-     * @param \int $cityId
-     *
-     * @return RefCity
+     * @return integer
      */
-    public function setCityId(\int $cityId)
+    public function getId()
     {
-        $this->cityId = $cityId;
-
-        return $this;
-    }
-
-    /**
-     * Get cityId
-     *
-     * @return \int
-     */
-    public function getCityId()
-    {
-        return $this->cityId;
+        return $this->id;
     }
 
     /**
      * Set name
      *
-     * @param \varchar $name
+     * @param string $name
      *
      * @return RefCity
      */
-    public function setName(\varchar $name)
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -79,7 +50,7 @@ class RefCity
     /**
      * Get name
      *
-     * @return \varchar
+     * @return string
      */
     public function getName()
     {
@@ -89,11 +60,11 @@ class RefCity
     /**
      * Set countryId
      *
-     * @param \int $countryId
+     * @param integer $countryId
      *
      * @return RefCity
      */
-    public function setCountryId(\int $countryId)
+    public function setCountryId($countryId)
     {
         $this->countryId = $countryId;
 
@@ -103,7 +74,7 @@ class RefCity
     /**
      * Get countryId
      *
-     * @return \int
+     * @return integer
      */
     public function getCountryId()
     {

@@ -34,7 +34,7 @@ Acted\LegalDocsBundle\Entity\Event:
           type: integer(11)
           notnull: true
         budget:
-          type: double
+          type: float
         currencyId:
           type: integer(11)
         startingDate:

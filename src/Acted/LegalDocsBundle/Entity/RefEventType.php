@@ -8,63 +8,34 @@ namespace Acted\LegalDocsBundle\Entity;
 class RefEventType
 {
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
-
     /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-    /**
-     * @var int
-     */
-    private $eventTypeId;
-
-    /**
-     * @var varchar
+     * @var string
      */
     private $eventType;
 
 
     /**
-     * Set eventTypeId
+     * Get id
      *
-     * @param \int $eventTypeId
-     *
-     * @return RefEventType
+     * @return integer
      */
-    public function setEventTypeId(\int $eventTypeId)
+    public function getId()
     {
-        $this->eventTypeId = $eventTypeId;
-
-        return $this;
-    }
-
-    /**
-     * Get eventTypeId
-     *
-     * @return \int
-     */
-    public function getEventTypeId()
-    {
-        return $this->eventTypeId;
+        return $this->id;
     }
 
     /**
      * Set eventType
      *
-     * @param \varchar $eventType
+     * @param string $eventType
      *
      * @return RefEventType
      */
-    public function setEventType(\varchar $eventType)
+    public function setEventType($eventType)
     {
         $this->eventType = $eventType;
 
@@ -74,7 +45,7 @@ class RefEventType
     /**
      * Get eventType
      *
-     * @return \varchar
+     * @return string
      */
     public function getEventType()
     {

@@ -16,7 +16,7 @@ Acted\LegalDocsBundle\Entity\Document:
           type: string(32)
           notnull: true
         documentName:
-          type: string(256)
+          type: string(100)
           notnull: true
           unique: true
         documentSize:
