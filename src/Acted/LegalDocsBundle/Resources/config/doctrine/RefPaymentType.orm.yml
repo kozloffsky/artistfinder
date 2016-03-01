@@ -1,6 +1,6 @@
 Acted\LegalDocsBundle\Entity\RefPaymentType:
     type: entity
-    table: null
+    table: RefPaymentType
     repositoryClass: Acted\LegalDocsBundle\Repository\RefPaymentTypeRepository
     id:
         id:
@@ -9,13 +9,8 @@ Acted\LegalDocsBundle\Entity\RefPaymentType:
             generator:
                 strategy: AUTO
     fields:
-        paymentId:
-          type: int(11)
-          primary: true
-          autoincrement: true
-          notnull: true
         paymentType:
-          type: varchar(32)
+          type: string(32)
           notnull: true
           unique: true
     lifecycleCallbacks: {  }

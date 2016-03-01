@@ -1,6 +1,6 @@
 Acted\LegalDocsBundle\Entity\RefEventType:
     type: entity
-    table: null
+    table: RefEventType
     repositoryClass: Acted\LegalDocsBundle\Repository\RefEventTypeRepository
     id:
         id:
@@ -9,13 +9,8 @@ Acted\LegalDocsBundle\Entity\RefEventType:
             generator:
                 strategy: AUTO
     fields:
-        eventTypeId:
-          type: int(11)
-          primary: true
-          autoincrement: true
-          notnull: true
         eventType:
-          type: varchar(32)
+          type: string(32)
           notnull: true
           unique: true
     lifecycleCallbacks: {  }

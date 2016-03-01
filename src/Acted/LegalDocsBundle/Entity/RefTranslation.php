@@ -23,7 +23,7 @@ class RefTranslation
         return $this->id;
     }
     /**
-     * @var mediumint
+     * @var integer
      */
     private $translationId;
 
@@ -41,11 +41,11 @@ class RefTranslation
     /**
      * Set translationId
      *
-     * @param \mediumint $translationId
+     * @param \integer $translationId
      *
      * @return RefTranslation
      */
-    public function setTranslationId(\mediumint $translationId)
+    public function setTranslationId( $translationId)
     {
         $this->translationId = $translationId;
 
@@ -55,7 +55,7 @@ class RefTranslation
     /**
      * Get translationId
      *
-     * @return \mediumint
+     * @return \integer
      */
     public function getTranslationId()
     {

@@ -1,7 +1,7 @@
-Acted\LegalDocsBundle\Entity\DynUser:
+Acted\LegalDocsBundle\Entity\User:
     type: entity
-    table: null
-    repositoryClass: Acted\LegalDocsBundle\Repository\DynUserRepository
+    table: User
+    repositoryClass: Acted\LegalDocsBundle\Repository\UserRepository
     id:
         id:
             type: integer
@@ -9,30 +9,25 @@ Acted\LegalDocsBundle\Entity\DynUser:
             generator:
                 strategy: AUTO
     fields:
-        userId:
-          type: bigint(20)
-          primary: true
-          autoincrement: true
-          notnull: true
         firstname:
-          type: varchar(128)
+          type: string(128)
           notnull: true
         lastname:
-          type: varchar(128)
+          type: string(128)
           notnull: true
         email:
-          type: varchar(256)
+          type: string(256)
           notnull: true
           unique: true
         passwordHash:
-          type: varchar(256)
+          type: string(256)
           notnull: true
         primaryPhone:
-          type: varchar(32)
+          type: string(32)
           notnull: true
           unique: true
         secondaryPhone:
-          type: varchar(32)
+          type: string(32)
         active:
           type: boolean
           notnull: true

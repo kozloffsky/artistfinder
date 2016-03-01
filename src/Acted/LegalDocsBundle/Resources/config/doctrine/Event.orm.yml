@@ -1,7 +1,7 @@
-Acted\LegalDocsBundle\Entity\DynEvent:
+Acted\LegalDocsBundle\Entity\Event:
     type: entity
-    table: null
-    repositoryClass: Acted\LegalDocsBundle\Repository\DynEventRepository
+    table: Event
+    repositoryClass: Acted\LegalDocsBundle\Repository\EventRepository
     id:
         id:
             type: integer
@@ -9,45 +9,40 @@ Acted\LegalDocsBundle\Entity\DynEvent:
             generator:
                 strategy: AUTO
     fields:
-        eventId:
-          type: bigint(20)
-          primary: true
-          autoincrement: true
-          notnull: true
         eventRef:
-          type: varchar(64)
+          type: string(64)
           notnull: true
           unique: true
         userId:
-          type: bigint(20)
+          type: integer(20)
           notnull: true
         title:
-          type: varchar(128)
+          type: string(128)
           notnull: true
         description:
-          type: varchar(512)
+          type: string(512)
         eventTypeId:
-          type: int(11)
+          type: integer(11)
           notnull: true
         isInternational:
           type: boolean
           notnull: true
         address:
-          type: varchar(256)
+          type: string(256)
           notnull: true
         cityId:
-          type: int(11)
+          type: integer(11)
           notnull: true
         budget:
           type: double
         currencyId:
-          type: int(11)
+          type: integer(11)
         startingDate:
           type: datetime
         endingDate:
           type: datetime
         timing:
-          type: varchar(128)
+          type: string(128)
         comments:
-          type: varchar(512)
+          type: string(512)
     lifecycleCallbacks: {  }

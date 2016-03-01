@@ -1,7 +1,7 @@
-Acted\LegalDocsBundle\Entity\DynArtistAgenda:
+Acted\LegalDocsBundle\Entity\ArtistAgenda:
     type: entity
-    table: null
-    repositoryClass: Acted\LegalDocsBundle\Repository\DynArtistAgendaRepository
+    table: ArtistAgenda
+    repositoryClass: Acted\LegalDocsBundle\Repository\ArtistAgendaRepository
     id:
         id:
             type: integer
@@ -9,19 +9,14 @@ Acted\LegalDocsBundle\Entity\DynArtistAgenda:
             generator:
                 strategy: AUTO
     fields:
-        agendaId:
-          type: bigint(20)
-          primary: true
-          autoincrement: true
-          notnull: true
         profileId:
-          type: bigint(20)
+          type: integer(20)
           notnull: true
         title:
-          type: varchar(128)
+          type: string(128)
           notnull: true
         description:
-          type: varchar(512)
+          type: string(512)
           notnull: true
         startingDatetime:
           type: datetime

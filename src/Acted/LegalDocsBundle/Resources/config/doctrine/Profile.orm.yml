@@ -1,7 +1,7 @@
-Acted\LegalDocsBundle\Entity\DynProfile:
+Acted\LegalDocsBundle\Entity\Profile:
     type: entity
-    table: null
-    repositoryClass: Acted\LegalDocsBundle\Repository\DynProfileRepository
+    table: Profile
+    repositoryClass: Acted\LegalDocsBundle\Repository\ProfileRepository
     id:
         id:
             type: integer
@@ -9,26 +9,21 @@ Acted\LegalDocsBundle\Entity\DynProfile:
             generator:
                 strategy: AUTO
     fields:
-        profileId:
-          type: bigint(20)
-          primary: true
-          autoincrement: true
-          notnull: true
         userId:
-          type: bigint(20)
+          type: integer(20)
           notnull: true
         title:
-          type: varchar(128)
+          type: string(128)
           notnull: true
         header:
-          type: varchar(512)
+          type: string(512)
         description:
           type: text
         isInternational:
           type: boolean
           notnull: true
         performanceRange:
-          type: int(8)
+          type: integer(8)
         paymentTypeId:
           type: int(11)
           notnull: true

@@ -1,6 +1,6 @@
 Acted\LegalDocsBundle\Entity\RefCurrency:
     type: entity
-    table: null
+    table: RefCurrency
     repositoryClass: Acted\LegalDocsBundle\Repository\RefCurrencyRepository
     id:
         id:
@@ -9,16 +9,11 @@ Acted\LegalDocsBundle\Entity\RefCurrency:
             generator:
                 strategy: AUTO
     fields:
-        currencyId:
-          type: int(11)
-          primary: true
-          autoincrement: true
-          notnull: true
         isoCode:
-          type: varchar(3)
+          type: string(3)
           notnull: true
           unique: true
         symbol:
-          type: varchar(8)
+          type: string(8)
           notnull: true
     lifecycleCallbacks: {  }

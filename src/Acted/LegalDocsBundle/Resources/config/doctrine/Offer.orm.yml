@@ -1,7 +1,7 @@
-Acted\LegalDocsBundle\Entity\DynOffer:
+Acted\LegalDocsBundle\Entity\Offer:
     type: entity
-    table: null
-    repositoryClass: Acted\LegalDocsBundle\Repository\DynOfferRepository
+    table: Offer
+    repositoryClass: Acted\LegalDocsBundle\Repository\OfferRepository
     id:
         id:
             type: integer
@@ -9,32 +9,27 @@ Acted\LegalDocsBundle\Entity\DynOffer:
             generator:
                 strategy: AUTO
     fields:
-        offerId:
-          type: bigint(20)
-          primary: true
-          autoincrement: true
-          notnull: true
         performanceId:
-          type: bigint(20)
+          type: integer(20)
           notnull: true
         title:
-          type: varchar(128)
+          type: string(128)
           notnull: true
           unique: true
         price:
           type: double
           notnull: true
         currencyId:
-          type: int(11)
+          type: integer(11)
           notnull: true
         depositValue:
           type: double
           notnull: true
         depositType:
-          type: varchar(32)
+          type: string(32)
           notnull: true
         paymentTerms:
-          type: varchar(256)
+          type: string(256)
         comments:
-          type: varchar(256)
+          type: string(256)
     lifecycleCallbacks: {  }

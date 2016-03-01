@@ -43,7 +43,7 @@ class DynDocument
     private $documentName;
 
     /**
-     * @var mediumint
+     * @var integer
      */
     private $documentSize;
 
@@ -103,7 +103,7 @@ class DynDocument
      *
      * @return DynDocument
      */
-    public function setDocumentType(\varchar $documentType)
+    public function setDocumentType( $documentType)
     {
         $this->documentType = $documentType;
 
@@ -127,7 +127,7 @@ class DynDocument
      *
      * @return DynDocument
      */
-    public function setDocumentName(\varchar $documentName)
+    public function setDocumentName( $documentName)
     {
         $this->documentName = $documentName;
 
@@ -147,11 +147,11 @@ class DynDocument
     /**
      * Set documentSize
      *
-     * @param \mediumint $documentSize
+     * @param \integer $documentSize
      *
      * @return DynDocument
      */
-    public function setDocumentSize(\mediumint $documentSize)
+    public function setDocumentSize( $documentSize)
     {
         $this->documentSize = $documentSize;
 
@@ -161,7 +161,7 @@ class DynDocument
     /**
      * Get documentSize
      *
-     * @return \mediumint
+     * @return \integer
      */
     public function getDocumentSize()
     {

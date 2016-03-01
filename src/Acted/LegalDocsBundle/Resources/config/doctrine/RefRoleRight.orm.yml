@@ -1,6 +1,6 @@
 Acted\LegalDocsBundle\Entity\RefRoleRight:
     type: entity
-    table: null
+    table: RefRoleRight
     repositoryClass: Acted\LegalDocsBundle\Repository\RefRoleRightRepository
     id:
         id:
@@ -10,11 +10,9 @@ Acted\LegalDocsBundle\Entity\RefRoleRight:
                 strategy: AUTO
     fields:
         roleId:
-          type: int(11)
-          primary: true
+          type: integer(11)
           notnull: true
         rightId:
-          type: int(11)
-          primary: true
+          type: integer(11)
           notnull: true
     lifecycleCallbacks: {  }

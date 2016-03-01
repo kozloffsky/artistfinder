@@ -1,7 +1,7 @@
-Acted\LegalDocsBundle\Entity\DynClient:
+Acted\LegalDocsBundle\Entity\Client:
     type: entity
-    table: null
-    repositoryClass: Acted\LegalDocsBundle\Repository\DynClientRepository
+    table: Client
+    repositoryClass: Acted\LegalDocsBundle\Repository\ClientRepository
     id:
         id:
             type: integer
@@ -10,20 +10,19 @@ Acted\LegalDocsBundle\Entity\DynClient:
                 strategy: AUTO
     fields:
         userId:
-          type: bigint(20)
-          primary: true
+          type: integer(20)
           notnull: true
         clientType:
-          type: varchar(32)
+          type: string(32)
           notnull: true
         company:
-          type: varchar(128)
+          type: string(128)
         comments:
-          type: varchar(512)
+          type: string(512)
         address:
-          type: varchar(256)
+          type: string(256)
           notnull: true
         cityId:
-          type: int(11)
+          type: integer(11)
           notnull: true
     lifecycleCallbacks: {  }

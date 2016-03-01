@@ -1,6 +1,6 @@
 Acted\LegalDocsBundle\Entity\RefCity:
     type: entity
-    table: null
+    table: RefCity
     repositoryClass: Acted\LegalDocsBundle\Repository\RefCityRepository
     id:
         id:
@@ -9,16 +9,11 @@ Acted\LegalDocsBundle\Entity\RefCity:
             generator:
                 strategy: AUTO
     fields:
-        cityId:
-          type: int(11)
-          primary: true
-          autoincrement: true
-          notnull: true
         name:
-          type: varchar(128)
+          type: string(128)
           notnull: true
           unique: true
         countryId:
-          type: int(11)
+          type: integer(11)
           notnull: true
     lifecycleCallbacks: {  }

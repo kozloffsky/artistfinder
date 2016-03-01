@@ -1,7 +1,7 @@
-Acted\LegalDocsBundle\Entity\DynMessage:
+Acted\LegalDocsBundle\Entity\Message:
     type: entity
-    table: null
-    repositoryClass: Acted\LegalDocsBundle\Repository\DynMessageRepository
+    table: Message
+    repositoryClass: Acted\LegalDocsBundle\Repository\MessageRepository
     id:
         id:
             type: integer
@@ -9,22 +9,17 @@ Acted\LegalDocsBundle\Entity\DynMessage:
             generator:
                 strategy: AUTO
     fields:
-        messageId:
-          type: bigint(20)
-          primary: true
-          autoincrement: true
-          notnull: true
         senderUserId:
-          type: bigint(20)
+          type: integer(20)
           notnull: true
         receiverUserId:
-          type: bigint(20)
+          type: integer(20)
           notnull: true
         subject:
-          type: varchar(128)
+          type: string(128)
           notnull: true
         messageText:
-          type: varchar(512)
+          type: string(512)
           notnull: true
         sendDateTime:
           type: datetime

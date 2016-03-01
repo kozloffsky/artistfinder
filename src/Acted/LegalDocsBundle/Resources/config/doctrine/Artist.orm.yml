@@ -1,7 +1,7 @@
-Acted\LegalDocsBundle\Entity\DynArtist:
+Acted\LegalDocsBundle\Entity\Artist:
     type: entity
-    table: null
-    repositoryClass: Acted\LegalDocsBundle\Repository\DynArtistRepository
+    table: Artist
+    repositoryClass: Acted\LegalDocsBundle\Repository\ArtistRepository
     id:
         id:
             type: integer
@@ -10,23 +10,22 @@ Acted\LegalDocsBundle\Entity\DynArtist:
                 strategy: AUTO
     fields:
         userId:
-          type: bigint(20)
-          primary: true
+          type: integer(20)
           notnull: true
         name:
-          type: varchar(128)
+          type: string(128)
           notnull: true
         assistantName:
-          type: varchar(128)
+          type: string(128)
         website:
-          type: varchar(256)
+          type: string(256)
         paymentDetails:
-          type: varchar(512)
+          type: string(512)
         vatRate:
           type: double
         comments:
-          type: varchar(512)
+          type: string(512)
         cityId:
-          type: int(11)
+          type: integer(11)
           notnull: true
     lifecycleCallbacks: {  }

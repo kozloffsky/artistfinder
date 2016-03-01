@@ -43,7 +43,7 @@ class DynMedia
     private $link;
 
     /**
-     * @var mediumint
+     * @var integer
      */
     private $mediaSize;
 
@@ -89,7 +89,7 @@ class DynMedia
      *
      * @return DynMedia
      */
-    public function setMediaType(\varchar $mediaType)
+    public function setMediaType( $mediaType)
     {
         $this->mediaType = $mediaType;
 
@@ -113,7 +113,7 @@ class DynMedia
      *
      * @return DynMedia
      */
-    public function setName(\varchar $name)
+    public function setName( $name)
     {
         $this->name = $name;
 
@@ -137,7 +137,7 @@ class DynMedia
      *
      * @return DynMedia
      */
-    public function setLink(\varchar $link)
+    public function setLink( $link)
     {
         $this->link = $link;
 
@@ -157,11 +157,11 @@ class DynMedia
     /**
      * Set mediaSize
      *
-     * @param \mediumint $mediaSize
+     * @param \integer $mediaSize
      *
      * @return DynMedia
      */
-    public function setMediaSize(\mediumint $mediaSize)
+    public function setMediaSize( $mediaSize)
     {
         $this->mediaSize = $mediaSize;
 
@@ -171,7 +171,7 @@ class DynMedia
     /**
      * Get mediaSize
      *
-     * @return \mediumint
+     * @return \integer
      */
     public function getMediaSize()
     {
@@ -185,7 +185,7 @@ class DynMedia
      *
      * @return DynMedia
      */
-    public function setPosition(\int $position)
+    public function setPosition($position)
     {
         $this->position = $position;
 

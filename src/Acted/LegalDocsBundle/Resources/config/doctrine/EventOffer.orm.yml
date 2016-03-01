@@ -1,7 +1,7 @@
-Acted\LegalDocsBundle\Entity\DynEventService:
+Acted\LegalDocsBundle\Entity\EventOffer:
     type: entity
-    table: null
-    repositoryClass: Acted\LegalDocsBundle\Repository\DynEventServiceRepository
+    table: EventOffer
+    repositoryClass: Acted\LegalDocsBundle\Repository\EventOfferRepository
     id:
         id:
             type: integer
@@ -10,32 +10,30 @@ Acted\LegalDocsBundle\Entity\DynEventService:
                 strategy: AUTO
     fields:
         eventId:
-          type: bigint(20)
-          primary: true
+          type: integer(20)
           notnull: true
-        serviceId:
-          type: bigint(20)
-          primary: true
+        offerId:
+          type: integer(20)
           notnull: true
         status:
-          type: varchar(32)
+          type: string(32)
           notnull: true
         price:
           type: double
           notnull: true
         currencyId:
-          type: int(11)
+          type: integer(11)
           notnull: true
         depositValue:
           type: double
           notnull: true
         depositType:
-          type: varchar(32)
+          type: string(32)
           notnull: true
         paymentTerms:
-          type: varchar(256)
+          type: string(256)
         comments:
-          type: varchar(256)
+          type: string(256)
         sendDateTime:
           type: datetime
           notnull: true

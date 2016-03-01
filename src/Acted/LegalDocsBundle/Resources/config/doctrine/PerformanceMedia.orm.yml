@@ -1,7 +1,7 @@
-Acted\LegalDocsBundle\Entity\DynPerformanceMedia:
+Acted\LegalDocsBundle\Entity\PerformanceMedia:
     type: entity
-    table: null
-    repositoryClass: Acted\LegalDocsBundle\Repository\DynPerformanceMediaRepository
+    table: PerformanceMedia
+    repositoryClass: Acted\LegalDocsBundle\Repository\PerformanceMediaRepository
     id:
         id:
             type: integer
@@ -10,11 +10,9 @@ Acted\LegalDocsBundle\Entity\DynPerformanceMedia:
                 strategy: AUTO
     fields:
         mediaId:
-          type: bigint(20)
-          primary: true
+          type: integer(20)
           notnull: true
         performanceId:
-          type: bigint(20)
-          primary: true
+          type: integer(20)
           notnull: true
     lifecycleCallbacks: {  }

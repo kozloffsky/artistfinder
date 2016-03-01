@@ -1,0 +1,21 @@
+Acted\LegalDocsBundle\Entity\MessageFile:
+    type: entity
+    table: MessageFile
+    repositoryClass: Acted\LegalDocsBundle\Repository\MessageFileRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        messageId:
+          type: integer(20)
+          notnull: true
+        fileName:
+          type: integer(20)
+          notnull: true
+        fileSize:
+          type: integer(9)
+          notnull: true
+    lifecycleCallbacks: {  }

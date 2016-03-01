@@ -1,0 +1,20 @@
+Acted\LegalDocsBundle\Entity\Performance:
+    type: entity
+    table: Performance
+    repositoryClass: Acted\LegalDocsBundle\Repository\PerformanceRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        profileId:
+          type: integer(20)
+          notnull: true
+        title:
+          type: string(128)
+          notnull: true
+        techRequirement:
+          type: string(512)
+    lifecycleCallbacks: {  }

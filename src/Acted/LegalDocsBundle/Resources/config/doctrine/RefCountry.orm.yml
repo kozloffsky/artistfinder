@@ -1,6 +1,6 @@
 Acted\LegalDocsBundle\Entity\RefCountry:
     type: entity
-    table: null
+    table: RefCountry
     repositoryClass: Acted\LegalDocsBundle\Repository\RefCountryRepository
     id:
         id:
@@ -9,13 +9,8 @@ Acted\LegalDocsBundle\Entity\RefCountry:
             generator:
                 strategy: AUTO
     fields:
-        countryId:
-          type: int(11)
-          primary: true
-          autoincrement: true
-          notnull: true
         name:
-          type: varchar(128)
+          type: string(128)
           notnull: true
           unique: true
     lifecycleCallbacks: {  }

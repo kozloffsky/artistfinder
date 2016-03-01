@@ -1,6 +1,6 @@
 Acted\LegalDocsBundle\Entity\RefTranslation:
     type: entity
-    table: null
+    table: RefTranslation
     repositoryClass: Acted\LegalDocsBundle\Repository\RefTranslationRepository
     id:
         id:
@@ -9,15 +9,10 @@ Acted\LegalDocsBundle\Entity\RefTranslation:
             generator:
                 strategy: AUTO
     fields:
-        translationId:
-          type: mediumint(9)
-          primary: true
-          autoincrement: true
-          notnull: true
         en:
-          type: varchar(512)
+          type: string(512)
           notnull: true
         fr:
-          type: varchar(512)
+          type: string(512)
           notnull: true
     lifecycleCallbacks: {  }

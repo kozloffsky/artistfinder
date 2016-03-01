@@ -1,7 +1,7 @@
-Acted\LegalDocsBundle\Entity\DynStaff:
+Acted\LegalDocsBundle\Entity\Staff:
     type: entity
-    table: null
-    repositoryClass: Acted\LegalDocsBundle\Repository\DynStaffRepository
+    table: Staff
+    repositoryClass: Acted\LegalDocsBundle\Repository\StaffRepository
     id:
         id:
             type: integer
@@ -10,12 +10,11 @@ Acted\LegalDocsBundle\Entity\DynStaff:
                 strategy: AUTO
     fields:
         userId:
-          type: bigint(20)
-          primary: true
+          type: integer(20)
           notnull: true
         roleId:
-          type: int(11)
+          type: integer(11)
           notnull: true
         signature:
-          type: varchar(512)
+          type: string(512)
     lifecycleCallbacks: {  }

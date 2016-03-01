@@ -1,7 +1,7 @@
-Acted\LegalDocsBundle\Entity\DynMedia:
+Acted\LegalDocsBundle\Entity\Media:
     type: entity
-    table: null
-    repositoryClass: Acted\LegalDocsBundle\Repository\DynMediaRepository
+    table: Media
+    repositoryClass: Acted\LegalDocsBundle\Repository\MediaRepository
     id:
         id:
             type: integer
@@ -9,23 +9,18 @@ Acted\LegalDocsBundle\Entity\DynMedia:
             generator:
                 strategy: AUTO
     fields:
-        mediaId:
-          type: bigint(20)
-          primary: true
-          autoincrement: true
-          notnull: true
         mediaType:
-          type: varchar(32)
+          type: string(32)
           notnull: true
         name:
-          type: varchar(128)
+          type: string(128)
           notnull: true
         link:
-          type: varchar(256)
+          type: string(256)
         mediaSize:
-          type: mediumint(9)
+          type: integer(9)
         position:
-          type: int(11)
+          type: integer(11)
           notnull: true
         active:
           type: boolean

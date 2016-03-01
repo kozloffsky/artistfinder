@@ -1,6 +1,6 @@
 Acted\LegalDocsBundle\Entity\RefRole:
     type: entity
-    table: null
+    table: RefRole
     repositoryClass: Acted\LegalDocsBundle\Repository\RefRoleRepository
     id:
         id:
@@ -9,16 +9,11 @@ Acted\LegalDocsBundle\Entity\RefRole:
             generator:
                 strategy: AUTO
     fields:
-        roleId:
-          type: int(11)
-          primary: true
-          autoincrement: true
-          notnull: true
         code:
-          type: varchar(32)
+          type: string(32)
           notnull: true
           unique: true
         name:
-          type: varchar(64)
+          type: string(64)
           notnull: true
     lifecycleCallbacks: {  }

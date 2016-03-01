@@ -38,7 +38,7 @@ class DynMessageFile
     private $fileName;
 
     /**
-     * @var mediumint
+     * @var integer
      */
     private $fileSize;
 
@@ -118,11 +118,11 @@ class DynMessageFile
     /**
      * Set fileSize
      *
-     * @param \mediumint $fileSize
+     * @param \integer $fileSize
      *
      * @return DynMessageFile
      */
-    public function setFileSize(\mediumint $fileSize)
+    public function setFileSize($fileSize)
     {
         $this->fileSize = $fileSize;
 
@@ -132,7 +132,7 @@ class DynMessageFile
     /**
      * Get fileSize
      *
-     * @return \mediumint
+     * @return \integer
      */
     public function getFileSize()
     {
