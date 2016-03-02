@@ -16,6 +16,7 @@
 /.htaccess
 /web/.htaccess
 /web/uploads
+/node_modules
 chmod
 cache
 #
