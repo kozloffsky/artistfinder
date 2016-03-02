@@ -19,6 +19,7 @@ Acted\LegalDocsBundle\Entity\Media:
           type: string(256)
         mediaSize:
           type: integer(9)
+          nullable: true
         position:
           type: integer(11)
           notnull: true

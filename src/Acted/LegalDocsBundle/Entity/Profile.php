@@ -312,4 +312,50 @@ class Profile
     {
         return $this->user;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $media;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->media = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add medium
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Media $medium
+     *
+     * @return Profile
+     */
+    public function addMedia(\Acted\LegalDocsBundle\Entity\Media $medium)
+    {
+        $this->media[] = $medium;
+
+        return $this;
+    }
+
+    /**
+     * Remove medium
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Media $medium
+     */
+    public function removeMedia(\Acted\LegalDocsBundle\Entity\Media $medium)
+    {
+        $this->media->removeElement($medium);
+    }
+
+    /**
+     * Get media
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
 }
