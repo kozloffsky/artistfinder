@@ -283,4 +283,33 @@ class User
     {
         return $this->background;
     }
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\Profile
+     */
+    private $profile;
+
+
+    /**
+     * Set profile
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Profile $profile
+     *
+     * @return User
+     */
+    public function setProfile(\Acted\LegalDocsBundle\Entity\Profile $profile = null)
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    /**
+     * Get profile
+     *
+     * @return \Acted\LegalDocsBundle\Entity\Profile
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
 }

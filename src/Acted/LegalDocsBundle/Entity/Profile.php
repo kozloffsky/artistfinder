@@ -254,4 +254,62 @@ class Profile
     {
         return $this->active;
     }
+    /**
+     * @var string
+     */
+    private $oneToOne;
+
+
+    /**
+     * Set oneToOne
+     *
+     * @param string $oneToOne
+     *
+     * @return Profile
+     */
+    public function setOneToOne($oneToOne)
+    {
+        $this->oneToOne = $oneToOne;
+
+        return $this;
+    }
+
+    /**
+     * Get oneToOne
+     *
+     * @return string
+     */
+    public function getOneToOne()
+    {
+        return $this->oneToOne;
+    }
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\User
+     */
+    private $user;
+
+
+    /**
+     * Set user
+     *
+     * @param \Acted\LegalDocsBundle\Entity\User $user
+     *
+     * @return Profile
+     */
+    public function setUser(\Acted\LegalDocsBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Acted\LegalDocsBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }
