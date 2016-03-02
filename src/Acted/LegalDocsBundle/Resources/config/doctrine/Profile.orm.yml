@@ -30,4 +30,12 @@ Acted\LegalDocsBundle\Entity\Profile:
         active:
           type: boolean
           notnull: true
+    oneToOne:
+        user:
+          targetEntity: Acted\LegalDocsBundle\Entity\User
+          inversedBy: user
+    manyToMany:
+        media:
+          targetEntity: Acted\LegalDocsBundle\Entity\Media
+
     lifecycleCallbacks: {  }

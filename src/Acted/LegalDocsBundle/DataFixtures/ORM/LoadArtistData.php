@@ -10,6 +10,8 @@
 namespace Acted\LegalDocsBundle\DataFixtures\ORM;
 
 use Acted\LegalDocsBundle\Entity\Artist;
+use Acted\LegalDocsBundle\Entity\Media;
+use Acted\LegalDocsBundle\Entity\Profile;
 use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Entity\RefCity;
 use Doctrine\Common\DataFixtures\FixtureInterface;
@@ -44,6 +46,23 @@ class LoadArtistData implements FixtureInterface, ContainerAwareInterface
         $user->setBackground($faker->imageUrl);
         $manager->persist($user);
         $manager->flush();
+
+        $media1 = new Media();
+        $media1->setName($faker->word);
+        $media1->setMediaType('photo');
+        $media1->setLink($faker->imageUrl);
+        $media1->setPosition(1);
+        $media1->setActive(true);
+        $media2 = new Media();
+        $media2->setName($faker->word);
+        $media2->setMediaType('photo');
+        $media2->setLink($faker->imageUrl);
+        $media2->setPosition(1);
+        $media2->setActive(true);
+        $manager->persist($media1);
+        $manager->persist($media2);
+        $manager->flush();
+
 
         $city = new RefCity();
         $city->setName($faker->city);

@@ -254,4 +254,108 @@ class Profile
     {
         return $this->active;
     }
+    /**
+     * @var string
+     */
+    private $oneToOne;
+
+
+    /**
+     * Set oneToOne
+     *
+     * @param string $oneToOne
+     *
+     * @return Profile
+     */
+    public function setOneToOne($oneToOne)
+    {
+        $this->oneToOne = $oneToOne;
+
+        return $this;
+    }
+
+    /**
+     * Get oneToOne
+     *
+     * @return string
+     */
+    public function getOneToOne()
+    {
+        return $this->oneToOne;
+    }
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\User
+     */
+    private $user;
+
+
+    /**
+     * Set user
+     *
+     * @param \Acted\LegalDocsBundle\Entity\User $user
+     *
+     * @return Profile
+     */
+    public function setUser(\Acted\LegalDocsBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Acted\LegalDocsBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $media;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->media = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add medium
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Media $medium
+     *
+     * @return Profile
+     */
+    public function addMedia(\Acted\LegalDocsBundle\Entity\Media $medium)
+    {
+        $this->media[] = $medium;
+
+        return $this;
+    }
+
+    /**
+     * Remove medium
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Media $medium
+     */
+    public function removeMedia(\Acted\LegalDocsBundle\Entity\Media $medium)
+    {
+        $this->media->removeElement($medium);
+    }
+
+    /**
+     * Get media
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
 }
