@@ -1,0 +1,4 @@
+profile_show:
+    path:     /{slug}
+    defaults: { _controller: ActedLegalDocsBundle:Profile:show }
+    methods:  GET

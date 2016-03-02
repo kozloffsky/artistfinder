@@ -255,4 +255,3 @@ class Profile
         return $this->active;
     }
 }
-

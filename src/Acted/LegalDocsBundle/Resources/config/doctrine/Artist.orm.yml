@@ -9,23 +9,30 @@ Acted\LegalDocsBundle\Entity\Artist:
             generator:
                 strategy: AUTO
     fields:
-        userId:
-          type: integer(20)
-          notnull: true
         name:
           type: string(128)
-          notnull: true
+        slug:
+          type: string(128)
         assistantName:
           type: string(128)
+          nullable: true
         website:
           type: string(256)
+          nullable: true
         paymentDetails:
           type: string(512)
+          nullable: true
         vatRate:
           type: float
+          nullable: true
         comments:
           type: string(512)
-        cityId:
-          type: integer(11)
-          notnull: true
+          nullable: true
+    manyToOne:
+        city:
+          targetEntity: Acted\LegalDocsBundle\Entity\RefCity
+    oneToOne:
+        user:
+          targetEntity: Acted\LegalDocsBundle\Entity\User
+
     lifecycleCallbacks: {  }

@@ -25,10 +25,17 @@ Acted\LegalDocsBundle\Entity\User:
         primaryPhone:
           type: string(32)
           unique: true
-          notnull: true
         secondaryPhone:
           type: string(32)
+          nullable: true
         active:
           type: boolean
           notnull: true
+        avatar:
+          type: string(256)
+          nullable: true
+        background:
+          type: string(256)
+          nullable: true
+
     lifecycleCallbacks: {  }

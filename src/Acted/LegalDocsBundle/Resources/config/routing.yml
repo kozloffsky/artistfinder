@@ -17,3 +17,7 @@ acted_legal_docs_quotationtype:
 acted_legal_docs_homepage:
     path:     /
     defaults: { _controller: ActedLegalDocsBundle:Default:index }
+
+acted_legal_docs_profile:
+  resource: "@ActedLegalDocsBundle/Resources/config/routing/profile.yml"
+  prefix: /profile

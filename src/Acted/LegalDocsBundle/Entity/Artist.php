@@ -1,6 +1,7 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Entity;
+use Cocur\Slugify\Slugify;
 
 /**
  * Artist
@@ -97,7 +98,8 @@ class Artist
     public function setName($name)
     {
         $this->name = $name;
-
+        $slugify = new Slugify();
+        $this->slug = $slugify->slugify($name);
         return $this;
     }
 
@@ -253,5 +255,92 @@ class Artist
     public function getCityId()
     {
         return $this->cityId;
+    }
+    /**
+     * @var string
+     */
+    private $slug;
+
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Artist
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\RefCity
+     */
+    private $city;
+
+
+    /**
+     * Set city
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefCity $city
+     *
+     * @return Artist
+     */
+    public function setCity(\Acted\LegalDocsBundle\Entity\RefCity $city = null)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return \Acted\LegalDocsBundle\Entity\RefCity
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\User
+     */
+    private $user;
+
+
+    /**
+     * Set user
+     *
+     * @param \Acted\LegalDocsBundle\Entity\User $user
+     *
+     * @return Artist
+     */
+    public function setUser(\Acted\LegalDocsBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Acted\LegalDocsBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

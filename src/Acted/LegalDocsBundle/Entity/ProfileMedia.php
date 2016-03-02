@@ -81,4 +81,3 @@ class ProfileMedia
         return $this->profileId;
     }
 }
-
