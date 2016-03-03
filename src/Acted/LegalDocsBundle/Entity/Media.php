@@ -125,6 +125,14 @@ class Media
         return $this->link;
     }
 
+    public function getVideoId()
+    {
+        if($this->mediaType != 'video' || (!preg_match('/\/(\d+)$/is', $this->link, $matches)) || empty($matches[1])) {
+            return null;
+        }
+        return $matches[1];
+    }
+
     /**
      * Set mediaSize
      *
