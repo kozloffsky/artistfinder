@@ -19,7 +19,7 @@ class ProfileController extends Controller
             throw new NotFoundHttpException();
         }
 
-        return $this->render('ActedLegalDocsBundle:Profile:showProfile.html.twig', array(
+        return $this->render('ActedLegalDocsBundle:Profile:show.html.twig', array(
             'artist' => $artist,
         ));
     }
