@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\Artist;
+use Acted\LegalDocsBundle\Entity\Offer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -29,7 +30,7 @@ class ProfileController extends Controller
         $offers = $paginator->paginate(
             $em->getRepository('ActedLegalDocsBundle:Offer')->findByArtistQuery($artist),
             $request->get('page'),
-            3
+            $this->getParameter('per_page')
         );
 
 

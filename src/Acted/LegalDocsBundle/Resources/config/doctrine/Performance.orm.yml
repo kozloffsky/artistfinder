@@ -21,4 +21,7 @@ Acted\LegalDocsBundle\Entity\Performance:
         offers:
           targetEntity: Acted\LegalDocsBundle\Entity\Offer
           mappedBy: performance
+    manyToMany:
+        media:
+          targetEntity: Acted\LegalDocsBundle\Entity\Media
     lifecycleCallbacks: {  }
