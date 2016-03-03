@@ -268,40 +268,6 @@ class Offer
     }
 
     /**
-     * Add performance
-     *
-     * @param \Acted\LegalDocsBundle\Entity\Performance $performance
-     *
-     * @return Offer
-     */
-    public function addPerformance(\Acted\LegalDocsBundle\Entity\Performance $performance)
-    {
-        $this->performance[] = $performance;
-
-        return $this;
-    }
-
-    /**
-     * Remove performance
-     *
-     * @param \Acted\LegalDocsBundle\Entity\Performance $performance
-     */
-    public function removePerformance(\Acted\LegalDocsBundle\Entity\Performance $performance)
-    {
-        $this->performance->removeElement($performance);
-    }
-
-    /**
-     * Get performance
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPerformance()
-    {
-        return $this->performance;
-    }
-
-    /**
      * Set performance
      *
      * @param \Acted\LegalDocsBundle\Entity\Performance $performance
@@ -313,5 +279,15 @@ class Offer
         $this->performance = $performance;
 
         return $this;
+    }
+
+    /**
+     * Get performance
+     *
+     * @return \Acted\LegalDocsBundle\Entity\Performance
+     */
+    public function getPerformance()
+    {
+        return $this->performance;
     }
 }

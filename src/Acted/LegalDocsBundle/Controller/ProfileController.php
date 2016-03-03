@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\Artist;
+use Acted\LegalDocsBundle\Entity\Offer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
