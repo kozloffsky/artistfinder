@@ -138,4 +138,66 @@ class Performance
     {
         return $this->profile;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $offers;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->offers = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add offer
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Offer $offer
+     *
+     * @return Performance
+     */
+    public function addOffer(\Acted\LegalDocsBundle\Entity\Offer $offer)
+    {
+        $this->offers[] = $offer;
+
+        return $this;
+    }
+
+    /**
+     * Remove offer
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Offer $offer
+     */
+    public function removeOffer(\Acted\LegalDocsBundle\Entity\Offer $offer)
+    {
+        $this->offers->removeElement($offer);
+    }
+
+    /**
+     * Get offers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOffers()
+    {
+        return $this->offers;
+    }
+
+    public function getOfferMinPrice()
+    {
+        $prices = $this->offers->map(function($entry){
+           return $entry->getPrice();
+        });
+        return min($prices->toArray());
+    }
+
+    public function getOfferMaxPrice()
+    {
+        $prices = $this->offers->map(function($entry){
+            return $entry->getPrice();
+        });
+        return max($prices->toArray());
+    }
 }

@@ -196,4 +196,67 @@ class ArtistRating
     {
         return $this->ratingDateTime;
     }
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\Event
+     */
+    private $event;
+
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\Artist
+     */
+    private $artist;
+
+
+    /**
+     * Set event
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Event $event
+     *
+     * @return ArtistRating
+     */
+    public function setEvent(\Acted\LegalDocsBundle\Entity\Event $event = null)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \Acted\LegalDocsBundle\Entity\Event
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    /**
+     * Set artist
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Artist $artist
+     *
+     * @return ArtistRating
+     */
+    public function setArtist(\Acted\LegalDocsBundle\Entity\Artist $artist = null)
+    {
+        $this->artist = $artist;
+
+        return $this;
+    }
+
+    /**
+     * Get artist
+     *
+     * @return \Acted\LegalDocsBundle\Entity\Artist
+     */
+    public function getArtist()
+    {
+        return $this->artist;
+    }
+
+    public function __construct()
+    {
+        $this->setRatingDateTime(new \DateTime());
+    }
 }

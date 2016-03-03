@@ -9,20 +9,19 @@ Acted\LegalDocsBundle\Entity\ArtistRating:
             generator:
                 strategy: AUTO
     fields:
-        eventId:
-          type: integer(20)
-          notnull: true
-        artistId:
-          type: integer(20)
-          notnull: true
         rating:
           type: integer(3)
-          notnull: true
         title:
           type: string(128)
+          nullable: true
         comments:
           type: string(512)
+          nullable: true
         ratingDateTime:
           type: datetime
-          notnull: true
+    manyToOne:
+        event:
+          targetEntity: Acted\LegalDocsBundle\Entity\Event
+        artist:
+          targetEntity: Acted\LegalDocsBundle\Entity\Artist
     lifecycleCallbacks: {  }

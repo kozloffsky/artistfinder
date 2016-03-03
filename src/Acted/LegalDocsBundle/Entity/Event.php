@@ -428,4 +428,62 @@ class Event
     {
         return $this->comments;
     }
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\User
+     */
+    private $user;
+
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\RefCity
+     */
+    private $city;
+
+
+    /**
+     * Set user
+     *
+     * @param \Acted\LegalDocsBundle\Entity\User $user
+     *
+     * @return Event
+     */
+    public function setUser(\Acted\LegalDocsBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Acted\LegalDocsBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set city
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefCity $city
+     *
+     * @return Event
+     */
+    public function setCity(\Acted\LegalDocsBundle\Entity\RefCity $city = null)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return \Acted\LegalDocsBundle\Entity\RefCity
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
 }
