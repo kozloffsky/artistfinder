@@ -41,5 +41,8 @@ Acted\LegalDocsBundle\Entity\User:
         profile:
           targetEntity: Acted\LegalDocsBundle\Entity\Profile
           mappedBy: user
+        artist:
+          targetEntity: Acted\LegalDocsBundle\Entity\Artist
+          mappedBy: user
 
     lifecycleCallbacks: {  }
