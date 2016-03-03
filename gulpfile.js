@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var uglify = require('gulp-uglify');
+var order = require("gulp-order");
 var uglifycss = require('gulp-uglifycss');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
@@ -12,6 +13,12 @@ var env = process.env.GULP_ENV;
 gulp.task('js', function(){
     return gulp.src([
             'src/Acted/LegalDocsBundle/Resources/public/js/*.js'])
+        .pipe(order([
+            "jquery.min.js",
+            "jquery.throttle.min.js",
+            "*.js",
+            "profile.js"
+        ]))
         .pipe(concat('javascript.js'))
         .pipe(gulpif(env === 'prod', uglify()))
         .pipe(sourcemaps.write('./'))

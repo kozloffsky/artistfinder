@@ -1,0 +1,641 @@
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+      content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+<link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
+<header>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img src="{{ asset('assets/images/ACTED.png') }}" alt=""></a>
+
+                <div class="profile-dropdown dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                        <img class="avatar" src="{{ asset('assets/images/avatar.jpg') }}" alt="Avatar">
+                        Nelli Shter <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <div class="divider-vertical"></div>
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="active">
+                        <a href="#">
+                            How it works
+                            <div class="underline">
+                                <div class="top"></div>
+                                <div class="bottom"></div>
+                            </div>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="#">Residencies
+                            <div class="underline">
+                                <div class="top"></div>
+                                <div class="bottom"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">Forums
+                            <div class="underline">
+                                <div class="top"></div>
+                                <div class="bottom"></div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="bookings"><a href="#">My bookings
+                            <div class="underline">
+                                <div class="top"></div>
+                                <div class="bottom"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="profile"><a href="#">
+                            Profile
+                            <div class="underline">
+                                <div class="top"></div>
+                                <div class="bottom"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="mail">
+                        <!--For screens > 991px-->
+                        <div class="hidden-sm hidden-xs badge">4</div>
+                        <a class="hidden-sm hidden-xs" href="#"><img src="{{ asset('assets/images/messages.png') }}" alt=""></a>
+                        <!--For screens < 991px-->
+                        <a class="hidden-md hidden-lg" href="#">Messages<span class="badge">13</span></a>
+                    </li>
+                    <li class="profile-dropdown dropdown hidden-sm">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            <img class="avatar" src="{{ asset('assets/images/avatar.jpg') }}" alt="Avatar">
+                            Nelli Shter <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="header-background">
+        <div class="background-stripe"></div>
+    </div>
+</header>
+
+<main>
+    <section class="profile-info container">
+        <img class="avatar" src="assets/images/Avatar_profile.jpg" alt="Avatar">
+        <div class="info">
+            <div class="username">{{ artist.name }}</div>
+
+            <div class="specializations">
+                <ul>
+                    <li><a href="#">Jazz Vocalist</a>
+                        <div class="divider"></div>
+                    </li>
+                    <li><a href="#">Jazz Pianist</a>
+                        <div class="divider"></div>
+                    </li>
+                    <li><a href="#">Vocalist</a>
+                        <div class="divider"></div>
+                    </li>
+                    <li><a href="#">Song Writer</a>
+                        <div class="divider"></div>
+                    </li>
+                    <li><a href="#">See All <span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="from">From {{ artist.city.name }}</div>
+
+            <div class="price">
+                <img src="{{ asset('assets/images/price_ic.png') }}" alt="Price">
+                $1000 - $2500 per event
+            </div>
+
+            <div class="user-rating">
+                <div class="stars">
+                    <div class="star">
+                        <div style="width: 100%" class="fill-star"></div>
+                    </div>
+
+                    <div class="star">
+                        <div style="width: 100%" class="fill-star"></div>
+                    </div>
+
+                    <div class="star">
+                        <div style="width: 100%" class="fill-star"></div>
+                    </div>
+
+                    <div class="star">
+                        <div style="width: 100%" class="fill-star"></div>
+                    </div>
+
+                    <div class="star">
+                        <div style="width: 30%" class="fill-star"></div>
+                    </div>
+                </div>
+
+                <div class="rating">4.5/5.0 (16 Votes)</div>
+            </div>
+        </div>
+        <div class="controls">
+            <div class="button-gradient follow">
+                <button class="btn">Follow me</button>
+            </div>
+
+            <div class="button-gradient filled">
+                <button class="btn">REQUEST FREE QUOTE</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="menu">
+        <div class="container">
+            <ul>
+                <li>
+                    <div class="menu-item">
+                        <a class="anchor-scroll" href="#biography">
+                            <div class="hover-bg">Bio</div>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="menu-item">
+                        <a class="anchor-scroll" href="#feedbacks">
+                            <div class="hover-bg">
+                                Feedbacks
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="menu-item">
+                        <a class="anchor-scroll" href="#media">
+                            <div class="hover-bg">
+                                Media
+                            </div>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <div class="container no-pad">
+        <section class="price-list">
+
+            <article class="item clearfix">
+                <h2>Playing Piano <span class="price">Price: from 1,000 EUR</span></h2>
+
+                <img class="preview" src="assets/images/playing_piano.jpg" alt="Preview">
+
+                <div class="video">
+                    <img src="assets/images/playing_piano.jpg" alt="">
+                    <span class="glyphicon glyphicon-play"></span>
+
+                    <div class="name">
+                        <div class="name-text">Jazz Vocalist</div>
+                    </div>
+                </div>
+
+                <div class="info">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                    </p>
+
+                    <div class="controls">
+                        <div class="button-gradient follow">
+                            <button class="btn">REQUEST FREE QUOTE</button>
+                        </div>
+
+                        <p>
+                            <a href="#">Technical requirements</a>
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="item  clearfix">
+                <h2>Singing Jazz <span class="price">Price: from 1,200 EUR</span></h2>
+
+                <img class="preview" src="assets/images/playing_piano.jpg" alt="Preview">
+
+                <div class="video">
+                    <img src="assets/images/playing_piano.jpg" alt="">
+                    <span class="glyphicon glyphicon-play"></span>
+
+                    <div class="name">
+                        <div class="name-text">Jazz Vocalist</div>
+                    </div>
+                </div>
+
+                <div class="info">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                    </p>
+
+                    <div class="controls">
+                        <div class="button-gradient follow">
+                            <button class="btn">REQUEST FREE QUOTE</button>
+                        </div>
+
+                        <p>
+                            <a href="#">Technical requirements</a>
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="item  clearfix">
+                <h2>Jazz Concert <span class="price">Price: from 2,200 EUR</span></h2>
+
+                <img class="preview" src="assets/images/playing_piano.jpg" alt="Preview">
+
+                <div class="video">
+                    <img src="assets/images/playing_piano.jpg" alt="">
+                    <span class="glyphicon glyphicon-play"></span>
+
+                    <div class="name">
+                        <div class="name-text">Jazz Vocalist</div>
+                    </div>
+                </div>
+
+                <div class="info">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                    </p>
+
+                    <div class="controls">
+                        <div class="button-gradient follow">
+                            <button class="btn">REQUEST FREE QUOTE</button>
+                        </div>
+
+                        <p>
+                            <a href="#">Technical requirements</a>
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <ul class="row pagination">
+                <li>
+                    <a href="#">
+                        <div class="button active">1</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div class="button">2</div>
+                    </a>
+                </li>
+                <li>
+                    <a class="next-page" href="#"><span class="glyphicon glyphicon-play"></span></a>
+                </li>
+            </ul>
+
+            <button class="show-more-info">
+                Show More
+            </button>
+        </section>
+        <section id="biography" class="profile-block biography">
+            <div class="title"><span>Biography</span></div>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+            </p>
+        </section>
+        <section id="feedbacks" class="profile-block feedbacks">
+            <div class="title">
+                <span>
+                     6 Feedback's
+                </span>
+
+                <div class="stars">
+                    <div class="star">
+                        <div style="width: 100%" class="fill-star"></div>
+                    </div>
+
+                    <div class="star">
+                        <div style="width: 100%" class="fill-star"></div>
+                    </div>
+
+                    <div class="star">
+                        <div style="width: 100%" class="fill-star"></div>
+                    </div>
+
+                    <div class="star">
+                        <div style="width: 100%" class="fill-star"></div>
+                    </div>
+
+                    <div class="star">
+                        <div style="width: 100%" class="fill-star"></div>
+                    </div>
+                </div>
+            </div>
+
+            <article class="feedback-block">
+                <div class="row">
+                    <div class="avatar">
+                        <img src="assets/images/avatar.jpg" alt="Avatar">
+                        <p class="name">Natali</p>
+                    </div>
+
+                    <div class="text">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="feedback-block">
+                <div class="row">
+                    <div class="avatar">
+                        <img src="assets/images/avatar.jpg" alt="Avatar">
+                        <p class="name">Natali</p>
+                    </div>
+
+                    <div class="text show-more">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                        <a href="#" class="more">+more</a>
+
+                        <div class="gradient"></div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="feedback-block">
+                <div class="row">
+                    <div class="avatar">
+                        <img src="assets/images/avatar.jpg" alt="Avatar">
+                        <p class="name">Natali</p>
+                    </div>
+
+                    <div class="text">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <ul class="row pagination">
+                <li>
+                    <a href="#">
+                        <div class="button active">1</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div class="button">2</div>
+                    </a>
+                </li>
+                <li>
+                    <a class="next-page" href="#"><span class="glyphicon glyphicon-play"></span></a>
+                </li>
+            </ul>
+
+            <button class="show-more-info">
+                Show More
+            </button>
+        </section>
+        <section id="media" class="profile-block media">
+            <div class="title"><span>Media</span></div>
+
+            <ul>
+                <li>
+                    <a class="tab active" data-target="#section-photo" href="#">
+                        Photo
+                        <div class="badge">3</div>
+                        <div class="circle"></div>
+                    </a>
+                </li>
+                <li>
+                    <a class="tab" data-target="#section-video" href="#">
+                        Video
+                        <div class="badge">26</div>
+                        <div class="circle"></div>
+                    </a>
+                </li>
+                <li>
+                    <a class="tab" href="#">
+                        Audio
+                        <div class="badge">127</div>
+                        <div class="circle"></div>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="row">
+
+                <section class="media-content wrapper" id="section-photo">
+                    <div class="slider-controls">
+                        <span id="prevSlide"></span>
+                        <span id="nextSlide"></span>
+                    </div>
+
+                    <ul class="bxslider">
+                        <li><img src="assets/images/avatar.jpg" alt=""></li>
+                        <li><img src="assets/images/Avatar_profile.jpg" alt=""></li>
+                    </ul>
+
+                    <div id="photo-pager" class="bx-pager">
+                        <div class="scale-thumb thumb1">
+                            <a data-slide-index="0" href=""><img src="assets/images/avatar.jpg"/></a>
+                        </div>
+                        <div class="scale-thumb thumb2">
+                            <a data-slide-index="1" href=""><img src="assets/images/Avatar_profile.jpg"/></a>
+                        </div>
+                        <div class="scale-thumb thumb3 empty">
+                            <a data-slide-index="2" href=""><img src="assets/images/avatar.jpg"/></a>
+                        </div>
+                        <div class="scale-thumb thumb4 empty">
+                            <a data-slide-index="3" href=""><img src="assets/images/avatar.jpg"/></a>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section class="media-content wrapper" id="section-video" >
+                    <div class="slider-controls">
+                        <span id="nextVideoSlide"></span>
+                        <span id="prevVideoSlide"></span>
+                    </div>
+
+                    <ul class="bxVideoSlider">
+                        <li><iframe src="http://player.vimeo.com/video/17914974" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>
+                        <li><iframe src="http://player.vimeo.com/video/17914974" width="500" height="381" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>
+                        <li><iframe src="http://player.vimeo.com/video/17914974" width="500" height="481" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>
+                    </ul>
+
+                    <div id="video-pager" class="bx-pager">
+                        <div class="scale-thumb thumb1">
+                            <a data-slide-index="0" href=""><img src="assets/images/avatar.jpg"/></a>
+                        </div>
+                        <div class="scale-thumb thumb2">
+                            <a data-slide-index="1" href=""><img src="assets/images/Avatar_profile.jpg"/></a>
+                        </div>
+                        <div class="scale-thumb thumb3">
+                            <a data-slide-index="2" href=""><img src="assets/images/singing_jazz.jpg"/></a>
+                        </div>
+                        <div class="scale-thumb thumb4 empty">
+                            <a data-slide-index="3" href=""><img src="assets/images/avatar.jpg"/></a>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+
+        </section>
+        <section class="profile-block social-media clearfix">
+            <div class="title"><span>My feed</span></div>
+
+            <div class="col-xs-12 no-pad">
+
+                <div class="col-lg-4">
+                    <div class="fb-post" data-href="https://www.facebook.com/20531316728/posts/10154009990506729/" data-width="100%"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://ru-ru.facebook.com/20531316728/posts/10154009990506729/">Опубликовано <a href="https://www.facebook.com/facebook/">Facebook</a>&nbsp;<a href="https://ru-ru.facebook.com/20531316728/posts/10154009990506729/">27 августа 2015 г.</a></blockquote></div></div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="fb-post" data-href="https://www.facebook.com/20531316728/posts/10154009990506729/" data-width="100%"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://ru-ru.facebook.com/20531316728/posts/10154009990506729/">Опубликовано <a href="https://www.facebook.com/facebook/">Facebook</a>&nbsp;<a href="https://ru-ru.facebook.com/20531316728/posts/10154009990506729/">27 августа 2015 г.</a></blockquote></div></div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="fb-post" data-href="https://www.facebook.com/20531316728/posts/10154009990506729/" data-width="100%"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://ru-ru.facebook.com/20531316728/posts/10154009990506729/">Опубликовано <a href="https://www.facebook.com/facebook/">Facebook</a>&nbsp;<a href="https://ru-ru.facebook.com/20531316728/posts/10154009990506729/">27 августа 2015 г.</a></blockquote></div></div>
+                </div>
+
+                <ul class="row pagination">
+                    <li>
+                        <a href="#">
+                            <div class="button active">1</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="button">2</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="next-page" href="#"><span class="glyphicon glyphicon-play"></span></a>
+                    </li>
+                </ul>
+            </div>
+
+            <button class="show-more-info">
+                Show More
+            </button>
+        </section>
+    </div>
+</main>
+
+<footer class="footer-dark">
+    <div class="social-icons">
+        <ul>
+            <li><a href="#"><div class="icon facebook"></div></a></li>
+            <li><a href="#"><div class="icon instagram"></div></a></li>
+            <li><a href="#"><div class="icon twitter"></div></a></li>
+        </ul>
+    </div>
+
+    <div class="container menus">
+        <div class="row">
+            <div class="col-sm-4">
+
+                <ul>
+                    <li class="title">Company</li>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Contact us</a></li>
+                    <li><a href="#">User agreement</a></li>
+                    <li><a href="#">Privacy</a></li>
+                </ul>
+
+            </div>
+
+            <div class="col-sm-4">
+
+                <ul>
+                    <li class="title">Discover</li>
+                    <li><a href="#">Browse talents</a></li>
+                    <li><a href="#">Residencies</a></li>
+                    <li><a href="#">Sign up</a></li>
+                </ul>
+
+            </div>
+
+            <div class="col-sm-4">
+
+                <ul>
+                    <li class="title">Support</li>
+                    <li><a href="#">How it works</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Help</a></li>
+                    <li><a href="#">Forum</a></li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <p class="copyright">
+        © AKKROO MMXV MATICULOUSLY HAND CRAFTED IN ENGLAND 1.386.503 PIECES OF DATA CAPTURED AND CAUTING
+    </p>
+</footer>
+
+
+<script src="{{ asset('js/javascript.js') }}"></script>
