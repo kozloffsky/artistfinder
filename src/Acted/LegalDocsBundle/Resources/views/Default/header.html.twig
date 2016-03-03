@@ -1,9 +1,15 @@
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-      content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
 <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
+
 <header>
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
@@ -18,11 +24,12 @@
                 </button>
                 <a class="navbar-brand" href="#"><img src="{{ asset('assets/images/ACTED.png') }}" alt=""></a>
 
+                {% if user %}
                 <div class="profile-dropdown dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">
-                        <img class="avatar" src="{{ asset('assets/images/avatar.jpg') }}" alt="Avatar">
-                        Nelli Shter <span class="caret"></span>
+                        <img class="avatar" src="{{ user.avatar }}" alt="Avatar">
+                        {{ user.firstname}} {{ user.lastname }} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Action</a></li>
@@ -32,6 +39,7 @@
                         <li><a href="#">Separated link</a></li>
                     </ul>
                 </div>
+                {% endif %}
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -67,6 +75,7 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
+                    {% if user %}
                     <li class="bookings"><a href="#">My bookings
                             <div class="underline">
                                 <div class="top"></div>
@@ -92,8 +101,8 @@
                     <li class="profile-dropdown dropdown hidden-sm">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
-                            <img class="avatar" src="{{ asset('assets/images/avatar.jpg') }}" alt="Avatar">
-                            Nelli Shter <span class="caret"></span>
+                            <img class="avatar" src="{{ user.avatar }}" alt="Avatar">
+                            {{ user.firstname}} {{ user.lastname }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Action</a></li>
@@ -103,6 +112,42 @@
                             <li><a href="#">Separated link</a></li>
                         </ul>
                     </li>
+                    {% else %}
+                        <li class="bookings"><a href="#">Become a talent
+                                <div class="underline">
+                                    <div class="top"></div>
+                                    <div class="bottom"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="profile"><a href="#">
+                                Find talents
+                                <div class="underline">
+                                    <div class="top"></div>
+                                    <div class="bottom"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="profile"><a href="#" data-toggle="modal" data-target="#registrationModal">
+                                Sign Up
+                                <div class="underline">
+                                    <div class="top"></div>
+                                    <div class="bottom"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="divider-vertical"></div>
+                        </li>
+                        <li class="profile"><a href="#">
+                                Log In
+                                <div class="underline">
+                                    <div class="top"></div>
+                                    <div class="bottom"></div>
+                                </div>
+                            </a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

@@ -33,7 +33,7 @@
 
             <div class="price">
                 <img src="{{ asset('assets/images/price_ic.png') }}" alt="Price">
-                $1000 - $2500 per event
+                ${{ artist.user.profile.minPrice }} - ${{ artist.user.profile.maxPrice }} per event
             </div>
 
             <div class="user-rating">
@@ -410,7 +410,7 @@
                     <div id="video-pager" class="bx-pager">
                         {% for video in artist.user.profile.videoList %}
                             <div class="scale-thumb thumb{{ loop.index }}">
-                                <a data-slide-index="{{ loop.index }}" href=""><img id="{{ video.videoId }}" src=""/></a>
+                                <a data-slide-index="{{ loop.index0 }}" href=""><img id="{{ video.videoId }}" src=""/></a>
                             </div>
                         {% endfor %}
                     </div>
