@@ -104,108 +104,42 @@
 
     <div class="container no-pad">
         <section class="price-list">
+            {% for offer in offers %}
+                <tr {% if loop.index is odd %}class="color"{% endif %}>
+                    <article class="item clearfix">
+                        <h2>{{ offer.title|slice(0, 20) ~ '...' }} <span class="price">Price: from {{ offer.price }} EUR</span></h2>
+                        <img class="preview" src="assets/images/playing_piano.jpg" alt="Preview">
 
-            <article class="item clearfix">
-                <h2>Playing Piano <span class="price">Price: from 1,000 EUR</span></h2>
+                        <div class="video">
+                            <img src="assets/images/playing_piano.jpg" alt="">
+                            <span class="glyphicon glyphicon-play"></span>
 
-                <img class="preview" src="assets/images/playing_piano.jpg" alt="Preview">
-
-                <div class="video">
-                    <img src="assets/images/playing_piano.jpg" alt="">
-                    <span class="glyphicon glyphicon-play"></span>
-
-                    <div class="name">
-                        <div class="name-text">Jazz Vocalist</div>
-                    </div>
-                </div>
-
-                <div class="info">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    </p>
-
-                    <div class="controls">
-                        <div class="button-gradient follow">
-                            <button class="btn">REQUEST FREE QUOTE</button>
+                            <div class="name">
+                                <div class="name-text">Jazz Vocalist</div>
+                            </div>
                         </div>
 
-                        <p>
-                            <a href="#">Technical requirements</a>
-                        </p>
-                    </div>
-                </div>
-            </article>
+                        <div class="info">
+                            <p>
+                                {{ offer.comments }}
+                            </p>
 
-            <article class="item  clearfix">
-                <h2>Singing Jazz <span class="price">Price: from 1,200 EUR</span></h2>
+                            <div class="controls">
+                                <div class="button-gradient follow">
+                                    <button class="btn">REQUEST FREE QUOTE</button>
+                                </div>
 
-                <img class="preview" src="assets/images/playing_piano.jpg" alt="Preview">
-
-                <div class="video">
-                    <img src="assets/images/playing_piano.jpg" alt="">
-                    <span class="glyphicon glyphicon-play"></span>
-
-                    <div class="name">
-                        <div class="name-text">Jazz Vocalist</div>
-                    </div>
-                </div>
-
-                <div class="info">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    </p>
-
-                    <div class="controls">
-                        <div class="button-gradient follow">
-                            <button class="btn">REQUEST FREE QUOTE</button>
+                                <p>
+                                    <a href="#">Technical requirements</a>
+                                </p>
+                            </div>
                         </div>
-
-                        <p>
-                            <a href="#">Technical requirements</a>
-                        </p>
-                    </div>
-                </div>
-            </article>
-
-            <article class="item  clearfix">
-                <h2>Jazz Concert <span class="price">Price: from 2,200 EUR</span></h2>
-
-                <img class="preview" src="assets/images/playing_piano.jpg" alt="Preview">
-
-                <div class="video">
-                    <img src="assets/images/playing_piano.jpg" alt="">
-                    <span class="glyphicon glyphicon-play"></span>
-
-                    <div class="name">
-                        <div class="name-text">Jazz Vocalist</div>
-                    </div>
-                </div>
-
-                <div class="info">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    </p>
-
-                    <div class="controls">
-                        <div class="button-gradient follow">
-                            <button class="btn">REQUEST FREE QUOTE</button>
-                        </div>
-
-                        <p>
-                            <a href="#">Technical requirements</a>
-                        </p>
-                    </div>
-                </div>
-            </article>
+                    </article>
+                </tr>
+            {% endfor %}
+            <div class="navigation">
+                {{ knp_pagination_render(offers) }}
+            </div>
 
             <ul class="row pagination">
                 <li>
