@@ -24,4 +24,12 @@ class ProfileController extends Controller
         ));
     }
 
+    public function listAction()
+    {
+        $entities = $this->getDoctrine()->getManager()->getRepository('ActedLegalDocsBundle:Artist')->findAll();
+
+        return $this->render('ActedLegalDocsBundle:Profile:list.html.twig', array('entities' => $entities));
+
+    }
+
 }

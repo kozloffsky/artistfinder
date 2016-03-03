@@ -33,7 +33,7 @@ Acted\LegalDocsBundle\Entity\Profile:
     oneToOne:
         user:
           targetEntity: Acted\LegalDocsBundle\Entity\User
-          inversedBy: user
+          inversedBy: profile
     manyToMany:
         media:
           targetEntity: Acted\LegalDocsBundle\Entity\Media

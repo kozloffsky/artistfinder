@@ -40,6 +40,6 @@ Acted\LegalDocsBundle\Entity\User:
     oneToOne:
         profile:
           targetEntity: Acted\LegalDocsBundle\Entity\Profile
-          mappedBy: profile
+          mappedBy: user
 
     lifecycleCallbacks: {  }
