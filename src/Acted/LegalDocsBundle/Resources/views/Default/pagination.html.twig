@@ -15,41 +15,51 @@
 #}
 
 {% if pageCount > 1 %}
-    <ul class="pagination">
+    <ul class="row pagination">
 
         {% if previous is defined %}
             <li>
-                <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}">&laquo;&nbsp;{{ 'Previous'|trans }}</a>
+                <a class="prev-page" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">
+                    <span class="glyphicon glyphicon-triangle-left"></span>
+                </a>
             </li>
         {% else %}
-            <li class="disabled">
+            {#<li class="disabled">
                 <span>&laquo;&nbsp;{{ 'Previous'|trans }}</span>
-            </li>
+            </li>#}
         {% endif %}
 
         {% if startPage > 1 %}
             <li>
-                <a href="{{ path(route, query|merge({(pageParameterName): 1})) }}">1</a>
+                <a href="{{ path(route, query|merge({(pageParameterName): 1})) }}">
+                    <div class="button">1</div>
+                </a>
             </li>
             {% if startPage == 3 %}
                 <li>
-                    <a href="{{ path(route, query|merge({(pageParameterName): 2})) }}">2</a>
+                    <a href="{{ path(route, query|merge({(pageParameterName): 2})) }}">
+                        <div class="button">2</div>
+                    </a>
                 </li>
             {% elseif startPage != 2 %}
-                <li class="disabled">
+                {#<li class="disabled">
                     <span>&hellip;</span>
-                </li>
+                </li>#}
             {% endif %}
         {% endif %}
 
         {% for page in pagesInRange %}
             {% if page != current %}
                 <li>
-                    <a href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                    <a href="{{ path(route, query|merge({(pageParameterName): page})) }}">
+                        <div class="button">{{ page }}</div>
+                    </a>
                 </li>
             {% else %}
-                <li class="active">
-                    <span>{{ page }}</span>
+                <li>
+                    <a href="">
+                        <div class="button active">{{ page }}</div>
+                    </a>
                 </li>
             {% endif %}
 
@@ -58,9 +68,9 @@
         {% if pageCount > endPage %}
             {% if pageCount > (endPage + 1) %}
                 {% if pageCount > (endPage + 2) %}
-                    <li class="disabled">
+                    {#<li class="disabled">
                         <span>&hellip;</span>
-                    </li>
+                    </li>#}
                 {% else %}
                     <li>
                         <a href="{{ path(route, query|merge({(pageParameterName): (pageCount - 1)})) }}">{{ pageCount -1 }}</a>
@@ -68,18 +78,20 @@
                 {% endif %}
             {% endif %}
             <li>
-                <a href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}">{{ pageCount }}</a>
+                <a href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}">
+                    <div class="button">{{ pageCount }}</div>
+                </a>
             </li>
         {% endif %}
 
         {% if next is defined %}
             <li>
-                <a href="{{ path(route, query|merge({(pageParameterName): next})) }}">{{ 'Next'|trans }}&nbsp;&raquo;</a>
+                <a class="next-page" href="{{ path(route, query|merge({(pageParameterName): next})) }}"><span class="glyphicon glyphicon-play"></span></a>
             </li>
         {% else %}
-            <li class="disabled">
+            {#<li class="disabled">
                 <span>{{ 'Next'|trans }}&nbsp;&raquo;</span>
-            </li>
+            </li>#}
         {% endif %}
     </ul>
 {% endif %}

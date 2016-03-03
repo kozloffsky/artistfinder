@@ -968,7 +968,12 @@ $(function() {
         var getFullStars = $(ratingstars).slice(0,raitingFull);
         var getHalfStars = $(ratingstars).eq(raitingFull);
         $(getFullStars).children('.fill-star').css('width', '100%');
-        $(getHalfStars).children('.fill-star').css('width', raitingDigits + '0%')
+        $(getHalfStars).children('.fill-star').css('width', raitingDigits + '0%');
+        var feedbackStars = $('#feedbacks .star');
+        var getFeedbackFullStars = $(feedbackStars).slice(0,raitingFull);
+        var getFeedbackHalfStars = $(feedbackStars).eq(raitingFull);
+        $(getFeedbackFullStars).children('.fill-star').css('width', '100%');
+        $(getFeedbackHalfStars).children('.fill-star').css('width', raitingDigits + '0%');
     }
 
     $(".navbar-nav li a").click(function(event) {
