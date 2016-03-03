@@ -97,3 +97,8 @@ stfalcon_tinymce:
              plugins: ["bbcode, code, link, preview"]
              menubar: false
              toolbar1: "bold,italic,underline,undo,redo,link,unlink,removeformat,cleanup,code,preview"
+
+knp_paginator:
+    page_range: 3
+    template:
+        pagination: ActedLegalDocsBundle:Default:pagination.html.twig
