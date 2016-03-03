@@ -1,6 +1,6 @@
 
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
-
+{{ dump(artist.user.profile.videoList) }}
 <div class="header-background" style="background-image: url({{ artist.user.background }})">
     <div class="background-stripe"></div>
 </div>
@@ -351,7 +351,7 @@
                 <li>
                     <a class="tab active" data-target="#section-photo" href="#">
                         Photo
-                        <div class="badge">3</div>
+                        <div class="badge">{{ artist.user.profile.photoList|length }}</div>
                         <div class="circle"></div>
                     </a>
                 </li>
@@ -380,23 +380,17 @@
                     </div>
 
                     <ul class="bxslider">
-                        <li><img src="assets/images/avatar.jpg" alt=""></li>
-                        <li><img src="assets/images/Avatar_profile.jpg" alt=""></li>
+                        {% for photo in artist.user.profile.photoList %}
+                            <li><img src="{{ photo.link }}" alt="{{ photo.name }}"></li>
+                        {% endfor %}
                     </ul>
 
                     <div id="photo-pager" class="bx-pager">
-                        <div class="scale-thumb thumb1">
-                            <a data-slide-index="0" href=""><img src="assets/images/avatar.jpg"/></a>
-                        </div>
-                        <div class="scale-thumb thumb2">
-                            <a data-slide-index="1" href=""><img src="assets/images/Avatar_profile.jpg"/></a>
-                        </div>
-                        <div class="scale-thumb thumb3 empty">
-                            <a data-slide-index="2" href=""><img src="assets/images/avatar.jpg"/></a>
-                        </div>
-                        <div class="scale-thumb thumb4 empty">
-                            <a data-slide-index="3" href=""><img src="assets/images/avatar.jpg"/></a>
-                        </div>
+                        {% for photo in artist.user.profile.photoList %}
+                            <div class="scale-thumb thumb{{ loop.index }}">
+                                <a data-slide-index="{{ loop.index0 }}" href=""><img src="{{ photo.link }}"/></a>
+                            </div>
+                        {% endfor %}
                     </div>
                 </section>
 
@@ -408,7 +402,7 @@
                     </div>
 
                     <ul class="bxVideoSlider">
-                        <li><iframe src="http://player.vimeo.com/video/17914974" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>
+                        <li><iframe src="https://vimeo.com/17914974" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>
                         <li><iframe src="http://player.vimeo.com/video/17914974" width="500" height="381" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>
                         <li><iframe src="http://player.vimeo.com/video/17914974" width="500" height="481" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>
                     </ul>
