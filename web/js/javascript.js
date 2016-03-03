@@ -957,6 +957,8 @@ unit:"px"},brightness:{min:0,max:400,unit:"%"},contrast:{min:0,max:400,unit:"%"}
 })(jQuery);
 $(function() {
 
+    $('.header-background').appendTo('header');
+
     $(".navbar-nav li a").click(function(event) {
         $(".navbar-collapse").collapse('hide');
     });

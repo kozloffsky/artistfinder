@@ -449,7 +449,7 @@ header.home {
     left: 0;
     right: 0;
     z-index: 0;
-    background: url("../../assets/images/bg.jpg") no-repeat center;
+    background: no-repeat center;
     background-size: cover;
 }
 .header-background>.background-stripe {
