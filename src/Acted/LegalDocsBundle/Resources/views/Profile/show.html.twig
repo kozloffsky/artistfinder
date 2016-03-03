@@ -1,6 +1,6 @@
 
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
-{{ dump(artist.user.profile.videoList) }}
+{{ dump(artist.user.profile.audioList) }}
 <div class="header-background" style="background-image: url({{ artist.user.background }})">
     <div class="background-stripe"></div>
 </div>
@@ -358,14 +358,14 @@
                 <li>
                     <a class="tab" data-target="#section-video" href="#">
                         Video
-                        <div class="badge">26</div>
+                        <div class="badge">{{ artist.user.profile.videoList|length }}</div>
                         <div class="circle"></div>
                     </a>
                 </li>
                 <li>
-                    <a class="tab" href="#">
+                    <a class="tab" data-target="#section-audio" href="#">
                         Audio
-                        <div class="badge">127</div>
+                        <div class="badge">{{ artist.user.profile.audioList|length }}</div>
                         <div class="circle"></div>
                     </a>
                 </li>
@@ -402,14 +402,14 @@
                     </div>
 
                     <ul class="bxVideoSlider">
-                        <li><iframe src="https://vimeo.com/17914974" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>
-                        <li><iframe src="http://player.vimeo.com/video/17914974" width="500" height="381" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>
-                        <li><iframe src="http://player.vimeo.com/video/17914974" width="500" height="481" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>
+                        {% for video in artist.user.profile.videoList %}
+                            <li><iframe src="{{ video.link }}" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>
+                        {% endfor %}
                     </ul>
 
                     <div id="video-pager" class="bx-pager">
                         <div class="scale-thumb thumb1">
-                            <a data-slide-index="0" href=""><img src="assets/images/avatar.jpg"/></a>
+                            <a data-slide-index="0" href=""><img src="https://i.vimeocdn.com/video/126025000_266x185.jpg"/></a>
                         </div>
                         <div class="scale-thumb thumb2">
                             <a data-slide-index="1" href=""><img src="assets/images/Avatar_profile.jpg"/></a>
@@ -421,6 +421,13 @@
                             <a data-slide-index="3" href=""><img src="assets/images/avatar.jpg"/></a>
                         </div>
                     </div>
+                </section>
+
+                <section class="media-content wrapper" id="section-audio" >
+                    {% for audio in artist.user.profile.audioList %}
+                        <h2>{{ audio.name }}</h2>
+                        <audio controls="true" name="media"><source src="{{ audio.link }}" type="audio/mpeg"></audio>
+                    {% endfor %}
                 </section>
 
             </div>
