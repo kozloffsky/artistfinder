@@ -343,4 +343,66 @@ class Artist
     {
         return $this->user;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $ratings;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ratings = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add rating
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ArtistRating $rating
+     *
+     * @return Artist
+     */
+    public function addRating(\Acted\LegalDocsBundle\Entity\ArtistRating $rating)
+    {
+        $this->ratings[] = $rating;
+
+        return $this;
+    }
+
+    /**
+     * Remove rating
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ArtistRating $rating
+     */
+    public function removeRating(\Acted\LegalDocsBundle\Entity\ArtistRating $rating)
+    {
+        $this->ratings->removeElement($rating);
+    }
+
+    /**
+     * Get ratings
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRatings()
+    {
+        return $this->ratings;
+    }
+
+    public function getRating()
+    {
+        $ratings = $this->ratings->map(function($entry){
+            /** @var ArtistRating $entry */
+            return $entry->getRating();
+        });
+
+        $count = $ratings->count();
+
+        if($count == 0) {
+            return 0;
+        }
+
+        return array_sum($ratings->toArray())/$ratings->count();
+    }
 }

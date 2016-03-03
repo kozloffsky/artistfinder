@@ -34,5 +34,10 @@ Acted\LegalDocsBundle\Entity\Artist:
     oneToOne:
         user:
           targetEntity: Acted\LegalDocsBundle\Entity\User
+    oneToMany:
+        ratings:
+          targetEntity: Acted\LegalDocsBundle\Entity\ArtistRating
+          mappedBy: artist
+
 
     lifecycleCallbacks: {  }
