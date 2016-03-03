@@ -47,20 +47,74 @@ class LoadArtistData implements FixtureInterface, ContainerAwareInterface
         $manager->persist($user);
         $manager->flush();
 
-        $media1 = new Media();
-        $media1->setName($faker->word);
-        $media1->setMediaType('photo');
-        $media1->setLink($faker->imageUrl);
-        $media1->setPosition(1);
-        $media1->setActive(true);
-        $media2 = new Media();
-        $media2->setName($faker->word);
-        $media2->setMediaType('photo');
-        $media2->setLink($faker->imageUrl);
-        $media2->setPosition(1);
-        $media2->setActive(true);
-        $manager->persist($media1);
-        $manager->persist($media2);
+        $photo1 = new Media();
+        $photo1->setName($faker->word);
+        $photo1->setMediaType('photo');
+        $photo1->setLink($faker->imageUrl);
+        $photo1->setPosition(1);
+        $photo1->setActive(true);
+
+        $photo2 = new Media();
+        $photo2->setName($faker->word);
+        $photo2->setMediaType('photo');
+        $photo2->setLink($faker->imageUrl);
+        $photo2->setPosition(1);
+        $photo2->setActive(true);
+
+        $video1 = new Media();
+        $video1->setName($faker->word);
+        $video1->setMediaType('video');
+        $video1->setLink('https://vimeo.com/17914974');
+        $video1->setPosition(1);
+        $video1->setActive(true);
+
+        $video2 = new Media();
+        $video2->setName($faker->word);
+        $video2->setMediaType('video');
+        $video2->setLink('https://vimeo.com/17214458');
+        $video2->setPosition(1);
+        $video2->setActive(true);
+
+        $audio1 = new Media();
+        $audio1->setName($faker->word);
+        $audio1->setMediaType('audio');
+        $audio1->setLink('http://www.noiseaddicts.com/samples_1w72b820/3828.mp3');
+        $audio1->setPosition(1);
+        $audio1->setActive(true);
+
+        $audio2 = new Media();
+        $audio2->setName($faker->word);
+        $audio2->setMediaType('audio');
+        $audio2->setLink('http://www.noiseaddicts.com/samples_1w72b820/22.mp3');
+        $audio2->setPosition(1);
+        $audio2->setActive(true);
+
+        $manager->persist($photo1);
+        $manager->persist($photo2);
+        $manager->persist($video1);
+        $manager->persist($video2);
+        $manager->persist($audio1);
+        $manager->persist($audio2);
+        $manager->flush();
+
+        $profile = new Profile();
+        $profile->setUser($user);
+        $profile->setTitle($faker->word);
+        $profile->setDescription($faker->text);
+        $profile->setIsInternational(true);
+        $profile->setPerformanceRange($faker->numberBetween(3, 10));
+        $profile->setHeader($faker->word);
+        $profile->setActive(true);
+        $profile->setPaymentTypeId(1);
+        $manager->persist($profile);
+        $manager->flush();
+
+        $profile->addMedia($photo1);
+        $profile->addMedia($photo2);
+        $profile->addMedia($video1);
+        $profile->addMedia($video2);
+        $profile->addMedia($audio1);
+        $profile->addMedia($audio2);
         $manager->flush();
 
 
@@ -72,7 +126,7 @@ class LoadArtistData implements FixtureInterface, ContainerAwareInterface
 
         $artist = new Artist();
         $artist->setName($faker->name);
-        $artist->setUserId($user->getId());
+        $artist->setUser($user);
         $artist->setCity($city);
         $manager->persist($artist);
         $manager->flush();
