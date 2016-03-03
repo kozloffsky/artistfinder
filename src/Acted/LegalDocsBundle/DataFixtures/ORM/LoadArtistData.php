@@ -47,6 +47,9 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
         $user->setAvatar($faker->imageUrl);
         $user->setBackground($faker->imageUrl);
         $manager->persist($user);
+
+        $this->addReference('user', $user);
+
         $manager->flush();
 
         $photo1 = new Media();
