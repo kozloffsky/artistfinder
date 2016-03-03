@@ -33,33 +33,30 @@
 
             <div class="price">
                 <img src="{{ asset('assets/images/price_ic.png') }}" alt="Price">
-                $1000 - $2500 per event
+                ${{ artist.user.profile.minPrice }} - ${{ artist.user.profile.maxPrice }} per event
             </div>
 
             <div class="user-rating">
                 <div class="stars">
                     <div class="star">
-                        <div style="width: 100%" class="fill-star"></div>
+                        <div class="fill-star"></div>
                     </div>
-
                     <div class="star">
-                        <div style="width: 100%" class="fill-star"></div>
+                        <div class="fill-star"></div>
                     </div>
-
                     <div class="star">
-                        <div style="width: 100%" class="fill-star"></div>
+                        <div class="fill-star"></div>
                     </div>
-
                     <div class="star">
-                        <div style="width: 100%" class="fill-star"></div>
+                        <div class="fill-star"></div>
                     </div>
-
                     <div class="star">
-                        <div style="width: 30%" class="fill-star"></div>
+                        <div class="fill-star"></div>
                     </div>
                 </div>
 
-                <div class="rating">4.5/5.0 (16 Votes)</div>
+                <div class="rating">{{ artist.rating }}/5.0 ({{ artist.ratings|length }} Votes)</div>
+                <span id="raitingVal" class="hidden">{{ artist.rating }}</span>
             </div>
         </div>
         <div class="controls">
@@ -410,7 +407,7 @@
                     <div id="video-pager" class="bx-pager">
                         {% for video in artist.user.profile.videoList %}
                             <div class="scale-thumb thumb{{ loop.index }}">
-                                <a data-slide-index="{{ loop.index }}" href=""><img id="{{ video.videoId }}" src=""/></a>
+                                <a data-slide-index="{{ loop.index0 }}" href=""><img id="{{ video.videoId }}" src=""/></a>
                             </div>
                         {% endfor %}
                     </div>
@@ -521,6 +518,7 @@
         © AKKROO MMXV MATICULOUSLY HAND CRAFTED IN ENGLAND 1.386.503 PIECES OF DATA CAPTURED AND CAUTING
     </p>
 </footer>
-
+</body>
+</html>
 
 <script src="{{ asset('js/javascript.js') }}"></script>

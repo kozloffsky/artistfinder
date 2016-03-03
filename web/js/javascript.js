@@ -959,6 +959,18 @@ $(function() {
 
     $('.header-background').appendTo('header');
 
+    setRaitingStars();
+    function setRaitingStars(){
+        var raiting = $('#raitingVal').text();
+        var raitingFull = raiting.toString().split(".")[0];
+        var raitingDigits = raiting.toString().split(".")[1];
+        var ratingstars = $('.user-rating .star');
+        var getFullStars = $(ratingstars).slice(0,raitingFull);
+        var getHalfStars = $(ratingstars).eq(raitingFull);
+        $(getFullStars).children('.fill-star').css('width', '100%');
+        $(getHalfStars).children('.fill-star').css('width', raitingDigits + '0%')
+    }
+
     $(".navbar-nav li a").click(function(event) {
         $(".navbar-collapse").collapse('hide');
     });
