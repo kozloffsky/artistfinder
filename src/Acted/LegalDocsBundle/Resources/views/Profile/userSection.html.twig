@@ -1,0 +1,100 @@
+<div class="header-background" style="background-image: url({{ artist.user.background }})">
+    <div class="background-stripe"></div>
+</div>
+<main>
+    <section class="profile-info container">
+        <img class="avatar" src="{{ artist.user.avatar }}" alt="Avatar">
+        <div class="info">
+            <div class="username">{{ artist.name }}</div>
+
+            <div class="specializations">
+                <ul>
+                    <li><a href="#">Jazz Vocalist</a>
+                        <div class="divider"></div>
+                    </li>
+                    <li><a href="#">Jazz Pianist</a>
+                        <div class="divider"></div>
+                    </li>
+                    <li><a href="#">Vocalist</a>
+                        <div class="divider"></div>
+                    </li>
+                    <li><a href="#">Song Writer</a>
+                        <div class="divider"></div>
+                    </li>
+                    <li><a href="#">See All <span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="from">From {{ artist.city.name }}</div>
+
+            <div class="price">
+                <img src="{{ asset('assets/images/price_ic.png') }}" alt="Price">
+                ${{ artist.user.profile.minPrice }} - ${{ artist.user.profile.maxPrice }} per event
+            </div>
+
+            <div class="user-rating">
+                <div class="stars">
+                    <div class="star">
+                        <div class="fill-star"></div>
+                    </div>
+                    <div class="star">
+                        <div class="fill-star"></div>
+                    </div>
+                    <div class="star">
+                        <div class="fill-star"></div>
+                    </div>
+                    <div class="star">
+                        <div class="fill-star"></div>
+                    </div>
+                    <div class="star">
+                        <div class="fill-star"></div>
+                    </div>
+                </div>
+
+                <div class="rating">{{ artist.rating }}/5.0 ({{ artist.ratings|length }} Votes)</div>
+                <span id="raitingVal" class="hidden">{{ artist.rating }}</span>
+            </div>
+        </div>
+        <div class="controls">
+            <div class="button-gradient follow">
+                <button class="btn">Follow me</button>
+            </div>
+
+            <div class="button-gradient filled">
+                <button class="btn">REQUEST FREE QUOTE</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="menu">
+        <div class="container">
+            <ul>
+                <li>
+                    <div class="menu-item">
+                        <a class="anchor-scroll" href="#biography">
+                            <div class="hover-bg">Bio</div>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="menu-item">
+                        <a class="anchor-scroll" href="#feedbacks">
+                            <div class="hover-bg">
+                                Feedbacks
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="menu-item">
+                        <a class="anchor-scroll" href="#media">
+                            <div class="hover-bg">
+                                Media
+                            </div>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
