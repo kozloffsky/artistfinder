@@ -7,24 +7,20 @@ use Acted\LegalDocsBundle\Entity\Offer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ProfileController extends Controller
 {
-    public function showAction(Request $request, $slug)
+    /**
+     * @ParamConverter("artist", class="ActedLegalDocsBundle:Artist", options={"mapping": {"artist": "slug"}})
+     */
+    public function showAction(Request $request, Artist $artist)
     {
         $em = $this->getDoctrine()->getManager();
 
         //TODO: for debug only
         $user = ($request->get('user'))
             ? $em->getRepository('ActedLegalDocsBundle:User')->findOneById($request->get('user')) : null;
-
-
-        /** @var Artist $artist */
-        $artist = $em->getRepository('ActedLegalDocsBundle:Artist')->findOneBySlug($slug);
-
-        if(!$artist) {
-            throw new NotFoundHttpException();
-        }
 
         $paginator = $this->get('knp_paginator');
         $offers = $paginator->paginate(
