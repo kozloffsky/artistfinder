@@ -1,0 +1,4 @@
+offer_list:
+    path:     /{slug}/offer
+    defaults: { _controller: ActedLegalDocsBundle:Offer:index }
+    methods:  GET
