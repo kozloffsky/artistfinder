@@ -25,8 +25,16 @@ class ProfileController extends Controller
             throw new NotFoundHttpException();
         }
 
+        $paginator = $this->get('knp_paginator');
+        $offers = $paginator->paginate(
+            $em->getRepository('ActedLegalDocsBundle:Offer')->findByArtistQuery($artist),
+            1,
+            3
+        );
+
+
         return $this->render('ActedLegalDocsBundle:Profile:show.html.twig',
-            compact('artist', 'user')
+            compact('artist', 'user', 'offers')
         );
     }
 

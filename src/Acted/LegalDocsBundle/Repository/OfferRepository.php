@@ -1,6 +1,8 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Repository;
+use Acted\LegalDocsBundle\Entity\Artist;
+use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * OfferRepository
@@ -10,4 +12,17 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class OfferRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findByArtistQuery(Artist $artist)
+    {
+        return $this->createQueryBuilder('o')
+            ->innerJoin('o.performance', 'p')
+            ->innerJoin('p.profile', 'pr')
+            ->innerJoin('pr.user', 'u')
+            ->innerJoin('u.artist', 'a')
+            ->where('a = :artist')
+            ->setParameter('artist', $artist)
+            ->getQuery();
+    }
+
 }

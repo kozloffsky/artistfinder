@@ -312,4 +312,33 @@ class User
     {
         return $this->profile;
     }
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\Artist
+     */
+    private $artist;
+
+
+    /**
+     * Set artist
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Artist $artist
+     *
+     * @return User
+     */
+    public function setArtist(\Acted\LegalDocsBundle\Entity\Artist $artist = null)
+    {
+        $this->artist = $artist;
+
+        return $this;
+    }
+
+    /**
+     * Get artist
+     *
+     * @return \Acted\LegalDocsBundle\Entity\Artist
+     */
+    public function getArtist()
+    {
+        return $this->artist;
+    }
 }
