@@ -14,12 +14,14 @@ use Acted\LegalDocsBundle\Entity\Media;
 use Acted\LegalDocsBundle\Entity\Profile;
 use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Entity\RefCity;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadArtistData implements FixtureInterface, ContainerAwareInterface
+class LoadArtistData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
 {
     /**
      * @var ContainerInterface
@@ -64,14 +66,14 @@ class LoadArtistData implements FixtureInterface, ContainerAwareInterface
         $video1 = new Media();
         $video1->setName($faker->word);
         $video1->setMediaType('video');
-        $video1->setLink('https://vimeo.com/17914974');
+        $video1->setLink('https://player.vimeo.com/video/17914974');
         $video1->setPosition(1);
         $video1->setActive(true);
 
         $video2 = new Media();
         $video2->setName($faker->word);
         $video2->setMediaType('video');
-        $video2->setLink('https://vimeo.com/17214458');
+        $video2->setLink('https://player.vimeo.com/video/17214458');
         $video2->setPosition(1);
         $video2->setActive(true);
 
@@ -109,6 +111,8 @@ class LoadArtistData implements FixtureInterface, ContainerAwareInterface
         $manager->persist($profile);
         $manager->flush();
 
+        $this->addReference('profile', $profile);
+
         $profile->addMedia($photo1);
         $profile->addMedia($photo2);
         $profile->addMedia($video1);
@@ -132,5 +136,8 @@ class LoadArtistData implements FixtureInterface, ContainerAwareInterface
         $manager->flush();
     }
 
-
+    public function getOrder()
+    {
+        return 1;
+    }
 }
