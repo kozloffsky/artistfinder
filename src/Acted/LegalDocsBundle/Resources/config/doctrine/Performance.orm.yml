@@ -9,12 +9,12 @@ Acted\LegalDocsBundle\Entity\Performance:
             generator:
                 strategy: AUTO
     fields:
-        profileId:
-          type: integer(20)
-          notnull: true
         title:
           type: string(128)
-          notnull: true
         techRequirement:
           type: string(512)
+          nullable: true
+    manyToOne:
+        profile:
+          targetEntity: Acted\LegalDocsBundle\Entity\Profile
     lifecycleCallbacks: {  }

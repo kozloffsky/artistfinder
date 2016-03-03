@@ -254,4 +254,64 @@ class Offer
     {
         return $this->comments;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $performance;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->performance = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add performance
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Performance $performance
+     *
+     * @return Offer
+     */
+    public function addPerformance(\Acted\LegalDocsBundle\Entity\Performance $performance)
+    {
+        $this->performance[] = $performance;
+
+        return $this;
+    }
+
+    /**
+     * Remove performance
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Performance $performance
+     */
+    public function removePerformance(\Acted\LegalDocsBundle\Entity\Performance $performance)
+    {
+        $this->performance->removeElement($performance);
+    }
+
+    /**
+     * Get performance
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPerformance()
+    {
+        return $this->performance;
+    }
+
+    /**
+     * Set performance
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Performance $performance
+     *
+     * @return Offer
+     */
+    public function setPerformance(\Acted\LegalDocsBundle\Entity\Performance $performance = null)
+    {
+        $this->performance = $performance;
+
+        return $this;
+    }
 }

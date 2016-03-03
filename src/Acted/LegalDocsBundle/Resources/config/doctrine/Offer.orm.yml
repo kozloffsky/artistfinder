@@ -9,27 +9,24 @@ Acted\LegalDocsBundle\Entity\Offer:
             generator:
                 strategy: AUTO
     fields:
-        performanceId:
-          type: integer(20)
-          notnull: true
         title:
           type: string(128)
-          notnull: true
           unique: true
         price:
           type: float
-          notnull: true
         currencyId:
           type: integer(11)
-          notnull: true
         depositValue:
           type: float
           notnull: true
-        depositType:
           type: string(32)
-          notnull: true
         paymentTerms:
           type: string(256)
+          nullable: true
         comments:
           type: string(256)
+          nullable: true
+    manyToOne:
+        performance:
+          targetEntity: Acted\LegalDocsBundle\Entity\Performance
     lifecycleCallbacks: {  }

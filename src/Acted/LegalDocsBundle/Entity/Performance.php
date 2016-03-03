@@ -109,4 +109,33 @@ class Performance
     {
         return $this->techRequirement;
     }
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\Profile
+     */
+    private $profile;
+
+
+    /**
+     * Set profile
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Profile $profile
+     *
+     * @return Performance
+     */
+    public function setProfile(\Acted\LegalDocsBundle\Entity\Profile $profile = null)
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    /**
+     * Get profile
+     *
+     * @return \Acted\LegalDocsBundle\Entity\Profile
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
 }
