@@ -42,21 +42,23 @@ class LoadOfferData extends AbstractFixture implements ContainerAwareInterface, 
     {
         $faker = $this->container->get('davidbadura_faker.faker');
 
-        for($i=0; $i < 10; $i++) {
+        for($i = 0; $i < 10; $i++) {
             $performance = $this->getReference('performance'.$i);
 
-            $offer = new Offer();
-            $offer->setPerformance($performance);
-            $offer->setTitle($faker->text(100));
-            $offer->setPrice($faker->randomFloat(null, 10, 10000));
-            $offer->setCurrencyId(1);
-            $offer->setDepositValue($faker->randomFloat(null, 1, 100));
-            $offer->setDepositType($faker->word);
-            $offer->setPaymentTerms($faker->text);
-            $offer->setComments($faker->text);
+            for($j = 0; $j < 5; $j++) {
+                $offer = new Offer();
+                $offer->setPerformance($performance);
+                $offer->setTitle($faker->text(100));
+                $offer->setPrice($faker->randomFloat(null, 10, 10000));
+                $offer->setCurrencyId(1);
+                $offer->setDepositValue($faker->randomFloat(null, 1, 100));
+                $offer->setDepositType($faker->word);
+                $offer->setPaymentTerms($faker->text);
+                $offer->setComments($faker->text);
 
-            $manager->persist($offer);
-            $manager->flush();
+                $manager->persist($offer);
+                $manager->flush();
+            }
         }
     }
 

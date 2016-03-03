@@ -128,12 +128,16 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
         $manager->persist($city);
         $manager->flush();
 
+        $this->addReference('city', $city);
+
         $artist = new Artist();
         $artist->setName($faker->name);
         $artist->setUser($user);
         $artist->setCity($city);
         $manager->persist($artist);
         $manager->flush();
+
+        $this->addReference('artist', $artist);
     }
 
     public function getOrder()

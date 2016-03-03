@@ -11,38 +11,40 @@ Acted\LegalDocsBundle\Entity\Event:
     fields:
         eventRef:
           type: string(64)
-          notnull: true
           unique: true
-        userId:
-          type: integer(20)
-          notnull: true
         title:
           type: string(128)
-          notnull: true
         description:
           type: string(512)
+          nullable: true
         eventTypeId:
           type: integer(11)
-          notnull: true
         isInternational:
           type: boolean
-          notnull: true
         address:
           type: string(256)
-          notnull: true
-        cityId:
-          type: integer(11)
-          notnull: true
         budget:
           type: float
+          nullable: true
         currencyId:
           type: integer(11)
+          nullable: true
         startingDate:
           type: datetime
+          nullable: true
         endingDate:
           type: datetime
+          nullable: true
         timing:
           type: string(128)
+          nullable: true
         comments:
           type: string(512)
+          nullable: true
+    manyToOne:
+          user:
+            targetEntity: Acted\LegalDocsBundle\Entity\User
+          city:
+            targetEntity: Acted\LegalDocsBundle\Entity\RefCity
+
     lifecycleCallbacks: {  }

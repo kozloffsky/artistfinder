@@ -381,4 +381,61 @@ class Profile
             return ($entry->getMediaType() == $type);
         });
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $performances;
+
+
+    /**
+     * Add performance
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Performance $performance
+     *
+     * @return Profile
+     */
+    public function addPerformance(\Acted\LegalDocsBundle\Entity\Performance $performance)
+    {
+        $this->performances[] = $performance;
+
+        return $this;
+    }
+
+    /**
+     * Remove performance
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Performance $performance
+     */
+    public function removePerformance(\Acted\LegalDocsBundle\Entity\Performance $performance)
+    {
+        $this->performances->removeElement($performance);
+    }
+
+    /**
+     * Get performances
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPerformances()
+    {
+        return $this->performances;
+    }
+
+    public function getMinPrice()
+    {
+        $prices = $this->getPerformances()->map(function($entry){
+            /** @var Performance $entry */
+            return $entry->getOfferMinPrice();
+        });
+        return min($prices->toArray());
+    }
+
+    public function getMaxPrice()
+    {
+        $prices = $this->getPerformances()->map(function($entry){
+            /** @var Performance $entry */
+            return $entry->getOfferMaxPrice();
+        });
+        return max($prices->toArray());
+    }
 }

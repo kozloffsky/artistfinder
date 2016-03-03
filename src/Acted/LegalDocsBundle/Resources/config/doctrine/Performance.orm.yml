@@ -17,4 +17,8 @@ Acted\LegalDocsBundle\Entity\Performance:
     manyToOne:
         profile:
           targetEntity: Acted\LegalDocsBundle\Entity\Profile
+    oneToMany:
+        offers:
+          targetEntity: Acted\LegalDocsBundle\Entity\Offer
+          mappedBy: performance
     lifecycleCallbacks: {  }

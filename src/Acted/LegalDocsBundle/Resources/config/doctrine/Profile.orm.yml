@@ -37,5 +37,10 @@ Acted\LegalDocsBundle\Entity\Profile:
     manyToMany:
         media:
           targetEntity: Acted\LegalDocsBundle\Entity\Media
+    oneToMany:
+        performances:
+          targetEntity: Acted\LegalDocsBundle\Entity\Performance
+          mappedBy: profile
+
 
     lifecycleCallbacks: {  }
