@@ -1,0 +1,5 @@
+<ul>
+{% for artist in entities %}
+    <li><a href="{{ path('profile_show', {'slug' : artist.slug}) }}" >{{ artist.name }}</a></li>
+{% endfor %}
+</ul>
