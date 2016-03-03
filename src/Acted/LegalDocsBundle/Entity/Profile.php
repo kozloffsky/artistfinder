@@ -358,4 +358,27 @@ class Profile
     {
         return $this->media;
     }
+
+    public function getPhotoList()
+    {
+        return $this->getFilteredMedia('photo');
+    }
+
+    public function getVideoList()
+    {
+        return $this->getFilteredMedia('video');
+    }
+
+    public function getAudioList()
+    {
+        return $this->getFilteredMedia('audio');
+    }
+
+    protected function getFilteredMedia($type)
+    {
+        return $this->media->filter(function($entry) use($type) {
+            /** @var Media $entry */
+            return ($entry->getMediaType() == $type);
+        });
+    }
 }

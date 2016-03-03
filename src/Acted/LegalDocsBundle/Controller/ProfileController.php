@@ -10,9 +10,9 @@ class ProfileController extends Controller
 {
     public function showAction($slug)
     {
-
         $em = $this->getDoctrine()->getManager();
 
+        /** @var Artist $artist */
         $artist = $em->getRepository('ActedLegalDocsBundle:Artist')->findOneBySlug($slug);
 
         if(!$artist) {
@@ -29,7 +29,6 @@ class ProfileController extends Controller
         $entities = $this->getDoctrine()->getManager()->getRepository('ActedLegalDocsBundle:Artist')->findAll();
 
         return $this->render('ActedLegalDocsBundle:Profile:list.html.twig', array('entities' => $entities));
-
     }
 
 }
