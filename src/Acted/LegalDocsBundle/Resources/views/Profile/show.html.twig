@@ -1,6 +1,6 @@
 
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
-{{ dump(artist.user.profile.audioList) }}
+
 <div class="header-background" style="background-image: url({{ artist.user.background }})">
     <div class="background-stripe"></div>
 </div>
@@ -408,18 +408,11 @@
                     </ul>
 
                     <div id="video-pager" class="bx-pager">
-                        <div class="scale-thumb thumb1">
-                            <a data-slide-index="0" href=""><img src="https://i.vimeocdn.com/video/126025000_266x185.jpg"/></a>
-                        </div>
-                        <div class="scale-thumb thumb2">
-                            <a data-slide-index="1" href=""><img src="assets/images/Avatar_profile.jpg"/></a>
-                        </div>
-                        <div class="scale-thumb thumb3">
-                            <a data-slide-index="2" href=""><img src="assets/images/singing_jazz.jpg"/></a>
-                        </div>
-                        <div class="scale-thumb thumb4 empty">
-                            <a data-slide-index="3" href=""><img src="assets/images/avatar.jpg"/></a>
-                        </div>
+                        {% for video in artist.user.profile.videoList %}
+                            <div class="scale-thumb thumb{{ loop.index }}">
+                                <a data-slide-index="{{ loop.index }}" href=""><img id="{{ video.videoId }}" src=""/></a>
+                            </div>
+                        {% endfor %}
                     </div>
                 </section>
 

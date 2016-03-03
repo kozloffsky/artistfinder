@@ -988,6 +988,25 @@ $(function() {
         }
     });
 
+    $('#video-pager img').each(function(){
+        var videoThumbId = $(this).attr('id');
+        getVideoThumbnails(videoThumbId)
+    });
+
+    function getVideoThumbnails(id){
+        $.ajax({
+            type:'GET',
+            url: 'http://vimeo.com/api/v2/video/' + id + '.json',
+            jsonp: 'callback',
+            dataType: 'jsonp',
+            success: function(data){
+                var thumbnail_src = data[0].thumbnail_medium;
+                var thumbs = document.getElementById(id);
+                $(thumbs).attr('src', thumbnail_src);
+            }
+        });
+    }
+
     function resizeThumbs() {
         $('.scale-thumb').each(function() {
             var height = $(this).width() * 0.69;

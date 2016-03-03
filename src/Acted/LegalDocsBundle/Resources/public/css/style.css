@@ -1437,6 +1437,10 @@ section.used-by {
     bottom: -30px;
     display: block;
 }
+#section-audio
+{
+    display: none;
+}
 
 /*Medium screens*/
 @media (max-width: 1199px) {
