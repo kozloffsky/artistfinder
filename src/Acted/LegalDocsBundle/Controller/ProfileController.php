@@ -28,7 +28,7 @@ class ProfileController extends Controller
         $paginator = $this->get('knp_paginator');
         $offers = $paginator->paginate(
             $em->getRepository('ActedLegalDocsBundle:Offer')->findByArtistQuery($artist),
-            1,
+            $request->get('page'),
             3
         );
 
