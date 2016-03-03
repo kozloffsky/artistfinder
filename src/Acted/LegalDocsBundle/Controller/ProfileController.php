@@ -7,13 +7,9 @@ use Acted\LegalDocsBundle\Entity\Offer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ProfileController extends Controller
 {
-    /**
-     * @ParamConverter("artist", class="ActedLegalDocsBundle:Artist", options={"mapping": {"artist": "slug"}})
-     */
     public function showAction(Request $request, Artist $artist)
     {
         $em = $this->getDoctrine()->getManager();

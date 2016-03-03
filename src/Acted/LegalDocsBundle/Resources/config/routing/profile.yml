@@ -3,6 +3,6 @@ profile_list:
     defaults: { _controller: ActedLegalDocsBundle:Profile:list }
     methods:  GET
 profile_show:
-    path:     /{artist}
+    path:     /{slug}
     defaults: { _controller: ActedLegalDocsBundle:Profile:show }
     methods:  GET
