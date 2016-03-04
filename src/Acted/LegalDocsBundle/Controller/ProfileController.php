@@ -10,21 +10,13 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProfileController extends Controller
 {
-    public function showAction(Request $request, $slug)
+    public function showAction(Request $request, Artist $artist)
     {
         $em = $this->getDoctrine()->getManager();
 
         //TODO: for debug only
         $user = ($request->get('user'))
             ? $em->getRepository('ActedLegalDocsBundle:User')->findOneById($request->get('user')) : null;
-
-
-        /** @var Artist $artist */
-        $artist = $em->getRepository('ActedLegalDocsBundle:Artist')->findOneBySlug($slug);
-
-        if(!$artist) {
-            throw new NotFoundHttpException();
-        }
 
         $paginator = $this->get('knp_paginator');
         $offers = $paginator->paginate(

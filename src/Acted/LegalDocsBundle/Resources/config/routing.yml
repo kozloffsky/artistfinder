@@ -21,3 +21,7 @@ acted_legal_docs_homepage:
 acted_legal_docs_profile:
   resource: "@ActedLegalDocsBundle/Resources/config/routing/profile.yml"
   prefix: /profile
+
+acted_legal_docs_offer:
+  resource: "@ActedLegalDocsBundle/Resources/config/routing/offer.yml"
+  prefix: /profile
