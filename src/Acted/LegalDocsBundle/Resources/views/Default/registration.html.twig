@@ -1,0 +1,397 @@
+
+<div class="modal registration-modal fade" id="registrationModal" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-header" style="display: block">
+                <div id="step-counter">
+                    Step 3/3
+                </div>
+                <h4 class="modal-title" id="modal-title">Contact details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row stage" style="display: none" id="stage-1">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-sm-push-0 col-xs-8 col-xs-push-2">
+                        <img id="entertainerImg" class="category-img" src="{{ asset('assets/images/pers1.png') }}" alt="">
+
+                        <div class="controls category-controls">
+                            <div class="button-gradient follow">
+                                <button id="entertainerBtn" class="btn">I am an entertainer</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-sm-push-0 col-xs-8 col-xs-push-2">
+                        <img class="category-img" src="{{ asset('assets/images/Group23.png') }}" alt="">
+
+                        <div class="controls category-controls">
+                            <div class="button-gradient follow">
+                                <button id="customerBtn" class="btn">I want to book entertainment</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row stage" style="display: none" id="stage-2">
+                    <div class="row sub-stage" id="artistBlock">
+
+                        <div data-toggle-desktop="category-2" id="category-1" class="col-sm-6 col-xs-12 no-pad category">
+                            <div class="category-header gradient-light">
+
+                                <div class="image-container">
+                                    <img src="{{ asset('assets/images/variety_acts.png') }}" alt="">
+                                </div>
+                                <span class="title">Variety Acts</span>
+
+                            </div>
+                            <div class="category-body">
+
+                                <div class="row category-content variety-acts">
+
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="variety_category_id_1">
+                                        <label for="variety_category_id_1">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="variety_category_id_2">
+                                        <label for="variety_category_id_2">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="variety_category_id_3">
+                                        <label for="variety_category_id_3">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="variety_category_id_4">
+                                        <label for="variety_category_id_4">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="variety_category_id_5">
+                                        <label for="variety_category_id_5">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="variety_category_id_6">
+                                        <label for="variety_category_id_6">Lorem ipsum</label>
+                                    </div>
+
+                                    <button class="show-more">
+                                        Other &#187;
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div data-toggle-desktop="category-1" id="category-2"  class="col-sm-6 col-xs-12 no-pad category">
+                            <div class="category-header gradient-dark">
+
+                                <div class="image-container">
+                                    <img src="{{ asset('assets/images/live_music.png') }}" alt="">
+                                </div>
+                                <span class="title">Live Music</span>
+
+                            </div>
+                            <div class="category-body">
+
+                                <div class="row category-content variety-acts">
+
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="livemusic_category_id_1">
+                                        <label for="livemusic_category_id_1">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="livemusic_category_id_2">
+                                        <label for="livemusic_category_id_2">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="livemusic_category_id_3">
+                                        <label for="livemusic_category_id_3">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="livemusic_category_id_4">
+                                        <label for="livemusic_category_id_4">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="livemusic_category_id_5">
+                                        <label for="livemusic_category_id_5">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="livemusic_category_id_6">
+                                        <label for="livemusic_category_id_6">Lorem ipsum</label>
+                                    </div>
+
+                                    <button class="show-more">
+                                        Other &#187;
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div data-toggle-desktop="category-4" id="category-3"  class="col-sm-6 col-xs-12 no-pad category">
+                            <div class="category-header gradient-light">
+
+                                <div class="image-container">
+                                    <img src="{{ asset('assets/images/international.png') }}" alt="">
+                                </div>
+                                <span class="title">International Artists</span>
+
+                            </div>
+                            <div class="category-body">
+
+                                <div class="row category-content international-artists">
+
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="ia_category_id_1">
+                                        <label for="ia_category_id_1">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="ia_category_id_2">
+                                        <label for="ia_category_id_2">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="ia_category_id_3">
+                                        <label for="ia_category_id_3">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="ia_category_id_4">
+                                        <label for="ia_category_id_4">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="ia_category_id_5">
+                                        <label for="ia_category_id_5">Lorem ipsum</label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div data-toggle-desktop="category-3" id="category-4"  class="col-sm-6 col-xs-12 no-pad category">
+                            <div class="category-header gradient-dark">
+
+                                <div class="image-container">
+                                    <img src="{{ asset('assets/images/comedian.png') }}" alt="">
+                                </div>
+                                <span class="title">Emcees & Comedians</span>
+
+                            </div>
+                            <div class="category-body">
+
+                                <div class="row category-content variety-acts">
+
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="emcees_category_id_1">
+                                        <label for="emcees_category_id_1">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="emcees_category_id_2">
+                                        <label for="emcees_category_id_2">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="emcees_category_id_3">
+                                        <label for="emcees_category_id_3">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="emcees_category_id_4">
+                                        <label for="emcees_category_id_4">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="emcees_category_id_5">
+                                        <label for="emcees_category_id_5">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="emcees_category_id_6">
+                                        <label for="emcees_category_id_6">Lorem ipsum</label>
+                                    </div>
+
+                                    <button class="show-more">
+                                        Other &#187;
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div data-toggle-desktop="category-6" id="category-5"  class="col-sm-6 col-xs-12 no-pad category">
+                            <div class="category-header gradient-light">
+
+                                <div class="image-container">
+                                    <img src="{{ asset('assets/images/musicalDanceActs.png') }}" alt="">
+                                </div>
+                                <span class="title">Musical and Dance Acts</span>
+
+                            </div>
+                            <div class="category-body">
+
+                                <div class="row category-content Emcees">
+
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="musicDance_category_id_1">
+                                        <label for="musicDance_category_id_1">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="musicDance_category_id_2">
+                                        <label for="musicDance_category_id_2">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="musicDance_category_id_3">
+                                        <label for="musicDance_category_id_3">Lorem ipsum</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div data-toggle-desktop="category-5" id="category-6"  class="col-sm-6 col-xs-12 no-pad category">
+                            <div class="category-header gradient-dark">
+
+                                <div class="image-container">
+                                    <img src="{{ asset('assets/images/childrenEntertainment.png') }}" alt="">
+                                </div>
+                                <span class="title">Children Entertainment</span>
+
+                            </div>
+                            <div class="category-body">
+
+                                <div class="row category-content children">
+
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="children_category_id_1">
+                                        <label for="children_category_id_1">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="children_category_id_2">
+                                        <label for="children_category_id_2">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="children_category_id_3">
+                                        <label for="children_category_id_3">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="children_category_id_4">
+                                        <label for="children_category_id_4">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="children_category_id_5">
+                                        <label for="children_category_id_5">Lorem ipsum</label>
+                                    </div>
+                                    <div class="col-xs-6 category-item">
+                                        <input class="checkbox" type="checkbox" id="children_category_id_6">
+                                        <label for="children_category_id_6">Lorem ipsum</label>
+                                    </div>
+
+                                    <button class="show-more">
+                                        Other &#187;
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="buttons">
+                            <div class="vertical-divder"></div>
+                            <button class="btn back-button">Back</button>
+                            <button id="stageTwoNext" class="btn">Next</button>
+                        </div>
+
+                    </div>
+
+                    <div class="row sub-stage" id="customerBlock">
+
+
+
+                    </div>
+                </div>
+                <div class="row stage" style="display: block" id="stage-3">
+                    <div class="row contact-details">
+                        <form class="details-form no-pad">
+                            <div class="form-group">
+                                <label for="first_name">First name</label>
+                                <input type="text" name="first_name" class="form-control" minlength="2" id="first_name" placeholder="First name" required>
+                                <label class="icon"></label>
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name">Last name</label>
+                                <input type="text" name="last_name" class="form-control" minlength="2" id="last_name" placeholder="Last name" required>
+                                <label class="icon"></label>
+                            </div>
+                            <div class="form-group">
+                                <label for="band_name">Artist/Band name</label>
+                                <input type="text" name="band_name" class="form-control" minlength="2" id="band_name" placeholder="Artist/Band name" required>
+                                <label class="icon"></label>
+                            </div>
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <select name="country" id="country">
+                                    <option value="Uk">United Kingdoms</option>
+                                    <option value="Fr">France</option>
+                                    <option value="De">Germany</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
+                                <label class="icon"></label>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="Password" required>
+                                <label class="icon"></label>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone_number">Phone number</label>
+                                <input type="text" name="phone" class="form-control" minlength="11" id="phone_number" placeholder="Phone number" required>
+                                <label class="icon"></label>
+                            </div>
+
+                            <div class="controls">
+                                <div class="button-gradient filled">
+                                    <button  id="stageThreeNext" type="button" class="btn register">Register Now</button>
+                                </div>
+
+                                <p class="hint">After registration you can start editing your profile</p>
+
+                                <button type="button" class="btn-back back-button">Back</button>
+                            </div>
+                        </form>
+
+                        <div class="preview-block hidden-xs no-pad">
+                            <div class="overlay">
+                                <span>Sample Profile</span>
+                            </div>
+                            <img src="{{ asset('assets/images/Example.png') }}" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row stage" style="display: none" id="stage-4">
+                    <div class="final-stage">
+                        <div class="col-xs-12">
+                            <img class="final-image" src="{{ asset('assets/images/congratulations.png') }}" alt="">
+                        </div>
+                        <div class="row">
+                            <h2>Welcome to ACTED</h2>
+
+                            <p class="description">
+                                We have sent you an email to validate your account. <br>If you haven't received it, please click
+                                <a href="#">here</a>
+                            </p>
+                            <p class="description">
+                                And if you need any help, please do not hesitate to use the FAQ
+                            </p>
+
+                            <div class="controls">
+                                <div class="button-gradient filled">
+                                    <button data-dismiss="modal" class="btn">Have a nice journey on ACTED</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="completionTime" class="tip">
+                Completion time: 2 minutes
+            </div>
+        </div>
+    </div>
+</div>
