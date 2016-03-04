@@ -98,8 +98,6 @@ class Artist
     public function setName($name)
     {
         $this->name = $name;
-        $slugify = new Slugify();
-        $this->slug = $slugify->slugify($name);
         return $this;
     }
 
@@ -281,8 +279,8 @@ class Artist
      */
     public function setSlug($slug)
     {
-        $this->slug = $slug;
-
+        $slugify = new Slugify();
+        $this->slug = $slugify->slugify($slug);
         return $this;
     }
     /**
