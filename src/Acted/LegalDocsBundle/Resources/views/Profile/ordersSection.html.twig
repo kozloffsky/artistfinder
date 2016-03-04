@@ -1,7 +1,7 @@
         {% for offer in offers %}
 
                 <article class="item clearfix">
-                    <h2>{{ offer.title|slice(0, 20) ~ '...' }} <span class="price">Price: from {{ offer.price }} EUR</span></h2>
+                    <h2>{{ offer.title|slice(0, 20) ~ '...' }} <span class="price">Price: from {{ offer.price|number_format(2, '.', ',') }} EUR</span></h2>
 
                     {% for mediaOf in offer.performance.media[0:1] %}
                         <img class="preview" src="{{ mediaOf.link }}" alt="Preview">

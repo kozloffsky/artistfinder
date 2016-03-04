@@ -34,7 +34,7 @@
 
             <div class="price">
                 <img src="{{ asset('assets/images/price_ic.png') }}" alt="Price">
-                ${{ artist.user.profile.minPrice }} - ${{ artist.user.profile.maxPrice }} per event
+                ${{ artist.user.profile.minPrice|number_format(2, '.', ',') }} - ${{ artist.user.profile.maxPrice|number_format(2, '.', ',') }} per event
             </div>
 
             <div class="user-rating">
