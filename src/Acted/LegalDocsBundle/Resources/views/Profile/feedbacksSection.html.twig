@@ -1,21 +1,22 @@
 
+{% for feedback in artist.ratings %}
 
     <article class="feedback-block">
-        {{ dump(artist.ratings.first()) }}
         <div class="row">
             <div class="avatar">
-                <img src="assets/images/avatar.jpg" alt="Avatar">
-                <p class="name">Natali</p>
+                <img src="{{ feedback.artist.user.avatar }}" alt="Avatar">
+                <p class="name">{{ feedback.artist.user.firstname }}</p>
             </div>
 
             <div class="text">
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                    {{ feedback.comments }}
                 </p>
             </div>
         </div>
-    </article>
+
+
+{% endfor %}
 
     <ul class="row pagination">
         <li>
