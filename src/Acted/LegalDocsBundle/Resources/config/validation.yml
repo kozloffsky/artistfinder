@@ -1,0 +1,6 @@
+Acted\LegalDocsBundle\Entity\User:
+  properties:
+    lastname:
+      - NotBlank: ~
+      - Length:
+          min: 3
