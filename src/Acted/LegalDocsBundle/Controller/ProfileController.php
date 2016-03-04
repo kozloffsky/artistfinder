@@ -6,6 +6,7 @@ use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Offer;
 use Acted\LegalDocsBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -32,16 +33,23 @@ class ProfileController extends Controller
     public function editAction(Request $request, Artist $artist)
     {
 
-//        $artistForm = $this->createForm('Acted\LegalDocsBundle\Form\ArtistType', $artist);
-//        $artistForm->handleRequest($request);
-//
-//        if($artistForm->isSubmitted() && $artistForm->isValid()) {
-//            var_dump($artistForm->isValid());
-//            die;
-//
-//        }
-//        VarDumper::dump($artistForm->getErrors());
-//        die;
+        $artistForm = $this->createForm('Acted\LegalDocsBundle\Form\ArtistType', $artist);
+        $artistForm->handleRequest($request);
+
+        if($artistForm->isSubmitted() && $artistForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($artist);
+            $em->flush();
+
+            return new JsonResponse(array('status' => 'success'));
+
+        }
+        $errors = array();
+        foreach ($artistForm->getErrors(true, true) as $formError) {
+            $errors[] = $formError->getMessage();
+        }
+        VarDumper::dump($errors);
+        die;
 
     }
 

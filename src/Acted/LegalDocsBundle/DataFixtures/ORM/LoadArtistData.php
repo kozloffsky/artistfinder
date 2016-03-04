@@ -135,6 +135,7 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
 
         $artist = new Artist();
         $artist->setName($faker->name);
+        $artist->setSlug($artist->getName());
         $artist->setUser($user);
         $artist->setCity($city);
         $manager->persist($artist);

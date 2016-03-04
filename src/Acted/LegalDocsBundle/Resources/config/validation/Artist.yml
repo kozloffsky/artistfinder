@@ -1,0 +1,6 @@
+Acted\LegalDocsBundle\Entity\Artist:
+  properties:
+    name:
+      - NotBlank: ~
+      - Length:
+          min: 3
