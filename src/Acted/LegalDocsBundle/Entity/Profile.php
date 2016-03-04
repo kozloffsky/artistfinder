@@ -438,4 +438,9 @@ class Profile
         });
         return max($prices->toArray());
     }
+
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
 }

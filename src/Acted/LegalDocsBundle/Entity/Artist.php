@@ -405,4 +405,9 @@ class Artist
 
         return array_sum($ratings->toArray())/$ratings->count();
     }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }
