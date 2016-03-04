@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\VarDumper\VarDumper;
 
 class ProfileController extends Controller
 {
@@ -30,7 +31,18 @@ class ProfileController extends Controller
 
     public function editAction(Request $request, Artist $artist)
     {
-        //TODO implement this
+
+//        $artistForm = $this->createForm('Acted\LegalDocsBundle\Form\ArtistType', $artist);
+//        $artistForm->handleRequest($request);
+//
+//        if($artistForm->isSubmitted() && $artistForm->isValid()) {
+//            var_dump($artistForm->isValid());
+//            die;
+//
+//        }
+//        VarDumper::dump($artistForm->getErrors());
+//        die;
+
     }
 
     public function offersAction(Request $request, Artist $artist)
@@ -44,7 +56,7 @@ class ProfileController extends Controller
     public function feedbacksAction(Request $request, Artist $artist)
     {
         $feedbacks = $this->getFeedbacks($artist,  $request->get('page', 1));
-        return $this->render('@ActedLegalDocs/Profile/feedbacksSection.html.twig');
+        return $this->render('@ActedLegalDocs/Profile/feedbacksSection.html.twig', compact('feedbacks'));
     }
 
     private function getOffers(Artist $artist, $page)
