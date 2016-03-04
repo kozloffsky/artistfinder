@@ -142,7 +142,7 @@ $(document).on('ready ajaxComplete', function(){
         var pageRoute = $(this).text();
         var pageBaseRoute = $('#slug').text()
         var paginationRoute = pageBaseRoute + '/feedback?page=' + pageRoute;
-        var paginationTarget = $(".feedbacks");
+        var paginationTarget = $(".feedbacksContainer");
         getPagination(paginationRoute, paginationTarget);
     });
 

@@ -13,7 +13,12 @@
     <section id="feedbacks" class="profile-block feedbacks">
         <div class="title">
                 <span>
-                     6 Feedback's
+                    {{ artist.ratings|length }}
+                    {% if artist.ratings|length == 1 %}
+                    Feedback
+                    {% else %}
+                    Feedback's
+                    {% endif %}
                 </span>
 
             <div class="stars">
@@ -38,7 +43,9 @@
                 </div>
             </div>
         </div>
+        <div class="feedbacksContainer">
 {% include 'ActedLegalDocsBundle:Profile:feedbacksSection.html.twig' %}
+        </div>
     </section>
 
 {% include 'ActedLegalDocsBundle:Profile:mediaSection.html.twig' %}

@@ -16,6 +16,8 @@ gulp.task('js', function(){
         .pipe(order([
             "jquery.min.js",
             "jquery.throttle.min.js",
+            "bootstrap.min.js",
+            "bootstrap-editable.min.js",
             "*.js",
             "profile.js"
         ]))

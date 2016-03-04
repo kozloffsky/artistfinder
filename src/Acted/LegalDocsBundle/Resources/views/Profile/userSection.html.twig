@@ -6,8 +6,11 @@
     <section class="profile-info container">
         <img class="avatar" src="{{ artist.user.avatar }}" alt="Avatar">
         <div class="info">
-            <div class="username">{{ artist.name }}</div>
-
+            {% if user %}
+                <div href="#" id="username" class="username" data-type="text" data-pk="{{ artist.id }}" data-url="/profile/{{ artist.slug }}/edit" data-title="">{{ artist.name }}</div>
+            {% else %}
+                <div class="username">{{ artist.name }}</div>
+            {% endif %}
             <div class="specializations">
                 <ul>
                     <li><a href="#">Jazz Vocalist</a>
