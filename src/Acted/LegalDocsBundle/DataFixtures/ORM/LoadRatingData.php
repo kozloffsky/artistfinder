@@ -51,6 +51,7 @@ class LoadRatingData extends AbstractFixture implements OrderedFixtureInterface,
             $rating->setTitle($faker->word);
             $rating->setComments($faker->text);
             $rating->setRatingDateTime($faker->dateTime);
+            $rating->setEvent($this->getReference('event'.$i));
             $manager->persist($rating);
             $manager->flush();
         }
