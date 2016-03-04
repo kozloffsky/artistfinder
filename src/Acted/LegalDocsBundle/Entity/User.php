@@ -341,4 +341,9 @@ class User
     {
         return $this->artist;
     }
+
+    public function __toString()
+    {
+        return $this->getEmail();
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Repository;
+use Acted\LegalDocsBundle\Entity\Artist;
 
 /**
  * ArtistRatingRepository
@@ -10,4 +11,11 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class ArtistRatingRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByArtistQuery(Artist $artist)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.artist = :artist')
+            ->setParameter('artist', $artist)
+            ->getQuery();
+    }
 }

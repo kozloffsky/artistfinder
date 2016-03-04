@@ -11,10 +11,8 @@ Acted\LegalDocsBundle\Entity\User:
     fields:
         firstname:
           type: string(128)
-          notnull: true
         lastname:
           type: string(128)
-          notnull: true
         email:
           type: string(100)
           notnull: true

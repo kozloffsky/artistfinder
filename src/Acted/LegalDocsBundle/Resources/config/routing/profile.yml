@@ -6,3 +6,15 @@ profile_show:
     path:     /{slug}
     defaults: { _controller: ActedLegalDocsBundle:Profile:show }
     methods:  GET
+profile_edit:
+    path:     /{slug}/edit
+    defaults: { _controller: ActedLegalDocsBundle:Profile:edit }
+    methods:  [GET, POST, PATCH, PUT]
+profile_offers_list:
+    path:     /{slug}/offer
+    defaults: { _controller: ActedLegalDocsBundle:Profile:offers }
+    methods:  GET
+profile_feedbacks_list:
+    path:     /{slug}/feedback
+    defaults: { _controller: ActedLegalDocsBundle:Profile:feedbacks }
+    methods:  GET
