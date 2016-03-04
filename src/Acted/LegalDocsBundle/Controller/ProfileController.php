@@ -48,9 +48,10 @@ class ProfileController extends Controller
         foreach ($artistForm->getErrors(true, true) as $formError) {
             $errors[] = $formError->getMessage();
         }
-        VarDumper::dump($errors);
-        die;
-
+        $data = array();
+        $data['status'] = 'error';
+        $data['errors'] = $errors;
+        return new JsonResponse($data);
     }
 
     public function offersAction(Request $request, Artist $artist)
