@@ -3,6 +3,7 @@ $(function() {
     $('.header-background').appendTo('header');
 
     setRaitingStars();
+
     function setRaitingStars(){
         var raiting = $('#raitingVal').text();
         var raitingFull = raiting.toString().split(".")[0];
@@ -125,4 +126,29 @@ $(function() {
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
+});
+$(document).on('ready ajaxComplete', function(){
+    $('.price-list .pagination a').on('click', function(event){
+        event.preventDefault();
+        var pageRoute = $(this).text();
+        var pageBaseRoute = $('#slug').text()
+        var paginationRoute = pageBaseRoute + '/offer?page=' + pageRoute;
+        var paginationTarget = $(".price-list");
+        getPagination(paginationRoute, paginationTarget);
+    });
+
+    $('.feedbacks .pagination a').on('click', function(event){
+        event.preventDefault();
+        var pageRoute = $(this).text();
+        var pageBaseRoute = $('#slug').text()
+        var paginationRoute = pageBaseRoute + '/feedback?page=' + pageRoute;
+        var paginationTarget = $(".feedbacks");
+        getPagination(paginationRoute, paginationTarget);
+    });
+
+    function getPagination(paginationRoute, paginationTarget){
+        $.get(paginationRoute, function( data ) {
+            $(paginationTarget).html(data);
+        });
+    }
 });

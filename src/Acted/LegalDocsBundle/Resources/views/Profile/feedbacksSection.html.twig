@@ -1,5 +1,5 @@
 
-{% for feedback in artist.ratings %}
+{% for feedback in feedbacks %}
 
     <article class="feedback-block">
         <div class="row">
@@ -18,21 +18,9 @@
 
 {% endfor %}
 
-    <ul class="row pagination">
-        <li>
-            <a href="#">
-                <div class="button active">1</div>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <div class="button">2</div>
-            </a>
-        </li>
-        <li>
-            <a class="next-page" href="#"><span class="glyphicon glyphicon-play"></span></a>
-        </li>
-    </ul>
+<div class="navigation">
+    {{ knp_pagination_render(feedbacks) }}
+</div>
 
     <button class="show-more-info">
         Show More
