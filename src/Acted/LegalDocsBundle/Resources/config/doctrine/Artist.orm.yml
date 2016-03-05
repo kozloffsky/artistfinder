@@ -34,6 +34,7 @@ Acted\LegalDocsBundle\Entity\Artist:
     oneToOne:
         user:
           targetEntity: Acted\LegalDocsBundle\Entity\User
+          inversedBy: artist
     oneToMany:
         ratings:
           targetEntity: Acted\LegalDocsBundle\Entity\ArtistRating

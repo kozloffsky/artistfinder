@@ -1,0 +1,53 @@
+Acted\LegalDocsBundle\Entity\Category:
+    type: entity
+    table: null
+    repositoryClass: Acted\LegalDocsBundle\Repository\CategoryRepository
+    gedmo:
+        tree:
+            type: nested
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+            unique: true
+        lft:
+            type: integer
+            gedmo:
+              - treeLeft
+        rgt:
+            type: integer
+            gedmo:
+              - treeRight
+        lvl:
+            type: integer
+            gedmo:
+              - treeLevel
+    manyToOne:
+        root:
+            targetEntity: Acted\LegalDocsBundle\Entity\Category
+            joinColumn:
+              referencedColumnName: id
+              onDelete: CASCADE
+            gedmo:
+              - treeRoot
+        parent:
+            targetEntity: Acted\LegalDocsBundle\Entity\Category
+            inversedBy: children
+            joinColumn:
+              referencedColumnName: id
+              onDelete: CASCADE
+            gedmo:
+              - treeParent
+    oneToMany:
+        children:
+            targetEntity: Acted\LegalDocsBundle\Entity\Category
+            mappedBy: parent
+            orderBy:
+              lft: ASC
+    lifecycleCallbacks: {  }

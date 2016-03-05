@@ -443,4 +443,43 @@ class Profile
     {
         return $this->getTitle();
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $categories;
+
+
+    /**
+     * Add category
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Category $category
+     *
+     * @return Profile
+     */
+    public function addCategory(\Acted\LegalDocsBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Category $category
+     */
+    public function removeCategory(\Acted\LegalDocsBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
 }

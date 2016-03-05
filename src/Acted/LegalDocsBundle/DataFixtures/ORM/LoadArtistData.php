@@ -111,6 +111,11 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
         $profile->setHeader($faker->word);
         $profile->setActive(true);
         $profile->setPaymentTypeId(1);
+
+        $profile->addCategory($this->getReference('category3'));
+        $profile->addCategory($this->getReference('category4'));
+        $profile->addCategory($this->getReference('category5'));
+
         $manager->persist($profile);
         $manager->flush();
 
@@ -146,6 +151,6 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
 
     public function getOrder()
     {
-        return 1;
+        return 2;
     }
 }

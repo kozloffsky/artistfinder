@@ -17,6 +17,7 @@ Acted\LegalDocsBundle\Entity\Performance:
     manyToOne:
         profile:
           targetEntity: Acted\LegalDocsBundle\Entity\Profile
+          inversedBy: performances
     oneToMany:
         offers:
           targetEntity: Acted\LegalDocsBundle\Entity\Offer
