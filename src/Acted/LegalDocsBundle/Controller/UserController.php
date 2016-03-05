@@ -4,7 +4,6 @@ namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Form\UserType;
 use Acted\LegalDocsBundle\HttpFoundation\File\Base64File;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -45,13 +44,6 @@ class UserController extends Controller
             return new JsonResponse(['status' => 'success']);
         }
 
-        $errors = [];
-        foreach ($userForm->getErrors(true, true) as $formError) {
-            $errors[] = $formError->getMessage();
-        }
-        $data = [];
-        $data['status'] = 'error';
-        $data['errors'] = $errors;
-        return new JsonResponse($data);
+        return new JsonResponse($this->formErrorResponse($userForm));
     }
 }

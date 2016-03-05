@@ -4,13 +4,9 @@ namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Offer;
-use Acted\LegalDocsBundle\Form\UserType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Acted\LegalDocsBundle\Form\ArtistType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\VarDumper\VarDumper;
 
 class ProfileController extends Controller
 {
@@ -32,8 +28,7 @@ class ProfileController extends Controller
 
     public function editAction(Request $request, Artist $artist)
     {
-
-        $artistForm = $this->createForm('Acted\LegalDocsBundle\Form\ArtistType', $artist);
+        $artistForm = $this->createForm(ArtistType::class, $artist);
         $artistForm->handleRequest($request);
 
         if($artistForm->isSubmitted() && $artistForm->isValid()) {
@@ -41,25 +36,16 @@ class ProfileController extends Controller
             $em->persist($artist);
             $em->flush();
 
-            return new JsonResponse(array('status' => 'success'));
+            return new JsonResponse(['status' => 'success']);
 
         }
-        $errors = array();
-        foreach ($artistForm->getErrors(true, true) as $formError) {
-            $errors[] = $formError->getMessage();
-        }
-        $data = array();
-        $data['status'] = 'error';
-        $data['errors'] = $errors;
-        return new JsonResponse($data);
+        return new JsonResponse($this->formErrorResponse($artistForm));
     }
 
     public function offersAction(Request $request, Artist $artist)
     {
         $offers = $this->getOffers($artist, $request->get('page', 1));
-        return $this->render('@ActedLegalDocs/Profile/ordersSection.html.twig',
-            compact('offers')
-        );
+        return $this->render('@ActedLegalDocs/Profile/ordersSection.html.twig', compact('offers'));
     }
 
     public function feedbacksAction(Request $request, Artist $artist)
@@ -93,8 +79,7 @@ class ProfileController extends Controller
     public function listAction()
     {
         $entities = $this->getDoctrine()->getManager()->getRepository('ActedLegalDocsBundle:Artist')->findAll();
-
-        return $this->render('ActedLegalDocsBundle:Profile:list.html.twig', array('entities' => $entities));
+        return $this->render('ActedLegalDocsBundle:Profile:list.html.twig', ['entities' => $entities]);
     }
 
 }

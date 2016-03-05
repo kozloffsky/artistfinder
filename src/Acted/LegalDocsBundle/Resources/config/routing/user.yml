@@ -1,4 +1,4 @@
-profile_edit:
+user_edit:
     path:     /edit
     defaults: { _controller: ActedLegalDocsBundle:User:edit }
     methods:  [PATCH]
