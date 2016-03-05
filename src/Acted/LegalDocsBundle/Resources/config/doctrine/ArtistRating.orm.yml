@@ -24,4 +24,5 @@ Acted\LegalDocsBundle\Entity\ArtistRating:
           targetEntity: Acted\LegalDocsBundle\Entity\Event
         artist:
           targetEntity: Acted\LegalDocsBundle\Entity\Artist
+          inversedBy: ratings
     lifecycleCallbacks: {  }

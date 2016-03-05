@@ -29,4 +29,5 @@ Acted\LegalDocsBundle\Entity\Offer:
     manyToOne:
         performance:
           targetEntity: Acted\LegalDocsBundle\Entity\Performance
+          inversedBy: offers
     lifecycleCallbacks: {  }
