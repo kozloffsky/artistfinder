@@ -4274,3 +4274,14 @@ section.used-by {
     font-size: 17px;
     margin-left: 10px;
 }
+#changeImageModel .actions
+{
+    text-align: center;
+}
+#editBackground
+{
+    font-size: 50px;
+    right: 0;
+    position: absolute;
+    bottom: 130px;
+}

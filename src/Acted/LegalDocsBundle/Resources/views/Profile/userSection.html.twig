@@ -1,30 +1,21 @@
 
+{% if user %}
+    <div class="header-background" style="background-image: url({{ artist.user.background }})">
+        <span id="bgImageSrc" class="hidden">{{ artist.user.background }}</span>
+        <div class="background-stripe"></div>
+        <div id="editBackground"><a href="#" data-toggle="modal" data-target="#changeBgModal"><i class="fa fa-pencil-square-o"></i></a></div>
+    </div>
+{% else %}
     <div class="header-background" style="background-image: url({{ artist.user.background }})">
         <div class="background-stripe"></div>
     </div>
+{% endif %}
     <span id="slug" class="hidden">{{ artist.slug }}</span>
     <section class="profile-info container">
         {% if user %}
             <div class="avatarEditable">
                <img class="avatar" src="{{ artist.user.avatar }}" alt="Avatar">
-               <div id="editAvatar"><a href="#" data-toggle="modal" data-target="#changeImageModel"><i class="fa fa-pencil-square-o"></i></a></div>
-                <div class="modal registration-modal fade" id="changeImageModel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <div class="changeImageContiner"></div>
-                <div class="actions">
-                    <a class="btn file-btn">
-                        <span>Upload</span>
-                        <input type="file" id="upload" value="Choose a file" accept="image/*" />
-                    </a>
-                    <button class="upload-result">Result</button>
-                </div>
-                            </div>
-                        </div>
-                </div>
+               <div id="editAvatar"><a href="#" data-toggle="modal" data-target="#changeImageModal"><i class="fa fa-pencil-square-o"></i></a></div>
             </div>
         {% else %}
         <img class="avatar" src="{{ artist.user.avatar }}" alt="Avatar">

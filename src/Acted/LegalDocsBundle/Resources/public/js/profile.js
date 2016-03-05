@@ -145,19 +145,17 @@ $('#editUsername').click(function(e) {
 });
 
 function avatarUpload() {
-    var $uploadCrop;
-
+    var $uploadCropAvatar;
     function readFile(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                $uploadCrop.croppie('bind', {
+                $uploadCropAvatar.croppie('bind', {
                     url: e.target.result
                 });
                 $('.upload-demo').addClass('ready');
             }
-
             reader.readAsDataURL(input.files[0]);
         }
         else {
@@ -165,10 +163,10 @@ function avatarUpload() {
         }
     }
 
-    $uploadCrop = $('.changeImageContiner').croppie({
+    $uploadCropAvatar = $('#changeImageModal .changeImageContiner').croppie({
         viewport: {
-            width: 200,
-            height: 200,
+            width: 213,
+            height: 213,
             type: 'circle'
         },
         boundary: {
@@ -177,23 +175,93 @@ function avatarUpload() {
         },
         exif: true
     });
+    var AvatarCurrent = $('.avatarEditable .avatar').attr('src');
+    $uploadCropAvatar.croppie('bind', {
+        url: AvatarCurrent
+    });
 
-    $('#upload').on('change', function () { readFile(this); });
-    $('.upload-result').on('click', function (ev) {
-        $uploadCrop.croppie('result', {
+    $('#uploadAvatar').on('change', function () { readFile(this); });
+    $('.upload-resultAvatar').on('click', function (ev) {
+        $uploadCropAvatar.croppie('result', {
             type: 'canvas',
-            size: 'viewport'
+            size: 'original'
         }).then(function (resp) {
             $.ajax({
                 type: "PATCH",
                 url: '/user/edit',
                 data: {"user[avatar]": resp}
-            });
+            })
+            $('.avatarEditable .avatar').attr('src', resp)
         });
     });
+    return;
 }
 
-$('#editAvatar').on('click', avatarUpload());
+$('#editAvatar').on('click', function() {
+    $('.changeImageContiner').empty()
+    avatarUpload()
+});
+
+
+$('#editBackground').on('click', function() {
+    $('.changeImageContiner').empty()
+    userBackgroundUpload()
+});
+
+function userBackgroundUpload(){
+    var $uploadCropBackground;
+    function readFile(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $uploadCropBackground.croppie('bind', {
+                    url: e.target.result
+                });
+                $('.upload-demo').addClass('ready');
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+        else {
+            swal("Sorry - you're browser doesn't support the FileReader API");
+        }
+    }
+
+    $uploadCropBackground = $('#changeBgModal .changeImageContiner').croppie({
+        viewport: {
+            width: 300,
+            height: 150
+        },
+        boundary: {
+            width: 400,
+            height: 300
+        },
+        exif: true
+    });
+
+    var backgroundCurrentSrc = $('#bgImageSrc').text();
+    console.log(backgroundCurrentSrc);
+    $uploadCropBackground.croppie('bind', {
+        url: backgroundCurrentSrc
+    });
+
+
+    $('#uploadBg').on('change', function () { readFile(this); });
+    $('.upload-resultBg').on('click', function (ev) {
+        $uploadCropBackground.croppie('result', {
+            type: 'canvas',
+            size: 'original'
+        }).then(function (resp) {
+            $.ajax({
+                type: "PATCH",
+                url: '/user/edit',
+                data: {"user[background]": resp}
+            });
+            $('.header-background').css('background-image', 'url(' + resp + ')');
+        });
+    });
+    return;
+}
 
 
 $(document).on('ready ajaxComplete', function(){
