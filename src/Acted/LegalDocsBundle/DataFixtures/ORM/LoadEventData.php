@@ -44,7 +44,7 @@ class LoadEventData extends AbstractFixture implements ContainerAwareInterface, 
 
         for($i = 0; $i < 10; $i++) {
             $event = new Event();
-            $event->setEventRef($faker->word);
+            $event->setEventRef($faker->unique()->word);
             $event->setUser($this->getReference('user'));
             $event->setTitle($faker->text(100));
             $event->setDescription($faker->text);
