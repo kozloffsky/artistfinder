@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Form;
 
+use Acted\LegalDocsBundle\Form\DataTransformer\Base64ToFileTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,6 +28,8 @@ class UserType extends AbstractType
             ->add('profile')
             ->add('artist')
         ;
+        $builder->get('avatar')->addModelTransformer(new Base64ToFileTransformer());
+        $builder->get('background')->addModelTransformer(new Base64ToFileTransformer());
     }
     
     /**
@@ -34,11 +37,11 @@ class UserType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Acted\LegalDocsBundle\Entity\User',
             'allow_extra_fields' => true,
             'csrf_protection'   => false,
             'method' => 'PATCH',
-        ));
+        ]);
     }
 }

@@ -21,20 +21,6 @@ class UserController extends Controller
         $user = ($request->get('user'))
             ? $em->getRepository('ActedLegalDocsBundle:User')->findOneById($request->get('user')) : null;
 
-        if ($request->request->has('user')) {
-            $userRequest = $request->request->get('user');
-            if(!empty($userRequest['avatar'])) {
-                $file = new Base64File($userRequest['avatar'], 'image/png');
-                $file = $file->move('images', $file->getBasename());
-                $request->request->set('user', ['avatar' => $file]);
-            }
-            if(!empty($userRequest['background'])) {
-                $file = new Base64File($userRequest['background'], 'image/png');
-                $file = $file->move('images', $file->getBasename());
-                $request->request->set('user', ['background' => $file]);
-            }
-        }
-
         $userForm = $this->createForm(UserType::class, $user);
         $userForm->handleRequest($request);
 
