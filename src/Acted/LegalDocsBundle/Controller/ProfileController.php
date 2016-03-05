@@ -6,6 +6,7 @@ use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Offer;
 use Acted\LegalDocsBundle\Form\ArtistType;
 use Acted\LegalDocsBundle\Form\OfferType;
+use Acted\LegalDocsBundle\Form\ProfileType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -31,16 +32,29 @@ class ProfileController extends Controller
     {
         $artistForm = $this->createForm(ArtistType::class, $artist);
         $artistForm->handleRequest($request);
+        $profileForm = $this->createForm(ProfileType::class, $artist->getUser()->getProfile());
+        $profileForm->handleRequest($request);
+
 
         if($artistForm->isSubmitted() && $artistForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($artist);
             $em->flush();
-
             return new JsonResponse(['status' => 'success']);
-
         }
-        return new JsonResponse($this->formErrorResponse($artistForm));
+
+        if($profileForm->isSubmitted() && $profileForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($artist->getUser()->getProfile());
+            $em->flush();
+            return new JsonResponse(['status' => 'success']);
+        }
+
+        if($artistForm->isSubmitted()) {
+            return new JsonResponse($this->formErrorResponse($artistForm));
+        }
+
+        return new JsonResponse($this->formErrorResponse($profileForm));
     }
 
     public function offersAction(Request $request, Artist $artist)
