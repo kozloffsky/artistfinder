@@ -23,7 +23,8 @@
         "stfalcon/tinymce-bundle": "dev-master",
         "cocur/slugify": "^2.0",
         "davidbadura/faker-bundle": "^1.1",
-        "knplabs/knp-paginator-bundle": "^2.5"
+        "knplabs/knp-paginator-bundle": "^2.5",
+        "gedmo/doctrine-extensions": "^2.4"
 
     },
     "require-dev": {

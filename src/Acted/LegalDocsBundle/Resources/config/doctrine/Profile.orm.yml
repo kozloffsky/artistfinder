@@ -37,6 +37,8 @@ Acted\LegalDocsBundle\Entity\Profile:
     manyToMany:
         media:
           targetEntity: Acted\LegalDocsBundle\Entity\Media
+        categories:
+          targetEntity: Acted\LegalDocsBundle\Entity\Category
     oneToMany:
         performances:
           targetEntity: Acted\LegalDocsBundle\Entity\Performance
