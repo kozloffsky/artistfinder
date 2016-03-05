@@ -14,6 +14,10 @@ profile_offers_list:
     path:     /{slug}/offer
     defaults: { _controller: ActedLegalDocsBundle:Profile:offers }
     methods:  GET
+profile_offer_edit:
+    path:     /{slug}/offer/{id}/edit
+    defaults: { _controller: ActedLegalDocsBundle:Profile:offerEdit }
+    methods:  PATCH
 profile_feedbacks_list:
     path:     /{slug}/feedback
     defaults: { _controller: ActedLegalDocsBundle:Profile:feedbacks }

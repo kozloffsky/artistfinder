@@ -5,6 +5,7 @@ namespace Acted\LegalDocsBundle\Controller;
 use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Offer;
 use Acted\LegalDocsBundle\Form\ArtistType;
+use Acted\LegalDocsBundle\Form\OfferType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -46,6 +47,21 @@ class ProfileController extends Controller
     {
         $offers = $this->getOffers($artist, $request->get('page', 1));
         return $this->render('@ActedLegalDocs/Profile/ordersSection.html.twig', compact('offers'));
+    }
+
+    public function offerEditAction(Request $request, Offer $offer)
+    {
+        $offerForm = $this->createForm(OfferType::class, $offer);
+        $offerForm->handleRequest($request);
+
+        if($offerForm->isSubmitted() && $offerForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($offer);
+            $em->flush();
+            return new JsonResponse(['status' => 'success']);
+        }
+
+        return new JsonResponse($this->formErrorResponse($offerForm));
     }
 
     public function feedbacksAction(Request $request, Artist $artist)
