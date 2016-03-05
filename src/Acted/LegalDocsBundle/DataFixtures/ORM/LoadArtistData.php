@@ -40,9 +40,9 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
         $user = new User();
         $user->setFirstname($faker->firstName);
         $user->setLastname($faker->lastName);
-        $user->setEmail($faker->email);
+        $user->setEmail($faker->unique()->email);
         $user->setPasswordHash(md5($faker->password));
-        $user->setPrimaryPhone($faker->phoneNumber);
+        $user->setPrimaryPhone($faker->unique()->phoneNumber);
         $user->setActive(true);
         $user->setAvatar($faker->imageUrl);
         $user->setBackground($faker->imageUrl);
