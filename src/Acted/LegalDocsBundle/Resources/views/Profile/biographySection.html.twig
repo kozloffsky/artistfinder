@@ -1,7 +1,7 @@
 <section id="biography" class="profile-block biography">
     {% if user %}
     <div class="title"><span>Biography</span><div id="editBiography" class=""><i class="fa fa-pencil-square-o"></i></div></div>
-    <p id="biographyEditable" data-type="text" data-pk="{{ artist.id }}" data-title="">
+    <p id="biographyEditable" data-type="textarea" data-pk="{{ artist.id }}" data-title="">
         {{ artist.user.profile.description }}
     </p>
     {% else %}

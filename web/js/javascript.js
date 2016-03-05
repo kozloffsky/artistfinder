@@ -2124,7 +2124,7 @@ $(function() {
 $('#editBiography').click(function(e) {
     e.stopPropagation();
     $('#biographyEditable').editable({
-        type: 'text',
+        type: 'textarea',
         success: function(response, newValue) {
             var slug = $('#slug').text();
             $.ajax({
