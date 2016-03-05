@@ -3,7 +3,6 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Form\UserType;
-use Acted\LegalDocsBundle\HttpFoundation\File\Base64File;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -257,7 +257,7 @@ class User
      */
     public function getAvatar()
     {
-        return $this->avatar;
+        return $this->rel2abs($this->avatar);
     }
 
     /**
@@ -281,7 +281,7 @@ class User
      */
     public function getBackground()
     {
-        return $this->background;
+        return $this->rel2abs($this->background);
     }
     /**
      * @var \Acted\LegalDocsBundle\Entity\Profile
@@ -346,4 +346,13 @@ class User
     {
         return $this->getEmail();
     }
+
+    protected  function rel2abs($link)
+    {
+        if(strpos($link, 'http') === 0){
+            return $link;
+        }
+        return '/'.ltrim($link, '/');
+    }
+
 }
