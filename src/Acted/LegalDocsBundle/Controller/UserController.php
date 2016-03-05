@@ -18,8 +18,10 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         //TODO: for debug only
-        $user = ($request->get('user'))
-            ? $em->getRepository('ActedLegalDocsBundle:User')->findOneById($request->get('user')) : null;
+        $user = ($request->query->get('user'))
+            ? $em->getRepository('ActedLegalDocsBundle:User')->findOneById($request->query->get('user')) :
+            $em->getRepository('ActedLegalDocsBundle:User')->findAll()[0];
+
 
         $userForm = $this->createForm(UserType::class, $user);
         $userForm->handleRequest($request);
