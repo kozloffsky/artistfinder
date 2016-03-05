@@ -128,6 +128,22 @@ $(function() {
 
 });
 
+$('#editBiography').click(function(e) {
+    e.stopPropagation();
+    $('#biographyEditable').editable({
+        type: 'text',
+        success: function(response, newValue) {
+            var slug = $('#slug').text();
+            $.ajax({
+                type: "PATCH",
+                url: '/profile/' + slug + '/edit',
+                data: {"artist[biography]": newValue}
+            });
+            console.log(slug)
+        }
+    });
+});
+
 $('#editUsername').click(function(e) {
     e.stopPropagation();
     $('#username').editable({

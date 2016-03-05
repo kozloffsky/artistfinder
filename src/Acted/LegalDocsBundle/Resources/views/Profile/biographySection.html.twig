@@ -1,6 +1,13 @@
 <section id="biography" class="profile-block biography">
-    <div class="title"><span>Biography</span></div>
+    {% if user %}
+    <div class="title"><span>Biography</span><div id="editBiography" class=""><i class="fa fa-pencil-square-o"></i></div></div>
+    <p id="biographyEditable" data-type="text" data-pk="{{ artist.id }}" data-title="">
+        {{ artist.user.profile.description }}
+    </p>
+    {% else %}
+        <div class="title"><span>Biography</span></div>
     <p>
         {{ artist.user.profile.description }}
     </p>
+    {% endif %}
 </section>

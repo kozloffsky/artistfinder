@@ -4274,7 +4274,7 @@ section.used-by {
     font-size: 17px;
     margin-left: 10px;
 }
-#changeImageModel .actions
+#changeImageModal .actions, #changeBgModal .actions
 {
     text-align: center;
 }
@@ -4284,4 +4284,9 @@ section.used-by {
     right: 0;
     position: absolute;
     bottom: 130px;
+}
+#editBiography
+{
+    float: right;
+    font-size: 20px;
 }
