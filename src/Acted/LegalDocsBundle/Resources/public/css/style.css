@@ -1965,4 +1965,26 @@ section.used-by {
         bottom: -35px!important;
     }
 }
-
+.avatarEditable
+{
+    float: left;
+    position: relative;
+    text-align: right;
+}
+#editAvatar
+{
+    position: relative;
+    color: #000;
+    font-size: 34px;
+}
+.info #username
+{
+    width: auto;
+}
+.editText
+{
+    display: inline-block;
+    color: #fff;
+    font-size: 17px;
+    margin-left: 10px;
+}

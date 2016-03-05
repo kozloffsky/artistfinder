@@ -4,10 +4,35 @@
     </div>
     <span id="slug" class="hidden">{{ artist.slug }}</span>
     <section class="profile-info container">
+        {% if user %}
+            <div class="avatarEditable">
+               <img class="avatar" src="{{ artist.user.avatar }}" alt="Avatar">
+               <div id="editAvatar"><a href="#" data-toggle="modal" data-target="#changeImageModel"><i class="fa fa-pencil-square-o"></i></a></div>
+                <div class="modal registration-modal fade" id="changeImageModel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <div class="changeImageContiner"></div>
+                <div class="actions">
+                    <a class="btn file-btn">
+                        <span>Upload</span>
+                        <input type="file" id="upload" value="Choose a file" accept="image/*" />
+                    </a>
+                    <button class="upload-result">Result</button>
+                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        {% else %}
         <img class="avatar" src="{{ artist.user.avatar }}" alt="Avatar">
+        {% endif %}
         <div class="info">
             {% if user %}
-                <div href="#" id="username" class="username" data-type="text" data-pk="{{ artist.id }}" data-url="/profile/{{ artist.slug }}/edit" data-title="">{{ artist.name }}</div>
+                <div href="#" id="username" class="username" data-type="text" data-pk="{{ artist.id }}" data-title="">{{ artist.name }}</div>
+                <div id="editUsername" class="editText"><i class="fa fa-pencil-square-o"></i></div>
             {% else %}
                 <div class="username">{{ artist.name }}</div>
             {% endif %}

@@ -127,6 +127,75 @@ $(function() {
     }(document, 'script', 'facebook-jssdk'));
 
 });
+
+$('#editUsername').click(function(e) {
+    e.stopPropagation();
+    $('#username').editable({
+        type: 'text',
+        success: function(response, newValue) {
+            var slug = $('#slug').text();
+            $.ajax({
+                type: "PATCH",
+                url: '/profile/' + slug + '/edit',
+                data: {"artist[name]": newValue}
+            });
+            console.log(slug)
+        }
+    });
+});
+
+function avatarUpload() {
+    var $uploadCrop;
+
+    function readFile(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $uploadCrop.croppie('bind', {
+                    url: e.target.result
+                });
+                $('.upload-demo').addClass('ready');
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+        else {
+            swal("Sorry - you're browser doesn't support the FileReader API");
+        }
+    }
+
+    $uploadCrop = $('.changeImageContiner').croppie({
+        viewport: {
+            width: 200,
+            height: 200,
+            type: 'circle'
+        },
+        boundary: {
+            width: 300,
+            height: 300
+        },
+        exif: true
+    });
+
+    $('#upload').on('change', function () { readFile(this); });
+    $('.upload-result').on('click', function (ev) {
+        $uploadCrop.croppie('result', {
+            type: 'canvas',
+            size: 'viewport'
+        }).then(function (resp) {
+            $.ajax({
+                type: "PATCH",
+                url: '/user/edit',
+                data: {"user[avatar]": resp}
+            });
+        });
+    });
+}
+
+$('#editAvatar').on('click', avatarUpload());
+
+
 $(document).on('ready ajaxComplete', function(){
     $('.price-list .pagination a').on('click', function(event){
         event.preventDefault();
