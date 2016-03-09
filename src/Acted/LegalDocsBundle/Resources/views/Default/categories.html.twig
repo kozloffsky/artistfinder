@@ -1,0 +1,22 @@
+{% for category in categories %}
+    <div data-toggle-desktop="category-2" id="category-1" class="col-sm-6 col-xs-12 no-pad category">
+        <div class="category-header gradient-light">
+            <div class="image-container">
+                <img src="{{ asset('assets/images/variety_acts.png') }}" alt="">
+            </div>
+            <span class="title">{{ category['title'] }}</span>
+        </div>
+        <div class="category-body">
+            {% for catChild in category['__children'] %}
+                <div class="row category-content variety-acts artistCategories">
+
+                    <div class="col-xs-6 category-item">
+                        <input class="checkbox" type="checkbox" id="variety_category_id_{{ catChild['id'] }}" name="{{ catChild['id'] }}">
+                        <label for="variety_category_id_{{ catChild['id'] }}">{{ catChild['title'] }}</label>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}

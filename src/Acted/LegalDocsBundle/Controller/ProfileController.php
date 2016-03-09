@@ -16,6 +16,9 @@ class ProfileController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        $categoriesRepo = $em->getRepository('ActedLegalDocsBundle:Category');
+        $categories = $categoriesRepo->childrenHierarchy();
+
         //TODO: for debug only
         $user = ($request->get('user'))
             ? $em->getRepository('ActedLegalDocsBundle:User')->findOneById($request->get('user')) : null;
@@ -24,7 +27,7 @@ class ProfileController extends Controller
         $feedbacks = $this->getFeedbacks($artist, 1);
 
         return $this->render('ActedLegalDocsBundle:Profile:show.html.twig',
-            compact('artist', 'user', 'offers', 'feedbacks')
+            compact('artist', 'user', 'offers', 'feedbacks', 'categories')
         );
     }
 

@@ -44,6 +44,9 @@
                     <li><a href="#">See All <span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
                     </li>
                 </ul>
+                {% if user %}
+                    <a href="#" data-toggle="modal" id="editCategories" data-target="#categotiesModal"><i class="fa fa-pencil-square-o"></i></a>
+                {% endif %}
             </div>
 
             <div class="from">From {{ artist.city.name }}</div>
@@ -118,3 +121,32 @@
             </ul>
         </div>
     </section>
+
+<div class="modal registration-modal fade" id="categotiesModal" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-header" style="display: block">
+                <h4 class="modal-title" id="modal-title">Categories</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row stage">
+                    <div class="row sub-stage" id="artistBlock">
+
+                        {% include 'ActedLegalDocsBundle:Default:categories.html.twig' %}
+
+                        <div class="buttons">
+                            <div class="vertical-divder"></div>
+                            <button class="btn"></button>
+                            <button id="saveCategories" class="btn">Save</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>

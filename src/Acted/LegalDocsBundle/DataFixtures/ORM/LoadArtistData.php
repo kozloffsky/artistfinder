@@ -18,6 +18,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Embed\Embed;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -73,12 +74,26 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
         $video1->setPosition(1);
         $video1->setActive(true);
 
+        $videoInfo = Embed::create('https://player.vimeo.com/video/17914974');
+        preg_match('/src="(.+?)"/', $videoInfo->getCode(), $videoLinkMatch);
+        if(isset($videoLinkMatch[1])){
+            $video1->setLink($videoLinkMatch[1]);
+        }
+        $video1->setThumbnail($videoInfo->getImage());
+
         $video2 = new Media();
         $video2->setName($faker->word);
         $video2->setMediaType('video');
         $video2->setLink('https://player.vimeo.com/video/17214458');
         $video2->setPosition(1);
         $video2->setActive(true);
+
+        $videoInfo = Embed::create('https://player.vimeo.com/video/17214458');
+        preg_match('/src="(.+?)"/', $videoInfo->getCode(), $videoLinkMatch);
+        if(isset($videoLinkMatch[1])){
+            $video2->setLink($videoLinkMatch[1]);
+        }
+        $video2->setThumbnail($videoInfo->getImage());
 
         $audio1 = new Media();
         $audio1->setName($faker->word);
