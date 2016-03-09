@@ -2276,8 +2276,13 @@ function userBackgroundUpload(){
 $(document).on('ready ajaxComplete', function(){
     $('.price-list .pagination a').on('click', function(event){
         event.preventDefault();
-        var pageRoute = $(this).text();
-        var pageBaseRoute = $('#slug').text()
+        if ($(this).hasClass('pageArrows')){
+            var paginationLink = $(this).attr('href');
+            var pageRoute = paginationLink.slice(-1);
+        } else {
+            var pageRoute = $(this).text();
+        }
+        var pageBaseRoute = $('#slug').text();
         var paginationRoute = pageBaseRoute + '/offer?page=' + pageRoute;
         var paginationTarget = $(".price-list");
         getPagination(paginationRoute, paginationTarget);
@@ -2285,8 +2290,13 @@ $(document).on('ready ajaxComplete', function(){
 
     $('.feedbacks .pagination a').on('click', function(event){
         event.preventDefault();
-        var pageRoute = $(this).text();
-        var pageBaseRoute = $('#slug').text()
+        if ($(this).hasClass('pageArrows')){
+            var paginationLink = $(this).attr('href');
+            var pageRoute = paginationLink.slice(-1);
+        } else {
+            var pageRoute = $(this).text();
+        }
+        var pageBaseRoute = $('#slug').text();
         var paginationRoute = pageBaseRoute + '/feedback?page=' + pageRoute;
         var paginationTarget = $(".feedbacksContainer");
         getPagination(paginationRoute, paginationTarget);
