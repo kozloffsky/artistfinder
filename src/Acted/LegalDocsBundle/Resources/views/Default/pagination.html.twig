@@ -19,7 +19,7 @@
 
         {% if previous is defined %}
             <li>
-                <a class="prev-page" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">
+                <a class="prev-page pageArrows" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">
                     <span class="glyphicon glyphicon-triangle-left"></span>
                 </a>
             </li>
@@ -30,17 +30,17 @@
         {% endif %}
 
         {% if startPage > 1 %}
-            <li>
+            {#<li>
                 <a href="{{ path(route, query|merge({(pageParameterName): 1})) }}">
                     <div class="button">1</div>
                 </a>
-            </li>
+            </li>#}
             {% if startPage == 3 %}
-                <li>
+                {#<li>
                     <a href="{{ path(route, query|merge({(pageParameterName): 2})) }}">
                         <div class="button">2</div>
                     </a>
-                </li>
+                </li>#}
             {% elseif startPage != 2 %}
                 {#<li class="disabled">
                     <span>&hellip;</span>
@@ -77,16 +77,18 @@
                     </li>
                 {% endif %}
             {% endif %}
-            <li>
+            {#<li>
                 <a href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}">
                     <div class="button">{{ pageCount }}</div>
                 </a>
-            </li>
+            </li>#}
         {% endif %}
 
         {% if next is defined %}
             <li>
-                <a class="next-page" href="{{ path(route, query|merge({(pageParameterName): next})) }}"><span class="glyphicon glyphicon-play"></span></a>
+                <a class="next-page pageArrows" href="{{ path(route, query|merge({(pageParameterName): next})) }}">
+                    <span class="glyphicon glyphicon-play"></span>
+                </a>
             </li>
         {% else %}
             {#<li class="disabled">
