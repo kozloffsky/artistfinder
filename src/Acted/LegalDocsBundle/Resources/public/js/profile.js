@@ -279,7 +279,26 @@ function userBackgroundUpload(){
     return;
 }
 
+function getCheckedCategories(){
+    var selectedCat = [];
+    $('.artistCategories input:checked').each(function() {
+        selectedCat.push($(this).attr('name'));
+    });
+    console.log(selectedCat);
+    var slug = $('#slug').text();
+    sendSelectedCategories(selectedCat, slug)
+}
 
+$('#saveCategories').click('click', function(){
+    getCheckedCategories();
+});
+function sendSelectedCategories(selectedCat, slug){
+    $.ajax({
+        type: "POST",
+        url: '/profile/' + slug + '/edit',
+        data: {"profile[categories]": selectedCat}
+    })
+}
 $(document).on('ready ajaxComplete', function(){
     $('.price-list .pagination a').on('click', function(event){
         event.preventDefault();
