@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new TFox\MpdfPortBundle\TFoxMpdfPortBundle(),
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new KnpU\GuardBundle\KnpUGuardBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
         );
 
