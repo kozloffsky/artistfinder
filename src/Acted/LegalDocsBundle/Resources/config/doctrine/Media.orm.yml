@@ -26,4 +26,7 @@ Acted\LegalDocsBundle\Entity\Media:
         active:
           type: boolean
           notnull: true
+        thumbnail:
+          type: string(256)
+          nullable: true
     lifecycleCallbacks: {  }
