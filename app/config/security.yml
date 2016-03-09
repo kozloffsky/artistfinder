@@ -8,7 +8,7 @@ security:
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
         database_users:
-            entity: { class: Acted\LegalDocsBundle\Entity\User, property: username }
+            entity: { class: Acted\LegalDocsBundle\Entity\User, property: email }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
