@@ -19,3 +19,4 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     per_page: 3
+    doctrine.orm.security.user.provider.class: Acted\LegalDocsBundle\Security\AppUserProvider
