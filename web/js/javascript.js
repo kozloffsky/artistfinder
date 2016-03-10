@@ -2287,7 +2287,7 @@ $('#saveCategories').click('click', function(){
 });
 function sendSelectedCategories(selectedCat, slug){
     $.ajax({
-        type: "POST",
+        type: "PATCH",
         url: '/profile/' + slug + '/edit',
         data: {"profile[categories]": selectedCat}
     })

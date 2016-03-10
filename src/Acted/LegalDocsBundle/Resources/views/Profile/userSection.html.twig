@@ -29,18 +29,11 @@
             {% endif %}
             <div class="specializations">
                 <ul>
-                    <li><a href="#">Jazz Vocalist</a>
+                    {% for category in artist.user.profile.categories %}
+                    <li><a href="#">{{ category.title }}</a>
                         <div class="divider"></div>
                     </li>
-                    <li><a href="#">Jazz Pianist</a>
-                        <div class="divider"></div>
-                    </li>
-                    <li><a href="#">Vocalist</a>
-                        <div class="divider"></div>
-                    </li>
-                    <li><a href="#">Song Writer</a>
-                        <div class="divider"></div>
-                    </li>
+                    {% endfor %}
                     <li><a href="#">See All <span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
                     </li>
                 </ul>

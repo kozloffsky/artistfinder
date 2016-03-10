@@ -2004,3 +2004,9 @@ section.used-by {
     float: right;
     font-size: 20px;
 }
+#editCategories
+{
+    position: absolute;
+    font-size: 20px;
+    right: 0;
+}
