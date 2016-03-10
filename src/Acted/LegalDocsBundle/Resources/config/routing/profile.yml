@@ -22,3 +22,7 @@ profile_feedbacks_list:
     path:     /{slug}/feedback
     defaults: { _controller: ActedLegalDocsBundle:Profile:feedbacks }
     methods:  GET
+profile_add_media:
+    path:    /{slug}/media/{id}
+    defaults: { _controller: ActedLegalDocsBundle:Profile:addMedia }
+    methods:  POST

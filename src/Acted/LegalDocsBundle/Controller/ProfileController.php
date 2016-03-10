@@ -3,12 +3,14 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\Artist;
+use Acted\LegalDocsBundle\Entity\Media;
 use Acted\LegalDocsBundle\Entity\Offer;
 use Acted\LegalDocsBundle\Form\ArtistType;
 use Acted\LegalDocsBundle\Form\OfferType;
 use Acted\LegalDocsBundle\Form\ProfileType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ProfileController extends Controller
 {
@@ -85,6 +87,23 @@ class ProfileController extends Controller
     {
         $feedbacks = $this->getFeedbacks($artist,  $request->get('page', 1));
         return $this->render('@ActedLegalDocs/Profile/feedbacksSection.html.twig', compact('feedbacks'));
+    }
+
+    /**
+     * @ParamConverter("artist", options={"mapping": {"slug": "slug"}})
+     * @ParamConverter("media", options={"mapping": {"id": "id"}})
+     */
+    public function addMediaAction(Artist $artist, Media $media)
+    {
+        $profile = $artist->getUser()->getProfile();
+
+        if(!$profile->getMedia()->contains($media)) {
+            $em = $this->getDoctrine()->getManager();
+            $profile->addMedia($media);
+            $em->flush();
+        }
+
+        return new JsonResponse(['status' => 'success']);
     }
 
     private function getPerformances(Artist $artist, $page)

@@ -282,4 +282,43 @@ class Media
     {
         return $this->position;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $profiles;
+
+
+    /**
+     * Add profile
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Profile $profile
+     *
+     * @return Media
+     */
+    public function addProfile(\Acted\LegalDocsBundle\Entity\Profile $profile)
+    {
+        $this->profiles[] = $profile;
+
+        return $this;
+    }
+
+    /**
+     * Remove profile
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Profile $profile
+     */
+    public function removeProfile(\Acted\LegalDocsBundle\Entity\Profile $profile)
+    {
+        $this->profiles->removeElement($profile);
+    }
+
+    /**
+     * Get profiles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProfiles()
+    {
+        return $this->profiles;
+    }
 }
