@@ -26,7 +26,7 @@ class MediaController extends Controller
             }
 
             $em->flush();
-            return new JsonResponse(['status' => 'success']);
+            return new JsonResponse(['status' => 'success', 'id' => $media->getId()]);
         }
 
         return new JsonResponse($this->formErrorResponse($mediaForm));
