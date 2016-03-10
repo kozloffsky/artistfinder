@@ -1,4 +1,4 @@
-offer_list:
-    path:     /{slug}/offer
+performance_list:
+    path:     /{slug}/performance
     defaults: { _controller: ActedLegalDocsBundle:Offer:index }
     methods:  GET

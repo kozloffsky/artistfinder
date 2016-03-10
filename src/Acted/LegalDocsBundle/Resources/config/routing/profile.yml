@@ -10,9 +10,9 @@ profile_edit:
     path:     /{slug}/edit
     defaults: { _controller: ActedLegalDocsBundle:Profile:edit }
     methods:  [GET, POST, PATCH, PUT]
-profile_offers_list:
-    path:     /{slug}/offer
-    defaults: { _controller: ActedLegalDocsBundle:Profile:offers }
+profile_performance_list:
+    path:     /{slug}/performance
+    defaults: { _controller: ActedLegalDocsBundle:Profile:performances }
     methods:  GET
 profile_offer_edit:
     path:     /{slug}/offer/{id}/edit

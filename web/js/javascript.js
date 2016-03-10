@@ -2302,7 +2302,7 @@ $(document).on('ready ajaxComplete', function(){
             var pageRoute = $(this).text();
         }
         var pageBaseRoute = $('#slug').text();
-        var paginationRoute = pageBaseRoute + '/offer?page=' + pageRoute;
+        var paginationRoute = pageBaseRoute + '/performance?page=' + pageRoute;
         var paginationTarget = $(".price-list");
         getPagination(paginationRoute, paginationTarget);
     });

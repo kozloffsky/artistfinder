@@ -23,11 +23,11 @@ class ProfileController extends Controller
         $user = ($request->get('user'))
             ? $em->getRepository('ActedLegalDocsBundle:User')->findOneById($request->get('user')) : null;
 
-        $offers = $this->getOffers($artist, 1);
+        $performances = $this->getPerformances($artist, 1);
         $feedbacks = $this->getFeedbacks($artist, 1);
 
         return $this->render('ActedLegalDocsBundle:Profile:show.html.twig',
-            compact('artist', 'user', 'offers', 'feedbacks', 'categories')
+            compact('artist', 'user', 'performances', 'feedbacks', 'categories')
         );
     }
 
@@ -60,10 +60,10 @@ class ProfileController extends Controller
         return new JsonResponse($this->formErrorResponse($profileForm));
     }
 
-    public function offersAction(Request $request, Artist $artist)
+    public function performancesAction(Request $request, Artist $artist)
     {
-        $offers = $this->getOffers($artist, $request->get('page', 1));
-        return $this->render('@ActedLegalDocs/Profile/ordersSection.html.twig', compact('offers'));
+        $performances = $this->getPerformances($artist, $request->get('page', 1));
+        return $this->render('@ActedLegalDocs/Profile/ordersSection.html.twig', compact('performances'));
     }
 
     public function offerEditAction(Request $request, Offer $offer)
@@ -87,12 +87,12 @@ class ProfileController extends Controller
         return $this->render('@ActedLegalDocs/Profile/feedbacksSection.html.twig', compact('feedbacks'));
     }
 
-    private function getOffers(Artist $artist, $page)
+    private function getPerformances(Artist $artist, $page)
     {
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
         return $paginator->paginate(
-            $em->getRepository('ActedLegalDocsBundle:Offer')->findByArtistQuery($artist),
+            $em->getRepository('ActedLegalDocsBundle:Performance')->findByArtistQuery($artist),
             $page,
             $this->getParameter('per_page')
         );

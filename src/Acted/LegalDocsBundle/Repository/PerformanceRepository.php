@@ -1,6 +1,7 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Repository;
+use Acted\LegalDocsBundle\Entity\Artist;
 
 /**
  * PerformanceRepository
@@ -10,4 +11,14 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class PerformanceRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByArtistQuery(Artist $artist)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.profile', 'pr')
+            ->innerJoin('pr.user', 'u')
+            ->innerJoin('u.artist', 'a')
+            ->where('a = :artist')
+            ->setParameter('artist', $artist)
+            ->getQuery();
+    }
 }
