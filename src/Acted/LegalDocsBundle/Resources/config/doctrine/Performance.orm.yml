@@ -25,4 +25,5 @@ Acted\LegalDocsBundle\Entity\Performance:
     manyToMany:
         media:
           targetEntity: Acted\LegalDocsBundle\Entity\Media
+          inversedBy: performances
     lifecycleCallbacks: {  }

@@ -1,0 +1,8 @@
+media_create:
+    path:     /new
+    defaults: { _controller: ActedLegalDocsBundle:Media:create }
+    methods:  [POST]
+media_edit:
+    path:     /{id}/edit
+    defaults: { _controller: ActedLegalDocsBundle:Media:edit }
+    methods:  [PATCH]

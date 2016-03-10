@@ -23,10 +23,18 @@ Acted\LegalDocsBundle\Entity\Media:
         position:
           type: integer(11)
           notnull: true
+          options:
+            default: 0
         active:
           type: boolean
           notnull: true
+          options:
+            default: true
         thumbnail:
           type: string(256)
           nullable: true
+    manyToMany:
+        performances:
+          targetEntity: Acted\LegalDocsBundle\Entity\Performance
+          mappedBy: media
     lifecycleCallbacks: {  }
