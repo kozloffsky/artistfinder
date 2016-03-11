@@ -24,9 +24,9 @@ class MediaController extends Controller
             foreach($media->getPerformances() as $performance) {
                 $performance->addMedia($media);
             }
-
+            $serializer = $this->get('jms_serializer');
             $em->flush();
-            return new JsonResponse(['status' => 'success', 'id' => $media->getId()]);
+            return new JsonResponse(['status' => 'success', 'media' => $serializer->toArray($media)]);
         }
 
         return new JsonResponse($this->formErrorResponse($mediaForm));

@@ -25,7 +25,9 @@
         "davidbadura/faker-bundle": "^1.1",
         "knplabs/knp-paginator-bundle": "^2.5",
         "gedmo/doctrine-extensions": "^2.4",
-        "embed/embed": "^2.6"
+        "embed/embed": "^2.6",
+        "jms/serializer": "^1.1",
+        "jms/serializer-bundle": "^1.1"
 
     },
     "require-dev": {
