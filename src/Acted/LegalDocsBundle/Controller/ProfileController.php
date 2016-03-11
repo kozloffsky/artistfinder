@@ -6,16 +6,14 @@ use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Media;
 use Acted\LegalDocsBundle\Entity\Offer;
 use Acted\LegalDocsBundle\Form\ArtistType;
+use Acted\LegalDocsBundle\Form\MediaUploadType;
 use Acted\LegalDocsBundle\Form\OfferType;
 use Acted\LegalDocsBundle\Form\ProfileType;
 use Acted\LegalDocsBundle\Model\MediaManager;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Validator\Constraints\Image;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProfileController extends Controller
 {
@@ -114,23 +112,7 @@ class ProfileController extends Controller
     public function newMediaAction(Request $request, Artist $artist)
     {
         $serializer = $this->get('jms_serializer');
-
-        $formBuilder = $this->get('form.factory')
-            ->createNamedBuilder(null, 'form', null, [
-                'csrf_protection' => false,
-                'allow_extra_fields' => true,
-                'validation_groups' => function(FormInterface $form) {
-                    $data = $form->getData();
-
-                    if(is_null($data['video'])){
-                        return ['Default', 'photo'];
-                    }
-                    return ['Default', 'video'];
-                }
-            ]);
-        $formBuilder->add('file', 'file', ['constraints' => [new NotBlank(['groups' => 'photo']), new Image()]]);
-        $formBuilder->add('video', 'text', ['constraints' => [new NotBlank(['groups' => 'video'])]]);
-        $form = $formBuilder->getForm();
+        $form = $this->createForm(MediaUploadType::class);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
@@ -141,7 +123,6 @@ class ProfileController extends Controller
             if(is_null($data['video'])) {
                 /** @var UploadedFile $file */
                 $file = $data['file'];
-
                 $media = $mediaManager->newPhoto($file);
             } else {
                 $media = $mediaManager->newVideo($data['video']);
