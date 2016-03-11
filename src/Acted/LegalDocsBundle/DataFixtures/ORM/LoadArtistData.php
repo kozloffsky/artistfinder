@@ -144,6 +144,8 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
         $profile->addMedia($audio2);
         $manager->flush();
 
+        $this->addReference('photo1', $photo1);
+        $this->addReference('photo2', $photo2);
 
         $city = new RefCity();
         $city->setName($faker->city);
