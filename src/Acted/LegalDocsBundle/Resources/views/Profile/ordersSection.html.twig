@@ -9,13 +9,15 @@
                     </h2>
                     <span class="performanceId hidden">{{ performance.id }}</span>
                     {% for mediaOf in performance.media[0:1] %}
-                        <form action="/media/{{ mediaOf.id }}/edit" method="PATCH" class="dropzone">
+                        <form action="/media/{{ mediaOf.id }}/edit" method="post" class="dropzone imagePerformanceChange">
                         </form>
                         <img class="preview" src="{{ mediaOf.link }}" alt="Preview">
                     {% endfor %}
 
                     <div class="video">
                         {% for mediaOf in performance.media[1:2] %}
+                            <form action="/media/{{ mediaOf.id }}/edit" method="post" class="dropzone imagePerformanceChange">
+                            </form>
                             <img src="{{ mediaOf.link }}" alt="">
                             <span class="glyphicon glyphicon-play"></span>
 
