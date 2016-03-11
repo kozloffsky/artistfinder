@@ -1,7 +1,7 @@
         {% for performance in performances %}
 
                 <article class="item clearfix">
-                    <h2>{{ performance.title|slice(0, 20) ~ '...' }} <span class="price">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</span></h2>
+                    <h2>{{ performance.title }} <span class="price">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</span></h2>
 
                     {% for mediaOf in performance.media[0:1] %}
                         <img class="preview" src="{{ mediaOf.link }}" alt="Preview">

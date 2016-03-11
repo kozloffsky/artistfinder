@@ -137,7 +137,7 @@ $('#editBiography').click(function(e) {
             $.ajax({
                 type: "PATCH",
                 url: '/profile/' + slug + '/edit',
-                data: {"artist[biography]": newValue}
+                data: {"profile[description]": newValue}
             });
             console.log(slug)
         }
