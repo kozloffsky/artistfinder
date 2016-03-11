@@ -108,3 +108,11 @@ knp_paginator:
     page_range: 3
     template:
         pagination: ActedLegalDocsBundle:Default:pagination.html.twig
+
+jms_serializer:
+    metadata:
+        auto_detection: true
+        directories:
+            ActedLegalDocsBundle:
+                namespace_prefix: ""
+                path: "@ActedLegalDocsBundle/Resources/config/serializer"

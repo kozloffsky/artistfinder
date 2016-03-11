@@ -1,0 +1,5 @@
+Acted\LegalDocsBundle\Entity\Media:
+  exclusion_policy: NONE
+  properties:
+    performances:
+      exclude: true

@@ -22,6 +22,7 @@ class MediaManager
         $media->setName($file->getClientOriginalName());
         $fileName = uniqid().'.'.$file->getClientOriginalExtension();
         $media->setLink($file->move('images', $fileName));
+        $media->setThumbnail('');
         return $media;
     }
 
