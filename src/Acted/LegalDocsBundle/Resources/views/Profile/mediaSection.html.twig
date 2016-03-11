@@ -28,9 +28,10 @@
     <div class="row">
 
         <section class="media-content wrapper" id="section-photo">
+            {% if user %}
             <form action="/profile/{{ artist.slug }}/media/new" method="post" class="dropzone">
-                {#<input type="image" name="media[file]" />#}
             </form>
+            {% endif %}
             <div class="slider-controls">
                 <span id="prevSlide"></span>
                 <span id="nextSlide"></span>
@@ -53,6 +54,16 @@
 
 
         <section class="media-content wrapper" id="section-video" >
+            {% if user %}
+                <div class="col-md-6 add-video-block">
+                <form class="videoAddForm">
+                    <input type="text" class="form-control videoAdd">
+                </form>
+                    <div id="addNewInputVideo"><i class="fa fa-plus"></i></div>
+                    <button type="submit" id="sendNewVideo" class="btn btn-default">Submit</button>
+                </div>
+                <div class="clearfix"></div>
+            {% endif %}
             <div class="slider-controls">
                 <span id="nextVideoSlide"></span>
                 <span id="prevVideoSlide"></span>
@@ -67,7 +78,7 @@
             <div id="video-pager" class="bx-pager">
                 {% for video in artist.user.profile.videoList %}
                     <div class="scale-thumb thumb{{ loop.index }}">
-                        <a data-slide-index="{{ loop.index0 }}" href=""><img id="{{ video.videoId }}" src=""/></a>
+                        <a data-slide-index="{{ loop.index0 }}" href=""><img id="{{ video.videoId }}" src="{{ video.thumbnail }}"/></a>
                     </div>
                 {% endfor %}
             </div>
@@ -75,6 +86,7 @@
 
         <section class="media-content wrapper" id="section-audio" >
             {% for audio in artist.user.profile.audioList %}
+                {{ dump(audio) }}
                 <h2>{{ audio.name }}</h2>
                 <audio controls="true" name="media"><source src="{{ audio.link }}" type="audio/mpeg"></audio>
             {% endfor %}

@@ -49,7 +49,7 @@ $(function() {
         }
     });
 
-    $('#video-pager img').each(function(){
+    /*$('#video-pager img').each(function(){
         var videoThumbId = $(this).attr('id');
         getVideoThumbnails(videoThumbId)
     });
@@ -66,7 +66,7 @@ $(function() {
                 $(thumbs).attr('src', thumbnail_src);
             }
         });
-    }
+    }*/
 
     function resizeThumbs() {
         $('.scale-thumb').each(function() {
@@ -164,7 +164,6 @@ $('.editOffer').click(function(e) {
     e.stopPropagation();
     var parentPerformance = $(this).parents('article')
     var performanceId = $(parentPerformance).children('.performanceId').text();
-    console.log(performanceId);
     $(parentPerformance).find('.perfomanceInfoEdiatable').editable({
         type: 'text',
         success: function(response, newValue) {
@@ -175,7 +174,49 @@ $('.editOffer').click(function(e) {
             });
         }
     });
+    $(parentPerformance).find('.perfomanceTitleEdiatable').editable({
+        type: 'text',
+        success: function(response, newValue) {
+            $.ajax({
+                type: "PATCH",
+                url: '/profile/performance/' + performanceId + '/edit',
+                data: {"performance[title]": newValue}
+            });
+        }
+    });
 });
+
+$('.deleteOffer').click(function(){
+    var parentPerformance = $(this).parents('article');
+    var performanceId = $(parentPerformance).children('.performanceId').text();
+    var slug = $('#slug').text();
+    $.ajax({
+        type: "DELETE",
+        url: '/profile/' + slug + '/performance/' + performanceId
+    })
+});
+
+$('#addNewInputVideo').click(function(){
+    var targetToAddField = $('#section-video .videoAddForm');
+    $(targetToAddField).append('<input type="text" class="form-control videoAdd">')
+});
+
+$('#sendNewVideo').click(function(){
+    var slug = $('#slug').text();
+    $('#section-video .videoAddForm input').each(function(){
+        var videoLink = $(this).val();
+        console.log(videoLink);
+        postNewVideo(slug, videoLink)
+    })
+});
+
+function postNewVideo(slug, videoLink){
+    $.ajax({
+        type: "POST",
+        url: '/profile/'+ slug +'/media/new',
+        data: {"video": videoLink}
+    })
+}
 
 function avatarUpload() {
     var $uploadCropAvatar;

@@ -2010,7 +2010,16 @@ section.used-by {
     font-size: 20px;
     right: 0;
 }
-.editOffer
+.editOffer, .deleteOffer
 {
     float: right;
+    margin-left: 15px;
+}
+#section-photo .dropzone, .add-video-block
+{
+    margin-bottom: 20px;
+}
+.videoAdd
+{
+    margin-bottom: 10px;
 }
