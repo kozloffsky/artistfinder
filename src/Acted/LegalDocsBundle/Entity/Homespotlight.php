@@ -81,4 +81,3 @@ class Homespotlight
         return $this->media;
     }
 }
-

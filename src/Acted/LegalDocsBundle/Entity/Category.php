@@ -1,6 +1,7 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Entity;
+use Cocur\Slugify\Slugify;
 
 /**
  * Category
@@ -270,5 +271,35 @@ class Category
     public function getImage()
     {
         return $this->image;
+    }
+    /**
+     * @var string
+     */
+    private $slug;
+
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Category
+     */
+    public function setSlug($slug)
+    {
+        $slugify = new Slugify();
+        $this->slug = $slugify->slugify($slug);
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

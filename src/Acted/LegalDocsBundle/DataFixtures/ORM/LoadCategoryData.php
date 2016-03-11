@@ -44,26 +44,32 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
 
         $varietyActsCategory = new Category();
         $varietyActsCategory->setTitle('Variety Acts');
+        $varietyActsCategory->setSlug($varietyActsCategory->getTitle());
         $varietyActsCategory->setImage('assets/images/variety_acts.png');
 
         $subCategory1 = new Category();
         $subCategory1->setTitle($faker->unique()->text(10));
+        $subCategory1->setSlug($subCategory1->getTitle());
         $subCategory1->setParent($varietyActsCategory);
 
         $subCategory2 = new Category();
         $subCategory2->setTitle($faker->unique()->text(10));
+        $subCategory2->setSlug($subCategory2->getTitle());
         $subCategory2->setParent($varietyActsCategory);
 
         $internationalArtists = new Category();
         $internationalArtists->setTitle('International Artists');
+        $internationalArtists->setSlug($internationalArtists->getTitle());
         $internationalArtists->setImage('assets/images/international.png');
 
         $subCategory3 = new Category();
         $subCategory3->setTitle($faker->unique()->text(10));
+        $subCategory3->setSlug($subCategory3->getTitle());
         $subCategory3->setParent($internationalArtists);
 
         $subCategory4 = new Category();
         $subCategory4->setTitle($faker->unique()->text(10));
+        $subCategory4->setSlug($subCategory4->getTitle());
         $subCategory4->setParent($internationalArtists);
 
         $manager->persist($varietyActsCategory);
