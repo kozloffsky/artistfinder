@@ -5,6 +5,9 @@ namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\Media;
 use Acted\LegalDocsBundle\Form\MediaType;
+use Acted\LegalDocsBundle\Form\MediaUploadType;
+use Acted\LegalDocsBundle\Model\MediaManager;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -34,18 +37,32 @@ class MediaController extends Controller
 
     public function editAction(Request $request, Media $media)
     {
-        $mediaForm = $this->createForm(MediaType::class, $media, ['method' => 'PATCH']);
-        $mediaForm->handleRequest($request);
+        $serializer = $this->get('jms_serializer');
+        $form = $this->createForm(MediaUploadType::class);
+        $form->handleRequest($request);
 
-        if($mediaForm->isSubmitted() && $mediaForm->isValid()) {
+
+        if($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $data = $form->getData();
+            $mediaManager = new MediaManager();
+
+            if(!empty($data['video'])) {
+                $media = $mediaManager->updateVideo($data['video'], $media);
+            } elseif(!empty($data['audio'])) {
+                $media = $mediaManager->updateAudio($data['audio'], $media);
+            } else {
+                /** @var UploadedFile $file */
+                $file = $data['file'];
+                $media = $mediaManager->updatePhoto($file, $media);
+            }
+
             $em->persist($media);
-
-
             $em->flush();
-            return new JsonResponse(['status' => 'success']);
+
+            return new JsonResponse(['status' => 'success', 'media' => $serializer->toArray($media)]);
         }
 
-        return new JsonResponse($this->formErrorResponse($mediaForm));
+        return new JsonResponse($serializer->toArray($form->getErrors()));
     }
 }

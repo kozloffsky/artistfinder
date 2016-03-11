@@ -29,11 +29,11 @@ class MediaUploadType extends AbstractType
             'validation_groups' => function(FormInterface $form) {
                 $data = $form->getData();
 
-                if(!is_null($data['video'])){
+                if(!empty($data['video'])){
                     return ['Default', 'video'];
                 }
 
-                if(!is_null($data['audio'])){
+                if(!empty($data['audio'])){
                     return ['Default', 'audio'];
                 }
 

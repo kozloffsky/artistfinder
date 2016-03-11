@@ -14,6 +14,10 @@ profile_performance_list:
     path:     /{slug}/performance
     defaults: { _controller: ActedLegalDocsBundle:Profile:performances }
     methods:  GET
+profile_performance_delete:
+    path:     /{slug}/performance/{id}
+    defaults: { _controller: ActedLegalDocsBundle:Profile:deletePerformance }
+    methods:  DELETE
 profile_offer_edit:
     path:     /{slug}/offer/{id}/edit
     defaults: { _controller: ActedLegalDocsBundle:Profile:offerEdit }

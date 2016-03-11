@@ -30,4 +30,6 @@ Acted\LegalDocsBundle\Entity\Offer:
         performance:
           targetEntity: Acted\LegalDocsBundle\Entity\Performance
           inversedBy: offers
+          joinColumn:
+            onDelete: CASCADE
     lifecycleCallbacks: {  }

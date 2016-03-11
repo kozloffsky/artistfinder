@@ -7,3 +7,8 @@ performance_edit:
     path: /performance/{id}/edit
     defaults: { _controller: ActedLegalDocsBundle:Performance:edit }
     methods:  PATCH
+
+performance_new_media:
+    path:    /performance/{id}/media/new
+    defaults: { _controller: ActedLegalDocsBundle:Performance:newMedia }
+    methods:  POST

@@ -5,4 +5,4 @@ media_create:
 media_edit:
     path:     /{id}/edit
     defaults: { _controller: ActedLegalDocsBundle:Media:edit }
-    methods:  [PATCH]
+    methods:  [POST]

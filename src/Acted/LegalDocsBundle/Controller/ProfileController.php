@@ -5,6 +5,7 @@ namespace Acted\LegalDocsBundle\Controller;
 use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Media;
 use Acted\LegalDocsBundle\Entity\Offer;
+use Acted\LegalDocsBundle\Entity\Performance;
 use Acted\LegalDocsBundle\Form\ArtistType;
 use Acted\LegalDocsBundle\Form\MediaUploadType;
 use Acted\LegalDocsBundle\Form\OfferType;
@@ -109,6 +110,21 @@ class ProfileController extends Controller
         return new JsonResponse(['status' => 'success']);
     }
 
+    /**
+     * @ParamConverter("artist", options={"mapping": {"slug": "slug"}})
+     * @ParamConverter("performance", options={"mapping": {"id": "id"}})
+     */
+    public function deletePerformanceAction(Artist $artist, Performance $performance)
+    {
+        if($artist->getUser()->getProfile()->getPerformances()->contains($performance)){
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($performance);
+            $em->flush();
+        }
+
+        return new JsonResponse(['status' => 'success']);
+    }
+
     public function newMediaAction(Request $request, Artist $artist)
     {
         $serializer = $this->get('jms_serializer');
@@ -119,15 +135,16 @@ class ProfileController extends Controller
             $em = $this->getDoctrine()->getManager();
             $data = $form->getData();
             $mediaManager = new MediaManager();
+            $media = new Media();
 
             if(!is_null($data['video'])) {
-                $media = $mediaManager->newVideo($data['video']);
+                $media = $mediaManager->updateVideo($data['video'], $media);
             } elseif(!is_null($data['audio'])) {
-                $media = $mediaManager->newAudio($data['audio']);
+                $media = $mediaManager->updateAudio($data['audio'], $media);
             } else {
                 /** @var UploadedFile $file */
                 $file = $data['file'];
-                $media = $mediaManager->newPhoto($file);
+                $media = $mediaManager->updatePhoto($file, $media);
             }
 
             $em->persist($media);
