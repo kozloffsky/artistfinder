@@ -3,6 +3,11 @@ performance_list:
     defaults: { _controller: ActedLegalDocsBundle:Offer:index }
     methods:  GET
 
+performance_new:
+    path: /{slug}/performance/new
+    defaults: { _controller: ActedLegalDocsBundle:Performance:new }
+    methods:  POST
+
 performance_edit:
     path: /performance/{id}/edit
     defaults: { _controller: ActedLegalDocsBundle:Performance:edit }

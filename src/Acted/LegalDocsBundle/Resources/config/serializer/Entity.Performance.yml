@@ -1,0 +1,5 @@
+Acted\LegalDocsBundle\Entity\Performance:
+  exclusion_policy: NONE
+  properties:
+    profile:
+      exclude: true
