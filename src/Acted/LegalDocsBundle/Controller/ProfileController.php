@@ -128,7 +128,7 @@ class ProfileController extends Controller
                     return ['Default', 'video'];
                 }
             ]);
-        $formBuilder->add('file', 'file', ['constraints' => [new NotBlank(['groups' => 'photo']), new Image()]]);
+        $formBuilder->add('photo', 'file', ['constraints' => [new NotBlank(['groups' => 'photo']), new Image()]]);
         $formBuilder->add('video', 'text', ['constraints' => [new NotBlank(['groups' => 'video'])]]);
         $form = $formBuilder->getForm();
         $form->handleRequest($request);
@@ -140,7 +140,7 @@ class ProfileController extends Controller
 
             if(is_null($data['video'])) {
                 /** @var UploadedFile $file */
-                $file = $data['file'];
+                $file = $data['photo'];
 
                 $media = $mediaManager->newPhoto($file);
             } else {
