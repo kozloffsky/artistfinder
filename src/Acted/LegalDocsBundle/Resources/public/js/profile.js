@@ -171,7 +171,7 @@ $('.editOffer').click(function(e) {
             $.ajax({
                 type: "PATCH",
                 url: '/profile/performance/' + performanceId + '/edit',
-                data: {"performance[tech_requirement]": newValue}
+                data: {"performance[techRequirement]": newValue}
             });
         }
     });
