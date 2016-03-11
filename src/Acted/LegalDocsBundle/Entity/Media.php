@@ -118,7 +118,7 @@ class Media
      */
     public function getLink()
     {
-        return $this->link;
+        return $this->rel2abs($this->link);
     }
 
     public function getVideoId()
@@ -320,5 +320,13 @@ class Media
     public function getProfiles()
     {
         return $this->profiles;
+    }
+
+    protected  function rel2abs($link)
+    {
+        if(strpos($link, 'http') === 0){
+            return $link;
+        }
+        return '/'.ltrim($link, '/');
     }
 }

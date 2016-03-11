@@ -16,6 +16,7 @@ class MediaUploadType extends AbstractType
         $builder
             ->add('file', 'file', ['constraints' => [new NotBlank(['groups' => 'photo']), new Image()]])
             ->add('video', 'text', ['constraints' => [new NotBlank(['groups' => 'video'])]])
+            ->add('audio', 'text', ['constraints' => [new NotBlank(['groups' => 'audio'])]])
         ;
 
     }
@@ -28,10 +29,15 @@ class MediaUploadType extends AbstractType
             'validation_groups' => function(FormInterface $form) {
                 $data = $form->getData();
 
-                if(is_null($data['video'])){
-                    return ['Default', 'photo'];
+                if(!is_null($data['video'])){
+                    return ['Default', 'video'];
                 }
-                return ['Default', 'video'];
+
+                if(!is_null($data['audio'])){
+                    return ['Default', 'audio'];
+                }
+
+                return ['Default', 'photo'];
             }
         ]);
 

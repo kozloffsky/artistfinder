@@ -120,12 +120,14 @@ class ProfileController extends Controller
             $data = $form->getData();
             $mediaManager = new MediaManager();
 
-            if(is_null($data['video'])) {
+            if(!is_null($data['video'])) {
+                $media = $mediaManager->newVideo($data['video']);
+            } elseif(!is_null($data['audio'])) {
+                $media = $mediaManager->newAudio($data['audio']);
+            } else {
                 /** @var UploadedFile $file */
                 $file = $data['file'];
                 $media = $mediaManager->newPhoto($file);
-            } else {
-                $media = $mediaManager->newVideo($data['video']);
             }
 
             $em->persist($media);
