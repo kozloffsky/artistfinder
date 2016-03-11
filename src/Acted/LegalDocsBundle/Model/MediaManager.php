@@ -14,9 +14,8 @@ use Symfony\Component\VarDumper\VarDumper;
  */
 class MediaManager
 {
-    public function newPhoto(UploadedFile $file)
+    public function updatePhoto(UploadedFile $file, Media $media)
     {
-        $media = new Media();
         $media->setActive(true);
         $media->setMediaType('photo');
         $media->setPosition(1);
@@ -26,9 +25,8 @@ class MediaManager
         return $media;
     }
 
-    public function newVideo($link)
+    public function updateVideo($link, Media $media)
     {
-        $media = new Media();
         $media->setActive(true);
         $media->setMediaType('video');
         $media->setPosition(1);
@@ -48,9 +46,8 @@ class MediaManager
         return $media;
     }
 
-    public function newAudio($link)
+    public function updateAudio($link, Media $media)
     {
-        $media = new Media();
         $media->setActive(true);
         $media->setMediaType('audio');
         $media->setPosition(1);

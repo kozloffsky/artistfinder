@@ -135,15 +135,16 @@ class ProfileController extends Controller
             $em = $this->getDoctrine()->getManager();
             $data = $form->getData();
             $mediaManager = new MediaManager();
+            $media = new Media();
 
             if(!is_null($data['video'])) {
-                $media = $mediaManager->newVideo($data['video']);
+                $media = $mediaManager->updateVideo($data['video'], $media);
             } elseif(!is_null($data['audio'])) {
-                $media = $mediaManager->newAudio($data['audio']);
+                $media = $mediaManager->updateAudio($data['audio'], $media);
             } else {
                 /** @var UploadedFile $file */
                 $file = $data['file'];
-                $media = $mediaManager->newPhoto($file);
+                $media = $mediaManager->updatePhoto($file, $media);
             }
 
             $em->persist($media);
