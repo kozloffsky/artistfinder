@@ -65,4 +65,12 @@ class MediaController extends Controller
 
         return new JsonResponse($serializer->toArray($form->getErrors()));
     }
+
+    public function deleteAction(Media $media)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($media);
+        $em->flush();
+        return new JsonResponse(['status' => 'success']);
+    }
 }

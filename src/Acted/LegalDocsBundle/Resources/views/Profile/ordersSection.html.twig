@@ -1,6 +1,6 @@
         {% for performance in performances %}
 
-            {% if user %}
+            {% if user is defined and user %}
                 <article class="item clearfix">
                     <h2><span class="perfomanceTitleEdiatable" data-type="textarea" data-pk="{{ performance.id }}" data-title="">{{ performance.title }} </span>
                         <span class="price">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</span>

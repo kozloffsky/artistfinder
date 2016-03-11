@@ -36,7 +36,7 @@ Acted\LegalDocsBundle\Entity\Media:
     manyToMany:
         performances:
           targetEntity: Acted\LegalDocsBundle\Entity\Performance
-          mappedBy: media:
+          mappedBy: media
         profiles:
           targetEntity: Acted\LegalDocsBundle\Entity\Profile
           mappedBy: media

@@ -6,3 +6,7 @@ media_edit:
     path:     /{id}/edit
     defaults: { _controller: ActedLegalDocsBundle:Media:edit }
     methods:  [POST]
+media_delete:
+    path:     /{id}/delete
+    defaults: { _controller: ActedLegalDocsBundle:Media:delete }
+    methods:  [DELETE]

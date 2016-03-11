@@ -427,6 +427,11 @@ class Profile
             /** @var Performance $entry */
             return $entry->getOfferMinPrice();
         });
+
+        if(count($prices) < 1){
+            return null;
+        }
+
         return min($prices->toArray());
     }
 
@@ -436,6 +441,11 @@ class Profile
             /** @var Performance $entry */
             return $entry->getOfferMaxPrice();
         });
+
+        if(count($prices) < 1){
+            return null;
+        }
+
         return max($prices->toArray());
     }
 

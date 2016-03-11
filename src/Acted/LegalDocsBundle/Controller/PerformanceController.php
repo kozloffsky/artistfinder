@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 
+use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Media;
 use Acted\LegalDocsBundle\Entity\Performance;
 use Acted\LegalDocsBundle\Form\MediaUploadType;
@@ -14,6 +15,24 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PerformanceController extends Controller
 {
+    public function newAction(Request $request, Artist $artist)
+    {
+        $performance = new Performance();
+        $performanceForm = $this->createForm(PerformanceType::class, $performance, ['method' => 'POST']);
+        $performanceForm->handleRequest($request);
+
+        if($performanceForm->isSubmitted() && $performanceForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $performance->setProfile($artist->getUser()->getProfile());
+            $em->persist($performance);
+            $em->flush();
+            $serializer = $this->get('jms_serializer');
+            return new JsonResponse(['status' => 'success', 'performance' => $serializer->toArray($performance)]);
+        }
+
+        return new JsonResponse($this->formErrorResponse($performanceForm));
+    }
+
     public function editAction(Request $request, Performance $performance)
     {
         $mediaForm = $this->createForm(PerformanceType::class, $performance, ['method' => 'PATCH']);
