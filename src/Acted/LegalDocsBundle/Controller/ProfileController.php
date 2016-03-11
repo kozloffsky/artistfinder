@@ -106,6 +106,23 @@ class ProfileController extends Controller
         return new JsonResponse(['status' => 'success']);
     }
 
+    /**
+     * @ParamConverter("artist", options={"mapping": {"slug": "slug"}})
+     * @ParamConverter("media", options={"mapping": {"id": "id"}})
+     */
+    public function deleteMediaAction(Artist $artist, Media $media)
+    {
+        $profile = $artist->getUser()->getProfile();
+
+        if($profile->getMedia()->contains($media)) {
+            $em = $this->getDoctrine()->getManager();
+            $profile->removeMedia($media);
+            $em->flush();
+        }
+
+        return new JsonResponse(['status' => 'success']);
+    }
+
     private function getPerformances(Artist $artist, $page)
     {
         $em = $this->getDoctrine()->getManager();

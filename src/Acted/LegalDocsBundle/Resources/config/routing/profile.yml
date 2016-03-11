@@ -26,3 +26,7 @@ profile_add_media:
     path:    /{slug}/media/{id}
     defaults: { _controller: ActedLegalDocsBundle:Profile:addMedia }
     methods:  POST
+profile_delete_media:
+    path:    /{slug}/media/{id}
+    defaults: { _controller: ActedLegalDocsBundle:Profile:deleteMedia }
+    methods:  DELETE
