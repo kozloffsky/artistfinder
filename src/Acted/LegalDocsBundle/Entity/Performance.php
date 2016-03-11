@@ -185,6 +185,11 @@ class Performance
         $prices = $this->offers->map(function ($entry) {
             return $entry->getPrice();
         });
+
+        if(count($prices) < 1){
+            return null;
+        }
+
         return min($prices->toArray());
     }
 
@@ -193,6 +198,11 @@ class Performance
         $prices = $this->offers->map(function ($entry) {
             return $entry->getPrice();
         });
+
+        if(count($prices) < 1){
+            return null;
+        }
+
         return max($prices->toArray());
     }
 
