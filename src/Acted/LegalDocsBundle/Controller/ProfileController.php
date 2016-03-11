@@ -116,7 +116,7 @@ class ProfileController extends Controller
         $serializer = $this->get('jms_serializer');
 
         $formBuilder = $this->get('form.factory')
-            ->createNamedBuilder('media', 'form', null, [
+            ->createNamedBuilder(null, 'form', null, [
                 'csrf_protection' => false,
                 'allow_extra_fields' => true,
                 'validation_groups' => function(FormInterface $form) {
@@ -128,7 +128,7 @@ class ProfileController extends Controller
                     return ['Default', 'video'];
                 }
             ]);
-        $formBuilder->add('photo', 'file', ['constraints' => [new NotBlank(['groups' => 'photo']), new Image()]]);
+        $formBuilder->add('file', 'file', ['constraints' => [new NotBlank(['groups' => 'photo']), new Image()]]);
         $formBuilder->add('video', 'text', ['constraints' => [new NotBlank(['groups' => 'video'])]]);
         $form = $formBuilder->getForm();
         $form->handleRequest($request);
@@ -140,7 +140,7 @@ class ProfileController extends Controller
 
             if(is_null($data['video'])) {
                 /** @var UploadedFile $file */
-                $file = $data['photo'];
+                $file = $data['file'];
 
                 $media = $mediaManager->newPhoto($file);
             } else {
