@@ -37,6 +37,7 @@ Acted\LegalDocsBundle\Entity\Profile:
     manyToMany:
         media:
           targetEntity: Acted\LegalDocsBundle\Entity\Media
+          inversedBy: profiles
         categories:
           targetEntity: Acted\LegalDocsBundle\Entity\Category
     oneToMany:

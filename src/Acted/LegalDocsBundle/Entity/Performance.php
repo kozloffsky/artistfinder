@@ -109,6 +109,7 @@ class Performance
     {
         return $this->techRequirement;
     }
+
     /**
      * @var \Acted\LegalDocsBundle\Entity\Profile
      */
@@ -138,18 +139,12 @@ class Performance
     {
         return $this->profile;
     }
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $offers;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->offers = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add offer
@@ -187,24 +182,35 @@ class Performance
 
     public function getOfferMinPrice()
     {
-        $prices = $this->offers->map(function($entry){
-           return $entry->getPrice();
+        $prices = $this->offers->map(function ($entry) {
+            return $entry->getPrice();
         });
         return min($prices->toArray());
     }
 
     public function getOfferMaxPrice()
     {
-        $prices = $this->offers->map(function($entry){
+        $prices = $this->offers->map(function ($entry) {
             return $entry->getPrice();
         });
         return max($prices->toArray());
     }
+
+
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $media;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->offers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->media = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Add medium
@@ -238,5 +244,10 @@ class Performance
     public function getMedia()
     {
         return $this->media;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 }

@@ -1,0 +1,6 @@
+Acted\LegalDocsBundle\Entity\Media:
+  properties:
+    mediaType:
+      - NotBlank: ~
+    name:
+      - NotBlank: ~

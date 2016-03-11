@@ -32,10 +32,6 @@ class Media
      */
     private $mediaSize;
 
-    /**
-     * @var integer
-     */
-    private $position;
 
     /**
      * @var boolean
@@ -157,29 +153,6 @@ class Media
         return $this->mediaSize;
     }
 
-    /**
-     * Set position
-     *
-     * @param integer $position
-     *
-     * @return Media
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-
-        return $this;
-    }
-
-    /**
-     * Get position
-     *
-     * @return integer
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
 
     /**
      * Set active
@@ -232,5 +205,120 @@ class Media
     public function getThumbnail()
     {
         return $this->thumbnail;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $performances;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->performances = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add performance
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Performance $performance
+     *
+     * @return Media
+     */
+    public function addPerformance(\Acted\LegalDocsBundle\Entity\Performance $performance)
+    {
+        $this->performances[] = $performance;
+
+        return $this;
+    }
+
+
+    /**
+     * Remove performance
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Performance $performance
+     */
+    public function removePerformance(\Acted\LegalDocsBundle\Entity\Performance $performance)
+    {
+        $this->performances->removeElement($performance);
+    }
+
+    /**
+     * Get performances
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPerformances()
+    {
+        return $this->performances;
+    }
+    /**
+     * @var integer
+     */
+    private $position = 0;
+
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     *
+     * @return Media
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $profiles;
+
+
+    /**
+     * Add profile
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Profile $profile
+     *
+     * @return Media
+     */
+    public function addProfile(\Acted\LegalDocsBundle\Entity\Profile $profile)
+    {
+        $this->profiles[] = $profile;
+
+        return $this;
+    }
+
+    /**
+     * Remove profile
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Profile $profile
+     */
+    public function removeProfile(\Acted\LegalDocsBundle\Entity\Profile $profile)
+    {
+        $this->profiles->removeElement($profile);
+    }
+
+    /**
+     * Get profiles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProfiles()
+    {
+        return $this->profiles;
     }
 }

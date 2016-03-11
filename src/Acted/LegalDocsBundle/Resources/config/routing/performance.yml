@@ -2,3 +2,8 @@ performance_list:
     path:     /{slug}/performance
     defaults: { _controller: ActedLegalDocsBundle:Offer:index }
     methods:  GET
+
+performance_edit:
+    path: /performance/{id}/edit
+    defaults: { _controller: ActedLegalDocsBundle:Performance:edit }
+    methods:  PATCH

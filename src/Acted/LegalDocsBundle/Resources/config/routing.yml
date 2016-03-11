@@ -29,3 +29,7 @@ acted_legal_docs_performance:
 acted_legal_docs_user:
   resource: "@ActedLegalDocsBundle/Resources/config/routing/user.yml"
   prefix: /user
+
+acted_legal_docs_media:
+  resource: "@ActedLegalDocsBundle/Resources/config/routing/media.yml"
+  prefix: /media
