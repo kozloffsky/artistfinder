@@ -1,5 +1,48 @@
         {% for performance in performances %}
 
+            {% if user %}
+                <article class="item clearfix">
+                    <h2>{{ performance.title }} <span class="price">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</span>
+                        <div class="editOffer"><i class="fa fa-pencil-square-o"></i></div>
+                    </h2>
+                    <span class="performanceId hidden">{{ performance.id }}</span>
+                    {% for mediaOf in performance.media[0:1] %}
+                        <img class="preview" src="{{ mediaOf.link }}" alt="Preview">
+                    {% endfor %}
+
+                    <div class="video">
+                        {% for mediaOf in performance.media[1:2] %}
+
+                            <img src="{{ mediaOf.link }}" alt="">
+                            <span class="glyphicon glyphicon-play"></span>
+
+                            <div class="name">
+                                <div class="name-text">{{ mediaOf.name }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+
+                    <div class="info">
+                        <p class="perfomanceInfoEdiatable" data-type="textarea" data-pk="{{ performance.id }}" data-title="">
+                            {{ performance.techRequirement }}
+                        </p>
+
+                        <div class="controls">
+                            <div class="button-gradient follow">
+                                <button class="btn">REQUEST FREE QUOTE</button>
+                            </div>
+
+                            <p>
+                                <a href="#">Technical requirements</a>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+
+            {% else %}
+
                 <article class="item clearfix">
                     <h2>{{ performance.title }} <span class="price">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</span></h2>
 
@@ -36,6 +79,8 @@
                         </div>
                     </div>
                 </article>
+
+            {% endif %}
 
         {% endfor %}
         <div class="navigation">

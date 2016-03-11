@@ -3920,6 +3920,23 @@ $('#editUsername').click(function(e) {
     });
 });
 
+$('.editOffer').click(function(e) {
+    e.stopPropagation();
+    var parentPerformance = $(this).parents('article')
+    var performanceId = $(parentPerformance).children('.performanceId').text();
+    console.log(performanceId);
+    $(parentPerformance).find('.perfomanceInfoEdiatable').editable({
+        type: 'text',
+        success: function(response, newValue) {
+            $.ajax({
+                type: "PATCH",
+                url: '/profile/performance/' + performanceId + '/edit',
+                data: {"performance[tech_requirement]": newValue}
+            });
+        }
+    });
+});
+
 function avatarUpload() {
     var $uploadCropAvatar;
     function readFile(input) {
