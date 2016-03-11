@@ -8,9 +8,14 @@ use Acted\LegalDocsBundle\Entity\Offer;
 use Acted\LegalDocsBundle\Form\ArtistType;
 use Acted\LegalDocsBundle\Form\OfferType;
 use Acted\LegalDocsBundle\Form\ProfileType;
+use Acted\LegalDocsBundle\Model\MediaManager;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProfileController extends Controller
 {
@@ -104,6 +109,53 @@ class ProfileController extends Controller
         }
 
         return new JsonResponse(['status' => 'success']);
+    }
+
+    public function newMediaAction(Request $request, Artist $artist)
+    {
+        $serializer = $this->get('jms_serializer');
+
+        $formBuilder = $this->get('form.factory')
+            ->createNamedBuilder('media', 'form', null, [
+                'csrf_protection' => false,
+                'allow_extra_fields' => true,
+                'validation_groups' => function(FormInterface $form) {
+                    $data = $form->getData();
+
+                    if(is_null($data['video'])){
+                        return ['Default', 'photo'];
+                    }
+                    return ['Default', 'video'];
+                }
+            ]);
+        $formBuilder->add('photo', 'file', ['constraints' => [new NotBlank(['groups' => 'photo']), new Image()]]);
+        $formBuilder->add('video', 'text', ['constraints' => [new NotBlank(['groups' => 'video'])]]);
+        $form = $formBuilder->getForm();
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $data = $form->getData();
+            $mediaManager = new MediaManager();
+
+            if(is_null($data['video'])) {
+                /** @var UploadedFile $file */
+                $file = $data['photo'];
+
+                $media = $mediaManager->newPhoto($file);
+            } else {
+                $media = $mediaManager->newVideo($data['video']);
+            }
+
+            $em->persist($media);
+            $artist->getUser()->getProfile()->addMedia($media);
+
+            $em->flush();
+
+            return new JsonResponse(['status' => 'success', 'media' => $serializer->toArray($media)]);
+        }
+
+        return new JsonResponse($serializer->toArray($form->getErrors()));
     }
 
     /**
