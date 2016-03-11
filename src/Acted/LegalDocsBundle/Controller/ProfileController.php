@@ -5,6 +5,7 @@ namespace Acted\LegalDocsBundle\Controller;
 use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Media;
 use Acted\LegalDocsBundle\Entity\Offer;
+use Acted\LegalDocsBundle\Entity\Performance;
 use Acted\LegalDocsBundle\Form\ArtistType;
 use Acted\LegalDocsBundle\Form\MediaUploadType;
 use Acted\LegalDocsBundle\Form\OfferType;
@@ -103,6 +104,21 @@ class ProfileController extends Controller
         if(!$profile->getMedia()->contains($media)) {
             $em = $this->getDoctrine()->getManager();
             $profile->addMedia($media);
+            $em->flush();
+        }
+
+        return new JsonResponse(['status' => 'success']);
+    }
+
+    /**
+     * @ParamConverter("artist", options={"mapping": {"slug": "slug"}})
+     * @ParamConverter("performance", options={"mapping": {"id": "id"}})
+     */
+    public function deletePerformanceAction(Artist $artist, Performance $performance)
+    {
+        if($artist->getUser()->getProfile()->getPerformances()->contains($performance)){
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($performance);
             $em->flush();
         }
 
