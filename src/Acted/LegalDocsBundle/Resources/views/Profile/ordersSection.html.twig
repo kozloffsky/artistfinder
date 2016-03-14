@@ -47,7 +47,7 @@
 
             {% endif %}
 
-            {% for performance in performances %}
+            {% for performance in performances|reverse %}
 
             {% if user is defined and user %}
                 <article class="item clearfix">
