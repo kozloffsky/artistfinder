@@ -44,6 +44,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
 
         $varietyActsCategory = new Category();
         $varietyActsCategory->setTitle('Variety Acts');
+        $varietyActsCategory->setDescription($faker->realText(400));
         $varietyActsCategory->setSlug($varietyActsCategory->getTitle());
         $varietyActsCategory->setImage('assets/images/variety_acts.png');
 
@@ -59,6 +60,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
 
         $internationalArtists = new Category();
         $internationalArtists->setTitle('International Artists');
+        $internationalArtists->setDescription($faker->realText(400));
         $internationalArtists->setSlug($internationalArtists->getTitle());
         $internationalArtists->setImage('assets/images/international.png');
 
