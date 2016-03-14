@@ -1,0 +1,19 @@
+Acted\LegalDocsBundle\Entity\Homespotlight:
+    type: entity
+    table: Homespotlight
+    repositoryClass: Acted\LegalDocsBundle\Repository\HomespotlightRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        active:
+            type: boolean
+            notnull: true
+            options:
+                default: true
+    manyToOne:
+        media:
+            targetEntity: Acted\LegalDocsBundle\Entity\Media

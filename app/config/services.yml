@@ -17,3 +17,6 @@ services:
             - {name: twig.extension}
         calls:
             - [ setEntityManager, [ "@doctrine.orm.entity_manager" ] ]
+    app.form_login_authenticator:
+        class: Acted\LegalDocsBundle\Security\FormLoginAuthenticator
+        arguments: ["@service_container"]

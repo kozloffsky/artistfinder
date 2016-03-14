@@ -37,12 +37,13 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
     public function load(ObjectManager $manager)
     {
         $faker = $this->container->get('davidbadura_faker.faker');
+        $encoder = $this->container->get('security.password_encoder');
 
         $user = new User();
         $user->setFirstname($faker->firstName);
         $user->setLastname($faker->lastName);
         $user->setEmail($faker->unique()->email);
-        $user->setPasswordHash(md5($faker->password));
+        $user->setPasswordHash($encoder->encodePassword($user, 'Aa123654'));
         $user->setPrimaryPhone($faker->unique()->phoneNumber);
         $user->setActive(true);
         $user->setAvatar($faker->imageUrl);
@@ -144,6 +145,8 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
         $profile->addMedia($audio2);
         $manager->flush();
 
+        $this->addReference('photo1', $photo1);
+        $this->addReference('photo2', $photo2);
 
         $city = new RefCity();
         $city->setName($faker->city);

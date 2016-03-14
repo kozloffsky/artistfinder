@@ -1,0 +1,7 @@
+security_login:
+    path:     /login
+    defaults: { _controller: "ActedLegalDocsBundle:Security:login" }
+
+security_login_check:
+    path:     /login_check
+    defaults: { _controller: "ActedLegalDocsBundle:Security:loginCheck" }
