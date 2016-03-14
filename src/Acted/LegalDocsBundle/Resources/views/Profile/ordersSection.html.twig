@@ -1,4 +1,53 @@
-        {% for performance in performances %}
+            {% if user is defined and user %}
+
+                <div id="addNewPerformance"><i class="fa fa-plus"></i>Add new performance</div>
+
+                <article class="item clearfix addPerfomanceCreate emptyPerformance">
+                    <h2><span class="perfomanceTitleEdiatable"></span>
+                        <span class="price">Price: from EUR</span>
+                    </h2>
+                    <span class="performanceId hidden"></span>
+
+                        <form action="/media//edit" method="post" class="dropzone imagePerformanceChange">
+                        </form>
+                        <img class="preview" src="" alt="Preview">
+
+
+                    <div class="video">
+
+                            <form action="/media//edit" method="post" class="dropzone imagePerformanceChange">
+                            </form>
+                            <img src="" alt="">
+                            <span class="glyphicon glyphicon-play"></span>
+
+                            <div class="name">
+                                <div class="name-text"></div>
+                            </div>
+
+                    </div>
+
+
+                    <div class="info">
+                        <p class="perfomanceInfoEdiatable" data-type="textarea" data-pk="" data-title="">
+
+                        </p>
+
+                        <div class="controls">
+                            <div class="button-gradient follow">
+                                <button class="btn">REQUEST FREE QUOTE</button>
+                            </div>
+
+                            <p>
+                                <a href="#">Technical requirements</a>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+
+            {% endif %}
+
+            {% for performance in performances %}
 
             {% if user is defined and user %}
                 <article class="item clearfix">

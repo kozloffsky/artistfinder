@@ -85,8 +85,17 @@
         </section>
 
         <section class="media-content wrapper" id="section-audio" >
+            {% if user %}
+                <div class="col-md-6 add-audio-block">
+                    <form class="audioAddForm">
+                        <input type="text" class="form-control audioAdd">
+                    </form>
+                    <div id="addNewInputAudio"><i class="fa fa-plus"></i></div>
+                    <button type="submit" id="sendNewAudio" class="btn btn-default">Submit</button>
+                </div>
+                <div class="clearfix"></div>
+            {% endif %}
             {% for audio in artist.user.profile.audioList %}
-                {{ dump(audio) }}
                 <h2>{{ audio.name }}</h2>
                 <audio controls="true" name="media"><source src="{{ audio.link }}" type="audio/mpeg"></audio>
             {% endfor %}

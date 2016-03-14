@@ -2023,3 +2023,21 @@ section.used-by {
 {
     margin-bottom: 10px;
 }
+.imagePerformanceChange
+{
+    width: 395px;
+    position: absolute;
+    z-index: 10;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    height: 273px;
+    display: none;
+}
+#addNewPerformance
+{
+    cursor: pointer;
+}
+.addPerfomanceCreate
+{
+    display: none;
+}

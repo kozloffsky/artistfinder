@@ -184,6 +184,7 @@ $('.editOffer').click(function(e) {
             });
         }
     });
+    $(parentPerformance).find('.imagePerformanceChange').fadeIn();
 });
 
 $('.deleteOffer').click(function(){
@@ -196,6 +197,18 @@ $('.deleteOffer').click(function(){
     })
 });
 
+$('#addNewPerformance').on('click', function(){
+    var addNewBtn = $(this);
+    var performanceCreateBlock = $('.emptyPerformance');
+    var getNewBlockPerformance = $(performanceCreateBlock).clone();
+    getNewBlockPerformance.insertAfter(addNewBtn).removeClass('emptyPerformance').fadeIn();
+    var slug = $('#slug').text();
+    $.ajax({
+        type: 'POST',
+        url: '/profile/'+ slug +'/performance/new'
+    })
+});
+
 $('#addNewInputVideo').click(function(){
     var targetToAddField = $('#section-video .videoAddForm');
     $(targetToAddField).append('<input type="text" class="form-control videoAdd">')
@@ -205,7 +218,6 @@ $('#sendNewVideo').click(function(){
     var slug = $('#slug').text();
     $('#section-video .videoAddForm input').each(function(){
         var videoLink = $(this).val();
-        console.log(videoLink);
         postNewVideo(slug, videoLink)
     })
 });
@@ -215,6 +227,22 @@ function postNewVideo(slug, videoLink){
         type: "POST",
         url: '/profile/'+ slug +'/media/new',
         data: {"video": videoLink}
+    })
+}
+
+$('#sendNewAudio').click(function(){
+    var slug = $('#slug').text();
+    $('#section-audio .audioAddForm input').each(function(){
+        var audioLink = $(this).val();
+        postNewAudio(slug, audioLink)
+    })
+});
+
+function postNewAudio(slug, audioLink){
+    $.ajax({
+        type: "POST",
+        url: '/profile/'+ slug +'/media/new',
+        data: {"audio": audioLink}
     })
 }
 
