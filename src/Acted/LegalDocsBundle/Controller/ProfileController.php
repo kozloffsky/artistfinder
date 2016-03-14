@@ -70,8 +70,9 @@ class ProfileController extends Controller
     {
         //TODO: for debug only
         $em = $this->getDoctrine()->getManager();
-        $user = ($request->get('user'))
-            ? $em->getRepository('ActedLegalDocsBundle:User')->findOneById($request->get('user')) : null;
+        $user = ($request->query->get('user'))
+            ? $em->getRepository('ActedLegalDocsBundle:User')->findOneById($request->query->get('user')) :
+            $em->getRepository('ActedLegalDocsBundle:User')->findAll()[0];
         $performances = $this->getPerformances($artist, $request->get('page', 1));
         return $this->render('@ActedLegalDocs/Profile/ordersSection.html.twig', compact('performances', 'user'));
     }
@@ -93,8 +94,12 @@ class ProfileController extends Controller
 
     public function feedbacksAction(Request $request, Artist $artist)
     {
+        $em = $this->getDoctrine()->getManager();
+        $user = ($request->query->get('user'))
+            ? $em->getRepository('ActedLegalDocsBundle:User')->findOneById($request->query->get('user')) :
+            $em->getRepository('ActedLegalDocsBundle:User')->findAll()[0];
         $feedbacks = $this->getFeedbacks($artist,  $request->get('page', 1));
-        return $this->render('@ActedLegalDocs/Profile/feedbacksSection.html.twig', compact('feedbacks'));
+        return $this->render('@ActedLegalDocs/Profile/feedbacksSection.html.twig', compact('feedbacks', 'user'));
     }
 
     /**
