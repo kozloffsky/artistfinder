@@ -94,6 +94,7 @@ class ProfileController extends Controller
 
     public function feedbacksAction(Request $request, Artist $artist)
     {
+        $em = $this->getDoctrine()->getManager();
         $user = ($request->query->get('user'))
             ? $em->getRepository('ActedLegalDocsBundle:User')->findOneById($request->query->get('user')) :
             $em->getRepository('ActedLegalDocsBundle:User')->findAll()[0];
