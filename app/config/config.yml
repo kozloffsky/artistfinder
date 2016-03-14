@@ -116,3 +116,11 @@ jms_serializer:
             ActedLegalDocsBundle:
                 namespace_prefix: ""
                 path: "@ActedLegalDocsBundle/Resources/config/serializer"
+
+liip_imagine:
+    filter_sets:
+        thumbnail_filter:
+            format: jpeg
+            filters:
+                strip: ~
+                downscale: { max: [300, 200] }
