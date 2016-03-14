@@ -139,7 +139,6 @@ $('#editBiography').click(function(e) {
                 url: '/profile/' + slug + '/edit',
                 data: {"profile[description]": newValue}
             });
-            console.log(slug)
         }
     });
 });
@@ -155,7 +154,6 @@ $('#editUsername').click(function(e) {
                 url: '/profile/' + slug + '/edit',
                 data: {"artist[name]": newValue}
             });
-            console.log(slug)
         }
     });
 });
@@ -174,6 +172,7 @@ $('.editOffer').click(function(e) {
             });
         }
     });
+
     $(parentPerformance).find('.perfomanceTitleEdiatable').editable({
         type: 'text',
         success: function(response, newValue) {
@@ -199,15 +198,46 @@ $('.deleteOffer').click(function(){
 
 $('#addNewPerformance').on('click', function(){
     var addNewBtn = $(this);
+    var slug = $('#slug').text();
     var performanceCreateBlock = $('.emptyPerformance');
     var getNewBlockPerformance = $(performanceCreateBlock).clone();
     getNewBlockPerformance.insertAfter(addNewBtn).removeClass('emptyPerformance').fadeIn();
-    var slug = $('#slug').text();
-    $.ajax({
-        type: 'POST',
-        url: '/profile/'+ slug +'/performance/new'
-    })
+    $(getNewBlockPerformance).find('.perfomanceTitleEdiatable').editable({
+        type: 'text',
+        success: function (response, newValue) {
+            $.ajax({
+                type: "POST",
+                url: '/profile/'+ slug +'/performance/new',
+                data: {"performance[title]": newValue},
+                success: function(responseText){
+                    var newPerformanceId = responseText.performance.id;
+                    $(getNewBlockPerformance).find('.performanceId').html(responseText.performance.id);
+                    createNewPerformance(getNewBlockPerformance, newPerformanceId)
+                }
+            });
+        }
+    });
 });
+
+function createNewPerformance(getNewBlockPerformance, newPerformanceId){
+    console.log(newPerformanceId);
+    var imagesDropzoneAdd = $(getNewBlockPerformance).find('.imagePerformanceChange');
+    imagesDropzoneAdd.attr('action', '/profile/performance/'+ newPerformanceId +'/media/new');
+    imagesDropzoneAdd.fadeIn();
+    $(imagesDropzoneAdd).each(function(){
+        new Dropzone(this);
+    });
+    $(getNewBlockPerformance).find('.perfomanceInfoEdiatable').editable({
+        type: 'text',
+        success: function(response, newValue) {
+            $.ajax({
+                type: "PATCH",
+                url: '/profile/performance/' + newPerformanceId + '/edit',
+                data: {"performance[techRequirement]": newValue}
+            });
+        }
+    });
+}
 
 $('#addNewInputVideo').click(function(){
     var targetToAddField = $('#section-video .videoAddForm');
