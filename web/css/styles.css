@@ -908,7 +908,7 @@ a.editable-click.editable-disabled:hover {
 .dropzone .dz-preview.dz-file-preview .dz-details {
     opacity: 1; }
 .dropzone .dz-preview.dz-image-preview {
-    background: white; }
+    background: transparent; }
 .dropzone .dz-preview.dz-image-preview .dz-details {
     -webkit-transition: opacity 0.2s linear;
     transition: opacity 0.2s linear; }
@@ -4568,4 +4568,22 @@ section.used-by {
 .videoAdd
 {
     margin-bottom: 10px;
+}
+.imagePerformanceChange
+{
+    width: 395px;
+    position: absolute;
+    z-index: 10;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    height: 273px;
+    display: none;
+}
+#addNewPerformance
+{
+    cursor: pointer;
+}
+.addPerfomanceCreate
+{
+    display: none;
 }
