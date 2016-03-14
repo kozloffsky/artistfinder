@@ -68,8 +68,12 @@ class ProfileController extends Controller
 
     public function performancesAction(Request $request, Artist $artist)
     {
+        //TODO: for debug only
+        $em = $this->getDoctrine()->getManager();
+        $user = ($request->get('user'))
+            ? $em->getRepository('ActedLegalDocsBundle:User')->findOneById($request->get('user')) : null;
         $performances = $this->getPerformances($artist, $request->get('page', 1));
-        return $this->render('@ActedLegalDocs/Profile/ordersSection.html.twig', compact('performances'));
+        return $this->render('@ActedLegalDocs/Profile/ordersSection.html.twig', compact('performances', 'user'));
     }
 
     public function offerEditAction(Request $request, Offer $offer)

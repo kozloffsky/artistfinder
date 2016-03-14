@@ -9,7 +9,7 @@ class AppKernel extends Kernel
     {
 //        https://github.com/sonata-project/SonataAdminBundle/issues/3468
 
-        $bundles = array(
+        $bundles = [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -25,9 +25,9 @@ class AppKernel extends Kernel
             new KnpU\GuardBundle\KnpUGuardBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
-        );
+        ];
 
-        if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
+        if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
