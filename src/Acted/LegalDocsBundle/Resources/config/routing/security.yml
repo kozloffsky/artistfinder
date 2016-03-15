@@ -5,6 +5,7 @@ security_login:
 security_register:
     path:     /register
     defaults: { _controller: "ActedLegalDocsBundle:Security:register" }
+    methods: POST
 
 security_confirm:
     path:     /confirm/{token}
