@@ -1,0 +1,13 @@
+Acted\LegalDocsBundle\Entity\User:
+  exclusion_policy: NONE
+  properties:
+    passwordHash:
+      exclude: true
+    confirmationToken:
+      exclude: true
+    roles:
+      exclude: true
+  virtual_properties:
+      getRoles:
+        serialized_name: roles
+        type: array<string>
