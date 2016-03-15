@@ -3,6 +3,8 @@
 namespace Acted\LegalDocsBundle\Security;
 
 
+use Acted\LegalDocsBundle\Entity\User;
+use Acted\LegalDocsBundle\Security\Exception\ActivationException;
 use KnpU\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -128,6 +130,10 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
         if (!$encoder->isPasswordValid($user, $plainPassword)) {
             // throw any AuthenticationException
             throw new BadCredentialsException();
+        }
+
+        if($user instanceof User && (!$user->getActive())){
+            throw new ActivationException();
         }
     }
 }

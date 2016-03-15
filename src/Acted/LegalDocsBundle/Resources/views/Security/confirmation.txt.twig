@@ -1,0 +1,12 @@
+{% block subject %}
+{% autoescape false %}
+Hello {{ user.firstname }} {{ user.lastname }}!
+{% endautoescape %}
+{% endblock %}
+{% block body_text %}
+{% autoescape false %}
+To finish activating your account - please visit {{ confirmationUrl }}
+
+Regards,the Team.
+{% endautoescape %}
+{% endblock %}
