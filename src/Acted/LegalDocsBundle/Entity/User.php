@@ -23,10 +23,6 @@ class User implements UserInterface
      */
     private $lastname;
 
-    /**
-     * @var string
-     */
-    private $email;
 
     /**
      * @var string
@@ -46,7 +42,7 @@ class User implements UserInterface
     /**
      * @var boolean
      */
-    private $active;
+    private $active = false;
 
 
     /**
@@ -106,30 +102,7 @@ class User implements UserInterface
     {
         return $this->lastname;
     }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
+    
 
     /**
      * Set passwordHash
@@ -363,7 +336,10 @@ class User implements UserInterface
      */
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        $roles =  $this->roles->map(function($entry) { /** @var RefRole $entry */
+            return $entry->getCode();
+        });
+        return $roles->toArray();
     }
 
     /**
@@ -474,4 +450,35 @@ class User implements UserInterface
     {
         $this->roles->removeElement($role);
     }
+
+    /**
+     * @var string
+     */
+    private $email;
+
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
 }
