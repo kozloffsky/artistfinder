@@ -409,4 +409,69 @@ class User implements UserInterface
     {
 
     }
+    /**
+     * @var string
+     */
+    private $confirmationToken;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $roles;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set confirmationToken
+     *
+     * @param string $confirmationToken
+     *
+     * @return User
+     */
+    public function setConfirmationToken($confirmationToken)
+    {
+        $this->confirmationToken = $confirmationToken;
+
+        return $this;
+    }
+
+    /**
+     * Get confirmationToken
+     *
+     * @return string
+     */
+    public function getConfirmationToken()
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
+     * Add role
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefRole $role
+     *
+     * @return User
+     */
+    public function addRole(\Acted\LegalDocsBundle\Entity\RefRole $role)
+    {
+        $this->roles[] = $role;
+
+        return $this;
+    }
+
+    /**
+     * Remove role
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefRole $role
+     */
+    public function removeRole(\Acted\LegalDocsBundle\Entity\RefRole $role)
+    {
+        $this->roles->removeElement($role);
+    }
 }
