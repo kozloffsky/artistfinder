@@ -23,7 +23,12 @@ class SecurityController extends Controller
 
     public function loginCheckAction()
     {
-        // will never be executed
+        throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
+    }
+
+    public function logoutAction()
+    {
+        throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
     }
 
     public function registerAction(Request $request)
