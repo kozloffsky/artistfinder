@@ -18,6 +18,7 @@ class PerformanceRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('pr.user', 'u')
             ->innerJoin('u.artist', 'a')
             ->where('a = :artist')
+            ->orderBy('p.id', 'DESC')
             ->setParameter('artist', $artist)
             ->getQuery();
     }
