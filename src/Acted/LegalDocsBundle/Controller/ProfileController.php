@@ -72,7 +72,7 @@ class ProfileController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = ($request->query->get('user'))
             ? $em->getRepository('ActedLegalDocsBundle:User')->findOneById($request->query->get('user')) :
-            $em->getRepository('ActedLegalDocsBundle:User')->findAll()[0];
+            null;
         $performances = $this->getPerformances($artist, $request->get('page', 1));
         return $this->render('@ActedLegalDocs/Profile/ordersSection.html.twig', compact('performances', 'user'));
     }
@@ -97,7 +97,7 @@ class ProfileController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = ($request->query->get('user'))
             ? $em->getRepository('ActedLegalDocsBundle:User')->findOneById($request->query->get('user')) :
-            $em->getRepository('ActedLegalDocsBundle:User')->findAll()[0];
+            null;
         $feedbacks = $this->getFeedbacks($artist,  $request->get('page', 1));
         return $this->render('@ActedLegalDocs/Profile/feedbacksSection.html.twig', compact('feedbacks', 'user'));
     }
