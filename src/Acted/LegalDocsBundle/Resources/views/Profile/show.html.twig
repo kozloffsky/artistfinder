@@ -14,10 +14,10 @@
         <div class="title">
                 <span>
                     {{ artist.ratings|length }}
-                    {% if artist.ratings|length == 1 %}
+                    {% if artist.ratings|length <= 1 %}
                     Feedback
                     {% else %}
-                    Feedback's
+                    Feedbacks
                     {% endif %}
                 </span>
 
