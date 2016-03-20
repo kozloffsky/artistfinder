@@ -23,7 +23,7 @@
         <div class="info">
             {% if user %}
                 <div href="#" id="username" class="username" data-type="text" data-pk="{{ artist.id }}" data-title="">{{ artist.name }}</div>
-                <div id="editUsername" class="editText"><i class="fa fa-pencil-square-o"></i></div>
+                <div id="editUsername" class="editText"><a href="#"><i class="fa fa-pencil-square-o"></i></a></div>
             {% else %}
                 <div class="username">{{ artist.name }}</div>
             {% endif %}
