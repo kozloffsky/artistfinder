@@ -5,6 +5,7 @@ namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Form\RegisterType;
+use Acted\LegalDocsBundle\Pojo\RegisterUser;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -38,25 +39,46 @@ class SecurityController extends Controller
         $serializer = $this->get('jms_serializer');
 
         if($form->isSubmitted() && $form->isValid()) {
+            /** @var RegisterUser $data */
             $data = $form->getData();
 
-            if($data['role'] == 'ROLE_CLIENT') {
+            $userManager = $this->get('app.user.manager');
+            $validator = $this->get('validator');
+            $em = $this->getDoctrine()->getManager();
 
-                $userManager = $this->get('app.user.manager');
-                $em = $this->getDoctrine()->getManager();
-                $validator = $this->get('validator');
+            $user = $userManager->newUser($data);
+            if ($data->getRole() == 'ROLE_ARTIST') {
+                $user->setPrimaryPhone($data->getPhone());
+            }
 
-                $user = $userManager->newUser($data['firstname'], $data['lastname'], $data['email'], $data['password'], $data['role']);
+            $validationErrors = $validator->validate($user);
+            if (count($validationErrors) > 0) {
+                return new JsonResponse($serializer->toArray($validationErrors), 400);
+            }
 
-                $validationErrors = $validator->validate($user);
-                if (count($validationErrors) == 0) {
-                    $em->persist($user);
-                    $em->flush();
-                    $userManager->sendConfirmationEmailMessage($user);
-                    return new JsonResponse(['status' => 'success', 'user' => $serializer->toArray($user)]);
-                } else {
+            $em->persist($user);
+
+            if ($data->getRole() == 'ROLE_ARTIST') {
+                $profile = $userManager->newProfile($data);
+                $profile->setUser($user);
+                $validationErrors = $validator->validate($profile);
+                if (count($validationErrors) > 0) {
                     return new JsonResponse($serializer->toArray($validationErrors), 400);
                 }
+
+                $artist = $userManager->newArtist($data);
+                $artist->setUser($user);
+                $validationErrors = $validator->validate($artist);
+                if (count($validationErrors) > 0) {
+                    return new JsonResponse($serializer->toArray($validationErrors), 400);
+                }
+
+                $em->persist($profile);
+                $em->persist($artist);
+
+                $em->flush();
+
+                return new JsonResponse($serializer->toArray($user));
             }
         }
 
