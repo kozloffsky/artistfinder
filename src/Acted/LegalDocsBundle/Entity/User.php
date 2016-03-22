@@ -187,6 +187,10 @@ class User implements UserInterface
     {
         $this->active = $active;
 
+        if (!empty($this->getProfile())) {
+            $this->getProfile()->setActive($active);
+        }
+
         return $this;
     }
 
