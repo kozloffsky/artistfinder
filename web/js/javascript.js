@@ -3903,7 +3903,7 @@ $('#editBiography').click(function(e) {
     });
 });
 
-$('#editUsername').click(function(e) {
+/*$('#editUsername').click(function(e) {
     e.stopPropagation();
     $('#username').editable({
         type: 'text',
@@ -3916,7 +3916,7 @@ $('#editUsername').click(function(e) {
             });
         }
     });
-});
+});*/
 
 $('.editOffer').click(function(e) {
     e.stopPropagation();
@@ -3947,21 +3947,30 @@ $('.editOffer').click(function(e) {
 });
 
 $('.deleteOffer').click(function(){
+    console.log('ddddd')
     var parentPerformance = $(this).parents('article');
     var performanceId = $(parentPerformance).children('.performanceId').text();
     var slug = $('#slug').text();
+    console.log(performanceId);
+    deleteOffer(slug, performanceId, parentPerformance)
+});
+
+function deleteOffer(slug, performanceId, parentPerformance){
     $.ajax({
         type: "DELETE",
-        url: '/profile/' + slug + '/performance/' + performanceId
+        url: '/profile/' + slug + '/performance/' + performanceId,
+        success: function(){
+            $(parentPerformance).remove();
+        }
     })
-});
+}
 
 $('#addNewPerformance').on('click', function(){
     var addNewBtn = $(this);
     var slug = $('#slug').text();
     var performanceCreateBlock = $('.emptyPerformance');
     var getNewBlockPerformance = $(performanceCreateBlock).clone();
-    getNewBlockPerformance.insertAfter(addNewBtn).removeClass('emptyPerformance').fadeIn();
+    getNewBlockPerformance.insertBefore(addNewBtn).removeClass('emptyPerformance').fadeIn();
     $(getNewBlockPerformance).find('.perfomanceTitleEdiatable').editable({
         type: 'text',
         success: function (response, newValue) {

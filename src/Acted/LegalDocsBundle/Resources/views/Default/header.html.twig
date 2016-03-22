@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
 </head>
 <body>
-<header>
+<header class="home">
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -23,9 +23,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"><img src="{{ asset('assets/images/ACTED.png') }}" alt=""></a>
+                <a class="navbar-brand" href="{{ app.request.getSchemeAndHttpHost() }}"><img src="{{ asset('assets/images/ACTED.png') }}" alt=""></a>
 
-                {% if user %}
+                {% if app.user %}
                 <div class="profile-dropdown dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">
@@ -76,7 +76,7 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    {% if user %}
+                    {% if app.user %}
                     <li class="bookings"><a href="#">My bookings
                             <div class="underline">
                                 <div class="top"></div>

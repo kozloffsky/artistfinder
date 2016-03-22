@@ -4515,13 +4515,13 @@ section.used-by {
 {
     float: left;
     position: relative;
-    text-align: left;
+    text-align: right;
 }
 #editAvatar
 {
     position: relative;
     color: #000;
-    font-size: 34px;
+    font-size: 28px;
 }
 .info #username
 {
@@ -4540,10 +4540,10 @@ section.used-by {
 }
 #editBackground
 {
-    font-size: 50px;
-    right: 0;
+    font-size: 35px;
+    right: 20px;
     position: absolute;
-    bottom: 130px;
+    top: 70px;
 }
 #editBiography
 {
@@ -4582,6 +4582,7 @@ section.used-by {
 #addNewPerformance
 {
     cursor: pointer;
+    margin-top: 30px;
 }
 .addPerfomanceCreate
 {

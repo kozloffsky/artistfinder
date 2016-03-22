@@ -1,51 +1,3 @@
-            {% if user is defined and user %}
-
-                <div id="addNewPerformance"><button type="button" class="btn btn-success fa fa-plus"> Add new performance</button></div>
-
-                <article class="item clearfix addPerfomanceCreate emptyPerformance">
-                    <h2><span class="perfomanceTitleEdiatable" data-type="textarea" data-pk="" data-title="">Your performance title</span>
-                        <span class="price">Price: from EUR</span>
-                    </h2>
-                    <span class="performanceId hidden"></span>
-
-                        <form action="/media//edit" method="post" class="dropzone imagePerformanceChange">
-                        </form>
-                        <img class="preview" src="" alt="Preview">
-
-
-                    <div class="video">
-
-                            <form action="/media//edit" method="post" class="dropzone imagePerformanceChange">
-                            </form>
-                            <img src="" alt="">
-                            <span class="glyphicon glyphicon-play"></span>
-
-                            <div class="name">
-                                <div class="name-text"></div>
-                            </div>
-
-                    </div>
-
-
-                    <div class="info">
-                        <p class="perfomanceInfoEdiatable" data-type="textarea" data-pk="" data-title="">
-                            Your info text
-                        </p>
-
-                        <div class="controls">
-                            <div class="button-gradient follow">
-                                <button class="btn">REQUEST FREE QUOTE</button>
-                            </div>
-
-                            <p>
-                                <a href="#">Technical requirements</a>
-                            </p>
-                        </div>
-                    </div>
-                </article>
-
-
-            {% endif %}
 
             {% for performance in performances|reverse %}
 
@@ -137,6 +89,57 @@
             {% endif %}
 
         {% endfor %}
+
+            {% if user is defined and user %}
+
+                <article class="item clearfix addPerfomanceCreate emptyPerformance">
+                    <h2><span class="perfomanceTitleEdiatable" data-type="textarea" data-pk="" data-title="">Your performance title</span>
+                        <span class="price">Price: from EUR</span>
+                        <div class="deleteOffer"><button type="button" class="btn btn-danger fa fa-trash"></button></div>
+                    </h2>
+                    <span class="performanceId hidden"></span>
+
+                    <form action="/media//edit" method="post" class="dropzone imagePerformanceChange">
+                    </form>
+                    <img class="preview" src="" alt="Preview">
+
+
+                    <div class="video">
+
+                        <form action="/media//edit" method="post" class="dropzone imagePerformanceChange">
+                        </form>
+                        <img src="" alt="">
+                        <span class="glyphicon glyphicon-play"></span>
+
+                        <div class="name">
+                            <div class="name-text"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="info">
+                        <p class="perfomanceInfoEdiatable" data-type="textarea" data-pk="" data-title="">
+                            Your info text
+                        </p>
+
+                        <div class="controls">
+                            <div class="button-gradient follow">
+                                <button class="btn">REQUEST FREE QUOTE</button>
+                            </div>
+
+                            <p>
+                                <a href="#">Technical requirements</a>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+                <div id="addNewPerformance">
+                    <button type="button" class="btn btn-success"><i class="fa fa-plus"></i> Add new performance</button>
+                </div>
+            {% endif %}
+
         <div class="navigation">
             {{ knp_pagination_render(performances) }}
         </div>
