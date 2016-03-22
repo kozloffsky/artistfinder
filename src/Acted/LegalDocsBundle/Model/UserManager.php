@@ -69,12 +69,17 @@ class UserManager
             throw new \InvalidArgumentException();
         }
 
-        $encoder = $this->encoderFactory->getEncoder($user);
-        $user->setPasswordHash($encoder->encodePassword($registerUser->getPassword(), $user->getSalt()));
-
+        $user = $this->updatePassword($user, $registerUser->getPassword());
         $user->setConfirmationToken($this->generateToken());
         $user->addRole($role);
 
+        return $user;
+    }
+
+    public function updatePassword(User $user, $plainPassword)
+    {
+        $encoder = $this->encoderFactory->getEncoder($user);
+        $user->setPasswordHash($encoder->encodePassword($plainPassword, $user->getSalt()));
         return $user;
     }
 
@@ -108,7 +113,17 @@ class UserManager
         $this->sendEmailMessage($rendered, $this->mailFrom, $user->getEmail());
     }
 
-    protected function generateToken()
+    public function sendRessetingEmailMessage(User $user)
+    {
+        $url = $this->router->generate('security_resetting_reset', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $rendered = $this->templating->render('@ActedLegalDocs/Security/resetting.txt.twig', [
+            'user' => $user,
+            'confirmationUrl' =>  $url
+        ]);
+        $this->sendEmailMessage($rendered, $this->mailFrom, $user->getEmail());
+    }
+
+    public function generateToken()
     {
         return rtrim(strtr(base64_encode($this->getRandomNumber()), '+/', '-_'), '=');
     }

@@ -21,3 +21,4 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     per_page: 3
+    resetting.token_ttl: 86400

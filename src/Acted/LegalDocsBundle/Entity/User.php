@@ -485,4 +485,39 @@ class User implements UserInterface
         return $this->email;
     }
 
+    /**
+     * @var \DateTime
+     */
+    private $passwordRequestedAt;
+
+
+    /**
+     * Set passwordRequestedAt
+     *
+     * @param \DateTime $passwordRequestedAt
+     *
+     * @return User
+     */
+    public function setPasswordRequestedAt($passwordRequestedAt)
+    {
+        $this->passwordRequestedAt = $passwordRequestedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get passwordRequestedAt
+     *
+     * @return \DateTime
+     */
+    public function getPasswordRequestedAt()
+    {
+        return $this->passwordRequestedAt;
+    }
+
+    public function isPasswordRequestNonExpired($ttl)
+    {
+        return $this->getPasswordRequestedAt() instanceof \DateTime &&
+        $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
+    }
 }
