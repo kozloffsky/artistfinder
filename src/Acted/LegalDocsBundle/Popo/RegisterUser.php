@@ -1,6 +1,6 @@
 <?php
 
-namespace Acted\LegalDocsBundle\Pojo;
+namespace Acted\LegalDocsBundle\Popo;
 
 final class RegisterUser
 {

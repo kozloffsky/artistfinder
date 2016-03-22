@@ -5,7 +5,7 @@ namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Form\RegisterType;
-use Acted\LegalDocsBundle\Pojo\RegisterUser;
+use Acted\LegalDocsBundle\Popo\RegisterUser;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

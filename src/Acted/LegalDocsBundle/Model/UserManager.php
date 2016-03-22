@@ -12,7 +12,7 @@ namespace Acted\LegalDocsBundle\Model;
 use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Profile;
 use Acted\LegalDocsBundle\Entity\User;
-use Acted\LegalDocsBundle\Pojo\RegisterUser;
+use Acted\LegalDocsBundle\Popo\RegisterUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;

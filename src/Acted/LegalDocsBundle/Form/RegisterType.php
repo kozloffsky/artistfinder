@@ -4,7 +4,7 @@ namespace Acted\LegalDocsBundle\Form;
 
 use Acted\LegalDocsBundle\Entity\Category;
 use Acted\LegalDocsBundle\Entity\RefCountry;
-use Acted\LegalDocsBundle\Pojo\RegisterUser;
+use Acted\LegalDocsBundle\Popo\RegisterUser;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
