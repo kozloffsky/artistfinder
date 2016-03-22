@@ -35,7 +35,7 @@ class Profile
     /**
      * @var boolean
      */
-    private $isInternational;
+    private $isInternational = false;
 
     /**
      * @var integer
@@ -50,7 +50,7 @@ class Profile
     /**
      * @var boolean
      */
-    private $active;
+    private $active = false;
 
 
     /**

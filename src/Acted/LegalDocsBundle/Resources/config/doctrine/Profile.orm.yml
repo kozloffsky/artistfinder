@@ -9,27 +9,27 @@ Acted\LegalDocsBundle\Entity\Profile:
             generator:
                 strategy: AUTO
     fields:
-        userId:
-          type: integer(20)
-          notnull: true
         title:
           type: string(128)
-          notnull: true
         header:
           type: string(512)
+          nullable: true
         description:
           type: text
+          nullable: true
         isInternational:
           type: boolean
-          notnull: true
+          options:
+            default: false
         performanceRange:
           type: integer(8)
+          nullable: true
         paymentTypeId:
           type: integer(11)
-          notnull: true
         active:
           type: boolean
-          notnull: true
+          options:
+            default: false
     oneToOne:
         user:
           targetEntity: Acted\LegalDocsBundle\Entity\User
