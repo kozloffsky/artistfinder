@@ -8,6 +8,11 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('ActedLegalDocsBundle:Default:index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $homespotlight = $em->getRepository('ActedLegalDocsBundle:Homespotlight')->findAll();
+        $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
+
+        return $this->render('ActedLegalDocsBundle:Default:index.html.twig',
+            compact('homespotlight', 'categories'));
     }
 }

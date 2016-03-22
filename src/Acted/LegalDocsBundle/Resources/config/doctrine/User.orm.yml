@@ -23,17 +23,22 @@ Acted\LegalDocsBundle\Entity\User:
         primaryPhone:
           type: string(32)
           unique: true
+          nullable: true
         secondaryPhone:
           type: string(32)
           nullable: true
         active:
           type: boolean
-          notnull: true
+          options:
+            default: false
         avatar:
           type: string(256)
           nullable: true
         background:
           type: string(256)
+          nullable: true
+        confirmationToken:
+          type: string(255)
           nullable: true
     oneToOne:
         profile:
@@ -42,5 +47,9 @@ Acted\LegalDocsBundle\Entity\User:
         artist:
           targetEntity: Acted\LegalDocsBundle\Entity\Artist
           mappedBy: user
+    manyToMany:
+        roles:
+          targetEntity: Acted\LegalDocsBundle\Entity\RefRole
+          inversedBy: users
 
     lifecycleCallbacks: {  }

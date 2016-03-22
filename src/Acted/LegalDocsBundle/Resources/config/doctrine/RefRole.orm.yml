@@ -16,4 +16,8 @@ Acted\LegalDocsBundle\Entity\RefRole:
         name:
           type: string(64)
           notnull: true
+    manyToMany:
+        users:
+          targetEntity: Acted\LegalDocsBundle\Entity\User
+          mappedBy: roles
     lifecycleCallbacks: {  }
