@@ -147,7 +147,7 @@ class SecurityController extends Controller
             return $this->redirect($this->generateUrl('acted_legal_docs_homepage'));
         }
 
-        return $this->render('@ActedLegalDocs/requestResetting.html.twig', [
+        return $this->render('@ActedLegalDocs/Security/requestResetting.html.twig', [
             'form' => $form->createView(),
         ]);
     }
