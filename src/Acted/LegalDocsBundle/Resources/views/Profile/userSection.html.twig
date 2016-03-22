@@ -21,12 +21,13 @@
         <img class="avatar" src="{{ artist.user.avatar }}" alt="Avatar">
         {% endif %}
         <div class="info">
-            {% if user %}
+            {#{% if user %}
                 <div href="#" id="username" class="username" data-type="text" data-pk="{{ artist.id }}" data-title="">{{ artist.name }}</div>
                 <div id="editUsername" class="editText"><i class="fa fa-pencil-square-o"></i></div>
             {% else %}
                 <div class="username">{{ artist.name }}</div>
-            {% endif %}
+            {% endif %}#}
+            <div class="username">{{ artist.name }}</div>
             <div class="specializations">
                 <ul>
                     {% for category in artist.user.profile.categories %}
