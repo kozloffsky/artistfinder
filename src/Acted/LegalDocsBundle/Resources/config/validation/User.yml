@@ -6,3 +6,4 @@ Acted\LegalDocsBundle\Entity\User:
           min: 3
   constraints:
     - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: primaryPhone
