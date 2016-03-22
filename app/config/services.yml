@@ -30,3 +30,6 @@ services:
           - "@templating.engine.twig"
           - "@router"
           - "%mailer_from_address%"
+
+    app.form_errors_serializer:
+        class: Acted\LegalDocsBundle\FormErrors\FormErrorsSerializer

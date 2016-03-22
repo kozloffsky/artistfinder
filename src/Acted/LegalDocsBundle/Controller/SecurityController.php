@@ -94,7 +94,7 @@ class SecurityController extends Controller
             return new JsonResponse($serializer->toArray($user));
         }
 
-        return new JsonResponse($serializer->toArray($form->getErrors()), 400);
+        return new JsonResponse($this->get('app.form_errors_serializer')->serializeFormErrors($form), 400);
     }
 
     public function confirmAction($token)
