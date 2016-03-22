@@ -12,8 +12,13 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Count;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class RegisterType extends AbstractType
 {
@@ -25,14 +30,31 @@ class RegisterType extends AbstractType
                 'choices' => ['ROLE_ARTIST', 'ROLE_CLIENT'],
                 'constraints' => [new NotBlank()]]
             )
+
             ->add('firstname', TextType::class, ['constraints' => [new NotBlank()]])
+
             ->add('lastname', TextType::class, ['constraints' => [new NotBlank()]])
-            ->add('email', EmailType::class, ['constraints' => [new NotBlank()]])
-            ->add('password', RepeatedType::class, ['constraints' => [new NotBlank()]])
-            ->add('categories', EntityType::class, ['class' => Category::class, 'multiple' => true])
-            ->add('name')
-            ->add('country', EntityType::class, ['class' => RefCountry::class])
-            ->add('phone')
+
+            ->add('email', EmailType::class, ['constraints' => [new NotBlank(), new Email()]])
+
+            ->add('password', RepeatedType::class, ['constraints' => [new NotBlank(), new Length(['min' => 6])]])
+
+            ->add('categories', EntityType::class, [
+                'class' => Category::class,
+                'multiple' => true,
+                'constraints' => [new Count(['min' => 1, 'groups' => 'artist'])]])
+
+            ->add('name', TextType::class, ['constraints' => [new NotBlank(['groups' => 'artist'])]])
+
+            ->add('country', EntityType::class, [
+                'class' => RefCountry::class,
+                'constraints' => [new NotBlank(['groups' => 'artist'])]]
+            )
+
+            ->add('phone', TextType::class, ['constraints' => [
+                new NotBlank(['groups' => 'artist']),
+                new Regex(['pattern' => '/^[\d\+\(\) -]+$/'])]]
+            )
         ;
     }
 
@@ -42,6 +64,14 @@ class RegisterType extends AbstractType
             'data_class' => RegisterUser::class,
             'csrf_protection' => false,
             'allow_extra_fields' => true,
+            'validation_groups' => function (FormInterface $form) {
+                /** @var RegisterUser $data */
+                $data = $form->getData();
+                if ($data->getRole() == 'ROLE_ARTIST') {
+                    return ['Default', 'artist'];
+                }
+                return ['Default'];
+            }
         ]);
 
     }
