@@ -13,6 +13,7 @@ Acted\LegalDocsBundle\Entity\Artist:
           type: string(128)
         slug:
           type: string(128)
+          unique: true
         assistantName:
           type: string(128)
           nullable: true
@@ -31,6 +32,8 @@ Acted\LegalDocsBundle\Entity\Artist:
     manyToOne:
         city:
           targetEntity: Acted\LegalDocsBundle\Entity\RefCity
+        country:
+          targetEntity: Acted\LegalDocsBundle\Entity\RefCountry
     oneToOne:
         user:
           targetEntity: Acted\LegalDocsBundle\Entity\User

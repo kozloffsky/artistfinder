@@ -124,3 +124,5 @@ liip_imagine:
             filters:
                 strip: ~
                 downscale: { max: [300, 200] }
+
+nelmio_api_doc: ~

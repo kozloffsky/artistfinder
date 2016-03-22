@@ -408,4 +408,33 @@ class Artist
     {
         return $this->getName();
     }
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\RefCountry
+     */
+    private $country;
+
+
+    /**
+     * Set country
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefCountry $country
+     *
+     * @return Artist
+     */
+    public function setCountry(\Acted\LegalDocsBundle\Entity\RefCountry $country = null)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return \Acted\LegalDocsBundle\Entity\RefCountry
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
 }

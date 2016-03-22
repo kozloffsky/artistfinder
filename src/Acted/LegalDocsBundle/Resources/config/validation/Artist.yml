@@ -4,3 +4,6 @@ Acted\LegalDocsBundle\Entity\Artist:
       - NotBlank: ~
       - Length:
           min: 3
+  constraints:
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: slug

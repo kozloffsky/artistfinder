@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new KnpU\GuardBundle\KnpUGuardBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

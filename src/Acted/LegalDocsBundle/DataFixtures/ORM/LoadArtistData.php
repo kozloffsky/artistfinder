@@ -12,6 +12,7 @@ namespace Acted\LegalDocsBundle\DataFixtures\ORM;
 use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Media;
 use Acted\LegalDocsBundle\Entity\Profile;
+use Acted\LegalDocsBundle\Entity\RefCountry;
 use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Entity\RefCity;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -147,6 +148,18 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
 
         $this->addReference('photo1', $photo1);
         $this->addReference('photo2', $photo2);
+
+        $france = new RefCountry();
+        $france->setName('France');
+        $uk = new RefCountry();
+        $uk->setName('United Kingdom');
+        $germany = new RefCountry();
+        $germany->setName('Germany');
+
+        $manager->persist($france);
+        $manager->persist($uk);
+        $manager->persist($germany);
+        $manager->flush();
 
         $city = new RefCity();
         $city->setName($faker->city);

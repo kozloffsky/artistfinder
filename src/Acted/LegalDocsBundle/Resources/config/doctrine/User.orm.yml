@@ -40,6 +40,9 @@ Acted\LegalDocsBundle\Entity\User:
         confirmationToken:
           type: string(255)
           nullable: true
+        passwordRequestedAt:
+          type: datetime
+          nullable: true
     oneToOne:
         profile:
           targetEntity: Acted\LegalDocsBundle\Entity\Profile
