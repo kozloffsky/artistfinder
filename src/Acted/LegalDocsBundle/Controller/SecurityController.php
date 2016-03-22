@@ -52,34 +52,30 @@ class SecurityController extends Controller
             }
 
             $validationErrors = $validator->validate($user);
-            if (count($validationErrors) > 0) {
-                return new JsonResponse($serializer->toArray($validationErrors), 400);
-            }
 
             $em->persist($user);
 
             if ($data->getRole() == 'ROLE_ARTIST') {
                 $profile = $userManager->newProfile($data);
                 $profile->setUser($user);
-                $validationErrors = $validator->validate($profile);
-                if (count($validationErrors) > 0) {
-                    return new JsonResponse($serializer->toArray($validationErrors), 400);
-                }
+                $validationErrors->addAll($validator->validate($profile));
 
                 $artist = $userManager->newArtist($data);
                 $artist->setUser($user);
-                $validationErrors = $validator->validate($artist);
-                if (count($validationErrors) > 0) {
-                    return new JsonResponse($serializer->toArray($validationErrors), 400);
-                }
+                $validationErrors->addAll($validator->validate($artist));
 
                 $em->persist($profile);
                 $em->persist($artist);
-
-                $em->flush();
-
-                return new JsonResponse($serializer->toArray($user));
             }
+
+
+            if (count($validationErrors) > 0) {
+                return new JsonResponse($serializer->toArray($validationErrors), 400);
+            }
+
+            $em->flush();
+            $userManager->sendConfirmationEmailMessage($user);
+            return new JsonResponse($serializer->toArray($user));
         }
 
         return new JsonResponse($serializer->toArray($form->getErrors()), 400);
