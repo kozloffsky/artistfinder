@@ -2,6 +2,19 @@ security_login:
     path:     /login
     defaults: { _controller: "ActedLegalDocsBundle:Security:login" }
 
+security_register:
+    path:     /register
+    defaults: { _controller: "ActedLegalDocsBundle:Security:register" }
+    methods: POST
+
+security_confirm:
+    path:     /confirm/{token}
+    defaults: { _controller: "ActedLegalDocsBundle:Security:confirm" }
+
 security_login_check:
     path:     /login_check
     defaults: { _controller: "ActedLegalDocsBundle:Security:loginCheck" }
+
+security_logout:
+    path:     /logout
+    defaults: { _controller: "ActedLegalDocsBundle:Security:logout" }

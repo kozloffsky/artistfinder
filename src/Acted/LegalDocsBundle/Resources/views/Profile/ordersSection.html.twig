@@ -1,6 +1,6 @@
             {% if user is defined and user %}
 
-                <div id="addNewPerformance"><i class="fa fa-plus"></i>Add new performance</div>
+                <div id="addNewPerformance"><button type="button" class="btn btn-success fa fa-plus"> Add new performance</button></div>
 
                 <article class="item clearfix addPerfomanceCreate emptyPerformance">
                     <h2><span class="perfomanceTitleEdiatable" data-type="textarea" data-pk="" data-title="">Your performance title</span>
@@ -53,8 +53,8 @@
                 <article class="item clearfix">
                     <h2><span class="perfomanceTitleEdiatable" data-type="textarea" data-pk="{{ performance.id }}" data-title="">{{ performance.title }} </span>
                         <span class="price">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</span>
-                        <div class="editOffer"><i class="fa fa-pencil-square-o"></i></div>
-                        <div class="deleteOffer"><i class="fa fa-trash"></i></div>
+                        <div class="deleteOffer"><button type="button" class="btn btn-danger fa fa-trash"></button></div>
+                        <div class="editOffer"><button type="button" class="btn btn-info fa fa-pencil-square-o"></button></div>
                     </h2>
                     <span class="performanceId hidden">{{ performance.id }}</span>
                     {% for mediaOf in performance.media[0:1] %}
