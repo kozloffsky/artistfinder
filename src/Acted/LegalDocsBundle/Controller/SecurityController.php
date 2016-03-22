@@ -11,6 +11,7 @@ use Acted\LegalDocsBundle\Popo\RegisterUser;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class SecurityController extends Controller
 {
@@ -34,6 +35,19 @@ class SecurityController extends Controller
         throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
     }
 
+    /**
+     * Registration
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Registration",
+     *  input="Acted\LegalDocsBundle\Form\RegisterType",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     */
     public function registerAction(Request $request)
     {
         $form = $this->createForm(RegisterType::class);

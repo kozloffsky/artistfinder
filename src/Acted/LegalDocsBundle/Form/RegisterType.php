@@ -28,33 +28,43 @@ class RegisterType extends AbstractType
             ->add('role', ChoiceType::class, [
                 'choices_as_values' => true,
                 'choices' => ['ROLE_ARTIST', 'ROLE_CLIENT'],
-                'constraints' => [new NotBlank()]]
-            )
+                'constraints' => [new NotBlank()],
+                'description' => 'User role',
+            ])
 
-            ->add('firstname', TextType::class, ['constraints' => [new NotBlank()]])
+            ->add('firstname', TextType::class, ['constraints' => [new NotBlank()], 'description' => 'First name'])
 
-            ->add('lastname', TextType::class, ['constraints' => [new NotBlank()]])
+            ->add('lastname', TextType::class, ['constraints' => [new NotBlank()], 'description' => 'Last name'])
 
-            ->add('email', EmailType::class, ['constraints' => [new NotBlank(), new Email()]])
+            ->add('email', EmailType::class, ['constraints' => [new NotBlank(), new Email()], 'description' => 'Email'])
 
-            ->add('password', RepeatedType::class, ['constraints' => [new NotBlank(), new Length(['min' => 6])]])
+            ->add('password', RepeatedType::class, [
+                'constraints' => [new NotBlank(), new Length(['min' => 6])],
+                'description' => 'Password and confirmation field'
+            ])
 
             ->add('categories', EntityType::class, [
                 'class' => Category::class,
                 'multiple' => true,
-                'constraints' => [new Count(['min' => 1, 'groups' => 'artist'])]])
+                'constraints' => [new Count(['min' => 1, 'groups' => 'artist'])],
+                'description' => 'Array of categories IDs (for ROLE_ARTIST)'
+            ])
 
-            ->add('name', TextType::class, ['constraints' => [new NotBlank(['groups' => 'artist'])]])
+            ->add('name', TextType::class, [
+                'constraints' => [new NotBlank(['groups' => 'artist'])],
+                'description' => 'Artist name (also is uses for "slug" generation) (for ROLE_ARTIST)'
+            ])
 
             ->add('country', EntityType::class, [
                 'class' => RefCountry::class,
-                'constraints' => [new NotBlank(['groups' => 'artist'])]]
-            )
+                'constraints' => [new NotBlank(['groups' => 'artist'])],
+                'description' => 'Country ID (for ROLE_ARTIST)',
+            ])
 
-            ->add('phone', TextType::class, ['constraints' => [
-                new NotBlank(['groups' => 'artist']),
-                new Regex(['pattern' => '/^[\d\+\(\) -]+$/'])]]
-            )
+            ->add('phone', TextType::class, [
+                'constraints' => [new NotBlank(['groups' => 'artist']), new Regex(['pattern' => '/^[\d\+\(\) -]+$/'])],
+                'description' => 'Phone number (available chars: digits,+,(,)) (for ROLE_ARTIST)',
+            ])
         ;
     }
 
