@@ -132,6 +132,7 @@ $('#editBiography').click(function(e) {
     e.stopPropagation();
     $('#biographyEditable').editable({
         type: 'textarea',
+        mode: 'inline',
         success: function(response, newValue) {
             var slug = $('#slug').text();
             $.ajax({
@@ -164,6 +165,7 @@ $('.editOffer').click(function(e) {
     var performanceId = $(parentPerformance).children('.performanceId').text();
     $(parentPerformance).find('.perfomanceInfoEdiatable').editable({
         type: 'text',
+        mode: 'inline',
         success: function(response, newValue) {
             $.ajax({
                 type: "PATCH",
@@ -184,26 +186,18 @@ $('.editOffer').click(function(e) {
         }
     });
     $(parentPerformance).find('.imagePerformanceChange').fadeIn();
-});
 
-$('.deleteOffer').click(function(){
-    console.log('ddddd')
-    var parentPerformance = $(this).parents('article');
-    var performanceId = $(parentPerformance).children('.performanceId').text();
-    var slug = $('#slug').text();
-    console.log(performanceId);
-    deleteOffer(slug, performanceId, parentPerformance)
-});
-
-function deleteOffer(slug, performanceId, parentPerformance){
-    $.ajax({
-        type: "DELETE",
-        url: '/profile/' + slug + '/performance/' + performanceId,
-        success: function(){
-            $(parentPerformance).remove();
+    Dropzone.options.imagePerformanceChange = {
+        paramName: "file", // The name that will be used to transfer the file
+        maxFilesize: 1, // MB
+        accept: function(file, done) {
+            if (file.name == "justinbieber.jpg") {
+                done("Naha, you don't.");
+            }
+            else { done(); }
         }
-    })
-}
+    };
+});
 
 $('#addNewPerformance').on('click', function(){
     var addNewBtn = $(this);
@@ -231,13 +225,16 @@ $('#addNewPerformance').on('click', function(){
 function createNewPerformance(getNewBlockPerformance, newPerformanceId){
     console.log(newPerformanceId);
     var imagesDropzoneAdd = $(getNewBlockPerformance).find('.imagePerformanceChange');
+    var deleteBtnNew = $(getNewBlockPerformance).find('.deleteOffer');
     imagesDropzoneAdd.attr('action', '/profile/performance/'+ newPerformanceId +'/media/new');
     imagesDropzoneAdd.fadeIn();
+    deleteBtnNew.fadeIn();
     $(imagesDropzoneAdd).each(function(){
         new Dropzone(this);
     });
     $(getNewBlockPerformance).find('.perfomanceInfoEdiatable').editable({
         type: 'text',
+        mode: 'inline',
         success: function(response, newValue) {
             $.ajax({
                 type: "PATCH",
@@ -246,6 +243,35 @@ function createNewPerformance(getNewBlockPerformance, newPerformanceId){
             });
         }
     });
+    $(deleteBtnNew).click(function() {
+        var slug = $('#slug').text();
+        $.ajax({
+            type: "DELETE",
+            url: '/profile/' + slug + '/performance/' + newPerformanceId,
+            success: function(){
+                $(getNewBlockPerformance).remove();
+            }
+        })
+    });
+}
+
+$('.deleteOffer').click(function(){
+    console.log('ddddd')
+    var parentPerformance = $(this).parents('article');
+    var performanceId = $(parentPerformance).children('.performanceId').text();
+    var slug = $('#slug').text();
+    console.log(performanceId);
+    deleteOffer(slug, performanceId, parentPerformance)
+});
+
+function deleteOffer(slug, performanceId, parentPerformance){
+    $.ajax({
+        type: "DELETE",
+        url: '/profile/' + slug + '/performance/' + performanceId,
+        success: function(){
+            $(parentPerformance).remove();
+        }
+    })
 }
 
 $('#addNewInputVideo').click(function(){

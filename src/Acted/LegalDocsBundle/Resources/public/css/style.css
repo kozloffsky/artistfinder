@@ -2042,3 +2042,24 @@ section.used-by {
 {
     display: none;
 }
+.addPerfomanceCreate .deleteOffer
+{
+    display: none;
+}
+.editable-inline, .editable-inline .form-group
+{
+    width: 100% !important;
+}
+.editable-inline .editable-input
+{
+    width: 80%;
+}
+.editable-inline .editable-input textarea
+{
+    width: 100%;
+}
+.editable-inline .form-group .editable-buttons
+{
+    width: 20%;
+    text-align: center;
+}

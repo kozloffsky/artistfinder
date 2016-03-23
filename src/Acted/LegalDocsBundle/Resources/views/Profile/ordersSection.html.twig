@@ -5,12 +5,12 @@
                 <article class="item clearfix">
                     <h2><span class="perfomanceTitleEdiatable" data-type="textarea" data-pk="{{ performance.id }}" data-title="">{{ performance.title }} </span>
                         <span class="price">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</span>
-                        <div class="deleteOffer"><button type="button" class="btn btn-danger fa fa-trash"></button></div>
-                        <div class="editOffer"><button type="button" class="btn btn-info fa fa-pencil-square-o"></button></div>
+                        <div class="deleteOffer"><button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button></div>
+                        <div class="editOffer"><button type="button" class="btn btn-info"><i class="fa fa-pencil-square-o"></i></button></div>
                     </h2>
                     <span class="performanceId hidden">{{ performance.id }}</span>
                     {% for mediaOf in performance.media[0:1] %}
-                        <form action="/media/{{ mediaOf.id }}/edit" method="post" class="dropzone imagePerformanceChange">
+                        <form action="/media/{{ mediaOf.id }}/edit" method="post" class="dropzone imagePerformanceChange" id="image-performance-change">
                         </form>
                         <img class="preview" src="{{ mediaOf.link }}" alt="Preview">
                     {% endfor %}
@@ -95,7 +95,7 @@
                 <article class="item clearfix addPerfomanceCreate emptyPerformance">
                     <h2><span class="perfomanceTitleEdiatable" data-type="textarea" data-pk="" data-title="">Your performance title</span>
                         <span class="price">Price: from EUR</span>
-                        <div class="deleteOffer"><button type="button" class="btn btn-danger fa fa-trash"></button></div>
+                        <div class="deleteOffer"><button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button></div>
                     </h2>
                     <span class="performanceId hidden"></span>
 
