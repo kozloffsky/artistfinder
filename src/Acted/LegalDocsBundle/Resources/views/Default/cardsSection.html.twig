@@ -1,157 +1,34 @@
 <section class="cards">
     <div class="container hideme">
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 no-pad">
-            <div class="card-flip variety-acts">
-                <div class="flipper">
-                    <div class="front">
-                        <div class="panel-text">
-                            <p class="title">Variety Acts</p>
 
+        {% for categoryCard in categories %}
+
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 no-pad">
+                <div class="card-flip variety-acts">
+                    <div class="flipper">
+                        <div class="front" style="background: url('{{ categoryCard.background }}') center no-repeat;">
+                            <div class="panel-text">
+                                <p class="title">{{ categoryCard.title }}</p>
+
+                            </div>
                         </div>
-                    </div>
-                    <div class="back">
-                        <div class="panel-text controls">
-                            <p class="title">Variety Acts</p>
-                            <p class="text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                labore et dolore magna aliqua. Ut enim ad minim veniam.
-                            </p>
+                        <div class="back">
+                            <div class="panel-text controls">
+                                <p class="title">{{ categoryCard.title }}</p>
+                                <p class="text">
+                                    {{ categoryCard.description }}
+                                </p>
 
-                            <div class="button-gradient filled follow">
-                                <button class="btn">See more</button>
+                                <div class="button-gradient filled follow">
+                                    <button class="btn">See more</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 no-pad">
-            <div class="card-flip live-music">
-                <div class="flipper">
-                    <div class="front">
-                        <div class="panel-text">
-                            <p class="title">Live Music</p>
-                        </div>
-                    </div>
-                    <div class="back">
-                        <div class="panel-text controls">
-                            <p class="title">Live Music</p>
-                            <p class="text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                labore et dolore magna aliqua. Ut enim ad minim veniam.
-                            </p>
+        {% endfor %}
 
-                            <div class="button-gradient filled follow">
-                                <button class="btn">See more</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 no-pad">
-            <div class="card-flip international">
-                <div class="flipper">
-                    <div class="front">
-
-                        <div class="panel-text">
-                            <p class="title">International Artists</p>
-                        </div>
-                    </div>
-                    <div class="back">
-                        <div class="panel-text controls">
-                            <p class="title">International Artists</p>
-                            <p class="text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                labore et dolore magna aliqua. Ut enim ad minim veniam.
-                            </p>
-
-                            <div class="button-gradient filled follow">
-                                <button class="btn">See more</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 no-pad">
-            <div class="card-flip emcees">
-                <div class="flipper">
-                    <div class="front">
-
-                        <div class="panel-text">
-                            <p class="title">Emcees & Comedians</p>
-                        </div>
-                    </div>
-                    <div class="back">
-                        <div class="panel-text controls">
-                            <p class="title">Emcees & Comedians</p>
-                            <p class="text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                labore et dolore magna aliqua. Ut enim ad minim veniam.
-                            </p>
-
-                            <div class="button-gradient filled follow">
-                                <button class="btn">See more</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 no-pad">
-            <div class="card-flip dance">
-                <div class="flipper">
-                    <div class="front">
-
-                        <div class="panel-text">
-                            <p class="title">Music and Dance Acts</p>
-                        </div>
-                    </div>
-                    <div class="back">
-                        <div class="panel-text controls">
-                            <p class="title">Music and Dance Acts</p>
-                            <p class="text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                labore et dolore magna aliqua. Ut enim ad minim veniam.
-                            </p>
-
-                            <div class="button-gradient filled follow">
-                                <button class="btn">See more</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 no-pad">
-            <div class="card-flip children">
-                <div class="flipper">
-                    <div class="front">
-                        <div class="panel-text">
-                            <p class="title">Children Entertainment</p>
-                        </div>
-                    </div>
-                    <div class="back">
-                        <div class="panel-text controls">
-                            <p class="title">Children Entertainment</p>
-                            <p class="text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                labore et dolore magna aliqua. Ut enim ad minim veniam.
-                            </p>
-
-                            <div class="button-gradient filled follow">
-                                <button class="btn">See more</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </section>
