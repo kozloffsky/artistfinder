@@ -17,7 +17,7 @@
 
                     <div class="video">
                         {% for mediaOf in performance.media[1:2] %}
-                            <form action="/media/{{ mediaOf.id }}/edit" method="post" class="dropzone imagePerformanceChange">
+                            <form action="/media/{{ mediaOf.id }}/edit" method="post" class="dropzone imagePerformanceChange" id="image-performance-change">
                             </form>
                             <img src="{{ mediaOf.link }}" alt="">
                             <span class="glyphicon glyphicon-play"></span>

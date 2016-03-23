@@ -2063,3 +2063,14 @@ section.used-by {
     width: 20%;
     text-align: center;
 }
+.removeNewImage
+{
+    color: #d9534f;
+    font-size: 30px;
+    cursor: pointer;
+}
+span.removeNewImage
+{
+    position: absolute;
+    margin-left: 7px;
+}

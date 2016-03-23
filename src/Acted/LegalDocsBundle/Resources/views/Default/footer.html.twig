@@ -1,6 +1,11 @@
 
-<!--<footer class="footer-dark">-->
-<footer>
+
+{% if app.request.get('_route') == 'acted_legal_docs_homepage' %}
+    <footer>
+    {% else %}
+    <footer class="footer-dark">
+{% endif %}
+
     <div class="social-icons">
         <ul>
             <li><a href="#"><div class="icon facebook"></div></a></li>
