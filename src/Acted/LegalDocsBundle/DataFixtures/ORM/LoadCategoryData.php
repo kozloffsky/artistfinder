@@ -47,32 +47,39 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
         $varietyActsCategory->setDescription($faker->realText(400));
         $varietyActsCategory->setSlug($varietyActsCategory->getTitle());
         $varietyActsCategory->setImage('assets/images/variety_acts.png');
+        $varietyActsCategory->setBackground($faker->imageUrl);
 
         $subCategory1 = new Category();
         $subCategory1->setTitle($faker->unique()->text(10));
         $subCategory1->setSlug($subCategory1->getTitle());
         $subCategory1->setParent($varietyActsCategory);
+        $subCategory1->setBackground($faker->imageUrl);
 
         $subCategory2 = new Category();
         $subCategory2->setTitle($faker->unique()->text(10));
         $subCategory2->setSlug($subCategory2->getTitle());
         $subCategory2->setParent($varietyActsCategory);
+        $subCategory2->setBackground($faker->imageUrl);
 
         $internationalArtists = new Category();
         $internationalArtists->setTitle('International Artists');
         $internationalArtists->setDescription($faker->realText(400));
         $internationalArtists->setSlug($internationalArtists->getTitle());
         $internationalArtists->setImage('assets/images/international.png');
+        $internationalArtists->setBackground($faker->imageUrl);
 
         $subCategory3 = new Category();
         $subCategory3->setTitle($faker->unique()->text(10));
         $subCategory3->setSlug($subCategory3->getTitle());
         $subCategory3->setParent($internationalArtists);
+        $subCategory3->setBackground($faker->imageUrl);
 
         $subCategory4 = new Category();
         $subCategory4->setTitle($faker->unique()->text(10));
         $subCategory4->setSlug($subCategory4->getTitle());
         $subCategory4->setParent($internationalArtists);
+        $subCategory4->setBackground($faker->imageUrl);
+
 
         $manager->persist($varietyActsCategory);
         $manager->persist($internationalArtists);

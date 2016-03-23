@@ -331,4 +331,33 @@ class Category
     {
         return $this->description;
     }
+    /**
+     * @var string
+     */
+    private $background;
+
+
+    /**
+     * Set background
+     *
+     * @param string $background
+     *
+     * @return Category
+     */
+    public function setBackground($background)
+    {
+        $this->background = $background;
+
+        return $this;
+    }
+
+    /**
+     * Get background
+     *
+     * @return string
+     */
+    public function getBackground()
+    {
+        return $this->background;
+    }
 }
