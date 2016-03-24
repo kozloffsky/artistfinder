@@ -32,6 +32,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row stage" style="display: none" id="stage-2">
                     <div class="row sub-stage" id="artistBlock">
 
@@ -47,13 +48,51 @@
 
                     <div class="row sub-stage" id="customerBlock">
 
+                        <div class="row contact-details">
+                            <form class="details-form no-pad">
+                                <div class="form-group">
+                                    <label for="first_name">First name</label>
+                                    <input type="text" name="first_name" class="form-control" minlength="2" id="customerFirst_name" placeholder="First name" required>
+                                    <label class="icon"></label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last_name">Last name</label>
+                                    <input type="text" name="last_name" class="form-control" minlength="2" id="customerLast_name" placeholder="Last name" required>
+                                    <label class="icon"></label>
+                                </div>
 
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" name="email" class="form-control" id="customerEmail" placeholder="Email" required>
+                                    <label class="icon"></label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="customerPassword" placeholder="Password" required>
+                                    <label class="icon"></label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password confirmation</label>
+                                    <input type="password" class="form-control" id="customerPasswordConfirm" placeholder="Password" required>
+                                    <label class="icon"></label>
+                                </div>
+
+                                <div class="controls">
+                                    <div class="button-gradient filled">
+                                        <button  id="stageThreeNextCustomer" type="button" class="btn register">Register Now</button>
+                                    </div>
+
+                                    <button type="button" style="width: 100%; margin-top: 10px;" class="btn-back back-button">Back</button>
+                                </div>
+                            </form>
+                        </div>
 
                     </div>
                 </div>
+
                 <div class="row stage" style="display: block" id="stage-3">
                     <div class="row contact-details">
-                        <form class="details-form no-pad">
+                        <form class="details-form no-pad artistRegForm">
                             <div class="form-group">
                                 <label for="first_name">First name</label>
                                 <input type="text" name="first_name" class="form-control" minlength="2" id="first_name" placeholder="First name" required>
@@ -89,6 +128,11 @@
                                 <label class="icon"></label>
                             </div>
                             <div class="form-group">
+                                <label for="password">Password confirmation</label>
+                                <input type="password" class="form-control" id="passwordSecond" placeholder="Password" required>
+                                <label class="icon"></label>
+                            </div>
+                            <div class="form-group">
                                 <label for="phone_number">Phone number</label>
                                 <input type="text" name="phone" class="form-control" minlength="11" id="phone_number" placeholder="Phone number" required>
                                 <label class="icon"></label>
@@ -113,6 +157,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row stage" style="display: none" id="stage-4">
                     <div class="final-stage">
                         <div class="col-xs-12">
@@ -145,3 +190,50 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade login-modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Log In</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-block login-form">
+                    <div class="form-group">
+                        <label for="user_email">Email</label>
+                        <input type="email" class="form-control" id="user_email" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="user_password">Password</label>
+                        <input type="password" class="form-control" id="user_password" placeholder="Password">
+                        <a class="forgot-password" href="#">Forgot?</a>
+                    </div>
+
+                    <div class="controls">
+                        <div class="button-gradient filled">
+                            <button class="btn">Login</button>
+                        </div>
+                    </div>
+                </form>
+
+                <form class="form-block recovery-form" style="display: none">
+                    <p class="tip">Please enter the email address that you used when creating your account.</p>
+
+                    <div class="form-group">
+                        <label for="user_email_rec">Email</label>
+                        <input type="email" class="form-control" id="user_email_rec" placeholder="Email">
+                    </div>
+
+                    <div class="controls">
+                        <div class="button-gradient filled">
+                            <button style="width: 220px;" class="btn">Send new password</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

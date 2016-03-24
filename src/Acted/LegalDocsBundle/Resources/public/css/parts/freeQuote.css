@@ -1,0 +1,303 @@
+* {
+    box-sizing: border-box!important;
+}
+
+.free-quote-modal .modal-dialog {
+    width: 900px;
+    margin-top: 100px;
+}
+
+.free-quote-modal .modal-content .close {
+    position: absolute;
+    height: 38px;
+    width: 38px;
+    top: -19px;
+    right: -19px;
+    border-radius: 50%;
+    background: #F2F2F2;
+    opacity: 1;
+    font-size: 28px;
+    outline: none!important;
+}
+
+.free-quote-modal .modal-content .close > span {
+    color: #959595;
+}
+
+.free-quote-modal .modal-header {
+    padding: 7px 15px;
+    background: #FF844E;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: none;
+    color: white;
+}
+
+.free-quote-modal .modal-body {
+    background: #EEEEEE;
+    padding-bottom: 0px;
+    padding-top: 8px;
+}
+
+.free-quote-modal .modal-footer {
+    border-top: 10px solid #9899CC;
+    background: white;
+    text-align: initial;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding-top: 8px;
+}
+
+.free-quote-modal .prof-block {
+    margin-bottom: 5px;
+}
+
+.free-quote-modal .modal-title {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.free-quote-modal.modal-registered .modal-title .title{
+    margin-right: 10px;
+    font-size: 18px;
+    font-family: LatoBold;
+    color: white;
+}
+
+.free-quote-modal.modal-registered .modal-title .select2 {
+    max-width: 600px;
+    margin-right: 38px;
+}
+
+.free-quote-modal.modal-registered .modal-title .new-event {
+    font-family: LatoRegular;
+    font-size: 18px;
+    color: white;
+}
+
+
+
+.free-quote-modal .modal-title .warn {
+    color: #FF844E;
+    background: white;
+    height: 22px;
+    width: 22px;
+    display: inline-block;
+    border-radius: 11px;
+    text-align: center;
+    line-height: 22px;
+    margin-left: 30px;
+    margin-right: 10px;
+}
+
+.free-quote-modal .custom-checkbox {
+    margin-right: 20px;
+    margin-bottom: 3px;
+}
+
+.free-quote-modal .form-group {
+    margin-bottom: 5px;
+}
+
+.free-quote-modal input {
+    border: 2px solid #EEEEEE!important;
+    border-radius: 8px;
+    box-shadow: none!important;
+    outline: none!important;
+    font-size: 13px;
+    font-family: LatoRegular;
+    color: #3d4248;
+    height: 34px;
+}
+
+.free-quote-modal .select2  {
+    width: 100%!important;
+    outline: none!important;
+}
+
+.free-quote-modal .select2-container .select2-selection--single {
+    outline: none;
+}
+
+.selections-white .select2-results__option {
+    background: white!important;
+}
+
+.free-quote-modal .select2-container--default .select2-selection--single {
+    height: 34px;
+    border: 2px solid #EEEEEE!important;
+    border-radius: 8px;
+}
+
+.free-quote-modal .profile-categories {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 100%;
+    -webkit-column-count: 4;
+    -moz-column-count: 4;
+    column-count: 4;
+}
+
+.free-quote-modal .profile-categories .custom-checkbox {
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.free-quote-modal .profile-categories .custom-checkbox label:before {
+    background: white;
+}
+
+.free-quote-modal .quote-profile-avatar {
+    width: 91px;
+    height: 91px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    float: left;
+    margin-right: 15px;
+}
+
+.free-quote-modal .quote-profile-info {
+    display: inline-block;
+    float: left;
+    width: calc(100% - 106px);
+}
+
+.free-quote-modal .quote-profile-info h2 {
+    font-size: 24px;
+    font-family: UbuntuMedium;
+    color: #3d4248;
+    margin: 5px 0;
+}
+
+.free-quote-modal .quote-profile-info p {
+    margin: 0;
+    font-family: LatoRegular;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.41);
+    line-height: 27px;
+}
+
+.free-quote-modal .quote-profile-desc {
+    width: 100%;
+    height: 91px;
+    resize: none;
+    outline: none;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #EEEEEE!important;
+    font-size: 14px;
+}
+
+.free-quote-modal .quote-profile-desc::-webkit-input-placeholder,
+.free-quote-modal .quote-profile-desc::-moz-placeholder,
+.free-quote-modal .quote-profile-desc:-moz-placeholder,
+.free-quote-modal .quote-profile-desc:-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.21);
+    font-family: LatoRegular;
+    line-height: 16px;
+}
+
+.free-quote-modal .controls {
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: 0px;
+    margin-bottom: 0px;
+}
+
+.free-quote-modal .controls button.btn {
+    font-family: LatoBold;
+    font-size: 20px!important;
+    color: white;
+    line-height: 20px;
+}
+
+.free-quote-modal .form-group label {
+    font-size: 14px;
+    font-family: LatoBold;
+    color: #3d4248;
+}
+
+.free-quote-modal.modal-registered .modal-body {
+    background: #EEEEEE;
+}
+
+.free-quote-modal.modal-registered .select2-container--default .select2-selection--single .select2-selection__rendered {
+    font-size: 16px;
+    color: #3d4248;
+    font-family: LatoRegular;
+    font-weight: 400;
+}
+
+.free-quote-modal.modal-registered .modal-body {
+    border-bottom: 10px solid #9899CC;
+}
+
+.free-quote-modal.modal-registered .modal-footer {
+    border-top: none;
+}
+
+.free-quote-modal .add-comment-btn {
+    text-decoration: underline;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+@media (max-width: 767px) {
+    .free-quote-modal.modal-registered .modal-title .select2 {
+        margin-top: 10px;
+    }
+
+    .free-quote-modal.modal-registered .modal-title .new-event {
+        margin-top: 10px;
+        float: right;
+    }
+
+    .free-quote-modal .modal-header {
+        background: #90bddf;
+    }
+
+    .free-quote-modal .modal-dialog {
+        margin: 70px 0 0;
+        width: 100%;
+    }
+
+    .free-quote-modal .modal-content {
+        border-radius: 0;
+        width: 100%;
+    }
+
+    .free-quote-modal .modal-title {
+        padding: 0 45px 0 25px;
+        font-size: 14px;
+    }
+
+    .free-quote-modal .modal-title .warn {
+        margin-left: 0px;
+        margin-right: 10px;
+        color: #90bddf;
+    }
+
+    .free-quote-modal .modal-content .close {
+        top: 20px;
+        right: 10px;
+        text-shadow: none;
+        background: transparent;
+    }
+
+    .free-quote-modal .guests-num .custom-checkbox {
+        width: 100%;
+    }
+
+    .free-quote-modal .modal-content .close > span {
+        color: white;
+    }
+
+    .free-quote-modal .profile-categories {
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+        column-count: 1;
+    }
+}

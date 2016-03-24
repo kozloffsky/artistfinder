@@ -6,6 +6,10 @@
     margin-bottom: 58px;
 }
 
+.registration-modal #stage-2 {
+    padding-top: 7px;
+}
+
 .registration-modal .modal-dialog {
     width: 95%;
     max-width: 900px;
@@ -15,13 +19,13 @@
 .registration-modal .modal-dialog .modal-title {
     text-align: center;
     font-family: UbuntuMedium;
-    font-size: 40px;
+    font-size: 26px;
     color: #3d4248;
     line-height: normal;
 }
 
 .registration-modal .modal-header {
-    padding: 28px 34px 0;
+    padding: 13px 32px 0;
 }
 
 .registration-modal .modal-header,
@@ -41,7 +45,7 @@
     font-size: 28px;
 }
 
-.registration-modal .modal-content .close>span {
+.registration-modal .modal-content .close > span {
     color: #959595;
 }
 
@@ -49,7 +53,6 @@
     display: inline-block;
     width: 100%;
 }
-
 
 .registration-modal .buttons .btn {
     background: transparent;
@@ -76,26 +79,29 @@
 .registration-modal .modal-content .close:active {
     outline: none;
     opacity: 1;
+    z-index: 2;
 }
 
 .registration-modal .modal-header #step-counter {
     position: absolute;
     font-family: UbuntuBold;
-    font-size: 24px;
+    font-size: 22px;
     color: #ffae6c;
 }
 
 .registration-modal .modal-body .category-img {
     cursor: pointer;
+    margin-top: 35px;
     position: relative;
     left: 50%;
     transform: translateX(-50%);
     width: 80%;
+    max-width: 280px;
 }
 
 .registration-modal .modal-body .controls {
     position: relative;
-    margin: 35px 0;
+    margin: 62px 0 20px;
     padding: 0;
 }
 
@@ -106,24 +112,14 @@
 }
 
 .registration-modal .modal-body {
-    padding: 15px 0 0;
+    padding: 5px 0 0;
 }
 
-.registration-modal .modal-body .category-body {
-    height: 0;
-    overflow: hidden;
-}
-
-.registration-modal .modal-body .category.open .category-body {
-    height: 100%;
-    overflow: visible;
-}
-
-.registration-modal .modal-body .controls>.button-gradient {
+.registration-modal .modal-body .controls > .button-gradient {
     margin-right: 0;
 }
 
-.registration-modal .modal-body .controls>.button-gradient .btn {
+.registration-modal .modal-body .controls > .button-gradient .btn {
     width: auto;
 }
 
@@ -134,17 +130,18 @@
 .registration-modal .buttons .btn.divider {
     border-right: 2px solid rgba(202, 202, 202, 0.25);
 }
+
 .registration-modal .modal-body .category-body.divider {
-    border-right: 2px solid rgba(202, 202, 202, 0.25)!important;
+    border-right: 2px solid rgba(202, 202, 202, 0.25) !important;
 
 }
 
 .registration-modal .category-content {
-    padding: 0 19px;
+    padding: 0 6px;
 }
 
 .registration-modal .category-item {
-    margin-top: 19px;
+    margin-top: 10px;
 }
 
 .registration-modal .category-item input {
@@ -158,7 +155,7 @@
 .registration-modal .category-item label {
     margin-bottom: 0;
     font-family: LatoRegular;
-    font-size: 18px;
+    font-size: 14px;
     color: #828282;
     cursor: pointer;
 
@@ -179,8 +176,8 @@
     background: #DDD;
     display: inline-block;
     vertical-align: middle;
-    width: 13px;
-    height: 13px;
+    width: 8px;
+    height: 8px;
     padding: 2px;
     margin-top: -4px;
     margin-right: 10px;
@@ -200,18 +197,17 @@
     font-size: 16px;
     font-family: LatoBold;
 
-    margin: 10px 30px 14px;
+    margin: 10px 30px 5px;
 }
 
 .category-content .show-more:hover {
     color: #a6a6a6;
 }
 
-
 .registration-modal .tip {
     font-family: LatoRegular;
     margin-top: 30px;
-    font-size: 20px;
+    font-size: 18px;
     color: #afafaf;
     position: absolute;
     bottom: 28px;
@@ -220,51 +216,48 @@
 
 .category-header {
     cursor: pointer;
-    line-height: 70px;
+    line-height: 50px;
     width: 100%;
-    padding-left: 18px;
 }
 
 .category-header .image-container {
     display: inline-block;
-    width: 70px;
+    width: 60px;
     padding-left: 18px;
 }
 
 .category-header .image-container img {
-    max-width: 90%;
+    max-width: 100%;
+    max-height: 45px;
 }
-
-
 
 .category-header .title {
     color: white;
     font-family: UbuntuMedium;
-    font-size: 26px;
-    margin-left: 20px;
+    font-size: 21px;
+    margin-left: 24px;
     vertical-align: middle;
 }
 
-
-.gradient-full{
-    background: rgb(255,173,108); /* Old browsers */
-    background: -moz-linear-gradient(left,  rgba(255,173,108,1) 0%, rgba(255,117,58,1) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(left,  rgba(255,173,108,1) 0%,rgba(255,117,58,1) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right,  rgba(255,173,108,1) 0%,rgba(255,117,58,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+.gradient-full {
+    background: rgb(255, 173, 108); /* Old browsers */
+    background: -moz-linear-gradient(left, rgba(255, 173, 108, 1) 0%, rgba(255, 117, 58, 1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, rgba(255, 173, 108, 1) 0%, rgba(255, 117, 58, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, rgba(255, 173, 108, 1) 0%, rgba(255, 117, 58, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
 .gradient-light {
-    background: rgb(254,182,119); /* Old browsers */
-    background: -moz-linear-gradient(left,  rgba(254,182,119,1) 0%, rgba(255,157,92,1) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(left,  rgba(254,182,119,1) 0%,rgba(255,157,92,1) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right,  rgba(254,182,119,1) 0%,rgba(255,157,92,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    background: rgb(254, 182, 119); /* Old browsers */
+    background: -moz-linear-gradient(left, rgba(254, 182, 119, 1) 0%, rgba(255, 157, 92, 1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, rgba(254, 182, 119, 1) 0%, rgba(255, 157, 92, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, rgba(254, 182, 119, 1) 0%, rgba(255, 157, 92, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
 .gradient-dark {
-    background: rgb(255,157,92); /* Old browsers */
-    background: -moz-linear-gradient(left,  rgba(255,157,92,1) 0%, rgba(255,129,66,1) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(left,  rgba(255,157,92,1) 0%,rgba(255,129,66,1) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right,  rgba(255,157,92,1) 0%,rgba(255,129,66,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    background: rgb(255, 157, 92); /* Old browsers */
+    background: -moz-linear-gradient(left, rgba(255, 157, 92, 1) 0%, rgba(255, 129, 66, 1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, rgba(255, 157, 92, 1) 0%, rgba(255, 129, 66, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, rgba(255, 157, 92, 1) 0%, rgba(255, 129, 66, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
 .contact-details {
@@ -277,8 +270,15 @@
     float: left;
 }
 
+#customerBlock .contact-details .details-form {
+    width: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 .contact-details .form-group {
     margin-bottom: 0px;
+    max-height: 70px;
 }
 
 .contact-details .form-group label {
@@ -296,8 +296,12 @@
     position: absolute;
     width: 20px;
     height: 15px;
-    top: -44px;
+    top: -41px;
     right: 25px;
+}
+
+#customerBlock .contact-details .form-group label:last-child::after {
+    right: 5px;
 }
 
 .contact-details .form-group label.error {
@@ -308,10 +312,10 @@
 .contact-details .form-group input {
     font-family: LatoRegular;
     font-weight: normal;
-    font-size: 18px;
+    font-size: 16px;
     color: #4c4c4c;
     padding-left: 18px;
-    height: 42px;
+    height: 34px;
     border-radius: 8px;
     border: 2px solid #e5e5e5;
     box-shadow: none;
@@ -319,11 +323,13 @@
     display: inline-block;
 }
 
+#customerBlock .contact-details .form-group input {
+    height: 34px;
+}
+
 .contact-details .form-group input.error {
     border: 2px solid #f97c7d;
 }
-
-
 
 .contact-details .form-group input.valid {
     border: 2px solid #809eff;
@@ -339,22 +345,22 @@
     background: url("../../assets/images/not_done.png") center no-repeat;
 }
 
-
 .registration-modal .modal-body .contact-details .controls {
-    margin-top: 15px;
-    margin-bottom: 24px;
+    margin-top: 5px;
+    margin-bottom: 10px;
     width: 390px;
     text-align: center;
 }
 
 .registration-modal .modal-body .contact-details .controls .button-gradient {
-    margin-bottom: 15px;
+    margin-bottom: 0px;
 }
 
 .registration-modal .modal-body .contact-details .controls .btn.register {
     font-family: LatoBold;
-    font-size: 21px;
+    font-size: 17px;
     padding: 5px 35px;
+    height: 35px;
 }
 
 .registration-modal .modal-body .contact-details .hint {
@@ -370,7 +376,7 @@
     border: none;
     font-family: UbuntuMedium;
     padding: 0px;
-    font-size: 28px;
+    font-size: 22px;
     margin-top: 26px;
 }
 
@@ -392,7 +398,7 @@
     left: 9px;
     bottom: 9px;
     right: 9px;
-    background: rgba(0,0,0,0.20);
+    background: rgba(0, 0, 0, 0.20);
 }
 
 .registration-modal .modal-body .preview-block .overlay span {
@@ -409,26 +415,24 @@
     position: relative;
     left: 50%;
     transform: translateX(-50%);
-    margin-bottom: 20px;
-    max-width: 100px;
+    margin-bottom: 32px;
 }
-
 
 .registration-modal .modal-body .final-stage h2 {
     display: inline-block;
     position: relative;
     width: 100%;
     font-family: UbuntuBold;
-    font-size: 34px;
+    font-size: 30px;
     color: #7f9eff;
     text-align: center;
     margin: 0;
 }
 
 .registration-modal .modal-body .final-stage .description {
-    margin: 40px 0 0;
+    margin: 30px 0 0;
     font-family: LatoRegular;
-    font-size: 20px;
+    font-size: 17px;
     color: #939393;
     text-align: center;
 }
@@ -438,18 +442,19 @@
 }
 
 .registration-modal .modal-body .final-stage .controls {
-    margin: 63px 0 58px;
+    margin: 38px 0 44px;
 }
 
-.registration-modal .modal-body .final-stage .controls>.button-gradient {
+.registration-modal .modal-body .final-stage .controls > .button-gradient {
     border-radius: 25px;
 }
 
 .registration-modal .modal-body .final-stage .controls .btn {
     font-family: LatoBlack;
-    font-size: 24px;
-    height: 50px;
+    font-size: 19px;
+    height: 38px;
     padding: 6px 16px;
+    line-height: 25px;
 }
 
 .registration-modal .select2 {
@@ -457,9 +462,10 @@
     border-radius: 8px;
     border: 2px solid #e5e5e5;
     overflow: hidden;
-    height: 42px;
+    height: 36px;
     max-width: 390px;
-    width: 100%!important;
+    width: 100% !important;
+    margin-bottom: 20px;
 }
 
 .registration-modal .select2-selection {
@@ -475,13 +481,21 @@
     font-size: 18px;
     color: #4c4c4c;
 }
+
 .registration-modal .select2-selection--single .select2-selection__arrow {
-    top: 7px;
+    top: 2px!important;
 }
 
+.registrations-selection {
+    border: 1px solid #e5e5e5;
+    border-top: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+@media (max-width: 767px) {
 
 
-@media (max-width: 400px) {
     .registration-modal {
         margin-top: 72px;
     }
@@ -494,7 +508,7 @@
 
     .registration-modal .modal-dialog {
         display: inline;
-        margin: 0px!important;
+        margin: 0px !important;
         width: 100%;
         min-height: 100%;
     }
@@ -504,12 +518,40 @@
         min-height: 100%;
     }
 
+    .registration-modal .select2,
+    .contact-details .form-group input {
+        width: calc(100% - 35px)!important;
+        max-width: none;
+    }
+
+    #customerBlock .contact-details .details-form,
+    .contact-details .details-form {
+        width: 100%;
+    }
+
+    .registration-modal .category-item {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .registration-modal .modal-body .controls {
+        margin: 40px 0 20px;
+    }
+
+    .registration-modal .modal-body .contact-details .controls {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 500px) {
+
     .gradient-light,
     .gradient-dark {
-        background: rgb(255,173,108); /* Old browsers */
-        background: -moz-linear-gradient(left,  rgba(255,173,108,1) 0%, rgba(255,117,58,1) 100%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(left,  rgba(255,173,108,1) 0%,rgba(255,117,58,1) 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to right,  rgba(255,173,108,1) 0%,rgba(255,117,58,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        background: rgb(255, 173, 108); /* Old browsers */
+        background: -moz-linear-gradient(left, rgba(255, 173, 108, 1) 0%, rgba(255, 117, 58, 1) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(left, rgba(255, 173, 108, 1) 0%, rgba(255, 117, 58, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to right, rgba(255, 173, 108, 1) 0%, rgba(255, 117, 58, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     }
 
     .registration-modal .modal-body .category-header.divider,
@@ -517,7 +559,7 @@
         border-right: none;
     }
 
-    .registration-modal .modal-header #step-counter{
+    .registration-modal .modal-header #step-counter {
         font-size: 14px;
         left: 15px;
     }
@@ -536,6 +578,191 @@
         padding: 25px 0 0;
     }
 
+    #customerBlock .contact-details .details-form,
+    .contact-details .details-form {
+        width: 100%;
+    }
+
+    .contact-details .form-group label:last-child::after {
+        right: 0;
+    }
+
+    .contact-details .form-group input.error + label.error + label.icon:after {
+        top: -65px;
+    }
+
+    .contact-details .form-group input {
+        width: calc(100% - 35px);
+        max-width: none;
+    }
+
+    .registration-modal .modal-body .final-stage .row {
+        padding: 0 35px;
+    }
+
+    .registration-modal .modal-body .contact-details .controls {
+        width: 100%;
+    }
+
+    .registration-modal .select2 {
+        max-width: calc(100% - 35px);
+        height: 30px;
+    }
+
+    .category-header .title {
+        font-size: 16px;
+    }
+
+    .registration-modal .modal-body .final-stage .controls .btn {
+        font-size: 12px;
+        height: 36px;
+    }
+
+    .contact-details .form-group input {
+        font-size: 12px;
+        padding-left: 12px;
+        height: 30px;
+    }
+
+    .registration-modal .select2-selection--single .select2-selection__rendered {
+        font-size: 12px;
+        padding-left: 12px;
+        line-height: 26px;
+    }
+
+    .registration-modal .select2-selection--single .select2-selection__arrow {
+        top: 0px;
+    }
+
+    .registration-modal .modal-body .contact-details .controls .btn.register {
+        font-size: 14px;
+    }
+
+    .registration-modal .modal-body .contact-details .hint {
+        font-size: 12px;
+    }
+
+    .registration-modal .modal-body .contact-details .btn-back {
+        font-size: 22px;
+        margin-top: 0;
+    }
+
+    .registration-modal .buttons .btn {
+        font-size: 16px;
+    }
+
+    .registration-modal .modal-body .final-stage h2 {
+        font-size: 16px;
+    }
+
+    .registration-modal .modal-body .final-stage .description {
+        font-size: 12px;
+    }
+
+    .registration-modal .modal-body .category:not(:last-of-type) {
+        border-bottom: 1px solid white;
+    }
+
+    .registration-modal .modal-body .category-img {
+        max-width: 200px;
+        margin-top: 0;
+    }
+
+    .registration-modal .modal-body .controls > .button-gradient .btn {
+        font-size: 14px;
+        height: 34px;
+    }
+
+    .registration-modal .modal-body .controls {
+        margin: 12px 0;
+    }
+
+    .registration-modal .modal-body .final-stage .controls {
+        margin: 33px 0;
+    }
+
+    .registration-modal .category-item label {
+        font-size: 12px;
+    }
+
+    .registration-modal .category-item .checkbox + label:before {
+        width: 10px;
+        height: 10px;
+    }
+
+    .registration-modal .category-item {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .category-content .show-more {
+        font-size: 14px;
+        margin: 6px 30px 6px;
+    }
+
+    .category-header {
+        padding-left: 0px;
+        line-height: 63px;
+    }
+
+    .registration-modal .modal-body .final-stage h2 {
+        font-size: 24px;
+    }
+
+    .registration-modal .modal-body .final-stage .description {
+        font-size: 16px;
+    }
+
+    .registration-modal .modal-body .controls > .button-gradient .btn {
+        font-size: 16px;
+        line-height: 22px;
+        height: 36px;
+    }
+
+    .registration-modal .modal-body .final-stage .final-image {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-bottom: 20px;
+        max-width: 125px;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .gradient-light,
+    .gradient-dark {
+        background: rgb(255, 173, 108); /* Old browsers */
+        background: -moz-linear-gradient(left, rgba(255, 173, 108, 1) 0%, rgba(255, 117, 58, 1) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(left, rgba(255, 173, 108, 1) 0%, rgba(255, 117, 58, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to right, rgba(255, 173, 108, 1) 0%, rgba(255, 117, 58, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    }
+
+    .registration-modal .modal-body .category-header.divider,
+    .registration-modal .modal-body .category-body.divider {
+        border-right: none;
+    }
+
+    .registration-modal .modal-header #step-counter {
+        font-size: 14px;
+        left: 15px;
+    }
+
+    .registration-modal .modal-dialog .modal-title {
+        font-size: 15px;
+        max-width: 250px;
+        width: 150px;
+        display: inline-block;
+        left: 50%;
+        transform: translateX(-50%);
+        position: relative;
+    }
+
+    .registration-modal .modal-body {
+        padding: 25px 0 0;
+    }
+
+    #customerBlock .contact-details .details-form,
     .contact-details .details-form {
         width: 100%;
     }
@@ -622,9 +849,10 @@
 
     .registration-modal .modal-body .category-img {
         max-width: 135px;
+        margin-top: 0;
     }
 
-    .registration-modal .modal-body .controls>.button-gradient .btn {
+    .registration-modal .modal-body .controls > .button-gradient .btn {
         font-size: 14px;
         height: 34px;
     }
@@ -655,22 +883,24 @@
         font-size: 14px;
         margin: 6px 30px 6px;
     }
+
     .category-header {
         padding-left: 0px;
         line-height: 63px;
     }
 
     .registration-modal .modal-body .final-stage h2 {
-    font-size: 24px;
+        font-size: 24px;
     }
 
     .registration-modal .modal-body .final-stage .description {
-    font-size: 16px;
+        font-size: 16px;
     }
 
-    .registration-modal .modal-body .controls>.button-gradient .btn {
-    font-size: 16px;
-    height: 36px;
+    .registration-modal .modal-body .controls > .button-gradient .btn {
+        font-size: 16px;
+        line-height: 22px;
+        height: 36px;
     }
 
     .registration-modal .modal-body .final-stage .final-image {
@@ -678,7 +908,7 @@
         left: 50%;
         transform: translateX(-50%);
         margin-bottom: 20px;
-        max-width: 135px;
+        max-width: 115px;
     }
 
 }
@@ -686,7 +916,7 @@
 
 @media (max-width: 400px) and (max-height: 480px) {
     .registration-modal .modal-body .category-img {
-        max-width: 100px;
+        max-width: 100px!important;
     }
 
     .registration-modal .modal-body .final-stage h2 {
@@ -697,9 +927,17 @@
         font-size: 12px;
     }
 
-    .registration-modal .modal-body .controls>.button-gradient .btn {
+    .registration-modal .modal-body .controls > .button-gradient .btn {
         font-size: 14px;
+        line-height: 22px;
         height: 34px;
+    }
+
+}
+
+@media (max-width: 400px) and (max-height: 650px) {
+    .registration-modal .modal-body .category-img {
+        max-width: 150px;
     }
 
 }

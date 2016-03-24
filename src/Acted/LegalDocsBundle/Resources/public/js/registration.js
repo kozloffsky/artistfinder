@@ -7,7 +7,8 @@ $(function () {
   //Initializing phone mask.
   $('#phone_number').mask('+44 (000) 000-0000', {placeholder: "+44 (___) ___-____"});
 
-  $("#country").select2({
+
+  var $select2 = $("#country").select2({
     placeholder: "Select Country",
     minimumResultsForSearch: -1
   }).on("change", function (e) {
@@ -31,6 +32,8 @@ $(function () {
 
 
   });
+  $select2.data('select2').$results.addClass($select2.attr('data-class'));
+
 
   var currentState = 1;
   var userIsArtist = true;
@@ -65,19 +68,25 @@ $(function () {
   function showFirstPage() {
     $('.stage').hide();
     $('.modal-header').show();
-    $('#step-counter').html('Step 1/3');
+    $('#step-counter').html('Step 1');
     $('#modal-title').html('Sign Up');
     $('#stage-1').show();
     $('#completionTime').show();
   }
 
   function showSecondPage(isArtist) {
-    if (isArtist) userIsArtist = isArtist;
+    var text;
+    if (isArtist) {
+      userIsArtist = isArtist;
+      text = 'Which acts do you perform?'
+    } else {
+      text = 'Contact details'
+    }
     $('.stage').hide();
     $('.sub-stage').hide();
     $('.modal-header').show();
-    $('#step-counter').html('Step 2/3');
-    $('#modal-title').html('Which acts do you perform?');
+    $('#step-counter').html('Step 2');
+    $('#modal-title').html(text);
     if (isArtist) {
       $('#artistBlock').show();
     } else {
@@ -85,12 +94,13 @@ $(function () {
     }
     $('#stage-2').show();
     $('#completionTime').hide();
+    $('#modal-title').focus();
   }
 
   function showThirdPage() {
     $('.stage').hide();
     $('.modal-header').show();
-    $('#step-counter').html('Step 3/3');
+    $('#step-counter').html('Step 3');
     $('#modal-title').html('Contact details');
     $('#stage-3').show();
     $('#completionTime').hide();
@@ -120,11 +130,15 @@ $(function () {
     chageState(2, true);
   });
 
+  $('#customerBtn, #customerImg').click(function() {
+    chageState(2, false);
+  });
+
 
   $('#stageTwoNext').click(function () {
     chageState(3);
   });
-  $('#stageThreeNext').click(function () {
+  $('#stageThreeNext, #stageThreeNextCustomer').click(function () {
     chageState(4);
   });
   $('.back-button').click(function () {
@@ -135,12 +149,41 @@ $(function () {
     }
   });
 
-  $('.category').click(function () {
-    $(this).toggleClass('open');
 
-    if ($(window).width() > 767) {
-      var id = $(this).attr('data-toggle-desktop');
-      $('#' + id).toggleClass('open');
-    }
-  })
+  $('#stageThreeNext').on('click', function(){
+    artistRegister();
+  });
+
+  function artistRegister(){
+    var artistCategories = [];
+    $('.artistCategories input:checked').each(function () {
+      artistCategories.push($(this).attr('name'));
+    });
+    var userRole = 'ROLE_ARTIST';
+    var artistFirstname = $('.artistRegForm #first_name').val();
+    var artistLastname = $('.artistRegForm #last_name').val();
+    var artistemail = $('.artistRegForm #email').val();
+    var artistSlug = $('.artistRegForm #band_name').val();
+    var artistPhone = $('.artistRegForm #phone_number').val();
+    var artistpasswordFirst = $('.artistRegForm #password').val();
+    console.log(artistpasswordFirst)
+    var userInformation = {};
+    userInformation.role = userRole;
+    userInformation.categories = artistCategories;
+    userInformation.firstname = artistFirstname;
+    userInformation.lastname = artistLastname;
+    userInformation.email = artistemail;
+    userInformation.name = artistSlug;
+    userInformation.phone = artistPhone;
+    userInformation.password = artistpasswordFirst;
+    registerUser(userInformation)
+  };
+
+  function registerUser(userInformation) {
+    $.ajax({
+      type: "POST",
+      url: '/register',
+      data: userInformation
+    })
+  }
 });

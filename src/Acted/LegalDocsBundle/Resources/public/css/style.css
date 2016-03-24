@@ -1,6 +1,10 @@
 @import "parts/footer.css";
 @import "parts/header.css";
 @import "parts/registration.css";
+@import "parts/search.css";
+@import "parts/freeQuote.css";
+@import "parts/loginAndRecovery.css";
+@import "parts/enquiries.css";
 
 @font-face {
     font-family: LatoBlack;
@@ -66,6 +70,27 @@ section.cards,
 section.used-by {
     background: white;
 }
+
+.select2-container--open .select2-dropdown--above {
+    border: none!important;
+}
+
+.select2-container--default .select2-results>.select2-results__options {
+    border: 2px solid #EEEEEE!important;
+}
+
+.select2-container--open .select2-dropdown--above .select2-results__options {
+    border-bottom: none!important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.select2-container--open .select2-dropdown--below .select2-results__options {
+    border-top: none!important;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
 
 .hideme {
     position: relative;
