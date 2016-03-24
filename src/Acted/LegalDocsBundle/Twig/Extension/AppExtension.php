@@ -29,7 +29,8 @@ class AppExtension extends \Twig_Extension
             'categories' => new \Twig_SimpleFunction('categories', [$this, 'renderCategories'], [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
-            ])
+            ]),
+            'countries' => new \Twig_SimpleFunction('countries', [$this, 'getCountries']),
         ];
     }
 
@@ -39,4 +40,10 @@ class AppExtension extends \Twig_Extension
         $categories = $categoriesRepo->childrenHierarchy();
         return $twig->render('ActedLegalDocsBundle:Default:categories.html.twig', compact('categories'));
     }
+
+    public function getCountries()
+    {
+        return $this->manager->getRepository('ActedLegalDocsBundle:RefCountry')->findAll();
+    }
+
 }
