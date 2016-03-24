@@ -49,15 +49,15 @@
                     <div class="row sub-stage" id="customerBlock">
 
                         <div class="row contact-details">
-                            <form class="details-form no-pad">
+                            <form class="details-form no-pad customerRegForm">
                                 <div class="form-group">
                                     <label for="first_name">First name</label>
-                                    <input type="text" name="first_name" class="form-control" minlength="2" id="customerFirst_name" placeholder="First name" required>
+                                    <input type="text" name="firstname" class="form-control" minlength="2" id="customerFirst_name" placeholder="First name" required>
                                     <label class="icon"></label>
                                 </div>
                                 <div class="form-group">
                                     <label for="last_name">Last name</label>
-                                    <input type="text" name="last_name" class="form-control" minlength="2" id="customerLast_name" placeholder="Last name" required>
+                                    <input type="text" name="lastname" class="form-control" minlength="2" id="customerLast_name" placeholder="Last name" required>
                                     <label class="icon"></label>
                                 </div>
 
@@ -68,18 +68,18 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password</label>
-                                    <input type="password" class="form-control" id="customerPassword" placeholder="Password" required>
+                                    <input type="password" class="form-control" id="customerPassword" name="password[first]" placeholder="Password" required>
                                     <label class="icon"></label>
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password confirmation</label>
-                                    <input type="password" class="form-control" id="customerPasswordConfirm" placeholder="Password" required>
+                                    <input type="password" class="form-control" id="customerPasswordConfirm" name="password[second]" data-rule-equalTo="#customerPassword" placeholder="Password" required>
                                     <label class="icon"></label>
                                 </div>
 
                                 <div class="controls">
                                     <div class="button-gradient filled">
-                                        <button  id="stageThreeNextCustomer" type="button" class="btn register">Register Now</button>
+                                        <button id="stageThreeNextCustomer" type="button" class="btn register">Register Now</button>
                                     </div>
 
                                     <button type="button" style="width: 100%; margin-top: 10px;" class="btn-back back-button">Back</button>
@@ -92,28 +92,28 @@
 
                 <div class="row stage" style="display: block" id="stage-3">
                     <div class="row contact-details">
-                        <form class="details-form no-pad artistRegForm">
+                        <form class="details-form no-pad artistRegForm" id="artistForm">
                             <div class="form-group">
                                 <label for="first_name">First name</label>
-                                <input type="text" name="first_name" class="form-control" minlength="2" id="first_name" placeholder="First name" required>
+                                <input type="text" name="firstname" class="form-control" minlength="2" id="first_name" placeholder="First name" required>
                                 <label class="icon"></label>
                             </div>
                             <div class="form-group">
                                 <label for="last_name">Last name</label>
-                                <input type="text" name="last_name" class="form-control" minlength="2" id="last_name" placeholder="Last name" required>
+                                <input type="text" name="lastname" class="form-control" minlength="2" id="last_name" placeholder="Last name" required>
                                 <label class="icon"></label>
                             </div>
                             <div class="form-group">
                                 <label for="band_name">Artist/Band name</label>
-                                <input type="text" name="band_name" class="form-control" minlength="2" id="band_name" placeholder="Artist/Band name" required>
+                                <input type="text" name="name" class="form-control" minlength="2" id="band_name" placeholder="Artist/Band name" required>
                                 <label class="icon"></label>
                             </div>
                             <div class="form-group">
                                 <label for="country">Country</label>
                                 <select name="country" id="country">
-                                    <option value="Uk">United Kingdoms</option>
-                                    <option value="Fr">France</option>
-                                    <option value="De">Germany</option>
+                                    {% for country in countries() %}
+                                        <option value="{{ country.id }}" name="country">{{ country.name }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
 
@@ -124,12 +124,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Password" required>
+                                <input type="password" class="form-control" id="password" name="password[first]" placeholder="Password" required>
                                 <label class="icon"></label>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password confirmation</label>
-                                <input type="password" class="form-control" id="passwordSecond" placeholder="Password" required>
+                                <input type="password" class="form-control" id="passwordSecond" name="password[second]" data-rule-equalTo="#password" placeholder="Password" required>
                                 <label class="icon"></label>
                             </div>
                             <div class="form-group">
@@ -198,15 +198,21 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Log In</h4>
             </div>
+
             <div class="modal-body">
-                <form class="form-block login-form">
+                <form class="form-block login-form" action="{{ path('security_login_check') }}" method="post">
+                    {#{% if error %}
+                        <div class="alert alert-danger">
+                            {{ error.messageKey|trans(error.messageData) }}
+                        </div>
+                    {% endif %}#}
                     <div class="form-group">
                         <label for="user_email">Email</label>
-                        <input type="email" class="form-control" id="user_email" placeholder="Email">
+                        <input type="email" class="form-control" id="user_email" placeholder="Email" name="_username">
                     </div>
                     <div class="form-group">
                         <label for="user_password">Password</label>
-                        <input type="password" class="form-control" id="user_password" placeholder="Password">
+                        <input type="password" class="form-control" id="user_password" placeholder="Password" name="_password">
                         <a class="forgot-password" href="#">Forgot?</a>
                     </div>
 

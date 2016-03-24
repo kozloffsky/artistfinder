@@ -4374,7 +4374,7 @@ $(function () {
   //$('#phone_number').cleanVal(); to get phone number.
 
   //Enabling form validation.
-  $(".details-form").validate();
+  $("#artistForm").validate();
 
   //Initializing phone mask.
   $('#phone_number').mask('+44 (000) 000-0000', {placeholder: "+44 (___) ___-____"});
@@ -4385,18 +4385,18 @@ $(function () {
     minimumResultsForSearch: -1
   }).on("change", function (e) {
     //Change mask here... Example:
-    var selectedCountry = $('#country').val();
+    var selectedCountry = $('#country').find('option:selected').text();
     $('#phone_number').val('');
 
     switch (selectedCountry) {
-      case 'Fr':
+      case 'France':
         $('#phone_number').mask('+33 (00) 0000-0000', {placeholder: "+33 (0_) ____-____"});
         break;
-      case  'De':
+      case  'Germany':
         $('#phone_number').mask('+49 (0000) 0000-0000', {placeholder: "+49 (0___) ____-____"});
         break;
       //Default country Uk
-      case 'Uk':
+      case 'United Kingdom':
       default:
         $('#phone_number').mask('+44 (000) 000-0000', {placeholder: "+44 (___) ___-____"});
         break;
@@ -4510,9 +4510,6 @@ $(function () {
   $('#stageTwoNext').click(function () {
     chageState(3);
   });
-  $('#stageThreeNext, #stageThreeNextCustomer').click(function () {
-    chageState(4);
-  });
   $('.back-button').click(function () {
     if (currentState - 1 == 2) {
       chageState(currentState - 1, userIsArtist);
@@ -4522,40 +4519,50 @@ $(function () {
   });
 
 
+  function finishRegistration()
+  {
+    chageState(4);
+  }
+
+
   $('#stageThreeNext').on('click', function(){
     artistRegister();
   });
 
+  $('#stageThreeNextCustomer').on('click', function(){
+    customerRegister();
+  });
+
   function artistRegister(){
-    var artistCategories = [];
-    $('.artistCategories input:checked').each(function () {
-      artistCategories.push($(this).attr('name'));
-    });
-    var userRole = 'ROLE_ARTIST';
-    var artistFirstname = $('.artistRegForm #first_name').val();
-    var artistLastname = $('.artistRegForm #last_name').val();
-    var artistemail = $('.artistRegForm #email').val();
-    var artistSlug = $('.artistRegForm #band_name').val();
-    var artistPhone = $('.artistRegForm #phone_number').val();
-    var artistpasswordFirst = $('.artistRegForm #password').val();
-    console.log(artistpasswordFirst)
-    var userInformation = {};
-    userInformation.role = userRole;
-    userInformation.categories = artistCategories;
-    userInformation.firstname = artistFirstname;
-    userInformation.lastname = artistLastname;
-    userInformation.email = artistemail;
-    userInformation.name = artistSlug;
-    userInformation.phone = artistPhone;
-    userInformation.password = artistpasswordFirst;
-    registerUser(userInformation)
+    var userInformation = $('.artistRegForm').serialize();
+    var categories = $('#categoriesForm').serialize();
+    var userRole = 'role=ROLE_ARTIST';
+    registerArtist(userInformation, categories, userRole);
   };
 
-  function registerUser(userInformation) {
+  function registerArtist(userInformation, categories, userRole) {
     $.ajax({
       type: "POST",
       url: '/register',
-      data: userInformation
+      data: userRole + '&' + userInformation + '&' + categories,
+      success: function(){
+        console.log('greate')
+        finishRegistration()
+      }
+    })
+  }
+
+  function customerRegister(){
+    var customerValues = $('.customerRegForm').serialize();
+    var customerRole = 'role=ROLE_CLIENT'
+    $.ajax({
+      type: "POST",
+      url: '/register',
+      data: customerRole +'&'+customerValues,
+      success: function(){
+        console.log('greate')
+        finishRegistration()
+      }
     })
   }
 });

@@ -1,4 +1,5 @@
 {% for category in categories %}
+    <form id="categoriesForm">
     <div data-toggle-desktop="category-2" id="category-1" class="col-sm-6 col-xs-12 no-pad category">
         <div class="category-header gradient-light">
             <div class="image-container">
@@ -11,7 +12,7 @@
                 <div class="row category-content variety-acts artistCategories">
 
                     <div class="col-xs-6 category-item">
-                        <input class="checkbox" type="checkbox" id="variety_category_id_{{ catChild['id'] }}" name="{{ catChild['id'] }}">
+                        <input class="checkbox" type="checkbox" id="variety_category_id_{{ catChild['id'] }}" name="categories[]" value="{{ catChild['id'] }}">
                         <label for="variety_category_id_{{ catChild['id'] }}">{{ catChild['title'] }}</label>
                     </div>
 
@@ -19,4 +20,5 @@
             {% endfor %}
         </div>
     </div>
+    </form>
 {% endfor %}
