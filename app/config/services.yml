@@ -33,3 +33,9 @@ services:
 
     app.form_errors_serializer:
         class: Acted\LegalDocsBundle\FormErrors\FormErrorsSerializer
+
+    app.artist_voter:
+        class: Acted\LegalDocsBundle\Security\ArtistVoter
+        tags:
+          - {name: security.voter}
+        public: false

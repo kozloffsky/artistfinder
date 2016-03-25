@@ -68,13 +68,8 @@ class ProfileController extends Controller
 
     public function performancesAction(Request $request, Artist $artist)
     {
-        //TODO: for debug only
-        $em = $this->getDoctrine()->getManager();
-        $user = ($request->query->get('user'))
-            ? $em->getRepository('ActedLegalDocsBundle:User')->findOneById($request->query->get('user')) :
-            null;
         $performances = $this->getPerformances($artist, $request->get('page', 1));
-        return $this->render('@ActedLegalDocs/Profile/ordersSection.html.twig', compact('performances', 'user'));
+        return $this->render('@ActedLegalDocs/Profile/ordersSection.html.twig', compact('performances', 'artist'));
     }
 
     public function offerEditAction(Request $request, Offer $offer)
@@ -94,12 +89,8 @@ class ProfileController extends Controller
 
     public function feedbacksAction(Request $request, Artist $artist)
     {
-        $em = $this->getDoctrine()->getManager();
-        $user = ($request->query->get('user'))
-            ? $em->getRepository('ActedLegalDocsBundle:User')->findOneById($request->query->get('user')) :
-            null;
         $feedbacks = $this->getFeedbacks($artist,  $request->get('page', 1));
-        return $this->render('@ActedLegalDocs/Profile/feedbacksSection.html.twig', compact('feedbacks', 'user'));
+        return $this->render('@ActedLegalDocs/Profile/feedbacksSection.html.twig', compact('feedbacks', 'artist'));
     }
 
     /**
