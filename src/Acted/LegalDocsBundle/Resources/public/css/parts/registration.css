@@ -145,7 +145,8 @@
 }
 
 .registration-modal .category-item input {
-    display: none;
+    opacity: 0;
+    position: absolute;
 }
 
 .registration-modal .category-item label:hover {

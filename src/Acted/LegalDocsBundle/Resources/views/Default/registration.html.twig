@@ -35,6 +35,7 @@
 
                 <div class="row stage" style="display: none" id="stage-2">
                     <div class="row sub-stage" id="artistBlock">
+                        <div class="errorCat">Choose at least one category</div>
 
                         {% include 'ActedLegalDocsBundle:Default:categories.html.twig' %}
 
@@ -49,7 +50,7 @@
                     <div class="row sub-stage" id="customerBlock">
 
                         <div class="row contact-details">
-                            <form class="details-form no-pad customerRegForm">
+                            <form class="details-form no-pad customerRegForm" id="customerRegForm">
                                 <div class="form-group">
                                     <label for="first_name">First name</label>
                                     <input type="text" name="firstname" class="form-control" minlength="2" id="customerFirst_name" placeholder="First name" required>
@@ -124,12 +125,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password[first]" placeholder="Password" required>
+                                <input type="password" class="form-control" minlength="6" id="password" name="password[first]" placeholder="Password" required>
                                 <label class="icon"></label>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password confirmation</label>
-                                <input type="password" class="form-control" id="passwordSecond" name="password[second]" data-rule-equalTo="#password" placeholder="Password" required>
+                                <input type="password" class="form-control" minlength="6" id="passwordSecond" name="password[second]" data-rule-equalTo="#password" placeholder="Password" required>
                                 <label class="icon"></label>
                             </div>
                             <div class="form-group">
@@ -223,7 +224,7 @@
                     </div>
                 </form>
 
-                <form class="form-block recovery-form" style="display: none">
+                <form class="form-block recovery-form" id="recoveryForm" style="display: none">
                     <p class="tip">Please enter the email address that you used when creating your account.</p>
 
                     <div class="form-group">
@@ -233,7 +234,7 @@
 
                     <div class="controls">
                         <div class="button-gradient filled">
-                            <button style="width: 220px;" class="btn">Send new password</button>
+                            <button style="width: 220px;" class="btn" id="passwordRecovery">Send new password</button>
                         </div>
                     </div>
                 </form>

@@ -2,7 +2,11 @@ $(function () {
   //$('#phone_number').cleanVal(); to get phone number.
 
   //Enabling form validation.
-  $("#artistForm").validate();
+  var artistValidation = $("#artistForm").validate();
+
+  var customerValidate =  $("#customerRegForm").validate();
+
+  $("#recoveryForm").validate();
 
   //Initializing phone mask.
   $('#phone_number').mask('+44 (000) 000-0000', {placeholder: "+44 (___) ___-____"});
@@ -136,8 +140,15 @@ $(function () {
 
 
   $('#stageTwoNext').click(function () {
-    chageState(3);
+    var numberCatChecked = $('#artistBlock input:checkbox:checked').length;
+    if (numberCatChecked >= 1){
+      $('.errorCat').fadeOut();
+      chageState(3);
+    } else {
+      $('.errorCat').fadeIn();
+    }
   });
+
   $('.back-button').click(function () {
     if (currentState - 1 == 2) {
       chageState(currentState - 1, userIsArtist);
@@ -163,19 +174,36 @@ $(function () {
 
   function artistRegister(){
     var userInformation = $('.artistRegForm').serialize();
-    var categories = $('#categoriesForm').serialize();
+    var categoriesForm = $('#categoriesForm').serialize();
     var userRole = 'role=ROLE_ARTIST';
-    registerArtist(userInformation, categories, userRole);
+    registerArtist(userInformation, categoriesForm, userRole);
   };
 
-  function registerArtist(userInformation, categories, userRole) {
+  function registerArtist(userInformation, categoriesForm, userRole) {
     $.ajax({
       type: "POST",
       url: '/register',
-      data: userRole + '&' + userInformation + '&' + categories,
+      data: userRole + '&' + userInformation + '&' + categoriesForm,
       success: function(){
-        console.log('greate')
         finishRegistration()
+      },
+      error: function(response){
+        var regestrationResponse = response.responseJSON;
+        $(regestrationResponse).each(function(){
+          var placeToShowErr = this.property_path;
+          var errorMsg = this.message;
+          console.log(placeToShowErr);
+          if (placeToShowErr == 'email'){
+            artistValidation.showErrors({
+              'email': errorMsg
+            });
+          }
+          if (placeToShowErr == 'primaryPhone'){
+            artistValidation.showErrors({
+              'phone': errorMsg
+            });
+          }
+        })
       }
     })
   }
@@ -188,9 +216,37 @@ $(function () {
       url: '/register',
       data: customerRole +'&'+customerValues,
       success: function(){
-        console.log('greate')
         finishRegistration()
+      },
+      error: function(response){
+        var regestrationResponse = response.responseJSON;
+        $(regestrationResponse).each(function(){
+          var placeToShowErr = this.property_path;
+          var errorMsg = this.message;
+          console.log(placeToShowErr);
+          if (placeToShowErr == 'email'){
+            customerValidate.showErrors({
+              'email': errorMsg
+            });
+          }
+        })
       }
     })
   }
+
+  $('#passwordRecovery').on('click', function()
+  {
+    var recoveryPasswordVal = $(this).serialize()
+    repairPassword(recoveryPasswordVal);
+  });
+
+
+  function repairPassword(recoveryPasswordVal) {
+    $.ajax({
+      type: "POST",
+      url: '/resseting/request',
+      data: recoveryPasswordVal
+    })
+  }
+
 });

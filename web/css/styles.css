@@ -1957,7 +1957,8 @@ header.home {
 }
 
 .registration-modal .category-item input {
-    display: none;
+    opacity: 0;
+    position: absolute;
 }
 
 .registration-modal .category-item label:hover {
@@ -6295,4 +6296,10 @@ span.removeNewImage
 {
     position: absolute;
     margin-left: 7px;
+}
+.errorCat
+{
+    color: #d9534f;
+    text-align: center;
+    display: none;
 }
