@@ -113,7 +113,7 @@ class UserManager
         $this->sendEmailMessage($rendered, $this->mailFrom, $user->getEmail());
     }
 
-    public function sendRessetingEmailMessage(User $user)
+    public function sendResettingEmailMessage(User $user)
     {
         $url = $this->router->generate('security_resetting_reset', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
         $rendered = $this->templating->render('@ActedLegalDocs/Security/resetting.txt.twig', [

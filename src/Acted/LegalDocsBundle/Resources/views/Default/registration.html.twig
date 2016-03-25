@@ -201,7 +201,7 @@
             </div>
 
             <div class="modal-body">
-                <form class="form-block login-form" action="{{ path('security_login_check') }}" method="post">
+                <form class="form-block login-form" action="{{ path('security_resetting_request') }}" method="post">
                     {#{% if error %}
                         <div class="alert alert-danger">
                             {{ error.messageKey|trans(error.messageData) }}
