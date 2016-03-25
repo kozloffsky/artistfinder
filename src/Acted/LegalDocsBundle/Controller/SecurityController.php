@@ -143,7 +143,7 @@ class SecurityController extends Controller
             $user->setPasswordRequestedAt(new \DateTime());
             $em->flush();
 
-            $userManager->sendRessetingEmailMessage($user);
+            $userManager->sendResettingEmailMessage($user);
             return $this->redirect($this->generateUrl('acted_legal_docs_homepage'));
         }
 

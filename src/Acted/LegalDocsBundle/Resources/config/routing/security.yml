@@ -20,9 +20,9 @@ security_logout:
     defaults: { _controller: "ActedLegalDocsBundle:Security:logout" }
 
 security_resetting_request:
-    path:     /resseting/request
+    path:     /resetting/request
     defaults: { _controller: "ActedLegalDocsBundle:Security:sendResetPassword" }
 
 security_resetting_reset:
-    path:     /resseting/reset/{token}
+    path:     /resetting/reset/{token}
     defaults: { _controller: "ActedLegalDocsBundle:Security:reset" }
