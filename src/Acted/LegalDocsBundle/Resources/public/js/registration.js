@@ -244,7 +244,7 @@ $(function () {
   function repairPassword(recoveryPasswordVal) {
     $.ajax({
       type: "POST",
-      url: '/resseting/request',
+      url: '/resetting/request',
       data: recoveryPasswordVal
     })
   }
