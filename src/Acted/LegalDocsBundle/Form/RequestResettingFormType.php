@@ -12,6 +12,7 @@ namespace Acted\LegalDocsBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RequestResettingFormType extends AbstractType
@@ -24,6 +25,15 @@ class RequestResettingFormType extends AbstractType
     public function getBlockPrefix()
     {
         return null;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'csrf_protection' => false,
+            'allow_extra_fields' => true,
+        ]);
+
     }
 
 }
