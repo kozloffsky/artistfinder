@@ -360,4 +360,9 @@ class Category
     {
         return $this->background;
     }
+
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
 }
