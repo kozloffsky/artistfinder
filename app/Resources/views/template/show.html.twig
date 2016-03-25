@@ -15,7 +15,7 @@
             </tr>
             <tr>
                 <th>Template</th>
-                <td>{{ template.template }}</td>
+                <td><iframe srcdoc='{{ template.template|raw }}'>{{ template.template|raw }}</iframe></td>
             </tr>
             <tr>
                 <th>Is_active</th>

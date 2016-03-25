@@ -118,9 +118,10 @@ class Template
      */
     public function setTypeId($typeId)
     {
-        if (!in_array($typeId, self::listTypes())) {
-            throw new \InvalidArgumentException("Invalid status");
-        }
+        //TODO: check code
+//        if (!in_array($typeId, self::listTypes())) {
+//            throw new \InvalidArgumentException("Invalid status");
+//        }
 
         $this->type_id = $typeId;
 
