@@ -24,10 +24,10 @@ $(function() {
         $(".navbar-collapse").collapse('hide');
     });
 
-    imageSlider();
 
-    function imageSlider() {
-        $('.bxslider').bxSlider({
+
+
+        var imageSlider = $('.bxslider').bxSlider({
             adaptiveHeight: true,
             mode: 'fade',
             pagerCustom: '#photo-pager',
@@ -36,10 +36,10 @@ $(function() {
             nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
             prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
         });
-    }
 
 
-    $('.bxVideoSlider').bxSlider({
+
+    var videoSlider = $('.bxVideoSlider').bxSlider({
         adaptiveHeight: true,
         mode: 'fade',
         useCSS: false,
@@ -259,9 +259,10 @@ $(function() {
             success: function () {
                 currentBlocThumb.remove();
                 getBigSliderContent.remove();
+                imageSlider.reloadSlider();
             }
         })
-    })
+    });
 
     $('#addNewPerformance').on('click', function () {
         var addNewBtn = $(this);
@@ -354,7 +355,19 @@ $(function() {
         $.ajax({
             type: "POST",
             url: '/profile/' + slug + '/media/new',
-            data: {"video": videoLink}
+            data: {"video": videoLink},
+            success: function(responseText){
+                console.log(responseText)
+                var newVideoLink = responseText.media.link;
+                var videoThumbnail = responseText.media.thumbnail;
+                var newVideoId = responseText.media.id;
+                console.log(newVideoLink, videoThumbnail);
+                var indexOfThumb = $('#video-pager .scale-thumb').length;
+                $('.bxVideoSlider').append('<li><iframe src='+ newVideoLink +'  width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>');
+                $('#video-pager').append('<div class="scale-thumb thumb'+ indexOfThumb + 1 +'"><span class="removeNewImage deleteMedia" id='+newVideoId+'><i class="fa fa-times-circle-o"></i></span><a data-slide-index='+ indexOfThumb +' href=""><img id='+newVideoId+' src='+videoThumbnail+'/></a></div>');
+
+                //videoSlider.reloadSlider();
+            }
         })
     }
 
