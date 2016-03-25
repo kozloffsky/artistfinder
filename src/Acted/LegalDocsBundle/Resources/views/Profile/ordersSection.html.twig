@@ -1,7 +1,7 @@
 
             {% for performance in performances|reverse %}
 
-            {% if user is defined and user %}
+            {% if is_granted('EDIT', artist) %}
                 <article class="item clearfix">
                     <h2><span class="perfomanceTitleEdiatable" data-type="textarea" data-pk="{{ performance.id }}" data-title="">{{ performance.title }} </span>
                         <span class="price">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</span>
@@ -90,7 +90,7 @@
 
         {% endfor %}
 
-            {% if user is defined and user %}
+            {% if is_granted('EDIT', artist) %}
 
                 <article class="item clearfix addPerfomanceCreate emptyPerformance">
                     <h2><span class="perfomanceTitleEdiatable" data-type="textarea" data-pk="" data-title="">Your performance title</span>

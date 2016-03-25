@@ -28,7 +28,7 @@
     <div class="row">
 
         <section class="media-content wrapper" id="section-photo">
-            {% if user %}
+            {% if is_granted('EDIT', artist) %}
             <form action="/profile/{{ artist.slug }}/media/new" method="post" class="dropzone" id="add-new-media-images">
             </form>
             {% endif %}
@@ -55,7 +55,7 @@
 
 
         <section class="media-content wrapper" id="section-video" >
-            {% if user %}
+            {% if is_granted('EDIT', artist) %}
                 <div class="col-md-6 add-video-block">
                 <form class="videoAddForm">
                     <input type="text" class="form-control videoAdd">
@@ -87,7 +87,7 @@
         </section>
 
         <section class="media-content wrapper" id="section-audio" >
-            {% if user %}
+            {% if is_granted('EDIT', artist) %}
                 <div class="col-md-6 add-audio-block">
                     <form class="audioAddForm">
                         <input type="text" class="form-control audioAdd">
