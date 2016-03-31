@@ -30,11 +30,13 @@
             <div class="username">{{ artist.name }}</div>
             <div class="specializations">
                 <ul>
+
                     {% for category in artist.user.profile.categories %}
-                    <li><a href="#">{{ category.title }}</a>
+                    <li class="currentCatUser"><a href="#">{{ category.title }}</a>
                         <div class="divider"></div>
                     </li>
                     {% endfor %}
+
                     <li><a href="#">See All <span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
                     </li>
                 </ul>

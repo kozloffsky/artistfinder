@@ -4328,22 +4328,32 @@ $(function() {
 
     function getCheckedCategories() {
         var selectedCat = [];
+        var selectedCatName = [];
         $('.artistCategories input:checked').each(function () {
             selectedCat.push($(this).val());
+            var labelId = $(this).attr('id');
+            var categoryName = $('#categotiesModal .artistCategories label[for='+ labelId +']').text();
+            selectedCatName.push(categoryName);
         });
-        console.log(selectedCat);
         var slug = $('#slug').text();
-        sendSelectedCategories(selectedCat, slug)
+        sendSelectedCategories(selectedCat, slug, selectedCatName)
     }
 
-    $('#saveCategories').click('click', function () {
+    $('#saveCategories').on('click', function () {
         getCheckedCategories();
     });
-    function sendSelectedCategories(selectedCat, slug) {
+    function sendSelectedCategories(selectedCat, slug, selectedCatName) {
         $.ajax({
             type: "PATCH",
             url: '/profile/' + slug + '/edit',
-            data: {"profile[categories]": selectedCat}
+            data: {"profile[categories]": selectedCat},
+            success: function(){
+                $('.currentCatUser').remove();
+                var newCategories = $.map(selectedCatName, function(value, i) {
+                    return '<li class="currentCatUser"><a href="#">'+ value +'</a><div class="divider"></div></li>';
+                });
+                $('.specializations > ul').prepend(newCategories.join(""));
+            }
         })
     }
 });
