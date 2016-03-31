@@ -25,9 +25,7 @@ class ProfileController extends Controller
         $categoriesRepo = $em->getRepository('ActedLegalDocsBundle:Category');
         $categories = $categoriesRepo->childrenHierarchy();
 
-        //TODO: for debug only
-        $user = ($request->get('user'))
-            ? $em->getRepository('ActedLegalDocsBundle:User')->findOneById($request->get('user')) : null;
+        $user = $this->getUser();
 
         $performances = $this->getPerformances($artist, 1);
         $feedbacks = $this->getFeedbacks($artist, 1);
