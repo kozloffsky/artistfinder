@@ -43,7 +43,11 @@
                 {% endif %}
             </div>
 
-            <div class="from">From {{ artist.city.name }}</div>
+            {% if(artist.city) %}
+                <div class="from">From {{ artist.city.name }}</div>
+            {% elseif(artist.country) %}
+                <div class="from">From {{ artist.country}}</div>
+            {% endif %}
 
             <div class="price">
                 <img src="{{ asset('assets/images/price_ic.png') }}" alt="Price">
