@@ -4329,7 +4329,7 @@ $(function() {
     function getCheckedCategories() {
         var selectedCat = [];
         $('.artistCategories input:checked').each(function () {
-            selectedCat.push($(this).attr('name'));
+            selectedCat.push($(this).val());
         });
         console.log(selectedCat);
         var slug = $('#slug').text();
