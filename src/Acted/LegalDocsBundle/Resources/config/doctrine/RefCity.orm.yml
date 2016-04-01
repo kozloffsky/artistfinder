@@ -16,4 +16,12 @@ Acted\LegalDocsBundle\Entity\RefCity:
         countryId:
           type: integer(11)
           notnull: true
+        latitude:
+          type: decimal
+          scale: 8
+          nullable: true
+        longitude:
+          type: decimal
+          scale: 8
+          nullable: true
     lifecycleCallbacks: {  }

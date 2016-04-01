@@ -1,0 +1,45 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: dexm1
+ * Date: 02.04.16
+ * Time: 0:55
+ */
+
+namespace Acted\LegalDocsBundle\EventListener;
+
+
+use Acted\LegalDocsBundle\Entity\RefCity;
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Geocoder\Exception\NoResult;
+use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\GoogleMaps;
+use Ivory\HttpAdapter\HttpAdapterFactory;
+
+class GeoListener
+{
+    public function prePersist(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+
+        if (!$entity instanceof RefCity) {
+            return;
+        }
+
+        $curl = HttpAdapterFactory::create(HttpAdapterFactory::CURL);
+        $geocoder = new GoogleMaps($curl);
+
+        /** @var AddressCollection $result */
+        try {
+            $addresses = $geocoder->geocode($entity->getName());
+        } catch (NoResult $e) {
+            return;
+        }
+
+        if ($address = $addresses->first()) {
+            $entity->setLatitude($address->getLatitude());
+            $entity->setLongitude($address->getLongitude());
+        }
+    }
+
+}

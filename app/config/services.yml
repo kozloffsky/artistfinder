@@ -49,3 +49,8 @@ services:
         arguments: ["%image_upload_dir%"]
         tags:
         - { name: doctrine.event_listener, event: postRemove }
+
+    app.listener.geo:
+        class: Acted\LegalDocsBundle\EventListener\GeoListener
+        tags:
+          - {name: doctrine.event_listener, event: prePersist}
