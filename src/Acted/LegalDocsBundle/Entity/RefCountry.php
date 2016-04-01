@@ -56,4 +56,50 @@ class RefCountry
     {
         return $this->getName();
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $regions;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->regions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add region
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefRegion $region
+     *
+     * @return RefCountry
+     */
+    public function addRegion(\Acted\LegalDocsBundle\Entity\RefRegion $region)
+    {
+        $this->regions[] = $region;
+
+        return $this;
+    }
+
+    /**
+     * Remove region
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefRegion $region
+     */
+    public function removeRegion(\Acted\LegalDocsBundle\Entity\RefRegion $region)
+    {
+        $this->regions->removeElement($region);
+    }
+
+    /**
+     * Get regions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRegions()
+    {
+        return $this->regions;
+    }
 }

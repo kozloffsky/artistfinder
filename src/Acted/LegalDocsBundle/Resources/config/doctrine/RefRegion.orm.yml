@@ -1,7 +1,7 @@
-Acted\LegalDocsBundle\Entity\RefCountry:
+Acted\LegalDocsBundle\Entity\RefRegion:
     type: entity
-    table: RefCountry
-    repositoryClass: Acted\LegalDocsBundle\Repository\RefCountryRepository
+    table: RefRegion
+    repositoryClass: Acted\LegalDocsBundle\Repository\RefRegionRepository
     id:
         id:
             type: integer
@@ -13,8 +13,8 @@ Acted\LegalDocsBundle\Entity\RefCountry:
           type: string(128)
           notnull: true
           unique: true
-    oneToMany:
-        regions:
-          targetEntity: Acted\LegalDocsBundle\Entity\RefRegion
-          mappedBy: country
+    manyToOne:
+        country:
+          targetEntity: Acted\LegalDocsBundle\Entity\RefCountry
+          inversedBy: regions
     lifecycleCallbacks: {  }
