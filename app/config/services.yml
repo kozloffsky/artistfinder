@@ -54,3 +54,7 @@ services:
         class: Acted\LegalDocsBundle\EventListener\GeoListener
         tags:
           - {name: doctrine.event_listener, event: prePersist}
+
+    app.search:
+        class: Acted\LegalDocsBundle\Service\DoctrineSearch
+        arguments: ["@doctrine.orm.entity_manager", "@knp_paginator"]

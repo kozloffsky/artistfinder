@@ -1,6 +1,7 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Repository;
+use Acted\LegalDocsBundle\Search\OrderCriteria;
 
 /**
  * ArtistRepository
@@ -10,4 +11,25 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class ArtistRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getFilteredQuery(OrderCriteria $oc)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->addSelect('AVG(ar.rating) AS HIDDEN rating_avg')
+            ->innerJoin('a.user', 'u')
+            ->innerJoin('u.profile', 'p')
+            ->innerJoin('p.performances', 'pr')
+            ->innerJoin('pr.offers', 'o')
+            ->leftJoin('a.ratings', 'ar')
+            ->groupBy('a');
+
+        if ($oc->getPrioritized() == 'rating') {
+            $qb->addOrderBy('rating_avg', $oc->getRatingOrder())
+                ->addOrderBy('o.price', $oc->getPriceOrder());
+        } else {
+            $qb->addOrderBy('o.price', $oc->getPriceOrder())
+                ->addOrderBy('rating_avg', $oc->getRatingOrder());
+        }
+
+        return $qb->getQuery();
+    }
 }

@@ -2,26 +2,20 @@
 
 namespace Acted\LegalDocsBundle\Controller;
 
-use Geocoder\Model\AddressCollection;
-use Geocoder\Provider\GoogleMaps;
-use Ivory\HttpAdapter\HttpAdapterFactory;
+
+use Acted\LegalDocsBundle\Search\OrderCriteria;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\VarDumper\VarDumper;
 
 class SearchController extends Controller
 {
     public function indexAction(Request $request)
     {
-        $curl = HttpAdapterFactory::create(HttpAdapterFactory::CURL);
-        $geocoder = new GoogleMaps($curl);
+        $s = $this->get('app.search');
 
-        /** @var AddressCollection $result */
-        $result = $geocoder->geocode('Paris');
+        $oc = new OrderCriteria(OrderCriteria::TOP_RATED, OrderCriteria::CHEAPEST);
 
-
-        var_dump($result->first()->getLatitude());
-        var_dump($result->first()->getLongitude());
-        var_dump($result->first()->getCountry());
+        VarDumper::dump($s->getFilteredArtists($oc));
         die;
-        return $this->render('', array('name' => 'search'));
     }
 }
