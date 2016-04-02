@@ -177,6 +177,8 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
         $manager->flush();
 
         $this->addReference('uk', $uk);
+        $this->addReference('germany', $germany);
+        $this->addReference('france', $france);
 
         $city = new RefCity();
         $city->setName($faker->city);

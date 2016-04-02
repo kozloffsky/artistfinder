@@ -47,6 +47,9 @@ class LoadPerformanceData extends AbstractFixture implements FixtureInterface, C
 
         $profile = $this->getReference('profile');
 
+        $videoInfo = Embed::create('https://player.vimeo.com/video/17914974');
+        preg_match('/src="(.+?)"/', $videoInfo->getCode(), $videoLinkMatch);
+
         for($i=0; $i < 10; $i++) {
             $performance = new Performance();
             $performance->setTitle($faker->word);
@@ -70,8 +73,6 @@ class LoadPerformanceData extends AbstractFixture implements FixtureInterface, C
             $video1->setPosition(1);
             $video1->setActive(true);
 
-            $videoInfo = Embed::create('https://player.vimeo.com/video/17914974');
-            preg_match('/src="(.+?)"/', $videoInfo->getCode(), $videoLinkMatch);
             if(isset($videoLinkMatch[1])){
                 $video1->setLink($videoLinkMatch[1]);
             }
