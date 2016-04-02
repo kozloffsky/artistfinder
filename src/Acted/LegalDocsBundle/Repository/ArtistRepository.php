@@ -1,6 +1,7 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Repository;
+use Acted\LegalDocsBundle\Search\FilterCriteria;
 use Acted\LegalDocsBundle\Search\OrderCriteria;
 
 /**
@@ -11,7 +12,7 @@ use Acted\LegalDocsBundle\Search\OrderCriteria;
  */
 class ArtistRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getFilteredQuery(OrderCriteria $oc)
+    public function getFilteredQuery(OrderCriteria $oc, FilterCriteria $fc)
     {
         $qb = $this->createQueryBuilder('a')
             ->addSelect('AVG(ar.rating) AS HIDDEN rating_avg')
@@ -21,6 +22,12 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('pr.offers', 'o')
             ->leftJoin('a.ratings', 'ar')
             ->groupBy('a');
+
+        if ($fc->withVideo()) {
+            $qb->innerJoin('pr.media', 'prm')
+                ->where('prm.mediaType = :mediaType')
+                ->setParameter('mediaType', 'video');
+        }
 
         if ($oc->getPrioritized() == 'rating') {
             $qb->addOrderBy('rating_avg', $oc->getRatingOrder())

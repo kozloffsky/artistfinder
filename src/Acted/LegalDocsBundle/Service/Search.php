@@ -9,9 +9,10 @@
 namespace Acted\LegalDocsBundle\Service;
 
 
+use Acted\LegalDocsBundle\Search\FilterCriteria;
 use Acted\LegalDocsBundle\Search\OrderCriteria;
 
 interface Search
 {
-    public function getFilteredArtists(OrderCriteria $oc);
+    public function getFilteredArtists(OrderCriteria $oc, FilterCriteria $fc);
 }

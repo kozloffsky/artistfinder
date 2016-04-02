@@ -9,6 +9,7 @@
 namespace Acted\LegalDocsBundle\Service;
 
 
+use Acted\LegalDocsBundle\Search\FilterCriteria;
 use Acted\LegalDocsBundle\Search\OrderCriteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -32,10 +33,10 @@ class DoctrineSearch implements Search
         $this->paginator = $paginator;
     }
 
-    public function getFilteredArtists(OrderCriteria $oc, $page = 1)
+    public function getFilteredArtists(OrderCriteria $oc, FilterCriteria $fc, $page = 1)
     {
         $artistRepo = $this->entityManager->getRepository('ActedLegalDocsBundle:Artist');
-        $artistsQuery = $artistRepo->getFilteredQuery($oc);
+        $artistsQuery = $artistRepo->getFilteredQuery($oc, $fc);
 
         return $this->paginator->paginate($artistsQuery, $page, 3, ['wrap-queries' => true]);
     }
