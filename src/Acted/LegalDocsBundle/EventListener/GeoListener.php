@@ -9,7 +9,7 @@
 namespace Acted\LegalDocsBundle\EventListener;
 
 
-use Acted\LegalDocsBundle\Entity\RefCity;
+use Acted\LegalDocsBundle\Geo\Geo;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Geocoder\Exception\NoResult;
 use Geocoder\Model\AddressCollection;
@@ -22,7 +22,7 @@ class GeoListener
     {
         $entity = $args->getEntity();
 
-        if (!$entity instanceof RefCity) {
+        if (!$entity instanceof Geo) {
             return;
         }
 

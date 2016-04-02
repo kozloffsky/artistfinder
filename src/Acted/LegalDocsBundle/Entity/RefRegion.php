@@ -4,9 +4,9 @@ namespace Acted\LegalDocsBundle\Entity;
 use Acted\LegalDocsBundle\Geo\Geo;
 
 /**
- * RefCity
+ * RefRegion
  */
-class RefCity implements Geo
+class RefRegion implements Geo
 {
     /**
      * @var integer
@@ -19,9 +19,9 @@ class RefCity implements Geo
     private $name;
 
     /**
-     * @var integer
+     * @var \Acted\LegalDocsBundle\Entity\RefCountry
      */
-    private $countryId;
+    private $country;
 
 
     /**
@@ -39,7 +39,7 @@ class RefCity implements Geo
      *
      * @param string $name
      *
-     * @return RefCity
+     * @return RefRegion
      */
     public function setName($name)
     {
@@ -59,27 +59,27 @@ class RefCity implements Geo
     }
 
     /**
-     * Set countryId
+     * Set country
      *
-     * @param integer $countryId
+     * @param \Acted\LegalDocsBundle\Entity\RefCountry $country
      *
-     * @return RefCity
+     * @return RefRegion
      */
-    public function setCountryId($countryId)
+    public function setCountry(\Acted\LegalDocsBundle\Entity\RefCountry $country = null)
     {
-        $this->countryId = $countryId;
+        $this->country = $country;
 
         return $this;
     }
 
     /**
-     * Get countryId
+     * Get country
      *
-     * @return integer
+     * @return \Acted\LegalDocsBundle\Entity\RefCountry
      */
-    public function getCountryId()
+    public function getCountry()
     {
-        return $this->countryId;
+        return $this->country;
     }
     /**
      * @var string
@@ -97,7 +97,7 @@ class RefCity implements Geo
      *
      * @param string $latitude
      *
-     * @return RefCity
+     * @return RefRegion
      */
     public function setLatitude($latitude)
     {
@@ -121,7 +121,7 @@ class RefCity implements Geo
      *
      * @param string $longitude
      *
-     * @return RefCity
+     * @return RefRegion
      */
     public function setLongitude($longitude)
     {

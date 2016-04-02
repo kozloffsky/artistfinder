@@ -13,6 +13,14 @@ Acted\LegalDocsBundle\Entity\RefRegion:
           type: string(128)
           notnull: true
           unique: true
+        latitude:
+          type: decimal
+          scale: 8
+          nullable: true
+        longitude:
+          type: decimal
+          scale: 8
+          nullable: true
     manyToOne:
         country:
           targetEntity: Acted\LegalDocsBundle\Entity\RefCountry
