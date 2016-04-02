@@ -4,16 +4,17 @@ namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\RefCountry;
 use Acted\LegalDocsBundle\Form\CountryFilterType;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 
 class GeoController extends Controller
 {
     /**
      * Regions list
-     *
+     * @Rest\View
      * @ApiDoc(
      *  resource=true,
      *  description="Retrieve regions list by country",
@@ -29,17 +30,15 @@ class GeoController extends Controller
         $countryForm = $this->createForm(CountryFilterType::class);
         $countryForm->handleRequest($request);
 
-        $serializer = $this->get('jms_serializer');
-
         if ($countryForm->isSubmitted() && $countryForm->isValid()) {
             $data = $countryForm->getData();
 
             /** @var RefCountry $country */
             $country = $data['country'];
 
-            return new JsonResponse($serializer->toArray($country->getRegions()));
+            return $country->getRegions();
         }
 
-        return new JsonResponse($this->get('app.form_errors_serializer')->serializeFormErrors($countryForm), 400);
+        return View::create($this->get('app.form_errors_serializer')->serializeFormErrors($countryForm), 400);
     }
 }
