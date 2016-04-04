@@ -7,6 +7,7 @@ use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Security\Exception\ActivationException;
 use KnpU\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
@@ -135,5 +136,13 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
         if($user instanceof User && (!$user->getActive())){
             throw new ActivationException();
         }
+    }
+
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    {
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(['error' => $exception->getMessageKey()]);
+        }
+        return parent::onAuthenticationFailure($request, $exception);
     }
 }
