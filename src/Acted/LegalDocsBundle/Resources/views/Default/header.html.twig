@@ -115,7 +115,9 @@
                             <li><a href="#">Another action</a></li>
                             <li><a href="#">Something else here</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
+                            {% if(app.user) %}
+                                <li><a href="{{ logout_path() }}">Logout</a></li>
+                            {% endif %}
                         </ul>
                     </li>
                     {% else %}
