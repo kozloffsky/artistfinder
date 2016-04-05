@@ -15,7 +15,6 @@ Acted\LegalDocsBundle\Entity\Category:
         title:
             type: string
             length: 255
-            unique: true
         slug:
             type: string(255)
             unique: true

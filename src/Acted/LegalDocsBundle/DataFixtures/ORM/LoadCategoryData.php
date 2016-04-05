@@ -47,54 +47,109 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
         $varietyActsCategory->setDescription($faker->realText(400));
         $varietyActsCategory->setSlug($varietyActsCategory->getTitle());
         $varietyActsCategory->setImage('assets/images/variety_acts.png');
-        $varietyActsCategory->setBackground($faker->imageUrl);
+        $varietyActsCategory->setBackground('assets/images/VarietyActs.jpg');
+        $manager->persist($varietyActsCategory);
 
-        $subCategory1 = new Category();
-        $subCategory1->setTitle($faker->unique()->text(10));
-        $subCategory1->setSlug($subCategory1->getTitle());
-        $subCategory1->setParent($varietyActsCategory);
-        $subCategory1->setBackground($faker->imageUrl);
+        $subCategories = range(1, 6);
+        foreach ($subCategories as $subCategoryId) {
+            $subCategory = new Category();
+            $subCategory->setTitle('Lorem ipsum');
+            $subCategory->setSlug($faker->unique()->text(10));
+            $subCategory->setParent($varietyActsCategory);
+            $manager->persist($subCategory);
+            $manager->flush();
+            $this->addReference('category'.$subCategoryId, $subCategory);
+        }
 
-        $subCategory2 = new Category();
-        $subCategory2->setTitle($faker->unique()->text(10));
-        $subCategory2->setSlug($subCategory2->getTitle());
-        $subCategory2->setParent($varietyActsCategory);
-        $subCategory2->setBackground($faker->imageUrl);
+        $liveMusic = new Category();
+        $liveMusic->setTitle('Live Music');
+        $liveMusic->setSlug($liveMusic->getTitle());
+        $liveMusic->setImage('assets/images/live_music.png');
+        $liveMusic->setBackground('assets/images/LiveMusic.jpg');
+        $manager->persist($liveMusic);
+
+        $subCategories = range(1, 6);
+        foreach ($subCategories as $subCategoryId) {
+            $subCategory = new Category();
+            $subCategory->setTitle('Lorem ipsum');
+            $subCategory->setSlug($faker->unique()->text(10));
+            $subCategory->setParent($liveMusic);
+            $manager->persist($subCategory);
+            $manager->flush();
+        }
+
 
         $internationalArtists = new Category();
         $internationalArtists->setTitle('International Artists');
         $internationalArtists->setDescription($faker->realText(400));
         $internationalArtists->setSlug($internationalArtists->getTitle());
         $internationalArtists->setImage('assets/images/international.png');
-        $internationalArtists->setBackground($faker->imageUrl);
-
-        $subCategory3 = new Category();
-        $subCategory3->setTitle($faker->unique()->text(10));
-        $subCategory3->setSlug($subCategory3->getTitle());
-        $subCategory3->setParent($internationalArtists);
-        $subCategory3->setBackground($faker->imageUrl);
-
-        $subCategory4 = new Category();
-        $subCategory4->setTitle($faker->unique()->text(10));
-        $subCategory4->setSlug($subCategory4->getTitle());
-        $subCategory4->setParent($internationalArtists);
-        $subCategory4->setBackground($faker->imageUrl);
-
-
-        $manager->persist($varietyActsCategory);
+        $internationalArtists->setBackground('assets/images/InternationalShow.jpeg');
         $manager->persist($internationalArtists);
-        $manager->persist($subCategory1);
-        $manager->persist($subCategory2);
-        $manager->persist($subCategory3);
-        $manager->persist($subCategory4);
-        $manager->flush();
 
-        $this->addReference('category1', $varietyActsCategory);
-        $this->addReference('category2', $internationalArtists);
-        $this->addReference('category3', $subCategory1);
-        $this->addReference('category4', $subCategory2);
-        $this->addReference('category5', $subCategory3);
-        $this->addReference('category6', $subCategory4);
+        $subCategories = range(1, 5);
+        foreach ($subCategories as $subCategoryId) {
+            $subCategory = new Category();
+            $subCategory->setTitle('Lorem ipsum');
+            $subCategory->setSlug($faker->unique()->text(10));
+            $subCategory->setParent($internationalArtists);
+            $manager->persist($subCategory);
+            $manager->flush();
+        }
+
+        $emcees = new Category();
+        $emcees->setTitle('Emcees & Comedians');
+        $emcees->setSlug($emcees->getTitle());
+        $emcees->setImage('assets/images/comedian.png');
+        $emcees->setBackground('assets/images/EMCEEComedian.jpeg');
+        $manager->persist($emcees);
+
+        $subCategories = range(1, 6);
+        foreach ($subCategories as $subCategoryId) {
+            $subCategory = new Category();
+            $subCategory->setTitle('Lorem ipsum');
+            $subCategory->setSlug($faker->unique()->text(10));
+            $subCategory->setParent($emcees);
+            $manager->persist($subCategory);
+            $manager->flush();
+        }
+
+        $dance = new Category();
+        $dance->setTitle('Musical and Dance Acts');
+        $dance->setSlug($dance->getTitle());
+        $dance->setImage('assets/images/musicalDanceActs.png');
+        $dance->setBackground('assets/images/DanceActs.jpg');
+        $manager->persist($dance);
+
+        $subCategories = range(1, 3);
+        foreach ($subCategories as $subCategoryId) {
+            $subCategory = new Category();
+            $subCategory->setTitle('Lorem ipsum');
+            $subCategory->setSlug($faker->unique()->text(10));
+            $subCategory->setParent($internationalArtists);
+            $manager->persist($subCategory);
+            $manager->flush();
+        }
+
+
+        $children = new Category();
+        $children->setTitle('Children Entertainment');
+        $children->setSlug($children->getTitle());
+        $children->setImage('assets/images/childrenEntertainment.png');
+        $children->setBackground('assets/images/ChildrenEntertainment.jpg');
+        $manager->persist($children);
+
+        $subCategories = range(1, 6);
+        foreach ($subCategories as $subCategoryId) {
+            $subCategory = new Category();
+            $subCategory->setTitle('Lorem ipsum');
+            $subCategory->setSlug($faker->unique()->text(10));
+            $subCategory->setParent($children);
+            $manager->persist($subCategory);
+            $manager->flush();
+        }
+
+        $manager->flush();
     }
 
     /**
