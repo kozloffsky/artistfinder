@@ -146,6 +146,21 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
         $profile->addMedia($audio2);
         $manager->flush();
 
+        $photoForSpotlights = range(1, 9);
+        foreach ($photoForSpotlights as $spotlight) {
+            $spotlightMedia = new Media();
+            $spotlightMedia->setName($spotlight.'.jpg');
+            $spotlightMedia->setMediaType('photo');
+            $spotlightMedia->setLink('assets/images/slider/'.$spotlight.'.jpg');
+            $spotlightMedia->setPosition(1);
+            $spotlightMedia->setActive(true);
+            $profile->addMedia($spotlightMedia);
+            $manager->persist($spotlightMedia);
+            $manager->flush();
+            $this->addReference('spotlight'.$spotlight, $spotlightMedia);
+        }
+
+
         $this->addReference('photo1', $photo1);
         $this->addReference('photo2', $photo2);
 

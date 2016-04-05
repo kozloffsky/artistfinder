@@ -24,16 +24,13 @@ class LoadHomespotlightData extends AbstractFixture implements OrderedFixtureInt
      */
     public function load(ObjectManager $manager)
     {
-        $spotlight1 = new Homespotlight();
-        $spotlight1->setMedia($this->getReference('photo1'));
-
-        $spotlight2 = new Homespotlight();
-        $spotlight2->setMedia($this->getReference('photo2'));
-
-        $manager->persist($spotlight1);
-        $manager->persist($spotlight2);
-
-        $manager->flush();
+        $photoForSpotlights = range(1, 9);
+        foreach ($photoForSpotlights as $spotlightId) {
+            $spotlight = new Homespotlight();
+            $spotlight->setMedia($this->getReference('spotlight'.$spotlightId));
+            $manager->persist($spotlight);
+            $manager->flush();
+        }
     }
 
     /**
