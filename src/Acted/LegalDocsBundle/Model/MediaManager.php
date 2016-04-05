@@ -14,6 +14,13 @@ use Symfony\Component\VarDumper\VarDumper;
  */
 class MediaManager
 {
+    private $dir;
+
+    public function __construct($dir)
+    {
+        $this->dir = $dir;
+    }
+
     public function updatePhoto(UploadedFile $file, Media $media)
     {
         $media->setActive(true);
@@ -21,7 +28,12 @@ class MediaManager
         $media->setPosition(1);
         $media->setName($file->getClientOriginalName());
         $fileName = uniqid().'.'.$file->getClientOriginalExtension();
-        $media->setLink($file->move('images', $fileName));
+
+        if (!file_exists($this->dir) && !is_dir($this->dir)) {
+            mkdir($this->dir, 0777, true);
+        }
+
+        $media->setLink($file->move($this->dir, $fileName));
         $media->setThumbnail('');
         return $media;
     }

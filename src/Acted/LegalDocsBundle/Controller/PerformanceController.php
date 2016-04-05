@@ -59,7 +59,7 @@ class PerformanceController extends Controller
         if($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $data = $form->getData();
-            $mediaManager = new MediaManager();
+            $mediaManager = $this->get('app.media.manager');
             $media = new Media();
 
             if(!is_null($data['video'])) {

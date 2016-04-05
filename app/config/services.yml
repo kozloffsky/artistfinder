@@ -31,6 +31,10 @@ services:
           - "@router"
           - "%mailer_from_address%"
 
+    app.media.manager:
+        class: Acted\LegalDocsBundle\Model\MediaManager
+        arguments: ["%image_upload_dir%"]
+
     app.form_errors_serializer:
         class: Acted\LegalDocsBundle\FormErrors\FormErrorsSerializer
 
@@ -39,3 +43,9 @@ services:
         tags:
           - {name: security.voter}
         public: false
+
+    app.remove_files.listener:
+        class: Acted\LegalDocsBundle\EventListener\RemoveFiles
+        arguments: ["%image_upload_dir%"]
+        tags:
+        - { name: doctrine.event_listener, event: postRemove }

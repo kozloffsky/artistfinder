@@ -45,7 +45,7 @@ class MediaController extends Controller
         if($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $data = $form->getData();
-            $mediaManager = new MediaManager();
+            $mediaManager = $this->get('app.media.manager');
 
             if(!empty($data['video'])) {
                 $media = $mediaManager->updateVideo($data['video'], $media);
