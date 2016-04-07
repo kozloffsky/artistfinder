@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -110,7 +111,11 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     {
         $username = $credentials['username'];
 
-        return $userProvider->loadUserByUsername($username);
+        try {
+            return $userProvider->loadUserByUsername($username);
+        } catch(UsernameNotFoundException $e) {
+            throw new BadCredentialsException();
+        }
     }
 
     /**
@@ -141,7 +146,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         if ($request->isXmlHttpRequest()) {
-            return new JsonResponse(['error' => $exception->getMessageKey()]);
+            return new JsonResponse(['error' => $exception->getMessageKey()], 403);
         }
         return parent::onAuthenticationFailure($request, $exception);
     }
