@@ -46,7 +46,9 @@
             <div id="photo-pager" class="bx-pager">
                 {% for photo in artist.user.profile.photoList %}
                     <div class="scale-thumb thumb{{ loop.index }}">
+                        {% if is_granted('EDIT', artist) %}
                         <span class="removeNewImage deleteMedia" id="{{ photo.id }}"><i class="fa fa-times-circle-o"></i></span>
+                        {% endif %}
                         <a data-slide-index="{{ loop.index0 }}" href=""><img src="{{ photo.link }}"/></a>
                     </div>
                 {% endfor %}
@@ -79,7 +81,9 @@
             <div id="video-pager" class="bx-pager">
                 {% for video in artist.user.profile.videoList %}
                     <div class="scale-thumb thumb{{ loop.index }}">
+                        {% if is_granted('EDIT', artist) %}
                         <span class="removeNewImage deleteMedia" id="{{ video.id }}"><i class="fa fa-times-circle-o"></i></span>
+                        {% endif %}
                         <a data-slide-index="{{ loop.index0 }}" href=""><img id="{{ video.videoId }}" src="{{ video.thumbnail }}"/></a>
                     </div>
                 {% endfor %}

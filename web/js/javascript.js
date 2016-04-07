@@ -3811,6 +3811,23 @@ $(function () {
         $('.login-form').show();
         $('.login-modal .modal-title').html('Log In');
     })
+
+    $('#loginBtn').on('click',function(event) {
+        event.preventDefault();
+        var customerValues = $('.login-form').serialize();
+        $.ajax({
+            type: "POST",
+            url: '/login_check',
+            data: customerValues,
+            success: function(response){
+                console.log(response)
+                alert('ffffff');
+            },
+            error: function(){
+                alert('dddd')
+            }
+        })
+    });
 });
 $(function() {
 
@@ -4067,6 +4084,8 @@ $(function() {
         var mediaId = $(this).attr('id');
         var currentBlocThumb = $(this).parent('.scale-thumb');
         var getBigSliderContent = $('#imageSlider' + mediaId);
+        var getMediaType = $(this).parents('section');
+        console.log(getMediaType[0].id)
         $.ajax({
             type: "DELETE",
             url: '/profile/' + slug + '/media/' + mediaId,
@@ -4074,6 +4093,13 @@ $(function() {
                 currentBlocThumb.remove();
                 getBigSliderContent.remove();
                 imageSlider.reloadSlider();
+                if(getMediaType[0].id == 'section-video'){
+                    var indexOfThumb = $('#video-pager .scale-thumb').length;
+                    $("#media [data-target='#section-video'] .badge").text(indexOfThumb)
+                } else if (getMediaType[0].id == '"section-photo"'){
+                    var indexOfThumb = $('#photo-pager .scale-thumb').length;
+                    $("#media [data-target='#section-photo'] .badge").text(indexOfThumb)
+                }
             }
         })
     });
@@ -4179,6 +4205,8 @@ $(function() {
                 var indexOfThumb = $('#video-pager .scale-thumb').length;
                 $('.bxVideoSlider').append('<li><iframe src='+ newVideoLink +'  width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>');
                 $('#video-pager').append('<div class="scale-thumb thumb'+ indexOfThumb + 1 +'"><span class="removeNewImage deleteMedia" id='+newVideoId+'><i class="fa fa-times-circle-o"></i></span><a data-slide-index='+ indexOfThumb +' href=""><img id='+newVideoId+' src='+videoThumbnail+'/></a></div>');
+                console.log(indexOfThumb);
+                $("#media [data-target='#section-video'] .badge").text(indexOfThumb + 1)
 
                 //videoSlider.reloadSlider();
             }
