@@ -17,3 +17,5 @@ Acted\LegalDocsBundle\Entity\Homespotlight:
     manyToOne:
         media:
             targetEntity: Acted\LegalDocsBundle\Entity\Media
+            onDelete: CASCADE
+            inversedBy: homespotlights

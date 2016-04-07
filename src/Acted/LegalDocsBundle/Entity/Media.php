@@ -329,4 +329,43 @@ class Media
         }
         return '/'.ltrim($link, '/');
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $homespotlights;
+
+
+    /**
+     * Add homespotlight
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Homespotlight $homespotlight
+     *
+     * @return Media
+     */
+    public function addHomespotlight(\Acted\LegalDocsBundle\Entity\Homespotlight $homespotlight)
+    {
+        $this->homespotlights[] = $homespotlight;
+
+        return $this;
+    }
+
+    /**
+     * Remove homespotlight
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Homespotlight $homespotlight
+     */
+    public function removeHomespotlight(\Acted\LegalDocsBundle\Entity\Homespotlight $homespotlight)
+    {
+        $this->homespotlights->removeElement($homespotlight);
+    }
+
+    /**
+     * Get homespotlights
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getHomespotlights()
+    {
+        return $this->homespotlights;
+    }
 }

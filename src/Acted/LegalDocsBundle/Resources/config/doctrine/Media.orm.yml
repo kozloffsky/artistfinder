@@ -40,4 +40,9 @@ Acted\LegalDocsBundle\Entity\Media:
         profiles:
           targetEntity: Acted\LegalDocsBundle\Entity\Profile
           mappedBy: media
+    oneToMany:
+        homespotlights:
+          targetEntity: Acted\LegalDocsBundle\Entity\Homespotlight
+          cascade: ["remove"]
+          mappedBy: media
     lifecycleCallbacks: {  }
