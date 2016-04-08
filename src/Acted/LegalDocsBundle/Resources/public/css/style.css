@@ -2099,7 +2099,7 @@ span.removeNewImage
     position: absolute;
     margin-left: 7px;
 }
-.errorCat
+.errorCat, #errorLogIn
 {
     color: #d9534f;
     text-align: center;

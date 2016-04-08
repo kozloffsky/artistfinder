@@ -1,4 +1,6 @@
 $(function () {
+    var loginFormValidation = $(".login-form").validate();
+
     $('.forgot-password').click(function () {
         $('.form-block').hide();
         $('.recovery-form').show();
@@ -18,12 +20,15 @@ $(function () {
             type: "POST",
             url: '/login_check',
             data: customerValues,
-            success: function(response){
-                console.log(response)
-                //alert('ffffff');
+            success: function(){
+                $('#errorLogIn').hide();
+                window.location.replace(window.location.href);
             },
-            error: function(){
-                //alert('dddd')
+            error: function(response){
+                var responseTextLogIn = response.responseJSON;
+                console.log(responseTextLogIn.error);
+                $('#errorLogIn').text(responseTextLogIn.error);
+                $('#errorLogIn').css('display', 'block');
             }
         })
     });

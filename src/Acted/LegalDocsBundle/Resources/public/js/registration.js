@@ -2,7 +2,7 @@ $(function () {
   //$('#phone_number').cleanVal(); to get phone number.
 
   //Enabling form validation.
-  var artistValidation = $("#artistForm").validate();
+
 
   var customerValidate =  $("#customerRegForm").validate();
 
@@ -164,7 +164,8 @@ $(function () {
   }
 
 
-  $('#stageThreeNext').on('click', function(){
+  $('#stageThreeNext').on('click', function(event){
+    event.preventDefault();
     artistRegister();
   });
 
