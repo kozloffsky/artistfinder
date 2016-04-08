@@ -22,7 +22,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('p.performances', 'pr')
             ->innerJoin('pr.offers', 'o')
             ->leftJoin('a.ratings', 'ar')
-            ->groupBy('a');
+            ->groupBy('a.id');
 
         if ($fc->withVideo()) {
             $qb->innerJoin('pr.media', 'prm')
@@ -37,11 +37,13 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('categories', $categories);
         }
 
+        $priceFunction = ($oc->getPriceOrder() == 'ASC') ? 'MIN' : 'MAX';
+        $qb->addSelect($priceFunction.'(o.price) AS HIDDEN price_agr');
         if ($oc->getPrioritized() == 'rating') {
             $qb->addOrderBy('rating_avg', $oc->getRatingOrder())
-                ->addOrderBy('o.price', $oc->getPriceOrder());
+                ->addOrderBy('price_agr', $oc->getPriceOrder());
         } else {
-            $qb->addOrderBy('o.price', $oc->getPriceOrder())
+            $qb->addOrderBy('price_agr', $oc->getPriceOrder())
                 ->addOrderBy('rating_avg', $oc->getRatingOrder());
         }
 
