@@ -12,14 +12,21 @@ namespace Acted\LegalDocsBundle\Search;
 class FilterCriteria
 {
     protected $withVideo = false;
+    protected $categories = [];
 
-    public function __construct($withVideo = false)
+    public function __construct($categories = [], $withVideo = false)
     {
         $this->withVideo = (bool)$withVideo;
+        $this->categories = $categories;
     }
 
     public function withVideo()
     {
         return $this->withVideo;
+    }
+
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }

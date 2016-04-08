@@ -1,6 +1,7 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Repository;
+
 use Acted\LegalDocsBundle\Search\FilterCriteria;
 use Acted\LegalDocsBundle\Search\OrderCriteria;
 
@@ -25,8 +26,15 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
 
         if ($fc->withVideo()) {
             $qb->innerJoin('pr.media', 'prm')
-                ->where('prm.mediaType = :mediaType')
+                ->andWhere('prm.mediaType = :mediaType')
                 ->setParameter('mediaType', 'video');
+        }
+
+        $categories = $fc->getCategories();
+        if (count($categories) > 0) {
+            $qb->innerJoin('p.categories', 'c')
+                ->andWhere('c IN (:categories)')
+                ->setParameter('categories', $categories);
         }
 
         if ($oc->getPrioritized() == 'rating') {
