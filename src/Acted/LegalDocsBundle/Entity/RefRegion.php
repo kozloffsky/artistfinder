@@ -139,4 +139,50 @@ class RefRegion implements Geo
     {
         return $this->longitude;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $cities;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->cities = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add city
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefCity $city
+     *
+     * @return RefRegion
+     */
+    public function addCity(\Acted\LegalDocsBundle\Entity\RefCity $city)
+    {
+        $this->cities[] = $city;
+
+        return $this;
+    }
+
+    /**
+     * Remove city
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefCity $city
+     */
+    public function removeCity(\Acted\LegalDocsBundle\Entity\RefCity $city)
+    {
+        $this->cities->removeElement($city);
+    }
+
+    /**
+     * Get cities
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCities()
+    {
+        return $this->cities;
+    }
 }

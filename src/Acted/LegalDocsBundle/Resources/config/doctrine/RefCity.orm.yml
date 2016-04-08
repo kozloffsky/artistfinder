@@ -13,9 +13,6 @@ Acted\LegalDocsBundle\Entity\RefCity:
           type: string(128)
           notnull: true
           unique: true
-        countryId:
-          type: integer(11)
-          notnull: true
         latitude:
           type: decimal
           scale: 8
@@ -24,4 +21,8 @@ Acted\LegalDocsBundle\Entity\RefCity:
           type: decimal
           scale: 8
           nullable: true
+    manyToOne:
+        region:
+          targetEntity: Acted\LegalDocsBundle\Entity\RefRegion
+          inversedBy: cities
     lifecycleCallbacks: {  }

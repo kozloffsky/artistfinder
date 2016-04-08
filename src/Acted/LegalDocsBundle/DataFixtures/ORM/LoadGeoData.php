@@ -35,6 +35,9 @@ class LoadGeoData extends AbstractFixture implements OrderedFixtureInterface
         $region3 = new RefRegion();
         $region3->setName('Brighton');
         $region3->setCountry($country1);
+        $london = new RefRegion();
+        $london->setName('London');
+        $london->setCountry($country1);
 
         $country2 = $this->getReference('germany');
 
@@ -47,6 +50,9 @@ class LoadGeoData extends AbstractFixture implements OrderedFixtureInterface
         $region6 = new RefRegion();
         $region6->setName('Hesse');
         $region6->setCountry($country2);
+        $berlin = new RefRegion();
+        $berlin->setName('Berlin');
+        $berlin->setCountry($country2);
 
         $country3 = $this->getReference('france');
 
@@ -72,6 +78,12 @@ class LoadGeoData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($region7);
         $manager->persist($region8);
         $manager->persist($region9);
+        $manager->persist($london);
+        $manager->persist($berlin);
+
+        $this->addReference('london', $london);
+        $this->addReference('berlin', $berlin);
+        $this->addReference('ile-de-france', $region9);
 
         $manager->flush();
     }

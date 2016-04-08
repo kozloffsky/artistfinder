@@ -139,4 +139,33 @@ class RefCity implements Geo
     {
         return $this->longitude;
     }
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\RefRegion
+     */
+    private $region;
+
+
+    /**
+     * Set region
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefRegion $region
+     *
+     * @return RefCity
+     */
+    public function setRegion(\Acted\LegalDocsBundle\Entity\RefRegion $region = null)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * Get region
+     *
+     * @return \Acted\LegalDocsBundle\Entity\RefRegion
+     */
+    public function getRegion()
+    {
+        return $this->region;
+    }
 }
