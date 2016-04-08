@@ -46,29 +46,6 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
         $videoInfo2 = Embed::create('https://player.vimeo.com/video/17214458');
         preg_match('/src="(.+?)"/', $videoInfo2->getCode(), $videoLinkMatch2);
 
-        $france = new RefCountry();
-        $france->setName('France');
-        $uk = new RefCountry();
-        $uk->setName('United Kingdom');
-        $germany = new RefCountry();
-        $germany->setName('Germany');
-
-        $manager->persist($france);
-        $manager->persist($uk);
-        $manager->persist($germany);
-        $manager->flush();
-
-        $this->addReference('uk', $uk);
-        $this->addReference('germany', $germany);
-        $this->addReference('france', $france);
-
-        $city = new RefCity();
-        $city->setName($faker->city);
-        $city->setCountryId(1);
-        $manager->persist($city);
-        $manager->flush();
-
-        $this->addReference('city', $city);
 
         for ($i = 0; $i < 10; $i++) {
             $user = new User();
@@ -220,6 +197,10 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $artist->setName($faker->unique()->name);
             $artist->setSlug($artist->getName());
             $artist->setUser($user);
+
+            $cityNumber = $faker->randomElement([1, 2, 3]);
+            $city = $this->getReference('city'.$cityNumber);
+
             $artist->setCity($city);
             $manager->persist($artist);
             $manager->flush();
@@ -230,6 +211,6 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
 
     public function getOrder()
     {
-        return 2;
+        return 3;
     }
 }

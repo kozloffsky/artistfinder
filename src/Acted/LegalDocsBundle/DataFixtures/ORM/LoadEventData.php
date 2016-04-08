@@ -52,7 +52,11 @@ class LoadEventData extends AbstractFixture implements ContainerAwareInterface, 
                 $event->setEventTypeId(1);
                 $event->setIsInternational(true);
                 $event->setAddress($faker->address);
-                $event->setCity($this->getReference('city'));
+
+                $cityNumber = $faker->randomElement([1, 2, 3]);
+                $city = $this->getReference('city'.$cityNumber);
+                $event->setCity($city);
+
                 $event->setBudget($faker->randomFloat(null, 100, 10000));
                 $event->setCurrencyId(1);
                 $event->setStartingDate($faker->dateTime);
@@ -75,6 +79,6 @@ class LoadEventData extends AbstractFixture implements ContainerAwareInterface, 
      */
     public function getOrder()
     {
-        return 5;
+        return 6;
     }
 }

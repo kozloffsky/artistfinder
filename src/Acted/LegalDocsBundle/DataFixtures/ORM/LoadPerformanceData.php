@@ -103,6 +103,6 @@ class LoadPerformanceData extends AbstractFixture implements FixtureInterface, C
 
     public function getOrder()
     {
-        return 3;
+        return 4;
     }
 }

@@ -70,6 +70,6 @@ class LoadOfferData extends AbstractFixture implements ContainerAwareInterface, 
      */
     public function getOrder()
     {
-        return 4;
+        return 5;
     }
 }
