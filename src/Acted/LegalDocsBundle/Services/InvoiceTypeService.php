@@ -14,7 +14,6 @@ use Acted\LegalDocsBundle\Entity\Template;
  */
 class InvoiceTypeService extends base\TemplatesService
 {
-
     /**
      * @var \Acted\LegalDocsBundle\Entity\InvoiceType
      */
@@ -23,11 +22,6 @@ class InvoiceTypeService extends base\TemplatesService
     protected function getTemplateId()
     {
         return Template::TYPE_INVOICE;
-    }
-    protected function getSavePath($fileName)
-    {
-        $path = $this->_container->get('kernel')->getRootDir();
-        return realpath($path . '/../web/docs/invoice_type') . '/' . $fileName;
     }
 
     public function company_name()

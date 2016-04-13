@@ -36,6 +36,10 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+      performancecontract_dir: "%performancecontract_dir%"
+      quotation_dir: "%quotation_dir%"
+      invoice_dir: "%invoice_dir%"
 
 # Doctrine Configuration
 doctrine:
