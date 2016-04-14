@@ -1,0 +1,4 @@
+artists_list:
+    path:     /
+    defaults: { _controller: ActedLegalDocsBundle:Artist:index, _format: json }
+    methods:  GET
