@@ -4485,6 +4485,7 @@ $(function () {
   //Change registration modal state.
   function chageState(state, isArtist) {
     currentState = state;
+    console.log(state, isArtist);
     switch (state) {
       case 1:
         showFirstPage();
@@ -4526,19 +4527,22 @@ $(function () {
     } else {
       text = 'Contact details'
     }
-    $('.stage').hide();
-    $('.sub-stage').hide();
-    $('.modal-header').show();
-    $('#step-counter').html('Step 2');
-    $('#modal-title').html(text);
+    console.log(text)
+    console.log(isArtist)
+    $('#registrationModal .stage').hide();
+    $('#registrationModal .sub-stage').hide();
+    $('#registrationModal .modal-header').show();
+    $('#registrationModal #step-counter').html('Step 2');
+    $('#registrationModal #modal-title').html(text);
+    console.log($('#modal-title').text());
     if (isArtist) {
-      $('#artistBlock').show();
+      $('#registrationModal #artistBlock').show();
     } else {
-      $('#customerBlock').show();
+      $('#registrationModal #customerBlock').show();
     }
-    $('#stage-2').show();
-    $('#completionTime').hide();
-    $('#modal-title').focus();
+    $('#registrationModal #stage-2').show();
+    $('#registrationModal #completionTime').hide();
+    $('#registrationModal #modal-title').focus();
   }
 
   function showThirdPage() {
@@ -4560,7 +4564,7 @@ $(function () {
 
 
   function resetModal() {
-    $('.registration-modal [type="checkbox"]').prop('checked', false);
+    $('#registrationModal [type="checkbox"]').prop('checked', false);
     $('.details-form input').val('');
     $('.category').removeClass('open');
     showFirstPage();
@@ -4571,6 +4575,7 @@ $(function () {
   });
 
   $('#entertainerBtn, #entertainerImg').click(function () {
+    console.log('foooo')
     chageState(2, true);
   });
 
