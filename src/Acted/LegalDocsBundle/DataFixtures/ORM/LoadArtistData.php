@@ -162,28 +162,12 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $profile->addMedia($spotlightMedia);
             $manager->persist($spotlightMedia);
             $manager->flush();
-            $this->addReference('spotlight'.$spotlight, $spotlightMedia);
+            $this->setReference('spotlight'.$spotlight, $spotlightMedia);
         }
 
 
-        $this->addReference('photo1', $photo1);
-        $this->addReference('photo2', $photo2);
-
-        $france = new RefCountry();
-        $france->setName('France');
-        $uk = new RefCountry();
-        $uk->setName('United Kingdom');
-        $germany = new RefCountry();
-        $germany->setName('Germany');
-
-        $manager->persist($france);
-        $manager->persist($uk);
-        $manager->persist($germany);
-        $manager->flush();
-
-        $this->addReference('uk', $uk);
-        $this->addReference('germany', $germany);
-        $this->addReference('france', $france);
+        $this->setReference('photo1', $photo1);
+        $this->setReference('photo2', $photo2);
 
         $city = new RefCity();
         $city->setName($faker->city);
@@ -191,7 +175,7 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
         $manager->persist($city);
         $manager->flush();
 
-        $this->addReference('city', $city);
+        $this->setReference('city', $city);
 
             $artist = new Artist();
             $artist->setName($faker->unique()->name);
@@ -205,7 +189,7 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $manager->persist($artist);
             $manager->flush();
 
-            $this->addReference('artist'.$i, $artist);
+            $this->setReference('artist'.$i, $artist);
         }
     }
 
