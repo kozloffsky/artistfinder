@@ -21,7 +21,7 @@ class SearchController extends Controller
         $s = $this->get('app.search');
 
         $oc = new OrderCriteria(OrderCriteria::TOP_RATED, OrderCriteria::CHEAPEST);
-        $fc = new FilterCriteria($data['categories'], true);
+        $fc = new FilterCriteria($data['categories'], true, $data['query']);
 
         VarDumper::dump($s->getFilteredArtists($oc, $fc));
         die;

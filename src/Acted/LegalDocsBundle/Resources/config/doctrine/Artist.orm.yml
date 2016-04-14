@@ -1,6 +1,10 @@
 Acted\LegalDocsBundle\Entity\Artist:
     type: entity
     table: Artist
+    indexes:
+      search_index:
+        columns: [name, assistant_name]
+        flags: [fulltext]
     repositoryClass: Acted\LegalDocsBundle\Repository\ArtistRepository
     id:
         id:

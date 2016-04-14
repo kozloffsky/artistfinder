@@ -30,6 +30,11 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('mediaType', 'video');
         }
 
+        if ($fc->getQuery()) {
+            $qb->andWhere('MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0')
+                ->setParameter('query', $fc->getQuery());
+        }
+
         $categories = $fc->getCategories();
         if (count($categories) > 0) {
             $qb->innerJoin('p.categories', 'c')

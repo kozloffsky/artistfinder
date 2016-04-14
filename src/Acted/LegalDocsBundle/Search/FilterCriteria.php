@@ -13,11 +13,13 @@ class FilterCriteria
 {
     protected $withVideo = false;
     protected $categories = [];
+    protected $query = null;
 
-    public function __construct($categories = [], $withVideo = false)
+    public function __construct($categories = [], $withVideo = false, $query = null)
     {
         $this->withVideo = (bool)$withVideo;
         $this->categories = $categories;
+        $this->query = $query;
     }
 
     public function withVideo()
@@ -28,5 +30,10 @@ class FilterCriteria
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    public function getQuery()
+    {
+        return $this->query;
     }
 }
