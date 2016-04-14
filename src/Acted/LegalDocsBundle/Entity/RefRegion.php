@@ -4,9 +4,9 @@ namespace Acted\LegalDocsBundle\Entity;
 use Acted\LegalDocsBundle\Geo\Geo;
 
 /**
- * RefCity
+ * RefRegion
  */
-class RefCity implements Geo
+class RefRegion implements Geo
 {
     /**
      * @var integer
@@ -19,9 +19,9 @@ class RefCity implements Geo
     private $name;
 
     /**
-     * @var integer
+     * @var \Acted\LegalDocsBundle\Entity\RefCountry
      */
-    private $countryId;
+    private $country;
 
 
     /**
@@ -39,7 +39,7 @@ class RefCity implements Geo
      *
      * @param string $name
      *
-     * @return RefCity
+     * @return RefRegion
      */
     public function setName($name)
     {
@@ -59,27 +59,27 @@ class RefCity implements Geo
     }
 
     /**
-     * Set countryId
+     * Set country
      *
-     * @param integer $countryId
+     * @param \Acted\LegalDocsBundle\Entity\RefCountry $country
      *
-     * @return RefCity
+     * @return RefRegion
      */
-    public function setCountryId($countryId)
+    public function setCountry(\Acted\LegalDocsBundle\Entity\RefCountry $country = null)
     {
-        $this->countryId = $countryId;
+        $this->country = $country;
 
         return $this;
     }
 
     /**
-     * Get countryId
+     * Get country
      *
-     * @return integer
+     * @return \Acted\LegalDocsBundle\Entity\RefCountry
      */
-    public function getCountryId()
+    public function getCountry()
     {
-        return $this->countryId;
+        return $this->country;
     }
     /**
      * @var string
@@ -97,7 +97,7 @@ class RefCity implements Geo
      *
      * @param string $latitude
      *
-     * @return RefCity
+     * @return RefRegion
      */
     public function setLatitude($latitude)
     {
@@ -121,7 +121,7 @@ class RefCity implements Geo
      *
      * @param string $longitude
      *
-     * @return RefCity
+     * @return RefRegion
      */
     public function setLongitude($longitude)
     {
@@ -140,32 +140,49 @@ class RefCity implements Geo
         return $this->longitude;
     }
     /**
-     * @var \Acted\LegalDocsBundle\Entity\RefRegion
+     * @var \Doctrine\Common\Collections\Collection
      */
-    private $region;
-
+    private $cities;
 
     /**
-     * Set region
-     *
-     * @param \Acted\LegalDocsBundle\Entity\RefRegion $region
-     *
-     * @return RefCity
+     * Constructor
      */
-    public function setRegion(\Acted\LegalDocsBundle\Entity\RefRegion $region = null)
+    public function __construct()
     {
-        $this->region = $region;
+        $this->cities = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add city
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefCity $city
+     *
+     * @return RefRegion
+     */
+    public function addCity(\Acted\LegalDocsBundle\Entity\RefCity $city)
+    {
+        $this->cities[] = $city;
 
         return $this;
     }
 
     /**
-     * Get region
+     * Remove city
      *
-     * @return \Acted\LegalDocsBundle\Entity\RefRegion
+     * @param \Acted\LegalDocsBundle\Entity\RefCity $city
      */
-    public function getRegion()
+    public function removeCity(\Acted\LegalDocsBundle\Entity\RefCity $city)
     {
-        return $this->region;
+        $this->cities->removeElement($city);
+    }
+
+    /**
+     * Get cities
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCities()
+    {
+        return $this->cities;
     }
 }

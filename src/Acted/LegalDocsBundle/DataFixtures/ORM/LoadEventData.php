@@ -42,27 +42,33 @@ class LoadEventData extends AbstractFixture implements ContainerAwareInterface, 
     {
         $faker = $this->container->get('davidbadura_faker.faker');
 
-        for($i = 0; $i < 10; $i++) {
-            $event = new Event();
-            $event->setEventRef($faker->unique()->word);
-            $event->setUser($this->getReference('user'));
-            $event->setTitle($faker->text(100));
-            $event->setDescription($faker->text);
-            $event->setEventTypeId(1);
-            $event->setIsInternational(true);
-            $event->setAddress($faker->address);
-            $event->setCity($this->getReference('city'));
-            $event->setBudget($faker->randomFloat(null, 100, 10000));
-            $event->setCurrencyId(1);
-            $event->setStartingDate($faker->dateTime);
-            $event->setEndingDate($faker->dateTime);
-            $event->setTiming($faker->text(100));
-            $event->setComments($faker->text);
+        for ($i = 0; $i < 10; $i++) {
+            for ($j = 0; $j < 10; $j++) {
+                $event = new Event();
+                $event->setEventRef($faker->unique()->word);
+                $event->setUser($this->getReference('user'.$i));
+                $event->setTitle($faker->text(100));
+                $event->setDescription($faker->text);
+                $event->setEventTypeId(1);
+                $event->setIsInternational(true);
+                $event->setAddress($faker->address);
 
-            $manager->persist($event);
-            $manager->flush();
+                $cityNumber = $faker->randomElement([1, 2, 3]);
+                $city = $this->getReference('city'.$cityNumber);
+                $event->setCity($city);
 
-            $this->addReference('event'.$i, $event);
+                $event->setBudget($faker->randomFloat(null, 100, 10000));
+                $event->setCurrencyId(1);
+                $event->setStartingDate($faker->dateTime);
+                $event->setEndingDate($faker->dateTime);
+                $event->setTiming($faker->text(100));
+                $event->setComments($faker->text);
+
+                $manager->persist($event);
+                $manager->flush();
+
+                $this->addReference('event' . $i . '_' . $j, $event);
+            }
         }
     }
 
@@ -73,6 +79,6 @@ class LoadEventData extends AbstractFixture implements ContainerAwareInterface, 
      */
     public function getOrder()
     {
-        return 5;
+        return 6;
     }
 }

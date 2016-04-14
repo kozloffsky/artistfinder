@@ -130,3 +130,11 @@ liip_imagine:
                 downscale: { max: [300, 200] }
 
 nelmio_api_doc: ~
+
+fos_rest:
+    view:
+        view_response_listener: true
+        formats:
+            json: true
+        templating_formats:
+            html: false

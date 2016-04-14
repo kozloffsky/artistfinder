@@ -2,6 +2,9 @@
 
 namespace Acted\LegalDocsBundle\Repository;
 
+use Acted\LegalDocsBundle\Search\FilterCriteria;
+use Acted\LegalDocsBundle\Search\OrderCriteria;
+
 /**
  * ArtistRepository
  *
@@ -10,4 +13,40 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class ArtistRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getFilteredQuery(OrderCriteria $oc, FilterCriteria $fc)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->addSelect('AVG(ar.rating) AS HIDDEN rating_avg')
+            ->innerJoin('a.user', 'u')
+            ->innerJoin('u.profile', 'p')
+            ->innerJoin('p.performances', 'pr')
+            ->innerJoin('pr.offers', 'o')
+            ->leftJoin('a.ratings', 'ar')
+            ->groupBy('a.id');
+
+        if ($fc->withVideo()) {
+            $qb->innerJoin('pr.media', 'prm')
+                ->andWhere('prm.mediaType = :mediaType')
+                ->setParameter('mediaType', 'video');
+        }
+
+        $categories = $fc->getCategories();
+        if (count($categories) > 0) {
+            $qb->innerJoin('p.categories', 'c')
+                ->andWhere('c IN (:categories)')
+                ->setParameter('categories', $categories);
+        }
+
+        $priceFunction = ($oc->getPriceOrder() == 'ASC') ? 'MIN' : 'MAX';
+        $qb->addSelect($priceFunction.'(o.price) AS HIDDEN price_agr');
+        if ($oc->getPrioritized() == 'rating') {
+            $qb->addOrderBy('rating_avg', $oc->getRatingOrder())
+                ->addOrderBy('price_agr', $oc->getPriceOrder());
+        } else {
+            $qb->addOrderBy('price_agr', $oc->getPriceOrder())
+                ->addOrderBy('rating_avg', $oc->getRatingOrder());
+        }
+
+        return $qb->getQuery();
+    }
 }

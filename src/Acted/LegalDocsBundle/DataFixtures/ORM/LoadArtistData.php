@@ -40,111 +40,116 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
         $faker = $this->container->get('davidbadura_faker.faker');
         $encoder = $this->container->get('security.password_encoder');
 
-        $user = new User();
-        $user->setFirstname($faker->firstName);
-        $user->setLastname($faker->lastName);
-        $user->setEmail($faker->unique()->email);
-        $user->setPasswordHash($encoder->encodePassword($user, 'Aa123654'));
-        $user->setPrimaryPhone($faker->unique()->phoneNumber);
-        $user->setActive(true);
-        $user->setAvatar($faker->imageUrl);
-        $user->setBackground($faker->imageUrl);
-        $manager->persist($user);
+        $videoInfo1 = Embed::create('https://player.vimeo.com/video/17914974');
+        preg_match('/src="(.+?)"/', $videoInfo1->getCode(), $videoLinkMatch1);
 
-        $this->addReference('user', $user);
+        $videoInfo2 = Embed::create('https://player.vimeo.com/video/17214458');
+        preg_match('/src="(.+?)"/', $videoInfo2->getCode(), $videoLinkMatch2);
 
-        $manager->flush();
 
-        $photo1 = new Media();
-        $photo1->setName($faker->word);
-        $photo1->setMediaType('photo');
-        $photo1->setLink($faker->imageUrl);
-        $photo1->setPosition(1);
-        $photo1->setActive(true);
+        for ($i = 0; $i < 10; $i++) {
+            $user = new User();
+            $user->setFirstname($faker->firstName);
+            $user->setLastname($faker->lastName);
+            $user->setEmail($faker->unique()->email);
+            $user->setPasswordHash($encoder->encodePassword($user, 'Aa123654'));
+            $user->setPrimaryPhone($faker->unique()->phoneNumber);
+            $user->setActive(true);
+            $user->setAvatar($faker->imageUrl);
+            $user->setBackground($faker->imageUrl);
+            $manager->persist($user);
 
-        $photo2 = new Media();
-        $photo2->setName($faker->word);
-        $photo2->setMediaType('photo');
-        $photo2->setLink($faker->imageUrl);
-        $photo2->setPosition(1);
-        $photo2->setActive(true);
+            $this->addReference('user'.$i, $user);
 
-        $video1 = new Media();
-        $video1->setName($faker->word);
-        $video1->setMediaType('video');
-        $video1->setLink('https://player.vimeo.com/video/17914974');
-        $video1->setPosition(1);
-        $video1->setActive(true);
+            $manager->flush();
 
-        $videoInfo = Embed::create('https://player.vimeo.com/video/17914974');
-        preg_match('/src="(.+?)"/', $videoInfo->getCode(), $videoLinkMatch);
-        if(isset($videoLinkMatch[1])){
-            $video1->setLink($videoLinkMatch[1]);
-        }
-        $video1->setThumbnail($videoInfo->getImage());
+            $photo1 = new Media();
+            $photo1->setName($faker->word);
+            $photo1->setMediaType('photo');
+            $photo1->setLink($faker->imageUrl);
+            $photo1->setPosition(1);
+            $photo1->setActive(true);
 
-        $video2 = new Media();
-        $video2->setName($faker->word);
-        $video2->setMediaType('video');
-        $video2->setLink('https://player.vimeo.com/video/17214458');
-        $video2->setPosition(1);
-        $video2->setActive(true);
+            $photo2 = new Media();
+            $photo2->setName($faker->word);
+            $photo2->setMediaType('photo');
+            $photo2->setLink($faker->imageUrl);
+            $photo2->setPosition(1);
+            $photo2->setActive(true);
 
-        $videoInfo = Embed::create('https://player.vimeo.com/video/17214458');
-        preg_match('/src="(.+?)"/', $videoInfo->getCode(), $videoLinkMatch);
-        if(isset($videoLinkMatch[1])){
-            $video2->setLink($videoLinkMatch[1]);
-        }
-        $video2->setThumbnail($videoInfo->getImage());
+            $video1 = new Media();
+            $video1->setName($faker->word);
+            $video1->setMediaType('video');
+            $video1->setLink('https://player.vimeo.com/video/17914974');
+            $video1->setPosition(1);
+            $video1->setActive(true);
 
-        $audio1 = new Media();
-        $audio1->setName($faker->word);
-        $audio1->setMediaType('audio');
-        $audio1->setLink('http://www.noiseaddicts.com/samples_1w72b820/3828.mp3');
-        $audio1->setPosition(1);
-        $audio1->setActive(true);
+            if(isset($videoLinkMatch[1])){
+                $video1->setLink($videoLinkMatch[1]);
+            }
+            $video1->setThumbnail($videoInfo1->getImage());
 
-        $audio2 = new Media();
-        $audio2->setName($faker->word);
-        $audio2->setMediaType('audio');
-        $audio2->setLink('http://www.noiseaddicts.com/samples_1w72b820/22.mp3');
-        $audio2->setPosition(1);
-        $audio2->setActive(true);
+            $video2 = new Media();
+            $video2->setName($faker->word);
+            $video2->setMediaType('video');
+            $video2->setLink('https://player.vimeo.com/video/17214458');
+            $video2->setPosition(1);
+            $video2->setActive(true);
 
-        $manager->persist($photo1);
-        $manager->persist($photo2);
-        $manager->persist($video1);
-        $manager->persist($video2);
-        $manager->persist($audio1);
-        $manager->persist($audio2);
-        $manager->flush();
 
-        $profile = new Profile();
-        $profile->setUser($user);
-        $profile->setTitle($faker->word);
-        $profile->setDescription($faker->text);
-        $profile->setIsInternational(true);
-        $profile->setPerformanceRange($faker->numberBetween(3, 10));
-        $profile->setHeader($faker->word);
-        $profile->setActive(true);
-        $profile->setPaymentTypeId(1);
+            if(isset($videoLinkMatch[1])){
+                $video2->setLink($videoLinkMatch[1]);
+            }
+            $video2->setThumbnail($videoInfo2->getImage());
 
-        $profile->addCategory($this->getReference('category3'));
-        $profile->addCategory($this->getReference('category4'));
-        $profile->addCategory($this->getReference('category5'));
+            $audio1 = new Media();
+            $audio1->setName($faker->word);
+            $audio1->setMediaType('audio');
+            $audio1->setLink('http://www.noiseaddicts.com/samples_1w72b820/3828.mp3');
+            $audio1->setPosition(1);
+            $audio1->setActive(true);
 
-        $manager->persist($profile);
-        $manager->flush();
+            $audio2 = new Media();
+            $audio2->setName($faker->word);
+            $audio2->setMediaType('audio');
+            $audio2->setLink('http://www.noiseaddicts.com/samples_1w72b820/22.mp3');
+            $audio2->setPosition(1);
+            $audio2->setActive(true);
 
-        $this->addReference('profile', $profile);
+            $manager->persist($photo1);
+            $manager->persist($photo2);
+            $manager->persist($video1);
+            $manager->persist($video2);
+            $manager->persist($audio1);
+            $manager->persist($audio2);
+            $manager->flush();
 
-        $profile->addMedia($photo1);
-        $profile->addMedia($photo2);
-        $profile->addMedia($video1);
-        $profile->addMedia($video2);
-        $profile->addMedia($audio1);
-        $profile->addMedia($audio2);
-        $manager->flush();
+            $profile = new Profile();
+            $profile->setUser($user);
+            $profile->setTitle($faker->word);
+            $profile->setDescription($faker->text);
+            $profile->setIsInternational(true);
+            $profile->setPerformanceRange($faker->numberBetween(3, 10));
+            $profile->setHeader($faker->word);
+            $profile->setActive(true);
+            $profile->setPaymentTypeId(1);
+
+            $profile->addCategory($this->getReference('category3'));
+            $profile->addCategory($this->getReference('category4'));
+            $profile->addCategory($this->getReference('category5'));
+
+            $manager->persist($profile);
+            $manager->flush();
+
+            $this->addReference('profile'.$i, $profile);
+
+            $profile->addMedia($photo1);
+            $profile->addMedia($photo2);
+            $profile->addMedia($video1);
+            $profile->addMedia($video2);
+            $profile->addMedia($audio1);
+            $profile->addMedia($audio2);
+            $manager->flush();
 
         $photoForSpotlights = range(1, 9);
         foreach ($photoForSpotlights as $spotlight) {
@@ -176,6 +181,10 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
         $manager->persist($germany);
         $manager->flush();
 
+        $this->addReference('uk', $uk);
+        $this->addReference('germany', $germany);
+        $this->addReference('france', $france);
+
         $city = new RefCity();
         $city->setName($faker->city);
         $city->setCountryId(1);
@@ -184,19 +193,24 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
 
         $this->addReference('city', $city);
 
-        $artist = new Artist();
-        $artist->setName($faker->name);
-        $artist->setSlug($artist->getName());
-        $artist->setUser($user);
-        $artist->setCity($city);
-        $manager->persist($artist);
-        $manager->flush();
+            $artist = new Artist();
+            $artist->setName($faker->unique()->name);
+            $artist->setSlug($artist->getName());
+            $artist->setUser($user);
 
-        $this->addReference('artist', $artist);
+            $cityNumber = $faker->randomElement([1, 2, 3]);
+            $city = $this->getReference('city'.$cityNumber);
+
+            $artist->setCity($city);
+            $manager->persist($artist);
+            $manager->flush();
+
+            $this->addReference('artist'.$i, $artist);
+        }
     }
 
     public function getOrder()
     {
-        return 2;
+        return 3;
     }
 }

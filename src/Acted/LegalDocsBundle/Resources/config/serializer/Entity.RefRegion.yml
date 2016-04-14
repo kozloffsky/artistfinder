@@ -1,0 +1,5 @@
+Acted\LegalDocsBundle\Entity\RefRegion:
+  exclusion_policy: NONE
+  properties:
+    country:
+      exclude: true
