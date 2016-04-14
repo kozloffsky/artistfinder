@@ -24,11 +24,6 @@ class QuotationTypeService extends base\TemplatesService
     {
         return Template::TYPE_QUOTATION;
     }
-    protected function getSavePath($fileName)
-    {
-        $path = $this->_container->get('kernel')->getRootDir();
-        return realpath($path . '/../web/docs/quotation_type') . '/' . $fileName;
-    }
 
     public function company_name()
     {
