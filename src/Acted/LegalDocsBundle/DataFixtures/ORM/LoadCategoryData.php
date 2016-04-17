@@ -42,9 +42,12 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
     {
         $faker = $this->container->get('davidbadura_faker.faker');
 
+        $categoryDescription = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+        do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.';
+
         $varietyActsCategory = new Category();
         $varietyActsCategory->setTitle('Variety Acts');
-        $varietyActsCategory->setDescription($faker->realText(400));
+        $varietyActsCategory->setDescription($categoryDescription);
         $varietyActsCategory->setSlug($varietyActsCategory->getTitle());
         $varietyActsCategory->setImage('assets/images/variety_acts.png');
         $varietyActsCategory->setBackground('assets/images/VarietyActs.jpg');
@@ -53,7 +56,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
         $subCategories = range(1, 6);
         foreach ($subCategories as $subCategoryId) {
             $subCategory = new Category();
-            $subCategory->setTitle('Lorem ipsum');
+            $subCategory->setTitle('Sub-category '.$subCategoryId);
             $subCategory->setSlug($faker->unique()->text(10));
             $subCategory->setParent($varietyActsCategory);
             $manager->persist($subCategory);
@@ -63,6 +66,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
 
         $liveMusic = new Category();
         $liveMusic->setTitle('Live Music');
+        $liveMusic->setDescription($categoryDescription);
         $liveMusic->setSlug($liveMusic->getTitle());
         $liveMusic->setImage('assets/images/live_music.png');
         $liveMusic->setBackground('assets/images/LiveMusic.jpg');
@@ -71,7 +75,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
         $subCategories = range(1, 6);
         foreach ($subCategories as $subCategoryId) {
             $subCategory = new Category();
-            $subCategory->setTitle('Lorem ipsum');
+            $subCategory->setTitle('Sub-category '.$subCategoryId);
             $subCategory->setSlug($faker->unique()->text(10));
             $subCategory->setParent($liveMusic);
             $manager->persist($subCategory);
@@ -81,7 +85,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
 
         $internationalArtists = new Category();
         $internationalArtists->setTitle('International Artists');
-        $internationalArtists->setDescription($faker->realText(400));
+        $internationalArtists->setDescription($categoryDescription);
         $internationalArtists->setSlug($internationalArtists->getTitle());
         $internationalArtists->setImage('assets/images/international.png');
         $internationalArtists->setBackground('assets/images/InternationalShow.jpeg');
@@ -90,7 +94,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
         $subCategories = range(1, 5);
         foreach ($subCategories as $subCategoryId) {
             $subCategory = new Category();
-            $subCategory->setTitle('Lorem ipsum');
+            $subCategory->setTitle('Sub-category '.$subCategoryId);
             $subCategory->setSlug($faker->unique()->text(10));
             $subCategory->setParent($internationalArtists);
             $manager->persist($subCategory);
@@ -100,6 +104,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
         $emcees = new Category();
         $emcees->setTitle('Emcees & Comedians');
         $emcees->setSlug($emcees->getTitle());
+        $emcees->setDescription($categoryDescription);
         $emcees->setImage('assets/images/comedian.png');
         $emcees->setBackground('assets/images/EMCEEComedian.jpeg');
         $manager->persist($emcees);
@@ -107,7 +112,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
         $subCategories = range(1, 6);
         foreach ($subCategories as $subCategoryId) {
             $subCategory = new Category();
-            $subCategory->setTitle('Lorem ipsum');
+            $subCategory->setTitle('Sub-category '.$subCategoryId);
             $subCategory->setSlug($faker->unique()->text(10));
             $subCategory->setParent($emcees);
             $manager->persist($subCategory);
@@ -117,6 +122,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
         $dance = new Category();
         $dance->setTitle('Musical and Dance Acts');
         $dance->setSlug($dance->getTitle());
+        $dance->setDescription($categoryDescription);
         $dance->setImage('assets/images/musicalDanceActs.png');
         $dance->setBackground('assets/images/DanceActs.jpg');
         $manager->persist($dance);
@@ -124,7 +130,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
         $subCategories = range(1, 3);
         foreach ($subCategories as $subCategoryId) {
             $subCategory = new Category();
-            $subCategory->setTitle('Lorem ipsum');
+            $subCategory->setTitle('Sub-category '.$subCategoryId);
             $subCategory->setSlug($faker->unique()->text(10));
             $subCategory->setParent($internationalArtists);
             $manager->persist($subCategory);
@@ -135,6 +141,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
         $children = new Category();
         $children->setTitle('Children Entertainment');
         $children->setSlug($children->getTitle());
+        $children->setDescription($categoryDescription);
         $children->setImage('assets/images/childrenEntertainment.png');
         $children->setBackground('assets/images/ChildrenEntertainment.jpg');
         $manager->persist($children);
@@ -142,7 +149,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
         $subCategories = range(1, 6);
         foreach ($subCategories as $subCategoryId) {
             $subCategory = new Category();
-            $subCategory->setTitle('Lorem ipsum');
+            $subCategory->setTitle('Sub-category '.$subCategoryId);
             $subCategory->setSlug($faker->unique()->text(10));
             $subCategory->setParent($children);
             $manager->persist($subCategory);

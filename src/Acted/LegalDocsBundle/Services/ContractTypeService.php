@@ -22,7 +22,8 @@ class ContractTypeService extends base\TemplatesService
     protected function getSavePath($fileName)
     {
         $path = $this->_container->get('kernel')->getRootDir();
-        return realpath($path . '/../web/docs/performace_contract') . '/' . $fileName;
+        $path .= '/../web/'.$this->dir;
+        return $path . '/' . $fileName;
     }
 
     public function artist_address()

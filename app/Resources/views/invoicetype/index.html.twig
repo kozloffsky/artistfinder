@@ -37,7 +37,7 @@
                             <a href="{{ path('invoicetype_edit', { 'id': invoiceType.id }) }}">edit</a>
                         </li>
                         <li>
-                            <a target="_blank" href="/docs/invoice_type/{{ invoiceType.id }}.pdf">view PDF</a>
+                            <a target="_blank" href="/{{ invoice_dir }}/{{ invoiceType.id }}.pdf">view PDF</a>
                         </li>
                     </ul>
                 </td>

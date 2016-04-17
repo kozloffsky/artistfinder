@@ -2868,6 +2868,18 @@ $(function () {
     $(".navbar-collapse").collapse('hide');
   });
 
+  checkAvatar();
+
+  function checkAvatar() {
+    var imageSrc = $('.avatar').attr('src');
+    //console.log(imageSrc.length)
+    if(imageSrc != undefined) {
+      if (imageSrc.length <= 1) {
+        $('.avatar').attr('src', '/assets/images/noAvatar.png');
+      }
+    }
+  }
+
   // Add class hover to flip-container elements.
   $(".flip-container").hover(function () {
     $(this).addClass("hover-mouse");
@@ -3800,6 +3812,8 @@ unit:"px"},brightness:{min:0,max:400,unit:"%"},contrast:{min:0,max:400,unit:"%"}
 
 })(jQuery);
 $(function () {
+    var loginFormValidation = $(".login-form").validate();
+
     $('.forgot-password').click(function () {
         $('.form-block').hide();
         $('.recovery-form').show();
@@ -3819,12 +3833,15 @@ $(function () {
             type: "POST",
             url: '/login_check',
             data: customerValues,
-            success: function(response){
-                console.log(response)
-                alert('ffffff');
+            success: function(){
+                $('#errorLogIn').hide();
+                window.location.replace(window.location.href);
             },
-            error: function(){
-                alert('dddd')
+            error: function(response){
+                var responseTextLogIn = response.responseJSON;
+                console.log(responseTextLogIn.error);
+                $('#errorLogIn').text(responseTextLogIn.error);
+                $('#errorLogIn').css('display', 'block');
             }
         })
     });
@@ -4425,7 +4442,7 @@ $(function () {
   //$('#phone_number').cleanVal(); to get phone number.
 
   //Enabling form validation.
-  var artistValidation = $("#artistForm").validate();
+
 
   var customerValidate =  $("#customerRegForm").validate();
 
@@ -4587,7 +4604,8 @@ $(function () {
   }
 
 
-  $('#stageThreeNext').on('click', function(){
+  $('#stageThreeNext').on('click', function(event){
+    event.preventDefault();
     artistRegister();
   });
 

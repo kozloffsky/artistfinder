@@ -17,6 +17,8 @@ use TFox\MpdfPortBundle\Service\MpdfService;
  */
 abstract class TemplatesService
 {
+    protected $dir;
+
     public $folder;
 
     public $_container;
@@ -46,7 +48,10 @@ abstract class TemplatesService
 
     abstract protected function getTemplateId();
 
-    abstract protected function getSavePath($fileName);
+    public function setSavePath($path)
+    {
+        $this->dir = $path;
+    }
 
     /**
      * @param ContainerInterface $container
@@ -93,8 +98,14 @@ abstract class TemplatesService
     {
         $fileName = $documentId . '.pdf';
 
+        $dir = dirname($this->getSavePath($fileName));
+        if (!file_exists($dir)) {
+            mkdir($dir, 0777, true);
+            chmod($dir, 0777);
+        }
+
         return $this->_mpdfService->generatePdf($this->_parsedTemplate, [
-            'outputFilename' => $this->getSavePath($fileName),
+            'outputFilename' => $dir.'/'.$fileName,
             'outputDest' => 'F',
         ]);
     }
@@ -130,5 +141,12 @@ abstract class TemplatesService
         }
 
         return $this->$methodName();
+    }
+
+    protected function getSavePath($fileName)
+    {
+        $path = $this->_container->get('kernel')->getRootDir();
+        $path .= '/../web/'.$this->dir;
+        return $path . '/' . $fileName;
     }
 }

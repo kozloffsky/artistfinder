@@ -141,7 +141,7 @@
 
                             <div class="controls">
                                 <div class="button-gradient filled">
-                                    <button  id="stageThreeNext" type="button" class="btn register">Register Now</button>
+                                    <button  id="stageThreeNext" type="submit" class="btn register submit">Register Now</button>
                                 </div>
 
                                 <p class="hint">After registration you can start editing your profile</p>
@@ -207,6 +207,7 @@
                             {{ error.messageKey|trans(error.messageData) }}
                         </div>
                     {% endif %}#}
+                    <span class="error" id="errorLogIn"></span>
                     <div class="form-group">
                         <label for="user_email">Email</label>
                         <input type="email" class="form-control" id="user_email" placeholder="Email" name="_username">
@@ -219,7 +220,7 @@
 
                     <div class="controls">
                         <div class="button-gradient filled">
-                            <button class="btn" id="loginBtn">Login</button>
+                            <button class="btn submit" id="loginBtn">Login</button>
                         </div>
                     </div>
                 </form>

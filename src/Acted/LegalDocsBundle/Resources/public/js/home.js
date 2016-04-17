@@ -3,6 +3,18 @@ $(function () {
     $(".navbar-collapse").collapse('hide');
   });
 
+  checkAvatar();
+
+  function checkAvatar() {
+    var imageSrc = $('.avatar').attr('src');
+    //console.log(imageSrc.length)
+    if(imageSrc != undefined) {
+      if (imageSrc.length <= 1) {
+        $('.avatar').attr('src', '/assets/images/noAvatar.png');
+      }
+    }
+  }
+
   // Add class hover to flip-container elements.
   $(".flip-container").hover(function () {
     $(this).addClass("hover-mouse");
