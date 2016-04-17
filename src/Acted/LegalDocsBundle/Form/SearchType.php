@@ -3,11 +3,16 @@
 namespace Acted\LegalDocsBundle\Form;
 
 use Acted\LegalDocsBundle\Entity\Category;
+use Acted\LegalDocsBundle\Entity\RefRegion;
+use Acted\LegalDocsBundle\Search\FilterCriteria;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SearchType extends AbstractType
 {
@@ -20,6 +25,14 @@ class SearchType extends AbstractType
                 'description' => 'Array of categories IDs'
             ])
             ->add('query', TextType::class, ['required' => false])
+            ->add('distance', ChoiceType::class,
+                ['choices' => [FilterCriteria::DISTANCE_0_50, FilterCriteria::DISTANCE_50_200, FilterCriteria::DISTANCE_200_1000],
+                'choices_as_values' => true]
+            )
+            ->add('user_region', EntityType::class, [
+                'constraints' => [new NotBlank(['groups' => 'distance'])],
+                'class' => RefRegion::class
+            ])
         ;
     }
 
@@ -29,6 +42,13 @@ class SearchType extends AbstractType
             'csrf_protection' => false,
             'allow_extra_fields' => true,
             'method' => 'GET',
+            'validation_groups' => function (FormInterface $form) {
+                $data = $form->getData();
+                if (isset($data['distance']) && $data['distance']) {
+                    return ['Default', 'distance'];
+                }
+                return ['Default'];
+            }
         ]);
     }
 

@@ -61,6 +61,11 @@ doctrine:
         dql:
             string_functions:
                 MATCH: Acted\LegalDocsBundle\DQL\MatchAgainstFunction
+                RADIANS: DoctrineExtensions\Query\Mysql\Radians
+            numeric_functions:
+                ACOS: DoctrineExtensions\Query\Mysql\Acos
+                COS: DoctrineExtensions\Query\Mysql\Cos
+                SIN: DoctrineExtensions\Query\Mysql\Sin
         mappings:
             tree:
                 type: annotation

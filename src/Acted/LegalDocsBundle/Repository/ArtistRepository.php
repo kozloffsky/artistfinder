@@ -52,6 +52,20 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->addOrderBy('rating_avg', $oc->getRatingOrder());
         }
 
+        if ($fc->getMinDistance() !== false) {
+            $qb->innerJoin('a.city', 'c')
+                ->addSelect('(6371*ACOS(COS(RADIANS(:latitude))
+                        *COS(RADIANS(c.latitude))*COS(RADIANS(c.longitude)-RADIANS(:longitude))
+                        + SIN(RADIANS(:latitude) ) * SIN(RADIANS(c.latitude)))) AS HIDDEN distance')
+                ->setParameter('latitude', $fc->getUserLatitude())
+                ->setParameter('longitude', $fc->getUserLongitude())
+                ->andHaving('distance >= :minDistance')
+                ->andHaving('distance <= :maxDistance')
+                ->setParameter('minDistance', $fc->getMinDistance())
+                ->setParameter('maxDistance', $fc->getMaxDistance())
+            ;
+        }
+
         return $qb->getQuery();
     }
 }
