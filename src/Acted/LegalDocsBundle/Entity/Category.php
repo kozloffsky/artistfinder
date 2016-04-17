@@ -365,4 +365,33 @@ class Category
     {
         return $this->getTitle();
     }
+    /**
+     * @var boolean
+     */
+    private $recommend = false;
+
+
+    /**
+     * Set recommend
+     *
+     * @param boolean $recommend
+     *
+     * @return Category
+     */
+    public function setRecommend($recommend)
+    {
+        $this->recommend = $recommend;
+
+        return $this;
+    }
+
+    /**
+     * Get recommend
+     *
+     * @return boolean
+     */
+    public function getRecommend()
+    {
+        return $this->recommend;
+    }
 }

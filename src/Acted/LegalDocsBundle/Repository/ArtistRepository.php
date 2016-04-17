@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Repository;
 
+use Acted\LegalDocsBundle\Entity\Category;
 use Acted\LegalDocsBundle\Search\FilterCriteria;
 use Acted\LegalDocsBundle\Search\OrderCriteria;
 
@@ -13,6 +14,20 @@ use Acted\LegalDocsBundle\Search\OrderCriteria;
  */
 class ArtistRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getRecommended(Category $category)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.recommend = :recommend')
+            ->setParameter('recommend', true)
+            ->innerJoin('a.user', 'u')
+            ->innerJoin('u.profile', 'p')
+            ->andWhere(':category MEMBER OF p.categories')
+            ->setParameter('category', $category)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getFilteredQuery(OrderCriteria $oc, FilterCriteria $fc)
     {
         $qb = $this->createQueryBuilder('a')

@@ -33,6 +33,10 @@ Acted\LegalDocsBundle\Entity\Artist:
         comments:
           type: string(512)
           nullable: true
+        recommend:
+          type: boolean
+          options:
+            default: false
     manyToOne:
         city:
           targetEntity: Acted\LegalDocsBundle\Entity\RefCity

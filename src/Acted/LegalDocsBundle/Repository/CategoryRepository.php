@@ -11,4 +11,12 @@ use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
  */
 class CategoryRepository extends NestedTreeRepository
 {
+    public function getRecommended()
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.recommend = :recommend')
+            ->setParameter('recommend', true)
+            ->getQuery()
+            ->getResult();
+    }
 }
