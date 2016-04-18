@@ -4,7 +4,9 @@ namespace Acted\LegalDocsBundle\Form;
 
 use Acted\LegalDocsBundle\Entity\Category;
 use Acted\LegalDocsBundle\Entity\RefCountry;
+use Acted\LegalDocsBundle\Form\DataTransformer\PhoneTransformer;
 use Acted\LegalDocsBundle\Popo\RegisterUser;
+use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -36,10 +38,19 @@ class RegisterType extends AbstractType
 
             ->add('lastname', TextType::class, ['constraints' => [new NotBlank()], 'description' => 'Last name'])
 
-            ->add('email', EmailType::class, ['constraints' => [new NotBlank(), new Email()], 'description' => 'Email'])
+            ->add('email', EmailType::class, ['constraints' => [
+                new NotBlank(),
+                new Email(['message' => 'Please provide a valid email address to register'])], 'description' => 'Email'
+            ])
 
             ->add('password', RepeatedType::class, [
-                'constraints' => [new NotBlank(), new Length(['min' => 6])],
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(['min' => 8]),
+                    new Regex(['pattern' =>'/[a-z]/', 'message' => 'Password should contain lowercase char, uppercase char, and digit']),
+                    new Regex(['pattern' =>'/[A-Z]/', 'message' => 'Password should contain lowercase char, uppercase char, and digit']),
+                    new Regex(['pattern' =>'/[0-9]/', 'message' => 'Password should contain lowercase char, uppercase char, and digit']),
+                ],
                 'description' => 'Password and confirmation field'
             ])
 
@@ -62,10 +73,16 @@ class RegisterType extends AbstractType
             ])
 
             ->add('phone', TextType::class, [
-                'constraints' => [new NotBlank(['groups' => 'artist']), new Regex(['pattern' => '/^[\d\+\(\) -]+$/'])],
+                'constraints' => [
+                    new NotBlank(['groups' => 'artist']),
+                    new Regex(['pattern' => '/^[\d\+\(\) -]+$/']),
+                    new PhoneNumber(['type' => 'mobile']),
+                ],
                 'description' => 'Phone number (available chars: digits,+,(,)) (for ROLE_ARTIST)',
             ])
         ;
+
+        $builder->get('phone')->addModelTransformer(new PhoneTransformer());
     }
 
     public function configureOptions(OptionsResolver $resolver)
