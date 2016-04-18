@@ -94,11 +94,10 @@ class LoadPerformanceData extends AbstractFixture implements FixtureInterface, C
                 $performance->addMedia($photo2);
                 $performance->addMedia($video1);
 
-                $manager->flush();
-
                 $this->addReference('performance' . $i . '_' . $j, $performance);
             }
         }
+        $manager->flush();
     }
 
     public function getOrder()

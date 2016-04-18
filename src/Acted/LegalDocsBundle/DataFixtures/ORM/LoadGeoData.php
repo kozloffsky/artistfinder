@@ -93,8 +93,6 @@ class LoadGeoData extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('berlin', $berlin);
         $this->addReference('ile-de-france', $region9);
 
-        $manager->flush();
-
         $city1 = new RefCity();
         $city1->setName('London');
         $city1->setRegion($london);

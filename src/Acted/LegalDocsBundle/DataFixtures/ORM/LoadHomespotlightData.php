@@ -29,8 +29,8 @@ class LoadHomespotlightData extends AbstractFixture implements OrderedFixtureInt
             $spotlight = new Homespotlight();
             $spotlight->setMedia($this->getReference('spotlight'.$spotlightId));
             $manager->persist($spotlight);
-            $manager->flush();
         }
+        $manager->flush();
     }
 
     /**

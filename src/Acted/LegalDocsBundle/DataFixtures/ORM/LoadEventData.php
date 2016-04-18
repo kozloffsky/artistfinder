@@ -65,11 +65,10 @@ class LoadEventData extends AbstractFixture implements ContainerAwareInterface, 
                 $event->setComments($faker->text);
 
                 $manager->persist($event);
-                $manager->flush();
-
                 $this->addReference('event' . $i . '_' . $j, $event);
             }
         }
+        $manager->flush();
     }
 
     /**
