@@ -6,6 +6,7 @@ namespace Acted\LegalDocsBundle\Controller;
 use Acted\LegalDocsBundle\Form\SearchType;
 use Acted\LegalDocsBundle\Search\FilterCriteria;
 use Acted\LegalDocsBundle\Search\OrderCriteria;
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\VarDumper\VarDumper;
 
@@ -14,6 +15,7 @@ class SearchController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $serializer = $this->get('jms_serializer');
         $searchForm = $this->createForm(SearchType::class);
         $searchForm->handleRequest($request);
 
@@ -26,7 +28,10 @@ class SearchController extends Controller
         $recommended = [];
 
         foreach ($recommendedCategories as $category) {
-            $recommended[] = ['category' => $category, 'artists' => $artistRepo->getRecommended($category)];
+            $recommended[] = [
+                'category' => $category,
+                'artists' => $serializer->toArray($artistRepo->getRecommended($category), SerializationContext::create()->setGroups(['block']))
+            ];
         }
 
         $oc = new OrderCriteria(OrderCriteria::TOP_RATED, OrderCriteria::CHEAPEST);
@@ -38,7 +43,7 @@ class SearchController extends Controller
         $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
 
 
-        return $this->render('ActedLegalDocsBundle:Default:search.html.twig', compact('categories'));
+        return $this->render('ActedLegalDocsBundle:Default:search.html.twig', compact('categories', 'recommended'));
         //VarDumper::dump($s->getFilteredArtists($oc, $fc));
         //die;
     }
