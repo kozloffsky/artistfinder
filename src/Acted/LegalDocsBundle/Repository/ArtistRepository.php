@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Repository;
 
+use Acted\LegalDocsBundle\Entity\Category;
 use Acted\LegalDocsBundle\Search\FilterCriteria;
 use Acted\LegalDocsBundle\Search\OrderCriteria;
 
@@ -13,6 +14,20 @@ use Acted\LegalDocsBundle\Search\OrderCriteria;
  */
 class ArtistRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getRecommended(Category $category)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.recommend = :recommend')
+            ->setParameter('recommend', true)
+            ->innerJoin('a.user', 'u')
+            ->innerJoin('u.profile', 'p')
+            ->andWhere(':category MEMBER OF p.categories')
+            ->setParameter('category', $category)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getFilteredQuery(OrderCriteria $oc, FilterCriteria $fc)
     {
         $qb = $this->createQueryBuilder('a')
@@ -30,6 +45,11 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('mediaType', 'video');
         }
 
+        if ($fc->getQuery()) {
+            $qb->andWhere('MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0')
+                ->setParameter('query', $fc->getQuery());
+        }
+
         $categories = $fc->getCategories();
         if (count($categories) > 0) {
             $qb->innerJoin('p.categories', 'c')
@@ -45,6 +65,20 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         } else {
             $qb->addOrderBy('price_agr', $oc->getPriceOrder())
                 ->addOrderBy('rating_avg', $oc->getRatingOrder());
+        }
+
+        if ($fc->getMinDistance() !== false) {
+            $qb->innerJoin('a.city', 'c')
+                ->addSelect('(6371*ACOS(COS(RADIANS(:latitude))
+                        *COS(RADIANS(c.latitude))*COS(RADIANS(c.longitude)-RADIANS(:longitude))
+                        + SIN(RADIANS(:latitude) ) * SIN(RADIANS(c.latitude)))) AS HIDDEN distance')
+                ->setParameter('latitude', $fc->getUserLatitude())
+                ->setParameter('longitude', $fc->getUserLongitude())
+                ->andHaving('distance >= :minDistance')
+                ->andHaving('distance <= :maxDistance')
+                ->setParameter('minDistance', $fc->getMinDistance())
+                ->setParameter('maxDistance', $fc->getMaxDistance())
+            ;
         }
 
         return $qb->getQuery();

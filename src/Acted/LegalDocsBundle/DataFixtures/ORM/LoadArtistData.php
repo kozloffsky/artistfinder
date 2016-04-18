@@ -46,6 +46,11 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
         $videoInfo2 = Embed::create('https://player.vimeo.com/video/17214458');
         preg_match('/src="(.+?)"/', $videoInfo2->getCode(), $videoLinkMatch2);
 
+        $recommendedCategories = [
+            $this->getReference('singers'),
+            $this->getReference('acrobats'),
+            $this->getReference('fire-show'),
+        ];
 
         for ($i = 0; $i < 10; $i++) {
             $user = new User();
@@ -59,9 +64,7 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $user->setBackground($faker->imageUrl);
             $manager->persist($user);
 
-            $this->addReference('user'.$i, $user);
-
-            $manager->flush();
+            $this->addReference('user' . $i, $user);
 
             $photo1 = new Media();
             $photo1->setName($faker->word);
@@ -84,7 +87,7 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $video1->setPosition(1);
             $video1->setActive(true);
 
-            if(isset($videoLinkMatch[1])){
+            if (isset($videoLinkMatch[1])) {
                 $video1->setLink($videoLinkMatch[1]);
             }
             $video1->setThumbnail($videoInfo1->getImage());
@@ -97,7 +100,7 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $video2->setActive(true);
 
 
-            if(isset($videoLinkMatch[1])){
+            if (isset($videoLinkMatch[1])) {
                 $video2->setLink($videoLinkMatch[1]);
             }
             $video2->setThumbnail($videoInfo2->getImage());
@@ -122,7 +125,6 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $manager->persist($video2);
             $manager->persist($audio1);
             $manager->persist($audio2);
-            $manager->flush();
 
             $profile = new Profile();
             $profile->setUser($user);
@@ -139,9 +141,8 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $profile->addCategory($this->getReference('category5'));
 
             $manager->persist($profile);
-            $manager->flush();
 
-            $this->addReference('profile'.$i, $profile);
+            $this->addReference('profile' . $i, $profile);
 
             $profile->addMedia($photo1);
             $profile->addMedia($photo2);
@@ -149,47 +150,50 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $profile->addMedia($video2);
             $profile->addMedia($audio1);
             $profile->addMedia($audio2);
-            $manager->flush();
 
-        $photoForSpotlights = range(1, 9);
-        foreach ($photoForSpotlights as $spotlight) {
-            $spotlightMedia = new Media();
-            $spotlightMedia->setName($spotlight.'.jpg');
-            $spotlightMedia->setMediaType('photo');
-            $spotlightMedia->setLink('assets/images/slider/'.$spotlight.'.jpg');
-            $spotlightMedia->setPosition(1);
-            $spotlightMedia->setActive(true);
-            $profile->addMedia($spotlightMedia);
-            $manager->persist($spotlightMedia);
-            $manager->flush();
-            $this->setReference('spotlight'.$spotlight, $spotlightMedia);
-        }
+            $photoForSpotlights = range(1, 9);
+            foreach ($photoForSpotlights as $spotlight) {
+                $spotlightMedia = new Media();
+                $spotlightMedia->setName($spotlight . '.jpg');
+                $spotlightMedia->setMediaType('photo');
+                $spotlightMedia->setLink('assets/images/slider/' . $spotlight . '.jpg');
+                $spotlightMedia->setPosition(1);
+                $spotlightMedia->setActive(true);
+                $profile->addMedia($spotlightMedia);
+                $manager->persist($spotlightMedia);
+                $this->setReference('spotlight' . $spotlight, $spotlightMedia);
+            }
 
 
-        $this->setReference('photo1', $photo1);
-        $this->setReference('photo2', $photo2);
+            $this->setReference('photo1', $photo1);
+            $this->setReference('photo2', $photo2);
 
-        $city = new RefCity();
-        $city->setName($faker->city);
-        $city->setCountryId(1);
-        $manager->persist($city);
-        $manager->flush();
+            $city = new RefCity();
+            $city->setName($faker->city);
+            $city->setCountryId(1);
+            $manager->persist($city);
 
-        $this->setReference('city', $city);
-
+            $this->setReference('city', $city);
             $artist = new Artist();
             $artist->setName($faker->unique()->name);
             $artist->setSlug($artist->getName());
             $artist->setUser($user);
 
             $cityNumber = $faker->randomElement([1, 2, 3]);
-            $city = $this->getReference('city'.$cityNumber);
+            $city = $this->getReference('city' . $cityNumber);
 
             $artist->setCity($city);
+
+            if ($i < 10) {
+                $artist->setRecommend(true);
+                $profile->addCategory($faker->randomElement($recommendedCategories));
+            }
+
+
             $manager->persist($artist);
             $manager->flush();
 
-            $this->setReference('artist'.$i, $artist);
+            $this->setReference('artist' . $i, $artist);
         }
     }
 

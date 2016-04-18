@@ -55,12 +55,11 @@ class LoadOfferData extends AbstractFixture implements ContainerAwareInterface, 
                     $offer->setDepositType($faker->word);
                     $offer->setPaymentTerms($faker->text);
                     $offer->setComments($faker->text);
-
                     $manager->persist($offer);
-                    $manager->flush();
                 }
             }
         }
+        $manager->flush();
     }
 
     /**

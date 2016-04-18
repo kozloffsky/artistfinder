@@ -437,4 +437,33 @@ class Artist
     {
         return $this->country;
     }
+    /**
+     * @var boolean
+     */
+    private $recommend = false;
+
+
+    /**
+     * Set recommend
+     *
+     * @param boolean $recommend
+     *
+     * @return Artist
+     */
+    public function setRecommend($recommend)
+    {
+        $this->recommend = $recommend;
+
+        return $this;
+    }
+
+    /**
+     * Get recommend
+     *
+     * @return boolean
+     */
+    public function getRecommend()
+    {
+        return $this->recommend;
+    }
 }

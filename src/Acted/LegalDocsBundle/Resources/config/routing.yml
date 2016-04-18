@@ -41,6 +41,10 @@ acted_legal_docs_geo:
   resource: "@ActedLegalDocsBundle/Resources/config/routing/geo.yml"
   prefix: /geo
 
+acted_legal_docs_artist:
+  resource: "@ActedLegalDocsBundle/Resources/config/routing/artist.yml"
+  prefix: /artist
+
 acted_legal_docs_search:
   path: /search
   defaults: { _controller: ActedLegalDocsBundle:Search:index }

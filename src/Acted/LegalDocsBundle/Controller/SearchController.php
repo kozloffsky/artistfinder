@@ -13,6 +13,7 @@ class SearchController extends Controller
 {
     public function indexAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $searchForm = $this->createForm(SearchType::class);
         $searchForm->handleRequest($request);
 
@@ -20,8 +21,17 @@ class SearchController extends Controller
 
         $s = $this->get('app.search');
 
+        $recommendedCategories = $em->getRepository('ActedLegalDocsBundle:Category')->getRecommended();
+        $artistRepo = $em->getRepository('ActedLegalDocsBundle:Artist');
+        $recommended = [];
+
+        foreach ($recommendedCategories as $category) {
+            $recommended[] = ['category' => $category, 'artists' => $artistRepo->getRecommended($category)];
+        }
+
         $oc = new OrderCriteria(OrderCriteria::TOP_RATED, OrderCriteria::CHEAPEST);
-        $fc = new FilterCriteria($data['categories'], true);
+        $fc = new FilterCriteria($data['categories'], true, $data['query']);
+        $fc->addDistance($data['user_region'], $data['distance']);
 
         $em = $this->getDoctrine()->getManager();
 
