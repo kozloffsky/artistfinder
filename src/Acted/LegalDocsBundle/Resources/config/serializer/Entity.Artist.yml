@@ -16,6 +16,9 @@ Acted\LegalDocsBundle\Entity\Artist:
     getRating:
       serialized_name: rating
       groups: [Default, block]
+    getVotesCount:
+      serialized_name: votes_count
+      groups: [block]
     getCategoriesNames:
       serialized_name: categories
       groups: [block]
