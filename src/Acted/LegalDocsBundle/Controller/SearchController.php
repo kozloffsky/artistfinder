@@ -36,7 +36,7 @@ class SearchController extends Controller
 
         $oc = new OrderCriteria(OrderCriteria::TOP_RATED, OrderCriteria::CHEAPEST);
         $fc = new FilterCriteria($data['categories'], true, $data['query']);
-        $fc->addDistance($data['user_region'], $data['distance']);
+//        $fc->addDistance($data['user_region'], $data['distance']);
 
         $em = $this->getDoctrine()->getManager();
 
