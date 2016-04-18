@@ -59,6 +59,7 @@ $(function () {
         nextText   : '<i class="fa fa-2x fa-angle-right"></i>',
         prevText   : '<i class="fa fa-2x fa-angle-left"></i>',
         moveSlides : 1,
+        infiniteLoop: false,
         onSliderLoad: function() {
             var viewportsCount = $('.bx-viewport').length;
             if(slidersCount == viewportsCount) {
@@ -100,7 +101,7 @@ $(function () {
         var visibleCards = parseInt(areaWidth / cardWidth);
         var cardMargin = (areaWidth - cardWidth * visibleCards) / visibleCards;
 
-        console.log(areaWidth,cardWidth,visibleCards,cardMargin);
+        //console.log(areaWidth,cardWidth,visibleCards,cardMargin);
 
         $('.profile-card.mobile-horizontal').each(function() {
             $(this).css({
@@ -114,6 +115,17 @@ $(function () {
         setTimeout(function() {
             resizeCards();
         }, 100);
+    });
+
+    $('.profile-card').each(function(){
+        var raiting = $(this).find('.raitingValRecomend').text();
+        var raitingFull = raiting.toString().split(".")[0];
+        var raitingDigits = raiting.toString().split(".")[1];
+        var ratingstars = $(this).find('.user-rating .star');
+        var getFullStars = $(ratingstars).slice(0, raitingFull);
+        var getHalfStars = $(ratingstars).eq(raitingFull);
+        $(getFullStars).children('.fill-star').css('width', '100%');
+        $(getHalfStars).children('.fill-star').css('width', raitingDigits + '0%');
     });
 
     $('#search-country').on('change',getSearchRegions);
@@ -156,8 +168,4 @@ $(function () {
         console.log(searchFormSerialize)
     });
 
-    /*function getCheckedCategories(){
-        var recoveryPasswordVal = $('#recoveryForm').serialize();
-        console.log(recoveryPasswordVal);
-    }*/
 });

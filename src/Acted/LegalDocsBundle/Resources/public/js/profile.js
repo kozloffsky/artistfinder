@@ -488,7 +488,7 @@ $(function() {
         $uploadCropBackground = $('#changeBgModal .changeImageContiner').croppie({
             viewport: {
                 width: 300,
-                height: 150
+                height: 89
             },
             boundary: {
                 width: 400,
