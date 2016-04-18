@@ -41,7 +41,7 @@
                             <a href="{{ path('quotationtype_edit', { 'id': quotationType.id }) }}">edit</a>
                         </li>
                         <li>
-                            <a target="_blank" href="/{{ quotation_dir }}/{{ quotationType.id }}.pdf">view PDF</a>
+                            <a target="_blank" href="/{{ quotationType.pdfPath }}">view PDF</a>
                         </li>
                     </ul>
                 </td>

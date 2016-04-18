@@ -46,10 +46,15 @@ class QuotationTypeController extends Controller
 
             $data = $form->getData();
 
-            $this->get('quotation_type')
+            $pdfPath = $this->get('quotation_type')
                 ->setData($data)
                 ->getParsedTemplate()
-                ->generatePdf($quotationType->getId());
+                ->generatePdf($quotationType);
+
+            if ($pdfPath) {
+                $quotationType->setPdfPath($pdfPath);
+                $em->flush();
+            }
 
 //            return $this->redirectToRoute('quotationtype_show', array('id' => $quotationType->getId()));
             return $this->redirectToRoute('quotationtype_index');

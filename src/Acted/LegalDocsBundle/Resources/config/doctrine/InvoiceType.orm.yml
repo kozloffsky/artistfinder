@@ -219,4 +219,11 @@ Acted\LegalDocsBundle\Entity\InvoiceType:
             options:
                 fixed: false
             column: acted_company_name
+        pdf_path:
+            type: string
+            nullable: true
+            length: 255
+    manyToOne:
+        event:
+            targetEntity: Acted\LegalDocsBundle\Entity\Event
     lifecycleCallbacks: {  }
