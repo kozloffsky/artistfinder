@@ -146,3 +146,5 @@ fos_rest:
             json: true
         templating_formats:
             html: false
+    serializer:
+        serialize_null: true

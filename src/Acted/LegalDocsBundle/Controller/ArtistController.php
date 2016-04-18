@@ -14,7 +14,7 @@ class ArtistController extends Controller
 {
     /**
      * Artist list
-     * @Rest\View
+     * @Rest\View(serializerGroups={"block"})
      * @ApiDoc(
      *  resource=true,
      *  description="Artist search",

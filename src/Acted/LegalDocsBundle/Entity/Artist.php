@@ -466,4 +466,37 @@ class Artist
     {
         return $this->recommend;
     }
+
+    public function getCityName()
+    {
+        return ($this->city) ? $this->city->getName() : null;
+    }
+
+    public function getCountryName()
+    {
+        return ($this->city && $this->city->getRegion()->getCountry()) ? $this->city->getRegion()->getCountry()->getName() : null;
+    }
+
+    public function getCategoriesNames()
+    {
+        if ($this->getUser()->getProfile()) {
+            return $this->getUser()->getProfile()->getCategories()->map(function($entry){
+                /** @var Category $entry */
+                return $entry->getTitle();
+            });
+        }
+        return [];
+    }
+
+    public function getLastPerformanceMedia()
+    {
+        if ($this->getUser()->getProfile()) {
+            /** @var Performance $performance */
+            $performance = $this->getUser()->getProfile()->getPerformances()->first();
+            if ($performance) {
+                return $performance->getMedia()->first();
+            }
+        }
+        return null;
+    }
 }
