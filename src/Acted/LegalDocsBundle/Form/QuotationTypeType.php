@@ -55,6 +55,7 @@ class QuotationTypeType extends AbstractType
             ->add('tax_amount')
             ->add('other_amount')
             ->add('total_amount')
+            ->add('event', null, ['required' => true])
         ;
     }
     

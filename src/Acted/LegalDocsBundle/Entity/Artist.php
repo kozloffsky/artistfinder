@@ -404,6 +404,11 @@ class Artist
         return array_sum($ratings->toArray())/$ratings->count();
     }
 
+    public function getVotesCount()
+    {
+        return count($this->ratings);
+    }
+
     public function __toString()
     {
         return $this->getName();
@@ -499,4 +504,6 @@ class Artist
         }
         return null;
     }
+
+
 }

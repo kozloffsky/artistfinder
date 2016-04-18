@@ -49,6 +49,7 @@ class InvoiceTypeType extends AbstractType
             ->add('other_amount')
             ->add('total_amount')
             ->add('acted_company_name')
+            ->add('event', null, ['required' => true])
         ;
     }
     

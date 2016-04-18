@@ -94,7 +94,40 @@ class SecurityController extends Controller
             return new JsonResponse($serializer->toArray($user));
         }
 
-        return new JsonResponse($this->get('app.form_errors_serializer')->serializeFormErrors($form), 400);
+        return new JsonResponse($this->get('app.form_errors_serializer')->serializeFormErrors($form, false), 400);
+    }
+
+    /**
+     * Email checking
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Check unique email",
+     *  requirements={
+     *      {
+     *          "name"="email",
+     *          "dataType"="email",
+     *          "description"="email to check"
+     *      }
+     *  },
+     * )
+     */
+    public function isEmailExistsAction($email)
+    {
+        $user = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('ActedLegalDocsBundle:User')
+            ->findOneByEmail($email);
+
+        $data = [];
+        $data['is_email_exists'] = (bool)$user;
+        if ($user) {
+            $data['message'] = 'User with this email already exists';
+        }
+
+
+        return new JsonResponse($data);
     }
 
     public function confirmAction($token)
