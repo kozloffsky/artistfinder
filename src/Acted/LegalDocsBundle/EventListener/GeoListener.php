@@ -26,8 +26,8 @@ class GeoListener
             return;
         }
 
-        $curl = HttpAdapterFactory::create(HttpAdapterFactory::CURL);
-        $geocoder = new GoogleMaps($curl);
+        $curl = HttpAdapterFactory::create(HttpAdapterFactory::FILE_GET_CONTENTS);
+        $geocoder = new GoogleMaps($curl, null, null, true, 'AIzaSyALRdjNjF9CsRTWzyyHMjorLmCsoVRNpEE');
 
         /** @var AddressCollection $result */
         try {

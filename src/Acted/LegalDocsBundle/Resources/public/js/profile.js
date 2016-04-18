@@ -553,6 +553,22 @@ $(function() {
             }
         })
     }
+
+    $('#section-audio audio').click(function(){
+        console.log('ddddd');
+        var audioGroup = $('#section-audio audio');
+        $(audioGroup).each(function(){
+            this.pause()
+        })
+    });
+
+    /*function preventMultipleAudio(){
+        console.log('ddddd');
+        var audioGroup = $('#section-audio audio');
+        $(audioGroup).each(function(){
+            this.pause()
+        })
+    }*/
 });
 $(document).on('ready ajaxComplete', function(){
     $('.price-list .pagination a').on('click', function(event){

@@ -23,7 +23,13 @@ class SearchController extends Controller
         $oc = new OrderCriteria(OrderCriteria::TOP_RATED, OrderCriteria::CHEAPEST);
         $fc = new FilterCriteria($data['categories'], true);
 
-        VarDumper::dump($s->getFilteredArtists($oc, $fc));
-        die;
+        $em = $this->getDoctrine()->getManager();
+
+        $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
+
+
+        return $this->render('ActedLegalDocsBundle:Default:search.html.twig', compact('categories'));
+        //VarDumper::dump($s->getFilteredArtists($oc, $fc));
+        //die;
     }
 }

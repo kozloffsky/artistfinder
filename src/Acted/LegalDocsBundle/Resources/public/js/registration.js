@@ -6,6 +6,8 @@ $(function () {
 
   var customerValidate =  $("#customerRegForm").validate();
 
+  var artistValidation =  $("#artistForm").validate();
+
   $("#recoveryForm").validate();
 
   //Initializing phone mask.
