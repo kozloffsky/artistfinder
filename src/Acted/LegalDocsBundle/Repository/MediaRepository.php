@@ -22,7 +22,7 @@ class MediaRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('profile', $profile)
             ->setMaxResults(1)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
 }
