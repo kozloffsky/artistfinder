@@ -52,7 +52,7 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $this->getReference('fire-show'),
         ];
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             $user = new User();
             $user->setFirstname($faker->firstName);
             $user->setLastname($faker->lastName);
@@ -168,12 +168,6 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $this->setReference('photo1', $photo1);
             $this->setReference('photo2', $photo2);
 
-            $city = new RefCity();
-            $city->setName($faker->city);
-            $city->setCountryId(1);
-            $manager->persist($city);
-
-            $this->setReference('city', $city);
             $artist = new Artist();
             $artist->setName($faker->unique()->name);
             $artist->setSlug($artist->getName());
@@ -184,7 +178,7 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
 
             $artist->setCity($city);
 
-            if ($i < 10) {
+            if ($i < 30) {
                 $artist->setRecommend(true);
                 $profile->addCategory($faker->randomElement($recommendedCategories));
             }

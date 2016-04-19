@@ -42,10 +42,10 @@ class LoadEventData extends AbstractFixture implements ContainerAwareInterface, 
     {
         $faker = $this->container->get('davidbadura_faker.faker');
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             for ($j = 0; $j < 10; $j++) {
                 $event = new Event();
-                $event->setEventRef($faker->unique()->word);
+                $event->setEventRef(uniqid());
                 $event->setUser($this->getReference('user'.$i));
                 $event->setTitle($faker->text(100));
                 $event->setDescription($faker->text);
@@ -67,8 +67,8 @@ class LoadEventData extends AbstractFixture implements ContainerAwareInterface, 
                 $manager->persist($event);
                 $this->addReference('event' . $i . '_' . $j, $event);
             }
+            $manager->flush();
         }
-        $manager->flush();
     }
 
     /**
