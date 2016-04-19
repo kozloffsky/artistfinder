@@ -42,6 +42,7 @@ class ArtistController extends Controller
         }
 
         $fc->addGeo($data['country'], $data['region']);
+        $fc->addLocation($data['user_region'], $data['location']);
 
         $page = ($data['page']) ? $data['page'] : 1;
         $filteredArtists = $s->getFilteredArtists($oc, $fc, $page);

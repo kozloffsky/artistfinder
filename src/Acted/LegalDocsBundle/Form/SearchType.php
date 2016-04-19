@@ -33,6 +33,12 @@ class SearchType extends AbstractType
                 ['choices' => [FilterCriteria::DISTANCE_0_50, FilterCriteria::DISTANCE_50_200, FilterCriteria::DISTANCE_200_1000],
                 'choices_as_values' => true]
             )
+
+            ->add('location', ChoiceType::class,[
+                'choices' => [FilterCriteria::LOCATION_100_KM, FilterCriteria::LOCATION_SAME_COUNTRY, FilterCriteria::LOCATION_INTERNATIONAL],
+                'choices_as_values' => true,
+            ])
+
             ->add('user_region', EntityType::class, [
                 'constraints' => [new NotBlank(['groups' => 'distance'])],
                 'class' => RefRegion::class
@@ -53,6 +59,12 @@ class SearchType extends AbstractType
                 if (isset($data['distance']) && $data['distance']) {
                     return ['Default', 'distance'];
                 }
+
+                if (isset($data['location'])
+                    && in_array($data['location'], [FilterCriteria::LOCATION_SAME_COUNTRY, FilterCriteria::LOCATION_100_KM])) {
+                    return ['Default', 'distance'];
+                }
+
                 return ['Default'];
             }
         ]);
