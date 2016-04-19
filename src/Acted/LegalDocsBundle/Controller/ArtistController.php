@@ -44,6 +44,7 @@ class ArtistController extends Controller
 
         $fc->addGeo($data['country'], $data['region']);
         $fc->addLocation($data['user_region'], $data['location']);
+        $fc->addRecommended($data['recommended']);
 
         $page = ($data['page']) ? $data['page'] : 1;
         $filteredArtists = $s->getFilteredArtists($oc, $fc, $page);
@@ -83,6 +84,7 @@ class ArtistController extends Controller
                 }
                 $fc->addGeo($data['country'], $data['region']);
                 $fc->addLocation($data['user_region'], $data['location']);
+                $fc->addRecommended($data['recommended']);
                 $page = ($data['page']) ? $data['page'] : 1;
                 $filteredArtists = $s->getFilteredArtists($oc, $fc, $page);
                 $result[$category->getId()] = iterator_to_array($filteredArtists);

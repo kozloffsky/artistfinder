@@ -122,6 +122,11 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('country', $fc->getCountry());
         }
 
+        if ($fc->getRecommended()) {
+            $qb->andWhere('a.recommend = :recommend')
+                ->setParameter('recommend', true);
+        }
+
         return $qb->getQuery();
     }
 }
