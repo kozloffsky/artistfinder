@@ -144,9 +144,11 @@ class SecurityController extends Controller
         $user->setConfirmationToken(null);
         $user->setActive(true);
 
+        $this->get('session')->getFlashBag()->set('confirm', 'Your account is now activated');
+
         $em->flush();
 
-        return $this->render('@ActedLegalDocs/Security/confirmed.html.twig', compact('user'));
+        return $this->redirect($this->generateUrl('acted_legal_docs_homepage'));
     }
 
     public function sendResetPasswordAction(Request $request)
