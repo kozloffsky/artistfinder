@@ -42,7 +42,7 @@ class LoadOfferData extends AbstractFixture implements ContainerAwareInterface, 
     {
         $faker = $this->container->get('davidbadura_faker.faker');
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             for ($j = 0; $j < 10; $j++) {
                 $performance = $this->getReference('performance' . $i . '_' . $j);
                 for ($k = 0; $k < 5; $k++) {
@@ -57,9 +57,9 @@ class LoadOfferData extends AbstractFixture implements ContainerAwareInterface, 
                     $offer->setComments($faker->text);
                     $manager->persist($offer);
                 }
+                $manager->flush();
             }
         }
-        $manager->flush();
     }
 
     /**

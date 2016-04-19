@@ -30,6 +30,12 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
 
     public function getFilteredQuery(OrderCriteria $oc, FilterCriteria $fc)
     {
+        $needRegionJoin = ($fc->getCountry()
+            || ($fc->getLocation() && in_array($fc->getLocation(), [FilterCriteria::LOCATION_SAME_COUNTRY, FilterCriteria::LOCATION_100_KM])));
+
+        $needDistanceSelect = ($fc->getMinDistance() !== false
+            || ($fc->getLocation() && $fc->getLocation() == FilterCriteria::LOCATION_100_KM));
+
         $qb = $this->createQueryBuilder('a')
             ->addSelect('AVG(ar.rating) AS HIDDEN rating_avg')
             ->innerJoin('a.user', 'u')
@@ -67,18 +73,53 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->addOrderBy('rating_avg', $oc->getRatingOrder());
         }
 
-        if ($fc->getMinDistance() !== false) {
-            $qb->innerJoin('a.city', 'c')
-                ->addSelect('(6371*ACOS(COS(RADIANS(:latitude))
-                        *COS(RADIANS(c.latitude))*COS(RADIANS(c.longitude)-RADIANS(:longitude))
-                        + SIN(RADIANS(:latitude) ) * SIN(RADIANS(c.latitude)))) AS HIDDEN distance')
+        if (($fc->getMinDistance() !== false) || $fc->getRegion() || $needRegionJoin) {
+            $qb->innerJoin('a.city', 'city');
+        }
+
+        if ($needRegionJoin) {
+            $qb->innerJoin('city.region', 'r');
+        }
+
+        if ($needDistanceSelect) {
+            $qb->addSelect('(6371*ACOS(COS(RADIANS(:latitude))
+                        *COS(RADIANS(city.latitude))*COS(RADIANS(city.longitude)-RADIANS(:longitude))
+                        + SIN(RADIANS(:latitude) ) * SIN(RADIANS(city.latitude)))) AS HIDDEN distance')
                 ->setParameter('latitude', $fc->getUserLatitude())
-                ->setParameter('longitude', $fc->getUserLongitude())
-                ->andHaving('distance >= :minDistance')
+                ->setParameter('longitude', $fc->getUserLongitude());
+        }
+
+        if ($fc->getMinDistance() !== false) {
+                $qb->andHaving('distance >= :minDistance')
                 ->andHaving('distance <= :maxDistance')
                 ->setParameter('minDistance', $fc->getMinDistance())
-                ->setParameter('maxDistance', $fc->getMaxDistance())
-            ;
+                ->setParameter('maxDistance', $fc->getMaxDistance());
+        }
+
+        switch($fc->getLocation()) {
+            case FilterCriteria::LOCATION_SAME_COUNTRY;
+                $qb->andWhere('r.country = :userCountry')
+                    ->setParameter('userCountry', $fc->getUserRegion()->getCountry());
+                break;
+            case FilterCriteria::LOCATION_INTERNATIONAL;
+                $qb->andWhere('p.isInternational = :international')
+                    ->setParameter('international', true);
+                break;
+            case FilterCriteria::LOCATION_100_KM;
+                $qb->andHaving('distance <= :locationDistance')
+                    ->setParameter('locationDistance', 100);
+                break;
+        }
+
+
+        if ($fc->getRegion()) {
+            $qb->andWhere('city.region = :region')
+                ->setParameter('region', $fc->getRegion());
+        }
+
+        if ($fc->getCountry()) {
+            $qb->andWhere('r.country = :country')
+                ->setParameter('country', $fc->getCountry());
         }
 
         return $qb->getQuery();

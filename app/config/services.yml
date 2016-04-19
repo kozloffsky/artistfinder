@@ -58,3 +58,10 @@ services:
     app.search:
         class: Acted\LegalDocsBundle\Service\DoctrineSearch
         arguments: ["@doctrine.orm.entity_manager", "@knp_paginator"]
+
+    app.artist_serializer_subscriber:
+        class: Acted\LegalDocsBundle\Serializer\ArtistSerializerSubscriber
+        arguments:
+          - "@doctrine.orm.default_entity_manager"
+        tags:
+          - { name: jms_serializer.event_subscriber }

@@ -42,7 +42,7 @@ class LoadRatingData extends AbstractFixture implements OrderedFixtureInterface,
     {
         $faker = $this->container->get('davidbadura_faker.faker');
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             $artist = $this->getReference('artist'.$i);
             for ($j = 0; $j < 10; $j++) {
                 $rating = new ArtistRating();
@@ -53,9 +53,9 @@ class LoadRatingData extends AbstractFixture implements OrderedFixtureInterface,
                 $rating->setRatingDateTime($faker->dateTime);
                 $rating->setEvent($this->getReference('event' . $i . '_' . $j));
                 $manager->persist($rating);
-                $manager->flush();
             }
         }
+        $manager->flush();
     }
 
     /**

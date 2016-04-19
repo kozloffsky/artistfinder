@@ -9,6 +9,7 @@
 namespace Acted\LegalDocsBundle\Search;
 
 
+use Acted\LegalDocsBundle\Entity\RefCountry;
 use Acted\LegalDocsBundle\Entity\RefRegion;
 
 class FilterCriteria
@@ -17,12 +18,21 @@ class FilterCriteria
     const DISTANCE_50_200 = 200;
     const DISTANCE_200_1000 = 1000;
 
+    const LOCATION_100_KM = '100-km';
+    const LOCATION_SAME_COUNTRY = 'same-country';
+    const LOCATION_INTERNATIONAL = 'international';
+
     protected $withVideo = false;
     protected $categories = [];
     protected $query = null;
     protected $latitude;
     protected $longitude;
     protected $distance;
+    protected $region;
+    protected $country;
+    protected $location;
+    /** @var RefRegion */
+    protected $userRegion;
 
     public function __construct($categories = [], $withVideo = false, $query = null)
     {
@@ -36,6 +46,12 @@ class FilterCriteria
         $this->latitude = $region->getLatitude();
         $this->longitude = $region->getLongitude();
         $this->distance = $distance;
+    }
+
+    public function addGeo(RefCountry $country = null, RefRegion $region = null)
+    {
+        $this->region = $region;
+        $this->country = $country;
     }
 
     public function getUserLatitude()
@@ -91,4 +107,38 @@ class FilterCriteria
     {
         return $this->query;
     }
+
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    public function addLocation(RefRegion $region = null, $location)
+    {
+        $this->location = $location;
+        $this->userRegion = $region;
+        if ($region) {
+            $this->latitude = $region->getLatitude();
+            $this->longitude = $region->getLongitude();
+        }
+    }
+
+    public function getUserRegion()
+    {
+        return $this->userRegion;
+    }
+
 }
