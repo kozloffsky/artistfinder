@@ -72,7 +72,7 @@ class ArtistController extends Controller
         $oc = new OrderCriteria(OrderCriteria::TOP_RATED, OrderCriteria::CHEAPEST);
         $result = [];
 
-        foreach ($data['categories'] as $category) {
+        foreach ((array)$data['categories'] as $category) {
             $fc = new FilterCriteria([$category], $data['with_video'], $data['query']);
             if ($data['distance']) {
                 $fc->addDistance($data['user_region'], $data['distance']);
