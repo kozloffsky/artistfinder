@@ -67,11 +67,14 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->addOrderBy('rating_avg', $oc->getRatingOrder());
         }
 
+        if (($fc->getMinDistance() !== false) || $fc->getRegion() || $fc->getCountry()) {
+            $qb->innerJoin('a.city', 'city');
+        }
+
         if ($fc->getMinDistance() !== false) {
-            $qb->innerJoin('a.city', 'c')
-                ->addSelect('(6371*ACOS(COS(RADIANS(:latitude))
-                        *COS(RADIANS(c.latitude))*COS(RADIANS(c.longitude)-RADIANS(:longitude))
-                        + SIN(RADIANS(:latitude) ) * SIN(RADIANS(c.latitude)))) AS HIDDEN distance')
+            $qb->addSelect('(6371*ACOS(COS(RADIANS(:latitude))
+                        *COS(RADIANS(city.latitude))*COS(RADIANS(city.longitude)-RADIANS(:longitude))
+                        + SIN(RADIANS(:latitude) ) * SIN(RADIANS(city.latitude)))) AS HIDDEN distance')
                 ->setParameter('latitude', $fc->getUserLatitude())
                 ->setParameter('longitude', $fc->getUserLongitude())
                 ->andHaving('distance >= :minDistance')
@@ -79,6 +82,17 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('minDistance', $fc->getMinDistance())
                 ->setParameter('maxDistance', $fc->getMaxDistance())
             ;
+        }
+
+        if ($fc->getRegion()) {
+            $qb->andWhere('city.region = :region')
+                ->setParameter('region', $fc->getRegion());
+        }
+
+        if ($fc->getCountry()) {
+            $qb->innerJoin('city.region', 'r')
+                ->andWhere('r.country = :country')
+                ->setParameter('country', $fc->getCountry());
         }
 
         return $qb->getQuery();

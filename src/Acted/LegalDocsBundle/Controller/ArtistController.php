@@ -40,6 +40,9 @@ class ArtistController extends Controller
         if ($data['distance']) {
             $fc->addDistance($data['user_region'], $data['distance']);
         }
+
+        $fc->addGeo($data['country'], $data['region']);
+
         $page = ($data['page']) ? $data['page'] : 1;
         $filteredArtists = $s->getFilteredArtists($oc, $fc, $page);
         return iterator_to_array($filteredArtists);

@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Form;
 
 use Acted\LegalDocsBundle\Entity\Category;
+use Acted\LegalDocsBundle\Entity\RefCountry;
 use Acted\LegalDocsBundle\Entity\RefRegion;
 use Acted\LegalDocsBundle\Search\FilterCriteria;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -25,6 +26,8 @@ class SearchType extends AbstractType
                 'multiple' => true,
                 'description' => 'Array of categories IDs'
             ])
+            ->add('country', EntityType::class, ['class' => RefCountry::class])
+            ->add('region', EntityType::class, ['class' => RefRegion::class])
             ->add('query', TextType::class, ['required' => false])
             ->add('distance', ChoiceType::class,
                 ['choices' => [FilterCriteria::DISTANCE_0_50, FilterCriteria::DISTANCE_50_200, FilterCriteria::DISTANCE_200_1000],

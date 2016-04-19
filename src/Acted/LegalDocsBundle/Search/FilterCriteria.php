@@ -9,6 +9,7 @@
 namespace Acted\LegalDocsBundle\Search;
 
 
+use Acted\LegalDocsBundle\Entity\RefCountry;
 use Acted\LegalDocsBundle\Entity\RefRegion;
 
 class FilterCriteria
@@ -23,6 +24,8 @@ class FilterCriteria
     protected $latitude;
     protected $longitude;
     protected $distance;
+    protected $region;
+    protected $country;
 
     public function __construct($categories = [], $withVideo = false, $query = null)
     {
@@ -36,6 +39,12 @@ class FilterCriteria
         $this->latitude = $region->getLatitude();
         $this->longitude = $region->getLongitude();
         $this->distance = $distance;
+    }
+
+    public function addGeo(RefCountry $country = null, RefRegion $region = null)
+    {
+        $this->region = $region;
+        $this->country = $country;
     }
 
     public function getUserLatitude()
@@ -90,5 +99,15 @@ class FilterCriteria
     public function getQuery()
     {
         return $this->query;
+    }
+
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+    public function getCountry()
+    {
+        return $this->country;
     }
 }
