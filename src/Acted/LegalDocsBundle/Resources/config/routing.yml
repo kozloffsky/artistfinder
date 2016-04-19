@@ -43,7 +43,7 @@ acted_legal_docs_geo:
 
 acted_legal_docs_artist:
   resource: "@ActedLegalDocsBundle/Resources/config/routing/artist.yml"
-  prefix: /artist
+  prefix: /
 
 acted_legal_docs_search:
   path: /search
