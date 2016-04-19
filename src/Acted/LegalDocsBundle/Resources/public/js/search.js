@@ -185,10 +185,12 @@ $(function () {
         $('#tab-singers .row').empty();
         $(response).each(function(){
             console.log(this);
-            var artistBlockSearch = '<div class="profile-card mobile-horizontal">'+
+            var artistCategories = this.categories,
+                artistCatString = artistCategories.toString();
+            var artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">'+
                 '<div class="video-icon"></div>'+
-                '<img class="header" src=""/>'+
-                '<p class="card-title"></p>'+
+                '<img class="header" src="'+this.media.link+'"/>'+
+                '<p class="card-title">'+ this.name +'</p>'+
                 '<div class="user-rating clearfix">'+
                 '<div class="stars">'+
                 '<div class="star">'+
@@ -207,10 +209,11 @@ $(function () {
                 '<div class="fill-star"></div>'+
                 '</div>'+
                 '</div>'+
-                '<div class="rating">4.5/5.0 (16 Votes)</div>'+
+                '<div class="rating">'+this.rating+'/5.0 ('+this.votes_count+' Votes)</div>'+
+                    '<span class="hidden catArtistRatingVal">'+this.rating+'</span>'+
                 '</div>'+
-                '<div class="location">United Kingdom, Essex</div>'+
-                '<div class="talents">Singer, Song Writer, Jazz Vocalist, Vocalist</div>'+
+                '<div class="location">'+ this.country + ', ' + this.city+'</div>'+
+                '<div class="talents">'+artistCatString+'</div>'+
                 '<div class="controls">'+
                 '<div class="button-gradient blue filled">'+
                 '<button data-dismiss="modal" class="btn">Profile</button>'+
@@ -221,6 +224,21 @@ $(function () {
                 '</div>'+
                 '</div>';
             $('#tab-singers .row').append(artistBlockSearch);
+        });
+        setArtistStarsCat();
+        console.log('finish');
+    }
+
+    function setArtistStarsCat(){
+        $('.categoriesCardsSearch').each(function(){
+            var raiting = $(this).find('.catArtistRatingVal').text();
+            var raitingFull = raiting.toString().split(".")[0];
+            var raitingDigits = raiting.toString().split(".")[1];
+            var ratingstars = $(this).find('.user-rating .star');
+            var getFullStars = $(ratingstars).slice(0, raitingFull);
+            var getHalfStars = $(ratingstars).eq(raitingFull);
+            $(getFullStars).children('.fill-star').css('width', '100%');
+            $(getHalfStars).children('.fill-star').css('width', raitingDigits + '0%');
         });
     }
 
