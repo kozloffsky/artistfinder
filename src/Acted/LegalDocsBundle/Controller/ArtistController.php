@@ -48,4 +48,44 @@ class ArtistController extends Controller
         $filteredArtists = $s->getFilteredArtists($oc, $fc, $page);
         return iterator_to_array($filteredArtists);
     }
+
+    /**
+     * Artist list by sub-categories
+     * @Rest\View(serializerGroups={"block"})
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Artist search that sorted by sub-categories",
+     *  input="Acted\LegalDocsBundle\Form\SearchType",
+     * )
+     */
+    public function batchAction(Request $request)
+    {
+        $searchForm = $this->createForm(SearchType::class);
+        $searchForm->handleRequest($request);
+
+        if ($searchForm->isSubmitted() && (!$searchForm->isValid())) {
+            return View::create($this->get('app.form_errors_serializer')->serializeFormErrors($searchForm), 400);
+        }
+        $data = $searchForm->getData();
+        $s = $this->get('app.search');
+
+        $oc = new OrderCriteria(OrderCriteria::TOP_RATED, OrderCriteria::CHEAPEST);
+        $result = [];
+
+        foreach ($data['categories'] as $category) {
+            $fc = new FilterCriteria([$category], $data['with_video'], $data['query']);
+            if ($data['distance']) {
+                $fc->addDistance($data['user_region'], $data['distance']);
+            }
+            $fc->addGeo($data['country'], $data['region']);
+            $fc->addLocation($data['user_region'], $data['location']);
+            $page = ($data['page']) ? $data['page'] : 1;
+            $filteredArtists = $s->getFilteredArtists($oc, $fc, $page);
+            $result[$category->getId()] = iterator_to_array($filteredArtists);
+
+        }
+
+        return $result;
+
+    }
 }

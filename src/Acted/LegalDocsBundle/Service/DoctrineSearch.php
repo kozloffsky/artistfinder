@@ -16,7 +16,7 @@ use Knp\Component\Pager\PaginatorInterface;
 
 class DoctrineSearch implements Search
 {
-    const PER_PAGE = 5;
+    const PER_PAGE = 15;
     /**
      * @var EntityManagerInterface
      */
