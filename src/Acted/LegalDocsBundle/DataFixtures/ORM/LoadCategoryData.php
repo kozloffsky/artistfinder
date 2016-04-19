@@ -152,7 +152,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
             $subCategory = new Category();
             $subCategory->setTitle('Sub-category '.$subCategoryId);
             $subCategory->setSlug($faker->unique()->text(10));
-            $subCategory->setParent($internationalArtists);
+            $subCategory->setParent($dance);
             $manager->persist($subCategory);
         }
 
