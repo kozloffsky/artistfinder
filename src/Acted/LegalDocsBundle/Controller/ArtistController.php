@@ -9,6 +9,7 @@ use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\VarDumper\VarDumper;
 
 class ArtistController extends Controller
 {
@@ -72,17 +73,20 @@ class ArtistController extends Controller
         $oc = new OrderCriteria(OrderCriteria::TOP_RATED, OrderCriteria::CHEAPEST);
         $result = [];
 
-        foreach ((array)$data['categories'] as $category) {
-            $fc = new FilterCriteria([$category], $data['with_video'], $data['query']);
-            if ($data['distance']) {
-                $fc->addDistance($data['user_region'], $data['distance']);
-            }
-            $fc->addGeo($data['country'], $data['region']);
-            $fc->addLocation($data['user_region'], $data['location']);
-            $page = ($data['page']) ? $data['page'] : 1;
-            $filteredArtists = $s->getFilteredArtists($oc, $fc, $page);
-            $result[$category->getId()] = iterator_to_array($filteredArtists);
 
+
+        if ($data['categories'] instanceof \Traversable) {
+            foreach ($data['categories'] as $category) {
+                $fc = new FilterCriteria([$category], $data['with_video'], $data['query']);
+                if ($data['distance']) {
+                    $fc->addDistance($data['user_region'], $data['distance']);
+                }
+                $fc->addGeo($data['country'], $data['region']);
+                $fc->addLocation($data['user_region'], $data['location']);
+                $page = ($data['page']) ? $data['page'] : 1;
+                $filteredArtists = $s->getFilteredArtists($oc, $fc, $page);
+                $result[$category->getId()] = iterator_to_array($filteredArtists);
+            }
         }
 
         return $result;
