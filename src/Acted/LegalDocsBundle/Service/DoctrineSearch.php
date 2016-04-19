@@ -16,6 +16,7 @@ use Knp\Component\Pager\PaginatorInterface;
 
 class DoctrineSearch implements Search
 {
+    const PER_PAGE = 5;
     /**
      * @var EntityManagerInterface
      */
@@ -38,7 +39,7 @@ class DoctrineSearch implements Search
         $artistRepo = $this->entityManager->getRepository('ActedLegalDocsBundle:Artist');
         $artistsQuery = $artistRepo->getFilteredQuery($oc, $fc);
 
-        return $this->paginator->paginate($artistsQuery, $page, 3, ['wrap-queries' => true]);
+        return $this->paginator->paginate($artistsQuery, $page, self::PER_PAGE, ['wrap-queries' => true]);
     }
 
 

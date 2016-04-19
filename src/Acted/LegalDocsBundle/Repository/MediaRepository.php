@@ -1,6 +1,7 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Repository;
+use Acted\LegalDocsBundle\Entity\Profile;
 
 /**
  * MediaRepository
@@ -10,4 +11,18 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class MediaRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getLastVideoMedia(Profile $profile)
+    {
+        return $this->createQueryBuilder('m')
+            ->innerJoin('m.performances', 'p')
+            ->where('m.mediaType = :mediaType')
+            ->setParameter('mediaType', 'video')
+            ->andWhere('p.profile = :profile')
+            ->setParameter('profile', $profile)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult();
+    }
+
 }

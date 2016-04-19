@@ -35,13 +35,13 @@ class ArtistController extends Controller
         $s = $this->get('app.search');
 
         $oc = new OrderCriteria(OrderCriteria::TOP_RATED, OrderCriteria::CHEAPEST);
-        $fc = new FilterCriteria($data['categories'], true, $data['query']);
+        $fc = new FilterCriteria($data['categories'], $data['with_video'], $data['query']);
 
         if ($data['distance']) {
             $fc->addDistance($data['user_region'], $data['distance']);
         }
-
-        $filteredArtists = $s->getFilteredArtists($oc, $fc);
+        $page = ($data['page']) ? $data['page'] : 1;
+        $filteredArtists = $s->getFilteredArtists($oc, $fc, $page);
         return iterator_to_array($filteredArtists);
     }
 }

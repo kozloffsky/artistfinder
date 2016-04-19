@@ -8,6 +8,7 @@ use Acted\LegalDocsBundle\Search\FilterCriteria;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -33,6 +34,8 @@ class SearchType extends AbstractType
                 'constraints' => [new NotBlank(['groups' => 'distance'])],
                 'class' => RefRegion::class
             ])
+            ->add('page', IntegerType::class)
+            ->add('with_video', ChoiceType::class, ['choices_as_values' => true, 'choices' => [true, false]])
         ;
     }
 
