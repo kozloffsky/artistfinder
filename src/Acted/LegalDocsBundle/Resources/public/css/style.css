@@ -2123,3 +2123,11 @@ span.removeNewImage
     color: inherit;
 
 }
+.category-body .show-more
+{
+    display: none;
+}
+.artistCategories
+{
+    min-height: 130px;
+}

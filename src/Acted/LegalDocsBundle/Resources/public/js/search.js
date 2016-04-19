@@ -156,7 +156,7 @@ $(function () {
             success:function(response){
                 $('#region').empty();
                 $(response).each(function(){
-                    $('#region').append('<option value="'+ this.id +'" name="region">'+this.name+'</option>');
+                    $('#region').append('<option value="'+ this.id +'" name="user_region">'+this.name+'</option>');
                     selectBoxStyle();
                 });
             }
@@ -166,6 +166,62 @@ $(function () {
     $('#search-region, #region, #searchCategory input, #artistLocationSearch input').on('change', function(){
         var searchFormSerialize = $('#searchLoc, #eventLocationForm, #searchCategory, #artistLocationSearch').serialize()
         console.log(searchFormSerialize)
+        getFilteredRes(searchFormSerialize)
     });
+
+    function getFilteredRes(searchFormSerialize){
+        $.ajax({
+            type:'GET',
+            url: '/artist',
+            data: searchFormSerialize,
+            success: function(response){
+                createNewFilterResults(response)
+            }
+        })
+    }
+
+    function createNewFilterResults(response){
+        console.log(response)
+        $('#tab-singers .row').empty();
+        $(response).each(function(){
+            console.log(this);
+            var artistBlockSearch = '<div class="profile-card mobile-horizontal">'+
+                '<div class="video-icon"></div>'+
+                '<img class="header" src=""/>'+
+                '<p class="card-title"></p>'+
+                '<div class="user-rating clearfix">'+
+                '<div class="stars">'+
+                '<div class="star">'+
+                '<div class="fill-star"></div>'+
+                '</div>'+
+                '<div class="star">'+
+                '<div class="fill-star"></div>'+
+                '</div>'+
+                '<div class="star">'+
+                '<div class="fill-star"></div>'+
+                '</div>'+
+                '<div class="star">'+
+                '<div class="fill-star"></div>'+
+                '</div>'+
+                '<div class="star">'+
+                '<div class="fill-star"></div>'+
+                '</div>'+
+                '</div>'+
+                '<div class="rating">4.5/5.0 (16 Votes)</div>'+
+                '</div>'+
+                '<div class="location">United Kingdom, Essex</div>'+
+                '<div class="talents">Singer, Song Writer, Jazz Vocalist, Vocalist</div>'+
+                '<div class="controls">'+
+                '<div class="button-gradient blue filled">'+
+                '<button data-dismiss="modal" class="btn">Profile</button>'+
+                '</div>'+
+                '<div class="button-gradient blue ">'+
+                '<button data-dismiss="modal" class="btn">Ask a free quote</button>'+
+                '</div>'+
+                '</div>'+
+                '</div>';
+            $('#tab-singers .row').append(artistBlockSearch);
+        });
+    }
 
 });

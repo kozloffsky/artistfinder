@@ -1556,6 +1556,7 @@ header.small .navbar {
     display: none;
 }
 
+
 .header-block .wrapper .divider {
     display: inline-block;
     width: 1px;
@@ -6486,4 +6487,12 @@ span.removeNewImage
 {
     color: inherit;
 
+}
+.category-body .show-more
+{
+    display: none;
+}
+.artistCategories
+{
+    min-height: 130px;
 }
