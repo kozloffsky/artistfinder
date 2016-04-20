@@ -33,6 +33,7 @@ class FilterCriteria
     protected $location;
     /** @var RefRegion */
     protected $userRegion;
+    protected $recommended;
 
     public function __construct($categories = [], $withVideo = false, $query = null)
     {
@@ -139,6 +140,22 @@ class FilterCriteria
     public function getUserRegion()
     {
         return $this->userRegion;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRecommended()
+    {
+        return $this->recommended;
+    }
+
+    /**
+     * @param mixed $recommended
+     */
+    public function addRecommended($recommended)
+    {
+        $this->recommended = $recommended;
     }
 
 }

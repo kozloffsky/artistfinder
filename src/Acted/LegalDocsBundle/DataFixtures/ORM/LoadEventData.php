@@ -42,8 +42,8 @@ class LoadEventData extends AbstractFixture implements ContainerAwareInterface, 
     {
         $faker = $this->container->get('davidbadura_faker.faker');
 
-        for ($i = 0; $i < 50; $i++) {
-            for ($j = 0; $j < 10; $j++) {
+        for ($i = 0; $i < 200; $i++) {
+            for ($j = 0; $j < 3; $j++) {
                 $event = new Event();
                 $event->setEventRef(uniqid());
                 $event->setUser($this->getReference('user'.$i));
