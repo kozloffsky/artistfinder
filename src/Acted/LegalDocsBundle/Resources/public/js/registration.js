@@ -174,7 +174,7 @@ $(function () {
     var subCatElement = $(this).find('.category-item'),
         countSubCat = subCatElement.length;
         //catBlockEl = this;
-    console.log(countSubCat);
+    //console.log(countSubCat);
     if (countSubCat > 6){
         subCatElement.slice(6, countSubCat).hide();
         $(subCatElement).next('.show-more').show();
