@@ -52,7 +52,7 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $this->getReference('fire-show'),
         ];
 
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 200; $i++) {
             $user = new User();
             $user->setFirstname($faker->firstName);
             $user->setLastname($faker->lastName);
@@ -151,19 +151,21 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $profile->addMedia($audio1);
             $profile->addMedia($audio2);
 
-            $photoForSpotlights = range(1, 9);
-            foreach ($photoForSpotlights as $spotlight) {
-                $spotlightMedia = new Media();
-                $spotlightMedia->setName($spotlight . '.jpg');
-                $spotlightMedia->setMediaType('photo');
-                $spotlightMedia->setLink('assets/images/slider/' . $spotlight . '.jpg');
-                $spotlightMedia->setPosition(1);
-                $spotlightMedia->setActive(true);
-                $profile->addMedia($spotlightMedia);
-                $manager->persist($spotlightMedia);
-                $this->setReference('spotlight' . $spotlight, $spotlightMedia);
-            }
 
+            if ($i == 1) {
+                $photoForSpotlights = range(1, 9);
+                foreach ($photoForSpotlights as $spotlight) {
+                    $spotlightMedia = new Media();
+                    $spotlightMedia->setName($spotlight . '.jpg');
+                    $spotlightMedia->setMediaType('photo');
+                    $spotlightMedia->setLink('assets/images/slider/' . $spotlight . '.jpg');
+                    $spotlightMedia->setPosition(1);
+                    $spotlightMedia->setActive(true);
+                    $profile->addMedia($spotlightMedia);
+                    $manager->persist($spotlightMedia);
+                    $this->setReference('spotlight' . $spotlight, $spotlightMedia);
+                }
+            }
 
             $this->setReference('photo1', $photo1);
             $this->setReference('photo2', $photo2);
@@ -178,7 +180,7 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
 
             $artist->setCity($city);
 
-            if ($i < 30) {
+            if ($i < 100) {
                 $artist->setRecommend(true);
                 $profile->addCategory($faker->randomElement($recommendedCategories));
             }
