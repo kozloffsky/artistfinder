@@ -401,7 +401,7 @@ class Artist
             return 0;
         }
 
-        return number_format(array_sum($ratings->toArray())/$ratings->count(), 2);
+        return number_format(array_sum($ratings->toArray())/$ratings->count(), 1);
     }
 
     public function getVotesCount()
