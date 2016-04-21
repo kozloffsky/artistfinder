@@ -6,6 +6,7 @@ use Acted\LegalDocsBundle\Entity\Category;
 use Acted\LegalDocsBundle\Entity\RefCountry;
 use Acted\LegalDocsBundle\Entity\RefRegion;
 use Acted\LegalDocsBundle\Search\FilterCriteria;
+use Acted\LegalDocsBundle\Search\OrderCriteria;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -36,6 +37,11 @@ class SearchType extends AbstractType
 
             ->add('location', ChoiceType::class,[
                 'choices' => [FilterCriteria::LOCATION_100_KM, FilterCriteria::LOCATION_SAME_COUNTRY, FilterCriteria::LOCATION_INTERNATIONAL],
+                'choices_as_values' => true,
+            ])
+
+            ->add('order', ChoiceType::class, [
+                'choices' => [OrderCriteria::CHEAPEST, OrderCriteria::MORE_EXPENSIVE, OrderCriteria::LOWEST_RATED, OrderCriteria::TOP_RATED],
                 'choices_as_values' => true,
             ])
 

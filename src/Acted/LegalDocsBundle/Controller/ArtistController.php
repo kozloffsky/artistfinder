@@ -35,7 +35,7 @@ class ArtistController extends Controller
 
         $s = $this->get('app.search');
 
-        $oc = new OrderCriteria(OrderCriteria::TOP_RATED, OrderCriteria::CHEAPEST);
+        $oc = OrderCriteria::createSimpleSort($data['order']);
         $fc = new FilterCriteria($data['categories'], $data['with_video'], $data['query']);
 
         if ($data['distance']) {
@@ -71,10 +71,8 @@ class ArtistController extends Controller
         $data = $searchForm->getData();
         $s = $this->get('app.search');
 
-        $oc = new OrderCriteria(OrderCriteria::TOP_RATED, OrderCriteria::CHEAPEST);
+        $oc = OrderCriteria::createSimpleSort($data['order']);
         $result = [];
-
-
 
         if ($data['categories'] instanceof \Traversable) {
             foreach ($data['categories'] as $category) {
