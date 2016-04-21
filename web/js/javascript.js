@@ -4917,28 +4917,47 @@ $(function () {
     }
 
     function createNewFilterResults(response){
-        var t0 = performance.now(),
-            tabContentBlock = $('.searchTabContent').clone();
-        //$('.tab-content .row').empty();
-        removeOldTabs();
+        var t0 = performance.now();
         $('.tab-content .row').empty();
+
+        removeOldTabs();
         loopSearchRes();
         function loopSearchRes(){
             for(var propt in response) {
                 var searchCategoryId = propt,
-                    searchCategoryName = $('#searchCategories label[for="search'+ searchCategoryId +'"]').text();
-                console.log(searchCategoryId);
-                $(tabContentBlock).attr('id', 'tab-'+propt)
-                    .removeClass('searchTabContent')
-                    .appendTo('.results-content > .container');
+                    searchCategoryName = $('#searchCategories label[for="search'+ searchCategoryId +'"]').text(),
+                    tabContentBlock = '<div id="tab-'+propt+'" class="tab-block tab-content" style="display: none; padding-bottom: 100px;">'+
+                        '<div class="filters">'+
+                        '<select data-placeholder="Top rated">'+
+                        '<option value="0">Top rated</option>'+
+                        '<option value="1">Lowest rated</option>'+
+                        '<option value="2">Lorem Ipsum</option>'+
+                        '</select>'+
+                        '<select data-palaceholder="Price">'+
+                        '<option value="0">Price</option>'+
+                        '<option value="1">Lorem Ipsum</option>'+
+                        '<option value="2">Lorem Ipsum</option>'+
+                        '</select>'+
+                        '<select data-palaceholder="Distance">'+
+                        '<option value="0">From 0 to 50km</option>'+
+                        '<option value="1">From 50 to 200km</option>'+
+                        '<option value="2">From 200km to 1000km</option>'+
+                        '</select>'+
+                        '<div class="custom-checkbox">'+
+                        '<input type="checkbox" name="range" id="only-video1">'+
+                        '<label for="only-video1">Only artists with video</label>'+
+                        '</div>'+
+                        '</div>'+
+                    '<div class="row">'+
+                    '</div>'+
+                    '</div>';
+                $(tabContentBlock).appendTo('.results-content > .container');
 
                 $('.results-menu').append('<li data-toggle="#tab-'+searchCategoryId+'" class="tab">'+
                     '<a>'+searchCategoryName+'</a>'+
                     '</li>');
-                //console.log(response[propt]);
+
                 $(response[propt]).each(function(){
-                    console.log(propt +'prop');
-                    console.log(this)
                     var artistCategories = this.categories,
                         artistCatString = artistCategories.toString(),
                         artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
@@ -4978,14 +4997,13 @@ $(function () {
                         '</div>' +
                         '</div>';
                     $('#tab-'+ propt +' > .row').append(artistBlockSearch);
-                    console.log(artistBlockSearch);
-                    //console.log($('#tab-'+ propt +' .row'));
                 });
             }
         };
 
         setArtistStarsCat();
         setTabsCorenersZ();
+        selectBoxStyle();
         //console.log('finish');
         initTabs();
         var t1 = performance.now();
