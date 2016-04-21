@@ -194,16 +194,17 @@ $(function () {
                 var searchCategoryId = propt,
                     searchCategoryName = $('#searchCategories label[for="search'+ searchCategoryId +'"]').text(),
                     tabContentBlock = '<div id="tab-'+propt+'" class="tab-block tab-content" style="display: none; padding-bottom: 100px;">'+
-                        '<div class="filters">'+
-                        '<select data-placeholder="Top rated">'+
-                        '<option value="0">Top rated</option>'+
-                        '<option value="1">Lowest rated</option>'+
+                        '<div class="filters" id="'+propt+'">'+
+                            '<form class="filtersCat">'+
+                        '<select data-placeholder="Top rated" name="order">'+
+                        '<option value="top_rated">Top rated</option>'+
+                        '<option value="lowest_rated">Lowest rated</option>'+
                         '<option value="2">Lorem Ipsum</option>'+
                         '</select>'+
-                        '<select data-palaceholder="Price">'+
-                        '<option value="0">Price</option>'+
-                        '<option value="1">Lorem Ipsum</option>'+
-                        '<option value="2">Lorem Ipsum</option>'+
+                        '<select data-palaceholder="Price" name="order">'+
+                        //'<option value="">Price</option>'+
+                        '<option value="cheapest">Cheapes</option>'+
+                        '<option value="more_expensive">Most expensive</option>'+
                         '</select>'+
                         '<select data-palaceholder="Distance">'+
                         '<option value="0">From 0 to 50km</option>'+
@@ -213,6 +214,7 @@ $(function () {
                         '<div class="custom-checkbox">'+
                         '<input type="checkbox" name="range" id="only-video1">'+
                         '<label for="only-video1">Only artists with video</label>'+
+                            '</form>'+
                         '</div>'+
                         '</div>'+
                     '<div class="row">'+
@@ -223,48 +225,7 @@ $(function () {
                 $('.results-menu').append('<li data-toggle="#tab-'+searchCategoryId+'" class="tab">'+
                     '<a>'+searchCategoryName+'</a>'+
                     '</li>');
-
-                $(response[propt]).each(function(){
-                    var artistCategories = this.categories,
-                        artistCatString = artistCategories.toString(),
-                        artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
-                        '<div class="video-icon"></div>' +
-                        '<img class="header" src="' + this.media.link + '"/>' +
-                        '<p class="card-title">' + this.name + '</p>' +
-                        '<div class="user-rating clearfix">' +
-                        '<div class="stars">' +
-                        '<div class="star">' +
-                        '<div class="fill-star"></div>' +
-                        '</div>' +
-                        '<div class="star">' +
-                        '<div class="fill-star"></div>' +
-                        '</div>' +
-                        '<div class="star">' +
-                        '<div class="fill-star"></div>' +
-                        '</div>' +
-                        '<div class="star">' +
-                        '<div class="fill-star"></div>' +
-                        '</div>' +
-                        '<div class="star">' +
-                        '<div class="fill-star"></div>' +
-                        '</div>' +
-                        '</div>' +
-                        '<div class="rating">' + this.rating + '/5.0 (' + this.votes_count + ' Votes)</div>' +
-                        '<span class="hidden catArtistRatingVal">' + this.rating + '</span>' +
-                        '</div>' +
-                        '<div class="location">' + this.country + ', ' + this.city + '</div>' +
-                        '<div class="talents">' + artistCatString + '</div>' +
-                        '<div class="controls">' +
-                        '<div class="button-gradient blue filled">' +
-                        '<button data-dismiss="modal" class="btn">Profile</button>' +
-                        '</div>' +
-                        '<div class="button-gradient blue ">' +
-                        '<button data-dismiss="modal" class="btn">Ask a free quote</button>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>';
-                    $('#tab-'+ propt +' > .row').append(artistBlockSearch);
-                });
+                loopArtistsInCat(response[propt], propt);
             }
         };
         setArtistStarsCat();
@@ -273,7 +234,57 @@ $(function () {
         //console.log('finish');
         initTabs();
         var t1 = performance.now();
+
+        $('.filtersCat select').on('change', function(){
+            var categoryFiltering = $(this).parents('.filters').attr('id');
+            catFilteringSearch(categoryFiltering);
+        });
+
         console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+    }
+
+    function loopArtistsInCat(artists, propt) {
+        $(artists).each(function () {
+            var artistCategories = this.categories,
+                artistCatString = artistCategories.toString(),
+                artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
+                    '<div class="video-icon"></div>' +
+                    '<img class="header" src="' + this.media.link + '"/>' +
+                    '<p class="card-title">' + this.name + '</p>' +
+                    '<div class="user-rating clearfix">' +
+                    '<div class="stars">' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="rating">' + this.rating + '/5.0 (' + this.votes_count + ' Votes)</div>' +
+                    '<span class="hidden catArtistRatingVal">' + this.rating + '</span>' +
+                    '</div>' +
+                    '<div class="location">' + this.country + ', ' + this.city + '</div>' +
+                    '<div class="talents">' + artistCatString + '</div>' +
+                    '<div class="controls">' +
+                    '<div class="button-gradient blue filled">' +
+                    '<button data-dismiss="modal" class="btn">Profile</button>' +
+                    '</div>' +
+                    '<div class="button-gradient blue ">' +
+                    '<button data-dismiss="modal" class="btn">Ask a free quote</button>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+            $('#tab-' + propt + ' > .row').append(artistBlockSearch);
+        });
     }
 
     function setArtistStarsCat(){
@@ -287,6 +298,20 @@ $(function () {
             $(getFullStars).children('.fill-star').css('width', '100%');
             $(getHalfStars).children('.fill-star').css('width', raitingDigits + '0%');
         });
+    }
+
+    function catFilteringSearch(categoryFiltering){
+        /*var formsWithoutCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch').serialize()
+        var catFilteringSerialize = $('#'+categoryFiltering+' .filtersCat').serialize();
+        console.log(catFilteringSerialize);
+        $.ajax({
+            type:'GET',
+            url: '/batch/artist',
+            data: searchFormSerialize,
+            success: function(response){
+                createNewFilterResults(response);
+            }
+        })*/
     }
 
     function removeOldTabs(){
