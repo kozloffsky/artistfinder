@@ -20,6 +20,22 @@ class OrderCriteria
     protected $price = self::CHEAPEST;
     protected $prioritized = 'rating';
 
+    public static function createSimpleSort($sort)
+    {
+        switch($sort) {
+            case self::TOP_RATED:
+                return new self(self::TOP_RATED, self::MORE_EXPENSIVE, 'rating');
+            case self::LOWEST_RATED:
+                return new self(self::LOWEST_RATED, self::CHEAPEST, 'rating');
+            case self::CHEAPEST:
+                return new self(self::TOP_RATED, self::CHEAPEST, 'price');
+            case self::MORE_EXPENSIVE:
+                return new self(self::TOP_RATED, self::MORE_EXPENSIVE, 'price');
+            default:
+                return new self(self::TOP_RATED, self::CHEAPEST);
+        }
+    }
+
     public function __construct($rating = self::TOP_RATED, $price = self::CHEAPEST, $prioritized = 'rating')
     {
         switch ($rating) {
