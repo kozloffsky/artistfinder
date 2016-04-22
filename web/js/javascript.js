@@ -4938,10 +4938,10 @@ $(function () {
                         '<option value="cheapest">Cheapes</option>'+
                         '<option value="more_expensive">Most expensive</option>'+
                         '</select>'+
-                        '<select data-palaceholder="Distance">'+
-                        '<option value="0">From 0 to 50km</option>'+
-                        '<option value="1">From 50 to 200km</option>'+
-                        '<option value="2">From 200km to 1000km</option>'+
+                        '<select data-palaceholder="Distance" name="distance">'+
+                        '<option value="50">From 0 to 50km</option>'+
+                        '<option value="200">From 50 to 200km</option>'+
+                        '<option value="1000">From 200km to 1000km</option>'+
                         '</select>'+
                         '<div class="custom-checkbox">'+
                         '<input type="checkbox" name="range" id="only-video1">'+
@@ -4960,7 +4960,7 @@ $(function () {
                 loopArtistsInCat(response[propt], propt);
             }
         };
-        setArtistStarsCat();
+        //setArtistStarsCat();
         setTabsCorenersZ();
         selectBoxStyle();
         //console.log('finish');
@@ -4968,6 +4968,9 @@ $(function () {
         var t1 = performance.now();
 
         $('.filtersCat select').on('change', function(){
+            var filtersCatSelectGroup = $('.filtersCat select');
+            filtersCatSelectGroup.prop( "disabled", true );
+            $(this).prop('disabled', false);
             var categoryFiltering = $(this).parents('.filters').attr('id');
             catFilteringSearch(categoryFiltering);
         });
@@ -4976,6 +4979,7 @@ $(function () {
     }
 
     function loopArtistsInCat(artists, propt) {
+        console.log(artists)
         $(artists).each(function () {
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString(),
@@ -5017,6 +5021,7 @@ $(function () {
                     '</div>';
             $('#tab-' + propt + ' > .row').append(artistBlockSearch);
         });
+        setArtistStarsCat();
     }
 
     function setArtistStarsCat(){
@@ -5033,17 +5038,20 @@ $(function () {
     }
 
     function catFilteringSearch(categoryFiltering){
-        /*var formsWithoutCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch').serialize()
-        var catFilteringSerialize = $('#'+categoryFiltering+' .filtersCat').serialize();
-        console.log(catFilteringSerialize);
+        var formsWithoutCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch, #'+categoryFiltering+' .filtersCat').serialize();
+        //var catFilteringSerialize = $('#'+categoryFiltering+' .filtersCat').serialize();
+        $('.filtersCat select').prop( "disabled", false );
+        console.log(categoryFiltering);
         $.ajax({
             type:'GET',
-            url: '/batch/artist',
-            data: searchFormSerialize,
+            url: '/artist',
+            data: formsWithoutCat + '&categories%5B%5D=' + categoryFiltering,
             success: function(response){
-                createNewFilterResults(response);
+                //console.log(response);
+                $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch').remove();
+                loopArtistsInCat(response,categoryFiltering);
             }
-        })*/
+        });
     }
 
     function removeOldTabs(){
