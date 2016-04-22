@@ -8,7 +8,6 @@ use Acted\LegalDocsBundle\Search\FilterCriteria;
 use Acted\LegalDocsBundle\Search\OrderCriteria;
 use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\VarDumper\VarDumper;
 
 class SearchController extends Controller
 {
@@ -38,13 +37,13 @@ class SearchController extends Controller
         $fc = new FilterCriteria($data['categories'], true, $data['query']);
 //        $fc->addDistance($data['user_region'], $data['distance']);
 
-        $em = $this->getDoctrine()->getManager();
 
         $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
 
+        //TODO: refactor this
+        $uk = $em->getRepository('ActedLegalDocsBundle:RefCountry')->findOneByName('United Kingdom');
+        $regions = $em->getRepository('ActedLegalDocsBundle:RefRegion')->findByCountry($uk);
 
-        return $this->render('ActedLegalDocsBundle:Default:search.html.twig', compact('categories', 'recommended'));
-        //VarDumper::dump($s->getFilteredArtists($oc, $fc));
-        //die;
+        return $this->render('ActedLegalDocsBundle:Default:search.html.twig', compact('categories', 'recommended', 'regions'));
     }
 }
