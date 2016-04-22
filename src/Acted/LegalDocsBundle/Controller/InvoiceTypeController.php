@@ -47,10 +47,15 @@ class InvoiceTypeController extends Controller
 
             $data = $form->getData();
 
-            $this->get('invoice_type')
+            $pdfPath = $this->get('invoice_type')
                 ->setData($data)
                 ->getParsedTemplate()
-                ->generatePdf($invoiceType->getId());
+                ->generatePdf($invoiceType);
+
+            if ($pdfPath) {
+                $invoiceType->setPdfPath($pdfPath);
+                $em->flush();
+            }
 
 //            return $this->redirectToRoute('invoicetype_show', array('id' => $invoiceType->getId()));
             return $this->redirectToRoute('invoicetype_index');

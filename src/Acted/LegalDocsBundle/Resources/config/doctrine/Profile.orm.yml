@@ -44,6 +44,5 @@ Acted\LegalDocsBundle\Entity\Profile:
         performances:
           targetEntity: Acted\LegalDocsBundle\Entity\Performance
           mappedBy: profile
-
-
+          orderBy: { 'id': 'DESC' }
     lifecycleCallbacks: {  }

@@ -13,4 +13,8 @@ Acted\LegalDocsBundle\Entity\RefCountry:
           type: string(128)
           notnull: true
           unique: true
+    oneToMany:
+        regions:
+          targetEntity: Acted\LegalDocsBundle\Entity\RefRegion
+          mappedBy: country
     lifecycleCallbacks: {  }

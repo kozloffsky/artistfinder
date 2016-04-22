@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Entity;
 
+use Acted\LegalDocsBundle\Services\base\LegalDoc;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="PerformanceContract")
  * @ORM\Entity(repositoryClass="Acted\LegalDocsBundle\Repository\PerformanceContractRepository")
  */
-class PerformanceContract
+class PerformanceContract implements LegalDoc
 {
     /**
      * @var int
@@ -673,5 +674,63 @@ class PerformanceContract
     public function getClientName()
     {
         return $this->client_name;
+    }
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\Event
+     */
+    private $event;
+
+
+    /**
+     * Set event
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Event $event
+     *
+     * @return PerformanceContract
+     */
+    public function setEvent(\Acted\LegalDocsBundle\Entity\Event $event = null)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \Acted\LegalDocsBundle\Entity\Event
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+    /**
+     * @var string
+     */
+    private $pdf_path;
+
+
+    /**
+     * Set pdfPath
+     *
+     * @param string $pdfPath
+     *
+     * @return PerformanceContract
+     */
+    public function setPdfPath($pdfPath)
+    {
+        $this->pdf_path = $pdfPath;
+
+        return $this;
+    }
+
+    /**
+     * Get pdfPath
+     *
+     * @return string
+     */
+    public function getPdfPath()
+    {
+        return $this->pdf_path;
     }
 }

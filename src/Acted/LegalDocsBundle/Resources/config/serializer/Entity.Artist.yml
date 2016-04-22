@@ -1,0 +1,27 @@
+Acted\LegalDocsBundle\Entity\Artist:
+  exclusion_policy: NONE
+  custom_accessor_order: [name, slug, rating]
+  properties:
+    name:
+      groups: [Default, block]
+    slug:
+      groups: [Default, block]
+  virtual_properties:
+    getCityName:
+      serialized_name: city
+      groups: [Default, block]
+    getCountryName:
+      serialized_name: country
+      groups: [Default, block]
+    getRating:
+      serialized_name: rating
+      groups: [Default, block]
+    getVotesCount:
+      serialized_name: votes_count
+      groups: [block]
+    getCategoriesNames:
+      serialized_name: categories
+      groups: [block]
+    getLastPerformanceMedia:
+      serialized_name: media
+      groups: [block]

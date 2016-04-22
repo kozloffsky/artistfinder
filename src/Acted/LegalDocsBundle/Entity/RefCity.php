@@ -1,11 +1,12 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Entity;
+use Acted\LegalDocsBundle\Geo\Geo;
 
 /**
  * RefCity
  */
-class RefCity
+class RefCity implements Geo
 {
     /**
      * @var integer
@@ -79,5 +80,92 @@ class RefCity
     public function getCountryId()
     {
         return $this->countryId;
+    }
+    /**
+     * @var string
+     */
+    private $latitude;
+
+    /**
+     * @var string
+     */
+    private $longitude;
+
+
+    /**
+     * Set latitude
+     *
+     * @param string $latitude
+     *
+     * @return RefCity
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    /**
+     * Get latitude
+     *
+     * @return string
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * Set longitude
+     *
+     * @param string $longitude
+     *
+     * @return RefCity
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * Get longitude
+     *
+     * @return string
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\RefRegion
+     */
+    private $region;
+
+
+    /**
+     * Set region
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefRegion $region
+     *
+     * @return RefCity
+     */
+    public function setRegion(\Acted\LegalDocsBundle\Entity\RefRegion $region = null)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * Get region
+     *
+     * @return \Acted\LegalDocsBundle\Entity\RefRegion
+     */
+    public function getRegion()
+    {
+        return $this->region;
     }
 }

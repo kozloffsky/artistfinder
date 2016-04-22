@@ -1,0 +1,32 @@
+Acted\LegalDocsBundle\Entity\RefRegion:
+    type: entity
+    table: RefRegion
+    repositoryClass: Acted\LegalDocsBundle\Repository\RefRegionRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+          type: string(128)
+          notnull: true
+          unique: true
+        latitude:
+          type: decimal
+          scale: 8
+          nullable: true
+        longitude:
+          type: decimal
+          scale: 8
+          nullable: true
+    oneToMany:
+        cities:
+          targetEntity: Acted\LegalDocsBundle\Entity\RefCity
+          mappedBy: region
+    manyToOne:
+        country:
+          targetEntity: Acted\LegalDocsBundle\Entity\RefCountry
+          inversedBy: regions
+    lifecycleCallbacks: {  }

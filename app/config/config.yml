@@ -62,6 +62,14 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        dql:
+            string_functions:
+                MATCH: Acted\LegalDocsBundle\DQL\MatchAgainstFunction
+                RADIANS: DoctrineExtensions\Query\Mysql\Radians
+            numeric_functions:
+                ACOS: DoctrineExtensions\Query\Mysql\Acos
+                COS: DoctrineExtensions\Query\Mysql\Cos
+                SIN: DoctrineExtensions\Query\Mysql\Sin
         mappings:
             tree:
                 type: annotation
@@ -130,3 +138,13 @@ liip_imagine:
                 downscale: { max: [300, 200] }
 
 nelmio_api_doc: ~
+
+fos_rest:
+    view:
+        view_response_listener: true
+        formats:
+            json: true
+        templating_formats:
+            html: false
+    serializer:
+        serialize_null: true

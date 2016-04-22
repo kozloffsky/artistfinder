@@ -47,10 +47,15 @@ class PerformanceContractController extends Controller
 
             $data = $form->getData();
 
-            $this->get('contract_type')
+            $pdfPath = $this->get('contract_type')
                 ->setData($data)
                 ->getParsedTemplate()
-                ->generatePdf($performanceContract->getId());
+                ->generatePdf($performanceContract);
+
+            if ($pdfPath) {
+                $performanceContract->setPdfPath($pdfPath);
+                $em->flush();
+            }
 
 //            return $this->redirectToRoute('performancecontract_show', array('id' => $performanceContract->getId()));
             return $this->redirectToRoute('performancecontract_index');

@@ -6,6 +6,7 @@
  */
 namespace Acted\LegalDocsBundle\Services\base;
 
+use Acted\LegalDocsBundle\Entity\Event;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Acted\LegalDocsBundle\Entity\Template;
 use TFox\MpdfPortBundle\Service\MpdfService;
@@ -20,6 +21,7 @@ abstract class TemplatesService
     protected $dir;
 
     public $folder;
+    public $type;
 
     public $_container;
     /**
@@ -57,11 +59,12 @@ abstract class TemplatesService
      * @param ContainerInterface $container
      * @param MpdfService $mpdf
      */
-    public function __construct(ContainerInterface $container, MpdfService $mpdf)
+    public function __construct(ContainerInterface $container, MpdfService $mpdf, $type = null)
     {
         $this->_container = $container;
         $this->_em = $container->get('doctrine')->getManager();
         $this->_mpdfService = $mpdf;
+        $this->type = $type;
     }
 
     public function setData($data)
@@ -89,14 +92,21 @@ abstract class TemplatesService
 
     /**
      * GeneratePDF
-     * @param integer $documentId
-     * @return boolean
-     *
+     * @param LegalDoc $legalDoc
+     * @return bool
      * @author Alex Makhorin
      */
-    public function generatePdf($documentId)
+    public function generatePdf(LegalDoc $legalDoc)
     {
-        $fileName = $documentId . '.pdf';
+        $event = $legalDoc->getEvent();
+
+        if ($event instanceof Event) {
+            $date = new \DateTime();
+            $fileName = implode('_', [$this->type, $event->getId(), $date->format('Ymd-His')]);
+            $fileName .= '.pdf';
+        } else {
+            throw new \InvalidArgumentException('Invalid event entity');
+        }
 
         $dir = dirname($this->getSavePath($fileName));
         if (!file_exists($dir)) {
@@ -104,10 +114,11 @@ abstract class TemplatesService
             chmod($dir, 0777);
         }
 
-        return $this->_mpdfService->generatePdf($this->_parsedTemplate, [
+        $this->_mpdfService->generatePdf($this->_parsedTemplate, [
             'outputFilename' => $dir.'/'.$fileName,
             'outputDest' => 'F',
         ]);
+        return $this->dir.'/'.$fileName;
     }
 
     /**

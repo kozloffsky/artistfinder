@@ -3,3 +3,9 @@ Acted\LegalDocsBundle\Entity\Media:
   properties:
     performances:
       exclude: true
+    link:
+      groups: [Default, block]
+    thumbnail:
+      groups: [Default, block]
+    mediaType:
+      groups: [Default, block]

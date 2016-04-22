@@ -53,6 +53,22 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
         $varietyActsCategory->setBackground('assets/images/VarietyActs.jpg');
         $manager->persist($varietyActsCategory);
 
+        $acrobats = new Category();
+        $acrobats->setTitle('Acrobats');
+        $acrobats->setSlug($acrobats->getTitle());
+        $acrobats->setParent($varietyActsCategory);
+        $acrobats->setRecommend(true);
+        $manager->persist($acrobats);
+        $this->setReference('acrobats', $acrobats);
+
+        $fireShow = new Category();
+        $fireShow->setTitle('Fire Show');
+        $fireShow->setSlug($fireShow->getTitle());
+        $fireShow->setParent($varietyActsCategory);
+        $fireShow->setRecommend(true);
+        $manager->persist($fireShow);
+        $this->setReference('fire-show', $fireShow);
+
         $subCategories = range(1, 6);
         foreach ($subCategories as $subCategoryId) {
             $subCategory = new Category();
@@ -60,7 +76,6 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
             $subCategory->setSlug($faker->unique()->text(10));
             $subCategory->setParent($varietyActsCategory);
             $manager->persist($subCategory);
-            $manager->flush();
             $this->addReference('category'.$subCategoryId, $subCategory);
         }
 
@@ -79,8 +94,15 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
             $subCategory->setSlug($faker->unique()->text(10));
             $subCategory->setParent($liveMusic);
             $manager->persist($subCategory);
-            $manager->flush();
         }
+
+        $singers = new Category();
+        $singers->setTitle('Singers');
+        $singers->setSlug($singers->getTitle());
+        $singers->setParent($liveMusic);
+        $singers->setRecommend(true);
+        $manager->persist($singers);
+        $this->setReference('singers', $singers);
 
 
         $internationalArtists = new Category();
@@ -98,7 +120,6 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
             $subCategory->setSlug($faker->unique()->text(10));
             $subCategory->setParent($internationalArtists);
             $manager->persist($subCategory);
-            $manager->flush();
         }
 
         $emcees = new Category();
@@ -116,7 +137,6 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
             $subCategory->setSlug($faker->unique()->text(10));
             $subCategory->setParent($emcees);
             $manager->persist($subCategory);
-            $manager->flush();
         }
 
         $dance = new Category();
@@ -134,7 +154,6 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
             $subCategory->setSlug($faker->unique()->text(10));
             $subCategory->setParent($dance);
             $manager->persist($subCategory);
-            $manager->flush();
         }
 
 
@@ -153,7 +172,6 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
             $subCategory->setSlug($faker->unique()->text(10));
             $subCategory->setParent($children);
             $manager->persist($subCategory);
-            $manager->flush();
         }
 
         $manager->flush();
@@ -166,6 +184,6 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
      */
     public function getOrder()
     {
-        return 1;
+        return 2;
     }
 }

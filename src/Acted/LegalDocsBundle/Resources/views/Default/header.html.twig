@@ -14,6 +14,8 @@
 
 {% if app.request.get('_route') == 'acted_legal_docs_homepage' %}
 <header class="home">
+    {% elseif app.request.get('_route') == 'acted_legal_docs_search' %}
+    <header class="search">
     {% else %}
     <header>
 {% endif %}

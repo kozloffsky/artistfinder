@@ -486,4 +486,9 @@ class Event
     {
         return $this->city;
     }
+
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
 }

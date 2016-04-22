@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Entity;
 
+use Acted\LegalDocsBundle\Services\base\LegalDoc;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="QuotationType")
  * @ORM\Entity(repositoryClass="Acted\LegalDocsBundle\Repository\QuotationTypeRepository")
  */
-class QuotationType
+class QuotationType implements LegalDoc
 {
     /**
      * @var int
@@ -1267,5 +1268,63 @@ class QuotationType
     public function getTotalAmount()
     {
         return $this->total_amount;
+    }
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\Event
+     */
+    private $event;
+
+
+    /**
+     * Set event
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Event $event
+     *
+     * @return QuotationType
+     */
+    public function setEvent(\Acted\LegalDocsBundle\Entity\Event $event = null)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \Acted\LegalDocsBundle\Entity\Event
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+    /**
+     * @var string
+     */
+    private $pdf_path;
+
+
+    /**
+     * Set pdfPath
+     *
+     * @param string $pdfPath
+     *
+     * @return QuotationType
+     */
+    public function setPdfPath($pdfPath)
+    {
+        $this->pdf_path = $pdfPath;
+
+        return $this;
+    }
+
+    /**
+     * Get pdfPath
+     *
+     * @return string
+     */
+    public function getPdfPath()
+    {
+        return $this->pdf_path;
     }
 }

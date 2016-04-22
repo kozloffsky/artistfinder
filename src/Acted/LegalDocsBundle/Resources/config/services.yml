@@ -1,19 +1,19 @@
 services:
     contract_type:
         class: Acted\LegalDocsBundle\Services\ContractTypeService
-        arguments: ["@service_container", "@tfox.mpdfport"]
+        arguments: ["@service_container", "@tfox.mpdfport", "contract"]
         calls:
           - [setSavePath, ['%performancecontract_dir%']]
         folder: %kernel.root_dir%
     invoice_type:
         class: Acted\LegalDocsBundle\Services\InvoiceTypeService
-        arguments: ["@service_container", "@tfox.mpdfport"]
+        arguments: ["@service_container", "@tfox.mpdfport", "invoice"]
         calls:
             - [setSavePath, ['%invoice_dir%']]
         folder: %kernel.root_dir%
     quotation_type:
         class: Acted\LegalDocsBundle\Services\QuotationTypeService
-        arguments: ["@service_container", "@tfox.mpdfport"]
+        arguments: ["@service_container", "@tfox.mpdfport", "quotation"]
         calls:
             - [setSavePath, ['%quotation_dir%']]
         folder: %kernel.root_dir%

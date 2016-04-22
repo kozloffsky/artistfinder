@@ -6,6 +6,8 @@ $(function () {
 
   var customerValidate =  $("#customerRegForm").validate();
 
+  var artistValidation =  $("#artistForm").validate();
+
   $("#recoveryForm").validate();
 
   //Initializing phone mask.
@@ -168,6 +170,21 @@ $(function () {
     chageState(4);
   }
 
+  $('.artistCategories').each(function(){
+    var subCatElement = $(this).find('.category-item'),
+        countSubCat = subCatElement.length;
+        //catBlockEl = this;
+    //console.log(countSubCat);
+    if (countSubCat > 6){
+        subCatElement.slice(6, countSubCat).hide();
+        $(subCatElement).next('.show-more').show();
+    }
+  });
+
+  $('.artistCategories .show-more').on('click',function(event){
+    event.preventDefault();
+    $(this).prevAll().show();
+  });
 
   $('#stageThreeNext').on('click', function(event){
     event.preventDefault();

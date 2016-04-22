@@ -401,7 +401,12 @@ class Artist
             return 0;
         }
 
-        return array_sum($ratings->toArray())/$ratings->count();
+        return number_format(array_sum($ratings->toArray())/$ratings->count(), 1);
+    }
+
+    public function getVotesCount()
+    {
+        return count($this->ratings);
     }
 
     public function __toString()
@@ -437,4 +442,68 @@ class Artist
     {
         return $this->country;
     }
+    /**
+     * @var boolean
+     */
+    private $recommend = false;
+
+
+    /**
+     * Set recommend
+     *
+     * @param boolean $recommend
+     *
+     * @return Artist
+     */
+    public function setRecommend($recommend)
+    {
+        $this->recommend = $recommend;
+
+        return $this;
+    }
+
+    /**
+     * Get recommend
+     *
+     * @return boolean
+     */
+    public function getRecommend()
+    {
+        return $this->recommend;
+    }
+
+    public function getCityName()
+    {
+        return ($this->city) ? $this->city->getName() : null;
+    }
+
+    public function getCountryName()
+    {
+        return ($this->city && $this->city->getRegion()->getCountry()) ? $this->city->getRegion()->getCountry()->getName() : null;
+    }
+
+    public function getCategoriesNames()
+    {
+        if ($this->getUser()->getProfile()) {
+            return $this->getUser()->getProfile()->getCategories()->map(function($entry){
+                /** @var Category $entry */
+                return $entry->getTitle();
+            });
+        }
+        return [];
+    }
+
+    public function getLastPerformanceMedia()
+    {
+        if ($this->getUser()->getProfile()) {
+            /** @var Performance $performance */
+            $performance = $this->getUser()->getProfile()->getPerformances()->first();
+            if ($performance) {
+                return $performance->getMedia()->first();
+            }
+        }
+        return null;
+    }
+
+
 }

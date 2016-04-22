@@ -36,6 +36,7 @@ class PerformanceContractType extends AbstractType
             ->add('last_call_date', 'date')
             ->add('artist_name')
             ->add('client_name')
+            ->add('event', null, ['required' => true])
         ;
     }
     

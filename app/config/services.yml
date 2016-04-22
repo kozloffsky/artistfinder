@@ -49,3 +49,19 @@ services:
         arguments: ["%image_upload_dir%"]
         tags:
         - { name: doctrine.event_listener, event: postRemove }
+
+    app.listener.geo:
+        class: Acted\LegalDocsBundle\EventListener\GeoListener
+        tags:
+          - {name: doctrine.event_listener, event: prePersist}
+
+    app.search:
+        class: Acted\LegalDocsBundle\Service\DoctrineSearch
+        arguments: ["@doctrine.orm.entity_manager", "@knp_paginator"]
+
+    app.artist_serializer_subscriber:
+        class: Acted\LegalDocsBundle\Serializer\ArtistSerializerSubscriber
+        arguments:
+          - "@doctrine.orm.default_entity_manager"
+        tags:
+          - { name: jms_serializer.event_subscriber }

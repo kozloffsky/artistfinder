@@ -53,6 +53,19 @@ main {
 .row {
     margin: 0;
 }
+.ul-reset {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.row {
+    margin: 0;
+}
+
+.modal {
+    padding-right: 0!important;
+}
 
 main .scroll-icon {
     position: absolute;
@@ -2104,4 +2117,17 @@ span.removeNewImage
     color: #d9534f;
     text-align: center;
     display: none;
+}
+.profile-card button a
+{
+    color: inherit;
+
+}
+.category-body .show-more
+{
+    display: none;
+}
+.artistCategories
+{
+    min-height: 130px;
 }

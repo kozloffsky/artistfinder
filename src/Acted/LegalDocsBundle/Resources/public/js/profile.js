@@ -488,7 +488,7 @@ $(function() {
         $uploadCropBackground = $('#changeBgModal .changeImageContiner').croppie({
             viewport: {
                 width: 300,
-                height: 150
+                height: 89
             },
             boundary: {
                 width: 400,
@@ -553,6 +553,22 @@ $(function() {
             }
         })
     }
+
+    $('#section-audio audio').click(function(){
+        console.log('ddddd');
+        var audioGroup = $('#section-audio audio');
+        $(audioGroup).each(function(){
+            this.pause()
+        })
+    });
+
+    /*function preventMultipleAudio(){
+        console.log('ddddd');
+        var audioGroup = $('#section-audio audio');
+        $(audioGroup).each(function(){
+            this.pause()
+        })
+    }*/
 });
 $(document).on('ready ajaxComplete', function(){
     $('.price-list .pagination a').on('click', function(event){

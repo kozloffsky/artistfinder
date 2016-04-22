@@ -10,13 +10,16 @@
         </div>
         <div class="category-body">
 
-                <div class="row category-content variety-acts artistCategories">
+                <div class="row category-content artistCategories">
                     {% for catChild in category['__children'] %}
                     <div class="col-xs-6 category-item">
                         <input class="checkbox" type="checkbox" id="variety_category_id_{{ catChild['id'] }}" name="categories[]" value="{{ catChild['id'] }}">
                         <label for="variety_category_id_{{ catChild['id'] }}">{{ catChild['title'] }}</label>
                     </div>
                     {% endfor %}
+                    <button class="show-more">
+                        Other &#187;
+                    </button>
                 </div>
 
         </div>

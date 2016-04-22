@@ -1,6 +1,10 @@
 Acted\LegalDocsBundle\Entity\Artist:
     type: entity
     table: Artist
+    indexes:
+      search_index:
+        columns: [name, assistant_name]
+        flags: [fulltext]
     repositoryClass: Acted\LegalDocsBundle\Repository\ArtistRepository
     id:
         id:
@@ -29,6 +33,10 @@ Acted\LegalDocsBundle\Entity\Artist:
         comments:
           type: string(512)
           nullable: true
+        recommend:
+          type: boolean
+          options:
+            default: false
     manyToOne:
         city:
           targetEntity: Acted\LegalDocsBundle\Entity\RefCity

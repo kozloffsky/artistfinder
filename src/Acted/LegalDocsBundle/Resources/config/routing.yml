@@ -31,7 +31,21 @@ acted_legal_docs_user:
   prefix: /user
 
 acted_legal_docs_security:
-    resource: "@ActedLegalDocsBundle/Resources/config/routing/security.yml"
+  resource: "@ActedLegalDocsBundle/Resources/config/routing/security.yml"
+
 acted_legal_docs_media:
   resource: "@ActedLegalDocsBundle/Resources/config/routing/media.yml"
   prefix: /media
+
+acted_legal_docs_geo:
+  resource: "@ActedLegalDocsBundle/Resources/config/routing/geo.yml"
+  prefix: /geo
+
+acted_legal_docs_artist:
+  resource: "@ActedLegalDocsBundle/Resources/config/routing/artist.yml"
+  prefix: /
+
+acted_legal_docs_search:
+  path: /search
+  defaults: { _controller: ActedLegalDocsBundle:Search:index }
+  methods:  [GET]

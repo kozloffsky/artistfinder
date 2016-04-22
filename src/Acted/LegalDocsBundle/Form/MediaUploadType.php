@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Form;
 
+use Acted\LegalDocsBundle\Form\DataTransformer\Base64ToFileTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -18,7 +19,7 @@ class MediaUploadType extends AbstractType
             ->add('video', 'text', ['constraints' => [new NotBlank(['groups' => 'video'])]])
             ->add('audio', 'text', ['constraints' => [new NotBlank(['groups' => 'audio'])]])
         ;
-
+        $builder->get('file')->addModelTransformer(new Base64ToFileTransformer());
     }
 
     public function configureOptions(OptionsResolver $resolver)

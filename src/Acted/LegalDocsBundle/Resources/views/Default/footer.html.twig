@@ -2,6 +2,8 @@
 
 {% if app.request.get('_route') == 'acted_legal_docs_homepage' %}
     <footer>
+    {% elseif app.request.get('_route') == 'acted_legal_docs_search' %}
+    <footer>
     {% else %}
     <footer class="footer-dark">
 {% endif %}
