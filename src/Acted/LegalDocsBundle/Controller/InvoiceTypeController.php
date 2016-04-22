@@ -96,6 +96,12 @@ class InvoiceTypeController extends Controller
             $em->persist($invoiceType);
             $em->flush();
 
+            $data = $editForm->getData();
+            $this->get('invoice_type')
+                ->setData($data)
+                ->getParsedTemplate()
+                ->generatePdf($invoiceType->getId());
+
             return $this->redirectToRoute('invoicetype_edit', array('id' => $invoiceType->getId()));
         }
 

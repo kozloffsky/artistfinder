@@ -96,6 +96,13 @@ class PerformanceContractController extends Controller
             $em->persist($performanceContract);
             $em->flush();
 
+            $data = $editForm->getData();
+
+            $this->get('contract_type')
+                ->setData($data)
+                ->getParsedTemplate()
+                ->generatePdf($performanceContract->getId());
+
             return $this->redirectToRoute('performancecontract_edit', array('id' => $performanceContract->getId()));
         }
 

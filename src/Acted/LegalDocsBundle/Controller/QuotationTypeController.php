@@ -95,6 +95,12 @@ class QuotationTypeController extends Controller
             $em->persist($quotationType);
             $em->flush();
 
+            $data = $editForm->getData();
+            $this->get('quotation_type')
+                ->setData($data)
+                ->getParsedTemplate()
+                ->generatePdf($quotationType->getId());
+
             return $this->redirectToRoute('quotationtype_edit', array('id' => $quotationType->getId()));
         }
 
