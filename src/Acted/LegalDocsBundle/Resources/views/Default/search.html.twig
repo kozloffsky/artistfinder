@@ -7,6 +7,7 @@
     <div class="background-panel"></div>
 
     <div class="header-block">
+
         <h2>Find Your Entertainer</h2>
 
         <div class="form-group">
@@ -25,8 +26,12 @@
                     {% endif %}
                     {% endfor %}
                 </select>
+
                 <div class="divider"></div>
                 <select  data-class="selections-white" name="region" id="search-region">
+                    {% for region in regions %}
+                        <option value="{{ region.id }}" name="region">{{ region.name }}</option>
+                    {% endfor %}
                 </select>
                 </form>
             </div>
@@ -41,7 +46,7 @@
         <div class="block">
             <h2>Where is your event located?</h2>
             <form id="eventLocationForm">
-            <select name="country" id="country">
+            <select name="user_country" id="country">
                 {% for country in countries() %}
                     {% if country.name == 'United Kingdom' %}
                         <option value="{{ country.id }}" name="user_country" selected="selected">{{ country.name }}</option>
@@ -52,6 +57,9 @@
             </select>
 
             <select name="user_region" id="region">
+                {% for region in regions %}
+                <option value="{{ region.id }}" name="user_region">{{ region.name }}</option>
+                {% endfor %}
             </select>
             </form>
         </div>
