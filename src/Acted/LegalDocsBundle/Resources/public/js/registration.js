@@ -11,7 +11,7 @@ $(function () {
   $("#recoveryForm").validate();
 
   //Initializing phone mask.
-  $('#phone_number').mask('+44 (000) 000-0000', {placeholder: "+44 (___) ___-____"});
+  /*$('#phone_number').mask('+44 (000) 000-0000', {placeholder: "+44 (___) ___-____"});
 
 
   var $select2 = $("#country").select2({
@@ -37,8 +37,9 @@ $(function () {
     }
 
 
-  });
-  $select2.data('select2').$results.addClass($select2.attr('data-class'));
+  });*/
+
+  //$select2.data('select2').$results.addClass($select2.attr('data-class'));
 
 
   var currentState = 1;
@@ -89,8 +90,6 @@ $(function () {
     } else {
       text = 'Contact details'
     }
-    console.log(text)
-    console.log(isArtist)
     $('#registrationModal .stage').hide();
     $('#registrationModal .sub-stage').hide();
     $('#registrationModal .modal-header').show();
@@ -99,6 +98,7 @@ $(function () {
     console.log($('#modal-title').text());
     if (isArtist) {
       $('#registrationModal #artistBlock').show();
+      disableCatNext();
     } else {
       $('#registrationModal #customerBlock').show();
     }
@@ -147,6 +147,12 @@ $(function () {
 
 
   $('#stageTwoNext').click(function () {
+    checkCategories();
+  });
+
+  $('#artistBlock input').on('change', disableCatNext);
+
+  function checkCategories(){
     var numberCatChecked = $('#artistBlock input:checkbox:checked').length;
     if (numberCatChecked >= 1){
       $('.errorCat').fadeOut();
@@ -154,7 +160,17 @@ $(function () {
     } else {
       $('.errorCat').fadeIn();
     }
-  });
+  }
+
+  function disableCatNext(){
+    var numberCatChecked = $('#artistBlock input:checkbox:checked').length;
+    if (numberCatChecked >= 1){
+      $('#stageTwoNext').removeClass('disabled');
+    } else {
+      $('#stageTwoNext').addClass('disabled');
+    }
+  }
+
 
   $('.back-button').click(function () {
     if (currentState - 1 == 2) {
@@ -201,6 +217,20 @@ $(function () {
     var userRole = 'role=ROLE_ARTIST';
     registerArtist(userInformation, categoriesForm, userRole);
   };
+
+  $("#artistForm").on('change',function(){
+    //var countReduiredInput = $("#artistForm input").length;
+    var validInputs = [];
+    setTimeout(function(){
+      $("#artistForm input").each(function(){
+        if ($(this).hasClass('valid')){
+          validInputs.push($(this).attr('id'))
+        }
+      });
+      console.log(validInputs)
+    }, 1500);
+
+  });
 
   function registerArtist(userInformation, categoriesForm, userRole) {
     $.ajax({

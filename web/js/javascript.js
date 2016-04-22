@@ -4325,7 +4325,7 @@ $(function() {
                         url: e.target.result
                     });
                     $('.upload-demo').addClass('ready');
-                }
+                };
                 reader.readAsDataURL(input.files[0]);
             }
             else {
@@ -4370,6 +4370,66 @@ $(function() {
         });
         return;
     }
+
+
+    /*function userPerformanceUpload() {
+        var $uploadUserPerfMedia;
+
+        function readFile(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $uploadCropBackground.croppie('bind', {
+                        url: e.target.result
+                    });
+                    $('.upload-demo').addClass('ready');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+            else {
+                swal("Sorry - you're browser doesn't support the FileReader API");
+            }
+        }
+
+        $uploadUserPerfMedia = $('#changeBgModal .changeImageContiner').croppie({
+            viewport: {
+                width: 300,
+                height: 89
+            },
+            boundary: {
+                width: 400,
+                height: 300
+            },
+            exif: true
+        });
+
+        var backgroundCurrentSrc = $('#bgImageSrc').text();
+        console.log(backgroundCurrentSrc);
+        $uploadUserPerfMedia.croppie('bind', {
+            url: backgroundCurrentSrc
+        });
+
+        $('#uploadBg').on('change', function () {
+            readFile(this);
+        });
+        $('.upload-resultBg').on('click', function (ev) {
+            $uploadUserPerfMedia.croppie('result', {
+                type: 'canvas',
+                size: 'original'
+            }).then(function (resp) {
+                $.ajax({
+                    type: "PATCH",
+                    url: '/user/edit',
+                    data: {"user[background]": resp}
+                });
+                $('.header-background').css('background-image', 'url(' + resp + ')');
+            });
+        });
+        return;
+    }*/
+
+
 
     function getCheckedCategories() {
         var selectedCat = [];
@@ -4467,7 +4527,7 @@ $(function () {
   $("#recoveryForm").validate();
 
   //Initializing phone mask.
-  $('#phone_number').mask('+44 (000) 000-0000', {placeholder: "+44 (___) ___-____"});
+  /*$('#phone_number').mask('+44 (000) 000-0000', {placeholder: "+44 (___) ___-____"});
 
 
   var $select2 = $("#country").select2({
@@ -4493,8 +4553,9 @@ $(function () {
     }
 
 
-  });
-  $select2.data('select2').$results.addClass($select2.attr('data-class'));
+  });*/
+
+  //$select2.data('select2').$results.addClass($select2.attr('data-class'));
 
 
   var currentState = 1;
@@ -4545,8 +4606,6 @@ $(function () {
     } else {
       text = 'Contact details'
     }
-    console.log(text)
-    console.log(isArtist)
     $('#registrationModal .stage').hide();
     $('#registrationModal .sub-stage').hide();
     $('#registrationModal .modal-header').show();
@@ -4555,6 +4614,7 @@ $(function () {
     console.log($('#modal-title').text());
     if (isArtist) {
       $('#registrationModal #artistBlock').show();
+      disableCatNext();
     } else {
       $('#registrationModal #customerBlock').show();
     }
@@ -4603,6 +4663,12 @@ $(function () {
 
 
   $('#stageTwoNext').click(function () {
+    checkCategories();
+  });
+
+  $('#artistBlock input').on('change', disableCatNext);
+
+  function checkCategories(){
     var numberCatChecked = $('#artistBlock input:checkbox:checked').length;
     if (numberCatChecked >= 1){
       $('.errorCat').fadeOut();
@@ -4610,7 +4676,17 @@ $(function () {
     } else {
       $('.errorCat').fadeIn();
     }
-  });
+  }
+
+  function disableCatNext(){
+    var numberCatChecked = $('#artistBlock input:checkbox:checked').length;
+    if (numberCatChecked >= 1){
+      $('#stageTwoNext').removeClass('disabled');
+    } else {
+      $('#stageTwoNext').addClass('disabled');
+    }
+  }
+
 
   $('.back-button').click(function () {
     if (currentState - 1 == 2) {
@@ -4657,6 +4733,20 @@ $(function () {
     var userRole = 'role=ROLE_ARTIST';
     registerArtist(userInformation, categoriesForm, userRole);
   };
+
+  $("#artistForm").on('change',function(){
+    //var countReduiredInput = $("#artistForm input").length;
+    var validInputs = [];
+    setTimeout(function(){
+      $("#artistForm input").each(function(){
+        if ($(this).hasClass('valid')){
+          validInputs.push($(this).attr('id'))
+        }
+      });
+      console.log(validInputs)
+    }, 1500);
+
+  });
 
   function registerArtist(userInformation, categoriesForm, userRole) {
     $.ajax({
@@ -4917,7 +5007,6 @@ $(function () {
     }
 
     function createNewFilterResults(response){
-        var t0 = performance.now();
         $('.tab-content .row').empty();
         removeOldTabs();
         loopSearchRes();
@@ -4958,6 +5047,7 @@ $(function () {
                     '<a>'+searchCategoryName+'</a>'+
                     '</li>');
                 loopArtistsInCat(response[propt], propt);
+                createShowMoreBtn(propt);
             }
         };
         //setArtistStarsCat();
@@ -4965,7 +5055,6 @@ $(function () {
         selectBoxStyle();
         //console.log('finish');
         initTabs();
-        var t1 = performance.now();
 
         $('.filtersCat select').on('change', function(){
             var filtersCatSelectGroup = $('.filtersCat select');
@@ -4974,8 +5063,21 @@ $(function () {
             var categoryFiltering = $(this).parents('.filters').attr('id');
             catFilteringSearch(categoryFiltering);
         });
+    }
 
-        console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+    function createShowMoreBtn(propt){
+        var countCardsInCat = $('#tab-'+propt+' .row .categoriesCardsSearch').length;
+        console.log(countCardsInCat);
+        if (countCardsInCat == 15){
+            $('#tab-'+propt+' .row').append('<div class="controls show-more">'+
+                '<div class="button-gradient">'+
+                '<button data-dismiss="modal" class="btn">Show more</button>'+
+            '</div>'+
+            '</div>');
+        }
+        $('#tab-'+propt+' .row .show-more').on('click',function(){
+            catFilteringSearchInfinite(propt);
+        });
     }
 
     function loopArtistsInCat(artists, propt) {
@@ -5051,6 +5153,52 @@ $(function () {
                 $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch').remove();
                 loopArtistsInCat(response,categoryFiltering);
             }
+        });
+    }
+
+    $.fn.isVisible = function() {
+        var rect = this[0].getBoundingClientRect();
+        return (
+            (rect.height > 0 || rect.width > 0) &&
+            rect.bottom >= 0 &&
+            rect.right >= 0 &&
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.left <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    };
+
+    var infiniteScrollCheckPage = {};
+
+    function catFilteringSearchInfinite(categoryFiltering){
+        var formsWithoutCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch').serialize(),
+            countElementsReady = $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch').length,
+            getCurrentPage = countElementsReady / 15,
+            pageMath = Math.floor(getCurrentPage),
+            pageNumberToLoad = pageMath + 1;
+            console.log(infiniteScrollCheckPage);
+        if (infiniteScrollCheckPage != pageNumberToLoad) {
+            infiniteScrollCheckPage = pageNumberToLoad;
+            console.log(infiniteScrollCheckPage);
+            $.ajax({
+                type: 'GET',
+                url: '/artist',
+                data: formsWithoutCat + '&categories%5B%5D=' + categoryFiltering + '&page=' + pageNumberToLoad,
+                success: function (response) {
+                    //console.log(response);
+                    $('#tab-' + categoryFiltering + ' > .row .show-more').remove();
+                    loopArtistsInCat(response, categoryFiltering);
+                    startInfiniteScroll(categoryFiltering);
+                }
+            });
+        }
+    }
+
+    function startInfiniteScroll(categoryFiltering){
+        $(window).scroll(function() {
+            if ($('.social-icons').isVisible()) {
+                catFilteringSearchInfinite(categoryFiltering);
+            }
+            return false;
         });
     }
 

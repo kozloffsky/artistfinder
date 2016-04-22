@@ -185,7 +185,6 @@ $(function () {
     }
 
     function createNewFilterResults(response){
-        var t0 = performance.now();
         $('.tab-content .row').empty();
         removeOldTabs();
         loopSearchRes();
@@ -226,6 +225,7 @@ $(function () {
                     '<a>'+searchCategoryName+'</a>'+
                     '</li>');
                 loopArtistsInCat(response[propt], propt);
+                createShowMoreBtn(propt);
             }
         };
         //setArtistStarsCat();
@@ -233,7 +233,6 @@ $(function () {
         selectBoxStyle();
         //console.log('finish');
         initTabs();
-        var t1 = performance.now();
 
         $('.filtersCat select').on('change', function(){
             var filtersCatSelectGroup = $('.filtersCat select');
@@ -242,8 +241,21 @@ $(function () {
             var categoryFiltering = $(this).parents('.filters').attr('id');
             catFilteringSearch(categoryFiltering);
         });
+    }
 
-        console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+    function createShowMoreBtn(propt){
+        var countCardsInCat = $('#tab-'+propt+' .row .categoriesCardsSearch').length;
+        console.log(countCardsInCat);
+        if (countCardsInCat == 15){
+            $('#tab-'+propt+' .row').append('<div class="controls show-more">'+
+                '<div class="button-gradient">'+
+                '<button data-dismiss="modal" class="btn">Show more</button>'+
+            '</div>'+
+            '</div>');
+        }
+        $('#tab-'+propt+' .row .show-more').on('click',function(){
+            catFilteringSearchInfinite(propt);
+        });
     }
 
     function loopArtistsInCat(artists, propt) {
@@ -319,6 +331,52 @@ $(function () {
                 $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch').remove();
                 loopArtistsInCat(response,categoryFiltering);
             }
+        });
+    }
+
+    $.fn.isVisible = function() {
+        var rect = this[0].getBoundingClientRect();
+        return (
+            (rect.height > 0 || rect.width > 0) &&
+            rect.bottom >= 0 &&
+            rect.right >= 0 &&
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.left <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    };
+
+    var infiniteScrollCheckPage = {};
+
+    function catFilteringSearchInfinite(categoryFiltering){
+        var formsWithoutCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch').serialize(),
+            countElementsReady = $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch').length,
+            getCurrentPage = countElementsReady / 15,
+            pageMath = Math.floor(getCurrentPage),
+            pageNumberToLoad = pageMath + 1;
+            console.log(infiniteScrollCheckPage);
+        if (infiniteScrollCheckPage != pageNumberToLoad) {
+            infiniteScrollCheckPage = pageNumberToLoad;
+            console.log(infiniteScrollCheckPage);
+            $.ajax({
+                type: 'GET',
+                url: '/artist',
+                data: formsWithoutCat + '&categories%5B%5D=' + categoryFiltering + '&page=' + pageNumberToLoad,
+                success: function (response) {
+                    //console.log(response);
+                    $('#tab-' + categoryFiltering + ' > .row .show-more').remove();
+                    loopArtistsInCat(response, categoryFiltering);
+                    startInfiniteScroll(categoryFiltering);
+                }
+            });
+        }
+    }
+
+    function startInfiniteScroll(categoryFiltering){
+        $(window).scroll(function() {
+            if ($('.social-icons').isVisible()) {
+                catFilteringSearchInfinite(categoryFiltering);
+            }
+            return false;
         });
     }
 

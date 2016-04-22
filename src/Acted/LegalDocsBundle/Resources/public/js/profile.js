@@ -477,7 +477,7 @@ $(function() {
                         url: e.target.result
                     });
                     $('.upload-demo').addClass('ready');
-                }
+                };
                 reader.readAsDataURL(input.files[0]);
             }
             else {
@@ -522,6 +522,66 @@ $(function() {
         });
         return;
     }
+
+
+    /*function userPerformanceUpload() {
+        var $uploadUserPerfMedia;
+
+        function readFile(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $uploadCropBackground.croppie('bind', {
+                        url: e.target.result
+                    });
+                    $('.upload-demo').addClass('ready');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+            else {
+                swal("Sorry - you're browser doesn't support the FileReader API");
+            }
+        }
+
+        $uploadUserPerfMedia = $('#changeBgModal .changeImageContiner').croppie({
+            viewport: {
+                width: 300,
+                height: 89
+            },
+            boundary: {
+                width: 400,
+                height: 300
+            },
+            exif: true
+        });
+
+        var backgroundCurrentSrc = $('#bgImageSrc').text();
+        console.log(backgroundCurrentSrc);
+        $uploadUserPerfMedia.croppie('bind', {
+            url: backgroundCurrentSrc
+        });
+
+        $('#uploadBg').on('change', function () {
+            readFile(this);
+        });
+        $('.upload-resultBg').on('click', function (ev) {
+            $uploadUserPerfMedia.croppie('result', {
+                type: 'canvas',
+                size: 'original'
+            }).then(function (resp) {
+                $.ajax({
+                    type: "PATCH",
+                    url: '/user/edit',
+                    data: {"user[background]": resp}
+                });
+                $('.header-background').css('background-image', 'url(' + resp + ')');
+            });
+        });
+        return;
+    }*/
+
+
 
     function getCheckedCategories() {
         var selectedCat = [];
