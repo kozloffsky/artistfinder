@@ -61,6 +61,14 @@ class PerformanceController extends Controller
             $data = $form->getData();
             $mediaManager = $this->get('app.media.manager');
             $media = new Media();
+            $performance->addMedia($media);
+
+            $validator = $this->get('validator');
+            $validationErrors = $validator->validate($performance);
+
+            if (count($validationErrors) > 0) {
+                return new JsonResponse($serializer->toArray($validationErrors), 400);
+            }
 
             if(!is_null($data['video'])) {
                 $media = $mediaManager->updateVideo($data['video'], $media);
@@ -73,8 +81,6 @@ class PerformanceController extends Controller
             }
 
             $em->persist($media);
-            $performance->addMedia($media);
-
             $em->flush();
 
             return new JsonResponse(['status' => 'success', 'media' => $serializer->toArray($media)]);

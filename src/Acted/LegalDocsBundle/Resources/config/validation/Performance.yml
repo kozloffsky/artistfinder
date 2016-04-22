@@ -1,0 +1,5 @@
+Acted\LegalDocsBundle\Entity\Performance:
+    properties:
+        media:
+          - Count:
+              max: 2

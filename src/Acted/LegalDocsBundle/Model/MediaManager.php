@@ -3,8 +3,8 @@
 namespace Acted\LegalDocsBundle\Model;
 use Acted\LegalDocsBundle\Entity\Media;
 use Embed\Embed;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * Created by PhpStorm.
@@ -21,13 +21,18 @@ class MediaManager
         $this->dir = $dir;
     }
 
-    public function updatePhoto(UploadedFile $file, Media $media)
+    public function updatePhoto(File $file, Media $media)
     {
         $media->setActive(true);
         $media->setMediaType('photo');
         $media->setPosition(1);
-        $media->setName($file->getClientOriginalName());
-        $fileName = uniqid().'.'.$file->getClientOriginalExtension();
+        if ($file instanceof UploadedFile) {
+            $media->setName($file->getClientOriginalName());
+            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+        } else {
+            $media->setName(uniqid());
+            $fileName = $media->getName() . '.' . $file->getExtension();
+        }
 
         if (!file_exists($this->dir) && !is_dir($this->dir)) {
             mkdir($this->dir, 0777, true);
