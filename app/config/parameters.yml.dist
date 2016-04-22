@@ -26,3 +26,4 @@ parameters:
     performancecontract_dir: docs/performance_contract
     invoice_dir: docs/invoice
     quotation_dir: docs/quotation
+    jms_serializer.constraint_violation_handler.class: Acted\LegalDocsBundle\Serializer\ConstraintViolationHandler
