@@ -18,14 +18,15 @@
 
                 <select data-class="selections-white" name="country" id="search-country">
                     {% for country in countries() %}
+                    {% if country.name == 'United Kingdom' %}
+                        <option value="{{ country.id }}" name="country" selected="selected">{{ country.name }}</option>
+                    {% else %}
                         <option value="{{ country.id }}" name="country">{{ country.name }}</option>
+                    {% endif %}
                     {% endfor %}
                 </select>
                 <div class="divider"></div>
                 <select  data-class="selections-white" name="region" id="search-region">
-                    <!--<option>Oxford</option>
-                    <option>Reading</option>
-                    <option>Brighton</option>-->
                 </select>
                 </form>
             </div>
@@ -42,7 +43,11 @@
             <form id="eventLocationForm">
             <select name="country" id="country">
                 {% for country in countries() %}
-                    <option value="{{ country.id }}" name="user_country">{{ country.name }}</option>
+                    {% if country.name == 'United Kingdom' %}
+                        <option value="{{ country.id }}" name="user_country" selected="selected">{{ country.name }}</option>
+                    {% else %}
+                        <option value="{{ country.id }}" name="user_country">{{ country.name }}</option>
+                    {% endif %}
                 {% endfor %}
             </select>
 

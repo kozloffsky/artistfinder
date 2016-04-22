@@ -136,7 +136,6 @@ $(function () {
 
     $('#country').on('change',chooseRegion);
 
-
     function getSearchRegions(){
         var selectedCountruOption = $(this).find('option:selected').val();
         $.ajax({
@@ -149,8 +148,8 @@ $(function () {
                     selectBoxStyle();
                 });
             }
-        })
-    }
+        });
+       }
 
     function chooseRegion(){
         var selectedCountruOption = $(this).find('option:selected').val();
