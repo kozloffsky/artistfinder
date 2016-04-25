@@ -218,8 +218,10 @@ $(function () {
     registerArtist(userInformation, categoriesForm, userRole);
   };
 
+  $('#artistForm #stageThreeNext').prop('disabled',true);
+
   $("#artistForm").on('change',function(){
-    //var countReduiredInput = $("#artistForm input").length;
+    var countReduiredInput = $("#artistForm input").length;
     var validInputs = [];
     setTimeout(function(){
       $("#artistForm input").each(function(){
@@ -227,9 +229,13 @@ $(function () {
           validInputs.push($(this).attr('id'))
         }
       });
-      console.log(validInputs)
+      var countValidElements = validInputs.length;
+      console.log(countValidElements);
+      console.log(countReduiredInput);
+      if(countValidElements == countReduiredInput){
+        $('#artistForm #stageThreeNext').prop('disabled',false);
+      }
     }, 1500);
-
   });
 
   function registerArtist(userInformation, categoriesForm, userRole) {
