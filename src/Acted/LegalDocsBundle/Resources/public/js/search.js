@@ -210,8 +210,8 @@ $(function () {
                         '<option value="1000">From 200km to 1000km</option>'+
                         '</select>'+
                         '<div class="custom-checkbox">'+
-                        '<input type="checkbox" name="range" id="only-video1">'+
-                        '<label for="only-video1">Only artists with video</label>'+
+                        '<input type="checkbox" name="with_video" value="1" id="only-video'+propt+'">'+
+                        '<label for="only-video'+propt+'">Only artists with video</label>'+
                             '</form>'+
                         '</div>'+
                         '</div>'+
@@ -237,6 +237,11 @@ $(function () {
             var filtersCatSelectGroup = $('.filtersCat select');
             filtersCatSelectGroup.prop( "disabled", true );
             $(this).prop('disabled', false);
+            var categoryFiltering = $(this).parents('.filters').attr('id');
+            catFilteringSearch(categoryFiltering);
+        });
+
+        $('.filtersCat input:checkbox').on('change', function(){
             var categoryFiltering = $(this).parents('.filters').attr('id');
             catFilteringSearch(categoryFiltering);
         });

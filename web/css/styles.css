@@ -6431,7 +6431,7 @@ section.used-by {
     width: 395px;
     position: absolute;
     z-index: 10;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.8);
     color: #fff;
     height: 273px;
     display: none;
@@ -6495,4 +6495,21 @@ span.removeNewImage
 .artistCategories
 {
     min-height: 130px;
+}
+.imagePerformanceChange .croppie-container
+{
+    padding: 0;
+}
+.imagePerformanceChange .croppie-container .cr-slider-wrap
+{
+    margin-top: 8px;
+}
+.offerMediaType
+{
+    text-align: center;
+    margin-top: 114px;
+}
+.performanceVideoAdd
+{
+    display: none;
 }

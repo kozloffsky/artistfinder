@@ -269,7 +269,7 @@ $(function () {
 
   function customerRegister(){
     var customerValues = $('.customerRegForm').serialize();
-    var customerRole = 'role=ROLE_CLIENT'
+    var customerRole = 'role=ROLE_CLIENT';
     $.ajax({
       type: "POST",
       url: '/register',

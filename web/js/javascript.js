@@ -4011,7 +4011,7 @@ $(function() {
      });
      });*/
 
-    Dropzone.options.imagePerformanceChange = false;
+    /*Dropzone.options.imagePerformanceChange = false;
 
     Dropzone.options.imagePerformanceChange = {
         maxFiles: 1,
@@ -4031,7 +4031,7 @@ $(function() {
                         url: '/profile/' + slug + '/media/' + imageId
                     })
                 });
-                // Add the button to the file preview element.
+
                 file.previewElement.appendChild(removeButton);
             });
             this.on("maxfilesexceeded", function (file) {
@@ -4039,7 +4039,7 @@ $(function() {
                 this.addFile(file);
             });
         }
-    };
+    };*/
 
     Dropzone.options.addNewMediaImages = false;
 
@@ -4051,7 +4051,7 @@ $(function() {
                 removeButton.addEventListener("click", function (e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    // Remove the file preview.
+
                     _this.removeFile(file);
                     var imageId = responseText.media.id;
                     console.log(imageId)
@@ -4061,7 +4061,7 @@ $(function() {
                         url: '/profile/' + slug + '/media/' + imageId
                     })
                 });
-                // Add the button to the file preview element.
+
                 file.previewElement.appendChild(removeButton);
             });
         }
@@ -4093,7 +4093,9 @@ $(function() {
                 });
             }
         });
-        $(parentPerformance).find('.imagePerformanceChange').fadeIn();
+        //$(parentPerformance).find('.imagePerformanceChange').fadeIn();
+        userPerformanceUpload(parentPerformance, performanceId);
+        offerMediaChoose(parentPerformance, performanceId)
     });
 
     $('.deleteMedia').on('click', function () {
@@ -4372,18 +4374,25 @@ $(function() {
     }
 
 
-    /*function userPerformanceUpload() {
-        var $uploadUserPerfMedia;
+    function userPerformanceUpload(parentPerformance, performanceId) {
+        var $uploadUserPerfMedia,
+            imgChangeBlock = parentPerformance.find('#image-performance-change1'),
+            changeImgContainer = imgChangeBlock.find('.changeImageContiner'),
+            mediaChangeId = imgChangeBlock.find('.mediaId').text(),
+            currentImgSrc = imgChangeBlock.next('.preview').attr('src'),
+            imageUploadBtn = parentPerformance.find('#uploadImg');
+        imgChangeBlock.fadeIn();
+        console.log(imageUploadBtn);
 
         function readFile(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    $uploadCropBackground.croppie('bind', {
+                    changeImgContainer.croppie('bind', {
                         url: e.target.result
                     });
-                    $('.upload-demo').addClass('ready');
+                    //$('.upload-demo').addClass('ready');
                 };
                 reader.readAsDataURL(input.files[0]);
             }
@@ -4392,25 +4401,24 @@ $(function() {
             }
         }
 
-        $uploadUserPerfMedia = $('#changeBgModal .changeImageContiner').croppie({
+        $uploadUserPerfMedia = $(changeImgContainer).croppie({
             viewport: {
                 width: 300,
-                height: 89
+                height: 207
             },
             boundary: {
-                width: 400,
-                height: 300
+                width: 395,
+                height: 215
             },
             exif: true
         });
 
-        var backgroundCurrentSrc = $('#bgImageSrc').text();
-        console.log(backgroundCurrentSrc);
         $uploadUserPerfMedia.croppie('bind', {
-            url: backgroundCurrentSrc
+            url: currentImgSrc
         });
 
-        $('#uploadBg').on('change', function () {
+        $(imageUploadBtn).on('change', function () {
+            console.log(this);
             readFile(this);
         });
         $('.upload-resultBg').on('click', function (ev) {
@@ -4419,16 +4427,58 @@ $(function() {
                 size: 'original'
             }).then(function (resp) {
                 $.ajax({
-                    type: "PATCH",
-                    url: '/user/edit',
-                    data: {"user[background]": resp}
-                });
-                $('.header-background').css('background-image', 'url(' + resp + ')');
+                    type: "POST",
+                    url: '/media/'+ mediaChangeId +'/edit',
+                    data: {"file":resp}
+            });
+                imgChangeBlock.next('.preview').attr('src', resp);
+                imgChangeBlock.fadeOut();
+                changeImgContainer.empty();
             });
         });
         return;
-    }*/
+    }
 
+    function offerMediaChoose(parentPerformance, performanceId){
+        var offerMediaChangeBlock = parentPerformance.find('#image-performance-change2'),
+            mediaChangeBtns = offerMediaChangeBlock.find('button'),
+            videoAddBlock = offerMediaChangeBlock.find('.performanceVideoAdd'),
+            mediaChangeBlock = offerMediaChangeBlock.find('.offerMediaType'),
+            mediaChangeId = offerMediaChangeBlock.find('.mediaId').text(),
+            addVideoBtn = offerMediaChangeBlock.find('#AddPerformanceVideo'),
+            videosAddForm = offerMediaChangeBlock.find('.videoPerformanceAdd');
+
+        offerMediaChangeBlock.fadeIn();
+        mediaChangeBtns.on('click',function(){
+            if($(this).hasClass('video')){
+                mediaChangeBlock.hide();
+                videoAddBlock.show();
+                addVideoBtn.on('click',function(){
+                    var videoAddedVal = videosAddForm.val();
+                    console.log(videoAddedVal);
+                    addPerformanceVideo(mediaChangeId, videoAddedVal, parentPerformance)
+                })
+            }
+        })
+
+    }
+
+    function addPerformanceVideo(mediaChangeId, videoAddedVal, parentPerformance){
+        var performanceVideoBlock = parentPerformance.find('.performanceVideo'),
+            videoAddBlock = parentPerformance.find('.performanceVideoAdd'),
+            changePerformanceBlock = parentPerformance.find('#image-performance-change2');
+        $.ajax({
+            type: "POST",
+            url: '/media/'+ mediaChangeId +'/edit',
+            data: {"video": videoAddedVal},
+            success: function(responseText){
+                console.log(responseText)
+                $(performanceVideoBlock).html('<iframe src='+ responseText.media.link +'  width="395" height="274" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen>');
+                videoAddBlock.hide();
+                changePerformanceBlock.hide();
+            }
+        })
+    }
 
 
     function getCheckedCategories() {
@@ -4785,7 +4835,7 @@ $(function () {
 
   function customerRegister(){
     var customerValues = $('.customerRegForm').serialize();
-    var customerRole = 'role=ROLE_CLIENT'
+    var customerRole = 'role=ROLE_CLIENT';
     $.ajax({
       type: "POST",
       url: '/register',
@@ -5038,8 +5088,8 @@ $(function () {
                         '<option value="1000">From 200km to 1000km</option>'+
                         '</select>'+
                         '<div class="custom-checkbox">'+
-                        '<input type="checkbox" name="range" id="only-video1">'+
-                        '<label for="only-video1">Only artists with video</label>'+
+                        '<input type="checkbox" name="with_video" value="1" id="only-video'+propt+'">'+
+                        '<label for="only-video'+propt+'">Only artists with video</label>'+
                             '</form>'+
                         '</div>'+
                         '</div>'+
@@ -5065,6 +5115,11 @@ $(function () {
             var filtersCatSelectGroup = $('.filtersCat select');
             filtersCatSelectGroup.prop( "disabled", true );
             $(this).prop('disabled', false);
+            var categoryFiltering = $(this).parents('.filters').attr('id');
+            catFilteringSearch(categoryFiltering);
+        });
+
+        $('.filtersCat input:checkbox').on('change', function(){
             var categoryFiltering = $(this).parents('.filters').attr('id');
             catFilteringSearch(categoryFiltering);
         });
