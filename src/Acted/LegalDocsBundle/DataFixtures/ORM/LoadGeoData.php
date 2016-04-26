@@ -33,18 +33,18 @@ class LoadGeoData extends AbstractFixture implements OrderedFixtureInterface
         $germany = new RefCountry();
         $germany->setName('Germany');
 
-        $oxford = new RefRegion();
-        $oxford->setName('Oxford');
-        $oxford->setCountry($uk);
-        $reading = new RefRegion();
-        $reading->setName('Reading');
-        $reading->setCountry($uk);
-        $brighton = new RefRegion();
-        $brighton->setName('Brighton');
-        $brighton->setCountry($uk);
-        $london = new RefRegion();
-        $london->setName('London');
-        $london->setCountry($uk);
+        $southEast = new RefRegion();
+        $southEast->setName('South East');
+        $southEast->setCountry($uk);
+        $southWest = new RefRegion();
+        $southWest->setName('South West');
+        $southWest->setCountry($uk);
+        $eastEngland = new RefRegion();
+        $eastEngland->setName('East England');
+        $eastEngland->setCountry($uk);
+        $londonArea = new RefRegion();
+        $londonArea->setName('London Area');
+        $londonArea->setCountry($uk);
 
         $baden = new RefRegion();
         $baden->setName('Baden-Württemberg');
@@ -56,7 +56,7 @@ class LoadGeoData extends AbstractFixture implements OrderedFixtureInterface
         $hesse->setName('Hesse');
         $hesse->setCountry($germany);
         $berlin = new RefRegion();
-        $berlin->setName('Berlin');
+        $berlin->setName('Berlin Area');
         $berlin->setCountry($germany);
 
         $britanny = new RefRegion();
@@ -77,25 +77,25 @@ class LoadGeoData extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('germany', $germany);
         $this->addReference('france', $france);
 
-        $manager->persist($oxford);
-        $manager->persist($reading);
-        $manager->persist($brighton);
+        $manager->persist($southEast);
+        $manager->persist($southWest);
+        $manager->persist($eastEngland);
         $manager->persist($baden);
         $manager->persist($bavaria);
         $manager->persist($hesse);
         $manager->persist($britanny);
         $manager->persist($corsica);
         $manager->persist($ile);
-        $manager->persist($london);
+        $manager->persist($londonArea);
         $manager->persist($berlin);
 
-        $this->addReference('london', $london);
+        $this->addReference('london', $londonArea);
         $this->addReference('berlin', $berlin);
         $this->addReference('ile-de-france', $ile);
 
         $city1 = new RefCity();
         $city1->setName('London');
-        $city1->setRegion($london);
+        $city1->setRegion($londonArea);
 
         $city2 = new RefCity();
         $city2->setName('Paris');
@@ -106,53 +106,53 @@ class LoadGeoData extends AbstractFixture implements OrderedFixtureInterface
         $city3->setRegion($berlin);
 
         $city4 = new RefCity();
-        $city4->setName('Benson');
-        $city4->setRegion($oxford);
+        $city4->setName('Oxford');
+        $city4->setRegion($southEast);
 
         $city5 = new RefCity();
-        $city5->setName('Chalgrove');
-        $city5->setRegion($oxford);
+        $city5->setName('Winchester');
+        $city5->setRegion($southEast);
 
         $city6 = new RefCity();
-        $city6->setName('Wheatley');
-        $city6->setRegion($oxford);
+        $city6->setName('Southampton');
+        $city6->setRegion($southEast);
 
         $city7 = new RefCity();
-        $city7->setName('Slough');
-        $city7->setRegion($reading);
+        $city7->setName('Bristol');
+        $city7->setRegion($southWest);
 
         $city8 = new RefCity();
-        $city8->setName('Maidenhead');
-        $city8->setRegion($reading);
+        $city8->setName('Plymouth');
+        $city8->setRegion($southWest);
 
         $city9 = new RefCity();
-        $city9->setName('Newbury');
-        $city9->setRegion($reading);
+        $city9->setName('Poole');
+        $city9->setRegion($southWest);
 
         $city10 = new RefCity();
-        $city10->setName('Henfield');
-        $city10->setRegion($brighton);
+        $city10->setName('Luton');
+        $city10->setRegion($eastEngland);
 
         $city11 = new RefCity();
-        $city11->setName('Hassocks');
-        $city11->setRegion($brighton);
+        $city11->setName('Norwich');
+        $city11->setRegion($eastEngland);
 
         $city12 = new RefCity();
-        $city12->setName('Woodmancote');
-        $city12->setRegion($brighton);
+        $city12->setName('Southend-on-Sea');
+        $city12->setRegion($eastEngland);
 
 
         $city13 = new RefCity();
-        $city13->setName('Croydon');
-        $city13->setRegion($london);
+        $city13->setName('Swindon');
+        $city13->setRegion($southWest);
 
         $city14 = new RefCity();
-        $city14->setName('Havering');
-        $city14->setRegion($london);
+        $city14->setName('Brighton');
+        $city14->setRegion($southEast);
 
         $city15 = new RefCity();
-        $city15->setName('Enfield');
-        $city15->setRegion($london);
+        $city15->setName('Reading');
+        $city15->setRegion($southEast);
 
         $city16 = new RefCity();
         $city16->setName('Stuttgart');

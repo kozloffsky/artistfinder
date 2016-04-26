@@ -41,4 +41,36 @@ class GeoController extends Controller
 
         return View::create($this->get('app.form_errors_serializer')->serializeFormErrors($countryForm), 400);
     }
+
+    /**
+     * Cities list
+     * @Rest\View
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Retrieve cities list by country",
+     *  input="Acted\LegalDocsBundle\Form\CountryFilterType",
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      400="Returned when the country ID is invalid",
+     *  }
+     * )
+     */
+    public function cityAction(Request $request)
+    {
+        $countryForm = $this->createForm(CountryFilterType::class);
+        $countryForm->handleRequest($request);
+
+        if ($countryForm->isSubmitted() && $countryForm->isValid()) {
+            $data = $countryForm->getData();
+
+            /** @var RefCountry $country */
+            $country = $data['country'];
+
+            $em = $this->getDoctrine()->getManager();
+
+            return $em->getRepository('ActedLegalDocsBundle:RefCity')->findByCountry($country);
+        }
+
+        return View::create($this->get('app.form_errors_serializer')->serializeFormErrors($countryForm), 400);
+    }
 }
