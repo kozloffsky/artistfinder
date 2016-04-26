@@ -1,6 +1,10 @@
 Acted\LegalDocsBundle\Entity\Profile:
     type: entity
     table: Profile
+    indexes:
+        search_index:
+            columns: [title, description, header]
+            flags: [fulltext]
     repositoryClass: Acted\LegalDocsBundle\Repository\ProfileRepository
     id:
         id:
