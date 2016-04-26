@@ -5079,7 +5079,7 @@ $(function () {
                         '</select>'+
                         '<select data-palaceholder="Price" name="order">'+
                         //'<option value="">Price</option>'+
-                        '<option value="cheapest">Cheapes</option>'+
+                        '<option value="cheapest">Cheapest</option>'+
                         '<option value="more_expensive">Most expensive</option>'+
                         '</select>'+
                         '<select data-palaceholder="Distance" name="distance">'+
@@ -5141,8 +5141,9 @@ $(function () {
     }
 
     function loopArtistsInCat(artists, propt) {
-        console.log(artists)
+
         $(artists).each(function () {
+            console.log(this)
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString(),
                 artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
@@ -5174,7 +5175,7 @@ $(function () {
                     '<div class="talents">' + artistCatString + '</div>' +
                     '<div class="controls">' +
                     '<div class="button-gradient blue filled">' +
-                    '<button data-dismiss="modal" class="btn">Profile</button>' +
+                    '<button data-dismiss="modal" class="btn"><a href="/profile/'+ this.slug +'">Profile</a></button>' +
                     '</div>' +
                     '<div class="button-gradient blue ">' +
                     '<button data-dismiss="modal" class="btn">Ask a free quote</button>' +
