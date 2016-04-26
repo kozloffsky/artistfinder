@@ -15,11 +15,13 @@ Acted\LegalDocsBundle\Entity\RefRegion:
           unique: true
         latitude:
           type: decimal
-          scale: 8
+          scale: 12
+          precision: 18
           nullable: true
         longitude:
           type: decimal
-          scale: 8
+          scale: 12
+          precision: 18
           nullable: true
     oneToMany:
         cities:
