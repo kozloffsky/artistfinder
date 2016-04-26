@@ -42,7 +42,7 @@ class LoadOfferData extends AbstractFixture implements ContainerAwareInterface, 
     {
         $faker = $this->container->get('davidbadura_faker.faker');
 
-        for ($i = 0; $i < 200; $i++) {
+        for ($i = 0; $i < 300; $i++) {
             for ($j = 0; $j < 3; $j++) {
                 $performance = $this->getReference('performance' . $i . '_' . $j);
                 for ($k = 0; $k < 3; $k++) {

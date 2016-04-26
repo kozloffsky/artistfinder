@@ -57,7 +57,40 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $cities[] = $this->getReference('city'.$i);
         }
 
-        for ($i = 0; $i < 200; $i++) {
+        $categories = [
+            $this->getReference('category1'),
+            $this->getReference('category2'),
+            $this->getReference('category3'),
+            $this->getReference('category4'),
+            $this->getReference('category5'),
+            $this->getReference('category6'),
+            $this->getReference('category_live_1'),
+            $this->getReference('category_live_2'),
+            $this->getReference('category_live_3'),
+            $this->getReference('category_live_4'),
+            $this->getReference('category_live_5'),
+            $this->getReference('category_live_6'),
+            $this->getReference('category_international_1'),
+            $this->getReference('category_international_2'),
+            $this->getReference('category_international_3'),
+            $this->getReference('category_international_4'),
+            $this->getReference('category_international_5'),
+            $this->getReference('category_emcees_1'),
+            $this->getReference('category_emcees_2'),
+            $this->getReference('category_emcees_3'),
+            $this->getReference('category_emcees_4'),
+            $this->getReference('category_emcees_5'),
+            $this->getReference('category_emcees_6'),
+            $this->getReference('category_dance_1'),
+            $this->getReference('category_dance_2'),
+            $this->getReference('category_dance_3'),
+        ];
+
+        for ($i = 1; $i <= 33; $i++) {
+            $cities[] = $this->getReference('city'.$i);
+        }
+
+        for ($i = 0; $i < 300; $i++) {
             $user = new User();
             $user->setFirstname($faker->firstName);
             $user->setLastname($faker->lastName);
@@ -98,9 +131,7 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $profile->setActive(true);
             $profile->setPaymentTypeId(1);
 
-            $profile->addCategory($this->getReference('category3'));
-            $profile->addCategory($this->getReference('category4'));
-            $profile->addCategory($this->getReference('category5'));
+            $profile->addCategory($faker->randomElement($categories));
 
             $manager->persist($profile);
 
