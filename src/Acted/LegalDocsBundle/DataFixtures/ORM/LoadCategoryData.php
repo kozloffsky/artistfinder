@@ -93,6 +93,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
             $subCategory->setTitle('Sub-category '.$subCategoryId);
             $subCategory->setSlug($faker->unique()->text(10));
             $subCategory->setParent($liveMusic);
+            $this->addReference('category_live_'.$subCategoryId, $subCategory);
             $manager->persist($subCategory);
         }
 
@@ -119,6 +120,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
             $subCategory->setTitle('Sub-category '.$subCategoryId);
             $subCategory->setSlug($faker->unique()->text(10));
             $subCategory->setParent($internationalArtists);
+            $this->addReference('category_international_'.$subCategoryId, $subCategory);
             $manager->persist($subCategory);
         }
 
@@ -136,6 +138,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
             $subCategory->setTitle('Sub-category '.$subCategoryId);
             $subCategory->setSlug($faker->unique()->text(10));
             $subCategory->setParent($emcees);
+            $this->addReference('category_emcees_'.$subCategoryId, $subCategory);
             $manager->persist($subCategory);
         }
 
@@ -153,6 +156,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
             $subCategory->setTitle('Sub-category '.$subCategoryId);
             $subCategory->setSlug($faker->unique()->text(10));
             $subCategory->setParent($dance);
+            $this->addReference('category_dance_'.$subCategoryId, $subCategory);
             $manager->persist($subCategory);
         }
 
@@ -171,6 +175,7 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
             $subCategory->setTitle('Sub-category '.$subCategoryId);
             $subCategory->setSlug($faker->unique()->text(10));
             $subCategory->setParent($children);
+            $this->addReference('category_children_'.$subCategoryId, $subCategory);
             $manager->persist($subCategory);
         }
 

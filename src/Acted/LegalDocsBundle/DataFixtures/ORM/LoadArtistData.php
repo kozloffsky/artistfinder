@@ -52,7 +52,45 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $this->getReference('fire-show'),
         ];
 
-        for ($i = 0; $i < 200; $i++) {
+        $cities = [];
+        for ($i = 1; $i <= 33; $i++) {
+            $cities[] = $this->getReference('city'.$i);
+        }
+
+        $categories = [
+            $this->getReference('category1'),
+            $this->getReference('category2'),
+            $this->getReference('category3'),
+            $this->getReference('category4'),
+            $this->getReference('category5'),
+            $this->getReference('category6'),
+            $this->getReference('category_live_1'),
+            $this->getReference('category_live_2'),
+            $this->getReference('category_live_3'),
+            $this->getReference('category_live_4'),
+            $this->getReference('category_live_5'),
+            $this->getReference('category_live_6'),
+            $this->getReference('category_international_1'),
+            $this->getReference('category_international_2'),
+            $this->getReference('category_international_3'),
+            $this->getReference('category_international_4'),
+            $this->getReference('category_international_5'),
+            $this->getReference('category_emcees_1'),
+            $this->getReference('category_emcees_2'),
+            $this->getReference('category_emcees_3'),
+            $this->getReference('category_emcees_4'),
+            $this->getReference('category_emcees_5'),
+            $this->getReference('category_emcees_6'),
+            $this->getReference('category_dance_1'),
+            $this->getReference('category_dance_2'),
+            $this->getReference('category_dance_3'),
+        ];
+
+        for ($i = 1; $i <= 33; $i++) {
+            $cities[] = $this->getReference('city'.$i);
+        }
+
+        for ($i = 0; $i < 300; $i++) {
             $user = new User();
             $user->setFirstname($faker->firstName);
             $user->setLastname($faker->lastName);
@@ -80,51 +118,8 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $photo2->setPosition(1);
             $photo2->setActive(true);
 
-            $video1 = new Media();
-            $video1->setName($faker->word);
-            $video1->setMediaType('video');
-            $video1->setLink('https://player.vimeo.com/video/17914974');
-            $video1->setPosition(1);
-            $video1->setActive(true);
-
-            if (isset($videoLinkMatch[1])) {
-                $video1->setLink($videoLinkMatch[1]);
-            }
-            $video1->setThumbnail($videoInfo1->getImage());
-
-            $video2 = new Media();
-            $video2->setName($faker->word);
-            $video2->setMediaType('video');
-            $video2->setLink('https://player.vimeo.com/video/17214458');
-            $video2->setPosition(1);
-            $video2->setActive(true);
-
-
-            if (isset($videoLinkMatch[1])) {
-                $video2->setLink($videoLinkMatch[1]);
-            }
-            $video2->setThumbnail($videoInfo2->getImage());
-
-            $audio1 = new Media();
-            $audio1->setName($faker->word);
-            $audio1->setMediaType('audio');
-            $audio1->setLink('http://www.noiseaddicts.com/samples_1w72b820/3828.mp3');
-            $audio1->setPosition(1);
-            $audio1->setActive(true);
-
-            $audio2 = new Media();
-            $audio2->setName($faker->word);
-            $audio2->setMediaType('audio');
-            $audio2->setLink('http://www.noiseaddicts.com/samples_1w72b820/22.mp3');
-            $audio2->setPosition(1);
-            $audio2->setActive(true);
-
             $manager->persist($photo1);
             $manager->persist($photo2);
-            $manager->persist($video1);
-            $manager->persist($video2);
-            $manager->persist($audio1);
-            $manager->persist($audio2);
 
             $profile = new Profile();
             $profile->setUser($user);
@@ -136,9 +131,7 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $profile->setActive(true);
             $profile->setPaymentTypeId(1);
 
-            $profile->addCategory($this->getReference('category3'));
-            $profile->addCategory($this->getReference('category4'));
-            $profile->addCategory($this->getReference('category5'));
+            $profile->addCategory($faker->randomElement($categories));
 
             $manager->persist($profile);
 
@@ -146,10 +139,58 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
 
             $profile->addMedia($photo1);
             $profile->addMedia($photo2);
-            $profile->addMedia($video1);
-            $profile->addMedia($video2);
-            $profile->addMedia($audio1);
-            $profile->addMedia($audio2);
+
+            if ($faker->boolean(30)) {
+                $video1 = new Media();
+                $video1->setName($faker->word);
+                $video1->setMediaType('video');
+                $video1->setLink('https://player.vimeo.com/video/17914974');
+                $video1->setPosition(1);
+                $video1->setActive(true);
+                $manager->persist($video1);
+                if (isset($videoLinkMatch[1])) {
+                    $video1->setLink($videoLinkMatch[1]);
+                }
+                $video1->setThumbnail($videoInfo1->getImage());
+                $profile->addMedia($video1);
+
+                if ($faker->boolean(50)) {
+                    $video2 = new Media();
+                    $video2->setName($faker->word);
+                    $video2->setMediaType('video');
+                    $video2->setLink('https://player.vimeo.com/video/17214458');
+                    $video2->setPosition(1);
+                    $video2->setActive(true);
+                    $manager->persist($video2);
+                    if (isset($videoLinkMatch[1])) {
+                        $video2->setLink($videoLinkMatch[1]);
+                    }
+                    $video2->setThumbnail($videoInfo2->getImage());
+                    $profile->addMedia($video2);
+                }
+            }
+
+            if ($faker->boolean(70)) {
+                $audio1 = new Media();
+                $audio1->setName($faker->word);
+                $audio1->setMediaType('audio');
+                $audio1->setLink('http://www.noiseaddicts.com/samples_1w72b820/3828.mp3');
+                $audio1->setPosition(1);
+                $audio1->setActive(true);
+
+                $audio2 = new Media();
+                $audio2->setName($faker->word);
+                $audio2->setMediaType('audio');
+                $audio2->setLink('http://www.noiseaddicts.com/samples_1w72b820/22.mp3');
+                $audio2->setPosition(1);
+                $audio2->setActive(true);
+
+                $manager->persist($audio1);
+                $manager->persist($audio2);
+
+                $profile->addMedia($audio1);
+                $profile->addMedia($audio2);
+            }
 
 
             if ($i == 1) {
@@ -175,12 +216,9 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $artist->setSlug($artist->getName());
             $artist->setUser($user);
 
-            $cityNumber = $faker->randomElement([1, 2, 3]);
-            $city = $this->getReference('city' . $cityNumber);
+            $artist->setCity($faker->randomElement($cities));
 
-            $artist->setCity($city);
-
-            if ($i < 100) {
+            if ($faker->boolean(40)) {
                 $artist->setRecommend(true);
                 $profile->addCategory($faker->randomElement($recommendedCategories));
             }

@@ -76,7 +76,7 @@ class RegisterType extends AbstractType
                 'constraints' => [
                     new NotBlank(['groups' => 'artist']),
                     new Regex(['pattern' => '/^[\d\+\(\) -]+$/']),
-                    new PhoneNumber(['type' => 'mobile']),
+                    new PhoneNumber(['type' => PhoneNumber::ANY]),
                 ],
                 'description' => 'Phone number (available chars: digits,+,(,)) (for ROLE_ARTIST)',
             ])
