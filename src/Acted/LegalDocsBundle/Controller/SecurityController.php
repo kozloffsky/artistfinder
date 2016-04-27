@@ -86,7 +86,15 @@ class SecurityController extends Controller
 
 
             if (count($validationErrors) > 0) {
-                return new JsonResponse($serializer->toArray($validationErrors), 400);
+                //todo: refactor
+                $errors = $serializer->toArray($validationErrors);
+                $prettyErrors = [];
+                foreach($errors as $error) {
+                    foreach($error as $key=>$value) {
+                        $prettyErrors[$key] = $value;
+                    }
+                }
+                return new JsonResponse($prettyErrors, 400);
             }
 
             $em->flush();
