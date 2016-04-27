@@ -51,24 +51,27 @@ $(function () {
     var visiblePanels = parseInt(sliderArea/panelWidth);
     var margin = (sliderArea - panelWidth * visiblePanels) / visiblePanels;
 
-    $('.slider-wrapper').bxSlider({
-        slideWidth : panelWidth,
-        minSlides  : 1,
-        maxSlides  : 5,
-        slideMargin: margin + 1,
-        pager      : false,
-        controls   : true,
-        nextText   : '<i class="fa fa-2x fa-angle-right"></i>',
-        prevText   : '<i class="fa fa-2x fa-angle-left"></i>',
-        moveSlides : 1,
-        infiniteLoop: false,
-        onSliderLoad: function() {
-            var viewportsCount = $('.bx-viewport').length;
-            if(slidersCount == viewportsCount) {
-                $('.bx-viewport').css('padding-left', margin/2+'px');
+    initSLiderRec();
+    function initSLiderRec(){
+        $('.slider-wrapper').bxSlider({
+            slideWidth : panelWidth,
+            minSlides  : 1,
+            maxSlides  : 5,
+            slideMargin: margin + 1,
+            pager      : false,
+            controls   : true,
+            nextText   : '<i class="fa fa-2x fa-angle-right"></i>',
+            prevText   : '<i class="fa fa-2x fa-angle-left"></i>',
+            moveSlides : 1,
+            infiniteLoop: false,
+            onSliderLoad: function() {
+                var viewportsCount = $('.bx-viewport').length;
+                if(slidersCount == viewportsCount) {
+                    $('.bx-viewport').css('padding-left', margin/2+'px');
+                }
             }
-        }
-    });
+        });
+    }
 
     function initTabs() {
         $('.tab').click(function () {
@@ -121,16 +124,20 @@ $(function () {
         }, 100);
     });
 
-    $('.profile-card').each(function(){
-        var raiting = $(this).find('.raitingValRecomend').text();
-        var raitingFull = raiting.toString().split(".")[0];
-        var raitingDigits = raiting.toString().split(".")[1];
-        var ratingstars = $(this).find('.user-rating .star');
-        var getFullStars = $(ratingstars).slice(0, raitingFull);
-        var getHalfStars = $(ratingstars).eq(raitingFull);
-        $(getFullStars).children('.fill-star').css('width', '100%');
-        $(getHalfStars).children('.fill-star').css('width', raitingDigits + '0%');
-    });
+    getRecStarts();
+
+    function getRecStarts() {
+        $('.profile-card').each(function () {
+            var raiting = $(this).find('.raitingValRecomend').text();
+            var raitingFull = raiting.toString().split(".")[0];
+            var raitingDigits = raiting.toString().split(".")[1];
+            var ratingstars = $(this).find('.user-rating .star');
+            var getFullStars = $(ratingstars).slice(0, raitingFull);
+            var getHalfStars = $(ratingstars).eq(raitingFull);
+            $(getFullStars).children('.fill-star').css('width', '100%');
+            $(getHalfStars).children('.fill-star').css('width', raitingDigits + '0%');
+        });
+    }
 
     $('#search-country').on('change',getSearchRegions);
 
@@ -181,6 +188,94 @@ $(function () {
                 createNewFilterResults(response);
             }
         })
+    }
+
+    $('#recomendedFilter select').on('change', function(){
+        var filtersCatSelectGroup = $('.recomendedFilter select');
+        filtersCatSelectGroup.prop( "disabled", true );
+        $(this).prop('disabled', false);
+        var recommendedCatFiltering = $('#recommendedCat, #recomendedFilter').serialize();
+
+        filterRecomended(recommendedCatFiltering);
+    });
+
+    function filterRecomended(recommendedCatFiltering){
+        console.log(recommendedCatFiltering)
+        $.ajax({
+            type:'GET',
+            url: '/batch/artist',
+            data: recommendedCatFiltering + '&recommended=1',
+            success: function(response){
+                recomendedSearchRes(response)
+            }
+        })
+    }
+
+
+    function recomendedSearchRes(response){
+        console.log(response);
+        $('.recommendations .slider').remove();
+        loopSearchRes();
+        function loopSearchRes(){
+            for(var propt in response) {
+                var searchCategoryId = propt,
+                    searchCategoryName = $('#searchCategories label[for="search'+ searchCategoryId +'"]').text(),
+                    tabContentBlockRec = '<div class="slider">'+
+                    '<h2 class="title" style="margin-top: 0px">'+ searchCategoryName +'</h2>'+
+                    '<div class="slider-block">'+
+                    '<div class="slider-wrapper searchRecomendationWrapper" id="searchRecWrapper'+searchCategoryId+'">'+
+                    '</div>';
+                $(tabContentBlockRec).appendTo('.recommendationsTabContent');
+                loopREcomendedArtistsInCat(response[propt], propt);
+            }
+        };
+        getRecStarts();
+        initSLiderRec();
+        $('.recomendedFilter select').prop('disabled',false);
+    }
+
+    function loopREcomendedArtistsInCat(artists, propt){
+        $(artists).each(function () {
+            var artistCategories = this.categories,
+                artistCatString = artistCategories.toString(),
+                artistBlockSearch = '<div class=" profile-card bordered">' +
+                    '<div class="video-icon"></div>' +
+                    '<img class="header" src="' + this.media.link + '"/>' +
+                    '<p class="card-title">' + this.name + '</p>' +
+                    '<div class="user-rating clearfix">' +
+                    '<div class="stars">' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="rating">' + this.rating + '/5.0 (' + this.votes_count + ' Votes)</div>' +
+                    '<span class="hidden raitingValRecomend">' + this.rating + '</span>' +
+                    '</div>' +
+                    '<div class="location">' + this.country + ', ' + this.city + '</div>' +
+                    '<div class="talents">' + artistCatString + '</div>' +
+                    '<div class="controls">' +
+                    '<div class="button-gradient blue filled">' +
+                    '<button data-dismiss="modal" class="btn"><a href="/profile/'+ this.slug +'">Profile</a></button>' +
+                    '</div>' +
+                    '<div class="button-gradient blue ">' +
+                    '<button data-dismiss="modal" class="btn">Ask a free quote</button>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+            $('#searchRecWrapper'+propt+'').append(artistBlockSearch);
+        });
     }
 
     function createNewFilterResults(response){

@@ -154,33 +154,37 @@
 
         <div class="results-content">
             <div class="container">
-                <div id="tab-rec" class="tab-block recommendations" style="display: block; padding-bottom: 100px;">
+                <form class="hidden" id="recommendedCat">
+                    {% for recommendation in recommended %}
+                        <input type="checkbox" name="categories[]" checked value="{{ recommendation.category.id }}">
+                    {% endfor %}
+                </form>
+
+                <div id="tab-rec" class="tab-block recommendations recommendationsTabContent" style="display: block; padding-bottom: 100px;">
 
 
                     <div class="filters">
-                        <select data-placeholder="Top rated">
-                            <option value="0">Top rated</option>
-                            <option value="1">Lowest rated</option>
+                        <form id="recomendedFilter">
+                        <select data-placeholder="Top rated" name="order">
+                            <option value="top_rated">Top rated</option>
+                            <option value="lowest_rated">Lowest rated</option>
                             <option value="2">Lorem Ipsum</option>
-                        </select>
+                            </select>
+                        <select data-palaceholder="Price" name="order">
 
-                        <select data-palaceholder="Price">
-                            <option>Price</option>
-                            <option value="1">Lorem Ipsum</option>
-                            <option value="2">Lorem Ipsum</option>
-                        </select>
-
-                        <select data-palaceholder="Distance">
-                            <option value="0">From 0 to 50km</option>
-                            <option value="1">From 50 to 200km</option>
-                            <option value="2">From 200km to 1000km</option>
-                        </select>
-
+                            <option value="cheapest">Cheapest</option>
+                            <option value="more_expensive">Most expensive</option>
+                            </select>
+                        <select data-palaceholder="Distance" name="distance">
+                            <option value="50">From 0 to 50km</option>
+                            <option value="200">From 50 to 200km</option>
+                            <option value="1000">From 200km to 1000km</option>
+                            </select>
                         <div class="custom-checkbox">
-                            <input type="checkbox" name="range" id="only-video">
+                            <input type="checkbox" name="with_video" value="1" id="only-video">
                             <label for="only-video">Only artists with video</label>
                         </div>
-
+                        </form>
                     </div>
 
                     {% for recommendation in recommended %}
