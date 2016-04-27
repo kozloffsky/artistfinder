@@ -75,8 +75,10 @@ class RegisterType extends AbstractType
             ->add('phone', TextType::class, [
                 'constraints' => [
                     new NotBlank(['groups' => 'artist']),
-                    new Regex(['pattern' => '/^[\d\+\(\) -]+$/']),
-                    new PhoneNumber(['type' => PhoneNumber::ANY]),
+                    new Regex([
+                        'pattern' => '/^[\d\+\(\) -]+$/',
+                        'message' => 'Phone can contain digits, brackets, +'
+                    ]),
                 ],
                 'description' => 'Phone number (available chars: digits,+,(,)) (for ROLE_ARTIST)',
             ])
