@@ -141,7 +141,7 @@ $(function () {
 
     $('#search-country').on('change',getSearchRegions);
 
-    $('#country').on('change',chooseRegion);
+    $('#country').on('change',chooseCity);
 
     function getSearchRegions(){
         var selectedCountruOption = $(this).find('option:selected').val();
@@ -158,15 +158,15 @@ $(function () {
         });
        }
 
-    function chooseRegion(){
+    function chooseCity(){
         var selectedCountruOption = $(this).find('option:selected').val();
         $.ajax({
             type:'GET',
-            url: '/geo/region?_format=json&country=' + selectedCountruOption,
+            url: '/geo/city?_format=json&country=' + selectedCountruOption,
             success:function(response){
                 $('#region').empty();
                 $(response).each(function(){
-                    $('#region').append('<option value="'+ this.id +'" name="user_region">'+this.name+'</option>');
+                    $('#region').append('<option value="'+ this.id +'" name="user_city">'+this.name+'</option>');
                     selectBoxStyle();
                 });
             }
