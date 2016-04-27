@@ -247,14 +247,18 @@ $(function () {
       },
       error: function(response){
         var regestrationResponse = response.responseJSON;
-        $(regestrationResponse).each(function(){
-          var placeToShowErr = this.property_path;
-          var errorMsg = this.message;
-          console.log(placeToShowErr);
-          console.log(errorMsg);
+        var fields = Object.keys(regestrationResponse);
+        $(fields).each(function(){
+          var placeToShowErr = this;
+          var errorMsg = regestrationResponse[placeToShowErr];
           if (placeToShowErr == 'email'){
             artistValidation.showErrors({
               'email': errorMsg
+            });
+          }
+          if (placeToShowErr == 'phone'){
+            artistValidation.showErrors({
+              'phone': errorMsg
             });
           }
           if (placeToShowErr == 'primaryPhone'){
@@ -262,12 +266,22 @@ $(function () {
               'phone': errorMsg
             });
           }
+          if (placeToShowErr == 'firstname'){
+            artistValidation.showErrors({
+              'firstname': errorMsg
+            });
+          }
+          if (placeToShowErr == 'lastname'){
+            artistValidation.showErrors({
+              'lastname': errorMsg
+            });
+          }
           if (placeToShowErr == 'slug'){
             artistValidation.showErrors({
               'name': errorMsg
             });
           }
-          if (placeToShowErr == 'password'){
+          if (placeToShowErr == 'password' && errorMsg.first){
             artistValidation.showErrors({
               'password[first]': errorMsg.first
             });
@@ -289,13 +303,27 @@ $(function () {
       },
       error: function(response){
         var regestrationResponse = response.responseJSON;
-        $(regestrationResponse).each(function(){
-          var placeToShowErr = this.property_path;
-          var errorMsg = this.message;
-          console.log(placeToShowErr);
+        var fields = Object.keys(regestrationResponse);
+        $(fields).each(function(){
+          var placeToShowErr = this;
+          var errorMsg = regestrationResponse[placeToShowErr];
           if (placeToShowErr == 'email'){
             customerValidate.showErrors({
               'email': errorMsg
+            });
+          } else if(placeToShowErr == 'password' && errorMsg.first) {
+            customerValidate.showErrors({
+              'password[first]': errorMsg.first
+            });
+          }
+          if (placeToShowErr == 'firstname'){
+            artistValidation.showErrors({
+              'firstname': errorMsg
+            });
+          }
+          if (placeToShowErr == 'lastname'){
+            artistValidation.showErrors({
+              'lastname': errorMsg
             });
           }
         })
