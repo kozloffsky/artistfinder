@@ -193,9 +193,10 @@ $(function () {
     $('#recomendedFilter select').on('change', function(){
         var filtersCatSelectGroup = $('.recomendedFilter select');
         filtersCatSelectGroup.prop( "disabled", true );
+        console.log(this)
         $(this).prop('disabled', false);
-        var recommendedCatFiltering = $('#recommendedCat, #recomendedFilter').serialize();
 
+        var recommendedCatFiltering = $('#recommendedCat, #recomendedFilter').serialize();
         filterRecomended(recommendedCatFiltering);
     });
 

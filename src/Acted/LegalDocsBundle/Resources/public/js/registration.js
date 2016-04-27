@@ -252,6 +252,7 @@ $(function () {
           var placeToShowErr = this.property_path;
           var errorMsg = this.message;
           console.log(placeToShowErr);
+          console.log(errorMsg);
           if (placeToShowErr == 'email'){
             artistValidation.showErrors({
               'email': errorMsg
@@ -260,6 +261,16 @@ $(function () {
           if (placeToShowErr == 'primaryPhone'){
             artistValidation.showErrors({
               'phone': errorMsg
+            });
+          }
+          if (placeToShowErr == 'slug'){
+            artistValidation.showErrors({
+              'name': errorMsg
+            });
+          }
+          if (placeToShowErr == 'password'){
+            artistValidation.showErrors({
+              'password[first]': errorMsg.first
             });
           }
         })

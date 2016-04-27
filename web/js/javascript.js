@@ -4818,6 +4818,7 @@ $(function () {
           var placeToShowErr = this.property_path;
           var errorMsg = this.message;
           console.log(placeToShowErr);
+          console.log(errorMsg);
           if (placeToShowErr == 'email'){
             artistValidation.showErrors({
               'email': errorMsg
@@ -4826,6 +4827,16 @@ $(function () {
           if (placeToShowErr == 'primaryPhone'){
             artistValidation.showErrors({
               'phone': errorMsg
+            });
+          }
+          if (placeToShowErr == 'slug'){
+            artistValidation.showErrors({
+              'name': errorMsg
+            });
+          }
+          if (placeToShowErr == 'password'){
+            artistValidation.showErrors({
+              'password[first]': errorMsg.first
             });
           }
         })
@@ -5071,9 +5082,10 @@ $(function () {
     $('#recomendedFilter select').on('change', function(){
         var filtersCatSelectGroup = $('.recomendedFilter select');
         filtersCatSelectGroup.prop( "disabled", true );
+        console.log(this)
         $(this).prop('disabled', false);
-        var recommendedCatFiltering = $('#recommendedCat, #recomendedFilter').serialize();
 
+        var recommendedCatFiltering = $('#recommendedCat, #recomendedFilter').serialize();
         filterRecomended(recommendedCatFiltering);
     });
 
