@@ -1,6 +1,7 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Repository;
+use Acted\LegalDocsBundle\Entity\RefCountry;
 
 /**
  * RefCityRepository
@@ -10,4 +11,16 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class RefCityRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findByCountry(RefCountry $country)
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.region', 'r')
+//            ->join('r.country', 'country')
+            ->where('r.country = :country')
+            ->setParameter('country', $country)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

@@ -1,6 +1,10 @@
 Acted\LegalDocsBundle\Entity\Performance:
     type: entity
     table: Performance
+    indexes:
+        search_index:
+            columns: [title, tech_requirement]
+            flags: [fulltext]
     repositoryClass: Acted\LegalDocsBundle\Repository\PerformanceRepository
     id:
         id:

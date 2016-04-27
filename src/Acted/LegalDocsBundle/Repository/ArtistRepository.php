@@ -52,7 +52,9 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         }
 
         if ($fc->getQuery()) {
-            $qb->andWhere('MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0')
+            $qb->andWhere('(MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0
+                OR MATCH(p.title, p.description, p.header) AGAINST (:query BOOLEAN) > 0
+                OR MATCH(pr.title, pr.techRequirement) AGAINST (:query BOOLEAN) > 0 )')
                 ->setParameter('query', $fc->getQuery());
         }
 

@@ -1,0 +1,5 @@
+Acted\LegalDocsBundle\Entity\RefCity:
+  exclusion_policy: NONE
+  properties:
+    region:
+      exclude: true

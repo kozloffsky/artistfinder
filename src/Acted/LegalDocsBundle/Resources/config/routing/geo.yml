@@ -2,3 +2,8 @@ regions_list:
     path:     /region
     defaults: { _controller: ActedLegalDocsBundle:Geo:region, _format: json }
     methods:  GET
+
+cities_list:
+    path:     /city
+    defaults: { _controller: ActedLegalDocsBundle:Geo:city, _format: json }
+    methods:  GET
