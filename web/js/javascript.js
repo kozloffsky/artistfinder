@@ -4661,7 +4661,6 @@ $(function () {
     $('#registrationModal .modal-header').show();
     $('#registrationModal #step-counter').html('Step 2');
     $('#registrationModal #modal-title').html(text);
-    console.log($('#modal-title').text());
     if (isArtist) {
       $('#registrationModal #artistBlock').show();
       disableCatNext();
@@ -4703,7 +4702,6 @@ $(function () {
   });
 
   $('#entertainerBtn, #entertainerImg').click(function () {
-    console.log('foooo')
     chageState(2, true);
   });
 
@@ -4765,7 +4763,8 @@ $(function () {
 
   $('.artistCategories .show-more').on('click',function(event){
     event.preventDefault();
-    $(this).prevAll().show();
+    var hiddenElements = $(this).parent('div').find('div:hidden');
+    $(hiddenElements).toggle();
   });
 
   $('#stageThreeNext').on('click', function(event){

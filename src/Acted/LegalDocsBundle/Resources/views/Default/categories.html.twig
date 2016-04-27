@@ -24,6 +24,8 @@
 
         </div>
     </div>
-
+    {% if  loop.index % 2 == 0 %}
+        <div class="row"></div>
+    {% endif %}
 {% endfor %}
 </form>
