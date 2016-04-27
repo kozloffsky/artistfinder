@@ -9,8 +9,10 @@
 namespace Acted\LegalDocsBundle\Search;
 
 
+use Acted\LegalDocsBundle\Entity\RefCity;
 use Acted\LegalDocsBundle\Entity\RefCountry;
 use Acted\LegalDocsBundle\Entity\RefRegion;
+use Acted\LegalDocsBundle\Geo\Geo;
 
 class FilterCriteria
 {
@@ -31,8 +33,8 @@ class FilterCriteria
     protected $region;
     protected $country;
     protected $location;
-    /** @var RefRegion */
-    protected $userRegion;
+    /** @var RefCity */
+    protected $userCity;
     protected $recommended;
 
     public function __construct($categories = [], $withVideo = false, $query = null)
@@ -42,10 +44,10 @@ class FilterCriteria
         $this->query = $query;
     }
 
-    public function addDistance(RefRegion $region, $distance)
+    public function addDistance(Geo $geo, $distance)
     {
-        $this->latitude = $region->getLatitude();
-        $this->longitude = $region->getLongitude();
+        $this->latitude = $geo->getLatitude();
+        $this->longitude = $geo->getLongitude();
         $this->distance = $distance;
     }
 
@@ -127,19 +129,19 @@ class FilterCriteria
         return $this->location;
     }
 
-    public function addLocation(RefRegion $region = null, $location)
+    public function addLocation(Geo $geo = null, $location)
     {
         $this->location = $location;
-        $this->userRegion = $region;
-        if ($region) {
-            $this->latitude = $region->getLatitude();
-            $this->longitude = $region->getLongitude();
+        $this->userCity = $geo;
+        if ($geo) {
+            $this->latitude = $geo->getLatitude();
+            $this->longitude = $geo->getLongitude();
         }
     }
 
-    public function getUserRegion()
+    public function getUserCity()
     {
-        return $this->userRegion;
+        return $this->userCity;
     }
 
     /**

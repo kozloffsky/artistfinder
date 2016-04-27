@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Form;
 
 use Acted\LegalDocsBundle\Entity\Category;
+use Acted\LegalDocsBundle\Entity\RefCity;
 use Acted\LegalDocsBundle\Entity\RefCountry;
 use Acted\LegalDocsBundle\Entity\RefRegion;
 use Acted\LegalDocsBundle\Search\FilterCriteria;
@@ -45,9 +46,9 @@ class SearchType extends AbstractType
                 'choices_as_values' => true,
             ])
 
-            ->add('user_region', EntityType::class, [
+            ->add('user_city', EntityType::class, [
                 'constraints' => [new NotBlank(['groups' => 'distance'])],
-                'class' => RefRegion::class
+                'class' => RefCity::class,
             ])
             ->add('page', IntegerType::class)
             ->add('with_video', ChoiceType::class, ['choices_as_values' => true, 'choices' => [true, false]])

@@ -13,4 +13,6 @@ interface Geo
 {
     public function setLatitude($value);
     public function setLongitude($value);
+    public function getLatitude();
+    public function getLongitude();
 }

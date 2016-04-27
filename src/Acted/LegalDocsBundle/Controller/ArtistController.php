@@ -39,11 +39,11 @@ class ArtistController extends Controller
         $fc = new FilterCriteria($data['categories'], $data['with_video'], $data['query']);
 
         if ($data['distance']) {
-            $fc->addDistance($data['user_region'], $data['distance']);
+            $fc->addDistance($data['user_city'], $data['distance']);
         }
 
         $fc->addGeo($data['country'], $data['region']);
-        $fc->addLocation($data['user_region'], $data['location']);
+        $fc->addLocation($data['user_city'], $data['location']);
         $fc->addRecommended($data['recommended']);
 
         $page = ($data['page']) ? $data['page'] : 1;
@@ -78,10 +78,10 @@ class ArtistController extends Controller
             foreach ($data['categories'] as $category) {
                 $fc = new FilterCriteria([$category], $data['with_video'], $data['query']);
                 if ($data['distance']) {
-                    $fc->addDistance($data['user_region'], $data['distance']);
+                    $fc->addDistance($data['user_city'], $data['distance']);
                 }
                 $fc->addGeo($data['country'], $data['region']);
-                $fc->addLocation($data['user_region'], $data['location']);
+                $fc->addLocation($data['user_city'], $data['location']);
                 $fc->addRecommended($data['recommended']);
                 $page = ($data['page']) ? $data['page'] : 1;
                 $filteredArtists = $s->getFilteredArtists($oc, $fc, $page);
