@@ -141,7 +141,15 @@ $(function () {
 
     $('#search-country').on('change',getSearchRegions);
 
-    $('#country').on('change',chooseCity);
+    $('#country').on('change', function(){
+        var selectedCountruOption = $(this).find('option:selected').val();
+        chooseCity(selectedCountruOption);
+    });
+
+    $(document).ready(function() {
+        var selectedCountruOption = $('#country').find('option:selected').val();
+        chooseCity(selectedCountruOption);
+    });
 
     function getSearchRegions(){
         var selectedCountruOption = $(this).find('option:selected').val();
@@ -158,8 +166,7 @@ $(function () {
         });
        }
 
-    function chooseCity(){
-        var selectedCountruOption = $(this).find('option:selected').val();
+    function chooseCity(selectedCountruOption){
         $.ajax({
             type:'GET',
             url: '/geo/city?_format=json&country=' + selectedCountruOption,
