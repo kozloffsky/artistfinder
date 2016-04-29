@@ -26,7 +26,7 @@ $(function () {
             var white = $(this).attr('data-class') == 'selections-white';
             var placeholder = $(this).attr('data-placeholder');
             var $select2 = $(this).select2({
-                placeholder: placeholder || '',
+                placeholder: placeholder,
                 minimumResultsForSearch: -1
             });
 
@@ -198,12 +198,12 @@ $(function () {
     }
 
     $('#recomendedFilter select').on('change', function(){
-        var filtersCatSelectGroup = $('.recomendedFilter select');
+        var filtersCatSelectGroup = $('#recomendedFilter select');
+        console.log(this);
         filtersCatSelectGroup.prop( "disabled", true );
-        console.log(this)
         $(this).prop('disabled', false);
+        var recommendedCatFiltering = $('#recommendedCat, #recomendedFilter, #eventLocationForm, #searchLoc').serialize();
 
-        var recommendedCatFiltering = $('#recommendedCat, #recomendedFilter').serialize();
         filterRecomended(recommendedCatFiltering);
     });
 
