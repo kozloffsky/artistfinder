@@ -199,11 +199,21 @@ $(function () {
 
     $('#recomendedFilter select').on('change', function(){
         var filtersCatSelectGroup = $('#recomendedFilter select');
-        console.log(this);
-        filtersCatSelectGroup.prop( "disabled", true );
-        $(this).prop('disabled', false);
+        console.log(this.id);
+        if (this.id == 'recFilterRating') {
+            $('#recomendedFilter #recFilterPrice').prop("disabled", true);
+        } else if (this.id == 'recFilterRating'){
+            $('#recomendedFilter #recFilterRating').prop("disabled", true);
+        }
         var recommendedCatFiltering = $('#recommendedCat, #recomendedFilter, #eventLocationForm, #searchLoc').serialize();
+        filtersCatSelectGroup.prop( "disabled", false );
+        filterRecomended(recommendedCatFiltering);
+    });
 
+    $('#recomendedFilter input:checkbox').on('change', function(){
+        $('#recomendedFilter select').prop( "disabled", true );
+        var recommendedCatFiltering = $('#recommendedCat, #recomendedFilter, #eventLocationForm, #searchLoc').serialize();
+        $('#recomendedFilter select').prop( "disabled", false );
         filterRecomended(recommendedCatFiltering);
     });
 
@@ -239,14 +249,15 @@ $(function () {
         };
         getRecStarts();
         initSLiderRec();
-        $('.recomendedFilter select').prop('disabled',false);
+        //$('.recomendedFilter select').prop('disabled',false);
     }
 
     function loopREcomendedArtistsInCat(artists, propt){
         $(artists).each(function () {
             var artistCategories = this.categories,
-                artistCatString = artistCategories.toString(),
-                artistBlockSearch = '<div class=" profile-card bordered">' +
+                artistCatString = artistCategories.toString();
+            if (this.video_media){
+                var artistBlockSearch = '<div class=" profile-card bordered">' +
                     '<div class="video-icon"></div>' +
                     '<img class="header" src="' + this.media.link + '"/>' +
                     '<p class="card-title">' + this.name + '</p>' +
@@ -275,13 +286,50 @@ $(function () {
                     '<div class="talents">' + artistCatString + '</div>' +
                     '<div class="controls">' +
                     '<div class="button-gradient blue filled">' +
-                    '<button data-dismiss="modal" class="btn"><a href="/profile/'+ this.slug +'">Profile</a></button>' +
+                    '<button data-dismiss="modal" class="btn"><a href="/profile/' + this.slug + '">Profile</a></button>' +
                     '</div>' +
                     '<div class="button-gradient blue ">' +
                     '<button data-dismiss="modal" class="btn">Ask a free quote</button>' +
                     '</div>' +
                     '</div>' +
                     '</div>';
+            } else {
+                var artistBlockSearch = '<div class=" profile-card bordered">' +
+                    '<img class="header" src="' + this.media.link + '"/>' +
+                    '<p class="card-title">' + this.name + '</p>' +
+                    '<div class="user-rating clearfix">' +
+                    '<div class="stars">' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="rating">' + this.rating + '/5.0 (' + this.votes_count + ' Votes)</div>' +
+                    '<span class="hidden raitingValRecomend">' + this.rating + '</span>' +
+                    '</div>' +
+                    '<div class="location">' + this.country + ', ' + this.city + '</div>' +
+                    '<div class="talents">' + artistCatString + '</div>' +
+                    '<div class="controls">' +
+                    '<div class="button-gradient blue filled">' +
+                    '<button data-dismiss="modal" class="btn"><a href="/profile/' + this.slug + '">Profile</a></button>' +
+                    '</div>' +
+                    '<div class="button-gradient blue ">' +
+                    '<button data-dismiss="modal" class="btn">Ask a free quote</button>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+            }
             $('#searchRecWrapper'+propt+'').append(artistBlockSearch);
         });
     }
@@ -298,16 +346,17 @@ $(function () {
                         '<div class="filters" id="'+propt+'">'+
                             '<form class="filtersCat">'+
                         '<select data-placeholder="Top rated" name="order">'+
+                        '<option value="" disabled selected hidden>Rating</option>'+
                         '<option value="top_rated">Top rated</option>'+
                         '<option value="lowest_rated">Lowest rated</option>'+
-                        '<option value="2">Lorem Ipsum</option>'+
                         '</select>'+
                         '<select data-palaceholder="Price" name="order">'+
-                        //'<option value="">Price</option>'+
+                        '<option value="" disabled selected hidden>Price</option>'+
                         '<option value="cheapest">Cheapest</option>'+
                         '<option value="more_expensive">Most expensive</option>'+
                         '</select>'+
                         '<select data-palaceholder="Distance" name="distance">'+
+                        '<option value="" disabled selected hidden>Distance</option>'+
                         '<option value="50">From 0 to 50km</option>'+
                         '<option value="200">From 50 to 200km</option>'+
                         '<option value="1000">From 200km to 1000km</option>'+
@@ -336,7 +385,7 @@ $(function () {
         //console.log('finish');
         initTabs();
 
-        $('.filtersCat select').on('change', function(){
+        $('.filtersCat select').on('change mouseover', function(){
             var filtersCatSelectGroup = $('.filtersCat select');
             filtersCatSelectGroup.prop( "disabled", true );
             $(this).prop('disabled', false);
@@ -369,8 +418,9 @@ $(function () {
 
         $(artists).each(function () {
             var artistCategories = this.categories,
-                artistCatString = artistCategories.toString(),
-                artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
+                artistCatString = artistCategories.toString();
+            if (this.video_media) {
+                var artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
                     '<div class="video-icon"></div>' +
                     '<img class="header" src="' + this.media.link + '"/>' +
                     '<p class="card-title">' + this.name + '</p>' +
@@ -399,13 +449,50 @@ $(function () {
                     '<div class="talents">' + artistCatString + '</div>' +
                     '<div class="controls">' +
                     '<div class="button-gradient blue filled">' +
-                    '<button data-dismiss="modal" class="btn"><a href="/profile/'+ this.slug +'">Profile</a></button>' +
+                    '<button data-dismiss="modal" class="btn"><a href="/profile/' + this.slug + '">Profile</a></button>' +
                     '</div>' +
                     '<div class="button-gradient blue ">' +
                     '<button data-dismiss="modal" class="btn">Ask a free quote</button>' +
                     '</div>' +
                     '</div>' +
                     '</div>';
+            } else {
+                var artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
+                    '<img class="header" src="' + this.media.link + '"/>' +
+                    '<p class="card-title">' + this.name + '</p>' +
+                    '<div class="user-rating clearfix">' +
+                    '<div class="stars">' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '<div class="star">' +
+                    '<div class="fill-star"></div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="rating">' + this.rating + '/5.0 (' + this.votes_count + ' Votes)</div>' +
+                    '<span class="hidden catArtistRatingVal">' + this.rating + '</span>' +
+                    '</div>' +
+                    '<div class="location">' + this.country + ', ' + this.city + '</div>' +
+                    '<div class="talents">' + artistCatString + '</div>' +
+                    '<div class="controls">' +
+                    '<div class="button-gradient blue filled">' +
+                    '<button data-dismiss="modal" class="btn"><a href="/profile/' + this.slug + '">Profile</a></button>' +
+                    '</div>' +
+                    '<div class="button-gradient blue ">' +
+                    '<button data-dismiss="modal" class="btn">Ask a free quote</button>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+            }
             $('#tab-' + propt + ' > .row').append(artistBlockSearch);
         });
         setArtistStarsCat();

@@ -228,9 +228,7 @@ $(function () {
           validInputs.push($(this).attr('id'))
         }
       });
-      var countValidElements = validInputs.length;
-      console.log(countValidElements);
-      console.log(countReduiredInput);
+      var countValidElements = validInputs.length + 1;
       if(countValidElements == countReduiredInput){
         $('#artistForm #stageThreeNext').prop('disabled',false);
       }
