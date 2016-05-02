@@ -79,8 +79,13 @@
                     {% endfor %}
 
                     <div class="video">
+                        {#{% if performance.media[1:2]%}
+                            gfhdsfdgf
+                        {% endif %}
+                        {{ dump(performance.media[1:2]) }}#}
 
-                        {% for mediaOf in performance.media[2:2] %}
+                        {% for mediaOf in performance.media[1:2] %}
+
                             {% if mediaOf.mediaType == "video" %}
                                 <iframe src="{{ mediaOf.link }}" width="395" height="274" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
                             {% else %}

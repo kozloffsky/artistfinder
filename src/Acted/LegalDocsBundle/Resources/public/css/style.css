@@ -2148,3 +2148,8 @@ span.removeNewImage
 {
     display: none;
 }
+.no-res-block
+{
+    color: #fff;
+    text-align: center;
+}

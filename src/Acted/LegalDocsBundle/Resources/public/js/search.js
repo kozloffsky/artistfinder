@@ -19,6 +19,16 @@ $(function () {
         $(this).addClass('active');
     });
 
+    getSearchQuery();
+
+    function getSearchQuery(){
+        var enteredQuery = localStorage.getItem('search');
+        if(enteredQuery) {
+            console.log(enteredQuery)
+            $(searchQuery).val(enteredQuery);
+            localStorage.removeItem('search');
+        }
+    }
 
 
     function selectBoxStyle() {
@@ -179,6 +189,12 @@ $(function () {
             }
         })
     }
+    
+    $('.searchFormStart').on('click',function () {
+        var searchFormSerialize = $('#searchLoc, #eventLocationForm, #searchCategory, #artistLocationSearch').serialize()
+        console.log(searchFormSerialize);
+        getFilteredRes(searchFormSerialize)
+    })
 
     $('#search-region, #region, #searchCategory input, #artistLocationSearch input').on('change', function(){
         var searchFormSerialize = $('#searchLoc, #eventLocationForm, #searchCategory, #artistLocationSearch').serialize()
@@ -375,7 +391,13 @@ $(function () {
                 $('.results-menu').append('<li data-toggle="#tab-'+searchCategoryId+'" class="tab">'+
                     '<a>'+searchCategoryName+'</a>'+
                     '</li>');
-                loopArtistsInCat(response[propt], propt);
+                console.log(response[propt].length)
+                if (response[propt].length == 0){
+                    noResInCat(propt)
+                } else {
+                    loopArtistsInCat(response[propt], propt);
+                }
+
                 createShowMoreBtn(propt);
             }
         };
@@ -412,6 +434,11 @@ $(function () {
         $('#tab-'+propt+' .row .show-more').on('click',function(){
             catFilteringSearchInfinite(propt);
         });
+    }
+
+    function noResInCat(propt){
+        var noResBlock = '<div class="no-res-block"><h1>No results matching your criteria</h1></div>'
+        $('#tab-' + propt + ' > .row').append(noResBlock);
     }
 
     function loopArtistsInCat(artists, propt) {
@@ -522,8 +549,13 @@ $(function () {
             data: formsWithoutCat + '&categories%5B%5D=' + categoryFiltering,
             success: function(response){
                 //console.log(response);
-                $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch').remove();
-                loopArtistsInCat(response,categoryFiltering);
+                $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch, #tab-'+categoryFiltering+' > .row .no-res-block').remove();
+                console.log(response.length)
+                if (response.length == 0){
+                    noResInCat(categoryFiltering)
+                } else {
+                    loopArtistsInCat(response, categoryFiltering);
+                }
             }
         });
     }

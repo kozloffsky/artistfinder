@@ -15,6 +15,12 @@ $(function () {
     }
   }
 
+  $('.homeSearchStart').on('click',function () {
+    var searchEntered = $(homeSearchInput).val();
+    if (searchEntered.length >= 1) {
+      localStorage.setItem("search", searchEntered);
+    }
+  })
   // Add class hover to flip-container elements.
   $(".flip-container").hover(function () {
     $(this).addClass("hover-mouse");
