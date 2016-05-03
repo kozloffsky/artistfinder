@@ -6518,3 +6518,7 @@ span.removeNewImage
     color: #fff;
     text-align: center;
 }
+.imagePerfinput
+{
+    display: none;
+}

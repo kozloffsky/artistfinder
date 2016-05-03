@@ -24,7 +24,7 @@
                     {% endfor %}
 
                     <div class="video">
-                        {% for mediaOf in performance.media[2:2] %}
+                        {% for mediaOf in performance.media[1:2] %}
                             <div class="imagePerformanceChange" id="image-performance-change2">
                                 <span class="hidden mediaId">{{ mediaOf.id }}</span>
                                 <div class="offerMediaType">
@@ -37,7 +37,21 @@
                                     </form>
                                     <button type="submit" id="AddPerformanceVideo" class="btn btn-default">Submit</button>
                                 </div>
+
+                                <div class="imagePerfinput">
+                                    <div class="changeImageContiner"></div>
+                                    <div class="actions">
+                                        <a class="btn btn-file">
+                                            <input type="file" id="uploadImg" value="Choose a file" accept="image/*" />
+                                        </a>
+                                        <button class="upload-resultBg btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+
                             </div>
+                            <div class="performanceVideo">
+                            </div>
+
 
                             {% if mediaOf.mediaType == "video" %}
                                 <div class="performanceVideo">
@@ -130,20 +144,46 @@
                     </h2>
                     <span class="performanceId hidden"></span>
 
-                    <form action="/media//edit" method="post" class="dropzone imagePerformanceChange">
-                    </form>
+                    <div class="imagePerformanceChange" id="image-performance-change1">
+                        <span class="hidden mediaId"></span>
+                        <div class="changeImageContiner"></div>
+                        <div class="actions">
+                            <a class="btn btn-file">
+                                <input type="file" id="uploadImg" value="Choose a file" accept="image/*" />
+                            </a>
+                            <button class="upload-resultBg btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
                     <img class="preview" src="" alt="Preview">
 
 
                     <div class="video">
 
-                        <form action="/media//edit" method="post" class="dropzone imagePerformanceChange">
-                        </form>
-                        <img src="" alt="">
-                        <span class="glyphicon glyphicon-play"></span>
+                        <div class="imagePerformanceChange" id="image-performance-change2">
+                            <span class="hidden mediaId"></span>
+                            <div class="offerMediaType">
+                                <button class="btn btn-primary image">Image</button>
+                                <button class="btn btn-primary video">Video</button>
+                            </div>
+                            <div class="performanceVideoAdd">
+                                <form class="videoAddForm">
+                                    <input type="text" class="form-control videoPerformanceAdd">
+                                </form>
+                                <button type="submit" id="AddPerformanceVideo" class="btn btn-default">Submit</button>
+                            </div>
 
-                        <div class="name">
-                            <div class="name-text"></div>
+                            <div class="imagePerfinput">
+                                <div class="changeImageContiner"></div>
+                                <div class="actions">
+                                    <a class="btn btn-file">
+                                        <input type="file" id="uploadImg" value="Choose a file" accept="image/*" />
+                                    </a>
+                                    <button class="upload-resultBg btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="performanceVideo">
                         </div>
 
                     </div>
