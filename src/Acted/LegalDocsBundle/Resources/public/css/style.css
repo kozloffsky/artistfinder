@@ -2147,6 +2147,13 @@ span.removeNewImage
 .performanceVideoAdd
 {
     display: none;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 90px;
+}
+.performanceVideoAdd button
+{
+    margin-top: 10px;
 }
 .no-res-block
 {
@@ -2156,4 +2163,12 @@ span.removeNewImage
 .imagePerfinput
 {
     display: none;
+}
+#profileAddNewMedia
+{
+    margin-bottom: 25px;
+}
+#addImageModal .actions
+{
+    text-align: center;
 }
