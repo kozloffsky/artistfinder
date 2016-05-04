@@ -151,6 +151,19 @@ $(function () {
 
     $('#search-country').on('change',getSearchRegions);
 
+    $('.search input, .search select').on('change', function(){
+        checkUserPosition()
+    });
+
+    function checkUserPosition(){
+        var cityChosen = $('#eventLocationForm #region').val();
+        console.log(cityChosen);
+            if (cityChosen.length == 0) {
+                $('.results select[name="distance"]').prop('disabled', true);
+            } else {
+                $('.results select[name="distance"]').prop('disabled', false);
+            }
+    }
     $('#country').on('change', function(){
         var selectedCountruOption = $(this).find('option:selected').val();
         chooseCity(selectedCountruOption);
@@ -168,6 +181,7 @@ $(function () {
             url: '/geo/region?_format=json&country=' + selectedCountruOption,
             success:function(response){
                 $('#search-region').empty();
+                $('#search-region').append('<option value="" name="region">select a region</option>');
                 $(response).each(function(){
                     $('#search-region').append('<option value="'+ this.id +'" name="region">'+this.name+'</option>');
                     selectBoxStyle();
@@ -182,10 +196,12 @@ $(function () {
             url: '/geo/city?_format=json&country=' + selectedCountruOption,
             success:function(response){
                 $('#region').empty();
+                $('#region').append('<option value="" name="user_city">select a city</option>');
                 $(response).each(function(){
                     $('#region').append('<option value="'+ this.id +'" name="user_city">'+this.name+'</option>');
                     selectBoxStyle();
                 });
+                checkUserPosition();
             }
         })
     }
