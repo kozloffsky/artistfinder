@@ -5420,10 +5420,10 @@ $(function () {
                         '<option value="more_expensive">Most expensive</option>'+
                         '</select>'+
                         '<select data-palaceholder="Distance" name="distance">'+
-                        '<option value="" disabled selected hidden>Distance</option>'+
-                        '<option value="50">From 0 to 50km</option>'+
-                        '<option value="200">From 50 to 200km</option>'+
-                        '<option value="1000">From 200km to 1000km</option>'+
+                        '<option value="any">Any</option>'+
+                        '<option value="80">From 0 to 50 miles</option>'+
+                        '<option value="160">From 0 to 100 miles</option>'+
+                        '<option value="321">From 0 to 200 miles</option>'+
                         '</select>'+
                         '<div class="custom-checkbox">'+
                         '<input type="checkbox" name="with_video" value="1" id="only-video'+propt+'">'+
