@@ -4,6 +4,7 @@ namespace Acted\LegalDocsBundle\Form;
 
 use Acted\LegalDocsBundle\Entity\Category;
 use Acted\LegalDocsBundle\Entity\RefCountry;
+use Acted\LegalDocsBundle\Entity\RefCity;
 use Acted\LegalDocsBundle\Form\DataTransformer\PhoneTransformer;
 use Acted\LegalDocsBundle\Popo\RegisterUser;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
@@ -81,6 +82,12 @@ class RegisterType extends AbstractType
                     ]),
                 ],
                 'description' => 'Phone number (available chars: digits,+,(,)) (for ROLE_ARTIST)',
+            ])
+            ->add('city',  EntityType::class, [
+                'class' => RefCity::class,
+                'constraints' => [new NotBlank(['groups' => 'artist'])],
+                'description' => 'City ID (for ROLE_ARTIST)',
+                'required' => false
             ])
         ;
 

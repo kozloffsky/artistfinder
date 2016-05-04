@@ -99,6 +99,7 @@ class UserManager
         $artist->setName($registerUser->getName());
         $artist->setSlug($registerUser->getName());
         $artist->setCountry($registerUser->getCountry());
+        $artist->setCity($registerUser->getCity());
 
         return $artist;
     }

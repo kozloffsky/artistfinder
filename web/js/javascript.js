@@ -4989,6 +4989,31 @@ $(function () {
     })
   }
 
+  $(document).ready(function() {
+    var selectedCountruOption = $('.form-group #country').find('option:selected').val();
+    chooseCityReg(selectedCountruOption);
+  });
+
+  $('.form-group #country').on('change',function(){
+    var selectedCountruOption = $('.form-group #country').find('option:selected').val();
+    chooseCityReg(selectedCountruOption);
+  })
+
+  function chooseCityReg(selectedCountruOption){
+    $.ajax({
+      type:'GET',
+      url: '/geo/city?_format=json&country=' + selectedCountruOption,
+      success:function(response){
+        $('#cityReg').empty();
+        //$('#cityReg').append('<option value="" name="user_city">select a city</option>');
+        $(response).each(function(){
+          $('#cityReg').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
+        });
+        $("#cityReg").select2();
+      }
+    })
+  }
+
   function customerRegister(){
     var customerValues = $('.customerRegForm').serialize();
     var customerRole = 'role=ROLE_CLIENT';
