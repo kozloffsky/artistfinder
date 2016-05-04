@@ -13,6 +13,7 @@ final class RegisterUser
     private $name;
     private $country;
     private $phone;
+    private $city;
 
     /**
      * @return mixed
@@ -140,6 +141,22 @@ final class RegisterUser
     public function setCountry($country)
     {
         $this->country = $country;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
     }
 
     /**
