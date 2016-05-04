@@ -16,9 +16,10 @@ use Acted\LegalDocsBundle\Geo\Geo;
 
 class FilterCriteria
 {
-    const DISTANCE_0_50 = 50;
-    const DISTANCE_50_200 = 200;
-    const DISTANCE_200_1000 = 1000;
+    const DISTANCE_0_50 = 80;
+    const DISTANCE_0_100 = 160;
+    const DISTANCE_0_200 = 321;
+    const DISTANCE_ANY = 'any';
 
     const LOCATION_100_KM = '100-km';
     const LOCATION_SAME_COUNTRY = 'same-country';
@@ -67,30 +68,17 @@ class FilterCriteria
         return $this->longitude;
     }
 
-
-    public function getMinDistance()
-    {
-        switch ($this->distance) {
-            case self::DISTANCE_0_50:
-                return 0;
-            case self::DISTANCE_50_200:
-                return 50;
-            case self::DISTANCE_200_1000:
-                return 200;
-            default:
-                return false;
-        }
-    }
-
     public function getMaxDistance()
     {
         switch ($this->distance) {
             case self::DISTANCE_0_50:
-                return 50;
-            case self::DISTANCE_50_200:
-                return 200;
-            case self::DISTANCE_200_1000:
-                return 1000;
+                return self::DISTANCE_0_50;
+            case self::DISTANCE_0_100:
+                return self::DISTANCE_0_100;
+            case self::DISTANCE_0_200:
+                return self::DISTANCE_0_200;
+            case self::DISTANCE_ANY:
+                return self::DISTANCE_ANY;
             default:
                 return false;
         }

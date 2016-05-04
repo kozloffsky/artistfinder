@@ -33,7 +33,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         $needRegionJoin = ($fc->getCountry()
             || ($fc->getLocation() && in_array($fc->getLocation(), [FilterCriteria::LOCATION_SAME_COUNTRY, FilterCriteria::LOCATION_100_KM])));
 
-        $needDistanceSelect = ($fc->getMinDistance() !== false
+        $needDistanceSelect = (($fc->getMaxDistance() !== FilterCriteria::DISTANCE_ANY && $fc->getMaxDistance() !== false)
             || ($fc->getLocation() && $fc->getLocation() == FilterCriteria::LOCATION_100_KM));
 
         $qb = $this->createQueryBuilder('a')
@@ -75,7 +75,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->addOrderBy('rating_avg', $oc->getRatingOrder());
         }
 
-        if (($fc->getMinDistance() !== false) || $fc->getRegion() || $needRegionJoin) {
+        if ($fc->getRegion() || $needRegionJoin) {
             $qb->innerJoin('a.city', 'city');
         }
 
@@ -91,10 +91,10 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('longitude', $fc->getUserLongitude());
         }
 
-        if ($fc->getMinDistance() !== false) {
+        if ($fc->getMaxDistance() !== FilterCriteria::DISTANCE_ANY && $fc->getMaxDistance() !== false) {
                 $qb->andHaving('distance >= :minDistance')
                 ->andHaving('distance <= :maxDistance')
-                ->setParameter('minDistance', $fc->getMinDistance())
+                ->setParameter('minDistance', 0)
                 ->setParameter('maxDistance', $fc->getMaxDistance());
         }
 

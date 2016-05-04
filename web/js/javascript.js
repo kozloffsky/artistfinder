@@ -5199,6 +5199,19 @@ $(function () {
 
     $('#search-country').on('change',getSearchRegions);
 
+    $('.search input, .search select').on('change', function(){
+        checkUserPosition()
+    });
+
+    function checkUserPosition(){
+        var cityChosen = $('#eventLocationForm #region').val();
+        console.log(cityChosen);
+            if (cityChosen.length == 0) {
+                $('.results select[name="distance"]').prop('disabled', true);
+            } else {
+                $('.results select[name="distance"]').prop('disabled', false);
+            }
+    }
     $('#country').on('change', function(){
         var selectedCountruOption = $(this).find('option:selected').val();
         chooseCity(selectedCountruOption);
@@ -5216,6 +5229,7 @@ $(function () {
             url: '/geo/region?_format=json&country=' + selectedCountruOption,
             success:function(response){
                 $('#search-region').empty();
+                $('#search-region').append('<option value="" name="region">select a region</option>');
                 $(response).each(function(){
                     $('#search-region').append('<option value="'+ this.id +'" name="region">'+this.name+'</option>');
                     selectBoxStyle();
@@ -5230,10 +5244,12 @@ $(function () {
             url: '/geo/city?_format=json&country=' + selectedCountruOption,
             success:function(response){
                 $('#region').empty();
+                $('#region').append('<option value="" name="user_city">select a city</option>');
                 $(response).each(function(){
                     $('#region').append('<option value="'+ this.id +'" name="user_city">'+this.name+'</option>');
                     selectBoxStyle();
                 });
+                checkUserPosition();
             }
         })
     }
@@ -5420,10 +5436,10 @@ $(function () {
                         '<option value="more_expensive">Most expensive</option>'+
                         '</select>'+
                         '<select data-palaceholder="Distance" name="distance">'+
-                        '<option value="" disabled selected hidden>Distance</option>'+
-                        '<option value="50">From 0 to 50km</option>'+
-                        '<option value="200">From 50 to 200km</option>'+
-                        '<option value="1000">From 200km to 1000km</option>'+
+                        '<option value="any">Any</option>'+
+                        '<option value="80">From 0 to 50 miles</option>'+
+                        '<option value="160">From 0 to 100 miles</option>'+
+                        '<option value="321">From 0 to 200 miles</option>'+
                         '</select>'+
                         '<div class="custom-checkbox">'+
                         '<input type="checkbox" name="with_video" value="1" id="only-video'+propt+'">'+

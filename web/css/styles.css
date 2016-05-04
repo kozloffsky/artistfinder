@@ -6537,3 +6537,7 @@ span.removeNewImage
 {
     text-align: center;
 }
+.select2-container--disabled
+{
+    opacity: 0.5;
+}
