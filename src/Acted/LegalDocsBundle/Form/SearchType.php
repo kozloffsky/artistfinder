@@ -47,8 +47,8 @@ class SearchType extends AbstractType
             ])
 
             ->add('user_city', EntityType::class, [
-                'constraints' => [new NotBlank(['groups' => 'distance'])],
                 'class' => RefCity::class,
+                'required' => false
             ])
             ->add('page', IntegerType::class)
             ->add('with_video', ChoiceType::class, ['choices_as_values' => true, 'choices' => [true, false]])
