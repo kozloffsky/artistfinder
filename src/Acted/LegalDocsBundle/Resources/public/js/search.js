@@ -397,7 +397,6 @@ $(function () {
                 } else {
                     loopArtistsInCat(response[propt], propt);
                 }
-
                 createShowMoreBtn(propt);
             }
         };

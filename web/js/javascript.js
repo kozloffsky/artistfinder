@@ -3881,20 +3881,20 @@ $(function() {
 
 
 
-        var imageSlider = console.log('')
-             if (($('.bxslider li').length) >= 1) {
-                $('.bxslider').bxSlider({
-                    adaptiveHeight: true,
-                    mode: 'fade',
-                    pagerCustom: '#photo-pager',
-                    nextSelector: '#nextSlide',
-                    prevSelector: '#prevSlide',
-                    nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
-                    prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
-                });
-            } else {
-                console.log('ffffff')
-            }
+    var imageSlider = console.log('')
+         if (($('.bxslider li').length) >= 1) {
+            $('.bxslider').bxSlider({
+                adaptiveHeight: true,
+                mode: 'fade',
+                pagerCustom: '#photo-pager',
+                nextSelector: '#nextSlide',
+                prevSelector: '#prevSlide',
+                nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
+                prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
+            });
+        } else {
+            console.log('ffffff')
+        }
 
 
 
@@ -5445,7 +5445,6 @@ $(function () {
                 } else {
                     loopArtistsInCat(response[propt], propt);
                 }
-
                 createShowMoreBtn(propt);
             }
         };
