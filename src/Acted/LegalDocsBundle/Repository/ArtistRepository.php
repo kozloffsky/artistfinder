@@ -91,7 +91,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('longitude', $fc->getUserLongitude());
         }
 
-        if ($fc->getMaxDistance() !== FilterCriteria::DISTANCE_ANY) {
+        if ($fc->getMaxDistance() !== FilterCriteria::DISTANCE_ANY && $fc->getMaxDistance() !== false) {
                 $qb->andHaving('distance >= :minDistance')
                 ->andHaving('distance <= :maxDistance')
                 ->setParameter('minDistance', 0)
