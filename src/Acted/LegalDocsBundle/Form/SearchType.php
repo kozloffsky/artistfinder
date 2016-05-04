@@ -32,7 +32,7 @@ class SearchType extends AbstractType
             ->add('region', EntityType::class, ['class' => RefRegion::class])
             ->add('query', TextType::class, ['required' => false])
             ->add('distance', ChoiceType::class,
-                ['choices' => [FilterCriteria::DISTANCE_0_50, FilterCriteria::DISTANCE_50_200, FilterCriteria::DISTANCE_200_1000],
+                ['choices' => [FilterCriteria::DISTANCE_0_50, FilterCriteria::DISTANCE_0_100, FilterCriteria::DISTANCE_0_200, FilterCriteria::DISTANCE_ANY],
                 'choices_as_values' => true]
             )
 
