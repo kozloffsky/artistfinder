@@ -4243,7 +4243,8 @@ $(function() {
                 $('.bxVideoSlider').append('<li><iframe src='+ newVideoLink +'  width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>');
                 $('#video-pager').append('<div class="scale-thumb thumb'+ indexOfThumb + 1 +'"><span class="removeNewImage deleteMedia" id='+newVideoId+'><i class="fa fa-times-circle-o"></i></span><a data-slide-index='+ indexOfThumb +' href=""><img id='+newVideoId+' src='+videoThumbnail+'/></a></div>');
                 console.log(indexOfThumb);
-                $("#media [data-target='#section-video'] .badge").text(indexOfThumb + 1)
+                $("#media [data-target='#section-video'] .badge").text(indexOfThumb + 1);
+                videoSlider.reload();
 
                 //videoSlider.reloadSlider();
             }
@@ -4648,8 +4649,13 @@ $(function() {
                 $.ajax({
                     type: "POST",
                     url: '/profile/'+slug+'/media/new',
-                    data: {'file':resp}
+                    data: {'file':resp},
+                    success: function(response){
+                        console.log(response)
+                        imageSlider.reload()
+                    }
                 });
+
                 //$('.header-background').css('background-image', 'url(' + resp + ')');
             });
         });

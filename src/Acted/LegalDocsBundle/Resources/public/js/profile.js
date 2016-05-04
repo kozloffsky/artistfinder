@@ -27,20 +27,20 @@ $(function() {
 
 
 
-        var imageSlider = console.log('')
-             if (($('.bxslider li').length) >= 1) {
-                $('.bxslider').bxSlider({
-                    adaptiveHeight: true,
-                    mode: 'fade',
-                    pagerCustom: '#photo-pager',
-                    nextSelector: '#nextSlide',
-                    prevSelector: '#prevSlide',
-                    nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
-                    prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
-                });
-            } else {
-                console.log('ffffff')
-            }
+    var imageSlider = console.log('')
+         if (($('.bxslider li').length) >= 1) {
+            $('.bxslider').bxSlider({
+                adaptiveHeight: true,
+                mode: 'fade',
+                pagerCustom: '#photo-pager',
+                nextSelector: '#nextSlide',
+                prevSelector: '#prevSlide',
+                nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
+                prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
+            });
+        } else {
+            console.log('ffffff')
+        }
 
 
 
@@ -389,7 +389,8 @@ $(function() {
                 $('.bxVideoSlider').append('<li><iframe src='+ newVideoLink +'  width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>');
                 $('#video-pager').append('<div class="scale-thumb thumb'+ indexOfThumb + 1 +'"><span class="removeNewImage deleteMedia" id='+newVideoId+'><i class="fa fa-times-circle-o"></i></span><a data-slide-index='+ indexOfThumb +' href=""><img id='+newVideoId+' src='+videoThumbnail+'/></a></div>');
                 console.log(indexOfThumb);
-                $("#media [data-target='#section-video'] .badge").text(indexOfThumb + 1)
+                $("#media [data-target='#section-video'] .badge").text(indexOfThumb + 1);
+                videoSlider.reload();
 
                 //videoSlider.reloadSlider();
             }
@@ -794,8 +795,13 @@ $(function() {
                 $.ajax({
                     type: "POST",
                     url: '/profile/'+slug+'/media/new',
-                    data: {'file':resp}
+                    data: {'file':resp},
+                    success: function(response){
+                        console.log(response)
+                        imageSlider.reload()
+                    }
                 });
+
                 //$('.header-background').css('background-image', 'url(' + resp + ')');
             });
         });
