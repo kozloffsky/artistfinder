@@ -27,32 +27,43 @@ $(function() {
 
 
 
-        var imageSlider = $('.bxslider').bxSlider({
+        var imageSlider = console.log('')
+             if (($('.bxslider li').length) >= 1) {
+                $('.bxslider').bxSlider({
+                    adaptiveHeight: true,
+                    mode: 'fade',
+                    pagerCustom: '#photo-pager',
+                    nextSelector: '#nextSlide',
+                    prevSelector: '#prevSlide',
+                    nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
+                    prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
+                });
+            } else {
+                console.log('ffffff')
+            }
+
+
+
+    var videoSlider = console.log('ffff')
+    if (($('.bxVideoSlider li').length) >= 1) {
+        $('.bxVideoSlider').bxSlider({
             adaptiveHeight: true,
             mode: 'fade',
-            pagerCustom: '#photo-pager',
-            nextSelector: '#nextSlide',
-            prevSelector: '#prevSlide',
+            useCSS: false,
+            video: true,
+            pagerCustom: '#video-pager',
+            nextSelector: '#nextVideoSlide',
+            prevSelector: '#prevVideoSlide',
             nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
-            prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
+            prevText: '<i class="left fa fa-3x fa-angle-left"></i>',
+            onSliderLoad: function () {
+                $('#section-video').hide();
+            }
         });
-
-
-
-    var videoSlider = $('.bxVideoSlider').bxSlider({
-        adaptiveHeight: true,
-        mode: 'fade',
-        useCSS: false,
-        video: true,
-        pagerCustom: '#video-pager',
-        nextSelector: '#nextVideoSlide',
-        prevSelector: '#prevVideoSlide',
-        nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
-        prevText: '<i class="left fa fa-3x fa-angle-left"></i>',
-        onSliderLoad: function () {
-            $('#section-video').hide();
-        }
-    });
+    } else {
+        $('#section-video').hide();
+        console.log('ffffff')
+    }
 
     /*$('#video-pager img').each(function(){
      var videoThumbId = $(this).attr('id');
@@ -193,7 +204,7 @@ $(function() {
         }
     };*/
 
-    Dropzone.options.addNewMediaImages = false;
+    /*Dropzone.options.addNewMediaImages = false;
 
     Dropzone.options.addNewMediaImages = {
         init: function () {
@@ -217,7 +228,7 @@ $(function() {
                 file.previewElement.appendChild(removeButton);
             });
         }
-    };
+    };*/
 
     $('.editOffer').click(function (e) {
         e.stopPropagation();
@@ -727,6 +738,69 @@ $(function() {
             this.pause()
         })
     }*/
+
+    $('#profileAddNewMedia').on('click', function (ev) {
+        $('.changeImageContiner').empty();
+        ev.preventDefault();
+        mediaImageUpload()
+    });
+
+    function mediaImageUpload() {
+        var slug = $('#slug').text();
+        var $uploadCropMedia;
+
+        function readFile(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $uploadCropMedia.croppie('bind', {
+                        url: e.target.result
+                    });
+                    //$('.upload-demo').addClass('ready');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+            else {
+                swal("Sorry - you're browser doesn't support the FileReader API");
+            }
+        }
+
+        $uploadCropMedia = $('#addImageModal .changeImageContiner').croppie({
+            viewport: {
+                width: 300,
+                height: 207
+            },
+            boundary: {
+                width: 400,
+                height: 300
+            },
+            exif: true
+        });
+
+        $uploadCropMedia.croppie('bind', {
+            url: '/assets/images/media-no-image.gif'
+        });
+
+
+        $('#uploadNewMedia').on('change', function () {
+            readFile(this);
+        });
+        $('.upload-NewMedia').on('click', function (ev) {
+            $uploadCropMedia.croppie('result', {
+                type: 'canvas',
+                size: 'original'
+            }).then(function (resp) {
+                $.ajax({
+                    type: "POST",
+                    url: '/profile/'+slug+'/media/new',
+                    data: {'file':resp}
+                });
+                //$('.header-background').css('background-image', 'url(' + resp + ')');
+            });
+        });
+        return;
+    }
 });
 $(document).on('ready ajaxComplete', function(){
     $('.price-list .pagination a').on('click', function(event){

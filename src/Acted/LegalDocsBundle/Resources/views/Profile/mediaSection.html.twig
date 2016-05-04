@@ -29,8 +29,9 @@
 
         <section class="media-content wrapper" id="section-photo">
             {% if is_granted('EDIT', artist) %}
-            <form action="/profile/{{ artist.slug }}/media/new" method="post" class="dropzone" id="add-new-media-images">
-            </form>
+            <!--<form action="/profile/{{ artist.slug }}/media/new" method="post" class="dropzone" id="add-new-media-images">
+            </form>-->
+                <button id="profileAddNewMedia" type="button" class="btn btn-success" data-toggle="modal" data-target="#addImageModal"><i class="fa fa-plus"></i> Add new image</button>
             {% endif %}
             <div class="slider-controls">
                 <span id="prevSlide"></span>
