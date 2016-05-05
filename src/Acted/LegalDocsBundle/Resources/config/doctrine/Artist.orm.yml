@@ -34,9 +34,9 @@ Acted\LegalDocsBundle\Entity\Artist:
           type: string(512)
           nullable: true
         recommend:
-          type: boolean
+          type: integer
           options:
-            default: false
+            default: 0
     manyToOne:
         city:
           targetEntity: Acted\LegalDocsBundle\Entity\RefCity

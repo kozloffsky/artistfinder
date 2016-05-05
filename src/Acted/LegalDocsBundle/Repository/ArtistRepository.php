@@ -65,6 +65,11 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('categories', $categories);
         }
 
+        if ($fc->getRecommended()) {
+            $qb->andWhere('a.recommend != 0')
+                ->addOrderBy('a.recommend', 'ASC');
+        }
+
         $priceFunction = ($oc->getPriceOrder() == 'ASC') ? 'MIN' : 'MAX';
         $qb->addSelect($priceFunction.'(o.price) AS HIDDEN price_agr');
         if ($oc->getPrioritized() == 'rating') {
@@ -122,11 +127,6 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         if ($fc->getCountry()) {
             $qb->andWhere('r.country = :country')
                 ->setParameter('country', $fc->getCountry());
-        }
-
-        if ($fc->getRecommended()) {
-            $qb->andWhere('a.recommend = :recommend')
-                ->setParameter('recommend', true);
         }
 
         return $qb->getQuery();
