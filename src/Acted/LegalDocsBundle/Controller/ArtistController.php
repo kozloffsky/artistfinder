@@ -89,6 +89,21 @@ class ArtistController extends Controller
             }
         }
 
+        if ($data['mainCategory']) {
+            $data['categories'] = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('ActedLegalDocsBundle:Category')
+                ->findByParent($data['mainCategory']);
+
+            foreach ($data['categories'] as $category) {
+                $fc = new FilterCriteria([$category]);
+                $page = ($data['page']) ? $data['page'] : 1;
+                $filteredArtists = $s->getFilteredArtists($oc, $fc, $page);
+                $result[$category->getId()] = iterator_to_array($filteredArtists);
+            }
+        }
+
         return $result;
 
     }

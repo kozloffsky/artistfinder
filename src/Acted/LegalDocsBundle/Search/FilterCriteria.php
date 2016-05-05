@@ -37,6 +37,7 @@ class FilterCriteria
     /** @var RefCity */
     protected $userCity;
     protected $recommended;
+    protected $mainCategory;
 
     public function __construct($categories = [], $withVideo = false, $query = null)
     {
@@ -146,6 +147,14 @@ class FilterCriteria
     public function addRecommended($recommended)
     {
         $this->recommended = $recommended;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMainCategory()
+    {
+        return $this->mainCategory;
     }
 
 }
