@@ -443,15 +443,15 @@ class Artist
         return $this->country;
     }
     /**
-     * @var boolean
+     * @var int
      */
-    private $recommend = false;
+    private $recommend = 0;
 
 
     /**
      * Set recommend
      *
-     * @param boolean $recommend
+     * @param int $recommend
      *
      * @return Artist
      */
@@ -465,7 +465,7 @@ class Artist
     /**
      * Get recommend
      *
-     * @return boolean
+     * @return int
      */
     public function getRecommend()
     {

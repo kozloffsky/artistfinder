@@ -219,7 +219,7 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $artist->setCity($faker->randomElement($cities));
 
             if ($faker->boolean(40)) {
-                $artist->setRecommend(true);
+                $artist->setRecommend(rand(0, 100));
                 $profile->addCategory($faker->randomElement($recommendedCategories));
             }
 
