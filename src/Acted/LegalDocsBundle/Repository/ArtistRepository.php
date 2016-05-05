@@ -67,7 +67,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
 
         if ($fc->getRecommended()) {
             $qb->andWhere('a.recommend != 0')
-                ->addOrderBy('a.recommend', 'DESC');
+                ->addOrderBy('a.recommend', 'ASC');
         }
 
         $priceFunction = ($oc->getPriceOrder() == 'ASC') ? 'MIN' : 'MAX';
