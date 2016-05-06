@@ -8,7 +8,6 @@
 
 namespace Acted\LegalDocsBundle\EventListener;
 
-
 use Acted\LegalDocsBundle\Geo\Geo;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Geocoder\Exception\NoResult;
@@ -25,7 +24,11 @@ class GeoListener
         if (!$entity instanceof Geo) {
             return;
         }
-
+        
+        if($entity->getLatitude()) {
+            return;
+        }
+        
         $curl = HttpAdapterFactory::create(HttpAdapterFactory::FILE_GET_CONTENTS);
         $geocoder = new GoogleMaps($curl, null, null, true, 'AIzaSyALRdjNjF9CsRTWzyyHMjorLmCsoVRNpEE');
 
@@ -40,6 +43,7 @@ class GeoListener
             $entity->setLatitude($address->getLatitude());
             $entity->setLongitude($address->getLongitude());
         }
+
     }
 
 }

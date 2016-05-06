@@ -36,38 +36,68 @@ class LoadGeoData extends AbstractFixture implements OrderedFixtureInterface
         $southEast = new RefRegion();
         $southEast->setName('South East');
         $southEast->setCountry($uk);
+        $southEast->setLatitude('51.081785');
+        $southEast->setLongitude('0.597509');
+
         $southWest = new RefRegion();
         $southWest->setName('South West');
         $southWest->setCountry($uk);
+        $southWest->setLatitude('51.460340');
+        $southWest->setLongitude('-2.586934');
+
         $eastEngland = new RefRegion();
         $eastEngland->setName('East England');
         $eastEngland->setCountry($uk);
+        $eastEngland->setLatitude('52.346329');
+        $eastEngland->setLongitude('0.516073');
+
         $londonArea = new RefRegion();
         $londonArea->setName('London Area');
         $londonArea->setCountry($uk);
+        $londonArea->setLatitude('51.5073509');
+        $londonArea->setLongitude('-0.1277583');
 
         $baden = new RefRegion();
         $baden->setName('Baden-Württemberg');
         $baden->setCountry($germany);
+        $baden->setLatitude('48.6616037');
+        $baden->setLongitude('9.3501336');
+
         $bavaria = new RefRegion();
         $bavaria->setName('Bavaria');
         $bavaria->setCountry($germany);
+        $bavaria->setLatitude('48.7904472');
+        $bavaria->setLongitude('11.4978895');
+
         $hesse = new RefRegion();
         $hesse->setName('Hesse');
         $hesse->setCountry($germany);
+        $hesse->setLatitude('50.6520515');
+        $hesse->setLongitude('9.1624376');
+
         $berlin = new RefRegion();
         $berlin->setName('Berlin Area');
         $berlin->setCountry($germany);
+        $berlin->setLatitude('52.5200066');
+        $berlin->setLongitude('13.4049540');
 
         $britanny = new RefRegion();
         $britanny->setName('Brittany');
         $britanny->setCountry($france);
+        $britanny->setLatitude('48.2020471');
+        $britanny->setLongitude('-2.9326435');
+
         $corsica = new RefRegion();
         $corsica->setName('Corsica');
         $corsica->setCountry($france);
+        $corsica->setLatitude('42.172569');
+        $corsica->setLongitude('9.169498');
+
         $ile = new RefRegion();
         $ile->setName('Île-de-France');
         $ile->setCountry($france);
+        $ile->setLatitude('48.8499198');
+        $ile->setLongitude('2.6370411');
 
         $manager->persist($uk);
         $manager->persist($germany);
@@ -153,6 +183,8 @@ class LoadGeoData extends AbstractFixture implements OrderedFixtureInterface
         $city15 = new RefCity();
         $city15->setName('Reading');
         $city15->setRegion($southEast);
+        $city15->setLatitude('51.453682');
+        $city15->setLongitude('-0.977338');
 
         $city16 = new RefCity();
         $city16->setName('Stuttgart');
