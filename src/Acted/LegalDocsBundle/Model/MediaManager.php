@@ -69,12 +69,11 @@ class MediaManager
         $media->setActive(true);
         $media->setMediaType('audio');
         $media->setPosition(1);
-        $media->setLink($link);
-        $media->setName($link);
 
-        $audioInfo = Embed::create($link);
-        if($audioInfo) {
-            $media->setName($audioInfo->getTitle());
+        preg_match('/src="([^"]+)"/', $link, $audioPath);
+        if (isset($audioPath[1])) {
+            $media->setLink($audioPath[1]);
+            $media->setName($audioPath[1]);
         }
 
         return $media;
