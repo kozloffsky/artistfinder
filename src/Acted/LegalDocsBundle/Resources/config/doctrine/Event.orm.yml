@@ -19,6 +19,8 @@ Acted\LegalDocsBundle\Entity\Event:
           nullable: true
         eventTypeId:
           type: integer(11)
+        venueTypeId:
+          type: integer(11)
         isInternational:
           type: boolean
         address:

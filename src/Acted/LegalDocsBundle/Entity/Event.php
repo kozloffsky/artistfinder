@@ -38,6 +38,11 @@ class Event
     private $eventTypeId;
 
     /**
+     * @var integer
+     */
+    private $venueTypeId;
+
+    /**
      * @var boolean
      */
     private $isInternational;
@@ -211,6 +216,30 @@ class Event
     public function getEventTypeId()
     {
         return $this->eventTypeId;
+    }
+
+    /**
+     * Set venueTypeId
+     *
+     * @param integer $venueTypeId
+     *
+     * @return Event
+     */
+    public function setVenueTypeId($venueTypeId)
+    {
+        $this->venueTypeId = $venueTypeId;
+
+        return $this;
+    }
+
+    /**
+     * Get venueTypeId
+     *
+     * @return integer
+     */
+    public function getVenueTypeId()
+    {
+        return $this->venueTypeId;
     }
 
     /**

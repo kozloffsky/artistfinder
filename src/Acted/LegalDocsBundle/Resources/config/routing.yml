@@ -49,3 +49,7 @@ acted_legal_docs_search:
   path: /search/{category}
   defaults: { _controller: ActedLegalDocsBundle:Search:index, category: "" }
   methods:  [GET]
+
+acted_legal_docs_event:
+  resource: "@ActedLegalDocsBundle/Resources/config/routing/event.yml"
+  prefix: /event
