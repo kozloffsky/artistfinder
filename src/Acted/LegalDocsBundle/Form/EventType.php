@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Form;
 
+use Acted\LegalDocsBundle\Entity\Event;
 use Acted\LegalDocsBundle\Entity\Performance;
 use Acted\LegalDocsBundle\Entity\RefCountry;
 use Acted\LegalDocsBundle\Entity\RefCity;
@@ -71,6 +72,11 @@ class EventType extends AbstractType
                 'multiple' => true,
                 'constraints' => [new Count(['min' => 1])],
                 'description' => 'Array of Performances IDs'
+            ])
+            ->add('event', EntityType::class, [
+                'class' => Event::class,
+                'required' => false,
+                'description' => 'Events if user auth and have some event'
             ])
             ->add('comment', TextType::class)
         ;
