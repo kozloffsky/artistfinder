@@ -1,0 +1,21 @@
+Acted\LegalDocsBundle\Entity\Event:
+    exclusion_policy: NONE
+    properties:
+        country:
+            groups: [Default, getEvent]
+        city:
+            groups: [Default, getEvent]
+        eventRef:
+            groups: [Default, getEvent]
+        eventTypeId:
+            groups: [Default, getEvent]
+        venueTypeId:
+            groups: [Default, getEvent]
+        startingDate:
+            groups: [Default, getEvent]
+        timing:
+            groups: [Default, getEvent]
+        comments:
+            groups: [Default, getEvent]
+        title:
+            groups: [Default, getEvent]

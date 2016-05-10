@@ -1,0 +1,9 @@
+Acted\LegalDocsBundle\Entity\EventOffer:
+    exclusion_policy: NONE
+    properties:
+        status:
+            groups: [Default, getEvent]
+        event:
+            groups: [Default, getEvent]
+        event:
+            groups: [Default, getEvent]

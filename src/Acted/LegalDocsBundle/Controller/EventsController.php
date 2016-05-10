@@ -39,9 +39,14 @@ class EventsController extends Controller
             $data = $form->getData();
             $eventManager = $this->get('app.event.manager');
 
-            $event = $eventManager->createEvent($data);
-            $validationErrors = $validator->validate($event);
-            $em->persist($event);
+            if (!$data->getEvent()) {
+                $event = $eventManager->createEvent($data);
+                $validationErrors = $validator->validate($event);
+                $em->persist($event);
+            } else {
+                $event = $data->getEvent();
+            }
+
             var_dump(uniqid());die;
 
             $offer = $eventManager->createOffer($data);
@@ -49,8 +54,8 @@ class EventsController extends Controller
             $em->persist($offer);
 
             $eventOffer = $eventManager->createEventOffer($data);
-            $eventOffer->setOfferId($offer);
-            $eventOffer->setEventId($event);
+            $eventOffer->setOffer($offer);
+            $eventOffer->setEvent($event);
             $validationErrors->addAll($validator->validate($eventOffer));
             $em->persist($eventOffer);
 
@@ -95,7 +100,7 @@ class EventsController extends Controller
 
     /**
      * Get events by user id
-     * @Rest\View
+     * @Rest\View(serializerGroups={"getEvent"})
      * @ApiDoc(
      *  description="Get list events by userID",
      *  statusCodes={
@@ -110,7 +115,7 @@ class EventsController extends Controller
     public function getEventsByUserIdAction(Request $request)
     {
         $userId = $request->query->get('user');
-        $events = $this->getEM()->getRepository('ActedLegalDocsBundle:Event')->findBy(['user' => $userId]);
+        $events = $this->getEM()->getRepository('ActedLegalDocsBundle:EventOffer')->getEventsByUserId($userId);
 
         return ['events' => $events];
     }
