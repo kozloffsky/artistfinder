@@ -34,9 +34,41 @@ class EventsController extends Controller
         $serializer = $this->get('jms_serializer');
 
         if($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $validator = $this->get('validator');
             $data = $form->getData();
-            var_dump($data);die;
+            $eventManager = $this->get('app.event.manager');
 
+            $event = $eventManager->createEvent($data);
+            $validationErrors = $validator->validate($event);
+            $em->persist($event);
+            var_dump(uniqid());die;
+
+            $offer = $eventManager->createOffer($data);
+            $validationErrors->addAll($validator->validate($offer));
+            $em->persist($offer);
+
+            $eventOffer = $eventManager->createEventOffer($data);
+            $eventOffer->setOfferId($offer);
+            $eventOffer->setEventId($event);
+            $validationErrors->addAll($validator->validate($eventOffer));
+            $em->persist($eventOffer);
+
+
+            if (count($validationErrors) > 0) {
+                $errors = $serializer->toArray($validationErrors);
+                $prettyErrors = [];
+                foreach($errors as $error) {
+                    foreach($error as $key=>$value) {
+                        $prettyErrors[$key] = $value;
+                    }
+                }
+                return new JsonResponse($prettyErrors, 400);
+            }
+
+            $em->flush();
+            $eventManager->sendEmailMessage();
+            return new JsonResponse($serializer->toArray($event));
         }
 
         return new JsonResponse($this->get('app.form_errors_serializer')->serializeFormErrors($form, false), 400);
@@ -59,6 +91,28 @@ class EventsController extends Controller
 
         return ['eventsType' => $eventsType];
 
+    }
+
+    /**
+     * Get events by user id
+     * @Rest\View
+     * @ApiDoc(
+     *  description="Get list events by userID",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function getEventsByUserIdAction(Request $request)
+    {
+        $userId = $request->query->get('user');
+        $events = $this->getEM()->getRepository('ActedLegalDocsBundle:Event')->findBy(['user' => $userId]);
+
+        return ['events' => $events];
     }
 
     private function getEM()

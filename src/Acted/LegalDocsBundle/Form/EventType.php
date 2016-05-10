@@ -2,7 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Form;
 
-use Acted\LegalDocsBundle\Entity\Artist;
+use Acted\LegalDocsBundle\Entity\Performance;
 use Acted\LegalDocsBundle\Entity\RefCountry;
 use Acted\LegalDocsBundle\Entity\RefCity;
 use Acted\LegalDocsBundle\Entity\RefEventType;
@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Count;
 
 class EventType extends AbstractType
 {
@@ -29,12 +30,13 @@ class EventType extends AbstractType
                 'format' => 'dd/MM/yyyy',
                 'widget' => 'single_text',
                 'constraints' => [new NotBlank()],
-                'description' => 'Format dd/MM/yyyy',
+                'description' => 'Event date by format dd/MM/yyyy',
             ])
             ->add('event_time', TextType::class)
             ->add('type', EntityType::class, [
                 'class' => RefEventType::class,
                 'constraints' => [new NotBlank()],
+                'description' => 'Type of event'
             ])
             ->add('country', EntityType::class, [
                 'class' => RefCountry::class,
@@ -64,10 +66,11 @@ class EventType extends AbstractType
                 'constraints' => [new NotBlank()],
                 'description' => 'Number of guests',
             ])
-            ->add('artist', EntityType::class, [
-                'class' => Artist::class,
-                'constraints' => [new NotBlank()],
-                'description' => 'Artist id'
+            ->add('performance', EntityType::class, [
+                'class' => Performance::class,
+                'multiple' => true,
+                'constraints' => [new Count(['min' => 1])],
+                'description' => 'Array of Performances IDs'
             ])
             ->add('comment', TextType::class)
         ;
