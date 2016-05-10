@@ -14,7 +14,9 @@ final class CreateEvent
     private $venueType;
     private $numberOfGuests;
     private $comment;
-    private $artist;
+    private $performance;
+    private $offer;
+    private $event;
 
     const NUMBER_OF_GUEST_MAX_50 = 'Less then 50';
     const NUMBER_OF_GUEST_MIN_50_MAX_100 = '50-100';
@@ -184,16 +186,48 @@ final class CreateEvent
     /**
      * @return mixed
      */
-    public function getArtist()
+    public function getPerformance()
     {
-        return $this->artist;
+        return $this->performance;
     }
 
     /**
-     * @param mixed $artist
+     * @param mixed $performance
      */
-    public function setArtist($artist)
+    public function setPerformance($performance)
     {
-        $this->artist = $artist;
+        $this->performance = $performance;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOffer()
+    {
+        return $this->offer;
+    }
+
+    /**
+     * @param mixed $offer
+     */
+    public function setOffer($offer)
+    {
+        $this->offer = $offer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    /**
+     * @param mixed $event
+     */
+    public function setEvent($event)
+    {
+        $this->event = $event;
     }
 }

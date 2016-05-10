@@ -31,6 +31,11 @@ services:
           - "@router"
           - "%mailer_from_address%"
 
+    app.event.manager:
+        class: Acted\LegalDocsBundle\Model\EventsManager
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
     app.media.manager:
         class: Acted\LegalDocsBundle\Model\MediaManager
         arguments: ["%image_upload_dir%"]

@@ -7,6 +7,8 @@ namespace Acted\LegalDocsBundle\Entity;
  */
 class EventOffer
 {
+    const EVENT_OFFER_STATUS_PROPOSE = 'propose';
+
     /**
      * @var integer
      */
@@ -66,7 +68,6 @@ class EventOffer
      * @var \DateTime
      */
     private $readDateTime;
-
 
     /**
      * Get id
