@@ -4263,7 +4263,7 @@ $(function() {
         $.ajax({
             type: "POST",
             url: '/profile/' + slug + '/media/new',
-            data: {"audio": audioLink}
+            data: {"audio": "'"+ audioLink +"'"}
         })
     }
 
