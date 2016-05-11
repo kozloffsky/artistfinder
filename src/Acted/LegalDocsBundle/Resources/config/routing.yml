@@ -46,6 +46,6 @@ acted_legal_docs_artist:
   prefix: /
 
 acted_legal_docs_search:
-  path: /search
-  defaults: { _controller: ActedLegalDocsBundle:Search:index }
+  path: /search/{category}
+  defaults: { _controller: ActedLegalDocsBundle:Search:index, category: "" }
   methods:  [GET]
