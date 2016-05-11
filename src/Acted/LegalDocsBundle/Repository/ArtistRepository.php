@@ -18,8 +18,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
     public function getRecommended(Category $category)
     {
         return $this->createQueryBuilder('a')
-            ->where('a.recommend = :recommend')
-            ->setParameter('recommend', true)
+            ->where('a.recommend != 0')
             ->innerJoin('a.user', 'u')
             ->innerJoin('u.profile', 'p')
             ->andWhere(':category MEMBER OF p.categories')
