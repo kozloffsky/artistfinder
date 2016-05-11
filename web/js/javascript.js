@@ -5475,15 +5475,18 @@ $(function () {
         loopSearchRes();
         function loopSearchRes(){
             for(var propt in response) {
-                var searchCategoryId = propt,
-                    searchCategoryName = $('.categories-menu a[data-toggle="#'+ searchCategoryId +'"]').text(),
-                    tabContentBlockRec = '<div class="slider">'+
-                        '<h2 class="title" style="margin-top: 0px">'+ searchCategoryName +'</h2>'+
-                        '<div class="slider-block">'+
-                        '<div class="slider-wrapper searchSearchResultWrapper" id="searchResWrapper'+searchCategoryId+'">'+
-                        '</div>';
-                $(tabContentBlockRec).appendTo('#tab-SearchResultTabContent');
-                loopREcomendedArtistsInCat(response[propt], propt, searchResultTab);
+                var elementsInCatCount = response[propt].length;
+                if(elementsInCatCount != 0) {
+                    var searchCategoryId = propt,
+                        searchCategoryName = $('.categories-menu a[data-toggle="#' + searchCategoryId + '"]').text(),
+                        tabContentBlockRec = '<div class="slider">' +
+                            '<h2 class="title" style="margin-top: 0px">' + searchCategoryName + '</h2>' +
+                            '<div class="slider-block">' +
+                            '<div class="slider-wrapper searchSearchResultWrapper" id="searchResWrapper' + searchCategoryId + '">' +
+                            '</div>';
+                    $(tabContentBlockRec).appendTo('#tab-SearchResultTabContent');
+                    loopREcomendedArtistsInCat(response[propt], propt, searchResultTab);
+                }
             }
         };
         getRecStarts();
@@ -5501,15 +5504,18 @@ $(function () {
         loopSearchRes();
         function loopSearchRes(){
             for(var propt in response) {
-                var searchCategoryId = propt,
-                    searchCategoryName = $('#searchCategories label[for="search'+ searchCategoryId +'"]').text(),
-                    tabContentBlockRec = '<div class="slider">'+
-                    '<h2 class="title" style="margin-top: 0px">'+ searchCategoryName +'</h2>'+
-                    '<div class="slider-block">'+
-                    '<div class="slider-wrapper searchRecomendationWrapper" id="searchRecWrapper'+searchCategoryId+'">'+
-                    '</div>';
-                $(tabContentBlockRec).appendTo('.recommendationsTabContent');
-                loopREcomendedArtistsInCat(response[propt], propt);
+                var elementsInCatCount = response[propt].length;
+                if (elementsInCatCount != 0) {
+                    var searchCategoryId = propt,
+                        searchCategoryName = $('#searchCategories label[for="search' + searchCategoryId + '"]').text(),
+                        tabContentBlockRec = '<div class="slider">' +
+                            '<h2 class="title" style="margin-top: 0px">' + searchCategoryName + '</h2>' +
+                            '<div class="slider-block">' +
+                            '<div class="slider-wrapper searchRecomendationWrapper" id="searchRecWrapper' + searchCategoryId + '">' +
+                            '</div>';
+                    $(tabContentBlockRec).appendTo('.recommendationsTabContent');
+                    loopREcomendedArtistsInCat(response[propt], propt);
+                }
             }
         };
         getRecStarts();
