@@ -44,38 +44,12 @@ class LoadEventData extends AbstractFixture implements ContainerAwareInterface, 
     {
         $faker = $this->container->get('davidbadura_faker.faker');
 
-        for ($i = 0; $i < 300; $i++) {
-            for ($j = 0; $j < 3; $j++) {
-                $event = new Event();
-                $event->setEventRef(uniqid());
-                $event->setUser($this->getReference('user'.$i));
-                $event->setTitle($faker->text(100));
-                $event->setDescription($faker->text);
-                $event->setEventTypeId(1);
-                $event->setVenueTypeId(1);
-                $event->setIsInternational(true);
-                $event->setAddress($faker->address);
-
-                $cityNumber = $faker->randomElement([1, 2, 3]);
-                $city = $this->getReference('city'.$cityNumber);
-                $event->setCity($city);
-
-                $event->setBudget($faker->randomFloat(null, 100, 10000));
-                $event->setCurrencyId(1);
-                $event->setStartingDate($faker->dateTime);
-                $event->setEndingDate($faker->dateTime);
-                $event->setTiming($faker->text(100));
-                $event->setComments($faker->text);
-
-                $manager->persist($event);
-                $this->addReference('event' . $i . '_' . $j, $event);
-            }
-            $manager->flush();
-        }
 
         $corporate = new RefEventType();
         $corporate->setEventType('Corporate event');
         $manager->persist($corporate);
+
+        $this->addReference('eventType', $corporate);
 
         $conference = new RefEventType();
         $conference->setEventType('Conference/Trade show');
@@ -128,6 +102,7 @@ class LoadEventData extends AbstractFixture implements ContainerAwareInterface, 
         $townHall = new RefVenueType();
         $townHall->setVenueType('Town hall');
         $manager->persist($townHall);
+        $this->addReference('venueType', $townHall);
 
         $residence = new RefVenueType();
         $residence->setVenueType('Residence');
@@ -150,6 +125,36 @@ class LoadEventData extends AbstractFixture implements ContainerAwareInterface, 
         $manager->persist($office);
 
         $manager->flush();
+
+        for ($i = 0; $i < 300; $i++) {
+            for ($j = 0; $j < 3; $j++) {
+                $event = new Event();
+                $event->setEventRef(uniqid());
+                $event->setUser($this->getReference('user'.$i));
+                $event->setTitle($faker->text(100));
+                $event->setDescription($faker->text);
+                $event->setEventType($this->getReference('eventType'));
+                $event->setVenueType($this->getReference('venueType'));
+                $event->setIsInternational(true);
+                $event->setAddress($faker->address);
+
+                $cityNumber = $faker->randomElement([1, 2, 3]);
+                $city = $this->getReference('city'.$cityNumber);
+                $event->setCity($city);
+
+                $event->setBudget($faker->randomFloat(null, 100, 10000));
+                $event->setCurrencyId(1);
+                $event->setStartingDate($faker->dateTime);
+                $event->setEndingDate($faker->dateTime);
+                $event->setTiming($faker->text(100));
+                $event->setComments($faker->text);
+
+                $manager->persist($event);
+                $this->addReference('event' . $i . '_' . $j, $event);
+            }
+            $manager->flush();
+        }
+
     }
 
     /**

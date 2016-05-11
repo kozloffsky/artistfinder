@@ -17,6 +17,10 @@ class RefVenueType
      */
     private $venueType;
 
+    public function __toString()
+    {
+        return $this->getVenueType();
+    }
 
     /**
      * Get id

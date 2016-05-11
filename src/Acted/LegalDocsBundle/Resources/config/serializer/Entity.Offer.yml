@@ -1,7 +1,0 @@
-Acted\LegalDocsBundle\Entity\Offer:
-    exclusion_policy: NONE
-    properties:
-        title:
-            groups: [Default, getEvent]
-        performance:
-            groups: [Default, getEvent]

@@ -17,6 +17,10 @@ class RefEventType
      */
     private $eventType;
 
+    public function __toString()
+    {
+        return $this->getEventType();
+    }
 
     /**
      * Get id

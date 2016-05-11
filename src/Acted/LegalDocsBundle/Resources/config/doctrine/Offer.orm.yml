@@ -14,11 +14,13 @@ Acted\LegalDocsBundle\Entity\Offer:
           unique: true
         price:
           type: float
+          nullable: true
         currencyId:
           type: integer(11)
+          nullable: true
         depositValue:
           type: float
-          notnull: true
+          nullable: true
           type: string(32)
         paymentTerms:
           type: string(256)
@@ -26,10 +28,8 @@ Acted\LegalDocsBundle\Entity\Offer:
         comments:
           type: string(256)
           nullable: true
-    manyToOne:
-        performance:
+    manyToMany:
+        performances:
           targetEntity: Acted\LegalDocsBundle\Entity\Performance
           inversedBy: offers
-          joinColumn:
-            onDelete: CASCADE
     lifecycleCallbacks: {  }

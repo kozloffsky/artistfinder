@@ -14,25 +14,28 @@ Acted\LegalDocsBundle\Entity\EventOffer:
           notnull: true
         price:
           type: float
-          notnull: true
+          nullable: true
         currencyId:
           type: integer(11)
-          notnull: true
+          nullable: true
         depositValue:
           type: float
-          notnull: true
+          nullable: true
         depositType:
           type: string(32)
-          notnull: true
+          nullable: true
         paymentTerms:
           type: string(256)
+          nullable: true
         comments:
           type: string(256)
+          nullable: true
         sendDateTime:
           type: datetime
           notnull: true
         readDateTime:
           type: datetime
+          nullable: true
     manyToOne:
         event:
           targetEntity: Acted\LegalDocsBundle\Entity\Event

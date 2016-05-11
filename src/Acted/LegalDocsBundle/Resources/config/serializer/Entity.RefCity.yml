@@ -1,5 +1,9 @@
 Acted\LegalDocsBundle\Entity\RefCity:
-  exclusion_policy: NONE
-  properties:
-    region:
-      exclude: true
+    exclusion_policy: NONE
+    properties:
+        region:
+            exclude: true
+        name:
+            groups: [Default, getEvent]
+        id:
+            groups: [Default, getEvent]

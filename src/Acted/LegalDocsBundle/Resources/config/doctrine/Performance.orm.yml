@@ -22,12 +22,11 @@ Acted\LegalDocsBundle\Entity\Performance:
         profile:
           targetEntity: Acted\LegalDocsBundle\Entity\Profile
           inversedBy: performances
-    oneToMany:
-        offers:
-          targetEntity: Acted\LegalDocsBundle\Entity\Offer
-          mappedBy: performance
     manyToMany:
         media:
           targetEntity: Acted\LegalDocsBundle\Entity\Media
           inversedBy: performances
+        offers:
+          targetEntity: Acted\LegalDocsBundle\Entity\Offer
+          mappedBy: performances
     lifecycleCallbacks: {  }

@@ -35,6 +35,10 @@ services:
         class: Acted\LegalDocsBundle\Model\EventsManager
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "@mailer"
+            - "%mailer_from_address%"
+            - "@templating.engine.twig"
+            - "@app.user.manager"
 
     app.media.manager:
         class: Acted\LegalDocsBundle\Model\MediaManager

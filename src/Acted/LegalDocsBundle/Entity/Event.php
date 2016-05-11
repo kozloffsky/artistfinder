@@ -2,6 +2,9 @@
 
 namespace Acted\LegalDocsBundle\Entity;
 
+use Acted\LegalDocsBundle\Entity\RefVenueType;
+use Acted\LegalDocsBundle\Entity\RefEventType;
+
 /**
  * Event
  */
@@ -33,14 +36,14 @@ class Event
     private $description;
 
     /**
-     * @var integer
+     * @var RefEventType
      */
-    private $eventTypeId;
+    private $eventType;
 
     /**
-     * @var integer
+     * @var RefVenueType
      */
-    private $venueTypeId;
+    private $venueType;
 
     /**
      * @var boolean
@@ -195,51 +198,51 @@ class Event
     }
 
     /**
-     * Set eventTypeId
+     * Set eventType
      *
-     * @param integer $eventTypeId
+     * @param RefEventType $eventType
      *
      * @return Event
      */
-    public function setEventTypeId($eventTypeId)
+    public function setEventType(RefEventType $eventType = null)
     {
-        $this->eventTypeId = $eventTypeId;
+        $this->eventType = $eventType;
 
         return $this;
     }
 
     /**
-     * Get eventTypeId
+     * Get eventType
      *
-     * @return integer
+     * @return RefEventType
      */
-    public function getEventTypeId()
+    public function getEventType()
     {
-        return $this->eventTypeId;
+        return $this->eventType;
     }
 
     /**
-     * Set venueTypeId
+     * Set venueType
      *
-     * @param integer $venueTypeId
+     * @param RefVenueType $venueType
      *
      * @return Event
      */
-    public function setVenueTypeId($venueTypeId)
+    public function setVenueType(RefVenueType $venueType = null)
     {
-        $this->venueTypeId = $venueTypeId;
+        $this->venueType= $venueType;
 
         return $this;
     }
 
     /**
-     * Get venueTypeId
+     * Get venueType
      *
-     * @return integer
+     * @return RefVenueType
      */
-    public function getVenueTypeId()
+    public function getVenueType()
     {
-        return $this->venueTypeId;
+        return $this->venueType;
     }
 
     /**

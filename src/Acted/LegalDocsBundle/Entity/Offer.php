@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Entity;
 
+use Acted\LegalDocsBundle\Entity\Performance;
 /**
  * Offer
  */
@@ -257,37 +258,47 @@ class Offer
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $performance;
+    private $performances;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->performance = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->performances = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Set performance
+     * Add performance
      *
-     * @param \Acted\LegalDocsBundle\Entity\Performance $performance
+     * @param Performance $performance
      *
      * @return Offer
      */
-    public function setPerformance(\Acted\LegalDocsBundle\Entity\Performance $performance = null)
+    public function addPerformance(Performance $performance)
     {
-        $this->performance = $performance;
+        $this->performances[] = $performance;
 
         return $this;
     }
 
     /**
-     * Get performance
+     * Remove performance
      *
-     * @return \Acted\LegalDocsBundle\Entity\Performance
+     * @param Performance $performance
      */
-    public function getPerformance()
+    public function removePerformance(Performance $performance)
     {
-        return $this->performance;
+        $this->performances->removeElement($performance);
+    }
+
+    /**
+     * Get performances
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPerformances()
+    {
+        return $this->performances;
     }
 }

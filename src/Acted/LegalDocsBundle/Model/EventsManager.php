@@ -4,9 +4,11 @@ namespace Acted\LegalDocsBundle\Model;
 
 use Acted\LegalDocsBundle\Popo\CreateEvent;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Templating\EngineInterface;
 use Acted\LegalDocsBundle\Entity\Event;
 use Acted\LegalDocsBundle\Entity\Offer;
 use Acted\LegalDocsBundle\Entity\EventOffer;
+use Acted\LegalDocsBundle\Model\UserManager;
 
 class EventsManager
 {
@@ -15,13 +17,33 @@ class EventsManager
      */
     protected $entityManager;
 
+    protected $mailer;
+
+    protected $mailFrom;
+
+    /**
+     * @var EngineInterface
+     */
+    protected $templating;
+
+    protected $userManager;
+
     /**
      * EventManager constructor.
      * @param EntityManagerInterface $entityManagerInterface
+     * @param $mailer
+     * @param $mailFrom
+     * @param EngineInterface $templating
+     * @param UserManager $userManager
      */
-    public function __construct(EntityManagerInterface $entityManagerInterface)
+    public function __construct(EntityManagerInterface $entityManagerInterface, $mailer, $mailFrom, EngineInterface
+    $templating, UserManager $userManager)
     {
         $this->entityManager = $entityManagerInterface;
+        $this->mailer = $mailer;
+        $this->mailFrom = $mailFrom;
+        $this->templating = $templating;
+        $this->userManager = $userManager;
     }
 
     /**
@@ -31,12 +53,18 @@ class EventsManager
     public function createEvent(CreateEvent $createEvent)
     {
         $event = new Event();
+        $date = $createEvent->getEventDate();
+        $nextDate = $date->add(new \DateInterval('P1D'));
         $event->setCity($createEvent->getCity());
         $event->setEventRef(uniqid());
-        $event->setEventTypeId($createEvent->getType());
-        $event->setVenueTypeId($createEvent->getVenueType());
+        $event->setEventType($createEvent->getType());
+        $event->setVenueType($createEvent->getVenueType());
         $event->setTitle($createEvent->getName());
-        $event->setStartingDate($createEvent->getEventDate());
+        $event->setStartingDate($date);
+        $event->setEndingDate($nextDate);
+        $event->setUser($createEvent->getUser());
+        $event->setIsInternational(1);
+        $event->setAddress($createEvent->getLocation());
         $event->setTiming($createEvent->getEventTime());
 
         return $event;
@@ -48,15 +76,14 @@ class EventsManager
      */
     public function createOffer(CreateEvent $createEvent)
     {
-        $result = [];
-        foreach ($createEvent->getPerformance() as $item) {
-            $offer = new Offer();
-            $offer->setTitle($createEvent->getName());
-            $offer->setPerformance($item);
-            $result[] = $offer;
+        $offer = new Offer();
+        $date = new \DateTime();
+        $offer->setTitle($createEvent->getName() . ' ' . $date->format('d-m-Y H:i:s'));
+        foreach ($createEvent->getPerformance() as $performance) {
+            $offer->addPerformance($performance);
         }
 
-        return $result;
+        return $offer;
     }
 
     /**
@@ -70,6 +97,34 @@ class EventsManager
         $eventOffer->setStatus(EventOffer::EVENT_OFFER_STATUS_PROPOSE);
 
         return $eventOffer;
+    }
+
+    /**
+     * @param $eventData
+     * @param $artist
+     */
+    public function createEventNotify($eventData, $artist)
+    {
+        $rendered = $this->templating->render('@ActedLegalDocs/Email/create_event_notify.html.twig', [
+            'event' => $eventData,
+            'artist' => $artist,
+        ]);
+
+        $this->userManager->sendEmailMessage($rendered, $this->mailFrom, $artist->getEmail());
+    }
+
+    /**
+     * @param $eventData
+     * @param $artist
+     */
+    public function newMessageNotify($eventData, $artist)
+    {
+//        $rendered = $this->templating->render('@ActedLegalDocs/Email/new_message_notify.html.twig', [
+//            'event' => $eventData,
+//            'artist' => $artist,
+//        ]);
+//
+//        $this->userManager->sendEmailMessage($rendered, $this->mailFrom, $artist->getEmail());
     }
 
 }
