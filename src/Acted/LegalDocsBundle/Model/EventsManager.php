@@ -119,12 +119,12 @@ class EventsManager
      */
     public function newMessageNotify($eventData, $artist)
     {
-//        $rendered = $this->templating->render('@ActedLegalDocs/Email/new_message_notify.html.twig', [
-//            'event' => $eventData,
-//            'artist' => $artist,
-//        ]);
-//
-//        $this->userManager->sendEmailMessage($rendered, $this->mailFrom, $artist->getEmail());
+        $rendered = $this->templating->render('@ActedLegalDocs/Email/new_message_notify.html.twig', [
+            'event' => $eventData,
+            'artist' => $artist,
+        ]);
+
+        $this->userManager->sendEmailMessage($rendered, $this->mailFrom, $artist->getEmail());
     }
 
 }
