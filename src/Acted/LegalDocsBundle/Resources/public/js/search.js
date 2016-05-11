@@ -457,6 +457,7 @@ $(function () {
     }
 
     function loopArtistsInCat(artists, propt) {
+        console.log(propt)
 
         $(artists).each(function () {
             var artistCategories = this.categories,
@@ -623,6 +624,56 @@ $(function () {
 
     function removeOldTabs(){
         $('.results-menu li').not('.recommendations').remove();
+    }
+
+    $(document).ready(function(){
+        var currentUrl = window.location.pathname;
+        var matchesUrl = currentUrl.split('/');
+        if (matchesUrl[1] == 'search'){
+            var searchCatName = matchesUrl[2];
+        }
+        if (searchCatName){
+            console.log(searchCatName)
+            findSearchMainCat(searchCatName)
+        } else {
+            //console.log(searchCatName)
+        }
+    })
+
+    function findSearchMainCat(searchCatName) {
+        var searchMainCatId = $('#mainCategoryList').find('#' + searchCatName).text();
+        console.log(searchMainCatId);
+        $.ajax({
+            type: 'GET',
+            url: '/artist',
+            data: {'mainCategory': searchMainCatId},
+            success: function (response) {
+                console.log(response);
+                catSearchRes(searchCatName, searchMainCatId, response);
+            }
+        })
+    }
+
+    function catSearchRes(searchCatName, searchMainCatId, response){
+        var destinationTab = 'catSearchResNew';
+        $('.results-menu').append('<li data-toggle="#tab-'+destinationTab+'" class="tab '+destinationTab+'Tab">'+
+            '<a>'+searchCatName+'</a>'+
+            '</li>');
+        loopArtistsInCat(response, destinationTab);
+        setTabsCorenersZ();
+        selectBoxStyle();
+        //console.log('finish');
+        initTabs();
+        createShowMoreBtn(destinationTab);
+        $('.tab').removeClass('active');
+        $('.'+destinationTab+'Tab').addClass('active');
+        $('.tab-block').hide();
+        var idContent = $('.'+destinationTab+'Tab').attr('data-toggle');
+        $(idContent).show();
+
+        $('html,body').animate({
+            scrollTop: $('.results').offset().top
+        });
     }
 
 });

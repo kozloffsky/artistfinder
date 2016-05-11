@@ -62,12 +62,17 @@
             </form>
         </div>
 
+        <div class="hidden" id="mainCategoryList">
+            {% for category in categories %}
+                    <span id="{{ category['slug'] }}">{{ category['id'] }}</span>
+            {% endfor %}
+        </div>
+
         <div class="block">
             <h2>Categories</h2>
             <div id="searchCategories">
             <ul class="categories-menu">
                 {% for category in categories %}
-
                     {% if loop.first %}
                         <li class="menu-block"><a data-toggle="#{{ category['id'] }}" class="active">{{ category['title'] }}</a></li>
                     {% else %}
@@ -303,6 +308,37 @@
                                 <button data-dismiss="modal" class="btn">Show more</button>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div id="tab-catSearchResNew" class="tab-block tab-content searchTabContent" style="display: none; padding-bottom: 100px;">
+                    <div class="filters">
+                        <select data-placeholder="Top rated">
+                            <option value="0">Top rated</option>
+                            <option value="1">Lowest rated</option>
+                            <option value="2">Lorem Ipsum</option>
+                        </select>
+
+                        <select data-palaceholder="Price">
+                            <option value="0">Price</option>
+                            <option value="1">Lorem Ipsum</option>
+                            <option value="2">Lorem Ipsum</option>
+                        </select>
+
+                        <select data-palaceholder="Distance">
+                            <option value="0">From 0 to 50km</option>
+                            <option value="1">From 50 to 200km</option>
+                            <option value="2">From 200km to 1000km</option>
+                        </select>
+
+                        <div class="custom-checkbox">
+                            <input type="checkbox" name="range" id="only-video1">
+                            <label for="only-video1">Only artists with video</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
                     </div>
                 </div>
             </div>
