@@ -19,16 +19,17 @@
 
                 <select data-class="selections-white" name="country" id="search-country">
                     {% for country in countries() %}
-                    {% if country.name == 'United Kingdom' %}
-                        <option value="{{ country.id }}" name="country" selected="selected">{{ country.name }}</option>
-                    {% else %}
-                        <option value="{{ country.id }}" name="country">{{ country.name }}</option>
-                    {% endif %}
+                        {% if country.name == 'United Kingdom' %}
+                            <option value="{{ country.id }}" name="country" selected="selected">{{ country.name }}</option>
+                        {% else %}
+                            <option value="{{ country.id }}" name="country">{{ country.name }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
 
                 <div class="divider"></div>
                 <select  data-class="selections-white" name="region" id="search-region">
+                    <option value="" name="region">select a region</option>
                     {% for region in regions %}
                         <option value="{{ region.id }}" name="region">{{ region.name }}</option>
                     {% endfor %}
@@ -186,6 +187,8 @@
                     </div>
 
                     {% for recommendation in recommended %}
+
+
 
                     <div class="slider">
 
