@@ -98,6 +98,11 @@ class ArtistController extends Controller
 
             foreach ($data['categories'] as $category) {
                 $fc = new FilterCriteria([$category]);
+                if ($data['distance']) {
+                    $fc->addDistance($data['user_city'], $data['distance']);
+                }
+                $fc->addGeo($data['country'], $data['region']);
+                $fc->addLocation($data['user_city'], $data['location']);
                 $page = ($data['page']) ? $data['page'] : 1;
                 $filteredArtists = $s->getFilteredArtists($oc, $fc, $page);
                 $result[$category->getId()] = iterator_to_array($filteredArtists);
@@ -121,6 +126,11 @@ class ArtistController extends Controller
                     $categoryIds[] = $category->getId();
                 }
                 $fc = new FilterCriteria($categoryIds, $data['with_video'], $data['query']);
+                if ($data['distance']) {
+                    $fc->addDistance($data['user_city'], $data['distance']);
+                }
+                $fc->addGeo($data['country'], $data['region']);
+                $fc->addLocation($data['user_city'], $data['location']);
                 $page = ($data['page']) ? $data['page'] : 1;
                 $filteredArtists = $s->getFilteredArtists($oc, $fc, $page, $categoryIds);
                 $result[$mainCategory->getId()] = iterator_to_array($filteredArtists);
