@@ -5,5 +5,3 @@ Acted\LegalDocsBundle\Entity\EventOffer:
             groups: [Default, getEvent]
         event:
             groups: [Default, getEvent]
-        event:
-            groups: [Default, getEvent]

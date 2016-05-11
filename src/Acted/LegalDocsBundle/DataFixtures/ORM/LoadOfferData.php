@@ -47,7 +47,7 @@ class LoadOfferData extends AbstractFixture implements ContainerAwareInterface, 
                 $performance = $this->getReference('performance' . $i . '_' . $j);
                 for ($k = 0; $k < 3; $k++) {
                     $offer = new Offer();
-                    $offer->setPerformance($performance);
+                    $offer->addPerformance($performance);
                     $offer->setTitle($faker->unique()->text(25));
                     $offer->setPrice($faker->randomFloat(null, 10, 10000));
                     $offer->setCurrencyId(1);

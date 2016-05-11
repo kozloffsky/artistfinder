@@ -47,7 +47,6 @@ class EventsController extends Controller
                 $event = $data->getEvent();
             }
 
-            var_dump(uniqid());die;
 
             $offer = $eventManager->createOffer($data);
             $validationErrors->addAll($validator->validate($offer));
@@ -58,7 +57,6 @@ class EventsController extends Controller
             $eventOffer->setEvent($event);
             $validationErrors->addAll($validator->validate($eventOffer));
             $em->persist($eventOffer);
-
 
             if (count($validationErrors) > 0) {
                 $errors = $serializer->toArray($validationErrors);
@@ -72,7 +70,11 @@ class EventsController extends Controller
             }
 
             $em->flush();
-            $eventManager->sendEmailMessage();
+            $artist = $data->getPerformance()->first()->getProfile()->getUser();
+
+            $eventManager->createEventNotify($data, $artist);
+            $eventManager->newMessageNotify($data, $artist);
+
             return new JsonResponse($serializer->toArray($event));
         }
 

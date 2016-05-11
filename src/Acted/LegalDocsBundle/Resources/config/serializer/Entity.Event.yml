@@ -13,6 +13,8 @@ Acted\LegalDocsBundle\Entity\Event:
             groups: [Default, getEvent]
         startingDate:
             groups: [Default, getEvent]
+        endingDate:
+            groups: [Default, getEvent]
         timing:
             groups: [Default, getEvent]
         comments:

@@ -6,6 +6,7 @@ use Acted\LegalDocsBundle\Entity\Event;
 use Acted\LegalDocsBundle\Entity\Performance;
 use Acted\LegalDocsBundle\Entity\RefCountry;
 use Acted\LegalDocsBundle\Entity\RefCity;
+use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Entity\RefEventType;
 use Acted\LegalDocsBundle\Entity\RefVenueType;
 use Acted\LegalDocsBundle\Popo\CreateEvent;
@@ -54,7 +55,7 @@ class EventType extends AbstractType
             ])
             ->add('venue_type', EntityType::class, [
                 'class' => RefVenueType::class,
-                'constraints' => [new NotBlank()],
+                'description' => 'Venue type ID',
             ])
             ->add('number_of_guests', ChoiceType::class, [
                 'choices_as_values' => true,
@@ -77,6 +78,10 @@ class EventType extends AbstractType
                 'class' => Event::class,
                 'required' => false,
                 'description' => 'Events if user auth and have some event'
+            ])
+            ->add('user', EntityType::class, [
+                'class' => User::class,
+                'description' => 'UserId'
             ])
             ->add('comment', TextType::class)
         ;

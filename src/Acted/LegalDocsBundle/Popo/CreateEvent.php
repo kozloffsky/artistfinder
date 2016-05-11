@@ -17,6 +17,7 @@ final class CreateEvent
     private $performance;
     private $offer;
     private $event;
+    private $user;
 
     const NUMBER_OF_GUEST_MAX_50 = 'Less then 50';
     const NUMBER_OF_GUEST_MIN_50_MAX_100 = '50-100';
@@ -230,4 +231,21 @@ final class CreateEvent
     {
         $this->event = $event;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+    
 }

@@ -17,10 +17,6 @@ Acted\LegalDocsBundle\Entity\Event:
         description:
           type: string(512)
           nullable: true
-        eventTypeId:
-          type: integer(11)
-        venueTypeId:
-          type: integer(11)
         isInternational:
           type: boolean
         address:
@@ -48,5 +44,9 @@ Acted\LegalDocsBundle\Entity\Event:
             targetEntity: Acted\LegalDocsBundle\Entity\User
           city:
             targetEntity: Acted\LegalDocsBundle\Entity\RefCity
+          eventType:
+            targetEntity: Acted\LegalDocsBundle\Entity\RefEventType
+          venueType:
+            targetEntity: Acted\LegalDocsBundle\Entity\RefVenueType
 
     lifecycleCallbacks: {  }
