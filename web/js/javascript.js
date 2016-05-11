@@ -4086,6 +4086,7 @@ $(function() {
 
     $('.editOffer').click(function (e) {
         e.stopPropagation();
+        $(this).children('button').prop('disabled', true)
         var parentPerformance = $(this).parents('article')
         var performanceId = $(parentPerformance).children('.performanceId').text();
         $(parentPerformance).find('.perfomanceInfoEdiatable').editable({
@@ -4112,7 +4113,7 @@ $(function() {
         });
         //$(parentPerformance).find('.imagePerformanceChange').fadeIn();
         userPerformanceUpload(parentPerformance, performanceId);
-        offerMediaChoose(parentPerformance, performanceId)
+        offerMediaChoose(parentPerformance, performanceId);
     });
 
     $('.deleteMedia').on('click', function () {
@@ -4128,11 +4129,11 @@ $(function() {
             success: function () {
                 currentBlocThumb.remove();
                 getBigSliderContent.remove();
-                imageSlider.reloadSlider();
+                //imageSlider.reloadSlider();
                 if(getMediaType[0].id == 'section-video'){
                     var indexOfThumb = $('#video-pager .scale-thumb').length;
                     $("#media [data-target='#section-video'] .badge").text(indexOfThumb)
-                } else if (getMediaType[0].id == '"section-photo"'){
+                } else if (getMediaType[0].id == 'section-photo'){
                     var indexOfThumb = $('#photo-pager .scale-thumb').length;
                     $("#media [data-target='#section-photo'] .badge").text(indexOfThumb)
                 }
@@ -4244,8 +4245,6 @@ $(function() {
                 $('#video-pager').append('<div class="scale-thumb thumb'+ indexOfThumb + 1 +'"><span class="removeNewImage deleteMedia" id='+newVideoId+'><i class="fa fa-times-circle-o"></i></span><a data-slide-index='+ indexOfThumb +' href=""><img id='+newVideoId+' src='+videoThumbnail+'/></a></div>');
                 console.log(indexOfThumb);
                 $("#media [data-target='#section-video'] .badge").text(indexOfThumb + 1);
-                videoSlider.reload();
-
                 //videoSlider.reloadSlider();
             }
         })
@@ -4387,6 +4386,7 @@ $(function() {
                     data: {"user[background]": resp}
                 });
                 $('.header-background').css('background-image', 'url(' + resp + ')');
+                $('#changeBgModal').modal('hide')
             });
         });
         return;
@@ -4453,6 +4453,7 @@ $(function() {
             readFile(this);
         });
         $(uploadImage).on('click', function (ev) {
+            console.log($uploadUserPerfMedia[mediaChangeId])
             $uploadUserPerfMedia[mediaChangeId].croppie('result', {
                 type: 'canvas',
                 size: 'original'
@@ -4481,6 +4482,102 @@ $(function() {
         return;
     }
 
+    function userPerformanceUploadSecond(parentPerformance, performanceId, block, newPerformance) {
+        console.log(parentPerformance)
+
+        var $uploadUserPerfMediaSecond;
+
+        var imgChangeBlock = parentPerformance.find('#image-performance-change2');
+
+        var changeImgContainer = imgChangeBlock.find('.imagePerfinput .changeImageContiner'),
+            mediaChangeId = imgChangeBlock.find('.mediaId').text(),
+            currentImgSrc = imgChangeBlock.nextAll('.preview').attr('src'),
+            imageUploadBtn = imgChangeBlock.find('.uploadImg'),
+            uploadImage = imgChangeBlock.find('.upload-resultBg');
+        imgChangeBlock.fadeIn();
+
+        var slug = $('#slug').text();
+        var $uploadCropMediaOffer;
+
+        function readFile(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $uploadCropMediaOffer.croppie('bind', {
+                        url: e.target.result
+                    });
+                    //$('.upload-demo').addClass('ready');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+            else {
+                swal("Sorry - you're browser doesn't support the FileReader API");
+            }
+        }
+
+        $uploadCropMediaOffer = $('#addImageModal .changeImageContiner').croppie({
+            viewport: {
+                width: 300,
+                height: 207
+            },
+            boundary: {
+                width: 400,
+                height: 300
+            },
+            exif: true
+        });
+
+        $uploadCropMediaOffer.croppie('bind', {
+            url: '/assets/images/media-no-image.gif'
+        });
+
+
+        $('#uploadNewMedia').on('change', function () {
+            readFile(this);
+        });
+        $('.upload-NewMedia').on('click', function (ev) {
+            $uploadCropMediaOffer.croppie('result', {
+                type: 'canvas',
+                size: 'original'
+            }).then(function (resp) {
+                console.log(newPerformance + 'fuuuu')
+                if(newPerformance){
+                    $.ajax({
+                        type: "POST",
+                        url: '/profile/performance/' + performanceId + '/media/new',
+                        data: {"file":resp},
+                        success: function(){
+                            imgChangeBlock.nextAll('.preview').attr('src', resp);
+                            console.log($uploadUserPerfMediaSecond)
+                            imgChangeBlock.fadeOut();
+                            $('#addImageModal').modal('hide')
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: '/media/' + mediaChangeId + '/edit',
+                        data: {"file": resp},
+                        success: function(){
+                            imgChangeBlock.nextAll('.preview').attr('src', resp);
+                            console.log($uploadUserPerfMediaSecond)
+                            imgChangeBlock.fadeOut();
+                            $('#addImageModal').modal('hide')
+                        }
+                    });
+                }
+                imgChangeBlock.nextAll('.preview').attr('src', resp);
+                console.log($uploadUserPerfMediaSecond)
+                imgChangeBlock.fadeOut();
+                $('#addImageModal').modal('hide')
+                //changeImgContainer.empty();
+            });
+        });
+        return;
+    }
+
+
     function offerMediaChoose(parentPerformance, performanceId, newPerformance){
         var offerMediaChangeBlock = parentPerformance.find('#image-performance-change2'),
             //firstImageCropper = parentPerformance.find('#image-performance-change1 .changeImageContiner'),
@@ -4508,7 +4605,8 @@ $(function() {
                 //firstImageCropper.empty();
                 console.log(newPerformance)
                 //var newPerformance = true;
-                userPerformanceUpload(parentPerformance, performanceId, offerMediaChangeBlock, newPerformance)
+                //mediaImageUpload()
+                userPerformanceUploadSecond(parentPerformance, performanceId, offerMediaChangeBlock, newPerformance)
             }
         })
 
@@ -4651,8 +4749,11 @@ $(function() {
                     url: '/profile/'+slug+'/media/new',
                     data: {'file':resp},
                     success: function(response){
-                        console.log(response)
-                        imageSlider.reload()
+                        console.log(response);
+                        $('#addImageModal').modal('hide');
+                        //imageSlider.reload();
+                        var indexOfThumb = $('#photo-pager .scale-thumb').length;
+                        $("#media [data-target='#section-photo'] .badge").text(indexOfThumb + 1);
                     }
                 });
 
@@ -4662,6 +4763,8 @@ $(function() {
         return;
     }
 });
+
+
 $(document).on('ready ajaxComplete', function(){
     $('.price-list .pagination a').on('click', function(event){
         event.preventDefault();
