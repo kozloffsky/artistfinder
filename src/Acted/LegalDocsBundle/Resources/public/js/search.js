@@ -83,6 +83,27 @@ $(function () {
         });
     }
 
+    function initSLiderSearchRes(){
+        $('.searchSearchResultWrapper').bxSlider({
+            slideWidth : panelWidth,
+            minSlides  : 1,
+            maxSlides  : 5,
+            slideMargin: margin + 1,
+            pager      : false,
+            controls   : true,
+            nextText   : '<i class="fa fa-2x fa-angle-right"></i>',
+            prevText   : '<i class="fa fa-2x fa-angle-left"></i>',
+            moveSlides : 1,
+            infiniteLoop: false,
+            onSliderLoad: function() {
+                var viewportsCount = $('.bx-viewport').length;
+                if(slidersCount == viewportsCount) {
+                    $('.bx-viewport').css('padding-left', margin/2+'px');
+                }
+            }
+        });
+    }
+
     function initTabs() {
         $('.tab').click(function () {
             $('.tab').removeClass('active');
@@ -224,7 +245,13 @@ $(function () {
             url: '/batch/artist',
             data: searchFormSerialize,
             success: function(response){
-                createNewFilterResults(response);
+                var checkedCategoriesFind = $('#searchCategory input:checkbox:checked').length;
+                console.log(checkedCategoriesFind)
+                if(checkedCategoriesFind > 0) {
+                    createNewFilterResults(response);
+                } else {
+                    searchResultMainCategories(response)
+                }
             }
         })
     }
@@ -261,6 +288,36 @@ $(function () {
         })
     }
 
+    function searchResultMainCategories(response){
+        console.log(response);
+        $('.SearchResultTab').remove();
+        $('<li data-toggle="#tab-SearchResultTabContent" class="tab SearchResultTab tab recommendations">'+
+            '<a>Search result</a>'+
+            '</li>').insertAfter('.results-menu .recommendations');
+        $('.SearchResultTabContent .slider').remove();
+        var searchResultTab = true;
+        loopSearchRes();
+        function loopSearchRes(){
+            for(var propt in response) {
+                var searchCategoryId = propt,
+                    searchCategoryName = $('.categories-menu a[data-toggle="#'+ searchCategoryId +'"]').text(),
+                    tabContentBlockRec = '<div class="slider">'+
+                        '<h2 class="title" style="margin-top: 0px">'+ searchCategoryName +'</h2>'+
+                        '<div class="slider-block">'+
+                        '<div class="slider-wrapper searchSearchResultWrapper" id="searchResWrapper'+searchCategoryId+'">'+
+                        '</div>';
+                $(tabContentBlockRec).appendTo('#tab-SearchResultTabContent');
+                loopREcomendedArtistsInCat(response[propt], propt, searchResultTab);
+            }
+        };
+        getRecStarts();
+        initSLiderSearchRes();
+        setTabsCorenersZ();
+        selectBoxStyle();
+        //console.log('finish');
+        initTabs();
+        //$('.recomendedFilter select').prop('disabled',false);
+    }
 
     function recomendedSearchRes(response){
         console.log(response);
@@ -284,7 +341,7 @@ $(function () {
         //$('.recomendedFilter select').prop('disabled',false);
     }
 
-    function loopREcomendedArtistsInCat(artists, propt){
+    function loopREcomendedArtistsInCat(artists, propt, searchResultTab){
         $(artists).each(function () {
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString();
@@ -362,7 +419,12 @@ $(function () {
                     '</div>' +
                     '</div>';
             }
-            $('#searchRecWrapper'+propt+'').append(artistBlockSearch);
+            if (searchResultTab){
+                $('#searchResWrapper'+propt+'').append(artistBlockSearch);
+            } else {
+                $('#searchRecWrapper'+propt+'').append(artistBlockSearch);
+            }
+
         });
     }
 

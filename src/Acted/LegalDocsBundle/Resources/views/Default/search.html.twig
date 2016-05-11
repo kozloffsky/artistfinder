@@ -277,28 +277,28 @@
 
                 <div id="" class="tab-block tab-content searchTabContent" style="display: none; padding-bottom: 100px;">
                     <div class="filters">
-                        <select data-placeholder="Top rated">
-                            <option value="0">Top rated</option>
-                            <option value="1">Lowest rated</option>
-                            <option value="2">Lorem Ipsum</option>
-                        </select>
-
-                        <select data-palaceholder="Price">
-                            <option value="0">Price</option>
-                            <option value="1">Lorem Ipsum</option>
-                            <option value="2">Lorem Ipsum</option>
-                        </select>
-
-                        <select data-palaceholder="Distance">
-                            <option value="0">From 0 to 50km</option>
-                            <option value="1">From 50 to 200km</option>
-                            <option value="2">From 200km to 1000km</option>
-                        </select>
-
-                        <div class="custom-checkbox">
-                            <input type="checkbox" name="range" id="only-video1">
-                            <label for="only-video1">Only artists with video</label>
-                        </div>
+                        <form id="recomendedFilter">
+                            <select data-placeholder="Rating" name="order" id="recFilterRating">
+                                <option value="" disabled selected hidden>Rating</option>
+                                <option value="top_rated">Top rated</option>
+                                <option value="lowest_rated">Lowest rated</option>
+                            </select>
+                            <select data-placeholder="Price" name="order" id="recFilterPrice">
+                                <option value="" disabled selected hidden>Price</option>
+                                <option value="cheapest">Cheapest</option>
+                                <option value="more_expensive">Most expensive</option>
+                            </select>
+                            <select data-palaceholder="Distance" name="distance">
+                                <option value="any">Any</option>
+                                <option value="80">From 0 to 50 miles</option>
+                                <option value="160">From 0 to 100 miles</option>
+                                <option value="321">From 0 to 200 miles</option>
+                            </select>
+                            <div class="custom-checkbox">
+                                <input type="checkbox" name="with_video" value="1" id="only-video">
+                                <label for="only-video">Only artists with video</label>
+                            </div>
+                        </form>
                     </div>
 
                     <div class="row">
@@ -313,28 +313,59 @@
 
                 <div id="tab-catSearchResNew" class="tab-block tab-content searchTabContent" style="display: none; padding-bottom: 100px;">
                     <div class="filters">
-                        <select data-placeholder="Top rated">
-                            <option value="0">Top rated</option>
-                            <option value="1">Lowest rated</option>
-                            <option value="2">Lorem Ipsum</option>
-                        </select>
+                        <form id="recomendedFilter">
+                            <select data-placeholder="Rating" name="order" id="recFilterRating">
+                                <option value="" disabled selected hidden>Rating</option>
+                                <option value="top_rated">Top rated</option>
+                                <option value="lowest_rated">Lowest rated</option>
+                            </select>
+                            <select data-placeholder="Price" name="order" id="recFilterPrice">
+                                <option value="" disabled selected hidden>Price</option>
+                                <option value="cheapest">Cheapest</option>
+                                <option value="more_expensive">Most expensive</option>
+                            </select>
+                            <select data-palaceholder="Distance" name="distance">
+                                <option value="any">Any</option>
+                                <option value="80">From 0 to 50 miles</option>
+                                <option value="160">From 0 to 100 miles</option>
+                                <option value="321">From 0 to 200 miles</option>
+                            </select>
+                            <div class="custom-checkbox">
+                                <input type="checkbox" name="with_video" value="1" id="only-video">
+                                <label for="only-video">Only artists with video</label>
+                            </div>
+                        </form>
+                    </div>
 
-                        <select data-palaceholder="Price">
-                            <option value="0">Price</option>
-                            <option value="1">Lorem Ipsum</option>
-                            <option value="2">Lorem Ipsum</option>
-                        </select>
+                    <div class="row">
 
-                        <select data-palaceholder="Distance">
-                            <option value="0">From 0 to 50km</option>
-                            <option value="1">From 50 to 200km</option>
-                            <option value="2">From 200km to 1000km</option>
-                        </select>
+                    </div>
+                </div>
 
-                        <div class="custom-checkbox">
-                            <input type="checkbox" name="range" id="only-video1">
-                            <label for="only-video1">Only artists with video</label>
-                        </div>
+                <div id="tab-SearchResultTabContent" class="tab-block tab-content SearchResultTabContent" style="display: none; padding-bottom: 100px;">
+                    <div class="filters">
+                        <form id="recomendedFilter">
+                            <select data-placeholder="Rating" name="order" id="recFilterRating">
+                                <option value="" disabled selected hidden>Rating</option>
+                                <option value="top_rated">Top rated</option>
+                                <option value="lowest_rated">Lowest rated</option>
+                            </select>
+                            <select data-placeholder="Price" name="order" id="recFilterPrice">
+                                <option value="" disabled selected hidden>Price</option>
+                                <option value="cheapest">Cheapest</option>
+                                <option value="more_expensive">Most expensive</option>
+                            </select>
+                            <select data-palaceholder="Distance" name="distance">
+                                <option value="any">Any</option>
+                                <option value="80">From 0 to 50 miles</option>
+                                <option value="160">From 0 to 100 miles</option>
+                                <option value="321">From 0 to 200 miles</option>
+                            </select>
+                            <div class="custom-checkbox">
+                                <input type="checkbox" name="with_video" value="1" id="only-video">
+                                <label for="only-video">Only artists with video</label>
+                            </div>
+                        </form>
                     </div>
 
                     <div class="row">
