@@ -112,6 +112,7 @@ $(function () {
             var id = $(this).attr('data-toggle');
             $(id).show();
         });
+        deleteTabSearch();
     }
 
     $('.header-block input').focus(function () {
@@ -293,6 +294,7 @@ $(function () {
         $('.SearchResultTab').remove();
         $('<li data-toggle="#tab-SearchResultTabContent" class="tab SearchResultTab tab recommendations">'+
             '<a>Search result</a>'+
+            '<div class="deleteTabBlock"><span class="hidden">SearchResultTabContent</span><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>'+
             '</li>').insertAfter('.results-menu .recommendations');
         $('.SearchResultTabContent .slider').remove();
         var searchResultTab = true;
@@ -440,6 +442,7 @@ $(function () {
         loopSearchRes();
         function loopSearchRes(){
             for(var propt in response) {
+                //$('#tab-'+propt+'').remove();
                 var searchCategoryId = propt,
                     searchCategoryName = $('#searchCategories label[for="search'+ searchCategoryId +'"]').text(),
                     tabContentBlock = '<div id="tab-'+propt+'" class="tab-block tab-content" style="display: none; padding-bottom: 100px;">'+
@@ -470,10 +473,16 @@ $(function () {
                     '<div class="row">'+
                     '</div>'+
                     '</div>';
-                $(tabContentBlock).appendTo('.results-content > .container');
+
+                var checkIfTabExist = $('#tab-'+propt+'').length;
+                console.log(checkIfTabExist)
+                if(checkIfTabExist == 0) {
+                    $(tabContentBlock).appendTo('.results-content > .container');
+                }
 
                 $('.results-menu').append('<li data-toggle="#tab-'+searchCategoryId+'" class="tab">'+
                     '<a>'+searchCategoryName+'</a>'+
+                    '<div class="deleteTabBlock"><span class="hidden">'+searchCategoryId+'</span><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>'+
                     '</li>');
                 console.log(response[propt].length)
                 if (response[propt].length == 0){
@@ -691,7 +700,7 @@ $(function () {
     }
 
     function removeOldTabs(){
-        $('.results-menu li').not('.recommendations').remove();
+        $('.results-menu li').not('.recommendations, .searchMainResTab').remove();
     }
 
     $(document).ready(function(){
@@ -724,8 +733,9 @@ $(function () {
 
     function catSearchRes(searchCatName, searchMainCatId, response){
         var destinationTab = 'catSearchResNew';
-        $('.results-menu').append('<li data-toggle="#tab-'+destinationTab+'" class="tab '+destinationTab+'Tab">'+
+        $('.results-menu').append('<li data-toggle="#tab-'+destinationTab+'" class="tab '+destinationTab+'Tab searchMainResTab">'+
             '<a>'+searchCatName+'</a>'+
+            '<div class="deleteTabBlock"><span class="hidden">'+destinationTab+'</span><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>'+
             '</li>');
         loopArtistsInCat(response, destinationTab);
         setTabsCorenersZ();
@@ -742,6 +752,23 @@ $(function () {
         $('html,body').animate({
             scrollTop: $('.results').offset().top
         });
+    }
+
+    function deleteTabSearch() {
+        $('.deleteTabBlock').on('click', function (event) {
+            event.stopPropagation();
+            var clickedBlockDel = this,
+                tabContentToDel = $(clickedBlockDel).find('span').text(),
+                tabBlock = $(clickedBlockDel).parent('.tab');
+            console.log(tabContentToDel);
+
+            $('.tab').removeClass('active');
+            $('.recommendedTab').addClass('active');
+            $('.tab-block').hide();
+            $('.recommendationsTabContent').show();
+            $(tabBlock).hide();
+            $('#search'+tabContentToDel+'').prop('checked', false)
+        })
     }
 
 });
