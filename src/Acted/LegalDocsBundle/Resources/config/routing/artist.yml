@@ -6,3 +6,7 @@ artists_list_by_category:
     path:     /batch/artist
     defaults: { _controller: ActedLegalDocsBundle:Artist:batch, _format: json }
     methods:  GET
+artists_info_by_slug:
+    path:     /info/artist/{slug}
+    defaults: { _controller: ActedLegalDocsBundle:Artist:getArtistInfoBySlug, _format: json }
+    methods:  GET

@@ -3,9 +3,11 @@ Acted\LegalDocsBundle\Entity\Artist:
   custom_accessor_order: [name, slug, rating]
   properties:
     name:
-      groups: [Default, block]
+      groups: [Default, block, quote_request]
     slug:
-      groups: [Default, block]
+      groups: [Default, block, quote_request]
+    user:
+      groups: [quote_request]
   virtual_properties:
     getCityName:
       serialized_name: city
@@ -21,7 +23,10 @@ Acted\LegalDocsBundle\Entity\Artist:
       groups: [block]
     getCategoriesNames:
       serialized_name: categories
-      groups: [block]
+      groups: [block, quote_request]
     getLastPerformanceMedia:
       serialized_name: media
       groups: [block]
+    getAllPerformance:
+      serialized_name: allPerformance
+      groups: [quote_request]

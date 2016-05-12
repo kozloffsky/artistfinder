@@ -140,4 +140,21 @@ class ArtistController extends Controller
         return $result;
 
     }
+
+    /**
+     * Artist info by slug
+     * @Rest\View(serializerGroups={"quote_request"})
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Artist info by slug",
+     * )
+     */
+    public function getArtistInfoBySlugAction(Request $request)
+    {
+        $slug = $request->get('slug');
+        $em = $this->getDoctrine()->getManager();
+        $artist = $em->getRepository('ActedLegalDocsBundle:Artist')->findOneBySlug($slug);
+
+        return ['artist' => $artist];
+    }
 }
