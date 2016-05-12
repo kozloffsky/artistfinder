@@ -26,6 +26,7 @@ Acted\LegalDocsBundle\Entity\Message:
           notnull: true
         readDateTime:
           type: datetime
+          nullable: true
     manyToOne:
         chatRoom:
             targetEntity: Acted\LegalDocsBundle\Entity\ChatRoom

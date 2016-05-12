@@ -49,9 +49,12 @@ class EventsController extends Controller
                 $event = $data->getEvent();
             }
 
-
             $offer = $eventManager->createOffer($data);
-            $validationErrors->addAll($validator->validate($offer));
+            if (!isset($validationErrors)) {
+                $validationErrors = $validator->validate($offer);
+            } else {
+                $validationErrors->addAll($validator->validate($offer));
+            }
             $em->persist($offer);
 
             $eventOffer = $eventManager->createEventOffer($data);
@@ -71,9 +74,11 @@ class EventsController extends Controller
                 return new JsonResponse($prettyErrors, 400);
             }
 
+
             $em->flush();
             $artist = $data->getPerformance()->first()->getProfile()->getUser();
-            $chatManager->createChat($event, $artist);
+
+            $chatManager->createChat($event, $artist, $data);
             $eventManager->createEventNotify($data, $artist, $offer);
             $eventManager->newMessageNotify($data, $artist);
 
