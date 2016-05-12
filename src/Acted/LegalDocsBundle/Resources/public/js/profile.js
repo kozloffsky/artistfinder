@@ -94,7 +94,7 @@ $(function() {
         if ($(window).width() < 992) {
             $('.navbar-collapse').css('max-height', $(window).height() - 70 + 'px');
         } else {
-            $('.navbar-collapse').css('max-height', '340px');
+            $('.navbar-collapse').css('max-height', '225px');
         }
     }
 

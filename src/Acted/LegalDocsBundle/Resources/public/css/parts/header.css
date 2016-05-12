@@ -24,6 +24,10 @@ header.small .navbar {
     background: #2228A3!important;
 }
 
+.navbar-brand>img {
+    max-width: 95px;
+}
+
 .home.header-background {
     background: url("../../assets/images/bg.jpg") no-repeat center;
     /*background: transparent;*/
@@ -43,6 +47,10 @@ header.small .navbar {
     position: relative;
     left: 50%;
     top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
 
@@ -50,6 +58,10 @@ header.small .navbar {
     position: absolute;
     top: 50%;
     left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     width: 80%;
     text-align: center;
@@ -153,7 +165,6 @@ header.small .navbar {
     display: none;
 }
 
-
 .header-block .wrapper .divider {
     display: inline-block;
     width: 1px;
@@ -174,6 +185,10 @@ header.small .navbar {
     width: 45px;
     padding: 0;
     background: rgba(255,117,58,1);
+    -webkit-transform: scaleX(-1);
+    -moz-transform: scaleX(-1);
+    -ms-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
     transform: scaleX(-1);
     color: white;
 }
@@ -221,7 +236,7 @@ header.small .navbar {
 }
 
 .navbar>.container-fluid .navbar-brand {
-    padding-top: 10px;
+    padding-top: 0;
     padding-bottom: 0;
     padding-left: 24px;
     padding-right: 23px;
@@ -231,6 +246,13 @@ header.small .navbar {
 
 .navbar-default .navbar-nav>li>a {
     color: white;
+}
+
+.navbar-default .navbar-nav .message-lt{
+    width: 25px;
+    height: 18px;
+    display: block;
+    background: url("../../assets/images/messages.png") no-repeat;
 }
 
 
@@ -261,7 +283,7 @@ header.small .navbar {
 }
 
 .navbar-default .navbar-nav>.active>a:hover,
-.navbar-default .navbar-nav>li>a:hover {
+.navbar-default .navbar-nav>li:not(.mail)>a:hover {
     background: transparent;
     color: white;
 }
@@ -434,6 +456,7 @@ header.small .navbar {
     }
 
     .navbar-default .navbar-nav>.active>a,
+    .navbar-default .navbar-nav>li>a:hover,
     .navbar-default .navbar-nav>.active>a:focus,
     .navbar-default .navbar-nav>.active>a:hover,
     .navbar-default .navbar-nav>.active>a:after{
@@ -442,8 +465,7 @@ header.small .navbar {
     }
 
     .navbar>.container-fluid .navbar-brand {
-        padding: 15px 30px;
-
+        padding: 5px 30px;
     }
 
     .navbar-brand>img {
@@ -482,6 +504,10 @@ header.small .navbar {
         color: white;
         top: 10px;
         position: relative;
+        -webkit-transform: scaleX(1);
+        -moz-transform: scaleX(1);
+        -ms-transform: scaleX(1);
+        -o-transform: scaleX(1);
         transform: scaleX(1);
     }
 

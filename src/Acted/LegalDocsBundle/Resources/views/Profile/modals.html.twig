@@ -49,3 +49,172 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal free-quote-modal fade" id="freeQuoteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">
+                    <div class="warn">!</div>
+                    Tip: Enter your event details below and it will automatically apply to your next quote requests
+                </h4>
+            </div>
+            <form>
+                <div class="modal-body">
+
+                    <div class="row clearfix">
+
+                        <div class="col-lg-12 form-group">
+                            <label for="event_name">Name your event</label>
+                            <input type="text" class="form-control" id="event_name" placeholder="Name your event">
+                        </div>
+
+                        <div class="col-lg-6 form-group">
+                            <label for="event_date">Date</label>
+                            <input type="text" class="form-control" id="event_date" placeholder="05/04/2016">
+                        </div>
+
+                        <div class="col-lg-6 form-group">
+                            <label for="event_city">City</label>
+                            <input type="text" class="form-control" id="event_city" placeholder="London">
+                        </div>
+
+                        <div class="col-lg-6 form-group">
+                            <label for="event_time">Time</label>
+                            <input type="text" class="form-control" id="event_time" placeholder="Evening">
+                        </div>
+
+                        <div class="col-lg-6 form-group">
+                            <label for="event_location">Location</label>
+                            <input type="text" class="form-control" id="event_location" placeholder="Event location">
+                        </div>
+
+                        <div class="col-lg-6 form-group">
+                            <label class="col-xs-12 no-pad" for="event_type">Event type</label>
+                            <select data-class="selections-white" name="event_type" id="event_type">
+                                <option value="0">Corporate event</option>
+                                <option value="1">Lorem Ipsum 1</option>
+                                <option value="2">Lorem Ipsum 2</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-6 form-group">
+                            <label class="col-xs-12 no-pad" for="venue_type">Venue type</label>
+                            <select data-class="selections-white" name="venue_type" id="venue_type">
+                                <option value="0">Hotel Ballroom</option>
+                                <option value="1">Lorem Ipsum 1</option>
+                                <option value="2">Lorem Ipsum 2</option>
+                            </select>
+                        </div>
+
+                        <div class="row col-lg-12 guests-num">
+                            <label class="col-xs-12 no-pad">Number of guests</label>
+
+                            <div class="custom-checkbox">
+                                <input id="count_1" name="guests_count" type="radio">
+                                <label for="count_1">Less than 50</label>
+                            </div>
+                            <div class="custom-checkbox">
+                                <input id="count_2" name="guests_count" type="radio">
+                                <label for="count_2">50-100</label>
+                            </div>
+                            <div class="custom-checkbox">
+                                <input id="count_3" name="guests_count" type="radio">
+                                <label for="count_3">100-500</label>
+                            </div>
+                            <div class="custom-checkbox">
+                                <input id="count_4" name="guests_count" type="radio">
+                                <label for="count_4">500+</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-lg-12">
+                        <div class="col-lg-12 no-pad">
+                            <img class="quote-profile-avatar" src="assets/images/avatar.jpg" alt="avatar"/>
+
+                            <div class="quote-profile-info">
+                                <h2>Diana Krall</h2>
+                                <p>Jazz Vocalist, Jazz Pianist, Song Writer, Lorem Ipsum, Lorem Ipsum, Lorem Ipsum</p>
+                            </div>
+                        </div>
+
+                        <ul class="profile-categories ul-reset">
+                            <li>
+                                <div class="custom-checkbox">
+                                    <input id="checkbox_1" type="checkbox">
+                                    <label for="checkbox_1">Comedy Acts long</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="custom-checkbox">
+                                    <input id="checkbox_2" type="checkbox">
+                                    <label for="checkbox_2">Comedy Acts very long</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="custom-checkbox">
+                                    <input id="checkbox_3" type="checkbox">
+                                    <label for="checkbox_3">Not so long but still</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="custom-checkbox">
+                                    <input id="checkbox_4" type="checkbox">
+                                    <label for="checkbox_4">Short</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="custom-checkbox">
+                                    <input id="checkbox_5" type="checkbox">
+                                    <label for="checkbox_5">Less Shorty</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="custom-checkbox">
+                                    <input id="checkbox_6" type="checkbox">
+                                    <label for="checkbox_6">Beautiful Acts</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="custom-checkbox">
+                                    <input id="checkbox_7" type="checkbox">
+                                    <label for="checkbox_7">Singers</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="custom-checkbox">
+                                    <input id="checkbox_8" type="checkbox">
+                                    <label for="checkbox_8">Night Dancers</label>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="row add-comment-btn">
+                            <a href="#" id="comment_toggle">Add a comment</a>
+                        </div>
+
+                        <div class="col-lg-12 no-pad" id="comment_area" style="display: none">
+                            <textarea name="quote-profile-desc" class="quote-profile-desc" placeholder="Write a message to the Artist if you have any question about his performance or if you want to provide with more details about your event"></textarea>
+                        </div>
+
+                        <div class="controls">
+                            <div class="button-gradient filled">
+                                <button class="btn">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
