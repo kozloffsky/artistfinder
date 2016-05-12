@@ -151,7 +151,7 @@ $(function () {
   $('#artistBlock input').on('change', disableCatNext);
 
   function checkCategories(){
-    var numberCatChecked = $('#artistBlock input:checkbox:checked').length;
+    var numberCatChecked = $('#registrationModal #categoriesForm input:checkbox:checked').length;
     if (numberCatChecked >= 1){
       $('.errorCat').fadeOut();
       chageState(3);
@@ -161,7 +161,7 @@ $(function () {
   }
 
   function disableCatNext(){
-    var numberCatChecked = $('#artistBlock input:checkbox:checked').length;
+    var numberCatChecked = $('#registrationModal #categoriesForm input:checkbox:checked').length;
     if (numberCatChecked >= 1){
       $('#stageTwoNext').removeClass('disabled');
     } else {
@@ -214,6 +214,7 @@ $(function () {
     var userInformation = $('.artistRegForm').serialize();
     var categoriesForm = $('#categoriesForm').serialize();
     var userRole = 'role=ROLE_ARTIST';
+    console.log(categoriesForm)
     registerArtist(userInformation, categoriesForm, userRole);
   };
 

@@ -4940,6 +4940,96 @@ $(document).on('ready ajaxComplete', function(){
     }
 });
 
+/**
+ * Created by pavel on 12.05.16.
+ */
+$(function () {
+
+    function initSelect(){
+        $('select').each(function () {
+            var placeholder = $(this).attr('data-placeholder');
+            var $select2    = $(this).select2({
+                placeholder            : placeholder || '',
+                minimumResultsForSearch: -1
+            });
+
+            var className = $(this).attr('data-class');
+            $select2.data('select2').$selection.addClass(className);
+            $select2.data('select2').$results.addClass(className);
+        });
+    }
+
+    //Get values for quote request when page load
+
+    addValuesInQuoteRequest();
+
+    function addValuesInQuoteRequest(){
+        getAllEventsType();
+        getAllVenuesType();
+    }
+
+    function getAllEventsType() {
+        $.ajax({
+            type: "GET",
+            url: '/event/list_events_type',
+            success: function(response) {
+                $(response.eventsType).each(function(){
+                    $('.free-quote-modal #event_type').append('<option value="'+ this.id +'" name="type">'+this.event_type+'</option>');
+                    initSelect();
+                });
+            }
+        })
+    }
+
+    function getAllVenuesType() {
+        $.ajax({
+            type: "GET",
+            url: '/event/list_venue_type',
+            success: function(response) {
+                $(response.venueType).each(function(){
+                    $('.free-quote-modal #venue_type').append('<option value="'+ this.id +'" name="type">'+this.venue_type+'</option>');
+                    initSelect();
+                });
+            }
+        })
+    }
+
+    $('.quoteRequestProfile').on('click',function(){
+        var artistSlug = $('#slug').text();
+        getArtistInformationForQuote(artistSlug)
+    })
+
+    function getArtistInformationForQuote(artistSlug){
+        $.ajax({
+            type: "GET",
+            url: '/info/artist/' + artistSlug,
+            success: function(response) {
+                createRequestQuotePerformances(response.artist);
+                createArtistDataViewInQuote(response.artist);
+            }
+        })
+    }
+
+    function createRequestQuotePerformances(artistData){
+        $('.requestQuotePerformances').empty();
+        $(artistData.allPerformance).each(function(){
+            var blockPerformance = '<li>'+
+                '<div class="custom-checkbox">'+
+                '<input id="'+this.id+'" type="checkbox">'+
+                '<label for="'+this.id+'">'+this.name+'</label>'+
+                '</div>'+
+                '</li>';
+            $('.requestQuotePerformances').append(blockPerformance);
+        })
+    }
+
+    function createArtistDataViewInQuote(artistData){
+        var artistCatString = artistData.categories.toString();
+        $('.quoteRequestArtistData .quote-profile-info h2').append(artistData.name);
+        $('.quoteRequestArtistData .quote-profile-info p').append(artistCatString);
+        $('.quote-profile-avatar').attr('src', artistData.user.avatar)
+    }
+});
 $(function () {
   //$('#phone_number').cleanVal(); to get phone number.
 
@@ -5093,7 +5183,7 @@ $(function () {
   $('#artistBlock input').on('change', disableCatNext);
 
   function checkCategories(){
-    var numberCatChecked = $('#artistBlock input:checkbox:checked').length;
+    var numberCatChecked = $('#registrationModal #categoriesForm input:checkbox:checked').length;
     if (numberCatChecked >= 1){
       $('.errorCat').fadeOut();
       chageState(3);
@@ -5103,7 +5193,7 @@ $(function () {
   }
 
   function disableCatNext(){
-    var numberCatChecked = $('#artistBlock input:checkbox:checked').length;
+    var numberCatChecked = $('#registrationModal #categoriesForm input:checkbox:checked').length;
     if (numberCatChecked >= 1){
       $('#stageTwoNext').removeClass('disabled');
     } else {
@@ -5156,6 +5246,7 @@ $(function () {
     var userInformation = $('.artistRegForm').serialize();
     var categoriesForm = $('#categoriesForm').serialize();
     var userRole = 'role=ROLE_ARTIST';
+    console.log(categoriesForm)
     registerArtist(userInformation, categoriesForm, userRole);
   };
 
