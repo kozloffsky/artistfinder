@@ -53,3 +53,7 @@ acted_legal_docs_search:
 acted_legal_docs_event:
   resource: "@ActedLegalDocsBundle/Resources/config/routing/event.yml"
   prefix: /event
+
+acted_legal_docs_chat_room:
+  resource: "@ActedLegalDocsBundle/Resources/config/routing/chatRoom.yml"
+  prefix: /chat_room
