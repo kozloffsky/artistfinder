@@ -11,6 +11,7 @@ use Acted\LegalDocsBundle\Entity\Offer;
 class EventOffer
 {
     const EVENT_OFFER_STATUS_PROPOSE = 'propose';
+    const EVENT_OFFER_STATUS_REJECT = 'reject';
 
     /**
      * @var integer

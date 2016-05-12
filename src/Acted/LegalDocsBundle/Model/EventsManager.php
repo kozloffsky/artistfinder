@@ -9,6 +9,7 @@ use Acted\LegalDocsBundle\Entity\Event;
 use Acted\LegalDocsBundle\Entity\Offer;
 use Acted\LegalDocsBundle\Entity\EventOffer;
 use Acted\LegalDocsBundle\Model\UserManager;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class EventsManager
 {
@@ -54,7 +55,7 @@ class EventsManager
     {
         $event = new Event();
         $date = $createEvent->getEventDate();
-        $nextDate = $date->add(new \DateInterval('P1D'));
+        $nextDate = new \DateTime(date('Y-m-d h:i:s', strtotime($date->format('Y-m-d h:i:s'))+86400));
         $event->setCity($createEvent->getCity());
         $event->setEventRef(uniqid());
         $event->setEventType($createEvent->getType());
@@ -102,12 +103,14 @@ class EventsManager
     /**
      * @param $eventData
      * @param $artist
+     * @param $offer
      */
-    public function createEventNotify($eventData, $artist)
+    public function createEventNotify($eventData, $artist, $offer)
     {
         $rendered = $this->templating->render('@ActedLegalDocs/Email/create_event_notify.html.twig', [
             'event' => $eventData,
             'artist' => $artist,
+            'offer' => $offer
         ]);
 
         $this->userManager->sendEmailMessage($rendered, $this->mailFrom, $artist->getEmail());
@@ -125,6 +128,19 @@ class EventsManager
         ]);
 
         $this->userManager->sendEmailMessage($rendered, $this->mailFrom, $artist->getEmail());
+    }
+
+    /**
+     * @param EventOffer $eventOffer
+     * @param string $status
+     */
+    public function changeStatusOffer(EventOffer $eventOffer, $status)
+    {
+        $now = new \DateTime();
+        $eventOffer->setStatus($status);
+        $eventOffer->setReadDateTime($now);
+        $this->entityManager->persist($eventOffer);
+        $this->entityManager->flush();
     }
 
 }

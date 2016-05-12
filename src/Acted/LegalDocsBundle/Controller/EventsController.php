@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Controller;
 
+use Acted\LegalDocsBundle\Entity\EventOffer;
 use Acted\LegalDocsBundle\Form\EventType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,7 +73,7 @@ class EventsController extends Controller
             $em->flush();
             $artist = $data->getPerformance()->first()->getProfile()->getUser();
 
-            $eventManager->createEventNotify($data, $artist);
+            $eventManager->createEventNotify($data, $artist, $offer);
             $eventManager->newMessageNotify($data, $artist);
 
             return new JsonResponse($serializer->toArray($event));
@@ -120,6 +121,35 @@ class EventsController extends Controller
         $events = $this->getEM()->getRepository('ActedLegalDocsBundle:EventOffer')->getEventsByUserId($userId);
 
         return ['events' => $events];
+    }
+
+    /**
+     * Reject offer by offerId
+     * @Rest\View
+     * @ApiDoc(
+     *  description="Reject offer by offerId",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when not exist offer",
+     *     }
+     * )
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function changeStatusToRejectAction(Request $request)
+    {
+        $offerId = $request->get('id');
+        $eventOffer = $this->getEM()->getRepository('ActedLegalDocsBundle:EventOffer')->findOneByOffer($offerId);
+        if ($eventOffer) {
+            $this->get('app.event.manager')->changeStatusOffer($eventOffer, EventOffer::EVENT_OFFER_STATUS_REJECT);
+            $this->addFlash('success', 'You Reject offer');
+
+            return $this->redirectToRoute('acted_legal_docs_homepage');
+        }
+        $this->addFlash('error', 'not exist offer!');
+
+        return $this->redirectToRoute('acted_legal_docs_homepage');
     }
 
     private function getEM()
