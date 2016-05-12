@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Entity;
 
+use Acted\LegalDocsBundle\Entity\ChatRoom;
 /**
  * Message
  */
@@ -42,6 +43,10 @@ class Message
      */
     private $readDateTime;
 
+    /**
+     * @var ChatRoom
+     */
+    private $chatRoom;
 
     /**
      * Get id
@@ -195,5 +200,22 @@ class Message
     public function getReadDateTime()
     {
         return $this->readDateTime;
+    }
+
+    /**
+     * @return ChatRoom
+     */
+    public function getChatRoom()
+    {
+        return $this->chatRoom;
+    }
+
+    /**
+     * @param ChatRoom $chatRoom
+     * @return  Message
+     */
+    public function setChatRoom(ChatRoom $chatRoom)
+    {
+        $this->chatRoom = $chatRoom;
     }
 }

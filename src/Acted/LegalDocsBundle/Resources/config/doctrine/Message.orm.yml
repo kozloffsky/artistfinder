@@ -26,4 +26,8 @@ Acted\LegalDocsBundle\Entity\Message:
           notnull: true
         readDateTime:
           type: datetime
+    manyToOne:
+        chatRoom:
+            targetEntity: Acted\LegalDocsBundle\Entity\ChatRoom
+            inversedBy: message
     lifecycleCallbacks: {  }

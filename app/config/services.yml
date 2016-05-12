@@ -40,6 +40,11 @@ services:
             - "@templating.engine.twig"
             - "@app.user.manager"
 
+    app.chat.manager:
+        class: Acted\LegalDocsBundle\Model\ChatManager
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
     app.media.manager:
         class: Acted\LegalDocsBundle\Model\MediaManager
         arguments: ["%image_upload_dir%"]

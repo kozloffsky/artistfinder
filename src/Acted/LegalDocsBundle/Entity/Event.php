@@ -523,4 +523,51 @@ class Event
     {
         return $this->getTitle();
     }
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $chatRooms;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->chatRooms = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add chatRoom
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom
+     *
+     * @return Event
+     */
+    public function addChatRoom(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
+    {
+        $this->chatRooms[] = $chatRoom;
+
+        return $this;
+    }
+
+    /**
+     * Remove chatRoom
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom
+     */
+    public function removeChatRoom(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
+    {
+        $this->chatRooms->removeElement($chatRoom);
+    }
+
+    /**
+     * Get chatRooms
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChatRooms()
+    {
+        return $this->chatRooms;
+    }
 }

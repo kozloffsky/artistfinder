@@ -39,6 +39,7 @@ class EventsController extends Controller
             $validator = $this->get('validator');
             $data = $form->getData();
             $eventManager = $this->get('app.event.manager');
+            $chatManager = $this->get('app.chat.manager');
 
             if (!$data->getEvent()) {
                 $event = $eventManager->createEvent($data);
@@ -72,7 +73,7 @@ class EventsController extends Controller
 
             $em->flush();
             $artist = $data->getPerformance()->first()->getProfile()->getUser();
-
+            $chatManager->createChat($event, $artist);
             $eventManager->createEventNotify($data, $artist, $offer);
             $eventManager->newMessageNotify($data, $artist);
 

@@ -48,5 +48,9 @@ Acted\LegalDocsBundle\Entity\Event:
             targetEntity: Acted\LegalDocsBundle\Entity\RefEventType
           venueType:
             targetEntity: Acted\LegalDocsBundle\Entity\RefVenueType
+    oneToMany:
+        chatRooms:
+          targetEntity: Acted\LegalDocsBundle\Entity\ChatRoom
+          mappedBy: event
 
     lifecycleCallbacks: {  }
