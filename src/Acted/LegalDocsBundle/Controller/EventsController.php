@@ -103,6 +103,25 @@ class EventsController extends Controller
     }
 
     /**
+     * Venue type list
+     * @Rest\View
+     * @ApiDoc(
+     *  description="Get list venue type",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     */
+    public function getListVenueTypeAction()
+    {
+        $eventsType = $this->getEM()->getRepository('ActedLegalDocsBundle:RefVenueType')->findAll();
+
+        return ['venueType' => $eventsType];
+
+    }
+
+    /**
      * Get events by user id
      * @Rest\View(serializerGroups={"getEvent"})
      * @ApiDoc(
