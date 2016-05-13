@@ -79,12 +79,12 @@
 
                         <div class="col-lg-6 form-group">
                             <label for="event_country">Country</label>
-                            <select data-class="selections-white" name="event_country" id="event_country">
+                            <select data-class="selections-white" name="country" id="event_country">
                                 {% for country in countries() %}
                                     {% if country.name == 'United Kingdom' %}
-                                        <option value="{{ country.id }}" name="event_country" selected="selected">{{ country.name }}</option>
+                                        <option value="{{ country.id }}" name="country" selected="selected">{{ country.name }}</option>
                                     {% else %}
-                                        <option value="{{ country.id }}" name="event_country">{{ country.name }}</option>
+                                        <option value="{{ country.id }}" name="country">{{ country.name }}</option>
                                     {% endif %}
                                 {% endfor %}
                             </select>
@@ -108,7 +108,7 @@
 
                         <div class="col-lg-6 form-group">
                             <label class="col-xs-12 no-pad" for="event_type">Event type</label>
-                            <select data-class="selections-white" name="event_type" id="event_type">
+                            <select data-class="selections-white" name="type" id="event_type">
                             </select>
                         </div>
 
@@ -122,19 +122,19 @@
                             <label class="col-xs-12 no-pad">Number of guests</label>
 
                             <div class="custom-checkbox">
-                                <input id="count_1" name="guests_count" type="radio" value="less_then_50">
+                                <input id="count_1" name="number_of_guests" type="radio" value="less_then_50">
                                 <label for="count_1">Less than 50</label>
                             </div>
                             <div class="custom-checkbox">
-                                <input id="count_2" name="guests_count" type="radio" value="50-100">
+                                <input id="count_2" name="number_of_guests" type="radio" value="50-100">
                                 <label for="count_2">50-100</label>
                             </div>
                             <div class="custom-checkbox">
-                                <input id="count_3" name="guests_count" type="radio" value="100-500">
+                                <input id="count_3" name="number_of_guests" type="radio" value="100-500">
                                 <label for="count_3">100-500</label>
                             </div>
                             <div class="custom-checkbox">
-                                <input id="count_4" name="guests_count" type="radio" value="500+">
+                                <input id="count_4" name="number_of_guests" type="radio" value="500+">
                                 <label for="count_4">500+</label>
                             </div>
                         </div>

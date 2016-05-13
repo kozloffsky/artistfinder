@@ -121,6 +121,7 @@
                                 <li><a href="{{ logout_path() }}">Logout</a></li>
                             {% endif %}
                         </ul>
+                        <span id="userInformation" class="hidden">{{ app.user.id }}</span>
                     </li>
                     {% else %}
                         <li class="bookings"><a href="#">Become a talent

@@ -3991,8 +3991,10 @@ $(function () {
             type: "POST",
             url: '/login_check',
             data: customerValues,
-            success: function(){
+            success: function(response){
                 $('#errorLogIn').hide();
+                var userData = JSON.stringify(response)
+                localStorage.setItem("user", userData);
                 window.location.replace(window.location.href);
             },
             error: function(response){
@@ -4414,7 +4416,10 @@ $(function() {
         $.ajax({
             type: "POST",
             url: '/profile/' + slug + '/media/new',
-            data: {"audio": "'"+ audioLink +"'"}
+            data: {"audio": "'"+ audioLink +"'"},
+            success: function(response){
+                $('.audioBlock').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="'+response.link+'"></iframe>')
+            }
         })
     }
 
@@ -5005,7 +5010,7 @@ $(function () {
             url: '/event/list_venue_type',
             success: function(response) {
                 $(response.venueType).each(function(){
-                    $('.free-quote-modal #venue_type').append('<option value="'+ this.id +'" name="type">'+this.venue_type+'</option>');
+                    $('.free-quote-modal #venue_type').append('<option value="'+ this.id +'" name="venue_type">'+this.venue_type+'</option>');
                     initSelect();
                 });
             }
@@ -5074,12 +5079,26 @@ $(function () {
 
     $('#quoteRequsetSend').on('click',function(e){
         e.preventDefault();
-        var requestFormSerialize = $('#requestQuoteForm').serialize();
-        sendQuoteRequest(requestFormSerialize)
+        var requestFormSerialize = $('#requestQuoteForm').serialize(),
+            userInformationStorage = JSON.parse(localStorage.getItem('user')),
+            checkUserLoggedIn = $('#userInformation').text();
+        console.log(userInformationStorage);
+        console.log(checkUserLoggedIn);
+        if(checkUserLoggedIn && userInformationStorage){
+            sendQuoteRequest(requestFormSerialize, userInformationStorage);
+        } else {
+
+        }
+
     });
 
-    function sendQuoteRequest(data){
+    function sendQuoteRequest(data, userInformationStorage){
         console.log(data)
+        $.ajax({
+            type:'POST',
+            url:'/event/create',
+            data: data + '&user='+userInformationStorage.userId
+        })
     };
 });
 $(function () {
@@ -5290,13 +5309,14 @@ $(function () {
     artistRegister();
   });
 
-  $('#stageThreeNextCustomer').on('click', function(){
+  $('#stageThreeNextCustomer').on('click', function(event){
+    event.preventDefault();
     customerRegister();
   });
 
   function artistRegister(){
     var userInformation = $('.artistRegForm').serialize();
-    var categoriesForm = $('#categoriesForm').serialize();
+    var categoriesForm = $('.artistCategoriesChoose > #categoriesForm').serialize();
     var userRole = 'role=ROLE_ARTIST';
     console.log(categoriesForm)
     registerArtist(userInformation, categoriesForm, userRole);
@@ -5843,6 +5863,7 @@ $(function () {
         };
         getRecStarts();
         initSLiderRec();
+        checkUserPosition();
         //$('.recomendedFilter select').prop('disabled',false);
     }
 
@@ -5988,6 +6009,7 @@ $(function () {
                     loopArtistsInCat(response[propt], propt);
                 }
                 createShowMoreBtn(propt);
+                checkUserPosition()
             }
         };
         //setArtistStarsCat();

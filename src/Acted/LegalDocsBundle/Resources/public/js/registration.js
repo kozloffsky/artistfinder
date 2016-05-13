@@ -206,13 +206,14 @@ $(function () {
     artistRegister();
   });
 
-  $('#stageThreeNextCustomer').on('click', function(){
+  $('#stageThreeNextCustomer').on('click', function(event){
+    event.preventDefault();
     customerRegister();
   });
 
   function artistRegister(){
     var userInformation = $('.artistRegForm').serialize();
-    var categoriesForm = $('#categoriesForm').serialize();
+    var categoriesForm = $('.artistCategoriesChoose > #categoriesForm').serialize();
     var userRole = 'role=ROLE_ARTIST';
     console.log(categoriesForm)
     registerArtist(userInformation, categoriesForm, userRole);

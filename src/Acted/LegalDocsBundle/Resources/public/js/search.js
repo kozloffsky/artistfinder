@@ -346,6 +346,7 @@ $(function () {
         };
         getRecStarts();
         initSLiderRec();
+        checkUserPosition();
         //$('.recomendedFilter select').prop('disabled',false);
     }
 
@@ -491,6 +492,7 @@ $(function () {
                     loopArtistsInCat(response[propt], propt);
                 }
                 createShowMoreBtn(propt);
+                checkUserPosition()
             }
         };
         //setArtistStarsCat();

@@ -50,7 +50,7 @@ $(function () {
             url: '/event/list_venue_type',
             success: function(response) {
                 $(response.venueType).each(function(){
-                    $('.free-quote-modal #venue_type').append('<option value="'+ this.id +'" name="type">'+this.venue_type+'</option>');
+                    $('.free-quote-modal #venue_type').append('<option value="'+ this.id +'" name="venue_type">'+this.venue_type+'</option>');
                     initSelect();
                 });
             }
@@ -119,15 +119,25 @@ $(function () {
 
     $('#quoteRequsetSend').on('click',function(e){
         e.preventDefault();
-        var requestFormSerialize = $('#requestQuoteForm').serialize();
-        sendQuoteRequest(requestFormSerialize)
+        var requestFormSerialize = $('#requestQuoteForm').serialize(),
+            userInformationStorage = JSON.parse(localStorage.getItem('user')),
+            checkUserLoggedIn = $('#userInformation').text();
+        console.log(userInformationStorage);
+        console.log(checkUserLoggedIn);
+        if(checkUserLoggedIn && userInformationStorage){
+            sendQuoteRequest(requestFormSerialize, userInformationStorage);
+        } else {
+
+        }
+
     });
 
-    function sendQuoteRequest(data){
+    function sendQuoteRequest(data, userInformationStorage){
         console.log(data)
         $.ajax({
             type:'POST',
-            url:'/event/create'
+            url:'/event/create',
+            data: data + '&user='+userInformationStorage.userId
         })
     };
 });
