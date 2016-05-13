@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="row stage" style="display: none" id="stage-2">
-                    <div class="row sub-stage" id="artistBlock">
+                    <div class="row sub-stage artistCategoriesChoose" id="artistBlock">
                         <div class="errorCat">Choose at least one category</div>
 
                         {% include 'ActedLegalDocsBundle:Default:categories.html.twig' %}
@@ -53,12 +53,12 @@
                             <form class="details-form no-pad customerRegForm" id="customerRegForm">
                                 <div class="form-group">
                                     <label for="first_name">First name</label>
-                                    <input type="text" name="firstname" class="form-control" minlength="2" id="customerFirst_name" placeholder="First name" required>
+                                    <input type="text" name="firstname" class="form-control" minlength="3" id="customerFirst_name" placeholder="First name" required>
                                     <label class="icon"></label>
                                 </div>
                                 <div class="form-group">
                                     <label for="last_name">Last name</label>
-                                    <input type="text" name="lastname" class="form-control" minlength="2" id="customerLast_name" placeholder="Last name" required>
+                                    <input type="text" name="lastname" class="form-control" minlength="3" id="customerLast_name" placeholder="Last name" required>
                                     <label class="icon"></label>
                                 </div>
 
@@ -96,17 +96,17 @@
                         <form class="details-form no-pad artistRegForm" id="artistForm">
                             <div class="form-group">
                                 <label for="first_name">First name</label>
-                                <input type="text" name="firstname" class="form-control" minlength="2" id="first_name" placeholder="First name" required>
+                                <input type="text" name="firstname" class="form-control" minlength="3" id="first_name" placeholder="First name" required>
                                 <label class="icon"></label>
                             </div>
                             <div class="form-group">
                                 <label for="last_name">Last name</label>
-                                <input type="text" name="lastname" class="form-control" minlength="2" id="last_name" placeholder="Last name" required>
+                                <input type="text" name="lastname" class="form-control" minlength="3" id="last_name" placeholder="Last name" required>
                                 <label class="icon"></label>
                             </div>
                             <div class="form-group">
                                 <label for="band_name">Artist/Band name</label>
-                                <input type="text" name="name" class="form-control" minlength="2" id="band_name" placeholder="Artist/Band name" required>
+                                <input type="text" name="name" class="form-control" minlength="3" id="band_name" placeholder="Artist/Band name" required>
                                 <label class="icon"></label>
                             </div>
                             <div class="form-group">

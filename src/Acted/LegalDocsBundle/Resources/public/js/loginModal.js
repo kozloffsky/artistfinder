@@ -20,8 +20,10 @@ $(function () {
             type: "POST",
             url: '/login_check',
             data: customerValues,
-            success: function(){
+            success: function(response){
                 $('#errorLogIn').hide();
+                var userData = JSON.stringify(response)
+                localStorage.setItem("user", userData);
                 window.location.replace(window.location.href);
             },
             error: function(response){

@@ -94,7 +94,7 @@ $(function() {
         if ($(window).width() < 992) {
             $('.navbar-collapse').css('max-height', $(window).height() - 70 + 'px');
         } else {
-            $('.navbar-collapse').css('max-height', '340px');
+            $('.navbar-collapse').css('max-height', '225px');
         }
     }
 
@@ -408,7 +408,10 @@ $(function() {
         $.ajax({
             type: "POST",
             url: '/profile/' + slug + '/media/new',
-            data: {"audio": "'"+ audioLink +"'"}
+            data: {"audio": "'"+ audioLink +"'"},
+            success: function(response){
+                $('.audioBlock').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="'+response.link+'"></iframe>')
+            }
         })
     }
 

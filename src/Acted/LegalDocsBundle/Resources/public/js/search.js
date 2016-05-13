@@ -56,8 +56,8 @@ $(function () {
     }
 
     var slidersCount = $('.slider-wrapper').length;
-    var panelWidth = 204;
-    var sliderArea = $('.slider-block').width() - 80;
+    var panelWidth = 153;
+    var sliderArea = $('.slider-block').width() - 70;
     var visiblePanels = parseInt(sliderArea/panelWidth);
     var margin = (sliderArea - panelWidth * visiblePanels) / visiblePanels;
 
@@ -346,6 +346,7 @@ $(function () {
         };
         getRecStarts();
         initSLiderRec();
+        checkUserPosition();
         //$('.recomendedFilter select').prop('disabled',false);
     }
 
@@ -491,6 +492,7 @@ $(function () {
                     loopArtistsInCat(response[propt], propt);
                 }
                 createShowMoreBtn(propt);
+                checkUserPosition()
             }
         };
         //setArtistStarsCat();
