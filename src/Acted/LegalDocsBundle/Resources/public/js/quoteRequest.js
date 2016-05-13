@@ -3,6 +3,8 @@
  */
 $(function () {
 
+    $( "#event_date" ).datepicker();
+
     function initSelect(){
         $('select').each(function () {
             var placeholder = $(this).attr('data-placeholder');
@@ -17,7 +19,10 @@ $(function () {
         });
     }
 
-    //Get values for quote request when page load
+    $('#comment_toggle').click(function (e) {
+        e.preventDefault();
+        $('#comment_area').toggle();
+    });
 
     addValuesInQuoteRequest();
 
@@ -73,7 +78,7 @@ $(function () {
         $(artistData.allPerformance).each(function(){
             var blockPerformance = '<li>'+
                 '<div class="custom-checkbox">'+
-                '<input id="'+this.id+'" type="checkbox">'+
+                '<input id="'+this.id+'" type="checkbox" name="performance[]" value="'+this.id+'">'+
                 '<label for="'+this.id+'">'+this.name+'</label>'+
                 '</div>'+
                 '</li>';
@@ -83,8 +88,46 @@ $(function () {
 
     function createArtistDataViewInQuote(artistData){
         var artistCatString = artistData.categories.toString();
-        $('.quoteRequestArtistData .quote-profile-info h2').append(artistData.name);
-        $('.quoteRequestArtistData .quote-profile-info p').append(artistCatString);
+        $('.quoteRequestArtistData .quote-profile-info h2').html(artistData.name);
+        $('.quoteRequestArtistData .quote-profile-info p').html(artistCatString);
         $('.quote-profile-avatar').attr('src', artistData.user.avatar);
     }
+
+    $(document).ready(function() {
+        var selectedCountruOption = $('#event_country').find('option:selected').val();
+        chooseCityQuote(selectedCountruOption);
+    });
+
+    $('#event_country').on('change',function(){
+        var selectedCountruOption = $('#event_country').find('option:selected').val();
+        chooseCityQuote(selectedCountruOption);
+    });
+
+    function chooseCityQuote(selectedCountruOption){
+        $.ajax({
+            type:'GET',
+            url: '/geo/city?_format=json&country=' + selectedCountruOption,
+            success:function(response){
+                $('#event_city').empty();
+                $(response).each(function(){
+                    $('#event_city').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
+                });
+                initSelect();
+            }
+        })
+    }
+
+    $('#quoteRequsetSend').on('click',function(e){
+        e.preventDefault();
+        var requestFormSerialize = $('#requestQuoteForm').serialize();
+        sendQuoteRequest(requestFormSerialize)
+    });
+
+    function sendQuoteRequest(data){
+        console.log(data)
+        $.ajax({
+            type:'POST',
+            url:'/event/create'
+        })
+    };
 });
