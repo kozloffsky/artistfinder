@@ -1,5 +1,9 @@
 Acted\LegalDocsBundle\Entity\Performance:
-  exclusion_policy: NONE
-  properties:
-    profile:
-      exclude: true
+    exclusion_policy: NONE
+    properties:
+        profile:
+            exclude: true
+        id:
+            groups: [chat_list, chat_room]
+        title:
+            groups: [chat_list, chat_room]

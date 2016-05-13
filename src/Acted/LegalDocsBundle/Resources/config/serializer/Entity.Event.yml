@@ -1,23 +1,27 @@
 Acted\LegalDocsBundle\Entity\Event:
     exclusion_policy: NONE
     properties:
+        id:
+            groups: [chat_list]
         country:
             groups: [Default, getEvent]
         city:
-            groups: [Default, getEvent]
+            groups: [Default, getEvent, chat_list]
         eventRef:
             groups: [Default, getEvent]
         eventTypeId:
-            groups: [Default, getEvent]
+            groups: [Default, getEvent, chat_list]
         venueTypeId:
             groups: [Default, getEvent]
         startingDate:
-            groups: [Default, getEvent]
+            groups: [Default, getEvent, chat_list]
         endingDate:
             groups: [Default, getEvent]
         timing:
-            groups: [Default, getEvent]
+            groups: [Default, getEvent, chat_list]
         comments:
             groups: [Default, getEvent]
         title:
-            groups: [Default, getEvent]
+            groups: [Default, getEvent, chat_list]
+        user:
+            groups: [chat_list, chat_room]

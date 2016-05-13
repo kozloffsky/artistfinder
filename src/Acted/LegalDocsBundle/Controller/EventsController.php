@@ -78,7 +78,7 @@ class EventsController extends Controller
             $em->flush();
             $artist = $data->getPerformance()->first()->getProfile()->getUser();
 
-            $chatManager->createChat($event, $artist, $data);
+            $chatManager->createChat($event, $artist, $data, $offer);
             $eventManager->createEventNotify($data, $artist, $offer);
             $eventManager->newMessageNotify($data, $artist);
 

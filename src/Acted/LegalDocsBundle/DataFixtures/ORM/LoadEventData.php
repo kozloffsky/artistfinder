@@ -8,7 +8,7 @@
 
 namespace Acted\LegalDocsBundle\DataFixtures\ORM;
 
-
+use Acted\LegalDocsBundle\Entity\EventOffer;
 use Acted\LegalDocsBundle\Entity\Event;
 use Acted\LegalDocsBundle\Entity\RefEventType;
 use Acted\LegalDocsBundle\Entity\RefVenueType;
@@ -154,6 +154,19 @@ class LoadEventData extends AbstractFixture implements ContainerAwareInterface, 
             }
             $manager->flush();
         }
+
+        $now = new \DateTime();
+
+        for ($n=0; $n < 3; $n++) {
+            $eventOffer = new EventOffer();
+            $eventOffer->setOffer($this->getReference('offer_'. ($n+1)*10));
+            $eventOffer->setEvent($this->getReference('event1_'.$n));
+            $eventOffer->setSendDateTime($now);
+            $eventOffer->setStatus(EventOffer::EVENT_OFFER_STATUS_PROPOSE);
+            $manager->persist($eventOffer);
+            $this->addReference('event_offer_'. $n, $eventOffer);
+        }
+        $manager->flush();
 
     }
 

@@ -1,0 +1,15 @@
+Acted\LegalDocsBundle\Entity\Message:
+    exclusion_policy: NONE
+    properties:
+        id:
+            groups: [chat_list, chat_room]
+        messageText:
+            groups: [chat_list, chat_room]
+        sendDateTime:
+            groups: [chat_list, chat_room]
+        readDateTime:
+            groups: [chat_list, chat_room]
+        receiverUser:
+            groups: [chat_list]
+        senderUser:
+            groups: [chat_room]

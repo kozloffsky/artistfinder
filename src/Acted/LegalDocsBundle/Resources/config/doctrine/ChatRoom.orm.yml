@@ -8,10 +8,6 @@ Acted\LegalDocsBundle\Entity\ChatRoom:
             id: true
             generator:
                 strategy: AUTO
-    fields:
-        chatRef:
-            type: string(64)
-            unique: true
     oneToMany:
         message:
             targetEntity: Acted\LegalDocsBundle\Entity\Message
@@ -23,4 +19,7 @@ Acted\LegalDocsBundle\Entity\ChatRoom:
         event:
             targetEntity: Acted\LegalDocsBundle\Entity\Event
             inversedBy: chatRooms
+    oneToOne:
+        offer:
+            targetEntity: Acted\LegalDocsBundle\Entity\Offer
     lifecycleCallbacks: {  }

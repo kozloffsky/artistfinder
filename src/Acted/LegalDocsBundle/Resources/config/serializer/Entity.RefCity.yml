@@ -4,6 +4,6 @@ Acted\LegalDocsBundle\Entity\RefCity:
         region:
             exclude: true
         name:
-            groups: [Default, getEvent]
+            groups: [Default, getEvent, chat_list]
         id:
             groups: [Default, getEvent]

@@ -4,6 +4,7 @@ namespace Acted\LegalDocsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Acted\LegalDocsBundle\Entity\Event;
+use Acted\LegalDocsBundle\Entity\Offer;
 use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Entity\Message;
 
@@ -23,14 +24,14 @@ class ChatRoom
     private $event;
 
     /**
+     * @var Offer
+     */
+    private $offer;
+
+    /**
      * @var Message
      */
     private $message;
-
-    /**
-     * @var string
-     */
-    private $chatRef;
 
     /**
      * @var User
@@ -68,6 +69,22 @@ class ChatRoom
     }
 
     /**
+     * @return Offer
+     */
+    public function getOffer()
+    {
+        return $this->offer;
+    }
+
+    /**
+     * @param Offer $offer
+     */
+    public function setOffer(Offer $offer)
+    {
+        $this->offer = $offer;
+    }
+
+    /**
      * Set message
      *
      * @param Message $message
@@ -91,20 +108,9 @@ class ChatRoom
         return $this->message;
     }
 
-    /**
-     * @return string
-     */
-    public function getChatRef()
+    public function getLastMessage()
     {
-        return $this->chatRef;
-    }
-
-    /**
-     * @param string $chatRef
-     */
-    public function setChatRef($chatRef)
-    {
-        $this->chatRef = $chatRef;
+        return $this->message->last();
     }
 
     /**

@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Acted\LegalDocsBundle\Entity\Event;
 use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Entity\Message;
+use Acted\LegalDocsBundle\Entity\Offer;
 use Acted\LegalDocsBundle\Popo\CreateEvent;
 
 class ChatManager
@@ -29,8 +30,9 @@ class ChatManager
      * @param Event $event
      * @param User $receiver
      * @param CreateEvent $data
+     * @param Offer $offer
      */
-    public function createChat($event, $receiver, $data)
+    public function createChat($event, $receiver, $data, $offer)
     {
         $chat = $this->entityManager
             ->getRepository('ActedLegalDocsBundle:ChatRoom')
@@ -39,7 +41,7 @@ class ChatManager
         if (!$chat) {
             $chatRoom = new ChatRoom();
             $chatRoom->setEvent($event);
-            $chatRoom->setChatRef(uniqid());
+            $chatRoom->setOffer($offer);
             $chatRoom->setUser($receiver);
             $message = $this->newChatMessage($chatRoom, $receiver, $data);
             $this->entityManager->persist($chatRoom);
@@ -80,8 +82,8 @@ class ChatManager
             $data->getNumberOfGuests(),  $data->getType()->getEventType(), $data->getComment(), implode(',', $perfName));
         $message = new Message();
         $message->setChatRoom($chatRoom);
-        $message->setReceiverUserId($receiver->getId());
-        $message->setSenderUserId($data->getUser()->getId());
+        $message->setReceiverUser($receiver);
+        $message->setSenderUser($data->getUser());
         $message->setSubject($data->getName());
         $message->setMessageText($body);
         $message->setSendDateTime($now);

@@ -19,7 +19,7 @@ final class CreateEvent
     private $event;
     private $user;
 
-    const NUMBER_OF_GUEST_MAX_50 = 'Less then 50';
+    const NUMBER_OF_GUEST_MAX_50 = 'less_then_50';
     const NUMBER_OF_GUEST_MIN_50_MAX_100 = '50-100';
     const NUMBER_OF_GUEST_MIN_100_MAX_500 = '100-500';
     const NUMBER_OF_GUEST_MORE_500 = '500+';
