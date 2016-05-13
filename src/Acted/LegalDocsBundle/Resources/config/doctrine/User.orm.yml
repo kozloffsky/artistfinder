@@ -54,5 +54,8 @@ Acted\LegalDocsBundle\Entity\User:
         roles:
           targetEntity: Acted\LegalDocsBundle\Entity\RefRole
           inversedBy: users
-
+    oneToMany:
+        chatRooms:
+            targetEntity: Acted\LegalDocsBundle\Entity\ChatRoom
+            mappedBy: user
     lifecycleCallbacks: {  }

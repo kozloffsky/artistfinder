@@ -57,6 +57,8 @@
     font-size: 14px;
 }
 
+.free-quote-modal .modal-title select + .select2 .select2-selection--single{border: none !important;}
+
 .free-quote-modal.modal-registered .modal-title .title{
     margin-right: 10px;
     font-size: 18px;
@@ -75,6 +77,22 @@
     color: white;
 }
 
+.free-quote-modal.modal-registered .quote-box a{
+    color: #889DFF;
+}
+.free-quote-modal.modal-registered .quote-box p{
+    font-size: 20px;
+    color: #000;
+    color: rgba(0, 0, 0, .68);
+    line-height: 32px;
+    margin: 0 0 10px;
+}
+.free-quote-modal.modal-registered.bio .modal-body{
+    padding: 40px 10px 35px;
+    border-bottom: none;
+}
+
+.free-quote-modal.bio .quote-profile-info .row{margin-bottom: 30px;}
 
 
 .free-quote-modal .modal-title .warn {
@@ -127,6 +145,12 @@
     height: 34px;
     border: 2px solid #EEEEEE!important;
     border-radius: 8px;
+}
+
+.select2-container--open .select2-dropdown--below{
+    overflow: hidden;
+    border-radius: 0 0 20px;
+    -webkit-border-radius: 0 0 20px;
 }
 
 .free-quote-modal .profile-categories {
@@ -202,6 +226,10 @@
 
 .free-quote-modal .controls {
     left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
     transform: translateX(-50%);
     padding-top: 0px;
     margin-bottom: 0px;
@@ -245,6 +273,259 @@
     margin-top: 5px;
 }
 
+/*free-quote-modal request styles start*/
+.free-quote-modal.request .modal-dialog{
+    width: auto;
+    max-width: 960px;
+    margin-top: 71px;
+}
+.free-quote-modal.request .frame:after{
+    display: block;
+    clear: both;
+    content: "";
+}
+.free-quote-modal.request .modal-header{
+    background: #fff;
+    padding: 21px 12px 20px;
+    border-bottom: 2px solid #dbdbdb;
+}
+.free-quote-modal.request .modal-body{
+    padding: 0;
+    border-bottom: 2px solid #dbdbdb;
+}
+.free-quote-modal.request .modal-footer{
+    padding: 20px 20px 10px;
+    font-size: 16px;
+    border: 0;
+}
+.free-quote-modal.request .modal-header h3{
+    color: #3d4248;
+    color: rgba(61, 66, 72, .87);
+    font: 22px UbuntuBold, Serif, sans-serif;
+}
+.free-quote-modal.request .title{
+    font: 15px LatoBold, Serif, sans-serif;
+    color: #3d4248;
+    margin: 0 0 10px;
+    display: inline-block;
+    vertical-align: top;
+}
+.free-quote-modal.request input[type="text"],
+.free-quote-modal.request input[type="email"],
+.free-quote-modal.request input[type="password"]{
+    height: 36px;
+    width: 100%;
+    padding: 0 11px;
+}
+.free-quote-modal.request .frame{padding: 0 50px 15px 0;}
+.free-quote-modal.request .frame .row{padding-bottom: 10px;}
+.free-quote-modal.request .col-1,
+.free-quote-modal.request .col-2{
+    padding: 20px 39px 20px 24px;
+    float: left;
+    width: 48%;
+    min-height: 515px;
+}
+.free-quote-modal.request .col-2{
+    padding-top: 42px;
+    padding-bottom: 20px;
+    background: #fff;
+    width: 52%;
+}
+.free-quote-modal.request .col{width: 160px;}
+.free-quote-modal.request .map-holder{
+    margin-right: -39px;
+    position: relative;
+    padding-top: 7px;
+    width: 196px;
+}
+.free-quote-modal.request .map-holder .gmnoprint,
+.free-quote-modal.request .map-holder [src^='http://maps.gstatic.com/mapfiles/api-3/images/google4_hdpi.png'],
+.free-quote-modal.request .map-holder [src^='http://maps.gstatic.com/mapfiles/api-3/images/google4.png']{display: none;}{display: none;}
+.free-quote-modal.request .map{
+    height: 106px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+.free-quote-modal.request .note{
+    display: block;
+    color: #7b7676;
+    font-style: normal;
+    font-size: 14px;
+}
+.free-quote-modal.request .price-list{
+    list-style: none;
+    margin: 0 0 18px;
+    padding: 0;
+}
+.free-quote-modal.request .price-list li{
+    border-top: 2px solid #f2efef;
+    padding: 8px 0 2px;
+}
+.free-quote-modal.request .price-list li:first-child{border-top: 0;}
+.free-quote-modal.request label{color: #3d4248;}
+.free-quote-modal.request .price-list .col{
+    padding: 0 0 0 30px;
+    width: 50%;
+    position: relative;
+}
+.free-quote-modal.request .price-list .col:first-child{
+    padding: 0 15px;
+    width: 50%;
+}
+.free-quote-modal.request .price-list .col:after{
+    position: absolute;
+    border-left: 2px solid #f2efef;
+    content: "";
+    left: 0;
+    top: -19px;
+    height: 55px;
+}
+.free-quote-modal.request .price-list .col:first-child:after{border: 0;}
+.free-quote-modal.request .custom-checkbox{
+    font: 15px LatoBold, Serif, sans-serif;
+    margin-bottom: 8px;
+}
+.free-quote-modal.request .custom-checkbox.small{
+    margin-right: 10px;
+    padding-top: 7px;
+    float: left;
+    font: 12px LatoRegular, Serif, sans-serif;
+}
+.free-quote-modal.request .price-list .select2{
+    float: right;
+    margin-right: 0;
+    width: 100px !important;
+}
+.free-quote-modal.request .custom-checkbox.small label{
+    padding-left: 20px;
+    font-size: 12px;
+}
+.free-quote-modal.request .custom-checkbox.small label:before{
+    width: 14px;
+    height: 14px;
+    border-width: 1px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    top: 50%;
+    margin-top: -8px;
+}
+.free-quote-modal.request .custom-checkbox.small label:after{
+    width: 14px;
+    height:14px;
+    top: 4px;
+}
+.free-quote-modal.request .selections-white.currency .select2-selection__rendered{
+    border-top: none;
+    padding: 0 8px;
+    font-size: 14px;
+    letter-spacing: -1px;
+}
+.select2-results__options.currency > li{
+    padding: 6px 8px;
+    letter-spacing: -1px;
+}
+.free-quote-modal.request .button-gradient button.btn{background: none;}
+.free-quote-modal.request .modal-footer .button-gradient{padding: 0;}
+.free-quote-modal.request .modal-footer .button-gradient .btn{
+    height: 40px;
+    font: 18px LatoRegular, Serif, sans-serif;
+    padding-top: 4px;
+}
+.free-quote-modal.request .modal-footer .button-gradient .btn:active{
+    background: rgba(255, 255, 255, 0.7);
+    color: rgba(75, 75, 75, 0.64);
+}
+.free-quote-modal .button-gradient.blue {
+    background: rgb(88,149,243);
+    background: -moz-linear-gradient(left, rgba(88,149,243,1) 0%, rgba(73,79,199,1) 100%);
+    background: -webkit-linear-gradient(left, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
+    background: linear-gradient(to right, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
+}
+.free-quote-modal .button-gradient.blue .btn:active{
+    background: rgba(255, 255, 255, 0);
+    color: white;
+}
+.free-quote-modal .button-gradient.blue button.btn{
+    background: #fff;
+    color: #000;
+    font-size: 15px !important;
+    height: 30px;
+    font-family: LatoRegular, Serif, sans-serif;
+    padding-top: 4px;
+}
+.free-quote-modal.request h4{
+    margin: 16px 0;
+    font: normal 15px LatoBold, Serif, sans-serif;
+}
+.free-quote-modal.request .modal-footer .row{margin-bottom: 15px;}
+.free-quote-modal.request .modal-footer h4{
+    font-size: 16px;
+    margin: 0 0 15px;
+}
+.free-quote-modal.request .modal-footer .select2{
+    width: 90px !important;
+    margin-right: 12px;
+}
+.free-quote-modal.request .modal-footer .select2-selection__rendered{
+    background: #f1f1f1 !important;
+    border-top: 0 !important;
+    font-size: 16px !important;
+}
+.select2-dropdown .interest,
+.select2-dropdown .acted,
+.select2-dropdown .atevent{
+    font-size: 16px;
+    overflow: hidden;
+    background: #f1f1f1;
+}
+.free-quote-modal.request .modal-footer .text{
+    display: inline-block;
+    vertical-align: middle;
+}
+.free-quote-modal.request .no-padding{padding: 0}
+.free-quote-modal.request select.acted + .select2{
+    width: 225px !important;
+}
+.free-quote-modal.request select.atevent + .select2{width: 80% !important;}
+/*free-quote-modal request styles end*/
+/*free-quote-modal request media styles start*/
+@media (max-width: 1199px){
+    .free-quote-modal.request .modal-footer [class^='col-lg-']:not(.col-lg-12){float: left;}
+    .free-quote-modal.request .modal-footer .col-lg-4{width: 40%;}
+    .free-quote-modal.request .modal-footer .col-lg-5{width: 40%;}
+    .free-quote-modal.request .modal-footer .col-lg-3{width: 20%;}
+    .free-quote-modal.request select.acted + .select2{width: 170px !important;}
+    .free-quote-modal.request .modal-footer .select2{margin-right: 8px;}
+}
+@media (max-width: 959px) {
+    .free-quote-modal.request .modal-dialog{padding: 0 17px 0 15px;}
+    .free-quote-modal.request .col-1,
+    .free-quote-modal.request .col-2{
+        width: 100%;
+        float: none;
+        min-height: 1%;
+        padding: 20px 15px 10px;
+    }
+    .free-quote-modal.request .col,
+    .free-quote-modal.request .map-holder{
+        margin: 0;
+        width: 45%;
+    }
+    .free-quote-modal.request .map{height: 115px;}
+    .free-quote-modal.request .frame{padding-right: 0;}
+    .free-quote-modal.request .price-list{margin-bottom: 10px;}
+    .free-quote-modal.request #interest + .select2{
+        float:left;
+        margin-top: -3px;
+    }
+    .free-quote-modal.request #interest + .select2 + .text{
+        overflow: hidden;
+        display: inline;
+    }
+
+}
+/*free-quote-modal request media styles end*/
 @media (max-width: 767px) {
     .free-quote-modal.modal-registered .modal-title .select2 {
         margin-top: 10px;
@@ -270,7 +551,7 @@
     }
 
     .free-quote-modal .modal-title {
-        padding: 0 45px 0 25px;
+        padding: 0 45px 0 18px;
         font-size: 14px;
     }
 
@@ -281,8 +562,8 @@
     }
 
     .free-quote-modal .modal-content .close {
-        top: 20px;
-        right: 10px;
+        top: 7px;
+        right: 4px;
         text-shadow: none;
         background: transparent;
     }
@@ -300,4 +581,72 @@
         -moz-column-count: 1;
         column-count: 1;
     }
+
+    /*free-quote-modal request media styles start*/
+    .free-quote-modal.request .modal-header{padding: 14px 0px 15px;}
+    .free-quote-modal.request .modal-content .close > span{
+        color: #959595;
+        font-weight: normal;
+    }
+    .free-quote-modal.request .modal-dialog{padding: 0;}
+    .free-quote-modal.request .col,
+    .free-quote-modal.request .map-holder{
+        width: 100%;
+        float: none;
+        margin-bottom: 8px;
+    }
+    .free-quote-modal.request .note{
+        font-size: 12px;
+        color: rgba(123, 118, 118, .3);
+        padding-left: 32px;
+    }
+    .free-quote-modal.request .map-holder{margin-bottom: 0;}
+    .free-quote-modal.request .map{height: 159px;}
+    .free-quote-modal.request .price-list .col:first-child,
+    .free-quote-modal.request .price-list .col{
+        width: 100%;
+        padding: 0;
+    }
+    .free-quote-modal.request .price-list .col:after{border: none;}
+    .free-quote-modal.request .custom-checkbox{margin-bottom: 5px;}
+    .free-quote-modal.request .custom-checkbox.small{margin-bottom: 0;}
+    .free-quote-modal.request .modal-footer [class^='col-lg-']:not(.col-lg-12){
+        float: none;
+        margin-bottom: 15px;
+        width: 100%;
+    }
+    .free-quote-modal.request select.acted + .select2,
+    .free-quote-modal.request select.atevent + .select2{width: 190px !important;}
+    .free-quote-modal.request .frame{padding-bottom: 8px;}
+    .free-quote-modal.request .price-list .col .row{margin-bottom: 8px;}
+    .free-quote-modal.request .price-list .col .row:last-child{margin-bottom: 0;}
+    .free-quote-modal.request .col-1,
+    .free-quote-modal.request .col-2{padding: 18px 15px 1px;}
+    .free-quote-modal.request .col-2{padding: 2px 10px 5px;}
+    .free-quote-modal.request .modal-footer{padding: 15px;}
+    .free-quote-modal.request .frame .col:last-child{margin-bottom: 0;}
+    .free-quote-modal.request #interest + .select2{margin-top: 8px;}
+    .free-quote-modal.request .custom-checkbox.small label{font-weight: normal;}
+    .free-quote-modal.request .price-list li{
+        border-width: 1px;
+        padding: 16px 0 8px;
+    }
+    .free-quote-modal.request .modal-footer .col-lg-3{margin-bottom: 0 !important;}
+    .free-quote-modal.request .modal-footer .button-gradient .btn{
+        height: 36px;
+        padding-top: 4px;
+    }
+    .free-quote-modal.request .modal-header h3{
+        font: 14px LatoBold, Serif, sans-serif;
+        color: #3d4248;
+    }
+    .free-quote-modal.request .title{
+        font: 14px LatoRegular, Serif, san-serif;
+    }
+    .free-quote-modal.request .title{
+        padding: 0 4px;
+        font-size: 14px;
+    }
+    .free-quote-modal.modal-registered .quote-box br{display: none;}
+    /*free-quote-modal request media styles end*/
 }

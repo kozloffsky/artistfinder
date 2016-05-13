@@ -105,10 +105,10 @@ $(function () {
   var carousel;
   if ($(window).width() < 490) {
     //Initialize for mobile devices
-    var forceWidth = $(window).width() - 80;
-    var forceHeight = ($(window).width() - 80) * 0.75;
+    var forceWidth = $(window).width() - 70;
+    var forceHeight = ($(window).width() - 70) * 0.75;
 
-    $('#carousel').height(forceHeight + 80);
+    $('#carousel').height(forceHeight + 70);
 
     carousel = $("#carousel").waterwheelCarousel({
       flankingItems: 2,
@@ -122,13 +122,17 @@ $(function () {
     });
   } else {
     //Initialize for desktop
-    carousel = $("#carousel").waterwheelCarousel({
-      flankingItems: 2,
-      forcedImageWidth: 486,
-      forcedImageHeight: 364,
-      separation: 250,
-      opacityMultiplier: 1,
-      movedToCenter: movedToCenter
+    $(window).on({
+      'load': function(){
+        carousel = $("#carousel").waterwheelCarousel({
+          flankingItems: 2,
+          forcedImageWidth: 364,
+          forcedImageHeight: 273,
+          separation: 250,
+          opacityMultiplier: 1,
+          movedToCenter: movedToCenter
+        });
+      }
     });
   }
   $('.next-control').click(function () {
@@ -145,6 +149,12 @@ $(function () {
   });
 
   jQuery("#videoBackgroundPlayer").YTPlayer();
+
+  if($('div').is('.mbYTP_wrapper')){
+    setTimeout(function(){
+      $('.home.header-background').css('background', 'none');
+    }, 1200);
+  }
 });
 
 //TODO: jQuery.mb.YTPlayer add to header youtube video.

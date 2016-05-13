@@ -2,25 +2,31 @@
 
 namespace Acted\LegalDocsBundle\Entity;
 
+use Acted\LegalDocsBundle\Entity\Event;
+use Acted\LegalDocsBundle\Entity\Offer;
+
 /**
  * EventOffer
  */
 class EventOffer
 {
+    const EVENT_OFFER_STATUS_PROPOSE = 'propose';
+    const EVENT_OFFER_STATUS_REJECT = 'reject';
+
     /**
      * @var integer
      */
     private $id;
 
     /**
-     * @var integer
+     * @var Event
      */
-    private $eventId;
+    private $event;
 
     /**
-     * @var integer
+     * @var Offer
      */
-    private $offerId;
+    private $offer;
 
     /**
      * @var string
@@ -67,11 +73,10 @@ class EventOffer
      */
     private $readDateTime;
 
-
     /**
      * Get id
      *
-     * @return integer
+     * @return Event
      */
     public function getId()
     {
@@ -81,49 +86,49 @@ class EventOffer
     /**
      * Set eventId
      *
-     * @param integer $eventId
+     * @param Event $event
      *
      * @return EventOffer
      */
-    public function setEventId($eventId)
+    public function setEvent(Event $event = null)
     {
-        $this->eventId = $eventId;
+        $this->event = $event;
 
         return $this;
     }
 
     /**
-     * Get eventId
+     * Get event
      *
-     * @return integer
+     * @return Event
      */
-    public function getEventId()
+    public function getEvent()
     {
-        return $this->eventId;
+        return $this->event;
     }
 
     /**
      * Set offerId
      *
-     * @param integer $offerId
+     * @param Offer $offer
      *
      * @return EventOffer
      */
-    public function setOfferId($offerId)
+    public function setOffer(Offer $offer = null)
     {
-        $this->offerId = $offerId;
+        $this->offer = $offer;
 
         return $this;
     }
 
     /**
-     * Get offerId
+     * Get offer
      *
-     * @return integer
+     * @return Offer
      */
-    public function getOfferId()
+    public function getOffer()
     {
-        return $this->offerId;
+        return $this->offer;
     }
 
     /**

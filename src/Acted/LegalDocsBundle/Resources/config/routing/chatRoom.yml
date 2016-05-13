@@ -1,0 +1,10 @@
+chat_room_list:
+    path:     /list/{userId}
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getChatRoomList, _format: json }
+    methods:  GET
+
+chat_room_item:
+    path:     /chat/{chat}
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getChat, _format: json }
+    methods:  GET
+

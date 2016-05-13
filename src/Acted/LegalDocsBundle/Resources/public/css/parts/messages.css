@@ -1,0 +1,370 @@
+.messages {
+    padding-bottom: 100px;
+    min-height: 600px;
+}
+
+.messages .categories-menu {
+    margin-top: 16px;
+    margin-bottom: 50px;
+}
+
+.select2  {
+    width: 180px!important;
+    outline: none;
+    margin-right: 18px;
+}
+
+.select2-container--default .select2-selection--single {
+    outline: none;
+    border: none;
+    border-radius: 15px;
+    height: 32px;
+    background-color: #F1F1F1;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    padding: 0 15px;
+    line-height: 32px;
+    text-align: left;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 4px;
+    right: 8px;
+}
+
+.select2-container--open .select2-dropdown--below {
+    border: none;
+    background: transparent;
+}
+
+.select2-container--default .select2-results__option {
+    background: #F1F1F1;
+    padding: 6px 15px;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #F1F1F1;
+    color: #828387;
+}
+
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: #F1F1F1;
+    color: #828387;
+}
+
+.select2-container--default .select2-results__option:last-of-type {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border: none;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #FF9758 transparent transparent transparent;
+    border-width: 7px 6px 0 6px;
+}
+
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-color: transparent transparent #FF9758 transparent;
+    border-width: 0 6px 7px 6px;;
+}
+
+.selections-white .select2-results__option {
+    background: white!important;
+}
+
+.dialogs {
+    margin-top: 30px;
+}
+
+.dialog-section {
+    background: white;
+    min-height: 50px;
+    border-top: 2px solid rgba(0, 0, 0, 0.18);
+    padding: 35px 0 0!important;
+}
+
+.dialog-section.new-message {
+    background: #fafafa;
+}
+
+.dialog-section:last-of-type {
+    border-bottom: 2px solid rgba(0, 0, 0, 0.18);
+}
+
+.dialog-section .message-block {
+    width: calc(100% - 225px);
+    display: inline-block;
+    float: left;
+    padding-bottom: 25px;
+}
+
+.dialog-section .avatar {
+    width: 70px;
+    display: inline-block;
+    float: left;
+}
+
+.dialog-section .avatar img {
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+    border-radius: 25px;
+}
+
+.dialog-section .user-info {
+    width: 155px;
+    display: inline-block;
+    float: left;
+}
+
+.dialog-section .controls {
+    height: auto;
+    padding: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: left;
+}
+
+.dialog-section .controls>.button-gradient.filled>.btn {
+    font-size: 15px!important;
+    height: 34px!important;
+    line-height: 30px;
+}
+
+.dialog-section .controls>.button-gradient .btn {
+    font-size: 15px!important;
+    height: 30px!important;
+    padding: 0 30px;
+    width: auto!important;
+}
+
+.dialog-section .controls>.button-gradient {
+    margin: 0 20px!important;
+}
+
+.dialog-section .button-gradient.blue {
+    background: rgb(88,149,243);
+    background: -moz-linear-gradient(left, rgba(88,149,243,1) 0%, rgba(73,79,199,1) 100%);
+    background: -webkit-linear-gradient(left, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
+    background: linear-gradient(to right, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
+}
+
+.dialog-section .text-block {
+    padding-bottom: 36px;
+}
+
+.message-controls i {
+    display: inline-block;
+    vertical-align: top;
+    height: 14px;
+    width: 14px;
+    margin-top: 3px;
+    margin-right: 5px;
+    background-size: cover!important;
+}
+
+.message-controls ul li a,
+.message-controls ul li {
+    text-decoration: none;
+    font-size: 14px;
+    font-family: LatoRegular;
+    margin-bottom: 20px;
+    color: rgba(0, 0, 0, 0.67);
+}
+
+.message-controls .status {
+    margin-bottom: 30px;
+}
+
+.message-controls .status.confirmed {
+    color: #489442;
+}
+.message-controls .status.not-avaliable {
+    color: #808080;
+}
+.message-controls .status.enquiry {
+    color: #6872d4;
+}
+.message-controls .status.cancelled {
+    color: #db6265;
+}
+
+.message-controls .confirmed i {
+    background: url("../../assets/images/confirmed.png") no-repeat center;
+
+}
+.message-controls .not-avaliable i {
+    background: url("../../assets/images/not-available.png") no-repeat center;
+}
+.message-controls .enquiry i {
+    background: url("../../assets/images/enquiry.png") no-repeat center;
+}
+.message-controls .cancelled i {
+    background: url("../../assets/images/cancelled.png") no-repeat center;
+}
+
+.message-controls .archive i {
+    background: url("../../assets/images/archive.png") no-repeat center;
+}
+
+.message-controls .delete i {
+    background: url("../../assets/images/delete.png") no-repeat center;
+}
+
+.user-info .user-name {
+    font-size: 15px;
+    font-family: LatoRegular;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.user-info .time {
+    font-size: 11px;
+    font-family: LatoRegular;
+    color: rgba(0, 0, 0, 0.67);
+    float: left;
+}
+
+.message-block .message-heading {
+    font-size: 15px;
+    font-family: LatoRegular;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.dialog-section.new-message .message-block .message-heading,
+.dialog-section.new-message .message-block .text{
+    font-weight: bold;
+}
+
+.message-block .text {
+    font-size: 14px;
+    font-family: LatoRegular;
+    color: rgba(0, 0, 0, 0.67);
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.controls-mobile {
+    display: none;
+    height: 0;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+@media (max-width: 767px) {
+    .dialog-section  {
+        width: 100%;
+        display: block;
+        clear: left;
+        padding: 15px 0 5px!important;
+    }
+
+    .dialog-section .avatar {
+        width: 60px;
+        height: 60px;
+    }
+
+    .dialog-section .wrap {
+        padding: 0 12px;
+    }
+
+    .dialog-section .avatar img {
+        width: 50px;
+        height: 50px;
+        margin-left: 0;
+    }
+
+    .dialog-section .message-block {
+        width: calc(100% - 70px);
+        display: inline-block;
+        float: left;
+        padding-bottom: 0px;
+    }
+
+    .dialog-section .user-info {
+        width: calc(100% - 70px);
+    }
+
+    .user-info .user-name {
+        font-size: 14px;
+    }
+
+    .user-info .time {
+        font-size: 11px;
+        line-height: 20px;
+        float: right;
+    }
+
+    .dialog-section .text-block {
+        padding: 0!important;
+    }
+
+    .message-block .text {
+        max-height: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+        word-break: break-all;
+        white-space: nowrap;
+        padding-right: 15px;
+        margin-bottom: 0;
+    }
+
+    .message-controls ul li {
+        margin-bottom: 0;
+    }
+
+    .message-controls .status {
+        margin-bottom: 0;
+    }
+
+    .controls-mobile {
+        display: block;
+        overflow: hidden;
+        height: 0;
+    }
+
+    .controls-mobile a {
+        color: rgba(0, 0, 0, 0.67);
+        text-decoration: none;
+    }
+
+    .controls-mobile.opened {
+        border-top: 1px solid rgba(0, 0, 0, 0.18);
+        display: block;
+        height: 25px;
+        padding-top: 5px;
+        margin-top: 10px;
+    }
+
+    .controls-mobile li {
+        display: inline-block;
+        width: 50%;
+        float: left;
+        text-align: center;
+    }
+
+    .messages .select2 {
+        width: 100%!important;
+    }
+
+    .messages .container {
+        padding: 0!important;
+    }
+
+    .dialog-section.noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none;   /* Chrome/Safari/Opera */
+        -khtml-user-select: none;    /* Konqueror */
+        -moz-user-select: none;      /* Firefox */
+        -ms-user-select: none;       /* IE/Edge */
+        user-select: none;           /* non-prefixed version, currently
+                                  not supported by any browser */
+    }
+}
+
+

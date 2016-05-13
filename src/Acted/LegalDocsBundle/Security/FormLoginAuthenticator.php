@@ -15,6 +15,7 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * Created by PhpStorm.
@@ -30,6 +31,21 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     {
         $this->container = $container;
     }
+
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    {
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(
+                [
+                    'userId' => $token->getUser()->getId(),
+                    'role' => $token->getUser()->getRoles()
+                ]
+            );
+        }
+
+        return parent::onAuthenticationSuccess($request, $token, $providerKey);
+    }
+
     /**
      * Return the URL to the login page
      *

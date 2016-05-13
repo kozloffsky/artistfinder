@@ -505,5 +505,19 @@ class Artist
         return null;
     }
 
+    public function getAllPerformance()
+    {
+        if ($this->getUser()->getProfile()) {
+            /** @var Performance $performance */
+            $performances = $this->getUser()->getProfile()->getPerformances();
+            $result = [];
+            foreach ($performances as $performance) {
+                $result[] = ['id' => $performance->getId(), 'name' => $performance->getTitle()];
+            }
+            return $result;
+        }
+        return null;
+    }
+
 
 }

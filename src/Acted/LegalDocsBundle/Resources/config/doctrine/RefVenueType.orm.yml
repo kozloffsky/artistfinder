@@ -1,0 +1,16 @@
+Acted\LegalDocsBundle\Entity\RefVenueType:
+    type: entity
+    table: RefVenueType
+    repositoryClass: Acted\LegalDocsBundle\Repository\RefVenueTypeRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        venueType:
+            type: string(64)
+            notnull: true
+            unique: true
+    lifecycleCallbacks: {  }

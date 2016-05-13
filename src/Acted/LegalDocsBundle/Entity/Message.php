@@ -2,6 +2,8 @@
 
 namespace Acted\LegalDocsBundle\Entity;
 
+use Acted\LegalDocsBundle\Entity\ChatRoom;
+use Acted\LegalDocsBundle\Entity\User;
 /**
  * Message
  */
@@ -13,14 +15,14 @@ class Message
     private $id;
 
     /**
-     * @var integer
+     * @var User
      */
-    private $senderUserId;
+    private $senderUser;
 
     /**
-     * @var integer
+     * @var User
      */
-    private $receiverUserId;
+    private $receiverUser;
 
     /**
      * @var string
@@ -42,6 +44,10 @@ class Message
      */
     private $readDateTime;
 
+    /**
+     * @var ChatRoom
+     */
+    private $chatRoom;
 
     /**
      * Get id
@@ -54,51 +60,51 @@ class Message
     }
 
     /**
-     * Set senderUserId
+     * Set senderUser
      *
-     * @param integer $senderUserId
+     * @param User $senderUser
      *
      * @return Message
      */
-    public function setSenderUserId($senderUserId)
+    public function setSenderUser(User $senderUser)
     {
-        $this->senderUserId = $senderUserId;
+        $this->senderUser = $senderUser;
 
         return $this;
     }
 
     /**
-     * Get senderUserId
+     * Get senderUser
      *
-     * @return integer
+     * @return User
      */
-    public function getSenderUserId()
+    public function getSenderUser()
     {
-        return $this->senderUserId;
+        return $this->senderUser;
     }
 
     /**
-     * Set receiverUserId
+     * Set receiverUser
      *
-     * @param integer $receiverUserId
+     * @param User $receiverUser
      *
      * @return Message
      */
-    public function setReceiverUserId($receiverUserId)
+    public function setReceiverUser(User $receiverUser)
     {
-        $this->receiverUserId = $receiverUserId;
+        $this->receiverUser = $receiverUser;
 
         return $this;
     }
 
     /**
-     * Get receiverUserId
+     * Get receiverUser
      *
-     * @return integer
+     * @return User
      */
-    public function getReceiverUserId()
+    public function getReceiverUser()
     {
-        return $this->receiverUserId;
+        return $this->receiverUser;
     }
 
     /**
@@ -195,5 +201,22 @@ class Message
     public function getReadDateTime()
     {
         return $this->readDateTime;
+    }
+
+    /**
+     * @return ChatRoom
+     */
+    public function getChatRoom()
+    {
+        return $this->chatRoom;
+    }
+
+    /**
+     * @param ChatRoom $chatRoom
+     * @return  Message
+     */
+    public function setChatRoom(ChatRoom $chatRoom)
+    {
+        $this->chatRoom = $chatRoom;
     }
 }

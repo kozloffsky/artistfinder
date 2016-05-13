@@ -400,11 +400,17 @@ class User implements UserInterface, \Serializable
     private $roles;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $chatRooms;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->chatRooms = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -453,6 +459,38 @@ class User implements UserInterface, \Serializable
     public function removeRole(\Acted\LegalDocsBundle\Entity\RefRole $role)
     {
         $this->roles->removeElement($role);
+    }
+
+    /**
+     * Add chatRoom
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom
+     *
+     * @return User
+     */
+    public function addChatRoom(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
+    {
+        $this->chatRooms[] = $chatRoom;
+
+        return $this;
+    }
+
+    /**
+     * Remove chatRoom
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom
+     */
+    public function removeChatRoom(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
+    {
+        $this->chatRooms->removeElement($chatRoom);
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection|\Doctrine\Common\Collections\Collection
+     */
+    public function getChatRooms()
+    {
+        return $this->chatRooms;
     }
 
     /**

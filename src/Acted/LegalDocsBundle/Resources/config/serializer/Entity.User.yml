@@ -7,6 +7,12 @@ Acted\LegalDocsBundle\Entity\User:
       exclude: true
     roles:
       exclude: true
+    avatar:
+      groups: [quote_request, chat_room]
+    firstname:
+      groups: [chat_list, chat_room]
+    lastname:
+      groups: [chat_list, chat_room]
   virtual_properties:
       getRoles:
         serialized_name: roles

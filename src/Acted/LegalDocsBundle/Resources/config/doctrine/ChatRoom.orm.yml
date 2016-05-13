@@ -1,0 +1,25 @@
+Acted\LegalDocsBundle\Entity\ChatRoom:
+    type: entity
+    table: ChatRoom
+    repositoryClass: Acted\LegalDocsBundle\Repository\ChatRoomRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    oneToMany:
+        message:
+            targetEntity: Acted\LegalDocsBundle\Entity\Message
+            mappedBy: chatRoom
+    manyToOne:
+        user:
+            targetEntity: Acted\LegalDocsBundle\Entity\User
+            inversedBy: chatRooms
+        event:
+            targetEntity: Acted\LegalDocsBundle\Entity\Event
+            inversedBy: chatRooms
+    oneToOne:
+        offer:
+            targetEntity: Acted\LegalDocsBundle\Entity\Offer
+    lifecycleCallbacks: {  }
