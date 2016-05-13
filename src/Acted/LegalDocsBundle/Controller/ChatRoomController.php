@@ -44,7 +44,7 @@ class ChatRoomController extends Controller
         $chatRoom = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->find($chatRoomId);
         $chat = $serializer->toArray($chatRoom, SerializationContext::create()
             ->setGroups(['chat_room']));
-var_dump($chat);die;
+
         return $this->render('ActedLegalDocsBundle:ChatRoom:chat_room.html.twig',
             compact('chat'));
     }
