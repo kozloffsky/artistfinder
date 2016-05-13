@@ -10,5 +10,11 @@ use FOS\RestBundle\View\View;
 
 class ChatRoomController extends Controller
 {
+    public function getChatRoomListAction(Request $request)
+    {
+        $userId = $request->get('userId');
+        $em = $this->getDoctrine()->getManager();
+        $chatRoomList = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->findBy(['user' => $userId]);
+    }
 
 }
