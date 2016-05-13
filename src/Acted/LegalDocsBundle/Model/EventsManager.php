@@ -2,7 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Model;
 
-use Acted\LegalDocsBundle\Popo\CreateEvent;
+use Acted\LegalDocsBundle\Popo\EventOfferData;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Acted\LegalDocsBundle\Entity\Event;
@@ -48,39 +48,41 @@ class EventsManager
     }
 
     /**
-     * @param CreateEvent $createEvent
+     * Create new Event
+     * @param EventOfferData $eventOfferData
      * @return Event
      */
-    public function createEvent(CreateEvent $createEvent)
+    public function createEvent(EventOfferData $eventOfferData)
     {
         $event = new Event();
-        $date = $createEvent->getEventDate();
+        $date = $eventOfferData->getEventDate();
         $nextDate = new \DateTime(date('Y-m-d h:i:s', strtotime($date->format('Y-m-d h:i:s'))+86400));
-        $event->setCity($createEvent->getCity());
+        $event->setCity($eventOfferData->getCity());
         $event->setEventRef(uniqid());
-        $event->setEventType($createEvent->getType());
-        $event->setVenueType($createEvent->getVenueType());
-        $event->setTitle($createEvent->getName());
+        $event->setEventType($eventOfferData->getType());
+        $event->setVenueType($eventOfferData->getVenueType());
+        $event->setTitle($eventOfferData->getName());
         $event->setStartingDate($date);
         $event->setEndingDate($nextDate);
-        $event->setUser($createEvent->getUser());
+        $event->setUser($eventOfferData->getUser());
         $event->setIsInternational(1);
-        $event->setAddress($createEvent->getLocation());
-        $event->setTiming($createEvent->getEventTime());
+        $event->setAddress($eventOfferData->getLocation());
+        $event->setTiming($eventOfferData->getEventTime());
 
         return $event;
     }
 
     /**
-     * @param CreateEvent $createEvent
+     * Create new Offer
+     * @param EventOfferData $eventOfferData
      * @return array Offer
      */
-    public function createOffer(CreateEvent $createEvent)
+    public function createOffer(EventOfferData $eventOfferData)
     {
         $offer = new Offer();
         $date = new \DateTime();
-        $offer->setTitle($createEvent->getName() . ' ' . $date->format('d-m-Y H:i:s'));
-        foreach ($createEvent->getPerformance() as $performance) {
+        $offer->setTitle($eventOfferData->getName() . ' ' . $date->format('d-m-Y H:i:s'));
+        foreach ($eventOfferData->getPerformance() as $performance) {
             $offer->addPerformance($performance);
         }
 
@@ -88,19 +90,21 @@ class EventsManager
     }
 
     /**
-     * @param CreateEvent $createEvent
+     * Create new EventOffer
+     * @param EventOfferData $eventOfferData
      * @return EventOffer
      */
-    public function createEventOffer(CreateEvent $createEvent)
+    public function createEventOffer(EventOfferData $eventOfferData)
     {
         $eventOffer = new EventOffer();
-        $eventOffer->setSendDateTime($createEvent->getEventDate());
+        $eventOffer->setSendDateTime($eventOfferData->getEventDate());
         $eventOffer->setStatus(EventOffer::EVENT_OFFER_STATUS_PROPOSE);
 
         return $eventOffer;
     }
 
     /**
+     * Send notify to Artist about new Event
      * @param $eventData
      * @param $artist
      * @param $offer
@@ -117,6 +121,7 @@ class EventsManager
     }
 
     /**
+     * Send notify to Artist about new Message
      * @param $eventData
      * @param $artist
      */
@@ -131,6 +136,7 @@ class EventsManager
     }
 
     /**
+     * Change status EventOffer
      * @param EventOffer $eventOffer
      * @param string $status
      */

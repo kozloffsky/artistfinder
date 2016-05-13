@@ -2,7 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Popo;
 
-final class CreateEvent
+final class EventOfferData
 {
     private $name;
     private $eventDate;

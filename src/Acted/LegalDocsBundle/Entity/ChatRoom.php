@@ -110,7 +110,12 @@ class ChatRoom
 
     public function getLastMessage()
     {
-        return $this->message->last();
+        if ($this->message) {
+            return $this->message->last();
+        } else {
+            return $this->message;
+        }
+
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\EventOffer;
-use Acted\LegalDocsBundle\Form\EventType;
+use Acted\LegalDocsBundle\Form\EventOfferType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,14 +12,13 @@ use FOS\RestBundle\View\View;
 
 class EventsController extends Controller
 {
-
     /**
      * Create event
      *
      * @ApiDoc(
      *  resource=true,
      *  description="Add new event",
-     *  input="Acted\LegalDocsBundle\Form\EventType",
+     *  input="Acted\LegalDocsBundle\Form\EventOfferType",
      *  statusCodes={
      *         200="Returned when successful",
      *         400="Returned when the form has validation errors",
@@ -30,7 +29,7 @@ class EventsController extends Controller
      */
     public function createEventAction(Request $request)
     {
-        $form = $this->createForm(EventType::class);
+        $form = $this->createForm(EventOfferType::class);
         $form->handleRequest($request);
         $serializer = $this->get('jms_serializer');
 
@@ -38,9 +37,11 @@ class EventsController extends Controller
             $em = $this->getDoctrine()->getManager();
             $validator = $this->get('validator');
             $data = $form->getData();
+
             $eventManager = $this->get('app.event.manager');
             $chatManager = $this->get('app.chat.manager');
 
+            /** Add or get Event */
             if (!$data->getEvent()) {
                 $event = $eventManager->createEvent($data);
                 $validationErrors = $validator->validate($event);
@@ -49,6 +50,7 @@ class EventsController extends Controller
                 $event = $data->getEvent();
             }
 
+            /** Add Offer */
             $offer = $eventManager->createOffer($data);
             if (!isset($validationErrors)) {
                 $validationErrors = $validator->validate($offer);
@@ -57,6 +59,7 @@ class EventsController extends Controller
             }
             $em->persist($offer);
 
+            /** Add EventOffer */
             $eventOffer = $eventManager->createEventOffer($data);
             $eventOffer->setOffer($offer);
             $eventOffer->setEvent($event);
@@ -73,12 +76,12 @@ class EventsController extends Controller
                 }
                 return new JsonResponse($prettyErrors, 400);
             }
-
-
             $em->flush();
-            $artist = $data->getPerformance()->first()->getProfile()->getUser();
 
+            $artist = $data->getPerformance()->first()->getProfile()->getUser();
+            /** Create ChatRoom */
             $chatManager->createChat($event, $artist, $data, $offer);
+            /** Notify Artist */
             $eventManager->createEventNotify($data, $artist, $offer);
             $eventManager->newMessageNotify($data, $artist);
 

@@ -2,11 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Controller;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializationContext;
 
 class ChatRoomController extends Controller
@@ -24,7 +20,6 @@ class ChatRoomController extends Controller
         $chatRoomList = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->findBy(['user' =>$userId]);
         $chats = $serializer->toArray($chatRoomList, SerializationContext::create()
             ->setGroups(['chat_list']));
-
 
         return $this->render('ActedLegalDocsBundle:ChatRoom:list.html.twig',
             compact('chats'));

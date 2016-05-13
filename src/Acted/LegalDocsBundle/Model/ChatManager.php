@@ -8,8 +8,13 @@ use Acted\LegalDocsBundle\Entity\Event;
 use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Entity\Message;
 use Acted\LegalDocsBundle\Entity\Offer;
-use Acted\LegalDocsBundle\Popo\CreateEvent;
+use Acted\LegalDocsBundle\Popo\EventOfferData;
 
+/**
+ * Manager for working with ChatRoom and Message
+ * Class ChatManager
+ * @package Acted\LegalDocsBundle\Model
+ */
 class ChatManager
 {
     /**
@@ -18,18 +23,26 @@ class ChatManager
     protected $entityManager;
 
     /**
+     * @var string
+     */
+    protected $rootDir;
+
+    /**
      * ChatManager constructor.
      * @param EntityManagerInterface $entityManagerInterface
+     * @param string $rootDir
      */
-    public function __construct(EntityManagerInterface $entityManagerInterface)
+    public function __construct(EntityManagerInterface $entityManagerInterface, $rootDir)
     {
         $this->entityManager = $entityManagerInterface;
+        $this->rootDir = $rootDir;
     }
 
     /**
+     * Create new ChatRoom
      * @param Event $event
      * @param User $receiver
-     * @param CreateEvent $data
+     * @param EventOfferData $data
      * @param Offer $offer
      */
     public function createChat($event, $receiver, $data, $offer)
@@ -46,12 +59,12 @@ class ChatManager
             $message = $this->newChatMessage($chatRoom, $receiver, $data);
             $this->entityManager->persist($chatRoom);
             $this->entityManager->persist($message);
-
             $this->entityManager->flush();
         }
     }
 
     /**
+     * Create new Message after create EventOffer
      * @param $chatRoom
      * @param $receiver
      * @param $data
@@ -61,25 +74,16 @@ class ChatManager
     {
         $date = $data->getEventDate();
         $now = new \DateTime();
-        $perfName = [];
-        foreach ($data->getPerformance() as $perf) {
-            $perfName[] = $perf->getTitle();
+        $performanceNames = [];
+        foreach ($data->getPerformance() as $performance) {
+            $performanceNames[] = $performance->getTitle();
         }
-
-        $body = sprintf('Dear, %s!
-             I would like to enquire about your availability and price for our upcoming event in %s lease kindly find below more information about our event.
-              Event: %s;
-              Timing: %s;
-              Date: %s;
-              Venue: %s;
-              Location: %s;
-              Number of guests: %s;
-              Event type: %s;
-              Additional comment: %s;
-              I am interested in the following acts: %s',
+        $path = $this->rootDir . '/../src/Acted/LegalDocsBundle/Resources/views/ChatRoom/propose.txt';
+        $body = sprintf(file_get_contents($path),
             $receiver->getFirstName(), $data->getCity()->getName(), $data->getName(), $data->getEventTime(),
             $date->format('Y/m/d'), $data->getVenueType()->getVenueType(), $data->getLocation(),
-            $data->getNumberOfGuests(),  $data->getType()->getEventType(), $data->getComment(), implode(',', $perfName));
+            $data->getNumberOfGuests(),  $data->getType()->getEventType(), $data->getComment(),
+            implode(',', $performanceNames));
         $message = new Message();
         $message->setChatRoom($chatRoom);
         $message->setReceiverUser($receiver);
@@ -90,5 +94,4 @@ class ChatManager
 
         return $message;
     }
-
 }
