@@ -5573,14 +5573,14 @@ $(function () {
     }
 
     var slidersCount = $('.slider-wrapper').length;
-    var panelWidth = 153;
+    var panelWidth = 204;
     var sliderArea = $('.slider-block').width() - 70;
     var visiblePanels = parseInt(sliderArea/panelWidth);
     var margin = (sliderArea - panelWidth * visiblePanels) / visiblePanels;
 
     initSLiderRec();
     function initSLiderRec(){
-        $('.slider-wrapper').bxSlider({
+        $('.searchRecomendationWrapper').bxSlider({
             slideWidth : panelWidth,
             minSlides  : 1,
             maxSlides  : 5,
@@ -5592,9 +5592,9 @@ $(function () {
             moveSlides : 1,
             infiniteLoop: false,
             onSliderLoad: function() {
-                var viewportsCount = $('.bx-viewport').length;
+                var viewportsCount = $('.searchRecomendationWrapper .bx-viewport').length;
                 if(slidersCount == viewportsCount) {
-                    $('.bx-viewport').css('padding-left', margin/2+'px');
+                    //$('.searchRecomendationWrapper .bx-viewport').css('padding-left', margin/2+'px');
                 }
             }
         });
@@ -5613,9 +5613,9 @@ $(function () {
             moveSlides : 1,
             infiniteLoop: false,
             onSliderLoad: function() {
-                var viewportsCount = $('.bx-viewport').length;
+                var viewportsCount = $('.searchSearchResultWrapper .bx-viewport').length;
                 if(slidersCount == viewportsCount) {
-                    $('.bx-viewport').css('padding-left', margin/2+'px');
+                    //$('.searchSearchResultWrapper .bx-viewport').css('padding-left', margin/2+'px');
                 }
             }
         });
