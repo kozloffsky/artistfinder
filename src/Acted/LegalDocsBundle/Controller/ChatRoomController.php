@@ -44,4 +44,29 @@ class ChatRoomController extends Controller
             compact('chat'));
     }
 
+    /**
+     * Get chat
+     * @param Request $request
+     * @return  array
+     */
+    public function getMessageAction(Request $request)
+    {
+        $messageId = $request->get('message');
+        $em = $this->getDoctrine()->getManager();
+        $serializer = $this->get('jms_serializer');
+
+        $message = $em->getRepository('ActedLegalDocsBundle:Message')->find($messageId);
+        $chat = $serializer->toArray($message, SerializationContext::create()
+            ->setGroups(['message']));
+        if(!$message->getReadDateTime()) {
+            $now = new \DateTime();
+            $message->setReadDateTime($now);
+            $em->persist($message);
+            $em->flush();
+        }
+
+        return $this->render('ActedLegalDocsBundle:ChatRoom:message.html.twig',
+            compact('chat'));
+    }
+
 }
