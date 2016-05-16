@@ -8,3 +8,9 @@ chat_room_item:
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getChat, _format: json }
     methods:  GET
 
+chat_room_message:
+    path:     /message/{message}
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getMessage, _format: json }
+    methods:  GET
+
+

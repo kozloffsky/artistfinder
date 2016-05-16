@@ -44,6 +44,7 @@ services:
         class: Acted\LegalDocsBundle\Model\ChatManager
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "%kernel.root_dir%"
 
     app.media.manager:
         class: Acted\LegalDocsBundle\Model\MediaManager

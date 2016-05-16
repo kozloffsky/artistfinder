@@ -9,7 +9,7 @@ use Acted\LegalDocsBundle\Entity\RefCity;
 use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Entity\RefEventType;
 use Acted\LegalDocsBundle\Entity\RefVenueType;
-use Acted\LegalDocsBundle\Popo\CreateEvent;
+use Acted\LegalDocsBundle\Popo\EventOfferData;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Count;
 
-class EventType extends AbstractType
+class EventOfferType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -60,10 +60,10 @@ class EventType extends AbstractType
             ->add('number_of_guests', ChoiceType::class, [
                 'choices_as_values' => true,
                 'choices' => [
-                    CreateEvent::NUMBER_OF_GUEST_MAX_50,
-                    CreateEvent::NUMBER_OF_GUEST_MIN_50_MAX_100,
-                    CreateEvent::NUMBER_OF_GUEST_MIN_100_MAX_500,
-                    CreateEvent::NUMBER_OF_GUEST_MORE_500
+                    EventOfferData::NUMBER_OF_GUEST_MAX_50,
+                    EventOfferData::NUMBER_OF_GUEST_MIN_50_MAX_100,
+                    EventOfferData::NUMBER_OF_GUEST_MIN_100_MAX_500,
+                    EventOfferData::NUMBER_OF_GUEST_MORE_500
                 ],
                 'constraints' => [new NotBlank()],
                 'description' => 'Number of guests',
@@ -90,7 +90,7 @@ class EventType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => CreateEvent::class,
+            'data_class' => EventOfferData::class,
             'csrf_protection' => false,
             'allow_extra_fields' => true,
             'cascade_validation' => true,

@@ -2,7 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Popo;
 
-final class CreateEvent
+final class EventOfferData
 {
     private $name;
     private $eventDate;
@@ -190,6 +190,23 @@ final class CreateEvent
     public function getPerformance()
     {
         return $this->performance;
+    }
+
+    /**
+     * Get array performance Ids
+     * @return array
+     */
+    public function getPerformanceIds()
+    {
+        $performances = $this->getPerformance();
+        $result = [];
+        if (!empty($performances)) {
+            foreach ($performances as $performance) {
+                $result[] = $performance->getId();
+            }
+        }
+
+        return $result;
     }
 
     /**

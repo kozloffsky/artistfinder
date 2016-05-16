@@ -1,0 +1,1 @@
+Dear, %s! I would like to enquire about your availability and price for our upcoming event in %s lease kindly find below more information about our event. Event: %s; Timing: %s; Date: %s; Venue: %s; Location: %s; Number of guests: %s; Event type: %s; Additional comment: %s; I am interested in the following acts: %s;
