@@ -193,6 +193,23 @@ final class EventOfferData
     }
 
     /**
+     * Get array performance Ids
+     * @return array
+     */
+    public function getPerformanceIds()
+    {
+        $performances = $this->getPerformance();
+        $result = [];
+        if (!empty($performances)) {
+            foreach ($performances as $performance) {
+                $result[] = $performance->getId();
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * @param mixed $performance
      */
     public function setPerformance($performance)

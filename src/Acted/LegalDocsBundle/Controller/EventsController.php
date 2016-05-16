@@ -48,6 +48,10 @@ class EventsController extends Controller
                 $em->persist($event);
             } else {
                 $event = $data->getEvent();
+                $offers = $eventManager->getPerformancesByParams($data->getUser()->getId(), $data->getPerformanceIds());
+                if ($offers) {
+                    return new JsonResponse($serializer->toArray($offers));
+                }
             }
 
             /** Add Offer */
@@ -178,6 +182,33 @@ class EventsController extends Controller
         $this->addFlash('error', 'not exist offer!');
 
         return $this->redirectToRoute('acted_legal_docs_homepage');
+    }
+
+
+    /**
+     * @ApiDoc(
+     *  description="Check exist offer by UserId for performance Ids",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function checkExistOfferAction(Request $request)
+    {
+        $performances = $request->get('performances');
+        $userId = $request->get('userId');
+        $eventManager = $this->get('app.event.manager');
+        $serializer = $this->get('jms_serializer');
+        $offers = $eventManager->getPerformancesByParams($userId, $performances);
+
+        if ($offers) {
+            return new JsonResponse($serializer->toArray($offers));
+        } else {
+            return new JsonResponse(['empty']);
+        }
     }
 
     private function getEM()

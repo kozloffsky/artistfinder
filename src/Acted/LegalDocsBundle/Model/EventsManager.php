@@ -136,6 +136,21 @@ class EventsManager
     }
 
     /**
+     * @param string $userId
+     * @param array $performancesIds
+     * @return array
+     */
+    public function getPerformancesByParams($userId, $performancesIds)
+    {
+        $em = $this->entityManager;
+        $offers = $em
+            ->getRepository('ActedLegalDocsBundle:EventOffer')
+            ->getAllPerformance($performancesIds, $userId);
+
+        return $offers;
+    }
+
+    /**
      * Change status EventOffer
      * @param EventOffer $eventOffer
      * @param string $status
