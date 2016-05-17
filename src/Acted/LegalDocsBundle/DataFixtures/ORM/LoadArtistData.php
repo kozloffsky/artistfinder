@@ -175,14 +175,14 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
                 $audio1 = new Media();
                 $audio1->setName($faker->word);
                 $audio1->setMediaType('audio');
-                $audio1->setLink('http://www.noiseaddicts.com/samples_1w72b820/3828.mp3');
+                $audio1->setLink('https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/257717036&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true');
                 $audio1->setPosition(1);
                 $audio1->setActive(true);
 
                 $audio2 = new Media();
                 $audio2->setName($faker->word);
                 $audio2->setMediaType('audio');
-                $audio2->setLink('http://www.noiseaddicts.com/samples_1w72b820/22.mp3');
+                $audio2->setLink('https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/237603952&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true');
                 $audio2->setPosition(1);
                 $audio2->setActive(true);
 
