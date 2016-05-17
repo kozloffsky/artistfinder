@@ -7,6 +7,7 @@ var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('gulp-autoprefixer');
 var cssimport = require("gulp-cssimport");
+var gulpIgnore = require('gulp-ignore');
 
 var env = process.env.GULP_ENV;
 
@@ -18,6 +19,7 @@ gulp.task('js', function(){
             "jquery.throttle.min.js",
             "bootstrap.min.js",
             "bootstrap-editable.min.js",
+            "retina-detect.js",
             "*.js",
             "profile.js"
         ]))
@@ -38,4 +40,16 @@ gulp.task('css', function(){
         .pipe(gulp.dest('web/css'));
 });
 
-gulp.task('default', ['js', 'css']);
+gulp.task('cssRetina', function(){
+    return gulp.src([
+            'src/Acted/LegalDocsBundle/Resources/public/css/*.css'])
+        .pipe(concat('style-retina.css'))
+        .pipe(cssimport({}))
+        .pipe(gulpIgnore.exclude('style.css'))
+        .pipe(autoprefixer())
+        .pipe(gulpif(env === 'prod', uglifycss()))
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest('web/css'));
+});
+
+gulp.task('default', ['js', 'css', 'cssRetina']);
