@@ -10380,6 +10380,193 @@ only screen and (min-resolution: 2dppx) {
     }
 
 }
+.avatarEditable
+{
+    float: left;
+    position: relative;
+    text-align: right;
+}
+#editAvatar
+{
+    position: relative;
+    color: #000;
+    font-size: 28px;
+}
+.info #username
+{
+    width: auto;
+}
+.editText
+{
+    display: inline-block;
+    color: #fff;
+    font-size: 17px;
+    margin-left: 10px;
+}
+#changeImageModal .actions, #changeBgModal .actions
+{
+    text-align: center;
+}
+#editBackground
+{
+    font-size: 35px;
+    right: 20px;
+    position: absolute;
+    top: 70px;
+}
+#editBiography
+{
+    float: right;
+    font-size: 20px;
+}
+#editCategories
+{
+    position: absolute;
+    font-size: 20px;
+    right: 0;
+}
+.editOffer, .deleteOffer
+{
+    float: right;
+    margin-left: 15px;
+}
+#section-photo .dropzone, .add-video-block
+{
+    margin-bottom: 20px;
+}
+.videoAdd
+{
+    margin-bottom: 10px;
+}
+.imagePerformanceChange
+{
+    width: 395px;
+    position: absolute;
+    z-index: 10;
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    height: 273px;
+    display: none;
+}
+#addNewPerformance
+{
+    cursor: pointer;
+    margin-top: 30px;
+}
+.addPerfomanceCreate
+{
+    display: none;
+}
+.addPerfomanceCreate .deleteOffer
+{
+    display: none;
+}
+.editable-inline, .editable-inline .form-group
+{
+    width: 100% !important;
+}
+.editable-inline .editable-input
+{
+    width: 80%;
+}
+.editable-inline .editable-input textarea
+{
+    width: 100%;
+}
+.editable-inline .form-group .editable-buttons
+{
+    width: 20%;
+    text-align: center;
+}
+.removeNewImage
+{
+    color: #d9534f;
+    font-size: 30px;
+    cursor: pointer;
+}
+span.removeNewImage
+{
+    position: absolute;
+    margin-left: 7px;
+}
+.errorCat, #errorLogIn
+{
+    color: #d9534f;
+    text-align: center;
+    display: none;
+}
+.profile-card button a
+{
+    color: inherit;
+
+}
+.category-body .show-more
+{
+    display: none;
+}
+.artistCategories
+{
+    min-height: 130px;
+}
+.imagePerformanceChange .croppie-container
+{
+    padding: 0;
+}
+.imagePerformanceChange .croppie-container .cr-slider-wrap
+{
+    margin-top: 8px;
+}
+.offerMediaType
+{
+    text-align: center;
+    margin-top: 114px;
+}
+.performanceVideoAdd
+{
+    display: none;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 90px;
+}
+.performanceVideoAdd button
+{
+    margin-top: 10px;
+}
+.no-res-block
+{
+    color: #fff;
+    text-align: center;
+}
+.imagePerfinput
+{
+    display: none;
+}
+#profileAddNewMedia
+{
+    margin-bottom: 25px;
+}
+#addImageModal .actions
+{
+    text-align: center;
+}
+.select2-container--disabled
+{
+    opacity: 0.5;
+}
+.deleteTabBlock
+{
+    position: absolute;
+    right: -1px;
+    top: -13px;
+    color: #f97c7d;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 2;
+}
+#section-audio iframe
+{
+    margin-top: 30px;
+}
 footer {
     position: relative;
     padding-top: 52px;
