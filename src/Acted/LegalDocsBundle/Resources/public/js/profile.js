@@ -410,7 +410,7 @@ $(function() {
             url: '/profile/' + slug + '/media/new',
             data: {"audio": "'"+ audioLink +"'"},
             success: function(response){
-                $('.audioBlock').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="'+response.link+'"></iframe>')
+                $('.audioBlock').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="'+response.media.link+'"></iframe>')
             }
         })
     }
