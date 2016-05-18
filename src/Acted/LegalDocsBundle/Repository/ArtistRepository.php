@@ -104,8 +104,14 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
 
         switch($fc->getLocation()) {
             case FilterCriteria::LOCATION_SAME_COUNTRY;
+                if ($fc->getUserCity()) {
+                    $userCountry = $fc->getUserCity()->getRegion()->getCountry();
+                } else {
+                    $userCountry = $fc->getCountry();
+                }
+
                 $qb->andWhere('r.country = :userCountry')
-                    ->setParameter('userCountry', $fc->getCountry());
+                    ->setParameter('userCountry', $userCountry);
                 break;
             case FilterCriteria::LOCATION_INTERNATIONAL;
                 $qb->andWhere('p.isInternational = :international')
@@ -123,7 +129,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('region', $fc->getRegion());
         }
 
-        if ($fc->getCountry()) {
+        if ($fc->getCountry() && !$fc->getUserCity()) {
             $qb->andWhere('r.country = :country')
                 ->setParameter('country', $fc->getCountry());
         }
