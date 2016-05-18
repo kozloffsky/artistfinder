@@ -6242,7 +6242,7 @@ $(function () {
             countElementsReady = $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch').length,
             getCurrentPage = countElementsReady / 15,
             pageMath = Math.floor(getCurrentPage),
-            pageNumberToLoad = pageMath + 1;
+            pageNumberToLoad = pageMath;
             console.log(infiniteScrollCheckPage);
         if (infiniteScrollCheckPage != pageNumberToLoad) {
             infiniteScrollCheckPage = pageNumberToLoad;
