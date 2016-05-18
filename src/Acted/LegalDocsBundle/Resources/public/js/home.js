@@ -155,6 +155,12 @@ $(function () {
       $('.home.header-background').css('background', 'none');
     }, 1200);
   }
+
+  $("#homeSearchInput").keypress(function(e) {
+    if (e.keyCode == 13) {
+      $('.homeSearchStart button').trigger('click');
+    }
+  });
 });
 
 //TODO: jQuery.mb.YTPlayer add to header youtube video.

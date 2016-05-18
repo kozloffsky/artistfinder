@@ -359,6 +359,10 @@ $(function () {
         initSLiderSearchRes();
         selectBoxStyle();
 
+        $('.tab').removeClass('active');
+        $('.SearchResultTab').addClass('active');
+        $('.tab-block').hide();
+        $('.SearchResultTabContent').show();
     }
 
     function recomendedSearchRes(response){
@@ -772,21 +776,23 @@ $(function () {
     }
 
     function catSearchRes(searchCatName, searchMainCatId, response){
+        console.log(searchMainCatId)
         var destinationTab = 'catSearchResNew';
-        $('.results-menu').append('<li data-toggle="#tab-'+destinationTab+'" class="tab '+destinationTab+'Tab searchMainResTab">'+
+        $('.results-menu').append('<li data-toggle="#tab-'+searchMainCatId+'" class="tab '+searchMainCatId+'Tab searchMainResTab">'+
             '<a>'+searchCatName+'</a>'+
-            '<div class="deleteTabBlock"><span class="hidden">'+destinationTab+'</span><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>'+
+            '<div class="deleteTabBlock"><span class="hidden">'+searchMainCatId+'</span><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>'+
             '</li>');
-        loopArtistsInCat(response, destinationTab);
+        $('.catSearchResNew').attr('id', 'tab-'+searchMainCatId+'');
+        loopArtistsInCat(response, searchMainCatId);
         setTabsCorenersZ();
         selectBoxStyle();
         //console.log('finish');
         initTabs();
-        createShowMoreBtn(destinationTab);
+        createShowMoreBtn(searchMainCatId);
         $('.tab').removeClass('active');
-        $('.'+destinationTab+'Tab').addClass('active');
+        $('.'+searchMainCatId+'Tab').addClass('active');
         $('.tab-block').hide();
-        var idContent = $('.'+destinationTab+'Tab').attr('data-toggle');
+        var idContent = $('.'+searchMainCatId+'Tab').attr('data-toggle');
         $(idContent).show();
 
         $('html,body').animate({
