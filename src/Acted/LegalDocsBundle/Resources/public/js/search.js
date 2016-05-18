@@ -55,7 +55,7 @@ $(function () {
         });
     }
 
-    var slidersCount = $('.slider-wrapper').length;
+
     var panelWidth = 204;
     var sliderArea = $('.slider-block').width() - 70;
     var visiblePanels = parseInt(sliderArea/panelWidth);
@@ -63,45 +63,54 @@ $(function () {
 
     initSLiderRec();
     function initSLiderRec(){
-        $('.searchRecomendationWrapper').bxSlider({
-            slideWidth : panelWidth,
-            minSlides  : 1,
-            maxSlides  : 5,
-            slideMargin: margin + 1,
-            pager      : false,
-            controls   : true,
-            nextText   : '<i class="fa fa-2x fa-angle-right"></i>',
-            prevText   : '<i class="fa fa-2x fa-angle-left"></i>',
-            moveSlides : 1,
-            infiniteLoop: false,
-            onSliderLoad: function() {
-                var viewportsCount = $('.searchRecomendationWrapper .bx-viewport').length;
-                if(slidersCount == viewportsCount) {
-                    //$('.searchRecomendationWrapper .bx-viewport').css('padding-left', margin/2+'px');
+        var countSlidersRecommended = $('.recommendationsTabContent .bx-viewport').length;
+        console.log(countSlidersRecommended)
+        var slidersCount = $('.searchRecomendationWrapper').length;
+        if(countSlidersRecommended == 0) {
+            $('.searchRecomendationWrapper').bxSlider({
+                slideWidth: 204,
+                minSlides: 1,
+                maxSlides: 5,
+                slideMargin: margin + 1,
+                pager: false,
+                controls: true,
+                nextText: '<i class="fa fa-2x fa-angle-right"></i>',
+                prevText: '<i class="fa fa-2x fa-angle-left"></i>',
+                moveSlides: 1,
+                infiniteLoop: false,
+                onSliderLoad: function () {
+                    var viewportsCount = $('.recommendationsTabContent .bx-viewport').length;
+                    if (slidersCount == viewportsCount) {
+                        $('.recommendationsTabContent .bx-viewport').css('padding-left', margin / 2 + 'px');
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     function initSLiderSearchRes(){
-        $('.searchSearchResultWrapper').bxSlider({
-            slideWidth : panelWidth,
-            minSlides  : 1,
-            maxSlides  : 5,
-            slideMargin: margin + 1,
-            pager      : false,
-            controls   : true,
-            nextText   : '<i class="fa fa-2x fa-angle-right"></i>',
-            prevText   : '<i class="fa fa-2x fa-angle-left"></i>',
-            moveSlides : 1,
-            infiniteLoop: false,
-            onSliderLoad: function() {
-                var viewportsCount = $('.searchSearchResultWrapper .bx-viewport').length;
-                if(slidersCount == viewportsCount) {
-                    //$('.searchSearchResultWrapper .bx-viewport').css('padding-left', margin/2+'px');
+        var countSlidersSearch = $('.SearchResultTabContent .bx-viewport').length;
+        var slidersCount = $('.searchSearchResultWrapper').length;
+        if(countSlidersSearch == 0) {
+            $('.searchSearchResultWrapper').bxSlider({
+                slideWidth: 204,
+                minSlides: 1,
+                maxSlides: 5,
+                slideMargin: margin + 1,
+                pager: false,
+                controls: true,
+                nextText: '<i class="fa fa-2x fa-angle-right"></i>',
+                prevText: '<i class="fa fa-2x fa-angle-left"></i>',
+                moveSlides: 1,
+                infiniteLoop: false,
+                onSliderLoad: function () {
+                    var viewportsCount = $('.SearchResultTabContent .bx-viewport').length;
+                    if (slidersCount == viewportsCount) {
+                        $('.SearchResultTabContent .bx-viewport').css('padding-left', margin / 2 + 'px');
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     function initTabs() {
@@ -277,6 +286,32 @@ $(function () {
         filterRecomended(recommendedCatFiltering);
     });
 
+
+
+/**/
+    $('#recomendedFilterSearch select').on('change', function(){
+        var filtersCatSelectGroup = $('#recomendedFilterSearch select');
+        console.log(this.id);
+        if (this.id == 'recFilterRating') {
+            $('#recomendedFilterSearch #recFilterPrice').prop("disabled", true);
+        } else if (this.id == 'recFilterRating'){
+            $('#recomendedFilterSearch #recFilterRating').prop("disabled", true);
+        }
+        var searchAllCat = $('#recommendedCat, #eventLocationForm, #searchLoc, #recomendedFilterSearch').serialize();
+        filtersCatSelectGroup.prop( "disabled", false );
+        getFilteredRes(searchAllCat)
+    });
+
+    $('#recomendedFilterSearch input:checkbox').on('change', function(){
+        $('#recomendedFilter select').prop( "disabled", true );
+        var searchAllCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch, #recomendedFilterSearch').serialize()
+        $('#recomendedFilter select').prop( "disabled", false );
+        getFilteredRes(searchAllCat)
+    });
+/**/
+
+
+
     function filterRecomended(recommendedCatFiltering){
         console.log(recommendedCatFiltering)
         $.ajax({
@@ -316,12 +351,14 @@ $(function () {
             }
         };
         getRecStarts();
-        initSLiderSearchRes();
+        checkUserPosition();
         setTabsCorenersZ();
-        selectBoxStyle();
         //console.log('finish');
         initTabs();
         //$('.recomendedFilter select').prop('disabled',false);
+        initSLiderSearchRes();
+        selectBoxStyle();
+
     }
 
     function recomendedSearchRes(response){
@@ -492,7 +529,7 @@ $(function () {
                     loopArtistsInCat(response[propt], propt);
                 }
                 createShowMoreBtn(propt);
-                checkUserPosition()
+                checkUserPosition();
             }
         };
         //setArtistStarsCat();
@@ -513,6 +550,7 @@ $(function () {
             var categoryFiltering = $(this).parents('.filters').attr('id');
             catFilteringSearch(categoryFiltering);
         });
+        checkUserPosition();
     }
 
     function createShowMoreBtn(propt){
@@ -673,7 +711,7 @@ $(function () {
             countElementsReady = $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch').length,
             getCurrentPage = countElementsReady / 15,
             pageMath = Math.floor(getCurrentPage),
-            pageNumberToLoad = pageMath + 1;
+            pageNumberToLoad = pageMath;
             console.log(infiniteScrollCheckPage);
         if (infiniteScrollCheckPage != pageNumberToLoad) {
             infiniteScrollCheckPage = pageNumberToLoad;

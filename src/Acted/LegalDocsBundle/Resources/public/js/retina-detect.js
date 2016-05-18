@@ -4,7 +4,7 @@ $(function () {
     var retina = window.devicePixelRatio > 1;
 
     if(retina) {
-        $("link[href*='css/styles.css']").attr('href', 'css/style-retina.css');
+        //$("link[href*='css/styles.css']").attr('href', 'css/style-retina.css');
         $('body').animate({'opacity': 1}, 800);
         // $('body').css('display', 'block');
     } else {

@@ -2458,3 +2458,11 @@ span.removeNewImage
 {
     margin-top: 30px;
 }
+.searchSearchResultWrapper .profile-card, .searchRecomendationWrapper .profile-card
+{
+    width: 204px !important;
+}
+.results-content .slider-block .bx-wrapper
+{
+    padding: 0 30px;
+}
