@@ -728,7 +728,7 @@ section.used-by {
 }
 
 .price-list>.item>.video {
-    cursor: pointer;
+    /*cursor: pointer;*/
     position: relative;
     overflow: hidden;
     display: inline-block;
@@ -2460,7 +2460,7 @@ span.removeNewImage
 }
 .searchSearchResultWrapper .profile-card, .searchRecomendationWrapper .profile-card
 {
-    width: 204px !important;
+    width: 205px !important;
 }
 .results-content .slider-block .bx-wrapper
 {
