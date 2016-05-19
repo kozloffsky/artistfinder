@@ -311,6 +311,20 @@ $(function () {
 /**/
 
 
+    $('.catSearchResNew .filtersCat select').on('change mouseover', function(){
+        var filtersCatSelectGroup = $('.filtersCat select');
+        filtersCatSelectGroup.prop( "disabled", true );
+        $(this).prop('disabled', false);
+        var categoryFiltering = $(this).parents('.catSearchResNew').attr('id');
+        catFilteringSearch(categoryFiltering);
+    });
+
+    $('.catSearchResNew .filtersCat input:checkbox').on('change', function(){
+        var categoryFiltering = $(this).parents('.catSearchResNew').attr('id');
+        catFilteringSearch(categoryFiltering);
+    });
+
+
 
     function filterRecomended(recommendedCatFiltering){
         console.log(recommendedCatFiltering)

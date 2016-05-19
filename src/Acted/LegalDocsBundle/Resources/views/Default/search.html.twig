@@ -168,7 +168,7 @@
 
                     <div class="filters">
                         <form id="recomendedFilter">
-                        <select data-placeholder="Rating" name="order" id="recFilterRating">
+                        <!--<select data-placeholder="Rating" name="order" id="recFilterRating">
                             <option value="" disabled selected hidden>Rating</option>
                             <option value="top_rated">Top rated</option>
                             <option value="lowest_rated">Lowest rated</option>
@@ -177,7 +177,7 @@
                             <option value="" disabled selected hidden>Price</option>
                             <option value="cheapest">Cheapest</option>
                             <option value="more_expensive">Most expensive</option>
-                            </select>
+                            </select>-->
                         <select data-palaceholder="Distance" name="distance">
                             <option value="any">Any</option>
                             <option value="80">From 0 to 50 miles</option>
@@ -315,7 +315,7 @@
 
                 <div id="tab-catSearchResNew" class="tab-block tab-content searchTabContent catSearchResNew" style="display: none; padding-bottom: 100px;">
                     <div class="filters">
-                        <form id="recomendedFilter">
+                        <form class="filtersCat">
                             <select data-placeholder="Rating" name="order" id="recFilterRating">
                                 <option value="" disabled selected hidden>Rating</option>
                                 <option value="top_rated">Top rated</option>
@@ -333,8 +333,8 @@
                                 <option value="321">From 0 to 200 miles</option>
                             </select>
                             <div class="custom-checkbox">
-                                <input type="checkbox" name="with_video" value="1" id="only-video">
-                                <label for="only-video">Only artists with video</label>
+                                <input type="checkbox" name="with_video" value="1" id="only-videoMainCat">
+                                <label for="only-videoMainCat">Only artists with video</label>
                             </div>
                         </form>
                     </div>
@@ -364,8 +364,8 @@
                                 <option value="321">From 0 to 200 miles</option>
                             </select>
                             <div class="custom-checkbox">
-                                <input type="checkbox" name="with_video" value="1" id="only-videoSearch">
-                                <label for="only-videoSearch">Only artists with video</label>
+                                <input type="checkbox" name="with_video" value="1" id="only-videoSearchMain">
+                                <label for="only-videoSearchMain">Only artists with video</label>
                             </div>
                         </form>
                     </div>

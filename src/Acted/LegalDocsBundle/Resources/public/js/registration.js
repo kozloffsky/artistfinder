@@ -276,7 +276,7 @@ $(function () {
               'lastname': errorMsg
             });
           }
-          if (placeToShowErr == 'slug'){
+          if (placeToShowErr == 'name'){
             artistValidation.showErrors({
               'name': errorMsg
             });
@@ -356,8 +356,8 @@ $(function () {
     })
   }
 
-  $('#passwordRecovery').on('click', function()
-  {
+  $('#passwordRecovery').on('click', function(e)  {
+    e.preventDefault();
     var recoveryPasswordVal = $('#recoveryForm').serialize();
     console.log(recoveryPasswordVal);
     repairPassword(recoveryPasswordVal);
@@ -368,7 +368,10 @@ $(function () {
     $.ajax({
       type: "POST",
       url: '/resetting/request',
-      data: recoveryPasswordVal
+      data: recoveryPasswordVal,
+      success: function(response){
+        console.log(response)
+      }
     })
   }
 
