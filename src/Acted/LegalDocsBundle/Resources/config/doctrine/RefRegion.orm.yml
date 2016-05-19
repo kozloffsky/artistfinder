@@ -31,4 +31,5 @@ Acted\LegalDocsBundle\Entity\RefRegion:
         country:
           targetEntity: Acted\LegalDocsBundle\Entity\RefCountry
           inversedBy: regions
+          fetch: EAGER
     lifecycleCallbacks: {  }
