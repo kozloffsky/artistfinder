@@ -159,6 +159,11 @@ class SecurityController extends Controller
         return $this->redirect($this->generateUrl('acted_legal_docs_homepage'));
     }
 
+    /**
+     * Resent password action
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function sendResetPasswordAction(Request $request)
     {
         $form = $this->createForm(RequestResettingFormType::class);
@@ -171,13 +176,11 @@ class SecurityController extends Controller
             $user = $em->getRepository('ActedLegalDocsBundle:User')->findOneByEmail($data['email']);
 
             if (null === $user) {
-                // prevent brute force
-                return $this->redirect($this->generateUrl('acted_legal_docs_homepage'));
+                return new JsonResponse(['error' => 'User with email '. $data['email'] . ' not exist.']);
             }
 
             if ($user->isPasswordRequestNonExpired($this->getParameter('resetting.token_ttl'))) {
-                // prevent brute force
-                return $this->redirect($this->generateUrl('acted_legal_docs_homepage'));
+                return new JsonResponse(['error' => 'something broken.']);
             }
 
             $userManager = $this->get('app.user.manager');
@@ -187,12 +190,10 @@ class SecurityController extends Controller
             $em->flush();
 
             $userManager->sendResettingEmailMessage($user);
-            return $this->redirect($this->generateUrl('acted_legal_docs_homepage'));
+            return new JsonResponse(['success' => 'Email send to your email.']);
         }
 
-        return $this->render('@ActedLegalDocs/Security/requestResetting.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return new JsonResponse(['error' => 'Email not exist.']);
     }
 
     public function resetAction(Request $request, $token)
