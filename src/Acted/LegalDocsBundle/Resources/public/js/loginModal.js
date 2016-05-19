@@ -11,7 +11,7 @@ $(function () {
         $('.form-block').hide();
         $('.login-form').show();
         $('.login-modal .modal-title').html('Log In');
-    })
+    });
 
     $('#loginBtn').on('click',function(event) {
         event.preventDefault();

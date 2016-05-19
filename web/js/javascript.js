@@ -3988,7 +3988,7 @@ $(function () {
         $('.form-block').hide();
         $('.login-form').show();
         $('.login-modal .modal-title').html('Log In');
-    })
+    });
 
     $('#loginBtn').on('click',function(event) {
         event.preventDefault();
@@ -5385,7 +5385,7 @@ $(function () {
               'lastname': errorMsg
             });
           }
-          if (placeToShowErr == 'slug'){
+          if (placeToShowErr == 'name'){
             artistValidation.showErrors({
               'name': errorMsg
             });
@@ -5465,8 +5465,8 @@ $(function () {
     })
   }
 
-  $('#passwordRecovery').on('click', function()
-  {
+  $('#passwordRecovery').on('click', function(e)  {
+    e.preventDefault();
     var recoveryPasswordVal = $('#recoveryForm').serialize();
     console.log(recoveryPasswordVal);
     repairPassword(recoveryPasswordVal);
@@ -5477,7 +5477,10 @@ $(function () {
     $.ajax({
       type: "POST",
       url: '/resetting/request',
-      data: recoveryPasswordVal
+      data: recoveryPasswordVal,
+      success: function(response){
+        console.log(response)
+      }
     })
   }
 
@@ -5846,6 +5849,20 @@ $(function () {
         getFilteredRes(searchAllCat)
     });
 /**/
+
+
+    $('.catSearchResNew .filtersCat select').on('change mouseover', function(){
+        var filtersCatSelectGroup = $('.filtersCat select');
+        filtersCatSelectGroup.prop( "disabled", true );
+        $(this).prop('disabled', false);
+        var categoryFiltering = $(this).parents('.catSearchResNew').attr('id');
+        catFilteringSearch(categoryFiltering);
+    });
+
+    $('.catSearchResNew .filtersCat input:checkbox').on('change', function(){
+        var categoryFiltering = $(this).parents('.catSearchResNew').attr('id');
+        catFilteringSearch(categoryFiltering);
+    });
 
 
 
