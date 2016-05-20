@@ -233,7 +233,7 @@ $(function() {
     $('.editOffer').click(function (e) {
         e.stopPropagation();
         $(this).children('button').prop('disabled', true)
-        var parentPerformance = $(this).parents('article')
+        var parentPerformance = $(this).parents('article');
         var performanceId = $(parentPerformance).children('.performanceId').text();
         $(parentPerformance).find('.perfomanceInfoEdiatable').editable({
             type: 'text',
@@ -258,6 +258,18 @@ $(function() {
             }
         });
         //$(parentPerformance).find('.imagePerformanceChange').fadeIn();
+
+        /*
+        var imagePerformanceChange = parentPerformance.find('.preview'),
+         imageSecondChangeBlock = parentPerformance.find('.video');
+         //$(parentPerformance).find('.imagePerformanceChange').fadeIn();
+         imagePerformanceChange.on('mouseover', function(){
+         userPerformanceUpload(parentPerformance, performanceId);
+         });
+         imageSecondChangeBlock.on('mouseover', function(){
+         offerMediaChoose(parentPerformance, performanceId);
+         })*/
+
         userPerformanceUpload(parentPerformance, performanceId);
         offerMediaChoose(parentPerformance, performanceId);
     });
@@ -698,7 +710,11 @@ $(function() {
                         url: '/profile/performance/' + performanceId + '/media/new',
                         data: {"file":resp},
                         success: function(){
-                            imgChangeBlock.nextAll('.preview').attr('src', resp);
+                        console.log(imgChangeBlock)
+                            var placeToAddNewImage = imgChangeBlock.parent('.video');
+                            console.log(placeToAddNewImage)
+                            imgChangeBlock.find('.preview').remove();
+                            placeToAddNewImage.append('<img class="preview" src="'+resp+'" alt="Preview">');
                             console.log($uploadUserPerfMediaSecond)
                             imgChangeBlock.fadeOut();
                             $('#addImageModal').modal('hide')
@@ -710,7 +726,8 @@ $(function() {
                         url: '/media/' + mediaChangeId + '/edit',
                         data: {"file": resp},
                         success: function(){
-                            imgChangeBlock.nextAll('.preview').attr('src', resp);
+                            imgChangeBlock.find('.preview').remove();
+                            imgChangeBlock.find('.video').append('<img class="preview" src="'+resp+'" alt="Preview">');
                             console.log($uploadUserPerfMediaSecond)
                             imgChangeBlock.fadeOut();
                             $('#addImageModal').modal('hide')
@@ -731,7 +748,7 @@ $(function() {
     function offerMediaChoose(parentPerformance, performanceId, newPerformance){
         var offerMediaChangeBlock = parentPerformance.find('#image-performance-change2'),
             //firstImageCropper = parentPerformance.find('#image-performance-change1 .changeImageContiner'),
-            mediaChangeBtns = offerMediaChangeBlock.find('button'),
+            mediaChangeBtns = offerMediaChangeBlock.find('.offerMediaType button'),
             videoAddBlock = offerMediaChangeBlock.find('.performanceVideoAdd'),
             mediaChangeBlock = offerMediaChangeBlock.find('.offerMediaType'),
             mediaChangeId = offerMediaChangeBlock.find('.mediaId').text(),
@@ -785,6 +802,10 @@ $(function() {
                     $(performanceVideoBlock).html('<iframe src=' + responseText.media.link + '  width="395" height="274" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen>');
                     videoAddBlock.hide();
                     changePerformanceBlock.hide();
+                    videoAddBlock.find('.videoAddMessage').css('color','#fff');
+                },
+                error: function(response){
+                    videoAddBlock.find('.videoAddMessage').css('color','#C9302C');
                 }
             })
         }
@@ -897,13 +918,14 @@ $(function() {
                     success: function(response){
                         console.log(response);
                         $('#addImageModal').modal('hide');
-                        //imageSlider.reload();
                         var indexOfThumb = $('#photo-pager .scale-thumb').length;
                         $("#media [data-target='#section-photo'] .badge").text(indexOfThumb + 1);
+                        $('#photo-pager').append('<div class="scale-thumb thumb'+indexOfThumb + 1+'">'+
+                        '<span class="removeNewImage deleteMedia" id="'+response.media.id+'"><i class="fa fa-times-circle-o"></i></span>'+
+                        '<a data-slide-index="'+indexOfThumb+'" href=""><img src="'+resp+'"/></a>'
+                        );
                     }
                 });
-
-                //$('.header-background').css('background-image', 'url(' + resp + ')');
             });
         });
         return;
