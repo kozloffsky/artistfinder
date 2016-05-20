@@ -5769,10 +5769,15 @@ $(function () {
         console.log(cityChosen);
             if (cityChosen.length == 0) {
                 $('.results select[name="distance"]').prop('disabled', true);
+                $('#range-near').prop('disabled', true);
+                $('label[for="range-near"]').css('opacity','0.7');
             } else {
                 $('.results select[name="distance"]').prop('disabled', false);
+                $('#range-near').prop('disabled', false);
+                $('label[for="range-near"]').css('opacity','1');
             }
     }
+
     $('#country').on('change', function(){
         var selectedCountruOption = $(this).find('option:selected').val();
         chooseCity(selectedCountruOption);
@@ -5816,15 +5821,15 @@ $(function () {
     }
     
     $('.searchFormStart').on('click',function () {
-        var searchFormSerialize = $('#searchLoc, #eventLocationForm, #searchCategory, #artistLocationSearch').serialize()
+        var searchFormSerialize = $('#searchLoc, #eventLocationForm, #searchCategory, #artistLocationSearch').serialize();
         console.log(searchFormSerialize);
         getFilteredRes(searchFormSerialize)
-    })
+    });
 
     $('#search-region, #region, #searchCategory input, #artistLocationSearch input').on('change', function(){
-        var searchFormSerialize = $('#searchLoc, #eventLocationForm, #searchCategory, #artistLocationSearch').serialize()
+        var searchFormSerialize = $('#searchLoc, #eventLocationForm, #searchCategory, #artistLocationSearch').serialize();
         console.log(searchFormSerialize);
-        getFilteredRes(searchFormSerialize)
+        getFilteredRes(searchFormSerialize);
     });
 
     function getFilteredRes(searchFormSerialize){
@@ -6160,6 +6165,8 @@ $(function () {
                 '<button data-dismiss="modal" class="btn">Show more</button>'+
             '</div>'+
             '</div>');
+        } else {
+            $('#tab-'+propt+' .row .show-more').remove();
         }
         $('#tab-'+propt+' .row .show-more').on('click',function(){
             catFilteringSearchInfinite(propt, mainCatS);
