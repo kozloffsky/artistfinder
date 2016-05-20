@@ -359,7 +359,6 @@ $(function () {
   $('#passwordRecovery').on('click', function(e)  {
     e.preventDefault();
     var recoveryPasswordVal = $('#recoveryForm').serialize();
-    console.log(recoveryPasswordVal);
     repairPassword(recoveryPasswordVal);
   });
 

@@ -2481,3 +2481,10 @@ a.disabled {
     max-height: 65px;
     overflow: hidden;
 }
+.specializations ul .currentCatUser:nth-child(n+4) {
+    display: none
+}
+.navbar
+{
+    z-index: 1000;
+}

@@ -752,10 +752,6 @@ $(function() {
             } else {
                 mediaChangeBlock.hide();
                 imageAddForm.show();
-                //firstImageCropper.empty();
-                console.log(newPerformance)
-                //var newPerformance = true;
-                //mediaImageUpload()
                 userPerformanceUploadSecond(parentPerformance, performanceId, offerMediaChangeBlock, newPerformance)
             }
         })
@@ -794,6 +790,13 @@ $(function() {
         }
     }
 
+    $('#editCategories').on('click',function(){
+        $('.specializations .currentCatUser a').each(function(){
+            var currentCatId = $(this).attr('id');
+            console.log(currentCatId);
+            $('.categoriesChange #categoriesForm .artistCategories').find('#variety_category_id_'+currentCatId+'').prop('checked',true);
+        })
+    });
 
     function getCheckedCategories() {
         var selectedCat = [];
@@ -822,17 +825,10 @@ $(function() {
                     return '<li class="currentCatUser"><a href="#">'+ value +'</a><div class="divider"></div></li>';
                 });
                 $('.specializations > ul').prepend(newCategories.join(""));
+                $('#categotiesModal').modal('hide');
             }
         })
     }
-
-    $('#section-audio audio').click(function(){
-        console.log('ddddd');
-        var audioGroup = $('#section-audio audio');
-        $(audioGroup).each(function(){
-            this.pause()
-        })
-    });
 
     /*function preventMultipleAudio(){
         console.log('ddddd');

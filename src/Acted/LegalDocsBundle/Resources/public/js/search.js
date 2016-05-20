@@ -315,13 +315,15 @@ $(function () {
         var filtersCatSelectGroup = $('.filtersCat select');
         filtersCatSelectGroup.prop( "disabled", true );
         $(this).prop('disabled', false);
-        var categoryFiltering = $(this).parents('.catSearchResNew').attr('id');
-        catFilteringSearch(categoryFiltering);
+        var categoryFiltering = $(this).parents('.filters').attr('id');
+        var mainCatS = true;
+        catFilteringSearch(categoryFiltering, mainCatS);
     });
 
     $('.catSearchResNew .filtersCat input:checkbox').on('change', function(){
-        var categoryFiltering = $(this).parents('.catSearchResNew').attr('id');
-        catFilteringSearch(categoryFiltering);
+        var categoryFiltering = $(this).parents('.filters').attr('id');
+        var mainCatS = true;
+        catFilteringSearch(categoryFiltering, mainCatS);
     });
 
 
@@ -571,7 +573,7 @@ $(function () {
         checkUserPosition();
     }
 
-    function createShowMoreBtn(propt){
+    function createShowMoreBtn(propt, mainCatS){
         var countCardsInCat = $('#tab-'+propt+' .row .categoriesCardsSearch').length;
         console.log(countCardsInCat);
         if (countCardsInCat == 15){
@@ -582,7 +584,7 @@ $(function () {
             '</div>');
         }
         $('#tab-'+propt+' .row .show-more').on('click',function(){
-            catFilteringSearchInfinite(propt);
+            catFilteringSearchInfinite(propt, mainCatS);
         });
     }
 
@@ -689,15 +691,20 @@ $(function () {
         });
     }
 
-    function catFilteringSearch(categoryFiltering){
+    function catFilteringSearch(categoryFiltering, mainCats){
         var formsWithoutCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch, #'+categoryFiltering+' .filtersCat').serialize();
         //var catFilteringSerialize = $('#'+categoryFiltering+' .filtersCat').serialize();
         $('.filtersCat select').prop( "disabled", false );
-        console.log(categoryFiltering);
+        console.log(mainCats);
+        if(mainCats){
+            var datasendSearch = formsWithoutCat + '&mainCategory=' + categoryFiltering;
+        } else {
+            var datasendSearch = formsWithoutCat + '&categories%5B%5D=' + categoryFiltering;
+        }
         $.ajax({
             type:'GET',
             url: '/artist',
-            data: formsWithoutCat + '&categories%5B%5D=' + categoryFiltering,
+            data: datasendSearch,
             success: function(response){
                 //console.log(response);
                 $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch, #tab-'+categoryFiltering+' > .row .no-res-block').remove();
@@ -724,7 +731,7 @@ $(function () {
 
     var infiniteScrollCheckPage = {};
 
-    function catFilteringSearchInfinite(categoryFiltering){
+    function catFilteringSearchInfinite(categoryFiltering, mainCatS){
         var formsWithoutCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch').serialize(),
             countElementsReady = $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch').length,
             getCurrentPage = countElementsReady / 15,
@@ -734,24 +741,29 @@ $(function () {
         if (infiniteScrollCheckPage != pageNumberToLoad) {
             infiniteScrollCheckPage = pageNumberToLoad;
             console.log(infiniteScrollCheckPage);
+            if(mainCatS){
+                var datasendSearch = formsWithoutCat + '&mainCategory=' + categoryFiltering + '&page=' + pageNumberToLoad;
+            } else {
+                var datasendSearch = formsWithoutCat + '&categories%5B%5D=' + categoryFiltering + '&page=' + pageNumberToLoad;
+            }
             $.ajax({
                 type: 'GET',
                 url: '/artist',
-                data: formsWithoutCat + '&categories%5B%5D=' + categoryFiltering + '&page=' + pageNumberToLoad,
+                data: datasendSearch,
                 success: function (response) {
                     //console.log(response);
                     $('#tab-' + categoryFiltering + ' > .row .show-more').remove();
                     loopArtistsInCat(response, categoryFiltering);
-                    startInfiniteScroll(categoryFiltering);
+                    startInfiniteScroll(categoryFiltering, mainCatS);
                 }
             });
         }
     }
 
-    function startInfiniteScroll(categoryFiltering){
+    function startInfiniteScroll(categoryFiltering, mainCatS){
         $(window).scroll(function() {
             if ($('.social-icons').isVisible()) {
-                catFilteringSearchInfinite(categoryFiltering);
+                catFilteringSearchInfinite(categoryFiltering, mainCatS);
             }
             return false;
         });
@@ -792,17 +804,19 @@ $(function () {
     function catSearchRes(searchCatName, searchMainCatId, response){
         console.log(searchMainCatId)
         var destinationTab = 'catSearchResNew';
+        var mainCatS = true;
         $('.results-menu').append('<li data-toggle="#tab-'+searchMainCatId+'" class="tab '+searchMainCatId+'Tab searchMainResTab">'+
             '<a>'+searchCatName+'</a>'+
             '<div class="deleteTabBlock"><span class="hidden">'+searchMainCatId+'</span><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>'+
             '</li>');
         $('.catSearchResNew').attr('id', 'tab-'+searchMainCatId+'');
+        $('.catSearchResNew .filters').attr('id', ''+searchMainCatId+'');
         loopArtistsInCat(response, searchMainCatId);
         setTabsCorenersZ();
         selectBoxStyle();
         //console.log('finish');
         initTabs();
-        createShowMoreBtn(searchMainCatId);
+
         $('.tab').removeClass('active');
         $('.'+searchMainCatId+'Tab').addClass('active');
         $('.tab-block').hide();
@@ -812,6 +826,7 @@ $(function () {
         $('html,body').animate({
             scrollTop: $('.results').offset().top
         });
+        createShowMoreBtn(searchMainCatId, mainCatS);
     }
 
     function deleteTabSearch() {

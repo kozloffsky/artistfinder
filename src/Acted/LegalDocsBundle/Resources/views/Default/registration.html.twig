@@ -113,7 +113,11 @@
                                 <label for="country">Country</label>
                                 <select name="country" id="country">
                                     {% for country in countries() %}
-                                        <option value="{{ country.id }}" name="country">{{ country.name }}</option>
+                                        {% if country.name == 'United Kingdom' %}
+                                            <option value="{{ country.id }}" name="country" selected="selected">{{ country.name }}</option>
+                                        {% else %}
+                                            <option value="{{ country.id }}" name="country">{{ country.name }}</option>
+                                        {% endif %}
                                     {% endfor %}
                                 </select>
                             </div>
