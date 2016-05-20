@@ -465,7 +465,8 @@ $(function() {
                     url: '/user/edit',
                     data: {"user[avatar]": resp}
                 })
-                $('.avatarEditable .avatar').attr('src', resp)
+                $('.avatarEditable .avatar').attr('src', resp);
+                $('#changeImageModal').modal('hide');
             });
         });
         return;
@@ -910,6 +911,16 @@ $(function() {
             });
         });
         return;
+    }
+
+    preventEmptyTabs();
+    function preventEmptyTabs(){
+        $('.mediaTabProf').each(function(){
+            var numOfmediaElements = $(this).find('.badge').text();
+            if (numOfmediaElements == 0){
+                $(this).addClass('disabled');
+            }
+        })
     }
 });
 

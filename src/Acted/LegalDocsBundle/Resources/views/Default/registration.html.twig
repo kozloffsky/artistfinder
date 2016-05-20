@@ -106,7 +106,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="band_name">Artist/Band name</label>
-                                <input type="text" name="name" class="form-control" minlength="3" id="band_name" placeholder="Artist/Band name" required>
+                                <input type="text" name="name" class="form-control" minlength="3" maxlength="20" id="band_name" placeholder="Artist/Band name" required>
                                 <label class="icon"></label>
                             </div>
                             <div class="form-group">
@@ -233,6 +233,7 @@
 
                 <form class="form-block recovery-form" id="recoveryForm" style="display: none">
                     <p class="tip">Please enter the email address that you used when creating your account.</p>
+                    <span class="error" id="errorLogRecovery"></span>
 
                     <div class="form-group">
                         <label for="user_email_rec">Email</label>
@@ -245,6 +246,7 @@
                         </div>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>

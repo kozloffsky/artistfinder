@@ -38,13 +38,13 @@ $(function(){
         sum;
 
     // bxslider init
-    $('.bxslider').bxSlider({
+    /*$('.bxslider').bxSlider({
         adaptiveHeight: true,
         mode          : 'fade',
         nextSelector  : '#nextSlide',
         prevSelector  : '#prevSlide',
         pager         : false
-    });
+    });*/
 
     // add animate to note
     $('.month-table .note').on({
@@ -4479,7 +4479,8 @@ $(function() {
                     url: '/user/edit',
                     data: {"user[avatar]": resp}
                 })
-                $('.avatarEditable .avatar').attr('src', resp)
+                $('.avatarEditable .avatar').attr('src', resp);
+                $('#changeImageModal').modal('hide');
             });
         });
         return;
@@ -4924,6 +4925,16 @@ $(function() {
             });
         });
         return;
+    }
+
+    preventEmptyTabs();
+    function preventEmptyTabs(){
+        $('.mediaTabProf').each(function(){
+            var numOfmediaElements = $(this).find('.badge').text();
+            if (numOfmediaElements == 0){
+                $(this).addClass('disabled');
+            }
+        })
     }
 });
 
@@ -5480,6 +5491,16 @@ $(function () {
       data: recoveryPasswordVal,
       success: function(response){
         console.log(response)
+        if(response.error){
+          $('#errorLogRecovery').text(response.error).show();
+        } else {
+          $('.recovery-form').hide();
+          $('.login-form').show();
+          $('.login-modal .modal-title').html(response.success);
+          setTimeout(function(){
+            $('.login-modal .modal-title').html('Log In');
+          }, 2000);
+        }
       }
     })
   }
@@ -6277,7 +6298,7 @@ $(function () {
             $.ajax({
                 type: 'GET',
                 url: '/artist',
-                data: formsWithoutCat + '&categories%5B%5D=' + categoryFiltering + '&page=' + pageNumberToLoad,
+                data: formsWithoutCat + '&mainCategory=' + categoryFiltering + '&page=' + pageNumberToLoad,
                 success: function (response) {
                     //console.log(response);
                     $('#tab-' + categoryFiltering + ' > .row .show-more').remove();

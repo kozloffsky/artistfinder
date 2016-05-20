@@ -371,6 +371,16 @@ $(function () {
       data: recoveryPasswordVal,
       success: function(response){
         console.log(response)
+        if(response.error){
+          $('#errorLogRecovery').text(response.error).show();
+        } else {
+          $('.recovery-form').hide();
+          $('.login-form').show();
+          $('.login-modal .modal-title').html(response.success);
+          setTimeout(function(){
+            $('.login-modal .modal-title').html('Log In');
+          }, 2000);
+        }
       }
     })
   }

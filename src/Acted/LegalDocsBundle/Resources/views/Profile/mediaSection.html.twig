@@ -1,6 +1,7 @@
 <section id="media" class="profile-block media">
     <div class="title"><span>Media</span></div>
 
+    {% if is_granted('EDIT', artist) %}
     <ul>
         <li>
             <a class="tab active" data-target="#section-photo" href="#">
@@ -24,6 +25,31 @@
             </a>
         </li>
     </ul>
+    {% else %}
+        <ul>
+            <li>
+                <a class="tab active mediaTabProf" data-target="#section-photo" href="#">
+                    Photo
+                    <div class="badge">{{ artist.user.profile.photoList|length }}</div>
+                    <div class="circle"></div>
+                </a>
+            </li>
+            <li>
+                <a class="tab mediaTabProf" data-target="#section-video" href="#">
+                    Video
+                    <div class="badge">{{ artist.user.profile.videoList|length }}</div>
+                    <div class="circle"></div>
+                </a>
+            </li>
+            <li>
+                <a class="tab mediaTabProf" data-target="#section-audio" href="#">
+                    Audio
+                    <div class="badge">{{ artist.user.profile.audioList|length }}</div>
+                    <div class="circle"></div>
+                </a>
+            </li>
+        </ul>
+    {% endif %}
 
     <div class="row">
 

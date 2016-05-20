@@ -31,7 +31,7 @@
             <div class="specializations">
                 <ul>
 
-                    {% for category in artist.user.profile.categories %}
+                    {% for category in artist.user.profile.categories|slice(0, 3) %}
                     <li class="currentCatUser"><a href="#">{{ category.title }}</a>
                         <div class="divider"></div>
                     </li>

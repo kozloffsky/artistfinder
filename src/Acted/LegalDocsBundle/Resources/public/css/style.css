@@ -2466,3 +2466,18 @@ span.removeNewImage
 {
     padding: 0 30px;
 }
+#errorLogRecovery{
+    color: #d9534f;
+    text-align: center;
+    display: none;
+}
+a.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: default;
+}
+.info .username
+{
+    max-height: 65px;
+    overflow: hidden;
+}
