@@ -36,6 +36,13 @@ class ArtistController extends Controller
         $s = $this->get('app.search');
 
         $oc = OrderCriteria::createSimpleSort($data['order']);
+        if ($data['mainCategory']) {
+            $data['categories'] = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('ActedLegalDocsBundle:Category')
+                ->findByParent($data['mainCategory']);
+        }
         $fc = new FilterCriteria($data['categories'], $data['with_video'], $data['query']);
 
         if ($data['distance']) {
