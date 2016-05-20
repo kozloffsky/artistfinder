@@ -69,7 +69,7 @@ class MediaManager
 
     public function updateAudio($link, Media $media)
     {
-        if (strripos($link, 'soundcloud.com') !== false) {
+        if (strripos($link, 'soundcloud.com') === false) {
             return ['error' => 'Added link should be from "soundcloud.com"'];
         }
         $media->setActive(true);
