@@ -5932,10 +5932,12 @@ $(function () {
             '</li>').insertAfter('.results-menu .recommendations');
         $('.SearchResultTabContent .slider').remove();
         var searchResultTab = true;
+        var searchResLength = [];
         loopSearchRes();
         function loopSearchRes(){
             for(var propt in response) {
                 var elementsInCatCount = response[propt].length;
+                searchResLength.push(elementsInCatCount);
                 if(elementsInCatCount != 0) {
                     var searchCategoryId = propt,
                         searchCategoryName = $('.categories-menu a[data-toggle="#' + searchCategoryId + '"]').text(),
@@ -5949,6 +5951,17 @@ $(function () {
                 }
             }
         };
+        var totalCategories = 0;
+        $.each(searchResLength,function() {
+            totalCategories += this;
+        });
+        console.log(totalCategories)
+        if(totalCategories == 0){
+            var searchCat = 'SearchResultTabContent'
+            noResInCat(searchCat);
+        } else {
+            $('#tab-SearchResultTabContent > .row .no-res-block').remove();
+        }
         getRecStarts();
         checkUserPosition();
         setTabsCorenersZ();
@@ -5984,6 +5997,7 @@ $(function () {
                 }
             }
         };
+
         getRecStarts();
         initSLiderRec();
         checkUserPosition();
@@ -6073,6 +6087,7 @@ $(function () {
             } else {
                 $('#searchRecWrapper'+propt+'').append(artistBlockSearch);
             }
+
 
         });
     }
