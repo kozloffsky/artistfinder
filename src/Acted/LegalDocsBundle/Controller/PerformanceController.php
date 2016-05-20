@@ -71,8 +71,20 @@ class PerformanceController extends Controller
             }
 
             if(!is_null($data['video'])) {
+                if (strripos($data['video'], 'youtube.com') === false && strripos($data['video'], 'vimeo.com') === false ) {
+                    return new JsonResponse([
+                        'status' => 'error',
+                        'message' => 'Added link should be from "youtube.com" or "vimeo.com"'
+                    ],  400);
+                }
                 $media = $mediaManager->updateVideo($data['video'], $media);
             } elseif(!is_null($data['audio'])) {
+                if (strripos($data['audio'], 'soundcloud.com') === false) {
+                    return new JsonResponse([
+                        'status' => 'error',
+                        'message' => 'Added link should be from "soundcloud.com"'
+                    ],  400);
+                }
                 $media = $mediaManager->updateAudio($data['audio'], $media);
             } else {
                 /** @var UploadedFile $file */
