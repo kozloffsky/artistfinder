@@ -838,7 +838,10 @@ $(function () {
         selectBoxStyle();
         //console.log('finish');
         initTabs();
-
+        console.log(response)
+        if (response.length == 0){
+            noResInCat(searchMainCatId)
+        }
         $('.tab').removeClass('active');
         $('.'+searchMainCatId+'Tab').addClass('active');
         $('.tab-block').hide();
