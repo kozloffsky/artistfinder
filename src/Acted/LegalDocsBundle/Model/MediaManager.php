@@ -45,6 +45,9 @@ class MediaManager
 
     public function updateVideo($link, Media $media)
     {
+        if (strripos($link, 'youtube.com') === false && strripos($link, 'vimeo.com') === false ) {
+            return ['error' => 'Added link should be from "youtube.com" or "vimeo.com"'];
+        }
         $media->setActive(true);
         $media->setMediaType('video');
         $media->setPosition(1);
@@ -66,6 +69,9 @@ class MediaManager
 
     public function updateAudio($link, Media $media)
     {
+        if (strripos($link, 'soundcloud.com') !== false) {
+            return ['error' => 'Added link should be from "soundcloud.com"'];
+        }
         $media->setActive(true);
         $media->setMediaType('audio');
         $media->setPosition(1);
