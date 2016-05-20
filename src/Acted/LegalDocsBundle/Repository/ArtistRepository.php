@@ -119,7 +119,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 break;
             case FilterCriteria::LOCATION_100_KM;
                 $qb->andHaving('distance <= :locationDistance')
-                    ->setParameter('locationDistance', 100);
+                    ->setParameter('locationDistance', 160);
                 break;
         }
 
