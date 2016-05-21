@@ -180,7 +180,7 @@ class SecurityController extends Controller
             }
 
             if ($user->isPasswordRequestNonExpired($this->getParameter('resetting.token_ttl'))) {
-                return new JsonResponse(['error' => 'Request already send on your email.']);
+                return new JsonResponse(['error' => 'Message already send on your email.']);
             }
 
             $userManager = $this->get('app.user.manager');
