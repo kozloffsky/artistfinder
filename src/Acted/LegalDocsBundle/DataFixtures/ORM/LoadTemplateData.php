@@ -23,6 +23,8 @@ class LoadTemplateData extends AbstractFixture
      */
     public function load(ObjectManager $manager)
     {
+        ini_set("memory_limit","1024M");
+
         $template1 = new Template();
         $template1->setTypeId(Template::TYPE_PERFORMANCE_CONTRACT);
         $template1->setTemplate('<!DOCTYPE html>

@@ -24,6 +24,8 @@ class LoadRoleData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
+        ini_set("memory_limit","1024M");
+
         $artistRole = new RefRole();
         $artistRole->setCode('ROLE_ARTIST');
         $artistRole->setName('Artist');

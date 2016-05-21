@@ -26,6 +26,8 @@ class LoadGeoData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
+        ini_set("memory_limit","1024M");
+
         $france = new RefCountry();
         $france->setName('France');
         $uk = new RefCountry();

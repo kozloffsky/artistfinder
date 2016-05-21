@@ -37,6 +37,8 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
 
     public function load(ObjectManager $manager)
     {
+        ini_set("memory_limit","1024M");
+
         $faker = $this->container->get('davidbadura_faker.faker');
         $encoder = $this->container->get('security.password_encoder');
 

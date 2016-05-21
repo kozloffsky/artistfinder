@@ -43,6 +43,8 @@ class LoadPerformanceData extends AbstractFixture implements FixtureInterface, C
      */
     public function load(ObjectManager $manager)
     {
+        ini_set("memory_limit","1024M");
+
         $faker = $this->container->get('davidbadura_faker.faker');
 
 

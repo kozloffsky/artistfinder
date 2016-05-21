@@ -40,6 +40,8 @@ class LoadOfferData extends AbstractFixture implements ContainerAwareInterface, 
      */
     public function load(ObjectManager $manager)
     {
+        ini_set("memory_limit","1024M");
+
         $faker = $this->container->get('davidbadura_faker.faker');
         $count = 0;
         for ($i = 0; $i < 300; $i++) {

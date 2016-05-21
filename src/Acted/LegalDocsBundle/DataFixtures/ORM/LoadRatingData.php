@@ -40,6 +40,8 @@ class LoadRatingData extends AbstractFixture implements OrderedFixtureInterface,
      */
     public function load(ObjectManager $manager)
     {
+        ini_set("memory_limit","1024M");
+
         $faker = $this->container->get('davidbadura_faker.faker');
 
         for ($i = 0; $i < 300; $i++) {

@@ -17,6 +17,8 @@ class LoadMessageData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
+        ini_set("memory_limit","1024M");
+
         $now = new \DateTime();
         for( $i = 0; $i < 3; $i++) {
             $chatRoom = new ChatRoom();

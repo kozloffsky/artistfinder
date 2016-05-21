@@ -24,6 +24,8 @@ class LoadHomespotlightData extends AbstractFixture implements OrderedFixtureInt
      */
     public function load(ObjectManager $manager)
     {
+        ini_set("memory_limit","1024M");
+
         $photoForSpotlights = range(1, 9);
         foreach ($photoForSpotlights as $spotlightId) {
             $spotlight = new Homespotlight();
