@@ -72,6 +72,9 @@ class MediaManager
         if (strripos($link, 'soundcloud.com') === false) {
             return ['error' => 'Added link should be from "soundcloud.com"'];
         }
+        if (strripos($link, 'iframe') === false) {
+            return ['error' => 'Added link should be embed'];
+        }
         $media->setActive(true);
         $media->setMediaType('audio');
         $media->setPosition(1);

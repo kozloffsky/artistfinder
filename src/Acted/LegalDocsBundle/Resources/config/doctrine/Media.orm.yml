@@ -13,7 +13,7 @@ Acted\LegalDocsBundle\Entity\Media:
           type: string(32)
           notnull: true
         name:
-          type: string(128)
+          type: string(255)
           notnull: true
         link:
           type: string(256)
