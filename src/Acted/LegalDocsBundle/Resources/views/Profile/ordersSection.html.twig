@@ -21,6 +21,18 @@
                             </div>
                         </div>
                         <img class="preview" src="{{ mediaOf.link }}" alt="Preview">
+                        {% else %}
+                            <div class="imagePerformanceChange" id="image-performance-change1">
+                                <span class="hidden mediaId">NewMedia</span>
+                                <div class="changeImageContiner"></div>
+                                <div class="actions">
+                                    <a class="btn btn-file">
+                                        <input type="file" id="uploadImg" value="Choose a file" accept="image/*" />
+                                    </a>
+                                    <button class="upload-resultBg btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                            <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
                     {% endfor %}
 
                     <div class="video">
@@ -62,6 +74,36 @@
                                 <img class="preview" src="{{ mediaOf.link }}" alt="Preview">
                             {% endif %}
 
+                        {% else %}
+                            <div class="imagePerformanceChange" id="image-performance-change2">
+                                <span class="hidden mediaId">NewMedia</span>
+                                <div class="offerMediaType">
+                                    <button class="btn btn-primary image" data-toggle="modal" data-target="#addImageModal">Image</button>
+                                    <button class="btn btn-primary video">Video</button>
+                                </div>
+                                <div class="performanceVideoAdd">
+                                    <form class="videoAddForm">
+                                        <span class="videoAddMessage">Added link should be from "youtube.com" or "vimeo.com"</span>
+                                        <input type="text" class="form-control videoPerformanceAdd">
+                                    </form>
+                                    <button type="submit" id="AddPerformanceVideo" class="btn btn-default">Submit</button>
+                                </div>
+
+                                <div class="imagePerfinput">
+                                    <div class="changeImageContiner"></div>
+                                    <div class="actions">
+                                        <a class="btn btn-file">
+                                            <input type="file" class="uploadImg" value="Choose a file" accept="image/*" />
+                                        </a>
+                                        <button class="upload-resultBg btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="performanceVideo">
+                            </div>
+
+                            <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
                         {% endfor %}
                     </div>
 
