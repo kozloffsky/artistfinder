@@ -40,7 +40,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('a.user', 'u')
             ->innerJoin('u.profile', 'p')
             ->innerJoin('p.performances', 'pr')
-            ->innerJoin('pr.offers', 'o')
+            ->leftJoin('pr.offers', 'o')
             ->leftJoin('a.ratings', 'ar')
             ->groupBy('a.id');
 
