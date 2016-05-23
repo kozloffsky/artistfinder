@@ -5448,7 +5448,7 @@ $(function () {
       url: '/geo/city?_format=json&country=' + selectedCountruOption,
       success:function(response){
         $('#cityReg').empty();
-        //$('#cityReg').append('<option value="" name="user_city">select a city</option>');
+        $('#cityReg').append('<option value="" name="city">select a city</option>');
         $(response).each(function(){
           $('#cityReg').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
         });
@@ -6084,7 +6084,7 @@ $(function () {
             } else {
                 $('#searchRecWrapper'+propt+'').append(artistBlockSearch);
             }
-
+            checkUserPosition();
 
         });
     }
@@ -6189,6 +6189,7 @@ $(function () {
         $('#tab-' + propt + ' > .row .no-res-block').remove();
         var noResBlock = '<div class="no-res-block"><h1>No results matching your criteria</h1></div>'
         $('#tab-' + propt + ' > .row').append(noResBlock);
+        checkUserPosition();
     }
 
     function loopArtistsInCat(artists, propt) {
@@ -6274,6 +6275,7 @@ $(function () {
             $('#tab-' + propt + ' > .row').append(artistBlockSearch);
         });
         setArtistStarsCat();
+        checkUserPosition();
     }
 
     function setArtistStarsCat(){
@@ -6428,6 +6430,7 @@ $(function () {
             scrollTop: $('.results').offset().top
         });
         createShowMoreBtn(searchMainCatId, mainCatS);
+        checkUserPosition();
     }
 
     function deleteTabSearch() {
@@ -6436,14 +6439,22 @@ $(function () {
             var clickedBlockDel = this,
                 tabContentToDel = $(clickedBlockDel).find('span').text(),
                 tabBlock = $(clickedBlockDel).parent('.tab');
-            console.log(tabContentToDel);
-
-            $('.tab').removeClass('active');
-            $('.recommendedTab').addClass('active');
-            $('.tab-block').hide();
-            $('.recommendationsTabContent').show();
-            $(tabBlock).hide();
-            $('#search'+tabContentToDel+'').prop('checked', false)
+            console.log(tabBlock.hasClass('active'));
+            if(tabBlock.hasClass('active')){
+                $('.tab').removeClass('active');
+                $('.recommendedTab').addClass('active');
+                $('.tab-block').hide();
+                $('.recommendationsTabContent').show();
+                $(tabBlock).hide();
+                $('#search'+tabContentToDel+'').prop('checked', false)
+            } else {
+                //$('.tab').removeClass('active');
+                //$('.recommendedTab').addClass('active');
+                $('#tab-'+tabContentToDel+'').hide();
+                //$('.recommendationsTabContent').show();
+                $(tabBlock).hide();
+                $('#search'+tabContentToDel+'').prop('checked', false)
+            }
         })
     }
 
@@ -6459,6 +6470,29 @@ $(function () {
                 scrollTop: $('.results').offset().top
             });
         }
+    }
+
+    $('#searchCategory input').on('change',function(){
+        var searchCategoryId = this.value;
+        var catPostion = $(this).prop( "checked" );
+        console.log(catPostion);
+        if(catPostion){
+            /*setTimeout(function(){
+                setActiveTab(searchCategoryId);
+            }, 1500);*/
+            $( document).on('ajaxComplete',function() {
+                setActiveTab(searchCategoryId);
+            });
+        }
+    });
+
+
+    function setActiveTab(searchCategoryId){
+        console.log('fdfdfd')
+        $('.tab').removeClass('active');
+        $('.results-menu li[data-toggle="#tab-' + searchCategoryId + '"]').addClass('active');
+        $('.tab-block').hide();
+        $('.results-content #tab-'+searchCategoryId+'').show();
     }
 
 });

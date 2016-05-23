@@ -307,7 +307,7 @@ $(function () {
       url: '/geo/city?_format=json&country=' + selectedCountruOption,
       success:function(response){
         $('#cityReg').empty();
-        //$('#cityReg').append('<option value="" name="user_city">select a city</option>');
+        $('#cityReg').append('<option value="" name="city">select a city</option>');
         $(response).each(function(){
           $('#cityReg').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
         });

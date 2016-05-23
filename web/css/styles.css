@@ -10421,3 +10421,7 @@ a.disabled {
 {
     z-index: 1000;
 }
+.results-content .slider
+{
+    margin-top: 15px;
+}
