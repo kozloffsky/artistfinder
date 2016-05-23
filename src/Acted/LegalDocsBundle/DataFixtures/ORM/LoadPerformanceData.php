@@ -65,7 +65,7 @@ class LoadPerformanceData extends AbstractFixture implements FixtureInterface, C
                 $photo1 = new Media();
                 $photo1->setName($faker->word);
                 $photo1->setMediaType('photo');
-                $photo1->setLink($faker->imageUrl);
+                $photo1->setLink('images/fixtures/'. rand(1, 30) . '.jpg');
                 $photo1->setPosition(1);
                 $photo1->setActive(true);
                 $manager->persist($photo1);
@@ -92,7 +92,7 @@ class LoadPerformanceData extends AbstractFixture implements FixtureInterface, C
                     $photo2 = new Media();
                     $photo2->setName($faker->word);
                     $photo2->setMediaType('photo');
-                    $photo2->setLink($faker->imageUrl);
+                    $photo2->setLink('images/fixtures/'. rand(1, 30) . '.jpg');
                     $photo2->setPosition(1);
                     $photo2->setActive(true);
 
