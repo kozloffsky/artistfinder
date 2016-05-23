@@ -11,9 +11,9 @@
         <h2>Find Your Entertainer</h2>
 
         <div class="form-group">
-
+            <form id="searchLoc">
             <div class="wrapper">
-                <form id="searchLoc">
+
                 <input type="text" name="query" id="searchQuery" placeholder="Search any entertainers">
                 <div class="divider"></div>
 
@@ -34,10 +34,11 @@
                         <option value="{{ region.id }}" name="region">{{ region.name }}</option>
                     {% endfor %}
                 </select>
-                </form>
+
             </div>
 
-            <button class="btn searchFormStart"><i class="fa fa-search"></i><span>Search</span></button>
+            <button class="btn submit searchFormStart" type="submit"><i class="fa fa-search"></i><span>Search</span></button>
+            </form>
         </div>
     </div>
 </div>

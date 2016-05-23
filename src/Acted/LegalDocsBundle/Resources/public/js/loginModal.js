@@ -1,3 +1,6 @@
+function activateModal(){
+    $('#activateProfileModal').modal('show');
+}
 $(function () {
     var loginFormValidation = $(".login-form").validate();
 

@@ -19,17 +19,6 @@ $(function () {
         $(this).addClass('active');
     });
 
-    getSearchQuery();
-
-    function getSearchQuery(){
-        var enteredQuery = localStorage.getItem('search');
-        if(enteredQuery) {
-            console.log(enteredQuery)
-            $(searchQuery).val(enteredQuery);
-            localStorage.removeItem('search');
-        }
-    }
-
 
     function selectBoxStyle() {
         $('select').each(function () {
@@ -241,12 +230,17 @@ $(function () {
             }
         })
     }
-    
-    $('.searchFormStart').on('click',function () {
+
+    $('.searchFormStart').on('click',function (e) {
+        e.preventDefault();
         var searchFormSerialize = $('#searchLoc, #eventLocationForm, #searchCategory, #artistLocationSearch').serialize();
         console.log(searchFormSerialize);
         getFilteredRes(searchFormSerialize)
+        $('html,body').animate({
+            scrollTop: $('.results').offset().top
+        });
     });
+
 
     $('#search-region, #region, #searchCategory input, #artistLocationSearch input').on('change', function(){
         var searchFormSerialize = $('#searchLoc, #eventLocationForm, #searchCategory, #artistLocationSearch').serialize();
@@ -279,14 +273,14 @@ $(function () {
         } else if (this.id == 'recFilterRating'){
             $('#recomendedFilter #recFilterRating').prop("disabled", true);
         }
-        var recommendedCatFiltering = $('#recommendedCat, #recomendedFilter, #eventLocationForm, #searchLoc').serialize();
+        var recommendedCatFiltering = $('#recommendedCat, #recomendedFilter, #eventLocationForm').serialize();
         filtersCatSelectGroup.prop( "disabled", false );
         filterRecomended(recommendedCatFiltering);
     });
 
     $('#recomendedFilter input:checkbox').on('change', function(){
         $('#recomendedFilter select').prop( "disabled", true );
-        var recommendedCatFiltering = $('#recommendedCat, #recomendedFilter, #eventLocationForm, #searchLoc').serialize();
+        var recommendedCatFiltering = $('#recommendedCat, #recomendedFilter, #eventLocationForm').serialize();
         $('#recomendedFilter select').prop( "disabled", false );
         filterRecomended(recommendedCatFiltering);
     });
@@ -869,6 +863,20 @@ $(function () {
             $(tabBlock).hide();
             $('#search'+tabContentToDel+'').prop('checked', false)
         })
+    }
+
+    setTimeout(getSearchQuery, 3000);
+
+    function getSearchQuery(){
+        var enteredQuery = localStorage.getItem('search');
+        if(enteredQuery) {
+            $('#searchQuery').val(enteredQuery);
+            localStorage.removeItem('search');
+            $('.searchFormStart').click();
+            $('html,body').animate({
+                scrollTop: $('.results').offset().top
+            });
+        }
     }
 
 });

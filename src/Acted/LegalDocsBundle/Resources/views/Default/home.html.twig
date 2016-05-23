@@ -1,9 +1,54 @@
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
-{% for flashMessage in app.session.flashbag.get('success') %}
-    <div class="success">{{ flashMessage }}</div>
-{% endfor %}
-{% for flashMessage in app.session.flashbag.get('error') %}
-    <div class="error">{{ flashMessage }}</div>
+
+{% for flashMessage in app.session.flashbag.get('confirm') %}
+<div class="modal registration-modal fade" id="activateProfileModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-body">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="final-stage">
+                    <div class="col-xs-12">
+                        <img class="final-image" src="{{ asset('assets/images/congratulations.png') }}" alt="">
+                    </div>
+                    <div class="row">
+                        <h2>Welcome to ACTED</h2>
+
+                        <p class="description">
+                            {{ flashMessage }}
+                        </p>
+                        <p class="description">
+                            And if you need any help, please do not hesitate to use the FAQ
+                        </p>
+
+                        <div class="controls">
+                            <div class="button-gradient filled">
+                                <button data-dismiss="modal" class="btn">Have a nice journey on ACTED</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                    <div class="success">{{ flashMessage }}</div>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                    <div class="error">{{ flashMessage }}</div>
+                {% endfor %}
+
+
+
+                {% block javascripts %}
+                <script type="text/javascript">
+                    window.onload = function() {
+                        $('#activateProfileModal').modal('show');
+                    };
+                </script>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endfor %}
 
 <div class="home header-background">
@@ -14,10 +59,6 @@
 
     <div class="header-block">
         <h2>Welcome here</h2>
-
-        {% for flashMessage in app.session.flashbag.get('confirm') %}
-            {{ flashMessage }}
-        {% endfor %}
 
         <div class="form-group">
             <input class="search-input" id="homeSearchInput" type="text" placeholder="Search any entertainers">
