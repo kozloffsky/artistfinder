@@ -56,10 +56,10 @@ class MediaController extends Controller
                 }
                 $media = $mediaManager->updateVideo($data['video'], $media);
             } elseif(!empty($data['audio'])) {
-                if (strripos($data['audio'], 'soundcloud.com') === false) {
+                if (strripos($data['audio'], 'soundcloud.com') === false || strripos($data['audio'], 'iframe')) {
                     return new JsonResponse([
                         'status' => 'error',
-                        'message' => 'Added link should be from "soundcloud.com"'
+                        'message' => 'Added link should be from "soundcloud.com" embed'
                     ],  400);
                 }
                 $media = $mediaManager->updateAudio($data['audio'], $media);
