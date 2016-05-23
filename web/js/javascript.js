@@ -4291,30 +4291,39 @@ $(function() {
         offerMediaChoose(parentPerformance, performanceId);
     });
 
-    $('.deleteMedia').on('click', function () {
-        var slug = $('#slug').text();
-        var mediaId = $(this).attr('id');
-        var currentBlocThumb = $(this).parent('.scale-thumb');
-        var getBigSliderContent = $('#imageSlider' + mediaId);
-        var getMediaType = $(this).parents('section');
-        console.log(getMediaType[0].id)
-        $.ajax({
-            type: "DELETE",
-            url: '/profile/' + slug + '/media/' + mediaId,
-            success: function () {
-                currentBlocThumb.remove();
-                getBigSliderContent.remove();
-                //imageSlider.reloadSlider();
-                if(getMediaType[0].id == 'section-video'){
-                    var indexOfThumb = $('#video-pager .scale-thumb').length;
-                    $("#media [data-target='#section-video'] .badge").text(indexOfThumb)
-                } else if (getMediaType[0].id == 'section-photo'){
-                    var indexOfThumb = $('#photo-pager .scale-thumb').length;
-                    $("#media [data-target='#section-photo'] .badge").text(indexOfThumb)
+    deleteMedia();
+
+    function deleteMedia() {
+        $('.deleteMedia').on('click', function () {
+            var slug = $('#slug').text();
+            var mediaId = $(this).attr('id');
+            var currentBlocThumb = $(this).parent('.scale-thumb');
+            var getBigSliderContent = $('#imageSlider' + mediaId);
+            var getMediaType = $(this).parents('section');
+            var clickedElDelete = $(this);
+            console.log(getMediaType[0].id)
+            $.ajax({
+                type: "DELETE",
+                url: '/profile/' + slug + '/media/' + mediaId,
+                success: function () {
+                    currentBlocThumb.remove();
+                    getBigSliderContent.remove();
+                    //imageSlider.reloadSlider();
+                    if (getMediaType[0].id == 'section-video') {
+                        var indexOfThumb = $('#video-pager .scale-thumb').length;
+                        $("#media [data-target='#section-video'] .badge").text(indexOfThumb)
+                    } else if (getMediaType[0].id == 'section-photo') {
+                        var indexOfThumb = $('#photo-pager .scale-thumb').length;
+                        $("#media [data-target='#section-photo'] .badge").text(indexOfThumb)
+                    } else if (getMediaType[0].id == 'section-audio') {
+                        $(clickedElDelete).parent('.audioEditProfile').remove();
+                        var indexOfThumb = $('#section-audio .audioEditProfile').length;
+                        $("#media [data-target='#section-audio'] .badge").text(indexOfThumb);
+                    }
                 }
-            }
-        })
-    });
+            })
+        });
+    }
 
     $('#addNewPerformance').on('click', function () {
         var addNewBtn = $(this);
@@ -4421,6 +4430,7 @@ $(function() {
                 console.log(indexOfThumb);
                 $("#media [data-target='#section-video'] .badge").text(indexOfThumb + 1);
                 //videoSlider.reloadSlider();
+                deleteMedia();
             }
         })
     }
@@ -4439,7 +4449,9 @@ $(function() {
             url: '/profile/' + slug + '/media/new',
             data: {"audio": "'"+ audioLink +"'"},
             success: function(response){
-                $('.audioBlock').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="'+response.media.link+'"></iframe>')
+                $('.audioBlock').append('<div class="audioEditProfile">'+
+                    '<span class="removeNewAudio deleteMedia" id="'+response.media.id+'"><i class="fa fa-times-circle-o"></i></span>'+
+                    '<iframe width="100%" height="150" scrolling="no" frameborder="no" src="'+response.media.link+'"></iframe></div>')
             }
         })
     }
@@ -4923,6 +4935,7 @@ $(function() {
         $('#uploadNewMedia').on('change', function () {
             readFile(this);
         });
+
         $('.upload-NewMedia').on('click', function (ev) {
             $uploadCropMedia.croppie('result', {
                 type: 'canvas',
@@ -4941,6 +4954,7 @@ $(function() {
                         '<span class="removeNewImage deleteMedia" id="'+response.media.id+'"><i class="fa fa-times-circle-o"></i></span>'+
                         '<a data-slide-index="'+indexOfThumb+'" href=""><img src="'+resp+'"/></a>'
                         );
+                        deleteMedia();
                     }
                 });
             });

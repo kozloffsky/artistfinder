@@ -2486,9 +2486,17 @@ a.disabled {
 }
 .navbar
 {
-    z-index: 1000;
+    z-index: 999999;
 }
 .results-content .slider
 {
     margin-top: 15px;
+}
+.audioEditProfile .deleteMedia
+{
+    right: 0;
+    color: #d9534f;
+    font-size: 30px;
+    cursor: pointer;
+    position: absolute;
 }
