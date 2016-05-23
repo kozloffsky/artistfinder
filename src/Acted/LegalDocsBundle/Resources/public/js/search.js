@@ -605,6 +605,7 @@ $(function () {
     }
 
     function noResInCat(propt){
+        $('#tab-' + propt + ' > .row .no-res-block').remove();
         var noResBlock = '<div class="no-res-block"><h1>No results matching your criteria</h1></div>'
         $('#tab-' + propt + ' > .row').append(noResBlock);
     }
