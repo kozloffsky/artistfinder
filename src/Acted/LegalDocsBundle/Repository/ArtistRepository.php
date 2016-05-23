@@ -42,6 +42,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('p.performances', 'pr')
             ->leftJoin('pr.offers', 'o')
             ->leftJoin('a.ratings', 'ar')
+            ->where('u.active != 0')
             ->groupBy('a.id');
 
         if ($fc->withVideo()) {
