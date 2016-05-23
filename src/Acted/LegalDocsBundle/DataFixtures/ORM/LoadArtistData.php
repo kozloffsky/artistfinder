@@ -101,8 +101,8 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $user->addRole($this->getReference('artistRole'));
             $user->setPrimaryPhone($faker->unique()->phoneNumber);
             $user->setActive(true);
-            $user->setAvatar('images/fixtures/'. rand(1, 30) . '.jpg');
-            $user->setBackground('images/fixtures/'. rand(1, 30) . '.jpg');
+            $user->setAvatar('/images/'. rand(1, 30) . '.jpg');
+            $user->setBackground('/images/'. rand(1, 30) . '.jpg');
             $manager->persist($user);
 
             $this->addReference('user' . $i, $user);
@@ -110,14 +110,14 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $photo1 = new Media();
             $photo1->setName($faker->word);
             $photo1->setMediaType('photo');
-            $photo1->setLink('images/fixtures/'. rand(1, 30) . '.jpg');
+            $photo1->setLink('/images/'. rand(1, 30) . '.jpg');
             $photo1->setPosition(1);
             $photo1->setActive(true);
 
             $photo2 = new Media();
             $photo2->setName($faker->word);
             $photo2->setMediaType('photo');
-            $photo2->setLink('images/fixtures/'. rand(1, 30) . '.jpg');
+            $photo2->setLink('/images/'. rand(1, 30) . '.jpg');
             $photo2->setPosition(1);
             $photo2->setActive(true);
 
