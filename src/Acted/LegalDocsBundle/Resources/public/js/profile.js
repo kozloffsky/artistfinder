@@ -410,6 +410,7 @@ $(function() {
         }
 
         $uploadCropAvatar = $('#changeImageModal .changeImageContiner').croppie({
+            exif: true,
             viewport: {
                 width: 213,
                 height: 213,
@@ -419,7 +420,6 @@ $(function() {
                 width: 300,
                 height: 300
             },
-            exif: true
         });
         var AvatarCurrent = $('.avatarEditable .avatar').attr('src');
         $uploadCropAvatar.croppie('bind', {
@@ -478,6 +478,7 @@ $(function() {
         }
 
         $uploadCropBackground = $('#changeBgModal .changeImageContiner').croppie({
+            exif: true,
             viewport: {
                 width: 300,
                 height: 89
@@ -485,8 +486,7 @@ $(function() {
             boundary: {
                 width: 400,
                 height: 300
-            },
-            exif: true
+            }
         });
 
         var backgroundCurrentSrc = $('#bgImageSrc').text();
@@ -539,6 +539,7 @@ $(function() {
         var $uploadUserPerfMedia = {};
 
         $uploadUserPerfMedia[mediaChangeId] = $(changeImgContainer).croppie({
+            exif: true,
             viewport: {
                 width: 300,
                 height: 207
@@ -547,7 +548,6 @@ $(function() {
                 width: 395,
                 height: 215
             },
-            exif: true
         });
 
         $uploadUserPerfMedia[mediaChangeId].croppie('bind', {
@@ -650,6 +650,7 @@ $(function() {
         }
 
         $uploadCropMediaOffer = $('#addImageModal .changeImageContiner').croppie({
+            exif: true,
             viewport: {
                 width: 300,
                 height: 207
@@ -657,8 +658,7 @@ $(function() {
             boundary: {
                 width: 400,
                 height: 300
-            },
-            exif: true
+            }
         });
 
         $uploadCropMediaOffer.croppie('bind', {
