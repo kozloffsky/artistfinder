@@ -255,7 +255,7 @@ $(function () {
             data: searchFormSerialize,
             success: function(response){
                 var checkedCategoriesFind = $('#searchCategory input:checkbox:checked').length;
-                console.log(checkedCategoriesFind)
+                console.log(checkedCategoriesFind);
                 if(checkedCategoriesFind > 0) {
                     createNewFilterResults(response);
                 } else {
@@ -799,7 +799,6 @@ $(function () {
             var searchCatName = matchesUrl[2];
         }
         if (searchCatName){
-            console.log(searchCatName)
             findSearchMainCat(searchCatName)
         } else {
             //console.log(searchCatName)
@@ -808,7 +807,7 @@ $(function () {
 
     function findSearchMainCat(searchCatName) {
         var searchMainCatId = $('#mainCategoryList').find('#' + searchCatName).text();
-        console.log(searchMainCatId);
+        console.log('searchMainCategory')
         $.ajax({
             type: 'GET',
             url: '/artist',
@@ -831,10 +830,7 @@ $(function () {
         $('.catSearchResNew').attr('id', 'tab-'+searchMainCatId+'');
         $('.catSearchResNew .filters').attr('id', ''+searchMainCatId+'');
         loopArtistsInCat(response, searchMainCatId);
-        setTabsCorenersZ();
-        selectBoxStyle();
-        //console.log('finish');
-        initTabs();
+
         console.log(response)
         if (response.length == 0){
             noResInCat(searchMainCatId)
@@ -849,6 +845,10 @@ $(function () {
             scrollTop: $('.results').offset().top
         });
         createShowMoreBtn(searchMainCatId, mainCatS);
+        setTabsCorenersZ();
+        selectBoxStyle();
+        //console.log('finish');
+        initTabs();
         checkUserPosition();
     }
 
