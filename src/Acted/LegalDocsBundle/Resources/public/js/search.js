@@ -177,8 +177,9 @@ $(function () {
 
     function checkUserPosition(){
         var cityChosen = $('#eventLocationForm #region').val();
-        console.log(cityChosen);
-            if (cityChosen.length == 0) {
+        if(cityChosen){
+        var cityCount = cityChosen.length;
+            if (cityCount == 0) {
                 $('.results select[name="distance"]').prop('disabled', true);
                 $('#range-near').prop('disabled', true);
                 $('label[for="range-near"]').css('opacity','0.7');
@@ -187,6 +188,7 @@ $(function () {
                 $('#range-near').prop('disabled', false);
                 $('label[for="range-near"]').css('opacity','1');
             }
+        }
     }
 
     $('#country').on('change', function(){
@@ -831,15 +833,9 @@ $(function () {
         $('.catSearchResNew .filters').attr('id', ''+searchMainCatId+'');
         loopArtistsInCat(response, searchMainCatId);
 
-        console.log(response)
         if (response.length == 0){
             noResInCat(searchMainCatId)
         }
-        $('.tab').removeClass('active');
-        $('.'+searchMainCatId+'Tab').addClass('active');
-        $('.tab-block').hide();
-        var idContent = $('.'+searchMainCatId+'Tab').attr('data-toggle');
-        $(idContent).show();
 
         $('html,body').animate({
             scrollTop: $('.results').offset().top
@@ -849,6 +845,13 @@ $(function () {
         selectBoxStyle();
         //console.log('finish');
         initTabs();
+
+        $('.tab').removeClass('active');
+        $('.'+searchMainCatId+'Tab').addClass('active');
+        $('.tab-block').hide();
+        var idContent = $('.'+searchMainCatId+'Tab').attr('data-toggle');
+        $(idContent).show();
+
         checkUserPosition();
     }
 

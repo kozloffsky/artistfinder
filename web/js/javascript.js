@@ -5342,7 +5342,7 @@ $(function() {
 
     function userPerformanceUpload(parentPerformance, performanceId, block, newPerformance) {
         console.log(newPerformance)
-
+        var retina = window.devicePixelRatio > 1;
         if (!block){
             var imgChangeBlock = parentPerformance.find('#image-performance-change1');
         } else {
@@ -5361,7 +5361,7 @@ $(function() {
 
         var $uploadUserPerfMedia = {};
 
-        $uploadUserPerfMedia[mediaChangeId] = $(changeImgContainer).croppie({
+        /*$uploadUserPerfMedia[mediaChangeId] = $(changeImgContainer).croppie({
             exif: true,
             viewport: {
                 width: 300,
@@ -5371,7 +5371,32 @@ $(function() {
                 width: 395,
                 height: 215
             },
-        });
+        });*/
+        if(retina) {
+            $uploadUserPerfMedia[mediaChangeId] = $(changeImgContainer).croppie({
+                exif: true,
+                viewport: {
+                    width: 150,
+                    height: 125
+                },
+                boundary: {
+                    width: 296,
+                    height: 140
+                }
+            });
+        }else{
+            $uploadUserPerfMedia[mediaChangeId] = $(changeImgContainer).croppie({
+                exif: true,
+                viewport: {
+                    width: 300,
+                    height: 207
+                },
+                boundary: {
+                    width: 395,
+                    height: 215
+                },
+            });
+        }
 
         $uploadUserPerfMedia[mediaChangeId].croppie('bind', {
             url: currentImgSrc
@@ -5922,7 +5947,7 @@ $(function () {
         chooseCityQuote(selectedCountruOption);
     });
 
-    $('#event_country').on('change',function(){
+    $('#requestQuoteForm #event_country').on('change',function(){
         var selectedCountruOption = $('#event_country').find('option:selected').val();
         chooseCityQuote(selectedCountruOption);
     });
@@ -6119,7 +6144,7 @@ $(function () {
 
   function checkCategories(){
     var numberCatChecked = $('#registrationModal #categoriesForm input:checkbox:checked').length;
-    if (numberCatChecked >= 1){
+    if (numberCatChecked >= 1 && numberCatChecked <= 3){
       $('.errorCat').fadeOut();
       chageState(3);
     } else {
@@ -6129,10 +6154,15 @@ $(function () {
 
   function disableCatNext(){
     var numberCatChecked = $('#registrationModal #categoriesForm input:checkbox:checked').length;
-    if (numberCatChecked >= 1){
+    if (numberCatChecked >= 1 && numberCatChecked <= 3){
       $('#stageTwoNext').removeClass('disabled');
     } else {
       $('#stageTwoNext').addClass('disabled');
+    }
+    if(numberCatChecked == 3){
+      $('#registrationModal #categoriesForm input:checkbox:not(:checked)').prop('disabled', true);
+    } else if(numberCatChecked < 3){
+      $('#registrationModal #categoriesForm input:checkbox:not(:checked)').prop('disabled', false);
     }
   }
 
@@ -6396,14 +6426,16 @@ $(function () {
 
     var retina = window.devicePixelRatio > 1;
 
+    console.log(retina)
     if(retina) {
-        //$("link[href*='css/styles.css']").attr('href', 'css/style-retina.css');
+        $("link[href*='css/styles.css']").attr('href', '/css/style-retina.css');
         $('body').animate({'opacity': 1}, 800);
-        // $('body').css('display', 'block');
+        $('body').css('display', 'block');
     } else {
         $('body').css('opacity', 1);
-        // $('body').css('display', 'block');
+        $('body').css('display', 'block');
     }
+
 });
 $(function () {
 
@@ -6584,8 +6616,9 @@ $(function () {
 
     function checkUserPosition(){
         var cityChosen = $('#eventLocationForm #region').val();
-        console.log(cityChosen);
-            if (cityChosen.length == 0) {
+        if(cityChosen){
+        var cityCount = cityChosen.length;
+            if (cityCount == 0) {
                 $('.results select[name="distance"]').prop('disabled', true);
                 $('#range-near').prop('disabled', true);
                 $('label[for="range-near"]').css('opacity','0.7');
@@ -6594,6 +6627,7 @@ $(function () {
                 $('#range-near').prop('disabled', false);
                 $('label[for="range-near"]').css('opacity','1');
             }
+        }
     }
 
     $('#country').on('change', function(){
@@ -7238,15 +7272,9 @@ $(function () {
         $('.catSearchResNew .filters').attr('id', ''+searchMainCatId+'');
         loopArtistsInCat(response, searchMainCatId);
 
-        console.log(response)
         if (response.length == 0){
             noResInCat(searchMainCatId)
         }
-        $('.tab').removeClass('active');
-        $('.'+searchMainCatId+'Tab').addClass('active');
-        $('.tab-block').hide();
-        var idContent = $('.'+searchMainCatId+'Tab').attr('data-toggle');
-        $(idContent).show();
 
         $('html,body').animate({
             scrollTop: $('.results').offset().top
@@ -7256,6 +7284,13 @@ $(function () {
         selectBoxStyle();
         //console.log('finish');
         initTabs();
+
+        $('.tab').removeClass('active');
+        $('.'+searchMainCatId+'Tab').addClass('active');
+        $('.tab-block').hide();
+        var idContent = $('.'+searchMainCatId+'Tab').attr('data-toggle');
+        $(idContent).show();
+
         checkUserPosition();
     }
 

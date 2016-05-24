@@ -8034,7 +8034,7 @@ html, body {
     overflow-x: hidden;
 }
 
-body{opacity: 0;}
+body {opacity: 0;}
 
 main {
     position: relative;
@@ -10432,4 +10432,7 @@ a.disabled {
     font-size: 30px;
     cursor: pointer;
     position: absolute;
+}
+.contact-details .form-group {
+    max-height: 77px;
 }

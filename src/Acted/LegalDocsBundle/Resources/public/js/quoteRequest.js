@@ -98,7 +98,7 @@ $(function () {
         chooseCityQuote(selectedCountruOption);
     });
 
-    $('#event_country').on('change',function(){
+    $('#requestQuoteForm #event_country').on('change',function(){
         var selectedCountruOption = $('#event_country').find('option:selected').val();
         chooseCityQuote(selectedCountruOption);
     });

@@ -40,4 +40,15 @@ gulp.task('css', function(){
         .pipe(gulp.dest('web/css'));
 });
 
-gulp.task('default', ['js', 'css']);
+gulp.task('cssRetina', function(){
+    return gulp.src([
+            'src/Acted/LegalDocsBundle/Resources/public/retinaCss/*.css'])
+        .pipe(concat('style-retina.css'))
+        .pipe(cssimport({}))
+        .pipe(autoprefixer())
+        .pipe(gulpif(env === 'prod', uglifycss()))
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest('web/css'));
+});
+
+gulp.task('default', ['js', 'css', 'cssRetina']);

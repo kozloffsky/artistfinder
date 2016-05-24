@@ -519,7 +519,7 @@ $(function() {
 
     function userPerformanceUpload(parentPerformance, performanceId, block, newPerformance) {
         console.log(newPerformance)
-
+        var retina = window.devicePixelRatio > 1;
         if (!block){
             var imgChangeBlock = parentPerformance.find('#image-performance-change1');
         } else {
@@ -538,7 +538,7 @@ $(function() {
 
         var $uploadUserPerfMedia = {};
 
-        $uploadUserPerfMedia[mediaChangeId] = $(changeImgContainer).croppie({
+        /*$uploadUserPerfMedia[mediaChangeId] = $(changeImgContainer).croppie({
             exif: true,
             viewport: {
                 width: 300,
@@ -548,7 +548,32 @@ $(function() {
                 width: 395,
                 height: 215
             },
-        });
+        });*/
+        if(retina) {
+            $uploadUserPerfMedia[mediaChangeId] = $(changeImgContainer).croppie({
+                exif: true,
+                viewport: {
+                    width: 150,
+                    height: 125
+                },
+                boundary: {
+                    width: 296,
+                    height: 140
+                }
+            });
+        }else{
+            $uploadUserPerfMedia[mediaChangeId] = $(changeImgContainer).croppie({
+                exif: true,
+                viewport: {
+                    width: 300,
+                    height: 207
+                },
+                boundary: {
+                    width: 395,
+                    height: 215
+                },
+            });
+        }
 
         $uploadUserPerfMedia[mediaChangeId].croppie('bind', {
             url: currentImgSrc

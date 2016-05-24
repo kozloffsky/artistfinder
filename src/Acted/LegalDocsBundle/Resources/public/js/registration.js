@@ -152,7 +152,7 @@ $(function () {
 
   function checkCategories(){
     var numberCatChecked = $('#registrationModal #categoriesForm input:checkbox:checked').length;
-    if (numberCatChecked >= 1){
+    if (numberCatChecked >= 1 && numberCatChecked <= 3){
       $('.errorCat').fadeOut();
       chageState(3);
     } else {
@@ -162,10 +162,15 @@ $(function () {
 
   function disableCatNext(){
     var numberCatChecked = $('#registrationModal #categoriesForm input:checkbox:checked').length;
-    if (numberCatChecked >= 1){
+    if (numberCatChecked >= 1 && numberCatChecked <= 3){
       $('#stageTwoNext').removeClass('disabled');
     } else {
       $('#stageTwoNext').addClass('disabled');
+    }
+    if(numberCatChecked == 3){
+      $('#registrationModal #categoriesForm input:checkbox:not(:checked)').prop('disabled', true);
+    } else if(numberCatChecked < 3){
+      $('#registrationModal #categoriesForm input:checkbox:not(:checked)').prop('disabled', false);
     }
   }
 
