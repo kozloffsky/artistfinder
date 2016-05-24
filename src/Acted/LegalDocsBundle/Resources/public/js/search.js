@@ -177,9 +177,8 @@ $(function () {
 
     function checkUserPosition(){
         var cityChosen = $('#eventLocationForm #region').val();
-        if(cityChosen){
-        var cityCount = cityChosen.length;
-            if (cityCount == 0) {
+        console.log(cityChosen)
+        if(!cityChosen){
                 $('.results select[name="distance"]').prop('disabled', true);
                 $('#range-near').prop('disabled', true);
                 $('label[for="range-near"]').css('opacity','0.7');
@@ -188,7 +187,6 @@ $(function () {
                 $('#range-near').prop('disabled', false);
                 $('label[for="range-near"]').css('opacity','1');
             }
-        }
     }
 
     $('#country').on('change', function(){
