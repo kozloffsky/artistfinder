@@ -38,7 +38,7 @@ class MediaManager
             mkdir($this->dir, 0777, true);
         }
 
-        $media->setLink($file->move($this->dir, $fileName));
+        $media->setLink('/'.$file->move($this->dir, $fileName));
         $media->setThumbnail('');
         return $media;
     }
