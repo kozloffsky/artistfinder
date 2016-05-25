@@ -588,20 +588,22 @@ $(function () {
     }
 
     function createShowMoreBtn(propt, mainCatS){
-        var countCardsInCat = $('#tab-'+propt+' .row .categoriesCardsSearch').length;
-        console.log(countCardsInCat);
-        if (countCardsInCat == 15){
-            $('#tab-'+propt+' .row').append('<div class="controls show-more">'+
-                '<div class="button-gradient">'+
-                '<button data-dismiss="modal" class="btn">Show more</button>'+
-            '</div>'+
-            '</div>');
-        } else {
-            $('#tab-'+propt+' .row .show-more').remove();
-        }
-        $('#tab-'+propt+' .row .show-more').on('click',function(){
-            catFilteringSearchInfinite(propt, mainCatS);
-        });
+        setTimeout(function() {
+            var countCardsInCat = $('#tab-'+propt+' .row .categoriesCardsSearch').length;
+            console.log(countCardsInCat);
+            if (countCardsInCat == 15){
+                $('#tab-'+propt+' .row').append('<div class="controls show-more">'+
+                    '<div class="button-gradient">'+
+                    '<button data-dismiss="modal" class="btn">Show more</button>'+
+                '</div>'+
+                '</div>');
+            } else {
+                $('#tab-'+propt+' .row .show-more').remove();
+            }
+            $('#tab-'+propt+' .row .show-more').on('click',function(){
+                catFilteringSearchInfinite(propt, mainCatS);
+            });
+        }, 1000)
     }
 
     function noResInCat(propt){
@@ -711,6 +713,7 @@ $(function () {
     }
 
     function catFilteringSearch(categoryFiltering, mainCats){
+        console.log(categoryFiltering)
         var formsWithoutCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch, #'+categoryFiltering+' .filtersCat').serialize();
         //var catFilteringSerialize = $('#'+categoryFiltering+' .filtersCat').serialize();
         $('.filtersCat select').prop( "disabled", false );
@@ -726,12 +729,15 @@ $(function () {
             data: datasendSearch,
             success: function(response){
                 //console.log(response);
-                $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch, #tab-'+categoryFiltering+' > .row .no-res-block').remove();
+                $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch, #tab-'+categoryFiltering+' > .row .no-res-block, #tab-'+categoryFiltering+' > .row .show-more').remove();
                 console.log(response.length)
                 if (response.length == 0){
                     noResInCat(categoryFiltering)
                 } else {
                     loopArtistsInCat(response, categoryFiltering);
+                    if(mainCats){
+                        createShowMoreBtn(categoryFiltering, mainCats)
+                    }
                 }
             }
         });
@@ -838,7 +844,7 @@ $(function () {
         $('html,body').animate({
             scrollTop: $('.results').offset().top
         });
-        createShowMoreBtn(searchMainCatId, mainCatS);
+
         setTabsCorenersZ();
         selectBoxStyle();
         //console.log('finish');
@@ -851,6 +857,7 @@ $(function () {
         $(idContent).show();
 
         checkUserPosition();
+        createShowMoreBtn(searchMainCatId, mainCatS);
     }
 
     function deleteTabSearch() {

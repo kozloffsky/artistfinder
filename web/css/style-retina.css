@@ -8664,10 +8664,13 @@ section.used-by {
     color: #b1b1b1;
 }
 
-.pagination a.prev-page span {
+/*.pagination a.prev-page span {
     -webkit-transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    -o-transform: rotate(-180deg);
     transform: rotate(-180deg);
-}
+}*/
 
 .pagination a.not-active {
     cursor: not-allowed;
@@ -10388,4 +10391,8 @@ a.disabled {
 #image-performance-change1 .btn-file
 {
     width: 115px;
+}
+.audioAddForm
+{
+    margin-bottom: 10px;
 }

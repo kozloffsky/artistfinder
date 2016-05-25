@@ -151,7 +151,7 @@ $(function() {
     });
 
 
-    $('.editOffer').click(function (e) {
+    $(document).on('click','.editOffer',function (e) {
         e.stopPropagation();
         $(this).unbind("click");
         $(this).children('button').prop('disabled', true)
@@ -211,9 +211,9 @@ $(function() {
                             useCSS: false,
                             video: true,
                             pagerCustom: '#video-pager',
-                            onSliderLoad: function () {
+                            /*onSliderLoad: function () {
                                 $('#section-video').hide();
-                            }
+                            }*/
                         })
                     } else if (getMediaType[0].id == 'section-photo') {
                         var indexOfThumb = $('#photo-pager .scale-thumb').length;
@@ -236,7 +236,7 @@ $(function() {
         });
     }
 
-    $('#addNewPerformance').on('click', function () {
+    $(document).on('click','#addNewPerformance', function () {
         var addNewBtn = $(this);
         var slug = $('#slug').text();
         var performanceCreateBlock = $('.emptyPerformance');
@@ -272,15 +272,15 @@ $(function() {
 
     function createNewPerformance(getNewBlockPerformance, newPerformanceId) {
         console.log(newPerformanceId);
-        var imagesDropzoneAdd = $(getNewBlockPerformance).find('.imagePerformanceChange');
+        //var imagesDropzoneAdd = $(getNewBlockPerformance).find('.imagePerformanceChange');
         var deleteBtnNew = $(getNewBlockPerformance).find('.deleteOffer');
         //imagesDropzoneAdd.attr('action', '/profile/performance/' + newPerformanceId + '/media/new');
-        imagesDropzoneAdd.fadeIn();
+        //imagesDropzoneAdd.fadeIn();
         deleteBtnNew.fadeIn();
         var newPerformance = true,
             performanceBlock = false;
         userPerformanceUpload(getNewBlockPerformance, newPerformanceId, performanceBlock, newPerformance);
-        offerMediaChoose(getNewBlockPerformance, newPerformanceId, newPerformance)
+        //offerMediaChoose(getNewBlockPerformance, newPerformanceId, newPerformance)
         $(getNewBlockPerformance).find('.perfomanceInfoEdiatable').editable({
             type: 'text',
             mode: 'inline',
@@ -304,7 +304,7 @@ $(function() {
         });
     }
 
-    $('.deleteOffer').click(function () {
+    $(document).on('click','.deleteOffer',function () {
         var parentPerformance = $(this).parents('article');
         var performanceId = $(parentPerformance).children('.performanceId').text();
         var slug = $('#slug').text();
@@ -321,11 +321,6 @@ $(function() {
             }
         })
     }
-
-    $('#addNewInputVideo').click(function () {
-        var targetToAddField = $('#section-video .videoAddForm');
-        $(targetToAddField).append('<input type="text" class="form-control videoAdd">')
-    });
 
     $('#sendNewVideo').click(function () {
         var slug = $('#slug').text();
@@ -347,22 +342,25 @@ $(function() {
                 var newVideoId = responseText.media.id;
                 console.log(newVideoLink, videoThumbnail);
                 var indexOfThumb = $('#video-pager .scale-thumb').length;
-                $('.bxVideoSlider').append('<li><iframe src='+ newVideoLink +'  width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>');
+                $('.bxVideoSlider').append('<li id="imageSlider'+newVideoId+'"><iframe src='+ newVideoLink +'  width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>');
                 $('#video-pager').append('<div class="scale-thumb thumb'+ indexOfThumb + 1 +'"><span class="removeNewImage deleteMedia" id='+newVideoId+'><i class="fa fa-times-circle-o"></i></span><a data-slide-index='+ indexOfThumb +' href=""><img id='+newVideoId+' src='+videoThumbnail+'/></a></div>');
                 console.log(indexOfThumb);
                 $("#media [data-target='#section-video'] .badge").text(indexOfThumb + 1);
                 //videoSlider.reloadSlider();
-                $('.bxVideoSlider').unwrap();
+                var videoSliderParent = $('.bxVideoSlider').parent('.bx-viewport').length
+                if (videoSliderParent > 0){
+                    $('.bxVideoSlider').unwrap();
+                }
                 $('.bxVideoSlider').bxSlider({
                     adaptiveHeight: true,
                     mode: 'fade',
                     useCSS: false,
                     video: true,
-                    pagerCustom: '#video-pager',
-                    onSliderLoad: function () {
+                    pagerCustom: '#video-pager'
+                    /*onSliderLoad: function () {
                         $('#section-video').hide();
-                    }
-                })
+                    }*/
+                });
                 deleteMedia();
             }
         })
@@ -423,7 +421,7 @@ $(function() {
         });
         var AvatarCurrent = $('.avatarEditable .avatar').attr('src');
         $uploadCropAvatar.croppie('bind', {
-            url: AvatarCurrent
+           // url: AvatarCurrent
         });
 
         $('#uploadAvatar').on('change', function () {
@@ -432,7 +430,8 @@ $(function() {
         $('.upload-resultAvatar').on('click', function (ev) {
             $uploadCropAvatar.croppie('result', {
                 type: 'canvas',
-                size: 'original'
+                size: 'viewport',
+                format: 'png'
             }).then(function (resp) {
                 $.ajax({
                     type: "PATCH",
@@ -519,6 +518,7 @@ $(function() {
 
     function userPerformanceUpload(parentPerformance, performanceId, block, newPerformance) {
         console.log(newPerformance)
+
         var retina = window.devicePixelRatio > 1;
         if (!block){
             var imgChangeBlock = parentPerformance.find('#image-performance-change1');
@@ -531,6 +531,7 @@ $(function() {
             imageUploadBtn = imgChangeBlock.find('#uploadImg'),
             uploadImage = imgChangeBlock.find('.upload-resultBg');
         imgChangeBlock.fadeIn();
+        changeImgContainer.empty();
         console.log(imageUploadBtn);
         if (!currentImgSrc){
             currentImgSrc = '/assets/images/media-no-image.gif'
@@ -538,17 +539,6 @@ $(function() {
 
         var $uploadUserPerfMedia = {};
 
-        /*$uploadUserPerfMedia[mediaChangeId] = $(changeImgContainer).croppie({
-            exif: true,
-            viewport: {
-                width: 300,
-                height: 207
-            },
-            boundary: {
-                width: 395,
-                height: 215
-            },
-        });*/
         if(retina) {
             $uploadUserPerfMedia[mediaChangeId] = $(changeImgContainer).croppie({
                 exif: true,
@@ -571,7 +561,7 @@ $(function() {
                 boundary: {
                     width: 395,
                     height: 215
-                },
+                }
             });
         }
 
@@ -613,7 +603,10 @@ $(function() {
                     $.ajax({
                         type: "POST",
                         url: '/profile/performance/' + performanceId + '/media/new',
-                        data: {"file":resp}
+                        data: {"file":resp},
+                        success: function(){
+                            offerMediaChoose(parentPerformance, performanceId, newPerformance)
+                        }
                     });
                 } else if (mediaChangeId == 'NewMedia'){
                     $.ajax({
@@ -641,6 +634,7 @@ $(function() {
     }
 
     function userPerformanceUploadSecond(parentPerformance, performanceId, block, newPerformance) {
+        $('#addImageModal .changeImageContiner').empty().removeClass('croppie-container');
         console.log(parentPerformance)
 
         var $uploadUserPerfMediaSecond;
@@ -699,7 +693,6 @@ $(function() {
                 type: 'canvas',
                 size: 'original'
             }).then(function (resp) {
-                console.log(newPerformance + 'fuuuu')
                 if(newPerformance){
                     $.ajax({
                         type: "POST",
