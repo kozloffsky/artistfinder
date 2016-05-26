@@ -382,7 +382,10 @@ $(function() {
             success: function(response){
                 $('.audioBlock').append('<div class="audioEditProfile">'+
                     '<span class="removeNewAudio deleteMedia" id="'+response.media.id+'"><i class="fa fa-times-circle-o"></i></span>'+
-                    '<iframe width="100%" height="150" scrolling="no" frameborder="no" src="'+response.media.link+'"></iframe></div>')
+                    '<iframe width="100%" height="150" scrolling="no" frameborder="no" src="'+response.media.link+'"></iframe></div>');
+                var indexOfThumb = $('#section-audio .audioEditProfile').length;
+                $("#media [data-target='#section-audio'] .badge").text(indexOfThumb);
+                deleteMedia();
             }
         })
     }
