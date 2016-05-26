@@ -133,7 +133,10 @@
 
                     {% for mediaOf in performance.media[0:1] %}
                         <img class="preview" src="{{ mediaOf.link }}" alt="Preview">
+                    {% else %}
+                        <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
                     {% endfor %}
+
 
                     <div class="video">
                         {#{% if performance.media[1:2]%}
@@ -153,7 +156,10 @@
                             <div class="name">
                                 <div class="name-text">{{ mediaOf.name }}</div>
                             </div>-->
+                        {% else %}
+                            <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
                         {% endfor %}
+
                     </div>
 
 
