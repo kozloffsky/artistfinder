@@ -12,12 +12,8 @@
                     {% for mediaOf in performance.media[0:1] %}
                         <div class="imagePerformanceChange" id="image-performance-change1">
                             <span class="hidden mediaId">{{ mediaOf.id }}</span>
-                            <div class="changeImageContiner"></div>
-                            <div class="actions">
-                                <a class="btn btn-file">
-                                    <input type="file" id="uploadImg" value="Choose a file" accept="image/*" />
-                                </a>
-                                <button class="upload-resultBg btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                            <div class="imageEditingProfile">
+                                <button class="btn btn-primary image" data-toggle="modal" data-target="#addImageModal">Image</button>
                             </div>
                         </div>
                         <img class="preview" src="{{ mediaOf.link }}" alt="Preview">
@@ -50,17 +46,6 @@
                                     </form>
                                     <button type="submit" id="AddPerformanceVideo" class="btn btn-default">Submit</button>
                                 </div>
-
-                                <div class="imagePerfinput">
-                                    <div class="changeImageContiner"></div>
-                                    <div class="actions">
-                                        <a class="btn btn-file">
-                                            <input type="file" class="uploadImg" value="Choose a file" accept="image/*" />
-                                        </a>
-                                        <button class="upload-resultBg btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-                                    </div>
-                                </div>
-
                             </div>
                             <div class="performanceVideo">
                             </div>
@@ -194,7 +179,8 @@
                     <span class="performanceId hidden"></span>
 
                     <div class="imagePerformanceChange" id="image-performance-change1">
-                        <span class="hidden mediaId"></span>
+                        <span class="hid
+                        <button class="btn btn-primary image" data-toggle="modal" data-target="#addImageModal">Image</button>den mediaId"></span>
                         <div class="changeImageContiner"></div>
                         <div class="actions">
                             <a class="btn btn-file">

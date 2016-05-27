@@ -179,7 +179,7 @@ $(function() {
                 });
             }
         });
-        userPerformanceUpload(parentPerformance, performanceId);
+        //userPerformanceUpload(parentPerformance, performanceId);
         offerMediaChoose(parentPerformance, performanceId);
     });
 
@@ -279,8 +279,8 @@ $(function() {
         deleteBtnNew.fadeIn();
         var newPerformance = true,
             performanceBlock = false;
-        userPerformanceUpload(getNewBlockPerformance, newPerformanceId, performanceBlock, newPerformance);
-        //offerMediaChoose(getNewBlockPerformance, newPerformanceId, newPerformance)
+        //userPerformanceUpload(getNewBlockPerformance, newPerformanceId, performanceBlock, newPerformance);
+        offerMediaChoose(getNewBlockPerformance, newPerformanceId, newPerformance)
         $(getNewBlockPerformance).find('.perfomanceInfoEdiatable').editable({
             type: 'text',
             mode: 'inline',
@@ -439,10 +439,15 @@ $(function() {
                 $.ajax({
                     type: "PATCH",
                     url: '/user/edit',
-                    data: {"user[avatar]": resp}
+                    data: {"user[avatar]": resp},
+                    success: function(){
+                        $('.avatarEditable .avatar').attr('src', resp);
+                        $('#changeImageModal').modal('hide');
+                    },
+                    error: function(response){
+                        alert(response.errors)
+                    }
                 })
-                $('.avatarEditable .avatar').attr('src', resp);
-                $('#changeImageModal').modal('hide');
             });
         });
         return;
@@ -518,131 +523,14 @@ $(function() {
         return;
     }
 
-
-    function userPerformanceUpload(parentPerformance, performanceId, block, newPerformance) {
-        console.log(newPerformance)
-
-        var retina = window.devicePixelRatio > 1;
-        if (!block){
-            var imgChangeBlock = parentPerformance.find('#image-performance-change1');
-        } else {
-            var imgChangeBlock = parentPerformance.find('#image-performance-change2');
-        }
-        var changeImgContainer = imgChangeBlock.find('.changeImageContiner'),
-            mediaChangeId = imgChangeBlock.find('.mediaId').text(),
-            currentImgSrc = imgChangeBlock.nextAll('.preview').attr('src'),
-            imageUploadBtn = imgChangeBlock.find('#uploadImg'),
-            uploadImage = imgChangeBlock.find('.upload-resultBg');
-        imgChangeBlock.fadeIn();
-        changeImgContainer.empty();
-        console.log(imageUploadBtn);
-        if (!currentImgSrc){
-            currentImgSrc = '/assets/images/media-no-image.gif'
-        }
-
-        var $uploadUserPerfMedia = {};
-
-        if(retina) {
-            $uploadUserPerfMedia[mediaChangeId] = $(changeImgContainer).croppie({
-                exif: true,
-                viewport: {
-                    width: 150,
-                    height: 125
-                },
-                boundary: {
-                    width: 296,
-                    height: 140
-                }
-            });
-        }else{
-            $uploadUserPerfMedia[mediaChangeId] = $(changeImgContainer).croppie({
-                exif: true,
-                viewport: {
-                    width: 300,
-                    height: 207
-                },
-                boundary: {
-                    width: 395,
-                    height: 215
-                }
-            });
-        }
-
-        $uploadUserPerfMedia[mediaChangeId].croppie('bind', {
-            url: currentImgSrc
-        });
-
-        function readFile(input) {
-            console.log(input.files)
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    changeImgContainer.croppie('bind', {
-                        url: e.target.result
-                    });
-                    //$('.upload-demo').addClass('ready');
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-            else {
-                swal("Sorry - you're browser doesn't support the FileReader API");
-            }
-        }
-
-        $(imageUploadBtn).on('change', function () {
-            console.log(this);
-            readFile(this);
-        });
-        $(uploadImage).on('click', function (ev) {
-            console.log($uploadUserPerfMedia[mediaChangeId])
-            $uploadUserPerfMedia[mediaChangeId].croppie('result', {
-                type: 'canvas',
-                size: 'original'
-            }).then(function (resp) {
-                console.log(mediaChangeId)
-                console.log(newPerformance)
-                if(newPerformance){
-                    $.ajax({
-                        type: "POST",
-                        url: '/profile/performance/' + performanceId + '/media/new',
-                        data: {"file":resp},
-                        success: function(){
-                            offerMediaChoose(parentPerformance, performanceId, newPerformance)
-                        }
-                    });
-                } else if (mediaChangeId == 'NewMedia'){
-                    $.ajax({
-                        type: "POST",
-                        url: '/profile/performance/' + performanceId + '/media/new',
-                        data: {"file":resp}
-                    });
-                } else {
-                    $.ajax({
-                        type: "POST",
-                        url: '/media/' + mediaChangeId + '/edit',
-                        data: {"file": resp}
-                    });
-                }
-                imgChangeBlock.next('.preview').attr('src', resp);
-                console.log($uploadUserPerfMedia[mediaChangeId])
-                imgChangeBlock.fadeOut();
-                changeImgContainer.empty();
-                console.log(parentPerformance);
-                $(parentPerformance).find('.editOffer').bind("click");
-                $(parentPerformance).find('.editOffer button').prop('disabled',false);
-            });
-        });
-        return;
-    }
-
     function userPerformanceUploadSecond(parentPerformance, performanceId, block, newPerformance) {
         $('#addImageModal .changeImageContiner').empty().removeClass('croppie-container');
         console.log(parentPerformance)
 
         var $uploadUserPerfMediaSecond;
 
-        var imgChangeBlock = parentPerformance.find('#image-performance-change2');
+        console.log(block)
+        var imgChangeBlock = parentPerformance.find('.imagePerformanceChange');
 
         var changeImgContainer = imgChangeBlock.find('.imagePerfinput .changeImageContiner'),
             mediaChangeId = imgChangeBlock.find('.mediaId').text(),
