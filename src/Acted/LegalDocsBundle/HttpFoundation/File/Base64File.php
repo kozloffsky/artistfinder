@@ -15,13 +15,15 @@ class Base64File extends File
 {
     public function __construct($base64Content, $type)
     {
+        $fType = explode('/', $type);
+
         if(strpos($base64Content, 'data:'.$type.';base64') !== 0) {
             throw new InvalidArgumentException;
         }
         $img = $base64Content;
         $img = str_replace('data:'.$type.';base64,', '', $img);
         $img = str_replace(' ', '+', $img);
-        $filePath = tempnam(sys_get_temp_dir(), 'UploadedFile').'.png';
+        $filePath = tempnam(sys_get_temp_dir(), 'UploadedFile').'.'.$fType[1];
 
         $file = fopen($filePath, "w");
         stream_filter_append($file, 'convert.base64-decode');

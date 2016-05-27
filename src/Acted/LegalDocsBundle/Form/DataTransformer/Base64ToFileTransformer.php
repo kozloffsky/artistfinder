@@ -12,6 +12,7 @@ namespace Acted\LegalDocsBundle\Form\DataTransformer;
 use Acted\LegalDocsBundle\HttpFoundation\File\Base64File;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
+use Symfony\Component\Filesystem\Filesystem;
 
 class Base64ToFileTransformer implements DataTransformerInterface
 {
@@ -49,8 +50,9 @@ class Base64ToFileTransformer implements DataTransformerInterface
         if(empty($value)) {
             return null;
         }
+        preg_match('/data:([^;]*);base64,(.*)/', $value, $matches);
 
-        $file = new Base64File($value, 'image/png');
+        $file = new Base64File($value, $matches[1]);
         return $file->move('images', $file->getBasename());
     }
 }
