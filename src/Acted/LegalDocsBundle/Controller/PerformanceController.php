@@ -89,6 +89,12 @@ class PerformanceController extends Controller
             } else {
                 /** @var UploadedFile $file */
                 $file = $data['file'];
+                if (!in_array($file->getExtension(), ['png', 'jpg', 'jpeg'])) {
+                    return new JsonResponse([
+                        'status' => 'error',
+                        'message' => 'You should upload only png or jpg images'
+                    ],  400);
+                }
                 $media = $mediaManager->updatePhoto($file, $media);
             }
 
