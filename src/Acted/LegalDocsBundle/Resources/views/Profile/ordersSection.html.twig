@@ -10,35 +10,34 @@
                     </h2>
                     <span class="performanceId hidden">{{ performance.id }}</span>
                     {% for mediaOf in performance.media[0:1] %}
-                        <div class="imagePerformanceChange" id="image-performance-change1">
-                            <span class="hidden mediaId">{{ mediaOf.id }}</span>
-                            <div class="imageEditingProfile">
-                                <button class="btn btn-primary image" data-toggle="modal" data-target="#addImageModal">Image</button>
+                        <div class="imagePerformanceChangeNew preview imageBlockWrapper">
+                            <div class="editing editingProf editImage">
+                                <span class="hidden mediaId">{{ mediaOf.id }}</span>
+                                <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i>
                             </div>
+                            <img class="preview" src="{{ mediaOf.link }}" alt="Preview">
                         </div>
-                        <img class="preview" src="{{ mediaOf.link }}" alt="Preview">
                         {% else %}
-                            <div class="imagePerformanceChange" id="image-performance-change1">
-                                <span class="hidden mediaId">NewMedia</span>
-                                <div class="changeImageContiner"></div>
-                                <div class="actions">
-                                    <a class="btn btn-file">
-                                        <input type="file" id="uploadImg" value="Choose a file" accept="image/*" />
-                                    </a>
-                                    <button class="upload-resultBg btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-                                </div>
+                            <div class="imagePerformanceChangeNew preview imageBlockWrapper">
+                                <div class="editing editingProf editImage">
+                                    <span class="hidden mediaId">NewMedia</span>
+                                    <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i></div>
+                                <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
                             </div>
-                            <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
+
                     {% endfor %}
 
-                    <div class="video">
+                    <div class="video imageBlockWrapper">
                         {% for mediaOf in performance.media[1:2] %}
+
+                            <div class="editing editingProf editImage">
+                                <span class="hidden mediaId">{{ mediaOf.id }}</span>
+                                <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i>
+                                <i class="fa fa-file-video-o editVideo" aria-hidden="true"></i>
+                            </div>
+
                             <div class="imagePerformanceChange" id="image-performance-change2">
                                 <span class="hidden mediaId">{{ mediaOf.id }}</span>
-                                <div class="offerMediaType">
-                                    <button class="btn btn-primary image" data-toggle="modal" data-target="#addImageModal">Image</button>
-                                    <button class="btn btn-primary video">Video</button>
-                                </div>
                                 <div class="performanceVideoAdd">
                                     <form class="videoAddForm">
                                         <span class="videoAddMessage">Added link should be from "youtube.com" or "vimeo.com"</span>
@@ -53,19 +52,24 @@
 
                             {% if mediaOf.mediaType == "video" %}
                                 <div class="performanceVideo">
-                                <iframe src="{{ mediaOf.link }}" width="395" height="274" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+                                    <iframe src="{{ mediaOf.link }}" width="395" height="274" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
                                 </div>
                                 {% else %}
                                 <img class="preview" src="{{ mediaOf.link }}" alt="Preview">
                             {% endif %}
 
                         {% else %}
+
+
+                            <div class="editing editingProf editImage">
+                                <span class="hidden mediaId">NewMedia</span>
+                                <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i>
+                                <i class="fa fa-file-video-o editVideo" aria-hidden="true"></i>
+                            </div>
+
+
                             <div class="imagePerformanceChange" id="image-performance-change2">
                                 <span class="hidden mediaId">NewMedia</span>
-                                <div class="offerMediaType">
-                                    <button class="btn btn-primary image" data-toggle="modal" data-target="#addImageModal">Image</button>
-                                    <button class="btn btn-primary video">Video</button>
-                                </div>
                                 <div class="performanceVideoAdd">
                                     <form class="videoAddForm">
                                         <span class="videoAddMessage">Added link should be from "youtube.com" or "vimeo.com"</span>
@@ -73,16 +77,6 @@
                                     </form>
                                     <button type="submit" id="AddPerformanceVideo" class="btn btn-default">Submit</button>
                                 </div>
-
-                                <!--<div class="imagePerfinput">
-                                    <div class="changeImageContiner"></div>
-                                    <div class="actions">
-                                        <a class="btn btn-file">
-                                            <input type="file" class="uploadImg" value="Choose a file" accept="image/*" />
-                                        </a>
-                                        <button class="upload-resultBg btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-                                    </div>
-                                </div>-->
 
                             </div>
                             <div class="performanceVideo">
@@ -178,49 +172,36 @@
                     </h2>
                     <span class="performanceId hidden"></span>
 
-                    <div class="imagePerformanceChange" id="image-performance-change1">
-                        <span class="hid
-                        <button class="btn btn-primary image" data-toggle="modal" data-target="#addImageModal">Image</button>den mediaId"></span>
-                        <div class="changeImageContiner"></div>
-                        <div class="actions">
-                            <a class="btn btn-file">
-                                <input type="file" id="uploadImg" value="Choose a file" accept="image/*" />
-                            </a>
-                            <button class="upload-resultBg btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-                        </div>
+                    <div class="imagePerformanceChangeNew preview editImageProfNew imageBlockWrapper">
+                        <div class="editing editingProf editImage">
+                            <span class="hidden mediaId">NewMedia</span>
+                            <i class="fa fa-picture-o editImageModalOpen"  data-target="#addImageModal"></i></div>
+                        <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
                     </div>
-                    <img class="preview" src="" alt="Preview">
+
+                    <div class="video imageBlockWrapper">
+                        <div class="editing editingProf newVideoImgAddBtns editImage">
+                            <span class="hidden mediaId">NewMedia</span>
+                            <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i>
+                            <i class="fa fa-file-video-o editVideo" aria-hidden="true"></i>
+                        </div>
 
 
-                    <div class="video">
-
-                        <div class="imagePerformanceChange" id="image-performance-change2">
-                            <span class="hidden mediaId"></span>
-                            <div class="offerMediaType">
-                                <button class="btn btn-primary image" data-toggle="modal" data-target="#addImageModal">Image</button>
-                                <button class="btn btn-primary video">Video</button>
-                            </div>
+                        <div class="imagePerformanceChange " id="image-performance-change2">
+                            <span class="hidden mediaId">NewMedia</span>
                             <div class="performanceVideoAdd">
                                 <form class="videoAddForm">
+                                    <span class="videoAddMessage">Added link should be from "youtube.com" or "vimeo.com"</span>
                                     <input type="text" class="form-control videoPerformanceAdd">
                                 </form>
                                 <button type="submit" id="AddPerformanceVideo" class="btn btn-default">Submit</button>
                             </div>
 
-                            <!--<div class="imagePerfinput">
-                                <div class="changeImageContiner"></div>
-                                <div class="actions">
-                                    <a class="btn btn-file">
-                                        <input type="file" id="uploadImg" value="Choose a file" accept="image/*" />
-                                    </a>
-                                    <button class="upload-resultBg btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-                                </div>
-                            </div>-->
-
                         </div>
                         <div class="performanceVideo">
                         </div>
 
+                        <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
                     </div>
 
 
