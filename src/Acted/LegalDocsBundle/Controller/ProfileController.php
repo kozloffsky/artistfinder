@@ -160,7 +160,7 @@ class ProfileController extends Controller
                         'message' => 'You should upload only png or jpg images'
                     ],  400);
                 }
-                $media = $mediaManager->updatePhoto($file, $media);
+                $media = $mediaManager->updatePhoto($file, $media, $request);
             }
 
             $em->persist($media);
