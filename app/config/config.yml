@@ -140,11 +140,15 @@ liip_imagine:
         small:
             quality: 100
             filters:
-                relative_resize: { widen: 200, mode: outbound }
+                relative_resize: { widen: 270, mode: outbound }
         medium:
             quality: 100
             filters:
-                thumbnail: { size: [480, 640], mode: outbound }
+                relative_resize: { widen: 481, mode: outbound }
+        big:
+            quality: 100
+            filters:
+                relative_resize: { widen: 1080, mode: outbound }
 
 nelmio_api_doc: ~
 
