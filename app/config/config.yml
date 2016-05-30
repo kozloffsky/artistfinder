@@ -130,12 +130,25 @@ jms_serializer:
                 path: "@ActedLegalDocsBundle/Resources/config/serializer"
 
 liip_imagine:
+    driver: imagick
     filter_sets:
         thumbnail_filter:
             format: jpeg
             filters:
                 strip: ~
                 downscale: { max: [300, 200] }
+        small:
+            quality: 100
+            filters:
+                relative_resize: { widen: 270, mode: outbound }
+        medium:
+            quality: 100
+            filters:
+                relative_resize: { widen: 481, mode: outbound }
+        big:
+            quality: 100
+            filters:
+                relative_resize: { widen: 1080, mode: outbound }
 
 nelmio_api_doc: ~
 

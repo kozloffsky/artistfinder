@@ -15,13 +15,15 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class MediaManager
 {
     private $dir;
+    private $lip;
 
-    public function __construct($dir)
+    public function __construct($dir, $lip)
     {
         $this->dir = $dir;
+        $this->lip = $lip;
     }
 
-    public function updatePhoto(File $file, Media $media)
+    public function updatePhoto(File $file, Media $media, $request)
     {
         $media->setActive(true);
         $media->setMediaType('photo');
@@ -40,6 +42,11 @@ class MediaManager
 
         $media->setLink('/'.$file->move($this->dir, $fileName));
         $media->setThumbnail('');
+
+        /**Generate thumbnail**/
+        $small = $this->lip->filterAction($request, $media->getLink(), 'small');
+        $medium = $this->lip->filterAction($request, $media->getLink(), 'medium');
+
         return $media;
     }
 

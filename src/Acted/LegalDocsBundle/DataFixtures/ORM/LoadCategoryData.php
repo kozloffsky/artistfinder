@@ -15,6 +15,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class LoadCategoryData extends AbstractFixture implements ContainerAwareInterface, OrderedFixtureInterface
 {
@@ -41,6 +42,12 @@ class LoadCategoryData extends AbstractFixture implements ContainerAwareInterfac
     public function load(ObjectManager $manager)
     {
         ini_set("memory_limit","1024M");
+
+        for ($i=1; $i < 31; $i++) {
+            $imagePath = '/images/'. $i . '.jpg';
+            $this->container->get('liip_imagine.controller')->filterAction(new Request(), $imagePath, 'small');
+            $this->container->get('liip_imagine.controller')->filterAction(new Request(), $imagePath, 'medium');
+        }
 
         $faker = $this->container->get('davidbadura_faker.faker');
 

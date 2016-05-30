@@ -48,7 +48,7 @@ services:
 
     app.media.manager:
         class: Acted\LegalDocsBundle\Model\MediaManager
-        arguments: ["%image_upload_dir%"]
+        arguments: ["%image_upload_dir%", "@liip_imagine.controller"]
 
     app.form_errors_serializer:
         class: Acted\LegalDocsBundle\FormErrors\FormErrorsSerializer
