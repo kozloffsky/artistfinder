@@ -211,7 +211,9 @@
                                         <div class="video-icon"></div>
                                     {% endif %}
 
-                                    <img class="header" src="{{ recomendedArtist.media.link }}"/>
+                                    <img class="header" src="{{ asset(recomendedArtist.media.link)|imagine_filter
+                                    ('small')
+                                    }}"/>
 
                                     <p class="card-title">{{ recomendedArtist.name }}</p>
 
