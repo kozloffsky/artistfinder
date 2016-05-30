@@ -205,7 +205,7 @@ $(function() {
 
     function userPerformanceUploadSecond(parentPerformance, performanceId, mediaId, imageBlockInsert, newPerformance) {
         //console.log('opennf')
-        console.log(mediaId)
+        console.log(parentPerformance)
         var isActiveCropper = false;
         $('#addImageModal .changeImageContiner').empty().removeClass('croppie-container');
         $('#uploadNewMedia').val('');
@@ -310,7 +310,7 @@ $(function() {
                                 $('#addImageModal').modal('hide');
                                 //$uploadCropMediaOffer.croppie('destroy')
                                 //$uploadCropMediaOffer = {};
-                                $('.newVideoImgAddBtns').fadeIn(800);
+                                parentPerformance.find('.newVideoImgAddBtns').fadeIn(800);
                             }
                         });
                     } else {
