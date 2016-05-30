@@ -456,13 +456,19 @@ $(function() {
         });
         $(deleteBtnNew).click(function () {
             var slug = $('#slug').text();
-            $.ajax({
-                type: "DELETE",
-                url: '/profile/' + slug + '/performance/' + newPerformanceId,
-                success: function () {
-                    $(getNewBlockPerformance).remove();
+            $(this).confirmation({
+                show:true,
+                onConfirm: function(){
+                    $.ajax({
+                        type: "DELETE",
+                        url: '/profile/' + slug + '/performance/' + newPerformanceId,
+                        success: function () {
+                            $(getNewBlockPerformance).remove();
+                        }
+                    })
                 }
-            })
+            });
+
         });
 
         console.log(getNewBlockPerformance)
@@ -492,12 +498,17 @@ $(function() {
 
     }
 
-    $(document).on('click','.deleteOffer',function () {
+    $(document).on('click','.deleteOffer button',function () {
         var parentPerformance = $(this).parents('article');
         var performanceId = $(parentPerformance).children('.performanceId').text();
         var slug = $('#slug').text();
+        $(this).confirmation({
+            show:true,
+            onConfirm: function(){
+                deleteOffer(slug, performanceId, parentPerformance)
+            }
+        });
         console.log(performanceId);
-        deleteOffer(slug, performanceId, parentPerformance)
     });
 
     function deleteOffer(slug, performanceId, parentPerformance) {

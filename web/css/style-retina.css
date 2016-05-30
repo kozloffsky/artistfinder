@@ -10339,7 +10339,7 @@ a.disabled {
 }
 .navbar
 {
-    z-index: 999999;
+    z-index: 1000;
 }
 .results-content .slider
 {
@@ -10422,4 +10422,18 @@ a.disabled {
 }
 .price-list .video iframe {
     width: 100% !important;
+}
+.price-list .info
+{
+    overflow: hidden;
+    word-wrap: normal;
+}
+.price-list .item .info p
+{
+    max-height: 196px;
+    overflow-y: auto;
+}
+.bx-wrapper .bx-controls-direction a
+{
+    z-index: 999;
 }
