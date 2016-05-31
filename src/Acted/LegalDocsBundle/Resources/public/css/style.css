@@ -2358,7 +2358,7 @@ section.used-by {
 }
 .editable-inline .editable-input
 {
-    width: 80%;
+    width: 77%;
 }
 .editable-inline .editable-input textarea
 {
@@ -2546,4 +2546,21 @@ a.disabled {
 .bx-wrapper .bx-controls-direction a
 {
     z-index: 999;
+}
+
+#loadSpinner
+{
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1090;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    background: rgba(0, 0, 0, 0.5) url("../assets/images/preloader.gif") no-repeat center center;
+}
+#photo-pager .scale-thumb img
+{
+    width: 100%;
 }

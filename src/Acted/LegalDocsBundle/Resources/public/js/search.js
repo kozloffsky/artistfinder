@@ -427,7 +427,7 @@ $(function () {
             if (this.video_media){
                 var artistBlockSearch = '<div class=" profile-card bordered">' +
                     '<div class="video-icon"></div>' +
-                    '<img class="header" src="' + this.media.link + '"/>' +
+                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +
@@ -463,7 +463,7 @@ $(function () {
                     '</div>';
             } else {
                 var artistBlockSearch = '<div class=" profile-card bordered">' +
-                    '<img class="header" src="' + this.media.link + '"/>' +
+                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +
@@ -622,7 +622,7 @@ $(function () {
             if (this.video_media) {
                 var artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
                     '<div class="video-icon"></div>' +
-                    '<img class="header" src="' + this.media.link + '"/>' +
+                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +
@@ -658,7 +658,7 @@ $(function () {
                     '</div>';
             } else {
                 var artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
-                    '<img class="header" src="' + this.media.link + '"/>' +
+                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +

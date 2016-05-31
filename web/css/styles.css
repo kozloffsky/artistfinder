@@ -56,7 +56,7 @@
 }
 
 .editableform-loading {
-    background: url('../img/loading.gif') center center no-repeat;
+    /*background: url('../img/loading.gif') center center no-repeat;*/
     height: 25px;
     width: auto;
     min-width: 25px;
@@ -1911,7 +1911,7 @@ body .ui-tooltip {
 }
 .ui-widget-content {
     border: 1px solid #aaaaaa;
-    background: #ffffff url("images/ui-bg_flat_75_ffffff_40x100.png") 50% 50% repeat-x;
+    background: #ffffff 50% 50% repeat-x;
     color: #222222;
 }
 .ui-widget-content a {
@@ -2342,7 +2342,7 @@ body .ui-tooltip {
 
 .bx-wrapper .bx-loading {
 	min-height: 50px;
-	background: url(images/bx_loader.gif) center center no-repeat #fff;
+	background: center center no-repeat #fff;
 	height: 100%;
 	width: 100%;
 	position: absolute;
@@ -10294,7 +10294,7 @@ section.used-by {
 }
 .editable-inline .editable-input
 {
-    width: 80%;
+    width: 77%;
 }
 .editable-inline .editable-input textarea
 {
@@ -10482,4 +10482,21 @@ a.disabled {
 .bx-wrapper .bx-controls-direction a
 {
     z-index: 999;
+}
+
+#loadSpinner
+{
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1090;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    background: rgba(0, 0, 0, 0.5) url("../assets/images/preloader.gif") no-repeat center center;
+}
+#photo-pager .scale-thumb img
+{
+    width: 100%;
 }

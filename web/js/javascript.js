@@ -4829,6 +4829,7 @@ $(function () {
     });
 });
 
+
 $(function() {
 
     $('.header-background').appendTo('header');
@@ -4855,6 +4856,8 @@ $(function() {
         $(".navbar-collapse").collapse('hide');
     });
 
+
+    //$('.deleteOffer button').confirmation();
 
 
 
@@ -5106,6 +5109,12 @@ $(function() {
                             type: "POST",
                             url: '/profile/performance/' + performanceId + '/media/new',
                             data: {"file":resp},
+                            beforeSend: function(){
+                                $('#loadSpinner').fadeIn(500);
+                            },
+                            complete: function(){
+                                $('#loadSpinner').fadeOut(500);
+                            },
                             success: function(){
                                 isActiveCropper = true;
                                 console.log(imgChangeBlock)
@@ -5126,6 +5135,12 @@ $(function() {
                             type: "POST",
                             url: '/profile/performance/' + performanceId + '/media/new',
                             data: {"file":resp},
+                            beforeSend: function(){
+                                $('#loadSpinner').fadeIn(500);
+                            },
+                            complete: function(){
+                                $('#loadSpinner').fadeOut(500);
+                            },
                             success: function(responseText){
                                 isActiveCropper = true;
                                 console.log(imgChangeBlock)
@@ -5148,6 +5163,12 @@ $(function() {
                             type: "POST",
                             url: '/media/' + mediaId + '/edit',
                             data: {"file": resp},
+                            beforeSend: function(){
+                                $('#loadSpinner').fadeIn(500);
+                            },
+                            complete: function(){
+                                $('#loadSpinner').fadeOut(500);
+                            },
                             success: function(){
                                 isActiveCropper = true;
                                 console.log(imgChangeBlock)
@@ -5211,16 +5232,17 @@ $(function() {
                             }*/
                         })
                     } else if (getMediaType[0].id == 'section-photo') {
+
                         var indexOfThumb = $('#photo-pager .scale-thumb').length;
                         $("#media [data-target='#section-photo'] .badge").text(indexOfThumb)
                         $('.bxslider').unwrap();
                         $('.bxslider').bxSlider({
                             adaptiveHeight: true,
-                            mode: 'fade',
                             pagerCustom: '#photo-pager',
                             nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
                             prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
                         });
+                        $('.bxslider .bx-clone').remove();
                     } else if (getMediaType[0].id == 'section-audio') {
                         $(clickedElDelete).parent('.audioEditProfile').remove();
                         var indexOfThumb = $('#section-audio .audioEditProfile').length;
@@ -5268,6 +5290,7 @@ $(function() {
     function createNewPerformance(getNewBlockPerformance, newPerformanceId) {
         console.log(newPerformanceId);
         var deleteBtnNew = $(getNewBlockPerformance).find('.deleteOffer');
+        deleteBtnNew.find('button').confirmation();
         deleteBtnNew.fadeIn();
         var newPerformance = true,
             performanceBlock = false;
@@ -5285,7 +5308,9 @@ $(function() {
             }
         });
         $(deleteBtnNew).click(function () {
+            //$(this).find('button').confirmation('show');
             var slug = $('#slug').text();
+
             $(this).confirmation({
                 show:true,
                 onConfirm: function(){
@@ -5332,6 +5357,7 @@ $(function() {
         var parentPerformance = $(this).parents('article');
         var performanceId = $(parentPerformance).children('.performanceId').text();
         var slug = $('#slug').text();
+        //$(this).confirmation('show');
         $(this).confirmation({
             show:true,
             onConfirm: function(){
@@ -5568,6 +5594,12 @@ $(function() {
                 type: "POST",
                 url: '/profile/performance/' + performanceId + '/media/new',
                 data: {"video": videoAddedVal},
+                beforeSend: function(){
+                    $('#loadSpinner').fadeIn(500);
+                },
+                complete: function(){
+                    $('#loadSpinner').fadeOut(500);
+                },
                 success: function (responseText) {
                     console.log(responseText);
                     $(changePerformanceBlock).parent('.video').find('.editingProf .mediaId').text(responseText.media.id)
@@ -5581,6 +5613,12 @@ $(function() {
                 type: "POST",
                 url: '/profile/performance/' + performanceId + '/media/new',
                 data: {"video": videoAddedVal},
+                beforeSend: function(){
+                    $('#loadSpinner').fadeIn(500);
+                },
+                complete: function(){
+                    $('#loadSpinner').fadeOut(500);
+                },
                 success: function (responseText) {
                     console.log(responseText);
                     $(changePerformanceBlock).parent('.video').find('iframe').remove();
@@ -5596,6 +5634,12 @@ $(function() {
                 type: "POST",
                 url: '/media/' + mediaChangeId + '/edit',
                 data: {"video": videoAddedVal},
+                beforeSend: function(){
+                    $('#loadSpinner').fadeIn(500);
+                },
+                complete: function(){
+                    $('#loadSpinner').fadeOut(500);
+                },
                 success: function (responseText) {
                     console.log(responseText);
                     $(changePerformanceBlock).parent('.video').find('iframe').remove();
@@ -5720,6 +5764,12 @@ $(function() {
                         type: "POST",
                         url: '/profile/' + slug + '/media/new',
                         data: {'file': resp},
+                        beforeSend: function(){
+                            $('#loadSpinner').fadeIn(500);
+                        },
+                        complete: function(){
+                            $('#loadSpinner').fadeOut(500);
+                        },
                         success: function (response) {
                             console.log(response);
                             console.log(isActiveCropper)
@@ -5731,19 +5781,30 @@ $(function() {
                             var indexOfThumb = $('#photo-pager .scale-thumb').length;
                             var countNextTabNum = indexOfThumb +1;
                             $("#media [data-target='#section-photo'] .badge").text(indexOfThumb + 1);
-                            $('#section-photo .bxslider').append('<li id="'+response.media.id+'"><img src="'+resp +'"></li>')
-                            $('#photo-pager').append('<div class="scale-thumb thumb'+countNextTabNum+'">' +
+                            $('#section-photo .bxslider').append('<li id="imageSlider'+response.media.id+'"><img src="'+resp +'"></li>')
+                            $('#photo-pager').append('<div class="scale-thumb thumb'+countNextTabNum+'" style="width:266px;height:183.54px;">' +
                                 '<span class="removeNewImage deleteMedia" id="' + response.media.id + '"><i class="fa fa-times-circle-o"></i></span>' +
                                 '<a data-slide-index="' + indexOfThumb + '" href=""><img src="' + resp + '"/></a>'
                             );
-                            $('.bxslider').unwrap();
-                            $('.bxslider').bxSlider({
-                                adaptiveHeight: true,
-                                mode: 'fade',
-                                pagerCustom: '#photo-pager',
-                                nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
-                                prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
-                            });
+
+                            if(indexOfThumb == 0){
+                                $('.bxslider').bxSlider({
+                                    adaptiveHeight: true,
+                                    pagerCustom: '#photo-pager',
+                                    nextSelector: '#nextSlide',
+                                    prevSelector: '#prevSlide',
+                                    nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
+                                    prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
+                                });
+                            } else {
+                                $('.bxslider').unwrap();
+                                $('.bxslider').bxSlider({
+                                    adaptiveHeight: true,
+                                    pagerCustom: '#photo-pager',
+                                    nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
+                                    prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
+                                });
+                            }
                             deleteMedia();
                             resizeThumbs();
                         }
@@ -5754,6 +5815,9 @@ $(function() {
         return;
     }
 
+    function startSliderChanger(){
+
+    }
     preventEmptyTabs();
     function preventEmptyTabs(){
         $('.mediaTabProf').each(function(){
@@ -6821,7 +6885,7 @@ $(function () {
             if (this.video_media){
                 var artistBlockSearch = '<div class=" profile-card bordered">' +
                     '<div class="video-icon"></div>' +
-                    '<img class="header" src="' + this.media.link + '"/>' +
+                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +
@@ -6857,7 +6921,7 @@ $(function () {
                     '</div>';
             } else {
                 var artistBlockSearch = '<div class=" profile-card bordered">' +
-                    '<img class="header" src="' + this.media.link + '"/>' +
+                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +
@@ -7016,7 +7080,7 @@ $(function () {
             if (this.video_media) {
                 var artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
                     '<div class="video-icon"></div>' +
-                    '<img class="header" src="' + this.media.link + '"/>' +
+                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +
@@ -7052,7 +7116,7 @@ $(function () {
                     '</div>';
             } else {
                 var artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
-                    '<img class="header" src="' + this.media.link + '"/>' +
+                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +

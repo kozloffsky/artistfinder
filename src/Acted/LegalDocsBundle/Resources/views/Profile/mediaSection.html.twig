@@ -64,7 +64,7 @@
 
             <ul class="bxslider">
                 {% for photo in artist.user.profile.photoList %}
-                    <li id="imageSlider{{ photo.id }}"><img src="{{ photo.link }}" alt="{{ photo.name }}"></li>
+                    <li id="imageSlider{{ photo.id }}"><img src="{{ asset(photo.link)|imagine_filter('big')}}" alt="{{ photo.name }}"></li>
                 {% endfor %}
             </ul>
 
@@ -74,7 +74,7 @@
                         {% if is_granted('EDIT', artist) %}
                         <span class="removeNewImage deleteMedia" id="{{ photo.id }}"><i class="fa fa-times-circle-o"></i></span>
                         {% endif %}
-                        <a data-slide-index="{{ loop.index0 }}" href=""><img src="{{ photo.link }}"/></a>
+                        <a data-slide-index="{{ loop.index0 }}" href=""><img src="{{ asset(photo.link)|imagine_filter('small')}}"/></a>
                     </div>
                 {% endfor %}
             </div>
