@@ -52,7 +52,8 @@ class MediaManager
 
     public function updateVideo($link, Media $media)
     {
-        if (strripos($link, 'youtube.com') === false && strripos($link, 'vimeo.com') === false ) {
+        if (strripos($link, 'youtube.com') === false && strripos($link, 'vimeo.com') === false
+            &&  strripos($link, 'youtu.be') === false ) {
             return ['error' => 'Added link should be from "youtube.com" or "vimeo.com"'];
         }
         $media->setActive(true);
