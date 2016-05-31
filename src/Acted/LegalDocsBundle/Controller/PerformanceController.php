@@ -71,7 +71,8 @@ class PerformanceController extends Controller
             }
 
             if(!is_null($data['video'])) {
-                if (strripos($data['video'], 'youtube.com') === false && strripos($data['video'], 'vimeo.com') === false ) {
+                if (strripos($data['video'], 'youtube.com') === false && strripos($data['video'], 'vimeo.com') === false
+                    &&  strripos($data['video'], 'youtu.be') === false ) {
                     return new JsonResponse([
                         'status' => 'error',
                         'message' => 'Added link should be from "youtube.com" or "vimeo.com"'
