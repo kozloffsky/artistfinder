@@ -18,6 +18,7 @@ class MediaUploadType extends AbstractType
             ->add('file', 'file', ['constraints' => [new NotBlank(['groups' => 'photo']), new Image()]])
             ->add('video', 'text', ['constraints' => [new NotBlank(['groups' => 'video'])]])
             ->add('audio', 'text', ['constraints' => [new NotBlank(['groups' => 'audio'])]])
+            ->add('position', 'integer', ['required' => false])
         ;
         $builder->get('file')->addModelTransformer(new Base64ToFileTransformer());
     }

@@ -256,7 +256,7 @@ class Media
     /**
      * @var integer
      */
-    private $position = 0;
+    private $position = 1;
 
 
     /**
