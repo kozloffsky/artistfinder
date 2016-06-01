@@ -189,12 +189,13 @@ $(function() {
                 imageBlockInsert = $(this).parents('.imageBlockWrapper');
             console.log(imageBlockInsert)
             userPerformanceUploadSecond(parentPerformance, performanceId, getMediaId, imageBlockInsert)
-        })
+        });
 
         $('.editVideo').on('click',function(){
+            var getBlockEditedVideo = $(this).parents('article');
             var getMediaId = $(this).prevAll('.mediaId').text(),
                 newPerformance = 'edit';
-            parentPerformance.find('#image-performance-change2, #image-performance-change2 .performanceVideoAdd').fadeIn(800);
+            getBlockEditedVideo.find('#image-performance-change2, #image-performance-change2 .performanceVideoAdd').fadeIn(800);
             $(parentPerformance).find('#AddPerformanceVideo').on('click',function(){
                 var videoAddedVal = $(parentPerformance).find('.videoPerformanceAdd').val();
                 console.log(getMediaId, videoAddedVal, parentPerformance, newPerformance, performanceId)
@@ -542,9 +543,10 @@ $(function() {
 
         $('.editVideo').on('click',function(){
             console.log(getNewBlockPerformance)
+            var getBlockEditedVideo = $(this).parents('article');
             var getMediaId = $(this).prevAll('.mediaId').text(),
                 newPerformance = 'edit';
-            getNewBlockPerformance.find('#image-performance-change2, #image-performance-change2 .performanceVideoAdd').fadeIn(800);
+            getBlockEditedVideo.find('#image-performance-change2, #image-performance-change2 .performanceVideoAdd').fadeIn(800);
             $(getNewBlockPerformance).find('#AddPerformanceVideo').on('click',function(){
                 var videoAddedVal = $(getNewBlockPerformance).find('.videoPerformanceAdd').val();
                 //console.log(getMediaId, videoAddedVal, parentPerformance, newPerformance, performanceId)

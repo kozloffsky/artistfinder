@@ -33,7 +33,7 @@
 
                     <div class="video imageBlockWrapper">
                         {% for mediaOf in performance.media|slice(0, 1) %}
-                            {{ dump(mediaOf) }}
+
                         {% if mediaOf.position == 2 %}
 
                             <div class="editing editingProf editImage">
@@ -64,25 +64,6 @@
                                 <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
                             {% endif %}
 
-                        {% else %}
-                            <div class="editing editingProf editImage">
-                                <span class="hidden mediaId">NewMedia</span>
-                                <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i>
-                                <i class="fa fa-file-video-o editVideo" aria-hidden="true"></i>
-                            </div>
-                            <div class="imagePerformanceChange" id="image-performance-change2">
-                                <span class="hidden mediaId">NewMedia</span>
-                                <div class="performanceVideoAdd">
-                                    <form class="videoAddForm">
-                                        <span class="videoAddMessage">Added link should be from "youtube.com" or "vimeo.com"</span>
-                                        <input type="text" class="form-control videoPerformanceAdd">
-                                    </form>
-                                    <button type="submit" id="AddPerformanceVideo" class="btn btn-default">Submit</button>
-                                </div>
-                            </div>
-                            <div class="performanceVideo">
-                            </div>
-                            <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
                         {% endif %}
                         {% else %}
                             <div class="editing editingProf editImage">
