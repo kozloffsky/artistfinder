@@ -87,21 +87,52 @@ $(function () {
     }
 
     function createArtistDataViewInQuote(artistData){
+        console.log(artistData)
         var artistCatString = artistData.categories.toString();
         $('.quoteRequestArtistData .quote-profile-info h2').html(artistData.name);
         $('.quoteRequestArtistData .quote-profile-info p').html(artistCatString);
-        $('.quote-profile-avatar').attr('src', artistData.user.avatar);
+        $('.quote-profile-avatar').attr('src', '/'+artistData.user.avatar);
     }
 
     $(document).ready(function() {
         var selectedCountruOption = $('#event_country').find('option:selected').val();
         chooseCityQuote(selectedCountruOption);
+        prepareEventRequestForm()
     });
 
     $('#requestQuoteForm #event_country').on('change',function(){
         var selectedCountruOption = $('#event_country').find('option:selected').val();
         chooseCityQuote(selectedCountruOption);
     });
+
+    function prepareEventRequestForm(){
+        var checkIfUserLoggedIn = $('header #userInformation').length;
+        console.log(checkIfUserLoggedIn)
+        if(checkIfUserLoggedIn > 0){
+            var userInformationStorage = JSON.parse(localStorage.getItem('user'));
+            if(userInformationStorage) {
+                if (userInformationStorage.role[0] == 'ROLE_CLIENT') {
+                    getUserEvents(userInformationStorage)
+                }
+            }
+        }
+        else {
+            localStorage.removeItem('user');
+        }
+    }
+
+    function getUserEvents(userInf){
+        var userId = userInf.userId
+        $.ajax({
+            type:'GET',
+            url:'/event/user_events?user='+userId,
+            success: function(response){
+                console.log(response)
+                var userEvents = response.events;
+                console.log(userEvents)
+            }
+        })
+    }
 
     function chooseCityQuote(selectedCountruOption){
         $.ajax({
@@ -127,13 +158,27 @@ $(function () {
         if(checkUserLoggedIn && userInformationStorage){
             sendQuoteRequest(requestFormSerialize, userInformationStorage);
         } else {
-
+            localStorage.setItem("quoteRequest", requestFormSerialize);
+            $('#freeQuoteModal').modal('hide');
+            $('#registrationModal').modal('show');
+            showSecondPage();
         }
-
     });
 
+    function showSecondPage() {
+        var text = 'Contact details';
+        $('#registrationModal .stage').hide();
+        $('#registrationModal .sub-stage').hide();
+        $('#registrationModal .modal-header').show();
+        $('#registrationModal #step-counter').html('Step 2');
+        $('#registrationModal #modal-title').html(text);
+        $('#registrationModal #customerBlock').show();
+        $('#registrationModal #stage-2').show();
+        $('#registrationModal #completionTime').hide();
+        $('#registrationModal #modal-title').focus();
+    }
+
     function sendQuoteRequest(data, userInformationStorage){
-        console.log(data)
         $.ajax({
             type:'POST',
             url:'/event/create',

@@ -3805,14 +3805,16 @@ $(function () {
   checkAvatar();
 
   function checkAvatar() {
-    var imageSrc = $('.avatar').attr('src');
-    //console.log(imageSrc.length)
-    if(imageSrc != undefined) {
-      if (imageSrc.length <= 1) {
-        $('.avatar').attr('src', '/assets/images/noAvatar.png');
-      }
-    }
-  }
+      $('img.avatar').each(function(){
+        var imageSrc = $(this).attr('src');
+        if(imageSrc != undefined) {
+          console.log(imageSrc.length);
+          if (imageSrc.length <= 1) {
+            $(this).attr('src', '/assets/images/noAvatar.png');
+          }
+        }
+      })
+  };
 
   $('.homeSearchStart').on('click',function () {
     var searchEntered = $(homeSearchInput).val();
@@ -3960,7 +3962,13 @@ $(function () {
       $('.homeSearchStart button').trigger('click');
     }
   });
+
+  $('#logOut').on('click',function(){
+    localStorage.removeItem('user');
+  })
 });
+
+
 
 //TODO: jQuery.mb.YTPlayer add to header youtube video.
 /*! jQuery UI - v1.11.4 - 2015-03-11
@@ -4815,7 +4823,7 @@ $(function () {
             data: customerValues,
             success: function(response){
                 $('#errorLogIn').hide();
-                var userData = JSON.stringify(response)
+                var userData = JSON.stringify(response);
                 localStorage.setItem("user", userData);
                 window.location.replace(window.location.href);
             },
@@ -5955,21 +5963,52 @@ $(function () {
     }
 
     function createArtistDataViewInQuote(artistData){
+        console.log(artistData)
         var artistCatString = artistData.categories.toString();
         $('.quoteRequestArtistData .quote-profile-info h2').html(artistData.name);
         $('.quoteRequestArtistData .quote-profile-info p').html(artistCatString);
-        $('.quote-profile-avatar').attr('src', artistData.user.avatar);
+        $('.quote-profile-avatar').attr('src', '/'+artistData.user.avatar);
     }
 
     $(document).ready(function() {
         var selectedCountruOption = $('#event_country').find('option:selected').val();
         chooseCityQuote(selectedCountruOption);
+        prepareEventRequestForm()
     });
 
     $('#requestQuoteForm #event_country').on('change',function(){
         var selectedCountruOption = $('#event_country').find('option:selected').val();
         chooseCityQuote(selectedCountruOption);
     });
+
+    function prepareEventRequestForm(){
+        var checkIfUserLoggedIn = $('header #userInformation').length;
+        console.log(checkIfUserLoggedIn)
+        if(checkIfUserLoggedIn > 0){
+            var userInformationStorage = JSON.parse(localStorage.getItem('user'));
+            if(userInformationStorage) {
+                if (userInformationStorage.role[0] == 'ROLE_CLIENT') {
+                    getUserEvents(userInformationStorage)
+                }
+            }
+        }
+        else {
+            localStorage.removeItem('user');
+        }
+    }
+
+    function getUserEvents(userInf){
+        var userId = userInf.userId
+        $.ajax({
+            type:'GET',
+            url:'/event/user_events?user='+userId,
+            success: function(response){
+                console.log(response)
+                var userEvents = response.events;
+                console.log(userEvents)
+            }
+        })
+    }
 
     function chooseCityQuote(selectedCountruOption){
         $.ajax({
@@ -5995,13 +6034,27 @@ $(function () {
         if(checkUserLoggedIn && userInformationStorage){
             sendQuoteRequest(requestFormSerialize, userInformationStorage);
         } else {
-
+            localStorage.setItem("quoteRequest", requestFormSerialize);
+            $('#freeQuoteModal').modal('hide');
+            $('#registrationModal').modal('show');
+            showSecondPage();
         }
-
     });
 
+    function showSecondPage() {
+        var text = 'Contact details';
+        $('#registrationModal .stage').hide();
+        $('#registrationModal .sub-stage').hide();
+        $('#registrationModal .modal-header').show();
+        $('#registrationModal #step-counter').html('Step 2');
+        $('#registrationModal #modal-title').html(text);
+        $('#registrationModal #customerBlock').show();
+        $('#registrationModal #stage-2').show();
+        $('#registrationModal #completionTime').hide();
+        $('#registrationModal #modal-title').focus();
+    }
+
     function sendQuoteRequest(data, userInformationStorage){
-        console.log(data)
         $.ajax({
             type:'POST',
             url:'/event/create',
@@ -6339,8 +6392,9 @@ $(function () {
       type: "POST",
       url: '/register',
       data: customerRole +'&'+customerValues,
-      success: function(){
-        finishRegistration()
+      success: function(response){
+        finishRegistration();
+        sendQuoteIfExist(response);
       },
       error: function(response){
         var regestrationResponse = response.responseJSON;
@@ -6370,6 +6424,18 @@ $(function () {
         })
       }
     })
+  }
+
+  function sendQuoteIfExist(userData){
+    var quote = localStorage.getItem('quoteRequest');
+    console.log(quote)
+    if(quote){
+      $.ajax({
+        type:'POST',
+        url:'/event/create',
+        data: quote + '&user='+ userData.id
+      })
+    }
   }
 
   $('#passwordRecovery').on('click', function(e)  {

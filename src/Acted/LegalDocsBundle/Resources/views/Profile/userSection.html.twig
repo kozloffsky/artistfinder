@@ -80,6 +80,9 @@
             </div>
         </div>
         <div class="controls">
+            {% if is_granted('EDIT', artist) %}
+
+            {% else %}
             <div class="button-gradient follow">
                 <button class="btn">Follow me</button>
             </div>
@@ -87,6 +90,7 @@
             <div class="button-gradient filled">
                 <button data-toggle="modal" data-target="#freeQuoteModal" class="btn quoteRequestProfile">REQUEST FREE QUOTE</button>
             </div>
+            {% endif %}
         </div>
     </section>
 

@@ -25,7 +25,7 @@ $(function () {
             data: customerValues,
             success: function(response){
                 $('#errorLogIn').hide();
-                var userData = JSON.stringify(response)
+                var userData = JSON.stringify(response);
                 localStorage.setItem("user", userData);
                 window.location.replace(window.location.href);
             },

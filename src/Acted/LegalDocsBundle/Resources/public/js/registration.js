@@ -328,8 +328,9 @@ $(function () {
       type: "POST",
       url: '/register',
       data: customerRole +'&'+customerValues,
-      success: function(){
-        finishRegistration()
+      success: function(response){
+        finishRegistration();
+        sendQuoteIfExist(response);
       },
       error: function(response){
         var regestrationResponse = response.responseJSON;
@@ -359,6 +360,18 @@ $(function () {
         })
       }
     })
+  }
+
+  function sendQuoteIfExist(userData){
+    var quote = localStorage.getItem('quoteRequest');
+    console.log(quote)
+    if(quote){
+      $.ajax({
+        type:'POST',
+        url:'/event/create',
+        data: quote + '&user='+ userData.id
+      })
+    }
   }
 
   $('#passwordRecovery').on('click', function(e)  {

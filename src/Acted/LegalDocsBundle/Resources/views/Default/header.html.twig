@@ -90,14 +90,18 @@
                         </a>
                     </li>
 
+
+                        {% if app.user.artist %}
                     <li class="profile"><a href="/profile/{{ app.user.artist.slug }}">
-                            Profile
-                            <div class="underline">
-                                <div class="top"></div>
-                                <div class="bottom"></div>
-                            </div>
+                        Profile
+                        <div class="underline">
+                            <div class="top"></div>
+                            <div class="bottom"></div>
+                        </div>
                         </a>
                     </li>
+                        {% endif %}
+
                     <li class="mail">
                         <!--For screens > 991px-->
                         <div class="hidden-sm hidden-xs badge">4</div>
@@ -117,7 +121,7 @@
                             <li><a href="#">Something else here</a></li>
                             <li role="separator" class="divider"></li>
                             {% if(app.user) %}
-                                <li><a href="{{ logout_path() }}">Logout</a></li>
+                                <li><a id="logOut" href="{{ logout_path() }}">Logout</a></li>
                             {% endif %}
                         </ul>
                         <span id="userInformation" class="hidden">{{ app.user.id }}</span>

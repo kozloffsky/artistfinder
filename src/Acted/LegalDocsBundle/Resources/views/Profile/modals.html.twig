@@ -57,9 +57,20 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">
+                <h4 class="modal-title eventUnregistered">
                     <div class="warn">!</div>
                     Tip: Enter your event details below and it will automatically apply to your next quote requests
+                </h4>
+                <h4 class="modal-title eventChooseRequest">
+                    <span class="title">Event:</span>
+
+                    <select data-class="selections-white selection-borderless" name="event_type" id="event_preset">
+                        <option value="0">Corporate event</option>
+                        <option value="1">Lorem Ipsum 1</option>
+                        <option value="2">Lorem Ipsum 2</option>
+                    </select>
+
+                    <a href="#" id="new-event" class="new-event">New event</a>
                 </h4>
             </div>
             <form id="requestQuoteForm">

@@ -6,14 +6,16 @@ $(function () {
   checkAvatar();
 
   function checkAvatar() {
-    var imageSrc = $('.avatar').attr('src');
-    //console.log(imageSrc.length)
-    if(imageSrc != undefined) {
-      if (imageSrc.length <= 1) {
-        $('.avatar').attr('src', '/assets/images/noAvatar.png');
-      }
-    }
-  }
+      $('img.avatar').each(function(){
+        var imageSrc = $(this).attr('src');
+        if(imageSrc != undefined) {
+          console.log(imageSrc.length);
+          if (imageSrc.length <= 1) {
+            $(this).attr('src', '/assets/images/noAvatar.png');
+          }
+        }
+      })
+  };
 
   $('.homeSearchStart').on('click',function () {
     var searchEntered = $(homeSearchInput).val();
@@ -161,6 +163,12 @@ $(function () {
       $('.homeSearchStart button').trigger('click');
     }
   });
+
+  $('#logOut').on('click',function(){
+    localStorage.removeItem('user');
+  })
 });
+
+
 
 //TODO: jQuery.mb.YTPlayer add to header youtube video.
