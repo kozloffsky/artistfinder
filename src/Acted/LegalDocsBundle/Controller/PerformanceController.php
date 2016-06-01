@@ -100,7 +100,6 @@ class PerformanceController extends Controller
             }
 
             if (isset($data['position']) && !empty($data['position'])) {
-                var_dump(111);die;
                 $media->setPosition($data['position']);
             }
             $em->persist($media);
