@@ -24,6 +24,6 @@ reject_offer:
     methods: GET
 
 check_exist_offer:
-    path: /chack_exist_offer
+    path: /check_exist_offer
     defaults: { _controller: ActedLegalDocsBundle:Events:checkExistOffer, _format: json }
     methods: POST
