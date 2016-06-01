@@ -90,6 +90,11 @@ class Event
      */
     private $comments;
 
+    /**
+     * @var string
+     */
+    private $numberOfGuests;
+
 
     /**
      * Get id
@@ -569,5 +574,21 @@ class Event
     public function getChatRooms()
     {
         return $this->chatRooms;
+    }
+
+    /**
+     * @return Event
+     */
+    public function getNumberOfGuests()
+    {
+        return $this->numberOfGuests;
+    }
+
+    /**
+     * @param string $numberOfGuests
+     */
+    public function setNumberOfGuests($numberOfGuests)
+    {
+        $this->numberOfGuests = $numberOfGuests;
     }
 }

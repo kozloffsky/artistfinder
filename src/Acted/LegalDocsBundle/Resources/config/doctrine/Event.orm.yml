@@ -39,6 +39,9 @@ Acted\LegalDocsBundle\Entity\Event:
         comments:
           type: string(512)
           nullable: true
+        numberOfGuests:
+          type: string(64)
+          nullable: true
     manyToOne:
           user:
             targetEntity: Acted\LegalDocsBundle\Entity\User

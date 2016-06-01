@@ -68,6 +68,7 @@ class EventsManager
         $event->setIsInternational(1);
         $event->setAddress($eventOfferData->getLocation());
         $event->setTiming($eventOfferData->getEventTime());
+        $event->setNumberOfGuests($eventOfferData->getNumberOfGuests());
 
         return $event;
     }
