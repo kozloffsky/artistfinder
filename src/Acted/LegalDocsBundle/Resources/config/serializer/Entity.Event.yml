@@ -2,7 +2,7 @@ Acted\LegalDocsBundle\Entity\Event:
     exclusion_policy: NONE
     properties:
         id:
-            groups: [chat_list]
+            groups: [chat_list, getEvent]
         country:
             groups: [Default, getEvent]
         city:
@@ -21,6 +21,8 @@ Acted\LegalDocsBundle\Entity\Event:
             groups: [Default, getEvent, chat_list]
         comments:
             groups: [Default, getEvent]
+        numberOfGuests:
+            groups: [getEvent]
         title:
             groups: [Default, getEvent, chat_list]
         user:
