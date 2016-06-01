@@ -97,11 +97,11 @@ class PerformanceController extends Controller
                     ],  400);
                 }
                 $media = $mediaManager->updatePhoto($file, $media, $request);
-                if (isset($data['position']) && !empty($data['position'])) {
-                    $media->setPosition($data['position']);
-                }
             }
 
+            if (isset($data['position']) && !empty($data['position'])) {
+                $media->setPosition($data['position']);
+            }
             $em->persist($media);
             $em->flush();
 
