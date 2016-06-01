@@ -9,7 +9,8 @@
                         <div class="editOffer"><button type="button" class="btn btn-info"><i class="fa fa-pencil-square-o"></i></button></div>
                     </h2>
                     <span class="performanceId hidden">{{ performance.id }}</span>
-                    {% for mediaOf in performance.media[0:1] %}
+                    {% for mediaOf in performance.media|slice(0, 1) %}
+                        {% if mediaOf.position == 1 %}
 
                         <div class="imagePerformanceChangeNew preview imageBlockWrapper">
                             <div class="editing editingProf editImage">
@@ -18,6 +19,7 @@
                             </div>
                             <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
                         </div>
+                    {% endif %}
                         {% else %}
                             <div class="imagePerformanceChangeNew preview imageBlockWrapper">
                                 <div class="editing editingProf editImage">
@@ -29,7 +31,8 @@
                     {% endfor %}
 
                     <div class="video imageBlockWrapper">
-                        {% for mediaOf in performance.media[1:2] %}
+                        {% for mediaOf in performance.media|slice(0, 1) %}
+                        {% if mediaOf.position == 2 %}
 
                             <div class="editing editingProf editImage">
                                 <span class="hidden mediaId">{{ mediaOf.id }}</span>
@@ -52,13 +55,14 @@
 
 
                             {% if mediaOf.mediaType == "video" %}
+
                                 <div class="performanceVideo">
                                     <iframe src="{{ mediaOf.link }}" width="395" height="274" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
                                 </div>
                                 {% else %}
                                 <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
                             {% endif %}
-
+                        {% endif %}
                         {% else %}
 
 
@@ -111,9 +115,10 @@
                 <article class="item clearfix">
                     <h2>{{ performance.title }} <span class="price">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</span></h2>
 
-                    {% for mediaOf in performance.media[0:1] %}
-                        {#{{ dump(mediaOf) }}#}
+                    {% for mediaOf in performance.media|slice(0, 1) %}
+                    {% if mediaOf.position == 1 %}
                         <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
+                    {% endif %}
                     {% else %}
                         <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
                     {% endfor %}
@@ -125,13 +130,15 @@
                         {% endif %}
                         {{ dump(performance.media[1:2]) }}#}
 
-                        {% for mediaOf in performance.media[1:2] %}
-                            {#{{ dump(mediaOf) }}#}
+                        {% for mediaOf in performance.media|slice(0, 1) %}
+                        {% if mediaOf.position == 2 %}
+
                             {% if mediaOf.mediaType == "video" %}
                                 <iframe src="{{ mediaOf.link }}" width="395" height="274" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
                             {% else %}
                                 <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
                             {% endif %}
+                        {% endif %}
                         <!--<span class="glyphicon glyphicon-play"></span>
 
                             <div class="name">

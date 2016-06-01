@@ -763,7 +763,8 @@ $(function() {
             $.ajax({
                 type: "POST",
                 url: '/profile/performance/' + performanceId + '/media/new',
-                data: {"video": videoAddedVal},
+                data: {"video": videoAddedVal,
+                    "position":2},
                 beforeSend: function(){
                     $('#loadSpinner').fadeIn(500);
                 },
@@ -782,7 +783,8 @@ $(function() {
             $.ajax({
                 type: "POST",
                 url: '/profile/performance/' + performanceId + '/media/new',
-                data: {"video": videoAddedVal},
+                data: {"video": videoAddedVal,
+                    "position":2},
                 beforeSend: function(){
                     $('#loadSpinner').fadeIn(500);
                 },
