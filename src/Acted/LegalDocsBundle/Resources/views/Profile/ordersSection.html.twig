@@ -9,28 +9,31 @@
                         <div class="editOffer"><button type="button" class="btn btn-info"><i class="fa fa-pencil-square-o"></i></button></div>
                     </h2>
                     <span class="performanceId hidden">{{ performance.id }}</span>
+                    <div class="imagePerformanceChangeNew preview imageBlockWrapper">
                     {% for mediaOf in performance.media|slice(0, 1) %}
-                        {% if mediaOf.position == 1 %}
-                        <div class="imagePerformanceChangeNew preview imageBlockWrapper">
-                            <div class="editing editingProf editImage">
-                                <span class="hidden mediaId">{{ mediaOf.id }}</span>
-                                <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i>
-                            </div>
-                            <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
+                    {% if mediaOf.position == 1 %}
+                        <div class="editing editingProf editImage">
+                            <span class="hidden mediaId">{{ mediaOf.id }}</span>
+                            <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i>
                         </div>
+                        <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
+                    {% else %}
+                        <div class="editing editingProf editImage">
+                            <span class="hidden mediaId">NewMedia</span>
+                            <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i></div>
+                        <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
                     {% endif %}
-                        {% else %}
-                            <div class="imagePerformanceChangeNew preview imageBlockWrapper">
-                                <div class="editing editingProf editImage">
-                                    <span class="hidden mediaId">NewMedia</span>
-                                    <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i></div>
-                                <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
-                            </div>
-
+                    {% else %}
+                        <div class="editing editingProf editImage">
+                            <span class="hidden mediaId">NewMedia</span>
+                            <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i></div>
+                        <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
                     {% endfor %}
+                    </div>
 
                     <div class="video imageBlockWrapper">
                         {% for mediaOf in performance.media|slice(0, 1) %}
+                            {{ dump(mediaOf) }}
                         {% if mediaOf.position == 2 %}
 
                             <div class="editing editingProf editImage">
@@ -54,24 +57,19 @@
 
 
                             {% if mediaOf.mediaType == "video" %}
-
                                 <div class="performanceVideo">
                                     <iframe src="{{ mediaOf.link }}" width="395" height="274" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
                                 </div>
                                 {% else %}
                                 <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
                             {% endif %}
-                        {% endif %}
+
                         {% else %}
-
-
                             <div class="editing editingProf editImage">
                                 <span class="hidden mediaId">NewMedia</span>
                                 <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i>
                                 <i class="fa fa-file-video-o editVideo" aria-hidden="true"></i>
                             </div>
-
-
                             <div class="imagePerformanceChange" id="image-performance-change2">
                                 <span class="hidden mediaId">NewMedia</span>
                                 <div class="performanceVideoAdd">
@@ -81,11 +79,29 @@
                                     </form>
                                     <button type="submit" id="AddPerformanceVideo" class="btn btn-default">Submit</button>
                                 </div>
-
                             </div>
                             <div class="performanceVideo">
                             </div>
-
+                            <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
+                        {% endif %}
+                        {% else %}
+                            <div class="editing editingProf editImage">
+                                <span class="hidden mediaId">NewMedia</span>
+                                <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i>
+                                <i class="fa fa-file-video-o editVideo" aria-hidden="true"></i>
+                            </div>
+                            <div class="imagePerformanceChange" id="image-performance-change2">
+                                <span class="hidden mediaId">NewMedia</span>
+                                <div class="performanceVideoAdd">
+                                    <form class="videoAddForm">
+                                        <span class="videoAddMessage">Added link should be from "youtube.com" or "vimeo.com"</span>
+                                        <input type="text" class="form-control videoPerformanceAdd">
+                                    </form>
+                                    <button type="submit" id="AddPerformanceVideo" class="btn btn-default">Submit</button>
+                                </div>
+                            </div>
+                            <div class="performanceVideo">
+                            </div>
                             <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
                         {% endfor %}
                     </div>
@@ -117,6 +133,8 @@
                     {% for mediaOf in performance.media|slice(0, 1) %}
                     {% if mediaOf.position == 1 %}
                         <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
+                    {% else %}
+                        <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
                     {% endif %}
                     {% else %}
                         <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
@@ -137,12 +155,15 @@
                             {% else %}
                                 <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
                             {% endif %}
-                        {% endif %}
+
                         <!--<span class="glyphicon glyphicon-play"></span>
 
                             <div class="name">
                                 <div class="name-text">{{ mediaOf.name }}</div>
                             </div>-->
+                        {% else %}
+                            <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
+                        {% endif %}
                         {% else %}
                             <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
                         {% endfor %}

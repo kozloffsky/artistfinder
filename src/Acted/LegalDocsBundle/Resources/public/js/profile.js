@@ -274,92 +274,125 @@ $(function() {
                 format: 'jpeg'
             }).then(function (resp) {
                 if(!isActiveCropper) {
-                    if(newPerformance){
-                        $.ajax({
-                            type: "POST",
-                            url: '/profile/performance/' + performanceId + '/media/new',
-                            data: {"file":resp},
-                            beforeSend: function(){
-                                $('#loadSpinner').fadeIn(500);
-                            },
-                            complete: function(){
-                                $('#loadSpinner').fadeOut(500);
-                            },
-                            success: function(){
-                                isActiveCropper = true;
-                                console.log(imgChangeBlock)
-                                $("#uploadNewMedia").val('');
-                                //var placeToAddNewImage = imgChangeBlock.parent('.video');
-                                //console.log(placeToAddNewImage);
-                                imgChangeBlock.find('iframe').remove();
-                                imgChangeBlock.find('img.preview').remove();
-                                imgChangeBlock.append('<img class="preview" src="'+resp+'" alt="Preview">');
-                                //imgChangeBlock.fadeOut();
-                                $('#addImageModal').modal('hide');
-                                //$uploadCropMediaOffer.croppie('destroy')
-                                //$uploadCropMediaOffer = {};
-                            }
-                        });
-                    } else if (mediaId == 'NewMedia'){
-                        $.ajax({
-                            type: "POST",
-                            url: '/profile/performance/' + performanceId + '/media/new',
-                            data: {"file":resp},
-                            beforeSend: function(){
-                                $('#loadSpinner').fadeIn(500);
-                            },
-                            complete: function(){
-                                $('#loadSpinner').fadeOut(500);
-                            },
-                            success: function(responseText){
-                                isActiveCropper = true;
-                                console.log(imgChangeBlock)
-                                $("#uploadNewMedia").val('');
-                                //var placeToAddNewImage = imgChangeBlock.parent('.video');
-                                //console.log(placeToAddNewImage);
-                                imgChangeBlock.find('.editingProf .mediaId').text(responseText.media.id);
-                                imgChangeBlock.find('iframe').remove();
-                                imgChangeBlock.find('img.preview').remove();
-                                imgChangeBlock.append('<img class="preview" src="'+resp+'" alt="Preview">');
-                                //imgChangeBlock.fadeOut();
-                                $('#addImageModal').modal('hide');
-                                //$uploadCropMediaOffer.croppie('destroy')
-                                //$uploadCropMediaOffer = {};
-                                parentPerformance.find('.newVideoImgAddBtns').fadeIn(800);
-                            }
-                        });
+                    if ($(imgChangeBlock).hasClass('video')) {
+                        if (mediaId == 'NewMedia') {
+                            $.ajax({
+                                type: "POST",
+                                url: '/profile/performance/' + performanceId + '/media/new',
+                                data: {"file": resp,
+                                    "position":2},
+                                beforeSend: function () {
+                                    $('#loadSpinner').fadeIn(500);
+                                },
+                                complete: function () {
+                                    $('#loadSpinner').fadeOut(500);
+                                },
+                                success: function (responseText) {
+                                    isActiveCropper = true;
+                                    console.log(imgChangeBlock)
+                                    $("#uploadNewMedia").val('');
+                                    //var placeToAddNewImage = imgChangeBlock.parent('.video');
+                                    //console.log(placeToAddNewImage);
+                                    imgChangeBlock.find('.editingProf .mediaId').text(responseText.media.id);
+                                    imgChangeBlock.find('iframe').remove();
+                                    imgChangeBlock.find('img.preview').remove();
+                                    imgChangeBlock.append('<img class="preview" src="' + resp + '" alt="Preview">');
+                                    //imgChangeBlock.fadeOut();
+                                    $('#addImageModal').modal('hide');
+                                    //$uploadCropMediaOffer.croppie('destroy')
+                                    //$uploadCropMediaOffer = {};
+                                    parentPerformance.find('.newVideoImgAddBtns').fadeIn(800);
+                                }
+                            });
+                        } else {
+                            $.ajax({
+                                type: "POST",
+                                url: '/media/' + mediaId + '/edit',
+                                data: {"file": resp},
+                                beforeSend: function () {
+                                    $('#loadSpinner').fadeIn(500);
+                                },
+                                complete: function () {
+                                    $('#loadSpinner').fadeOut(500);
+                                },
+                                success: function () {
+                                    isActiveCropper = true;
+                                    console.log(imgChangeBlock)
+                                    $("#uploadNewMedia").val('');
+                                    //var placeToAddNewImage = imgChangeBlock.parent('.video');
+                                    //console.log(placeToAddNewImage);
+                                    imgChangeBlock.find('iframe').remove();
+                                    imgChangeBlock.find('img.preview').remove();
+                                    imgChangeBlock.append('<img class="preview" src="' + resp + '" alt="Preview">');
+                                    //imgChangeBlock.fadeOut();
+                                    $('#addImageModal').modal('hide');
+                                    //$uploadCropMediaOffer.croppie('destroy')
+                                    //$uploadCropMediaOffer = {};
+                                }
+                            });
+                        }
                     } else {
-                        $.ajax({
-                            type: "POST",
-                            url: '/media/' + mediaId + '/edit',
-                            data: {"file": resp},
-                            beforeSend: function(){
-                                $('#loadSpinner').fadeIn(500);
-                            },
-                            complete: function(){
-                                $('#loadSpinner').fadeOut(500);
-                            },
-                            success: function(){
-                                isActiveCropper = true;
-                                console.log(imgChangeBlock)
-                                $("#uploadNewMedia").val('');
-                                //var placeToAddNewImage = imgChangeBlock.parent('.video');
-                                //console.log(placeToAddNewImage);
-                                imgChangeBlock.find('iframe').remove();
-                                imgChangeBlock.find('img.preview').remove();
-                                imgChangeBlock.append('<img class="preview" src="'+resp+'" alt="Preview">');
-                                //imgChangeBlock.fadeOut();
-                                $('#addImageModal').modal('hide');
-                                //$uploadCropMediaOffer.croppie('destroy')
-                                //$uploadCropMediaOffer = {};
-                            }
-                        });
+                        if (mediaId == 'NewMedia') {
+                            $.ajax({
+                                type: "POST",
+                                url: '/profile/performance/' + performanceId + '/media/new',
+                                data: {"file": resp},
+                                beforeSend: function () {
+                                    $('#loadSpinner').fadeIn(500);
+                                },
+                                complete: function () {
+                                    $('#loadSpinner').fadeOut(500);
+                                },
+                                success: function (responseText) {
+                                    isActiveCropper = true;
+                                    console.log(imgChangeBlock)
+                                    $("#uploadNewMedia").val('');
+                                    //var placeToAddNewImage = imgChangeBlock.parent('.video');
+                                    //console.log(placeToAddNewImage);
+                                    imgChangeBlock.find('.editingProf .mediaId').text(responseText.media.id);
+                                    imgChangeBlock.find('iframe').remove();
+                                    imgChangeBlock.find('img.preview').remove();
+                                    imgChangeBlock.append('<img class="preview" src="' + resp + '" alt="Preview">');
+                                    //imgChangeBlock.fadeOut();
+                                    $('#addImageModal').modal('hide');
+                                    //$uploadCropMediaOffer.croppie('destroy')
+                                    //$uploadCropMediaOffer = {};
+                                    parentPerformance.find('.newVideoImgAddBtns').fadeIn(800);
+                                }
+                            });
+                        } else {
+                            $.ajax({
+                                type: "POST",
+                                url: '/media/' + mediaId + '/edit',
+                                data: {"file": resp},
+                                beforeSend: function () {
+                                    $('#loadSpinner').fadeIn(500);
+                                },
+                                complete: function () {
+                                    $('#loadSpinner').fadeOut(500);
+                                },
+                                success: function () {
+                                    isActiveCropper = true;
+                                    console.log(imgChangeBlock)
+                                    $("#uploadNewMedia").val('');
+                                    //var placeToAddNewImage = imgChangeBlock.parent('.video');
+                                    //console.log(placeToAddNewImage);
+                                    imgChangeBlock.find('iframe').remove();
+                                    imgChangeBlock.find('img.preview').remove();
+                                    imgChangeBlock.append('<img class="preview" src="' + resp + '" alt="Preview">');
+                                    //imgChangeBlock.fadeOut();
+                                    $('#addImageModal').modal('hide');
+                                    //$uploadCropMediaOffer.croppie('destroy')
+                                    //$uploadCropMediaOffer = {};
+                                }
+                            });
+                        }
+                        //imgChangeBlock.nextAll('.preview').attr('src', resp);
+                        //console.log($uploadUserPerfMediaSecond)
+                        //imgChangeBlock.fadeOut();
+                        //$('#addImageModal').modal('hide');
+                        //changeImgContainer.empty();
                     }
-                    //imgChangeBlock.nextAll('.preview').attr('src', resp);
-                    //console.log($uploadUserPerfMediaSecond)
-                    //imgChangeBlock.fadeOut();
-                    //$('#addImageModal').modal('hide');
-                    //changeImgContainer.empty();
                 }
             });
 
