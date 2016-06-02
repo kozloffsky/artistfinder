@@ -182,7 +182,14 @@ $(function() {
                 });
             }
         });
-        $(parentPerformance).find('.editingProf').fadeIn(800);
+
+        var getImagePerformanceId = $(parentPerformance).find('.imagePerformanceChangeNew .editImage .mediaId').text();
+        console.log(getImagePerformanceId);
+        if(getImagePerformanceId == 'NewMedia'){
+            $(parentPerformance).find('.imagePerformanceChangeNew .editImage').fadeIn(800)
+        } else {
+            $(parentPerformance).find('.editingProf').fadeIn(800);
+        }
 
         $('.editImageModalOpen').on('click',function(){
             var getMediaId = $(this).prev('.mediaId').text(),
@@ -469,6 +476,7 @@ $(function() {
             console.log(newPerfCreated)
             $(getNewBlockPerformance).find('.perfomanceTitleEdiatable').editable({
                 type: 'text',
+                emptytext: 'Your performance title',
                 success: function (response, newValue) {
                     $.ajax({
                         type: "POST",
@@ -503,6 +511,7 @@ $(function() {
         $(getNewBlockPerformance).find('.perfomanceInfoEdiatable').editable({
             type: 'text',
             mode: 'inline',
+            emptytext: 'Your performance description',
             success: function (response, newValue) {
                 $.ajax({
                     type: "PATCH",
@@ -559,17 +568,16 @@ $(function() {
     }
 
     $(document).on('click','.deleteOffer button',function () {
+
         var parentPerformance = $(this).parents('article');
         var performanceId = $(parentPerformance).children('.performanceId').text();
         var slug = $('#slug').text();
-        //$(this).confirmation('show');
         $(this).confirmation({
             show:true,
             onConfirm: function(){
                 deleteOffer(slug, performanceId, parentPerformance)
             }
         });
-        console.log(performanceId);
     });
 
     function deleteOffer(slug, performanceId, parentPerformance) {
