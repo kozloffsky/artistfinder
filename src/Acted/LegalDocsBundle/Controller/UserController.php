@@ -23,6 +23,10 @@ class UserController extends Controller
 
         if($userForm->isSubmitted() && $userForm->isValid()) {
             $em->flush();
+            if($userForm->getData()->getBackground()) {
+                $this->container->get('liip_imagine.controller')->filterAction($request, $userForm->getData()
+                    ->getBackground(), 'background');
+            }
             return new JsonResponse(['status' => 'success']);
         }
 
