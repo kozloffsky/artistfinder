@@ -1,0 +1,5 @@
+Acted\LegalDocsBundle\Entity\RefEventType:
+    exclusion_policy: NONE
+    properties:
+        id:
+            groups: [getEvent]

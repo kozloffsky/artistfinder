@@ -457,7 +457,7 @@ $(function () {
                     '<button data-dismiss="modal" class="btn"><a href="/profile/' + this.slug + '">Profile</a></button>' +
                     '</div>' +
                     '<div class="button-gradient blue ">' +
-                    '<button data-dismiss="modal" class="btn">Ask a free quote</button>' +
+                    '<button data-dismiss="modal" class="btn askQuoteFromSearch" value="' + this.slug + '">Ask a free quote</button>' +
                     '</div>' +
                     '</div>' +
                     '</div>';
@@ -493,7 +493,7 @@ $(function () {
                     '<button data-dismiss="modal" class="btn"><a href="/profile/' + this.slug + '">Profile</a></button>' +
                     '</div>' +
                     '<div class="button-gradient blue ">' +
-                    '<button data-dismiss="modal" class="btn">Ask a free quote</button>' +
+                    '<button data-dismiss="modal" class="btn askQuoteFromSearch" value="' + this.slug + '">Ask a free quote</button>' +
                     '</div>' +
                     '</div>' +
                     '</div>';
@@ -652,7 +652,7 @@ $(function () {
                     '<button data-dismiss="modal" class="btn"><a href="/profile/' + this.slug + '">Profile</a></button>' +
                     '</div>' +
                     '<div class="button-gradient blue ">' +
-                    '<button data-dismiss="modal" class="btn">Ask a free quote</button>' +
+                    '<button data-dismiss="modal" class="btn askQuoteFromSearch" value="' + this.slug + '">Ask a free quote</button>' +
                     '</div>' +
                     '</div>' +
                     '</div>';
@@ -688,7 +688,7 @@ $(function () {
                     '<button data-dismiss="modal" class="btn"><a href="/profile/' + this.slug + '">Profile</a></button>' +
                     '</div>' +
                     '<div class="button-gradient blue ">' +
-                    '<button data-dismiss="modal" class="btn">Ask a free quote</button>' +
+                    '<button data-dismiss="modal" class="btn askQuoteFromSearch" value="' + this.slug + '">Ask a free quote</button>' +
                     '</div>' +
                     '</div>' +
                     '</div>';

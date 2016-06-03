@@ -591,4 +591,10 @@ class Event
     {
         $this->numberOfGuests = $numberOfGuests;
     }
+
+    public function getCountryId()
+    {
+        return ($this->city && $this->city->getRegion()->getCountry()) ? $this->city->getRegion()->getCountry()->getId
+        () : null;
+    }
 }

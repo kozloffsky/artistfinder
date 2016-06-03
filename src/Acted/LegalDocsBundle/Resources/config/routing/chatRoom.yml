@@ -1,16 +1,14 @@
 chat_room_list:
-    path:     /list/{userId}
-    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getChatRoomList, _format: json }
+    path:     /enquiries/{userId}
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getChatRoomList }
     methods:  GET
 
 chat_room_item:
     path:     /chat/{chat}
-    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getChat, _format: json }
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getChat }
     methods:  GET
 
 chat_room_message:
     path:     /message/{message}
-    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getMessage, _format: json }
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getMessage }
     methods:  GET
-
-

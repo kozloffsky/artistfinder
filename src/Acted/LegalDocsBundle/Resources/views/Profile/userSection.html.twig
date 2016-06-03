@@ -1,7 +1,7 @@
 
 {% if is_granted('EDIT', artist) %}
-    <div class="header-background" style="background-image: url({{ artist.user.background }})">
-        <span id="bgImageSrc" class="hidden">{{  asset(artist.user.background)|imagine_filter('background') }}</span>
+    <div class="header-background" style="background-image: url({{ asset(artist.user.background)|imagine_filter('background') }})">
+        <span id="bgImageSrc" class="hidden">{{ asset(artist.user.background)|imagine_filter('background') }} }}</span>
         <div class="background-stripe"></div>
         <div id="editBackground"><a href="#" data-toggle="modal" data-target="#changeBgModal"><i class="fa fa-pencil-square-o"></i></a></div>
     </div>
@@ -88,7 +88,7 @@
             </div>
 
             <div class="button-gradient filled">
-                <button data-toggle="modal" data-target="#freeQuoteModal" class="btn quoteRequestProfile">REQUEST FREE QUOTE</button>
+                <button data-toggle="modal" class="btn quoteRequestProfile">REQUEST FREE QUOTE</button>
             </div>
             {% endif %}
         </div>

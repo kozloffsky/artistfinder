@@ -567,7 +567,16 @@ $(function() {
 
     }
 
-    $(document).on('click','.deleteOffer button',function () {
+    $('.deleteOffer button').confirmation({
+        show:true,
+        onConfirm: function(){
+            var parentPerformance = $(this).parents('article');
+            var performanceId = $(parentPerformance).children('.performanceId').text();
+            var slug = $('#slug').text();
+            deleteOffer(slug, performanceId, parentPerformance)
+        }
+    });
+    /*$(document).on('click','.deleteOffer button',function () {
 
         var parentPerformance = $(this).parents('article');
         var performanceId = $(parentPerformance).children('.performanceId').text();
@@ -578,7 +587,7 @@ $(function() {
                 deleteOffer(slug, performanceId, parentPerformance)
             }
         });
-    });
+    });*/
 
     function deleteOffer(slug, performanceId, parentPerformance) {
         $.ajax({
@@ -785,10 +794,18 @@ $(function() {
                 $.ajax({
                     type: "PATCH",
                     url: '/user/edit',
-                    data: {"user[background]": resp}
+                    data: {"user[background]": resp},
+                    beforeSend: function () {
+                        $('#loadSpinner').fadeIn(500);
+                    },
+                    complete: function () {
+                        $('#loadSpinner').fadeOut(500);
+                    },
+                    success: function(){
+                        $('.header-background').css('background-image', 'url(' + resp + ')');
+                        $('#changeBgModal').modal('hide');
+                    }
                 });
-                $('.header-background').css('background-image', 'url(' + resp + ')');
-                $('#changeBgModal').modal('hide')
             });
         });
         return;
@@ -874,10 +891,27 @@ $(function() {
     $('#editCategories').on('click',function(){
         $('.specializations .currentCatUser a').each(function(){
             var currentCatId = $(this).attr('id');
-            console.log(currentCatId);
             $('.categoriesChange #categoriesForm .artistCategories').find('#variety_category_id_'+currentCatId+'').prop('checked',true);
         })
     });
+
+    $('#categotiesModal #categoriesForm input').on('change',function(){
+        disableCategories();
+    })
+
+    function disableCategories(){
+        var numberCatChecked = $('#categotiesModal #categoriesForm input:checkbox:checked').length;
+        if (numberCatChecked >= 1 && numberCatChecked <= 3){
+            $('#saveCategories').removeClass('disabled');
+        } else {
+            $('#saveCategories').addClass('disabled');
+        }
+        if(numberCatChecked == 3){
+            $('#categotiesModal #categoriesForm input:checkbox:not(:checked)').prop('disabled', true);
+        } else if(numberCatChecked < 3){
+            $('#categotiesModal #categoriesForm input:checkbox:not(:checked)').prop('disabled', false);
+        }
+    }
 
     function getCheckedCategories() {
         var selectedCat = [];
@@ -895,6 +929,8 @@ $(function() {
     $('#saveCategories').on('click', function () {
         getCheckedCategories();
     });
+
+
     function sendSelectedCategories(selectedCat, slug, selectedCatName) {
         $.ajax({
             type: "PATCH",
