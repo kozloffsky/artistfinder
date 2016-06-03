@@ -20,7 +20,7 @@ Acted\LegalDocsBundle\Entity\Event:
         timing:
             groups: [Default, getEvent, chat_list]
         comments:
-            groups: [Default, getEvent]
+            groups: [Default, getEvent, chat_list]
         numberOfGuests:
             groups: [getEvent]
         venueType:
