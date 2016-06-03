@@ -5405,7 +5405,16 @@ $(function() {
 
     }
 
-    $(document).on('click','.deleteOffer button',function () {
+    $('.deleteOffer button').confirmation({
+        show:true,
+        onConfirm: function(){
+            var parentPerformance = $(this).parents('article');
+            var performanceId = $(parentPerformance).children('.performanceId').text();
+            var slug = $('#slug').text();
+            deleteOffer(slug, performanceId, parentPerformance)
+        }
+    });
+    /*$(document).on('click','.deleteOffer button',function () {
 
         var parentPerformance = $(this).parents('article');
         var performanceId = $(parentPerformance).children('.performanceId').text();
@@ -5416,7 +5425,7 @@ $(function() {
                 deleteOffer(slug, performanceId, parentPerformance)
             }
         });
-    });
+    });*/
 
     function deleteOffer(slug, performanceId, parentPerformance) {
         $.ajax({
@@ -5623,10 +5632,18 @@ $(function() {
                 $.ajax({
                     type: "PATCH",
                     url: '/user/edit',
-                    data: {"user[background]": resp}
+                    data: {"user[background]": resp},
+                    beforeSend: function () {
+                        $('#loadSpinner').fadeIn(500);
+                    },
+                    complete: function () {
+                        $('#loadSpinner').fadeOut(500);
+                    },
+                    success: function(){
+                        $('.header-background').css('background-image', 'url(' + resp + ')');
+                        $('#changeBgModal').modal('hide');
+                    }
                 });
-                $('.header-background').css('background-image', 'url(' + resp + ')');
-                $('#changeBgModal').modal('hide')
             });
         });
         return;
@@ -5712,10 +5729,27 @@ $(function() {
     $('#editCategories').on('click',function(){
         $('.specializations .currentCatUser a').each(function(){
             var currentCatId = $(this).attr('id');
-            console.log(currentCatId);
             $('.categoriesChange #categoriesForm .artistCategories').find('#variety_category_id_'+currentCatId+'').prop('checked',true);
         })
     });
+
+    $('#categotiesModal #categoriesForm input').on('change',function(){
+        disableCategories();
+    })
+
+    function disableCategories(){
+        var numberCatChecked = $('#categotiesModal #categoriesForm input:checkbox:checked').length;
+        if (numberCatChecked >= 1 && numberCatChecked <= 3){
+            $('#saveCategories').removeClass('disabled');
+        } else {
+            $('#saveCategories').addClass('disabled');
+        }
+        if(numberCatChecked == 3){
+            $('#categotiesModal #categoriesForm input:checkbox:not(:checked)').prop('disabled', true);
+        } else if(numberCatChecked < 3){
+            $('#categotiesModal #categoriesForm input:checkbox:not(:checked)').prop('disabled', false);
+        }
+    }
 
     function getCheckedCategories() {
         var selectedCat = [];
@@ -5733,6 +5767,8 @@ $(function() {
     $('#saveCategories').on('click', function () {
         getCheckedCategories();
     });
+
+
     function sendSelectedCategories(selectedCat, slug, selectedCatName) {
         $.ajax({
             type: "PATCH",
@@ -5959,8 +5995,8 @@ $(function () {
             success: function(response) {
                 $(response.eventsType).each(function(){
                     $('.free-quote-modal #event_type').append('<option value="'+ this.id +'" name="type">'+this.event_type+'</option>');
-                    initSelect();
                 });
+                initSelect();
             }
         })
     }
@@ -5972,8 +6008,8 @@ $(function () {
             success: function(response) {
                 $(response.venueType).each(function(){
                     $('.free-quote-modal #venue_type').append('<option value="'+ this.id +'" name="venue_type">'+this.venue_type+'</option>');
-                    initSelect();
                 });
+                initSelect();
             }
         })
     }
@@ -6012,7 +6048,7 @@ $(function () {
         var artistCatString = artistData.categories.toString();
         $('.quoteRequestArtistData .quote-profile-info h2').html(artistData.name);
         $('.quoteRequestArtistData .quote-profile-info p').html(artistCatString);
-        $('.quote-profile-avatar').attr('src', '/'+artistData.user.avatar);
+        $('.quote-profile-avatar').attr('src', artistData.user.avatar);
     }
 
     $(document).ready(function() {
@@ -6039,6 +6075,7 @@ $(function () {
         }
         else {
             localStorage.removeItem('user');
+            $('.eventChooseRequest').hide();
         }
     }
 
@@ -6050,10 +6087,30 @@ $(function () {
             success: function(response){
                 console.log(response)
                 var userEvents = response.events;
-                console.log(userEvents)
+                console.log(userEvents.length)
+                if(userEvents.length > 0){
+                    createEventsListRequest(userEvents)
+                }
             }
         })
     }
+
+    function createEventsListRequest(userEvents){
+        $(userEvents).each(function(){
+            var eventsOptions='<option value="'+ this.event.id +'" name="event">'+this.event.title+'</option>';
+            $('#event_preset').append(eventsOptions);
+        })
+        initSelect();
+        $('.eventUnregistered').hide();
+        $('#requestQuoteForm .modal-body').hide();
+        $('#requestQuoteForm .modal-body').addClass('choosePrevEvent');
+    }
+
+    $('#new-event').on('click',function(){
+        $('#requestQuoteForm .modal-body').slideDown();
+        $('#requestQuoteForm .modal-body').removeClass('choosePrevEvent');
+        $('#requestQuoteForm .modal-body').addClass('newEventRegistered');
+    });
 
     function chooseCityQuote(selectedCountruOption){
         $.ajax({
@@ -6071,18 +6128,22 @@ $(function () {
 
     $('#quoteRequsetSend').on('click',function(e){
         e.preventDefault();
-        var requestFormSerialize = $('#requestQuoteForm').serialize(),
+        var requestFormSerialize = $('#requestQuoteForm, #quoteRequestSecond').serialize(),
             userInformationStorage = JSON.parse(localStorage.getItem('user')),
-            checkUserLoggedIn = $('#userInformation').text();
-        console.log(userInformationStorage);
-        console.log(checkUserLoggedIn);
-        if(checkUserLoggedIn && userInformationStorage){
+            checkUserLoggedIn = $('#userInformation').text(),
+            prevEventChosen = $('#requestQuoteForm .modal-body').hasClass('choosePrevEvent');
+        console.log(prevEventChosen)
+        if(checkUserLoggedIn && userInformationStorage && prevEventChosen == false){
             sendQuoteRequest(requestFormSerialize, userInformationStorage);
-        } else {
+        } else if (!checkUserLoggedIn){
             localStorage.setItem("quoteRequest", requestFormSerialize);
             $('#freeQuoteModal').modal('hide');
             $('#registrationModal').modal('show');
             showSecondPage();
+        } else if(prevEventChosen == true && checkUserLoggedIn && userInformationStorage){
+            var chosenEvent = $('#chosenEvent, #quoteRequestSecond').serialize();
+            console.log(chosenEvent)
+            sendQuoteRequest(chosenEvent, userInformationStorage);
         }
     });
 

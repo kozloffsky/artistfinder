@@ -38,8 +38,8 @@ $(function () {
             success: function(response) {
                 $(response.eventsType).each(function(){
                     $('.free-quote-modal #event_type').append('<option value="'+ this.id +'" name="type">'+this.event_type+'</option>');
-                    initSelect();
                 });
+                initSelect();
             }
         })
     }
@@ -51,8 +51,8 @@ $(function () {
             success: function(response) {
                 $(response.venueType).each(function(){
                     $('.free-quote-modal #venue_type').append('<option value="'+ this.id +'" name="venue_type">'+this.venue_type+'</option>');
-                    initSelect();
                 });
+                initSelect();
             }
         })
     }
@@ -91,7 +91,7 @@ $(function () {
         var artistCatString = artistData.categories.toString();
         $('.quoteRequestArtistData .quote-profile-info h2').html(artistData.name);
         $('.quoteRequestArtistData .quote-profile-info p').html(artistCatString);
-        $('.quote-profile-avatar').attr('src', '/'+artistData.user.avatar);
+        $('.quote-profile-avatar').attr('src', artistData.user.avatar);
     }
 
     $(document).ready(function() {
@@ -118,6 +118,7 @@ $(function () {
         }
         else {
             localStorage.removeItem('user');
+            $('.eventChooseRequest').hide();
         }
     }
 
@@ -129,10 +130,30 @@ $(function () {
             success: function(response){
                 console.log(response)
                 var userEvents = response.events;
-                console.log(userEvents)
+                console.log(userEvents.length)
+                if(userEvents.length > 0){
+                    createEventsListRequest(userEvents)
+                }
             }
         })
     }
+
+    function createEventsListRequest(userEvents){
+        $(userEvents).each(function(){
+            var eventsOptions='<option value="'+ this.event.id +'" name="event">'+this.event.title+'</option>';
+            $('#event_preset').append(eventsOptions);
+        })
+        initSelect();
+        $('.eventUnregistered').hide();
+        $('#requestQuoteForm .modal-body').hide();
+        $('#requestQuoteForm .modal-body').addClass('choosePrevEvent');
+    }
+
+    $('#new-event').on('click',function(){
+        $('#requestQuoteForm .modal-body').slideDown();
+        $('#requestQuoteForm .modal-body').removeClass('choosePrevEvent');
+        $('#requestQuoteForm .modal-body').addClass('newEventRegistered');
+    });
 
     function chooseCityQuote(selectedCountruOption){
         $.ajax({
@@ -150,18 +171,22 @@ $(function () {
 
     $('#quoteRequsetSend').on('click',function(e){
         e.preventDefault();
-        var requestFormSerialize = $('#requestQuoteForm').serialize(),
+        var requestFormSerialize = $('#requestQuoteForm, #quoteRequestSecond').serialize(),
             userInformationStorage = JSON.parse(localStorage.getItem('user')),
-            checkUserLoggedIn = $('#userInformation').text();
-        console.log(userInformationStorage);
-        console.log(checkUserLoggedIn);
-        if(checkUserLoggedIn && userInformationStorage){
+            checkUserLoggedIn = $('#userInformation').text(),
+            prevEventChosen = $('#requestQuoteForm .modal-body').hasClass('choosePrevEvent');
+        console.log(prevEventChosen)
+        if(checkUserLoggedIn && userInformationStorage && prevEventChosen == false){
             sendQuoteRequest(requestFormSerialize, userInformationStorage);
-        } else {
+        } else if (!checkUserLoggedIn){
             localStorage.setItem("quoteRequest", requestFormSerialize);
             $('#freeQuoteModal').modal('hide');
             $('#registrationModal').modal('show');
             showSecondPage();
+        } else if(prevEventChosen == true && checkUserLoggedIn && userInformationStorage){
+            var chosenEvent = $('#chosenEvent, #quoteRequestSecond').serialize();
+            console.log(chosenEvent)
+            sendQuoteRequest(chosenEvent, userInformationStorage);
         }
     });
 

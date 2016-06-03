@@ -51,7 +51,7 @@
 </div>
 
 
-<div class="modal free-quote-modal fade" id="freeQuoteModal" tabindex="-1" role="dialog">
+<div class="modal free-quote-modal modal-registered fade" id="freeQuoteModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -61,17 +61,14 @@
                     <div class="warn">!</div>
                     Tip: Enter your event details below and it will automatically apply to your next quote requests
                 </h4>
-                <h4 class="modal-title eventChooseRequest">
-                    <span class="title">Event:</span>
-
-                    <select data-class="selections-white selection-borderless" name="event_type" id="event_preset">
-                        <option value="0">Corporate event</option>
-                        <option value="1">Lorem Ipsum 1</option>
-                        <option value="2">Lorem Ipsum 2</option>
-                    </select>
-
-                    <a href="#" id="new-event" class="new-event">New event</a>
-                </h4>
+                <form id="chosenEvent">
+                    <h4 class="modal-title eventChooseRequest">
+                        <span class="title">Event:</span>
+                            <select data-class="selections-white selection-borderless" name="event" id="event_preset">
+                            </select>
+                        <a href="#" id="new-event" class="new-event">New event</a>
+                    </h4>
+                </form>
             </div>
             <form id="requestQuoteForm">
                 <div class="modal-body">
@@ -83,12 +80,7 @@
                             <input type="text" class="form-control" id="event_name" placeholder="Name your event" name="name">
                         </div>
 
-                        <div class="col-lg-6 form-group">
-                            <label for="event_date">Date</label>
-                            <input type="text" class="date-picker form-control" id="event_date" name="event_date">
-                        </div>
-
-                        <div class="col-lg-6 form-group">
+                        <div class="col-lg-12 form-group">
                             <label for="event_country">Country</label>
                             <select data-class="selections-white" name="country" id="event_country">
                                 {% for country in countries() %}
@@ -99,6 +91,11 @@
                                     {% endif %}
                                 {% endfor %}
                             </select>
+                        </div>
+
+                        <div class="col-lg-6 form-group">
+                            <label for="event_date">Date</label>
+                            <input type="text" class="date-picker form-control" id="event_date" name="event_date">
                         </div>
 
                         <div class="col-lg-6 form-group">
@@ -154,6 +151,8 @@
 
 
                 </div>
+            </form>
+            <form id="quoteRequestSecond">
                 <div class="modal-footer">
                     <div class="col-lg-12">
                         <div class="col-lg-12 no-pad quoteRequestArtistData">
