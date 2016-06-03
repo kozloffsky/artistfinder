@@ -14,8 +14,10 @@
 <header class="home">
     {% elseif app.request.get('_route') == 'acted_legal_docs_search' %}
     <header class="search">
-    {% else %}
+    {% elseif app.request.get('_route') == 'acted_legal_docs_profile' %}
     <header>
+    {% else %}
+    <header class="small">
 {% endif %}
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
