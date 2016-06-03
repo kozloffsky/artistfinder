@@ -15,9 +15,12 @@ class ChatRoomController extends Controller
     public function getChatRoomListAction(Request $request)
     {
         $userId = $request->get('userId');
+        $filter = $request->get('filter');
+
         $em = $this->getDoctrine()->getManager();
         $serializer = $this->get('jms_serializer');
-        $chatRoomList = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->findBy(['user' =>$userId]);
+        $chatRoomList = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->getChatRoomByParams($userId, $filter);
+
         $chats = $serializer->toArray($chatRoomList, SerializationContext::create()
             ->setGroups(['chat_list']));
 

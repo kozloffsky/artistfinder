@@ -28,4 +28,33 @@ class ChatRoomRepository extends EntityRepository
             ])
             ->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * @param $userId
+     * @param $filter
+     * @return array
+     */
+    public function getChatRoomByParams($userId, $filter)
+    {
+        $query = $this->createQueryBuilder('c')
+            ->where('c.user = :userId')
+            ->setParameter('userId', $userId)
+            ;
+        switch ($filter){
+            case 'archived':
+                $query->innerJoin('c.message', 'm')
+                    ->andWhere('m.readDateTime IS NOT null')
+                ;
+                break;
+            case 'unread':
+                $query->innerJoin('c.message', 'm')
+                    ->andWhere('m.readDateTime IS null')
+                ;
+                break;
+            default:
+                break;
+        }
+
+        return $query->getQuery()->getResult();
+    }
 }

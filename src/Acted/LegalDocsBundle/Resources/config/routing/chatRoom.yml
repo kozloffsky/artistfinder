@@ -1,5 +1,5 @@
 chat_room_list:
-    path:     /list/{userId}
+    path:     /requires/{userId}
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getChatRoomList }
     methods:  GET
 
