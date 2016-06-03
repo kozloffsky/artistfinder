@@ -21,8 +21,12 @@ class ChatRoomController extends Controller
         $chats = $serializer->toArray($chatRoomList, SerializationContext::create()
             ->setGroups(['chat_list']));
 
+        $uk = $em->getRepository('ActedLegalDocsBundle:RefCountry')->findOneByName('United Kingdom');
+        $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
+        $regions = $em->getRepository('ActedLegalDocsBundle:RefRegion')->findByCountry($uk);
+
         return $this->render('ActedLegalDocsBundle:ChatRoom:list.html.twig',
-            compact('chats'));
+            compact('chats', 'categories', 'regions'));
     }
 
     /**
