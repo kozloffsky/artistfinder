@@ -75,7 +75,7 @@ $(function () {
         console.log(performanceRequestId)
         getArtistInformationForQuote(artistSlug, performanceRequestId)
         $('#freeQuoteModal').modal('show');
-    })
+    });
 
     function getArtistInformationForQuote(artistSlug, performanceRequestId){
         $.ajax({
@@ -150,21 +150,43 @@ $(function () {
                 var userEvents = response.events;
                 console.log(userEvents.length)
                 if(userEvents.length > 0){
-                    createEventsListRequest(userEvents)
+                    createEventsListRequest(userEvents);
+                    setDataEvent(userEvents);
                 }
             }
         })
     }
 
     function createEventsListRequest(userEvents){
-        $(userEvents).each(function(){
-            var eventsOptions='<option value="'+ this.event.id +'" name="event">'+this.event.title+'</option>';
+        $(userEvents).each(function(i){
+            var eventsOptions='<option value="'+ this.event.id +'" name="event" class="'+i+'">'+this.event.title+'</option>';
             $('#event_preset').append(eventsOptions);
-        })
+        });
         initSelect();
         $('.eventUnregistered').hide();
         $('#requestQuoteForm .modal-body').hide();
         $('#requestQuoteForm .modal-body').addClass('choosePrevEvent');
+    }
+
+    function setDataEvent(userEvents){
+        $('#chosenEvent select').on('change',function(){
+            console.log(userEvents);
+            var selectedEvent = $(this).find('option:selected').attr('class');
+            console.log(selectedEvent);
+            fillFormWithDataFromEvent(userEvents, selectedEvent)
+        })
+    }
+
+    function fillFormWithDataFromEvent(userEvents, selectedEvent){
+        $('#requestQuoteForm #event_name').val(userEvents[selectedEvent].event.title);
+        $('#requestQuoteForm #event_date').val(userEvents[selectedEvent].event.starting_date);
+        $('#requestQuoteForm #event_time').val(userEvents[selectedEvent].event.timing);
+        $('#requestQuoteForm #event_city option[value='+userEvents[selectedEvent].event.city.id+']').attr('selected','selected');
+        $('#requestQuoteForm #event_country option[value='+userEvents[selectedEvent].event.countryId+']').attr('selected','selected');
+        $('#requestQuoteForm #event_location').val(userEvents[selectedEvent].event.location);
+        $('#requestQuoteForm #event_type option[value='+userEvents[selectedEvent].event.event_type.id+']').attr('selected','selected');
+        $('#requestQuoteForm #venue_type option[value='+userEvents[selectedEvent].event.venue_type.id+']').attr('selected','selected');
+        $('#requestQuoteForm .guests-num input[value="'+userEvents[selectedEvent].event.number_of_guests+'"]').prop('checked',true);
     }
 
     $('#new-event').on('click',function(){
@@ -202,7 +224,7 @@ $(function () {
             $('#registrationModal').modal('show');
             showSecondPage();
         } else if(prevEventChosen == true && checkUserLoggedIn && userInformationStorage){
-            var chosenEvent = $('#chosenEvent, #quoteRequestSecond').serialize();
+            var chosenEvent = $('#chosenEvent, #requestQuoteForm, #quoteRequestSecond').serialize();
             console.log(chosenEvent)
             sendQuoteRequest(chosenEvent, userInformationStorage);
         }

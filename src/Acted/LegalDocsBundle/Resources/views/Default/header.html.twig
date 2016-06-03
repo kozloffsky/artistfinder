@@ -14,7 +14,7 @@
 <header class="home">
     {% elseif app.request.get('_route') == 'acted_legal_docs_search' %}
     <header class="search">
-    {% elseif app.request.get('_route') == 'acted_legal_docs_profile' %}
+    {% elseif app.request.get('_route') == 'profile_show' or app.request.get('_route') == 'profile_edit' %}
     <header>
     {% else %}
     <header class="small">
