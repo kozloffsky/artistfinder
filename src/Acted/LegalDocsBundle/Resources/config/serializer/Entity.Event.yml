@@ -23,7 +23,15 @@ Acted\LegalDocsBundle\Entity\Event:
             groups: [Default, getEvent]
         numberOfGuests:
             groups: [getEvent]
+        venueType:
+            groups: [getEvent]
+        eventType:
+            groups: [getEvent]
         title:
             groups: [Default, getEvent, chat_list]
         user:
             groups: [chat_list, chat_room]
+    virtual_properties:
+        getCountryId:
+            serialized_name: countryId
+            groups: [getEvent]
