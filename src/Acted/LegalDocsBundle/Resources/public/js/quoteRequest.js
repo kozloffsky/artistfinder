@@ -59,21 +59,36 @@ $(function () {
 
     $('.quoteRequestProfile').on('click',function(){
         var artistSlug = $('#slug').text();
-        getArtistInformationForQuote(artistSlug)
+        getArtistInformationForQuote(artistSlug);
+        $('#freeQuoteModal').modal('show');
     });
 
-    function getArtistInformationForQuote(artistSlug){
+    $('.askQuoteFromSearch').on('click',function(){
+        var artistSlug = $(this).val();
+        getArtistInformationForQuote(artistSlug);
+        $('#freeQuoteModal').modal('show');
+    });
+
+    $('.requestQuotePerformance').on('click',function(){
+        var artistSlug = $('#slug').text();
+        var performanceRequestId = $(this).val();
+        console.log(performanceRequestId)
+        getArtistInformationForQuote(artistSlug, performanceRequestId)
+        $('#freeQuoteModal').modal('show');
+    })
+
+    function getArtistInformationForQuote(artistSlug, performanceRequestId){
         $.ajax({
             type: "GET",
             url: '/info/artist/' + artistSlug,
             success: function(response) {
-                createRequestQuotePerformances(response.artist);
+                createRequestQuotePerformances(response.artist, performanceRequestId);
                 createArtistDataViewInQuote(response.artist);
             }
         })
     }
 
-    function createRequestQuotePerformances(artistData){
+    function createRequestQuotePerformances(artistData, performanceRequestId){
         $('.requestQuotePerformances').empty();
         $(artistData.allPerformance).each(function(){
             var blockPerformance = '<li>'+
@@ -83,7 +98,10 @@ $(function () {
                 '</div>'+
                 '</li>';
             $('.requestQuotePerformances').append(blockPerformance);
-        })
+        });
+        if(performanceRequestId){
+            $('.requestQuotePerformances input#'+performanceRequestId).prop('checked', true);
+        }
     }
 
     function createArtistDataViewInQuote(artistData){
