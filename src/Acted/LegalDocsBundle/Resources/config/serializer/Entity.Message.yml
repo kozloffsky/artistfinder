@@ -17,3 +17,8 @@ Acted\LegalDocsBundle\Entity\Message:
             groups: [chat_room, message, all_messages]
         chatRoom:
             groups: [all_messages]
+    virtual_properties:
+        getTimeFromGet:
+            serialized_name: time_from_get
+            groups: [chat_list, message, chat_room, all_messages]
+
