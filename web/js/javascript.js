@@ -3002,7 +3002,7 @@ $(function() {
             type:'GET',
             url:'/event/change_status/reject/'+id+'?type=no_email',
             success: function(res){
-                //$('article#'+id).
+                $('article#'+id).appendTo('.enquiries-wrap')
             }
         })
     }
