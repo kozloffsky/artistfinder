@@ -4,6 +4,6 @@ Acted\LegalDocsBundle\Entity\Performance:
         profile:
             exclude: true
         id:
-            groups: [chat_list, chat_room]
+            groups: [chat_list, chat_room, all_messages]
         title:
-            groups: [chat_list, chat_room]
+            groups: [chat_list, chat_room, all_messages]

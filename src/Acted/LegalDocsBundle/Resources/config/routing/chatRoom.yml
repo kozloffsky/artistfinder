@@ -3,6 +3,11 @@ chat_room_list:
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getChatRoomList }
     methods:  GET
 
+all_messages_user:
+    path:     /messages/{userId}
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getAllMessages }
+    methods:  GET
+
 chat_room_item:
     path:     /chat/{chat}
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getChat }
@@ -11,4 +16,14 @@ chat_room_item:
 chat_room_message:
     path:     /message/{message}
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getMessage }
+    methods:  GET
+
+change_status_message:
+    path:     /archived/message/{messageId}
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:archivedMessage }
+    methods:  POST
+
+filter_message:
+    path:     /filter/messages/{userId}
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getAllMessageByFilter }
     methods:  GET

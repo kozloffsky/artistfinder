@@ -172,9 +172,13 @@ class EventsController extends Controller
     public function changeStatusToRejectAction(Request $request)
     {
         $offerId = $request->get('id');
+        $type = $request->query->get('type');
         $eventOffer = $this->getEM()->getRepository('ActedLegalDocsBundle:EventOffer')->findOneByOffer($offerId);
         if ($eventOffer) {
             $this->get('app.event.manager')->changeStatusOffer($eventOffer, EventOffer::EVENT_OFFER_STATUS_REJECT);
+            if ($type === 'no_email') {
+                return new JsonResponse(['success' => 'Success reject!']);
+            }
             $this->addFlash('success', 'You Reject offer');
 
             return $this->redirectToRoute('acted_legal_docs_homepage');

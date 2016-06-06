@@ -6,35 +6,35 @@ Acted\LegalDocsBundle\Entity\Event:
         country:
             groups: [Default, getEvent]
         city:
-            groups: [Default, getEvent, chat_list]
+            groups: [Default, getEvent, chat_list, chat_room, all_messages]
         eventRef:
             groups: [Default, getEvent]
         eventTypeId:
-            groups: [Default, getEvent, chat_list]
+            groups: [Default, getEvent, chat_list, chat_room]
         venueTypeId:
             groups: [Default, getEvent]
         startingDate:
-            groups: [Default, getEvent, chat_list]
+            groups: [Default, getEvent, chat_list, chat_room, all_messages]
             type: DateTime<"m/d/Y">
         endingDate:
             groups: [Default, getEvent]
         timing:
-            groups: [Default, getEvent, chat_list]
+            groups: [Default, getEvent, chat_list, chat_room]
         comments:
-            groups: [Default, getEvent, chat_list]
+            groups: [Default, getEvent, chat_list, chat_room]
         numberOfGuests:
-            groups: [getEvent]
+            groups: [getEvent, chat_room]
         venueType:
             groups: [getEvent]
         eventType:
             groups: [getEvent]
         title:
-            groups: [Default, getEvent, chat_list]
+            groups: [Default, getEvent, chat_list, chat_room, all_messages]
         address:
-            groups: [Default, getEvent, chat_list]
+            groups: [Default, getEvent, chat_list, chat_room]
             serialized_name: location
         user:
-            groups: [chat_list, chat_room]
+            groups: [chat_list]
     virtual_properties:
         getCountryId:
             serialized_name: countryId

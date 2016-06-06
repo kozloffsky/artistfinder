@@ -296,12 +296,13 @@ $(function () {
         } else if (this.id == 'recFilterRating'){
             $('#recomendedFilterSearch #recFilterRating').prop("disabled", true);
         }
-        var searchAllCat = $('#recommendedCat, #eventLocationForm, #searchLoc, #recomendedFilterSearch').serialize();
+        var searchAllCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch, #recomendedFilterSearch').serialize()
         filtersCatSelectGroup.prop( "disabled", false );
         getFilteredRes(searchAllCat)
     });
 
     $('#recomendedFilterSearch input:checkbox').on('change', function(){
+        console.log('fgdgdfgfsdgf')
         $('#recomendedFilter select').prop( "disabled", true );
         var searchAllCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch, #recomendedFilterSearch').serialize()
         $('#recomendedFilter select').prop( "disabled", false );

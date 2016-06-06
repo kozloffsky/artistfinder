@@ -50,6 +50,11 @@ class Message
     private $chatRoom;
 
     /**
+     * @var boolean
+     */
+    private $archived = false;
+
+    /**
      * Get id
      *
      * @return integer
@@ -218,5 +223,30 @@ class Message
     public function setChatRoom(ChatRoom $chatRoom)
     {
         $this->chatRoom = $chatRoom;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isArchived()
+    {
+        return $this->archived;
+    }
+
+    /**
+     * @param boolean $archived
+     * @return  Message
+     */
+    public function setArchived($archived)
+    {
+        $this->archived = $archived;
+    }
+
+    public function getTimeFromGet()
+    {
+        $now = new \DateTime();
+        $period = $now->diff($this->getSendDateTime());
+
+        return $period->format('%d days %H hours %i minutes');
     }
 }

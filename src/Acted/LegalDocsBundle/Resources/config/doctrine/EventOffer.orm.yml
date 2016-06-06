@@ -41,4 +41,5 @@ Acted\LegalDocsBundle\Entity\EventOffer:
           targetEntity: Acted\LegalDocsBundle\Entity\Event
         offer:
           targetEntity: Acted\LegalDocsBundle\Entity\Offer
+          inversedBy: eventOffer
     lifecycleCallbacks: {  }

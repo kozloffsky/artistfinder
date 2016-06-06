@@ -3,36 +3,11 @@
 
     <div class="container">
         <!-- THIS MENU VISIBLE ONLY ON DESCTIOP SCREEN-->
-        <ul class="categories-menu">
-            <li class="menu-block"><a href="/messages">Messages</a></li>
-            <li class="menu-block"><a href="/enquiries" class="active">Enquiries</a></li>
-            <li class="menu-block"><a href="/bookings">Bookings</a></li>
-            <li class="menu-block"><a href="/agenda">Agenda</a></li>
-            <li class="menu-block"><a href="/prices">Prices</a></li>
-            <li class="menu-block"><a href="/payment">Payment & Accounts</a></li>
-            <li class="menu-block"><a href="/reports">Reports</a></li>
-            <li class="menu-block"><a href="/feedbacks">Feedbacks</a></li>
-        </ul>
-
-        <!-- THIS DROPDOWN VISIBLE ONLY ON SM SCREEN-->
-        <div class="dropdown categories-dropdown hidden-lg hidden-md hidden-sm visible-xs">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Enquiries
-                <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-                <li class="menu-block"><a href="/messages" class="active">Messages</a></li>
-                <li class="menu-block"><a href="/bookings">Bookings</a></li>
-                <li class="menu-block"><a href="/agenda">Agenda</a></li>
-                <li class="menu-block"><a href="/prices">Prices</a></li>
-                <li class="menu-block"><a href="/payment">Payment & Accounts</a></li>
-                <li class="menu-block"><a href="/reports">Reports</a></li>
-                <li class="menu-block"><a href="/feedbacks">Feedbacks</a></li>
-            </ul>
-        </div>
+        {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
 
         <div class="enquiries-wrap">
-            {% for chat in chats %}
-                {{ dump(chat) }}
-            <article class="enq-block clearfix">
+            {% for chat in chats|reverse %}
+            <article class="enq-block clearfix" id="{{ chat.offer.id }}">
                 <span class="received-time">
                      <i class="enq-icon icon-timing"></i> Received 5 hours ago
                 </span>
@@ -52,13 +27,16 @@
                 <div class="col-lg-9 act-request">
 
                     <p class="act-request-title">
-                        Act request: <span class="bold-title">5-piece Jazz band, Acrobats, Sports Act</span>
-                        <span class="see-more">(<a href="#">See more</a>)</span>
+                        Act request: <span class="bold-title">{% for chatOffer in chat.offer.performances %}
+                                {{ chatOffer.title }},
+                        {% endfor %}
+                        </span>
+                        <!--<span class="see-more">(<a href="#">See more</a>)</span>-->
                     </p>
 
                     <p class="act-request-message" data-max-chars-desktop="150" data-max-chars-mobile="70">
                         <span class="title">Message from client:</span>
-                        <span class="text">{{ chat.last_message.message_text }}</span>
+                        <span class="text">{{ chat.offer.comments }}</span>
                         <a class="show-more-btn" href="#">+more</a>
                     </p>
 
@@ -72,7 +50,7 @@
                         </div>
 
                         <div class="button-gradient">
-                            <button type="button" class="btn register">Not available</button>
+                            <button type="button" class="btn register rejectRequest">Not available</button>
                         </div>
                     </div>
 
