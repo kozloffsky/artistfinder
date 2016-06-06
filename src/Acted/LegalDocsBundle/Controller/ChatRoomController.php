@@ -2,24 +2,25 @@
 
 namespace Acted\LegalDocsBundle\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializationContext;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class ChatRoomController extends Controller
 {
     /**
-     * List of chatRoom
+     * List of chatRooms
      * @param Request $request
      * @return  array
      */
     public function getChatRoomListAction(Request $request)
     {
         $userId = $request->get('userId');
-        $filter = $request->get('filter');
 
         $em = $this->getDoctrine()->getManager();
         $serializer = $this->get('jms_serializer');
-        $chatRoomList = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->getChatRoomByParams($userId, $filter);
+        $chatRoomList = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->getChatRoomByParams($userId);
 
         $chats = $serializer->toArray($chatRoomList, SerializationContext::create()
             ->setGroups(['chat_list']));
@@ -33,13 +34,14 @@ class ChatRoomController extends Controller
     }
 
     /**
-     * Get chat
+     * Get all messages by filter
      * @param Request $request
      * @return  array
      */
     public function getAllMessagesAction(Request $request)
     {
         $userId = $request->get('userId');
+
         $em = $this->getDoctrine()->getManager();
         $serializer = $this->get('jms_serializer');
 
@@ -49,6 +51,59 @@ class ChatRoomController extends Controller
 
         return $this->render('ActedLegalDocsBundle:ChatRoom:all_messages.html.twig',
             compact('messages'));
+    }
+
+    /**
+     * Get messages by filter
+     * @ApiDoc(
+     *  description="et messages by filter",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when not exist offer",
+     *     }
+     * )
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getAllMessageByFilterAction(Request $request)
+    {
+        $userId = $request->get('userId');
+        $filters = $request->query->get('filters');
+        $em = $this->getDoctrine()->getManager();
+        $serializer = $this->get('jms_serializer');
+
+        $data = $em->getRepository('ActedLegalDocsBundle:Message')->getAllMessages($userId, $filters);
+        $messages = $serializer->toArray($data, SerializationContext::create()
+            ->setGroups(['chat_room']));
+
+        return new JsonResponse($messages);
+
+    }
+
+    /**
+     * Archived message
+     * @ApiDoc(
+     *  description="Archived message",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when not exist offer",
+     *     }
+     * )
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function archivedMessageAction(Request $request)
+    {
+        $messageId = $request->get('messageId');
+        $em = $this->getDoctrine()->getManager();
+        $message = $em->getRepository('ActedLegalDocsBundle:Message')->find($messageId);
+        $message->setArchived(true);
+        $em->persist($message);
+        $em->flush();
+
+        return new JsonResponse(['success' => 'Success archived!']);
     }
 
     /**

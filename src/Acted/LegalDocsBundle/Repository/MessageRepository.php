@@ -10,12 +10,36 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class MessageRepository extends \Doctrine\ORM\EntityRepository
 {
-
-    public function getAllMessages($userId)
+    /**
+     * @param int $userId
+     * @param string $filter
+     * @return array
+     */
+    public function getAllMessages($userId, $filter=null)
     {
-        return $this->createQueryBuilder('m')
+        $query = $this->createQueryBuilder('m')
             ->where('m.receiverUser = :userId')
-            ->setParameter('userId', $userId)
-            ->getQuery()->getResult();
+            ->setParameter('userId', $userId);
+
+        if ($filter) {
+            switch ($filter){
+                case 'archived':
+                    $query
+                        ->andWhere('m.archived = :archived')
+                        ->setParameter('archived', true)
+                    ;
+                    break;
+                case 'unread':
+                    $query
+                        ->andWhere('m.readDateTime IS null')
+                    ;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+        return $query->getQuery()->getResult();
     }
 }

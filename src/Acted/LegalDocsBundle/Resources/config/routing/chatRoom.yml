@@ -12,3 +12,13 @@ chat_room_message:
     path:     /message/{message}
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getMessage }
     methods:  GET
+
+change_status_message:
+    path:     /archived/message/{messageId}
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:archivedMessage }
+    methods:  POST
+
+filter_message:
+    path:     /filter/messages/{userId}
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getAllMessageByFilter }
+    methods:  GET

@@ -50,6 +50,11 @@ class Message
     private $chatRoom;
 
     /**
+     * @var boolean
+     */
+    private $archived;
+
+    /**
      * Get id
      *
      * @return integer
@@ -218,5 +223,22 @@ class Message
     public function setChatRoom(ChatRoom $chatRoom)
     {
         $this->chatRoom = $chatRoom;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isArchived()
+    {
+        return $this->archived;
+    }
+
+    /**
+     * @param boolean $archived
+     * @return  Message
+     */
+    public function setArchived($archived)
+    {
+        $this->archived = $archived;
     }
 }
