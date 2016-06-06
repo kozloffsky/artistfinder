@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializationContext;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\View\View;
+
 class ChatRoomController extends Controller
 {
     /**
@@ -136,6 +139,27 @@ class ChatRoomController extends Controller
 
         return $this->render('ActedLegalDocsBundle:ChatRoom:message.html.twig',
             compact('chat'));
+    }
+
+    /**
+     * Get logs sending email
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Get logs sending email",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @return JsonResponse
+     */
+    public function showLogsAction()
+    {
+        $repo = $this->getDoctrine()->getRepository("TweedeGolfSwiftmailerLoggerBundle:LoggedMessage");
+        $data = $repo->findAll();
+
+        var_dump($data);die;
     }
 
     /**

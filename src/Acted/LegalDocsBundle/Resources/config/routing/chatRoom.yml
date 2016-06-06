@@ -27,3 +27,9 @@ filter_message:
     path:     /filter/messages/{userId}
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getAllMessageByFilter }
     methods:  GET
+
+show_logs_messaging:
+    path: /emails/logs
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:showLogs, _format: json }
+    methods:  GET
+
