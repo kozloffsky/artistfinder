@@ -2,6 +2,6 @@ Acted\LegalDocsBundle\Entity\EventOffer:
     exclusion_policy: NONE
     properties:
         status:
-            groups: [Default, getEvent, all_messages]
+            groups: [Default, getEvent, all_messages, chat_list]
         event:
             groups: [Default, getEvent]

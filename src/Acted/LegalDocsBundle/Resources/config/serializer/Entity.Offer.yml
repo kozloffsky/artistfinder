@@ -6,4 +6,4 @@ Acted\LegalDocsBundle\Entity\Offer:
         comments:
             groups: [chat_list, chat_room, all_messages]
         eventOffer:
-            groups: [all_messages]
+            groups: [all_messages, chat_list]
