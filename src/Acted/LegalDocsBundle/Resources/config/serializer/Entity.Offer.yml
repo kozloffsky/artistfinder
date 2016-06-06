@@ -2,6 +2,8 @@ Acted\LegalDocsBundle\Entity\Offer:
     exclusion_policy: NONE
     properties:
         performances:
+            groups: [chat_list, chat_room]
+        comments:
             groups: [chat_list, chat_room, all_messages]
         eventOffer:
             groups: [all_messages]

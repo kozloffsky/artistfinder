@@ -2991,7 +2991,18 @@ $(function() {
         }
     });
 
+    $('.rejectRequest').on('click',function(){
+        var eventId = $(this).parents('article').attr('id');
+        rejectRequest(eventId)
+    })
 
+    function rejectRequest(id){
+        console.log(id)
+        $.ajax({
+            type:'GET',
+            url:'/event/change_status/reject/'+id+'?type=no_email'
+        })
+    }
 
 });
 (function() {
@@ -11009,12 +11020,13 @@ $(function () {
         } else if (this.id == 'recFilterRating'){
             $('#recomendedFilterSearch #recFilterRating').prop("disabled", true);
         }
-        var searchAllCat = $('#recommendedCat, #eventLocationForm, #searchLoc, #recomendedFilterSearch').serialize();
+        var searchAllCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch, #recomendedFilterSearch').serialize()
         filtersCatSelectGroup.prop( "disabled", false );
         getFilteredRes(searchAllCat)
     });
 
     $('#recomendedFilterSearch input:checkbox').on('change', function(){
+        console.log('fgdgdfgfsdgf')
         $('#recomendedFilter select').prop( "disabled", true );
         var searchAllCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch, #recomendedFilterSearch').serialize()
         $('#recomendedFilter select').prop( "disabled", false );
