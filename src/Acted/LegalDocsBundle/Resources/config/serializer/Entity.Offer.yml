@@ -1,6 +1,8 @@
 Acted\LegalDocsBundle\Entity\Offer:
     exclusion_policy: NONE
     properties:
+        id:
+            groups: [chat_list, chat_room, all_messages]
         performances:
             groups: [chat_list, chat_room]
         comments:
