@@ -1,0 +1,70 @@
+{% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
+<main class="messages">
+
+    <div class="container">
+        <!-- THIS MENU VISIBLE ONLY ON DESCTIOP SCREEN-->
+        {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
+
+        <div>
+            <select data-class="selections-white" name="event_type" id="event_type">
+                <option value="0">All messages</option>
+                <option value="1">Lorem Ipsum 1</option>
+                <option value="2">Lorem Ipsum 2</option>
+            </select>
+
+
+            <div class="dialogs">
+                {% for message in messages|reverse %}
+                    {{ dump(message) }}
+                <article class="col-xs-12 dialog-section noselect" data-longtap-duration="500">
+                    <div class="wrap clearfix">
+                        <div class="avatar">
+                            {% if message.sender_user[avatar] %}
+                                <img src="{{ message.sender_user.avatar }}" alt=""/>
+                            {% else %}
+                            {% endif %}
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">{{ message.sender_user.firstname }}</span>
+                            <span class="time">Today at 11:34 pm</span>
+                        </div>
+                        <div class="message-block">
+                            <div class="col-lg-10 col-sm-10 text-block">
+                                <p class="message-heading hidden-xs">Enquiry for a 4-piece Jazz Band / St Regis / 17 Dec 16</p>
+
+                                <div class="text">
+                                    {{ message.message_text }}
+                                </div>
+
+                                <div class="controls hidden-xs">
+                                    <div class="button-gradient filled blue">
+                                        <a href="/chat-room" class="btn register">See Conversation</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-2  message-controls no-pad">
+                                <ul class="ul-reset">
+                                    <li class="status confirmed"><i class="confirmed"></i> Confirmed</li>
+                                    <li class="archive hidden-xs"><a href="#"><i class="archive"></i> Archive</a></li>
+                                    <li class="delete hidden-xs"><a href="#"><i class="delete"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="clearfix message-controls controls-mobile ul-reset">
+                        <li class="archive"><a href="#"><i class="archive"></i> Archive</a></li>
+                        <li class="delete"><a href="#"><i class="delete"></i> Delete</a></li>
+                    </ul>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+
+</main>
+
+{% include 'ActedLegalDocsBundle:Default:footer.html.twig' %}

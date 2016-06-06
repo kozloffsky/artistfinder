@@ -49,8 +49,12 @@ class ChatRoomController extends Controller
         $messages = $serializer->toArray($data, SerializationContext::create()
             ->setGroups(['all_messages']));
 
+        $uk = $em->getRepository('ActedLegalDocsBundle:RefCountry')->findOneByName('United Kingdom');
+        $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
+        $regions = $em->getRepository('ActedLegalDocsBundle:RefRegion')->findByCountry($uk);
+
         return $this->render('ActedLegalDocsBundle:ChatRoom:all_messages.html.twig',
-            compact('messages'));
+            compact('messages', 'categories', 'regions'));
     }
 
     /**

@@ -10450,3 +10450,13 @@ a.disabled {
     overflow: visible;
     background: rgba(0, 0, 0, 0.5) url("../assets/images/preloader.gif") no-repeat center center;
 }
+
+#photo-pager .scale-thumb img
+{
+    width: 100%;
+}
+
+.dangerMessage
+{
+    border-color: #ff735a;
+}

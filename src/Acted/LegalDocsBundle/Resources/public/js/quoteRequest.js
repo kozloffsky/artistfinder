@@ -247,7 +247,17 @@ $(function () {
         $.ajax({
             type:'POST',
             url:'/event/create',
-            data: data + '&user='+userInformationStorage.userId
+            data: data + '&user='+userInformationStorage.userId,
+            success:function(res){
+                console.log(res)
+            },
+            error: function(response){
+                $('#requestQuoteForm input').attr('style', '');
+                $.each(response.responseJSON, function(key, value) {
+                    console.log(key, value);
+                    $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
+                });
+            }
         })
     };
 });

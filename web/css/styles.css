@@ -10500,3 +10500,9 @@ a.disabled {
 {
     width: 100%;
 }
+
+
+.dangerMessage
+{
+    border-color: #ff735a;
+}

@@ -3000,7 +3000,10 @@ $(function() {
         console.log(id)
         $.ajax({
             type:'GET',
-            url:'/event/change_status/reject/'+id+'?type=no_email'
+            url:'/event/change_status/reject/'+id+'?type=no_email',
+            success: function(res){
+                //$('article #'+id).
+            }
         })
     }
 
@@ -10258,7 +10261,17 @@ $(function () {
         $.ajax({
             type:'POST',
             url:'/event/create',
-            data: data + '&user='+userInformationStorage.userId
+            data: data + '&user='+userInformationStorage.userId,
+            success:function(res){
+                console.log(res)
+            },
+            error: function(response){
+                $('#requestQuoteForm input').attr('style', '');
+                $.each(response.responseJSON, function(key, value) {
+                    console.log(key, value);
+                    $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
+                });
+            }
         })
     };
 });
