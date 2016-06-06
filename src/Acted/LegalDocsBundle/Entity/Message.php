@@ -241,4 +241,12 @@ class Message
     {
         $this->archived = $archived;
     }
+
+    public function getTimeFromGet()
+    {
+        $now = new \DateTime();
+        $period = $now->diff($this->getSendDateTime());
+
+        return $period->format('%d days %H hours %i minutes');
+    }
 }
