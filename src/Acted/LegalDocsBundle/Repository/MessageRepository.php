@@ -15,7 +15,6 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->createQueryBuilder('m')
             ->where('m.receiverUser = :userId')
-            ->orWhere('m.senderUser = :userId')
             ->setParameter('userId', $userId)
             ->getQuery()->getResult();
     }
