@@ -1,0 +1,63 @@
+{% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
+<main class="enquiries">
+
+    <div class="container">
+        <!-- THIS MENU VISIBLE ONLY ON DESCTIOP SCREEN-->
+        {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
+
+        <div class="enquiries-wrap">
+            {% for chat in chats|reverse %}
+                <article class="enq-block clearfix">
+                <span class="received-time">
+                     <i class="enq-icon icon-timing"></i> Received 5 hours ago
+                </span>
+
+                    <div class="col-lg-3 no-pad">
+
+                        <ul class="act-request-data ul-reset">
+                            <li><i class="enq-icon icon-date"></i> Date: <span class="value">{{ chat.event.starting_date }}</span></li>
+                            <li><i class="enq-icon icon-timing"></i> Timing: <span class="value">{{ chat.event.timing }}</span></li>
+                            <li><i class="enq-icon icon-location"></i> Location: <span class="value">{{ chat.event.city.name }}</span></li>
+                            <li><i class="enq-icon icon-event"></i> Event: <span class="value">{{ chat.event.title }}</span></li>
+                            <li><i class="enq-icon icon-client"></i> Client: <span class="value">{{ chat.event.user.firstname }}</span>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div class="col-lg-9 act-request">
+
+                        <p class="act-request-title">
+                            Act request: <span class="bold-title">5-piece Jazz band, Acrobats, Sports Act</span>
+                            <span class="see-more">(<a href="#">See more</a>)</span>
+                        </p>
+
+                        <p class="act-request-message" data-max-chars-desktop="150" data-max-chars-mobile="70">
+                            <span class="title">Message from client:</span>
+                            <span class="text">{{ chat.offer.comments }}</span>
+                            <a class="show-more-btn" href="#">+more</a>
+                        </p>
+
+                        <div class="controls">
+                            <div class="button-gradient filled">
+                                <button type="button" class="btn register">Send Quotation</button>
+                            </div>
+
+                            <div class="button-gradient filled blue">
+                                <button type="button" class="btn register">Send Message</button>
+                            </div>
+
+                            <div class="button-gradient">
+                                <button type="button" class="btn register">Not available</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+
+    </div>
+
+</main>
+
+{% include 'ActedLegalDocsBundle:Default:footer.html.twig' %}

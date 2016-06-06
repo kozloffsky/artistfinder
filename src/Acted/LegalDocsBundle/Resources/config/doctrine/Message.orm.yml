@@ -13,7 +13,7 @@ Acted\LegalDocsBundle\Entity\Message:
           type: string(128)
           notnull: true
         messageText:
-          type: string(512)
+          type: text
           notnull: true
         sendDateTime:
           type: datetime

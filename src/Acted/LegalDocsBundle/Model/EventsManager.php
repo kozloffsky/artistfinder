@@ -83,6 +83,7 @@ class EventsManager
         $offer = new Offer();
         $date = new \DateTime();
         $offer->setTitle($eventOfferData->getName() . ' ' . $date->format('d-m-Y H:i:s'));
+        $offer->setComments($eventOfferData->getComment());
         foreach ($eventOfferData->getPerformance() as $performance) {
             $offer->addPerformance($performance);
         }

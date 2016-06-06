@@ -39,6 +39,20 @@ $(function() {
         }
     });
 
+    $('.rejectRequest').on('click',function(){
+        var eventId = $(this).parents('article').attr('id');
+        rejectRequest(eventId)
+    })
 
+    function rejectRequest(id){
+        console.log(id)
+        $.ajax({
+            type:'GET',
+            url:'/event/change_status/reject/'+id+'?type=no_email',
+            success: function(res){
+                //$('article #'+id).
+            }
+        })
+    }
 
 });

@@ -3,3 +3,6 @@ Acted\LegalDocsBundle\Entity\Offer:
     properties:
         performances:
             groups: [chat_list, chat_room]
+        comments:
+            groups: [chat_list, chat_room]
+
