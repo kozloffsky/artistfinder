@@ -3,3 +3,5 @@ Acted\LegalDocsBundle\Entity\Offer:
     properties:
         performances:
             groups: [chat_list, chat_room, all_messages]
+        eventOffer:
+            groups: [all_messages]

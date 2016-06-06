@@ -32,4 +32,8 @@ Acted\LegalDocsBundle\Entity\Offer:
         performances:
           targetEntity: Acted\LegalDocsBundle\Entity\Performance
           inversedBy: offers
+    oneToMany:
+        eventOffer:
+          targetEntity: Acted\LegalDocsBundle\Entity\EventOffer
+          mappedBy: offer
     lifecycleCallbacks: {  }

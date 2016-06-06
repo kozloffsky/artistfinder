@@ -53,6 +53,11 @@ class Offer
      */
     private $comments;
 
+    /**
+     * @var EventOffer
+     */
+    private $eventOffer;
+
 
     /**
      * Get id
@@ -301,4 +306,22 @@ class Offer
     {
         return $this->performances;
     }
+
+    /**
+     * @return EventOffer
+     */
+    public function getEventOffer()
+    {
+        return $this->eventOffer;
+    }
+
+    /**
+     * @param EventOffer $eventOffer
+     */
+    public function setEventOffer(EventOffer $eventOffer)
+    {
+        $this->eventOffer = $eventOffer;
+    }
+
+
 }

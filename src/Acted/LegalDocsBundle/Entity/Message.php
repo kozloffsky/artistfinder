@@ -52,7 +52,7 @@ class Message
     /**
      * @var boolean
      */
-    private $archived;
+    private $archived = false;
 
     /**
      * Get id
