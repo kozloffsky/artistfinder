@@ -10,6 +10,8 @@ Acted\LegalDocsBundle\Entity\Message:
         readDateTime:
             groups: [chat_list, chat_room, message]
         receiverUser:
-            groups: [chat_list, message]
+            groups: [chat_list, message, chat_room]
         senderUser:
             groups: [chat_room, message]
+        chatRoom:
+            groups: [chat_room]

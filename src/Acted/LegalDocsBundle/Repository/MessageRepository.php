@@ -10,4 +10,13 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class MessageRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getAllMessages($userId)
+    {
+        return $this->createQueryBuilder('m')
+            ->where('m.receiverUser = :userId')
+            ->orWhere('m.senderUser = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()->getResult();
+    }
 }
