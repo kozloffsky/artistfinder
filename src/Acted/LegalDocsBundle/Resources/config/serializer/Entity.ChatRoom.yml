@@ -4,9 +4,11 @@ Acted\LegalDocsBundle\Entity\ChatRoom:
         id:
             groups: [chat_list]
         event:
-            groups: [chat_list]
+            groups: [chat_room, chat_list]
         offer:
-            groups: [chat_list, chat_room]
+            groups: [chat_list, chat_room, all_messages]
+        message:
+            groups: [chat_room]
     virtual_properties:
         getLastMessage:
             groups: [chat_list]

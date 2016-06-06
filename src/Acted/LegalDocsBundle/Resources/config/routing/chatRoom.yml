@@ -3,9 +3,14 @@ chat_room_list:
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getChatRoomList }
     methods:  GET
 
-chat_room_item:
+all_messages_user:
     path:     /messages/{userId}
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getAllMessages }
+    methods:  GET
+
+chat_room_item:
+    path:     /chat/{chat}
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getChat }
     methods:  GET
 
 chat_room_message:

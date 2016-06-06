@@ -2,16 +2,16 @@ Acted\LegalDocsBundle\Entity\Message:
     exclusion_policy: NONE
     properties:
         id:
-            groups: [chat_list, chat_room, message]
+            groups: [chat_list, chat_room, message, all_messages]
         messageText:
-            groups: [chat_list, chat_room, message]
+            groups: [chat_list, chat_room, message, all_messages]
         sendDateTime:
-            groups: [chat_list, chat_room, message]
+            groups: [chat_list, chat_room, message, all_messages]
         readDateTime:
-            groups: [chat_list, chat_room, message]
+            groups: [chat_list, chat_room, message, all_messages]
         receiverUser:
-            groups: [chat_list, message, chat_room]
+            groups: [chat_list, message, chat_room, all_messages]
         senderUser:
-            groups: [chat_room, message]
+            groups: [chat_room, message, all_messages]
         chatRoom:
-            groups: [chat_room]
+            groups: [all_messages]

@@ -47,7 +47,7 @@ class ChatRoomController extends Controller
 
         $data = $em->getRepository('ActedLegalDocsBundle:Message')->getAllMessages($userId);
         $messages = $serializer->toArray($data, SerializationContext::create()
-            ->setGroups(['chat_room']));
+            ->setGroups(['all_messages']));
 
         return $this->render('ActedLegalDocsBundle:ChatRoom:all_messages.html.twig',
             compact('messages'));
@@ -75,7 +75,7 @@ class ChatRoomController extends Controller
 
         $data = $em->getRepository('ActedLegalDocsBundle:Message')->getAllMessages($userId, $filters);
         $messages = $serializer->toArray($data, SerializationContext::create()
-            ->setGroups(['chat_room']));
+            ->setGroups(['all_messages']));
 
         return new JsonResponse($messages);
 
@@ -130,5 +130,25 @@ class ChatRoomController extends Controller
         return $this->render('ActedLegalDocsBundle:ChatRoom:message.html.twig',
             compact('chat'));
     }
+
+    /**
+     * Get chat
+     * @param Request $request
+     * @return  array
+     */
+    public function getChatAction(Request $request)
+    {
+        $chatRoomId = $request->get('chat');
+        $em = $this->getDoctrine()->getManager();
+        $serializer = $this->get('jms_serializer');
+
+        $chatRoom = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->find($chatRoomId);
+        $chat = $serializer->toArray($chatRoom, SerializationContext::create()
+            ->setGroups(['chat_room']));
+
+        return $this->render('ActedLegalDocsBundle:ChatRoom:chat_room.html.twig',
+            compact('chat'));
+    }
+
 
 }
