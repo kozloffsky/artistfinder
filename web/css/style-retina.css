@@ -10460,3 +10460,8 @@ a.disabled {
 {
     border-color: #ff735a;
 }
+.user-info .user-name
+{
+    float: left;
+    width: 115px;
+}
