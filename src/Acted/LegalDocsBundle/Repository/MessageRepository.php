@@ -29,14 +29,23 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
                         ->setParameter('archived', true)
                     ;
                     break;
+                case 'all':
+                    $query
+                        ->andWhere('m.archived = :archived')
+                        ->setParameter('archived', false)
+                    ;
+                    break;
                 case 'unread':
                     $query
                         ->andWhere('m.readDateTime IS null')
                     ;
                     break;
-                default:
-                    break;
             }
+        } else {
+            $query
+                ->andWhere('m.archived = :archived')
+                ->setParameter('archived', false)
+            ;
         }
 
 

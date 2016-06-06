@@ -60,7 +60,10 @@ class ChatRoomController extends Controller
     /**
      * Get messages by filter
      * @ApiDoc(
-     *  description="et messages by filter",
+     *  description="et messages by filter archive|all|unread",
+     *  filters={
+     *      {"name"="filters", "dataType"="string"}
+     *  },
      *  statusCodes={
      *         200="Returned when successful",
      *         400="Returned when not exist offer",
