@@ -1,0 +1,20 @@
+acted_rpc:
+    channel: sample/{method}
+    handler:
+        callback: 'acted.rpc' #related to the getName() or your RPC service
+    requirements:
+        method:
+            path: "[a-z_]+" #accept all valid regex, don't put delimiters !
+
+acted_topic:
+    channel: acted/channel
+    handler:
+        callback: 'acted.topic' #related to the getName() of your topic
+
+acted_topic_chat:
+    channel: acted/chat/{room}
+    handler:
+        callback: 'acted.topic' #related to the getName() of your topic
+    requirements:
+        room:
+            path: "\d+" #accept all valid regex, don't put delimiters !
