@@ -98,9 +98,6 @@ class ActedTopic implements TopicInterface, TopicPeriodicTimerInterface, Pushabl
      */
     public function onPublish(ConnectionInterface $connection, Topic $topic, WampRequest $request, $event, array $exclude, array $eligible)
     {
-        foreach ($topic as $client) {
-            dump($client);
-        }
         $topic->broadcast([
             'msg' => $event
         ]);

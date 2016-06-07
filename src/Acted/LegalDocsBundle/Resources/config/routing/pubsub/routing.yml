@@ -14,7 +14,7 @@ acted_topic:
 acted_topic_chat:
     channel: acted/chat/{room}
     handler:
-        callback: 'acted.topic'
+        callback: 'acted.topic' #related to the getName() of your topic
     requirements:
         room:
-            path: "\d+"
+            path: "\d+" #accept all valid regex, don't put delimiters !

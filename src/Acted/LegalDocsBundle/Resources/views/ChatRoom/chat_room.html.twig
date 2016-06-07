@@ -22,16 +22,15 @@
         webSocket.on("socket/connect", function(session){
 
             //the callback function in "subscribe" is called everytime an event is published in that channel.
-            session.subscribe("acted/chat/6", function(uri, payload){
+            session.subscribe("acted/chat/1", function(uri, payload){
                 console.log('user:    ', payload.msg);
             });
 
             $(function () {
                 $('#main').on('click', '#click-but', function () {
                    var text = $('#chat-room').val();
-                    if (text.length > 1) {
-                        $.post("{{ path('websocket_push', {'chatId': 6}) }}", {'message': text});
-//                        session.publish("acted/chat/1", text);
+                    if (text.length > 5) {
+                        session.publish("acted/chat/1", text);
                     }
                 });
 
@@ -44,7 +43,7 @@
     <h1>Not auth user</h1>
 {% endif %}
 <div id="main">
-    <textarea name="chat-room" id="chat-room" cols="30" rows="10" value="jsdffh hf sjks"></textarea>
+    <textarea name="chat-room" id="chat-room" cols="30" rows="10"></textarea>
     <button id="click-but">some button</button>
 </div>
 
