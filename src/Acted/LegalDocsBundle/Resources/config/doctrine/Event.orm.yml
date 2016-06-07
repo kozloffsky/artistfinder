@@ -37,7 +37,7 @@ Acted\LegalDocsBundle\Entity\Event:
           type: string(128)
           nullable: true
         comments:
-          type: string(512)
+          type: text
           nullable: true
         numberOfGuests:
           type: string(64)
