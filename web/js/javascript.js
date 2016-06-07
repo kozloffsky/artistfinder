@@ -10243,6 +10243,8 @@ $(function () {
                 if(userEvents.length > 0){
                     createEventsListRequest(userEvents);
                     setDataEvent(userEvents);
+                } else {
+                    $('.eventChooseRequest').hide();
                 }
             }
         })
