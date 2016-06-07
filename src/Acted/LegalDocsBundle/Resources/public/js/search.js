@@ -591,7 +591,7 @@ $(function () {
     function createShowMoreBtn(propt, mainCatS){
         setTimeout(function() {
             var countCardsInCat = $('#tab-'+propt+' .row .categoriesCardsSearch').length;
-            console.log(countCardsInCat);
+            //console.log(countCardsInCat);
             if (countCardsInCat == 15){
                 $('#tab-'+propt+' .row').append('<div class="controls show-more">'+
                     '<div class="button-gradient">'+
@@ -604,7 +604,7 @@ $(function () {
             $('#tab-'+propt+' .row .show-more').on('click',function(){
                 catFilteringSearchInfinite(propt, mainCatS);
             });
-        }, 1000)
+        }, 2000)
     }
 
     function noResInCat(propt){
@@ -737,7 +737,9 @@ $(function () {
                 } else {
                     loopArtistsInCat(response, categoryFiltering);
                     if(mainCats){
-                        createShowMoreBtn(categoryFiltering, mainCats)
+                        createShowMoreBtn(categoryFiltering, mainCats);
+                    } else {
+                        createShowMoreBtn(categoryFiltering);
                     }
                 }
             }
@@ -760,17 +762,18 @@ $(function () {
     function catFilteringSearchInfinite(categoryFiltering, mainCatS){
         var formsWithoutCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch').serialize(),
             countElementsReady = $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch').length,
+            categorySorting = $('#tab-'+categoryFiltering+' > .filters form').serialize(),
             getCurrentPage = countElementsReady / 15,
             pageMath = Math.floor(getCurrentPage),
-            pageNumberToLoad = pageMath;
-            console.log(infiniteScrollCheckPage);
+            pageNumberToLoad = pageMath + 1;
+            //console.log(infiniteScrollCheckPage);
         if (infiniteScrollCheckPage != pageNumberToLoad) {
             infiniteScrollCheckPage = pageNumberToLoad;
-            console.log(infiniteScrollCheckPage);
+            //console.log(infiniteScrollCheckPage);
             if(mainCatS){
-                var datasendSearch = formsWithoutCat + '&mainCategory=' + categoryFiltering + '&page=' + pageNumberToLoad;
+                var datasendSearch = formsWithoutCat + '&mainCategory=' + categoryFiltering + '&' + categorySorting + '&page=' + pageNumberToLoad;
             } else {
-                var datasendSearch = formsWithoutCat + '&categories%5B%5D=' + categoryFiltering + '&page=' + pageNumberToLoad;
+                var datasendSearch = formsWithoutCat + '&categories%5B%5D=' + categoryFiltering +'&'+ categorySorting + '&page=' + pageNumberToLoad;
             }
             $.ajax({
                 type: 'GET',

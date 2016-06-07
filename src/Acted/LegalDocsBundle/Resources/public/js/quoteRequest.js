@@ -57,19 +57,22 @@ $(function () {
         })
     }
 
-    $('.quoteRequestProfile').on('click',function(){
+
+    $(document).on('click','.quoteRequestProfile',function(){
         var artistSlug = $('#slug').text();
         getArtistInformationForQuote(artistSlug);
         $('#freeQuoteModal').modal('show');
     });
 
-    $('.askQuoteFromSearch').on('click',function(){
+
+    $(document).on('click','.askQuoteFromSearch',function(){
         var artistSlug = $(this).val();
         getArtistInformationForQuote(artistSlug);
         $('#freeQuoteModal').modal('show');
     });
 
-    $('.requestQuotePerformance').on('click',function(){
+
+    $(document).on('click','.requestQuotePerformance',function(){
         var artistSlug = $('#slug').text();
         var performanceRequestId = $(this).val();
         console.log(performanceRequestId)
@@ -174,7 +177,9 @@ $(function () {
             var selectedEvent = $(this).find('option:selected').attr('class');
             console.log(selectedEvent);
             fillFormWithDataFromEvent(userEvents, selectedEvent)
-        })
+        });
+        var selectedEvent = $('#chosenEvent select').find('option:selected').attr('class');
+        fillFormWithDataFromEvent(userEvents, selectedEvent)
     }
 
     function fillFormWithDataFromEvent(userEvents, selectedEvent){
@@ -249,7 +254,9 @@ $(function () {
             url:'/event/create',
             data: data + '&user='+userInformationStorage.userId,
             success:function(res){
-                console.log(res)
+                console.log(res);
+                $('#freeQuoteModal').modal('hide');
+                $('#offerSuccess').modal('show');
             },
             error: function(response){
                 $('#requestQuoteForm input').attr('style', '');

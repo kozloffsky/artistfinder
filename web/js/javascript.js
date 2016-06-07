@@ -2990,6 +2990,17 @@ $(function() {
             $toggler.hide();
         }
     });
+    createActiveMenu();
+    function createActiveMenu(){
+        var currentUrl = window.location.pathname;
+        console.log(currentUrl)
+        var matchesUrl = currentUrl.split('/');
+        if (matchesUrl[1] == 'dashboard'){
+            var pageName = matchesUrl[2];
+            console.log(pageName)
+            $('.menu-block a[href*='+pageName+']').addClass('active');
+        }
+    }
 
     $('.rejectRequest').on('click',function(){
         var eventId = $(this).parents('article').attr('id');
@@ -10134,19 +10145,22 @@ $(function () {
         })
     }
 
-    $('.quoteRequestProfile').on('click',function(){
+
+    $(document).on('click','.quoteRequestProfile',function(){
         var artistSlug = $('#slug').text();
         getArtistInformationForQuote(artistSlug);
         $('#freeQuoteModal').modal('show');
     });
 
-    $('.askQuoteFromSearch').on('click',function(){
+
+    $(document).on('click','.askQuoteFromSearch',function(){
         var artistSlug = $(this).val();
         getArtistInformationForQuote(artistSlug);
         $('#freeQuoteModal').modal('show');
     });
 
-    $('.requestQuotePerformance').on('click',function(){
+
+    $(document).on('click','.requestQuotePerformance',function(){
         var artistSlug = $('#slug').text();
         var performanceRequestId = $(this).val();
         console.log(performanceRequestId)
@@ -10251,7 +10265,9 @@ $(function () {
             var selectedEvent = $(this).find('option:selected').attr('class');
             console.log(selectedEvent);
             fillFormWithDataFromEvent(userEvents, selectedEvent)
-        })
+        });
+        var selectedEvent = $('#chosenEvent select').find('option:selected').attr('class');
+        fillFormWithDataFromEvent(userEvents, selectedEvent)
     }
 
     function fillFormWithDataFromEvent(userEvents, selectedEvent){
@@ -10326,7 +10342,9 @@ $(function () {
             url:'/event/create',
             data: data + '&user='+userInformationStorage.userId,
             success:function(res){
-                console.log(res)
+                console.log(res);
+                $('#freeQuoteModal').modal('hide');
+                $('#offerSuccess').modal('show');
             },
             error: function(response){
                 $('#requestQuoteForm input').attr('style', '');
@@ -11391,7 +11409,7 @@ $(function () {
     function createShowMoreBtn(propt, mainCatS){
         setTimeout(function() {
             var countCardsInCat = $('#tab-'+propt+' .row .categoriesCardsSearch').length;
-            console.log(countCardsInCat);
+            //console.log(countCardsInCat);
             if (countCardsInCat == 15){
                 $('#tab-'+propt+' .row').append('<div class="controls show-more">'+
                     '<div class="button-gradient">'+
@@ -11404,7 +11422,7 @@ $(function () {
             $('#tab-'+propt+' .row .show-more').on('click',function(){
                 catFilteringSearchInfinite(propt, mainCatS);
             });
-        }, 1000)
+        }, 2000)
     }
 
     function noResInCat(propt){
@@ -11537,7 +11555,9 @@ $(function () {
                 } else {
                     loopArtistsInCat(response, categoryFiltering);
                     if(mainCats){
-                        createShowMoreBtn(categoryFiltering, mainCats)
+                        createShowMoreBtn(categoryFiltering, mainCats);
+                    } else {
+                        createShowMoreBtn(categoryFiltering);
                     }
                 }
             }
@@ -11560,17 +11580,18 @@ $(function () {
     function catFilteringSearchInfinite(categoryFiltering, mainCatS){
         var formsWithoutCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch').serialize(),
             countElementsReady = $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch').length,
+            categorySorting = $('#tab-'+categoryFiltering+' > .filters form').serialize(),
             getCurrentPage = countElementsReady / 15,
             pageMath = Math.floor(getCurrentPage),
-            pageNumberToLoad = pageMath;
-            console.log(infiniteScrollCheckPage);
+            pageNumberToLoad = pageMath + 1;
+            //console.log(infiniteScrollCheckPage);
         if (infiniteScrollCheckPage != pageNumberToLoad) {
             infiniteScrollCheckPage = pageNumberToLoad;
-            console.log(infiniteScrollCheckPage);
+            //console.log(infiniteScrollCheckPage);
             if(mainCatS){
-                var datasendSearch = formsWithoutCat + '&mainCategory=' + categoryFiltering + '&page=' + pageNumberToLoad;
+                var datasendSearch = formsWithoutCat + '&mainCategory=' + categoryFiltering + '&' + categorySorting + '&page=' + pageNumberToLoad;
             } else {
-                var datasendSearch = formsWithoutCat + '&categories%5B%5D=' + categoryFiltering + '&page=' + pageNumberToLoad;
+                var datasendSearch = formsWithoutCat + '&categories%5B%5D=' + categoryFiltering +'&'+ categorySorting + '&page=' + pageNumberToLoad;
             }
             $.ajax({
                 type: 'GET',
