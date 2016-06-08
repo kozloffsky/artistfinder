@@ -214,10 +214,4 @@ class EventsController extends Controller
             return new JsonResponse(['empty']);
         }
     }
-
-    private function getEM()
-    {
-        return $this->getDoctrine()->getManager();
-    }
-
 }
