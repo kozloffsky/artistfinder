@@ -5,11 +5,12 @@ namespace Acted\LegalDocsBundle\RPC;
 use Gos\Bundle\WebSocketBundle\Topic\TopicInterface;
 use Gos\Bundle\WebSocketBundle\Topic\TopicPeriodicTimer;
 use Gos\Bundle\WebSocketBundle\Topic\TopicPeriodicTimerInterface;
+use Gos\Bundle\WebSocketBundle\Topic\PushableTopicInterface;
 use Ratchet\ConnectionInterface;
 use Ratchet\Wamp\Topic;
 use Gos\Bundle\WebSocketBundle\Router\WampRequest;
 
-class ActedTopic implements TopicInterface, TopicPeriodicTimerInterface
+class ActedTopic implements TopicInterface, TopicPeriodicTimerInterface, PushableTopicInterface
 {
     /**
      * @var TopicPeriodicTimer
@@ -97,16 +98,23 @@ class ActedTopic implements TopicInterface, TopicPeriodicTimerInterface
      */
     public function onPublish(ConnectionInterface $connection, Topic $topic, WampRequest $request, $event, array $exclude, array $eligible)
     {
-        /*
-            $topic->getId() will contain the FULL requested uri, so you can proceed based on that
-
-            if ($topic->getId() == "acme/channel/shout")
-               //shout something to all subs.
-        */
-
+        foreach ($topic as $client) {
+            dump($client);
+        }
         $topic->broadcast([
-            'msg' => 'some message' //$event
+            'msg' => $event
         ]);
+    }
+
+    /**
+     * @param Topic        $topic
+     * @param WampRequest  $request
+     * @param array|string $data
+     * @param string       $provider The name of pusher who push the data
+     */
+    public function onPush(Topic $topic, WampRequest $request, $data, $provider)
+    {
+        $topic->broadcast($data);
     }
 
     /**

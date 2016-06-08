@@ -24,4 +24,9 @@ class Controller extends BaseController
         $data['errors'] = $errors;
         return $data;
     }
+
+    protected function getEM()
+    {
+        return $this->getDoctrine()->getManager();
+    }
 }

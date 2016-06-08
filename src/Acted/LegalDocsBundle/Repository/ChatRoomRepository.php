@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Repository;
 
+use Acted\LegalDocsBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 /**
  * ChatRoomRepository
@@ -39,6 +40,16 @@ class ChatRoomRepository extends EntityRepository
             ->where('c.user = :userId')
             ->setParameter('userId', $userId)
             ;
+
+        return $query->getQuery()->getResult();
+    }
+
+    public function checkUserPermission(User $user)
+    {
+        $query = $this->createQueryBuilder('c')
+            ->where('c.user = :userId')
+            ->setParameter('userId', $userId)
+        ;
 
         return $query->getQuery()->getResult();
     }

@@ -7,3 +7,10 @@ gos_web_socket:
         router:
             resources:
                 - @ActedLegalDocsBundle/Resources/config/routing/pubsub/routing.yml
+    pushers:
+        zmq:
+            default: true
+            host: 127.0.0.1
+            port: 5555
+            persistent: true
+            protocol: tcp

@@ -36,7 +36,12 @@ class ChatRoom
     /**
      * @var User
      */
-    private $user;
+    private $artist;
+
+    /**
+     * @var User
+     */
+    private $client;
 
     /**
      * Get id
@@ -121,16 +126,32 @@ class ChatRoom
     /**
      * @return User
      */
-    public function getUser()
+    public function getArtist()
     {
-        return $this->user;
+        return $this->artist;
     }
 
     /**
-     * @param User $user
+     * @param User $artist
      */
-    public function setUser(User $user)
+    public function setArtist(User $artist)
     {
-        $this->user = $user;
+        $this->artist = $artist;
+    }
+
+    /**
+     * @return User
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param User $client
+     */
+    public function setClient(User $client)
+    {
+        $this->client = $client;
     }
 }

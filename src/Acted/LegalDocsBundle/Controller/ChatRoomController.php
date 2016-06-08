@@ -181,5 +181,16 @@ class ChatRoomController extends Controller
             compact('chat'));
     }
 
+    public function webSocketPushAction(Request $request)
+    {
+        $message = $request->request->get('message');
+        $user = $this->getUser();
+        $checkChat = $this->getEM()->getRepository('ActedLegalDocsBundle:ChatRoom')->checkUserPermission($user);
+        $pusher = $this->container->get('gos_web_socket.zmq.pusher');
+        
+        $pusher->push(['msg' => $message], 'acted_topic_chat', ['room' => 1], ['user' => $user->getId()]);
+        dump($user);die;
+    }
+
 
 }

@@ -33,3 +33,8 @@ show_logs_messaging:
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:showLogs, _format: json }
     methods:  GET
 
+websocket_push:
+    path: /web/push/{chatId}
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:webSocketPush }
+    methods:  POST
+
