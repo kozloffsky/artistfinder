@@ -43,3 +43,8 @@ read_message:
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:readMessagesInChat }
     methods:  POST
 
+count_new_message:
+    path: /count_new_message
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:countNewMessage }
+    methods:  GET
+

@@ -72,4 +72,21 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()->execute()
         ;
     }
+
+    /**
+     * Count unread messages from all chats
+     * @param User $user
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function countNewMessage($user)
+    {
+        return $this->createQueryBuilder('m')
+            ->select('COUNT(m.id) as data')
+            ->where('m.receiverUser = :user')
+            ->andWhere('m.readDateTime IS NULL')
+            ->setParameter('user', $user)
+            ->getQuery()->getOneOrNullResult()
+            ;
+    }
 }

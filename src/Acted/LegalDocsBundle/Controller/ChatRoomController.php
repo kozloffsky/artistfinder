@@ -4,6 +4,7 @@ namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Form\ChatMessageType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializationContext;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -256,5 +257,21 @@ class ChatRoomController extends Controller
         }
 
         return new JsonResponse(['success'], 200);
+    }
+
+    /**
+     * Count new messages from all chats
+     * @return Response
+     */
+    public function countNewMessageAction()
+    {
+        $user = $this->getUser();
+        /** Check auth */
+        if (!$user) {
+            return new Response(0);
+        }
+        $amount = $this->getEM()->getRepository('ActedLegalDocsBundle:Message')->countNewMessage($user);
+
+        return new Response($amount['data']);
     }
 }
