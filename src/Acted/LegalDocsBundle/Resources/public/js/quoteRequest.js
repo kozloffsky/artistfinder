@@ -3,7 +3,7 @@
  */
 $(function () {
 
-    $( "#event_date" ).datepicker();
+    $( "#event_date" ).datepicker({dateFormat: 'dd/mm/yy'});
 
     function initSelect(){
         $('select').each(function () {
