@@ -55,7 +55,10 @@ Acted\LegalDocsBundle\Entity\User:
           targetEntity: Acted\LegalDocsBundle\Entity\RefRole
           inversedBy: users
     oneToMany:
-        chatRooms:
+        chatRoomsArtist:
             targetEntity: Acted\LegalDocsBundle\Entity\ChatRoom
-            mappedBy: user
+            mappedBy: artist
+        chatRoomsClient:
+            targetEntity: Acted\LegalDocsBundle\Entity\ChatRoom
+            mappedBy: client
     lifecycleCallbacks: {  }

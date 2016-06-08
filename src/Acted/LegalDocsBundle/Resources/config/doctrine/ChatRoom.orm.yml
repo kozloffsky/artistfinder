@@ -13,9 +13,12 @@ Acted\LegalDocsBundle\Entity\ChatRoom:
             targetEntity: Acted\LegalDocsBundle\Entity\Message
             mappedBy: chatRoom
     manyToOne:
-        user:
+        artist:
             targetEntity: Acted\LegalDocsBundle\Entity\User
-            inversedBy: chatRooms
+            inversedBy: chatRoomsArtist
+        client:
+            targetEntity: Acted\LegalDocsBundle\Entity\User
+            inversedBy: chatRoomsClient
         event:
             targetEntity: Acted\LegalDocsBundle\Entity\Event
             inversedBy: chatRooms
