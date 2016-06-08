@@ -10091,7 +10091,7 @@ $(document).on('ready ajaxComplete', function(){
  */
 $(function () {
 
-    $( "#event_date" ).datepicker();
+    $( "#event_date" ).datepicker({dateFormat: 'dd/mm/yy'});
 
     function initSelect(){
         $('select').each(function () {
@@ -10729,7 +10729,15 @@ $(function () {
       $.ajax({
         type:'POST',
         url:'/event/create',
-        data: quote + '&user='+ userData.id
+        data: quote + '&user='+ userData.id,
+        success: function(){
+          localStorage.removeItem('quoteRequest');
+          setTimeout(function(){
+            $('#registrationModal').modal('hide');
+            $('#offerSuccess').modal('show');
+           }, 2500);
+
+        }
       })
     }
   }
