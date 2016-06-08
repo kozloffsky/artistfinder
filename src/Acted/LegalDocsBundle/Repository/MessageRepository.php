@@ -51,4 +51,25 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    /**
+     * @param DateTime $now
+     * @param User $user
+     * @param int $chatId
+     */
+    public function updateReadDate($now, $user, $chatId)
+    {
+        $this->createQueryBuilder('m')
+            ->update('ActedLegalDocsBundle:Message', 'm')
+            ->set('m.readDateTime', '?1')
+            ->where('m.receiverUser = :user')
+            ->andWhere('m.chatRoom = :chatRoom')
+            ->setParameters([
+                    1 => $now,
+                    'user' => $user,
+                    'chatRoom' => $chatId
+                ])
+            ->getQuery()->execute()
+        ;
+    }
 }

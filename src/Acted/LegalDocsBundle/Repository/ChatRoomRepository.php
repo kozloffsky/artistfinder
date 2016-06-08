@@ -44,13 +44,23 @@ class ChatRoomRepository extends EntityRepository
         return $query->getQuery()->getResult();
     }
 
-    public function checkUserPermission(User $user)
+    /**
+     * @param User $user
+     * @param int $chatId
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function checkUserPermission($user, $chatId)
     {
         $query = $this->createQueryBuilder('c')
-            ->where('c.user = :userId')
-            ->setParameter('userId', $userId)
+            ->where('c.artist = :userId OR c.client = :userId')
+            ->andWhere('c.id = :chatId')
+            ->setParameters([
+                'userId' => $user,
+                'chatId' => $chatId
+            ])
         ;
 
-        return $query->getQuery()->getResult();
+        return $query->getQuery()->getOneOrNullResult();
     }
 }

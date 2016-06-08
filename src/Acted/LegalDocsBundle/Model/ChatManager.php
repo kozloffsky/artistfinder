@@ -94,4 +94,26 @@ class ChatManager
 
         return $message;
     }
+
+    /**
+     * @param ChatRoom $chatRoom
+     * @param User $sender
+     * @param User $receiver
+     * @param string $messageText
+     * @return  Message
+     */
+    public function newMessage(ChatRoom $chatRoom, User $sender, User $receiver, $messageText)
+    {
+        $message = new Message();
+        $now = new \DateTime();
+
+        $message->setChatRoom($chatRoom);
+        $message->setReceiverUser($receiver);
+        $message->setSenderUser($sender);
+        $message->setMessageText($messageText);
+        $message->setSubject($chatRoom->getEvent()->getTitle());
+        $message->setSendDateTime($now);
+
+        return $message;
+    }
 }

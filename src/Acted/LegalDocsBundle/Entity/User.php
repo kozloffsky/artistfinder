@@ -597,6 +597,11 @@ class User implements UserInterface, \Serializable
         $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
     }
 
+    public function getFullName()
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
     /**
      * String representation of object
      * @link http://php.net/manual/en/serializable.serialize.php

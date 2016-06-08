@@ -38,3 +38,8 @@ websocket_push:
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:webSocketPush }
     methods:  POST
 
+read_message:
+    path: /read_message/{chatId}
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:readMessagesInChat }
+    methods:  POST
+
