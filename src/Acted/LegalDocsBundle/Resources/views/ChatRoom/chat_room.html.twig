@@ -22,7 +22,7 @@
         webSocket.on("socket/connect", function(session){
 
             //the callback function in "subscribe" is called everytime an event is published in that channel.
-            session.subscribe("acted/chat/1", function(uri, payload){
+            session.subscribe("acted/chat/6", function(uri, payload){
                 console.log('user:    ', payload.msg);
             });
 
@@ -30,7 +30,7 @@
                 $('#main').on('click', '#click-but', function () {
                    var text = $('#chat-room').val();
                     if (text.length > 1) {
-                        $.post("{{ path('websocket_push', {'chatId': 1}) }}", {'message': text});
+                        $.post("{{ path('websocket_push', {'chatId': 6}) }}", {'message': text});
 //                        session.publish("acted/chat/1", text);
                     }
                 });
