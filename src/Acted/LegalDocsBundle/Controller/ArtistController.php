@@ -54,7 +54,8 @@ class ArtistController extends Controller
         $fc->addRecommended($data['recommended']);
 
         $page = ($data['page']) ? $data['page'] : 1;
-        $filteredArtists = $s->getFilteredArtists($oc, $fc, $page);
+        $limit = ($data['limit']) ? $data['limit'] : 15;
+        $filteredArtists = $s->getFilteredArtists($oc, $fc, $page, $limit);
         return iterator_to_array($filteredArtists);
     }
 
@@ -77,6 +78,7 @@ class ArtistController extends Controller
         }
         $data = $searchForm->getData();
         $s = $this->get('app.search');
+        $limit = ($data['limit']) ? $data['limit'] : 15;
 
         $oc = OrderCriteria::createSimpleSort($data['order']);
         $result = [];
@@ -91,7 +93,7 @@ class ArtistController extends Controller
                 $fc->addLocation($data['user_city'], $data['location']);
                 $fc->addRecommended($data['recommended']);
                 $page = ($data['page']) ? $data['page'] : 1;
-                $filteredArtists = $s->getFilteredArtists($oc, $fc, $page);
+                $filteredArtists = $s->getFilteredArtists($oc, $fc, $page, $limit);
                 $result[$category->getId()] = iterator_to_array($filteredArtists);
             }
         }
@@ -111,7 +113,7 @@ class ArtistController extends Controller
                 $fc->addGeo($data['country'], $data['region']);
                 $fc->addLocation($data['user_city'], $data['location']);
                 $page = ($data['page']) ? $data['page'] : 1;
-                $filteredArtists = $s->getFilteredArtists($oc, $fc, $page);
+                $filteredArtists = $s->getFilteredArtists($oc, $fc, $page, $limit);
                 $result[$category->getId()] = iterator_to_array($filteredArtists);
             }
         }
@@ -139,7 +141,7 @@ class ArtistController extends Controller
                 $fc->addGeo($data['country'], $data['region']);
                 $fc->addLocation($data['user_city'], $data['location']);
                 $page = ($data['page']) ? $data['page'] : 1;
-                $filteredArtists = $s->getFilteredArtists($oc, $fc, $page, $categoryIds);
+                $filteredArtists = $s->getFilteredArtists($oc, $fc, $page, $categoryIds, $limit);
                 $result[$mainCategory->getId()] = iterator_to_array($filteredArtists);
             }
         }
