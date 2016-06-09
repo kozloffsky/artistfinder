@@ -141,7 +141,7 @@ class ArtistController extends Controller
                 $fc->addGeo($data['country'], $data['region']);
                 $fc->addLocation($data['user_city'], $data['location']);
                 $page = ($data['page']) ? $data['page'] : 1;
-                $filteredArtists = $s->getFilteredArtists($oc, $fc, $page, $categoryIds, $limit);
+                $filteredArtists = $s->getFilteredArtists($oc, $fc, $page, $limit, $categoryIds);
                 $result[$mainCategory->getId()] = iterator_to_array($filteredArtists);
             }
         }
