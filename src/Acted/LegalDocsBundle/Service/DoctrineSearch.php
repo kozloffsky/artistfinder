@@ -34,12 +34,12 @@ class DoctrineSearch implements Search
         $this->paginator = $paginator;
     }
 
-    public function getFilteredArtists(OrderCriteria $oc, FilterCriteria $fc, $page = 1)
+    public function getFilteredArtists(OrderCriteria $oc, FilterCriteria $fc, $page = 1, $limit = 15)
     {
         $artistRepo = $this->entityManager->getRepository('ActedLegalDocsBundle:Artist');
         $artistsQuery = $artistRepo->getFilteredQuery($oc, $fc);
 
-        return $this->paginator->paginate($artistsQuery, $page, self::PER_PAGE, ['wrap-queries' => true]);
+        return $this->paginator->paginate($artistsQuery, $page, $limit, ['wrap-queries' => true]);
     }
 
 

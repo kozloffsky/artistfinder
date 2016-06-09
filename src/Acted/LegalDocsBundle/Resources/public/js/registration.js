@@ -369,7 +369,15 @@ $(function () {
       $.ajax({
         type:'POST',
         url:'/event/create',
-        data: quote + '&user='+ userData.id
+        data: quote + '&user='+ userData.id,
+        success: function(){
+          localStorage.removeItem('quoteRequest');
+          setTimeout(function(){
+            $('#registrationModal').modal('hide');
+            $('#offerSuccess').modal('show');
+           }, 2500);
+
+        }
       })
     }
   }

@@ -2990,6 +2990,17 @@ $(function() {
             $toggler.hide();
         }
     });
+    createActiveMenu();
+    function createActiveMenu(){
+        var currentUrl = window.location.pathname;
+        console.log(currentUrl)
+        var matchesUrl = currentUrl.split('/');
+        if (matchesUrl[1] == 'dashboard'){
+            var pageName = matchesUrl[2];
+            console.log(pageName)
+            $('.menu-block a[href*='+pageName+']').addClass('active');
+        }
+    }
 
     $('.rejectRequest').on('click',function(){
         var eventId = $(this).parents('article').attr('id');
@@ -3000,7 +3011,84 @@ $(function() {
         console.log(id)
         $.ajax({
             type:'GET',
-            url:'/event/change_status/reject/'+id+'?type=no_email'
+            url:'/event/change_status/reject/'+id+'?type=no_email',
+            success: function(res){
+                $('article#'+id).appendTo('.enquiries-wrap')
+            }
+        })
+    }
+
+    $(document).on('click','.archiveMessage',function(){
+        var messageId = $(this).parents('article').attr('id');
+        archiveMessage(messageId)
+    })
+
+    function archiveMessage(id){
+        console.log(id)
+        $.ajax({
+            type:'POST',
+            url:'/dashboard/archived/message/'+id,
+            success: function(res){
+                $('article#'+id).fadeOut();
+            }
+        })
+    }
+
+    $('#sortMessages').on('change',function(){
+        var filterValueSelected = $(this).find('option:selected').val();
+        messagesFilter(filterValueSelected)
+    });
+
+    function messagesFilter(val){
+        var userId = $('header #userInformation').text();
+        console.log(val)
+        $.ajax({
+            type:'GET',
+            url:'/dashboard/filter/messages/'+userId+'?filters='+val,
+            success: function(res){
+                $('.messages .dialogs').empty();
+                $(res).each(function(){
+                    if(this.sender_user.avatar){
+                        var userMessageAvatar = this.sender_user.avatar;
+                    } else {
+                        var userMessageAvatar = '/assets/images/noAvatar.png';
+                    }
+                    if(this.archived == false){
+                        var archiveButton = '<li class="archive hidden-xs"><a class="archiveMessage"><i class="archive"></i> Archive</a></li>'
+                    } else {
+                        var archiveButton = '';
+                    }
+                    var viewMessages = '<article class="col-xs-12 dialog-section noselect" data-longtap-duration="500" id="'+this.id+'">'+
+                        '<div class="wrap clearfix">'+
+                        '<div class="avatar">'+
+                        '<img src="'+userMessageAvatar+'" alt=""/>'+
+                        '</div>'+
+                        '<div class="user-info">'+
+                        '<span class="user-name">'+this.sender_user.firstname+'</span>'+
+                        '<span class="time">Today at 11:34 pm</span>'+
+                        '</div>'+
+                        '<div class="message-block">'+
+                        '<div class="col-lg-10 col-sm-10 text-block">'+
+                        '<p class="message-heading hidden-xs">Enquiry for '+this.chat_room.event.title+' / '+this.chat_room.event.city.name+'/ '+this.chat_room.event.starting_date+'</p>'+
+                        '<div class="text">'+this.message_text+'</div>'+
+                        '<div class="controls hidden-xs">'+
+                        '<div class="button-gradient filled blue">'+
+                        '<a href="/chat-room" class="btn register">See Conversation</a>'+
+                        '</div>'+
+                        '</div>'+
+                        '</div>'+
+                        '<div class="col-lg-2 col-sm-2  message-controls no-pad">'+
+                        '<ul class="ul-reset">'+
+                        '<li class="status confirmed"><i class="confirmed"></i> '+this.chat_room.offer.event_offer[0].status+'</li>'+
+                        archiveButton+
+                        '</ul>'+
+                        '</div>'+
+                        '</div>'+
+                        '</div>'+
+                        '</article>';
+                    $('.messages .dialogs').append(viewMessages);
+                })
+            }
         })
     }
 
@@ -10014,7 +10102,7 @@ $(document).on('ready ajaxComplete', function(){
  */
 $(function () {
 
-    $( "#event_date" ).datepicker();
+    $( "#event_date" ).datepicker({dateFormat: 'dd/mm/yy'});
 
     function initSelect(){
         $('select').each(function () {
@@ -10068,19 +10156,22 @@ $(function () {
         })
     }
 
-    $('.quoteRequestProfile').on('click',function(){
+
+    $(document).on('click','.quoteRequestProfile',function(){
         var artistSlug = $('#slug').text();
         getArtistInformationForQuote(artistSlug);
         $('#freeQuoteModal').modal('show');
     });
 
-    $('.askQuoteFromSearch').on('click',function(){
+
+    $(document).on('click','.askQuoteFromSearch',function(){
         var artistSlug = $(this).val();
         getArtistInformationForQuote(artistSlug);
         $('#freeQuoteModal').modal('show');
     });
 
-    $('.requestQuotePerformance').on('click',function(){
+
+    $(document).on('click','.requestQuotePerformance',function(){
         var artistSlug = $('#slug').text();
         var performanceRequestId = $(this).val();
         console.log(performanceRequestId)
@@ -10163,6 +10254,8 @@ $(function () {
                 if(userEvents.length > 0){
                     createEventsListRequest(userEvents);
                     setDataEvent(userEvents);
+                } else {
+                    $('.eventChooseRequest').hide();
                 }
             }
         })
@@ -10185,7 +10278,9 @@ $(function () {
             var selectedEvent = $(this).find('option:selected').attr('class');
             console.log(selectedEvent);
             fillFormWithDataFromEvent(userEvents, selectedEvent)
-        })
+        });
+        var selectedEvent = $('#chosenEvent select').find('option:selected').attr('class');
+        fillFormWithDataFromEvent(userEvents, selectedEvent)
     }
 
     function fillFormWithDataFromEvent(userEvents, selectedEvent){
@@ -10258,7 +10353,19 @@ $(function () {
         $.ajax({
             type:'POST',
             url:'/event/create',
-            data: data + '&user='+userInformationStorage.userId
+            data: data + '&user='+userInformationStorage.userId,
+            success:function(res){
+                console.log(res);
+                $('#freeQuoteModal').modal('hide');
+                $('#offerSuccess').modal('show');
+            },
+            error: function(response){
+                $('#requestQuoteForm input').attr('style', '');
+                $.each(response.responseJSON, function(key, value) {
+                    console.log(key, value);
+                    $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
+                });
+            }
         })
     };
 });
@@ -10633,7 +10740,15 @@ $(function () {
       $.ajax({
         type:'POST',
         url:'/event/create',
-        data: quote + '&user='+ userData.id
+        data: quote + '&user='+ userData.id,
+        success: function(){
+          localStorage.removeItem('quoteRequest');
+          setTimeout(function(){
+            $('#registrationModal').modal('hide');
+            $('#offerSuccess').modal('show');
+           }, 2500);
+
+        }
       })
     }
   }
@@ -10742,6 +10857,21 @@ $(function () {
         var id = $(this).attr('data-toggle');
         $(this).addClass('active');
     });
+
+    var blocksToShow = '';
+
+    function getNumOfBlocksToShow(){
+        var windowWidth = window.innerWidth;
+        console.log(windowWidth)
+        if(windowWidth <= 991 && windowWidth >= 839){
+            blocksToShow = 16;
+        } else {
+            blocksToShow = 15;
+        }
+    }
+    getNumOfBlocksToShow()
+    console.log(blocksToShow)
+
 
 
     function selectBoxStyle() {
@@ -10972,18 +11102,18 @@ $(function () {
         getFilteredRes(searchFormSerialize);
     });
 
-    function getFilteredRes(searchFormSerialize){
+    function getFilteredRes(searchFormSerialize, searchResMain){
         $.ajax({
             type:'GET',
             url: '/batch/artist',
-            data: searchFormSerialize,
+            data: searchFormSerialize + '&limit=' +blocksToShow,
             success: function(response){
                 var checkedCategoriesFind = $('#searchCategory input:checkbox:checked').length;
                 console.log(checkedCategoriesFind);
-                if(checkedCategoriesFind > 0) {
+                if(checkedCategoriesFind > 0 && !searchResMain) {
                     createNewFilterResults(response);
                 } else {
-                    searchResultMainCategories(response)
+                    searchResultMainCategories(response);
                 }
             }
         })
@@ -11015,6 +11145,7 @@ $(function () {
     $('#recomendedFilterSearch select').on('change', function(){
         var filtersCatSelectGroup = $('#recomendedFilterSearch select');
         console.log(this.id);
+        var searchResTabMain = true;
         if (this.id == 'recFilterRating') {
             $('#recomendedFilterSearch #recFilterPrice').prop("disabled", true);
         } else if (this.id == 'recFilterRating'){
@@ -11022,15 +11153,16 @@ $(function () {
         }
         var searchAllCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch, #recomendedFilterSearch').serialize()
         filtersCatSelectGroup.prop( "disabled", false );
-        getFilteredRes(searchAllCat)
+        getFilteredRes(searchAllCat, searchResTabMain)
     });
 
     $('#recomendedFilterSearch input:checkbox').on('change', function(){
         console.log('fgdgdfgfsdgf')
+        var searchResTabMain = true;
         $('#recomendedFilter select').prop( "disabled", true );
         var searchAllCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch, #recomendedFilterSearch').serialize()
         $('#recomendedFilter select').prop( "disabled", false );
-        getFilteredRes(searchAllCat)
+        getFilteredRes(searchAllCat, searchResTabMain)
     });
 /**/
 
@@ -11315,8 +11447,8 @@ $(function () {
     function createShowMoreBtn(propt, mainCatS){
         setTimeout(function() {
             var countCardsInCat = $('#tab-'+propt+' .row .categoriesCardsSearch').length;
-            console.log(countCardsInCat);
-            if (countCardsInCat == 15){
+            //console.log(countCardsInCat);
+            if (countCardsInCat == blocksToShow){
                 $('#tab-'+propt+' .row').append('<div class="controls show-more">'+
                     '<div class="button-gradient">'+
                     '<button data-dismiss="modal" class="btn">Show more</button>'+
@@ -11328,7 +11460,7 @@ $(function () {
             $('#tab-'+propt+' .row .show-more').on('click',function(){
                 catFilteringSearchInfinite(propt, mainCatS);
             });
-        }, 1000)
+        }, 2000)
     }
 
     function noResInCat(propt){
@@ -11451,7 +11583,7 @@ $(function () {
         $.ajax({
             type:'GET',
             url: '/artist',
-            data: datasendSearch,
+            data: datasendSearch + '&limit=' + blocksToShow,
             success: function(response){
                 //console.log(response);
                 $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch, #tab-'+categoryFiltering+' > .row .no-res-block, #tab-'+categoryFiltering+' > .row .show-more').remove();
@@ -11461,7 +11593,9 @@ $(function () {
                 } else {
                     loopArtistsInCat(response, categoryFiltering);
                     if(mainCats){
-                        createShowMoreBtn(categoryFiltering, mainCats)
+                        createShowMoreBtn(categoryFiltering, mainCats);
+                    } else {
+                        createShowMoreBtn(categoryFiltering);
                     }
                 }
             }
@@ -11484,22 +11618,23 @@ $(function () {
     function catFilteringSearchInfinite(categoryFiltering, mainCatS){
         var formsWithoutCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch').serialize(),
             countElementsReady = $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch').length,
-            getCurrentPage = countElementsReady / 15,
+            categorySorting = $('#tab-'+categoryFiltering+' > .filters form').serialize(),
+            getCurrentPage = countElementsReady / blocksToShow,
             pageMath = Math.floor(getCurrentPage),
-            pageNumberToLoad = pageMath;
-            console.log(infiniteScrollCheckPage);
+            pageNumberToLoad = pageMath + 1;
+            //console.log(infiniteScrollCheckPage);
         if (infiniteScrollCheckPage != pageNumberToLoad) {
             infiniteScrollCheckPage = pageNumberToLoad;
-            console.log(infiniteScrollCheckPage);
+            //console.log(infiniteScrollCheckPage);
             if(mainCatS){
-                var datasendSearch = formsWithoutCat + '&mainCategory=' + categoryFiltering + '&page=' + pageNumberToLoad;
+                var datasendSearch = formsWithoutCat + '&mainCategory=' + categoryFiltering + '&' + categorySorting + '&page=' + pageNumberToLoad;
             } else {
-                var datasendSearch = formsWithoutCat + '&categories%5B%5D=' + categoryFiltering + '&page=' + pageNumberToLoad;
+                var datasendSearch = formsWithoutCat + '&categories%5B%5D=' + categoryFiltering +'&'+ categorySorting + '&page=' + pageNumberToLoad;
             }
             $.ajax({
                 type: 'GET',
                 url: '/artist',
-                data: datasendSearch,
+                data: datasendSearch + '&limit=' +blocksToShow,
                 success: function (response) {
                     //console.log(response);
                     $('#tab-' + categoryFiltering + ' > .row .show-more').remove();
@@ -11542,7 +11677,7 @@ $(function () {
         $.ajax({
             type: 'GET',
             url: '/artist',
-            data: {'mainCategory': searchMainCatId},
+            data: {'mainCategory': searchMainCatId, 'limit': blocksToShow},
             success: function (response) {
                 console.log(response);
                 catSearchRes(searchCatName, searchMainCatId, response);
@@ -11629,18 +11764,18 @@ $(function () {
         var catPostion = $(this).prop( "checked" );
         console.log(catPostion);
         if(catPostion){
-            /*setTimeout(function(){
+            setTimeout(function(){
                 setActiveTab(searchCategoryId);
-            }, 1500);*/
-            $( document).on('ajaxComplete',function() {
+            }, 1500);
+            /*$( document).on('ajaxComplete',function() {
                 setActiveTab(searchCategoryId);
-            });
+            });*/
         }
     });
 
 
     function setActiveTab(searchCategoryId){
-        console.log('fdfdfd')
+        //console.log('fdfdfd')
         $('.tab').removeClass('active');
         $('.results-menu li[data-toggle="#tab-' + searchCategoryId + '"]').addClass('active');
         $('.tab-block').hide();

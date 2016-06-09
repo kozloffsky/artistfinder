@@ -7,10 +7,9 @@
 
         <div class="enquiries-wrap">
             {% for chat in chats|reverse %}
-                {{ dump(chat) }}
-            <article class="enq-block clearfix" id="{{ chat.id }}">
+            <article class="enq-block clearfix" id="{{ chat.offer.id }}">
                 <span class="received-time">
-                     <i class="enq-icon icon-timing"></i> Received 5 hours ago
+                     <i class="enq-icon icon-timing"></i> Received {{ chat.last_message.time_from_get }} ago
                 </span>
 
                 <div class="col-lg-3 no-pad">
@@ -28,13 +27,23 @@
                 <div class="col-lg-9 act-request">
 
                     <p class="act-request-title">
-                        Act request: <span class="bold-title">5-piece Jazz band, Acrobats, Sports Act</span>
-                        <span class="see-more">(<a href="#">See more</a>)</span>
+                        Act request: <span class="bold-title">{% for chatOffer in chat.offer.performances %}
+                                {{ chatOffer.title }},
+                        {% endfor %}
+                        </span>
+                        <!--<span class="see-more">(<a href="#">See more</a>)</span>-->
                     </p>
 
                     <p class="act-request-message" data-max-chars-desktop="150" data-max-chars-mobile="70">
                         <span class="title">Message from client:</span>
-                        <span class="text">{{ chat.offer.comments }}</span>
+
+                        <span class="text">
+                            {%  if chat.offer.comments is defined %}
+                            {{ chat.offer.comments }}
+                            {% else %}
+                            {{ chat.last_message.message_text }}
+                            {% endif %}
+                        </span>
                         <a class="show-more-btn" href="#">+more</a>
                     </p>
 

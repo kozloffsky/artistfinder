@@ -26,10 +26,14 @@ Acted\LegalDocsBundle\Entity\Offer:
           type: string(256)
           nullable: true
         comments:
-          type: string(256)
+          type: text
           nullable: true
     manyToMany:
         performances:
           targetEntity: Acted\LegalDocsBundle\Entity\Performance
           inversedBy: offers
+    oneToMany:
+        eventOffer:
+          targetEntity: Acted\LegalDocsBundle\Entity\EventOffer
+          mappedBy: offer
     lifecycleCallbacks: {  }

@@ -3,7 +3,7 @@
  */
 $(function () {
 
-    $( "#event_date" ).datepicker();
+    $( "#event_date" ).datepicker({dateFormat: 'dd/mm/yy'});
 
     function initSelect(){
         $('select').each(function () {
@@ -57,19 +57,22 @@ $(function () {
         })
     }
 
-    $('.quoteRequestProfile').on('click',function(){
+
+    $(document).on('click','.quoteRequestProfile',function(){
         var artistSlug = $('#slug').text();
         getArtistInformationForQuote(artistSlug);
         $('#freeQuoteModal').modal('show');
     });
 
-    $('.askQuoteFromSearch').on('click',function(){
+
+    $(document).on('click','.askQuoteFromSearch',function(){
         var artistSlug = $(this).val();
         getArtistInformationForQuote(artistSlug);
         $('#freeQuoteModal').modal('show');
     });
 
-    $('.requestQuotePerformance').on('click',function(){
+
+    $(document).on('click','.requestQuotePerformance',function(){
         var artistSlug = $('#slug').text();
         var performanceRequestId = $(this).val();
         console.log(performanceRequestId)
@@ -152,6 +155,8 @@ $(function () {
                 if(userEvents.length > 0){
                     createEventsListRequest(userEvents);
                     setDataEvent(userEvents);
+                } else {
+                    $('.eventChooseRequest').hide();
                 }
             }
         })
@@ -174,7 +179,9 @@ $(function () {
             var selectedEvent = $(this).find('option:selected').attr('class');
             console.log(selectedEvent);
             fillFormWithDataFromEvent(userEvents, selectedEvent)
-        })
+        });
+        var selectedEvent = $('#chosenEvent select').find('option:selected').attr('class');
+        fillFormWithDataFromEvent(userEvents, selectedEvent)
     }
 
     function fillFormWithDataFromEvent(userEvents, selectedEvent){
@@ -247,7 +254,19 @@ $(function () {
         $.ajax({
             type:'POST',
             url:'/event/create',
-            data: data + '&user='+userInformationStorage.userId
+            data: data + '&user='+userInformationStorage.userId,
+            success:function(res){
+                console.log(res);
+                $('#freeQuoteModal').modal('hide');
+                $('#offerSuccess').modal('show');
+            },
+            error: function(response){
+                $('#requestQuoteForm input').attr('style', '');
+                $.each(response.responseJSON, function(key, value) {
+                    console.log(key, value);
+                    $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
+                });
+            }
         })
     };
 });

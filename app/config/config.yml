@@ -165,3 +165,8 @@ fos_rest:
             html: false
     serializer:
         serialize_null: true
+
+tweede_golf_swiftmailer_logger:
+    loggers:
+        entity_logger:
+            enabled: true
