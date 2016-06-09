@@ -100,9 +100,10 @@ class ChatManager
      * @param User $sender
      * @param User $receiver
      * @param string $messageText
+     * @param string $filePath
      * @return  Message
      */
-    public function newMessage(ChatRoom $chatRoom, User $sender, User $receiver, $messageText)
+    public function newMessage(ChatRoom $chatRoom, User $sender, User $receiver, $messageText = null, $filePath = null)
     {
         $message = new Message();
         $now = new \DateTime();
@@ -111,6 +112,7 @@ class ChatManager
         $message->setReceiverUser($receiver);
         $message->setSenderUser($sender);
         $message->setMessageText($messageText);
+        $message->setFilePath($filePath);
         $message->setSubject($chatRoom->getEvent()->getTitle());
         $message->setSendDateTime($now);
 

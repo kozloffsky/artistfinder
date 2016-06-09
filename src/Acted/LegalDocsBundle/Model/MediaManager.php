@@ -96,4 +96,9 @@ class MediaManager
         return $media;
     }
 
+    public function uploadFile($file)
+    {
+        return '';
+    }
+
 }

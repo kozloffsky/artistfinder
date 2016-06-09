@@ -55,6 +55,11 @@ class Message
     private $archived = false;
 
     /**
+     * @var string
+     */
+    private $filePath;
+
+    /**
      * Get id
      *
      * @return integer
@@ -240,6 +245,23 @@ class Message
     public function setArchived($archived)
     {
         $this->archived = $archived;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilePath()
+    {
+        return $this->filePath;
+    }
+
+    /**
+     * @param string $filePath
+     * @return Message
+     */
+    public function setFilePath($filePath)
+    {
+        $this->filePath = $filePath;
     }
 
     public function getTimeFromGet()
