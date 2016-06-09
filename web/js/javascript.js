@@ -3018,7 +3018,7 @@ $(function() {
         })
     }
 
-    $('.archiveMessage').on('click',function(){
+    $(document).on('click','.archiveMessage',function(){
         var messageId = $(this).parents('article').attr('id');
         archiveMessage(messageId)
     })
@@ -3048,10 +3048,20 @@ $(function() {
             success: function(res){
                 $('.messages .dialogs').empty();
                 $(res).each(function(){
+                    if(this.sender_user.avatar){
+                        var userMessageAvatar = this.sender_user.avatar;
+                    } else {
+                        var userMessageAvatar = '/assets/images/noAvatar.png';
+                    }
+                    if(this.archived == false){
+                        var archiveButton = '<li class="archive hidden-xs"><a class="archiveMessage"><i class="archive"></i> Archive</a></li>'
+                    } else {
+                        var archiveButton = '';
+                    }
                     var viewMessages = '<article class="col-xs-12 dialog-section noselect" data-longtap-duration="500" id="'+this.id+'">'+
                         '<div class="wrap clearfix">'+
                         '<div class="avatar">'+
-                        '<img src="'+this.sender_user.avatar+'" alt=""/>'+
+                        '<img src="'+userMessageAvatar+'" alt=""/>'+
                         '</div>'+
                         '<div class="user-info">'+
                         '<span class="user-name">'+this.sender_user.firstname+'</span>'+
@@ -3070,6 +3080,7 @@ $(function() {
                         '<div class="col-lg-2 col-sm-2  message-controls no-pad">'+
                         '<ul class="ul-reset">'+
                         '<li class="status confirmed"><i class="confirmed"></i> '+this.chat_room.offer.event_offer[0].status+'</li>'+
+                        archiveButton+
                         '</ul>'+
                         '</div>'+
                         '</div>'+
@@ -10847,6 +10858,21 @@ $(function () {
         $(this).addClass('active');
     });
 
+    var blocksToShow = '';
+
+    function getNumOfBlocksToShow(){
+        var windowWidth = window.innerWidth;
+        console.log(windowWidth)
+        if(windowWidth <= 991 && windowWidth >= 839){
+            blocksToShow = 16;
+        } else {
+            blocksToShow = 15;
+        }
+    }
+    getNumOfBlocksToShow()
+    console.log(blocksToShow)
+
+
 
     function selectBoxStyle() {
         $('select').each(function () {
@@ -11076,18 +11102,18 @@ $(function () {
         getFilteredRes(searchFormSerialize);
     });
 
-    function getFilteredRes(searchFormSerialize){
+    function getFilteredRes(searchFormSerialize, searchResMain){
         $.ajax({
             type:'GET',
             url: '/batch/artist',
-            data: searchFormSerialize,
+            data: searchFormSerialize + '&limit=' +blocksToShow,
             success: function(response){
                 var checkedCategoriesFind = $('#searchCategory input:checkbox:checked').length;
                 console.log(checkedCategoriesFind);
-                if(checkedCategoriesFind > 0) {
+                if(checkedCategoriesFind > 0 && !searchResMain) {
                     createNewFilterResults(response);
                 } else {
-                    searchResultMainCategories(response)
+                    searchResultMainCategories(response);
                 }
             }
         })
@@ -11119,6 +11145,7 @@ $(function () {
     $('#recomendedFilterSearch select').on('change', function(){
         var filtersCatSelectGroup = $('#recomendedFilterSearch select');
         console.log(this.id);
+        var searchResTabMain = true;
         if (this.id == 'recFilterRating') {
             $('#recomendedFilterSearch #recFilterPrice').prop("disabled", true);
         } else if (this.id == 'recFilterRating'){
@@ -11126,15 +11153,16 @@ $(function () {
         }
         var searchAllCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch, #recomendedFilterSearch').serialize()
         filtersCatSelectGroup.prop( "disabled", false );
-        getFilteredRes(searchAllCat)
+        getFilteredRes(searchAllCat, searchResTabMain)
     });
 
     $('#recomendedFilterSearch input:checkbox').on('change', function(){
         console.log('fgdgdfgfsdgf')
+        var searchResTabMain = true;
         $('#recomendedFilter select').prop( "disabled", true );
         var searchAllCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch, #recomendedFilterSearch').serialize()
         $('#recomendedFilter select').prop( "disabled", false );
-        getFilteredRes(searchAllCat)
+        getFilteredRes(searchAllCat, searchResTabMain)
     });
 /**/
 
@@ -11420,7 +11448,7 @@ $(function () {
         setTimeout(function() {
             var countCardsInCat = $('#tab-'+propt+' .row .categoriesCardsSearch').length;
             //console.log(countCardsInCat);
-            if (countCardsInCat == 15){
+            if (countCardsInCat == blocksToShow){
                 $('#tab-'+propt+' .row').append('<div class="controls show-more">'+
                     '<div class="button-gradient">'+
                     '<button data-dismiss="modal" class="btn">Show more</button>'+
@@ -11555,7 +11583,7 @@ $(function () {
         $.ajax({
             type:'GET',
             url: '/artist',
-            data: datasendSearch,
+            data: datasendSearch + '&limit=' + blocksToShow,
             success: function(response){
                 //console.log(response);
                 $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch, #tab-'+categoryFiltering+' > .row .no-res-block, #tab-'+categoryFiltering+' > .row .show-more').remove();
@@ -11591,7 +11619,7 @@ $(function () {
         var formsWithoutCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch').serialize(),
             countElementsReady = $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch').length,
             categorySorting = $('#tab-'+categoryFiltering+' > .filters form').serialize(),
-            getCurrentPage = countElementsReady / 15,
+            getCurrentPage = countElementsReady / blocksToShow,
             pageMath = Math.floor(getCurrentPage),
             pageNumberToLoad = pageMath + 1;
             //console.log(infiniteScrollCheckPage);
@@ -11606,7 +11634,7 @@ $(function () {
             $.ajax({
                 type: 'GET',
                 url: '/artist',
-                data: datasendSearch,
+                data: datasendSearch + '&limit=' +blocksToShow,
                 success: function (response) {
                     //console.log(response);
                     $('#tab-' + categoryFiltering + ' > .row .show-more').remove();
@@ -11649,7 +11677,7 @@ $(function () {
         $.ajax({
             type: 'GET',
             url: '/artist',
-            data: {'mainCategory': searchMainCatId},
+            data: {'mainCategory': searchMainCatId, 'limit': blocksToShow},
             success: function (response) {
                 console.log(response);
                 catSearchRes(searchCatName, searchMainCatId, response);
@@ -11736,18 +11764,18 @@ $(function () {
         var catPostion = $(this).prop( "checked" );
         console.log(catPostion);
         if(catPostion){
-            /*setTimeout(function(){
+            setTimeout(function(){
                 setActiveTab(searchCategoryId);
-            }, 1500);*/
-            $( document).on('ajaxComplete',function() {
+            }, 1500);
+            /*$( document).on('ajaxComplete',function() {
                 setActiveTab(searchCategoryId);
-            });
+            });*/
         }
     });
 
 
     function setActiveTab(searchCategoryId){
-        console.log('fdfdfd')
+        //console.log('fdfdfd')
         $('.tab').removeClass('active');
         $('.results-menu li[data-toggle="#tab-' + searchCategoryId + '"]').addClass('active');
         $('.tab-block').hide();

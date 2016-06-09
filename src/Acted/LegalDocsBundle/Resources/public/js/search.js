@@ -609,7 +609,7 @@ $(function () {
         setTimeout(function() {
             var countCardsInCat = $('#tab-'+propt+' .row .categoriesCardsSearch').length;
             //console.log(countCardsInCat);
-            if (countCardsInCat == 15){
+            if (countCardsInCat == blocksToShow){
                 $('#tab-'+propt+' .row').append('<div class="controls show-more">'+
                     '<div class="button-gradient">'+
                     '<button data-dismiss="modal" class="btn">Show more</button>'+
@@ -780,7 +780,7 @@ $(function () {
         var formsWithoutCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch').serialize(),
             countElementsReady = $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch').length,
             categorySorting = $('#tab-'+categoryFiltering+' > .filters form').serialize(),
-            getCurrentPage = countElementsReady / + blocksToShow,
+            getCurrentPage = countElementsReady / blocksToShow,
             pageMath = Math.floor(getCurrentPage),
             pageNumberToLoad = pageMath + 1;
             //console.log(infiniteScrollCheckPage);

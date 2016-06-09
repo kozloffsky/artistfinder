@@ -10511,3 +10511,7 @@ a.disabled {
     float: left;
     width: 115px;
 }
+.archiveMessage
+{
+    cursor: pointer;
+}
