@@ -87,6 +87,7 @@ $(function() {
         messagesFilter(filterValueSelected)
     });
 
+
     function messagesFilter(val){
         var userId = $('header #userInformation').text();
         console.log(val)

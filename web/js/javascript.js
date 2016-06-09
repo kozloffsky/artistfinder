@@ -3038,6 +3038,7 @@ $(function() {
         var filterValueSelected = $(this).find('option:selected').val();
         messagesFilter(filterValueSelected)
     });
+    
 
     function messagesFilter(val){
         var userId = $('header #userInformation').text();
