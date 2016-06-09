@@ -25,4 +25,21 @@ class OfferRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery();
     }
 
+    /**
+     * @param User $artist
+     * @return int
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function countOffersForArtist($artist)
+    {
+        $query = $this->createQueryBuilder('o')
+            ->select('COUNT(o.id) as amount')
+            ->leftJoin('o.performances', 'p')
+            ->where('p.profile = :user')
+            ->setParameter('user', $artist)
+        ;
+
+        return $query->getQuery()->getOneOrNullResult();
+    }
+
 }

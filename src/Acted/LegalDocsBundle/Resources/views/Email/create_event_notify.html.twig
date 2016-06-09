@@ -50,7 +50,7 @@
         </ul>
         <p>
             You can reply instantly to this enquiry, or message me through our
-            <a href="{{ url('acted_legal_docs_homepage') }}">chatroom</a>.
+            <a href="{{ url('chat_room_list', {'userId': artist.id } ) }}">chatroom</a>.
             If you are not available, you just need to
             <a href="{{ url('reject_offer', {'id': offer.id}) }}">click here</a>. </p>
         <p>Many thanks & kind regards,</p>
