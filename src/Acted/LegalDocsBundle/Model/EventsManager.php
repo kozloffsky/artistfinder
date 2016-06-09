@@ -129,9 +129,12 @@ class EventsManager
      */
     public function newMessageNotify($eventData, $artist)
     {
+        $em = $this->entityManager;
         $rendered = $this->templating->render('@ActedLegalDocs/Email/new_message_notify.html.twig', [
             'event' => $eventData,
             'artist' => $artist,
+            'amount_enquiries' => $em->getRepository('ActedLegalDocsBundle:Offer')->countOffersForArtist($artist)
+            ['amount']
         ]);
 
         $this->userManager->sendEmailMessage($rendered, $this->mailFrom, $artist->getEmail());

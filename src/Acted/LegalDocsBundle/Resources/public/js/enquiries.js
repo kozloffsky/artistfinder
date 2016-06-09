@@ -66,7 +66,7 @@ $(function() {
         })
     }
 
-    $('.archiveMessage').on('click',function(){
+    $(document).on('click','.archiveMessage',function(){
         var messageId = $(this).parents('article').attr('id');
         archiveMessage(messageId)
     })
@@ -96,10 +96,20 @@ $(function() {
             success: function(res){
                 $('.messages .dialogs').empty();
                 $(res).each(function(){
+                    if(this.sender_user.avatar){
+                        var userMessageAvatar = this.sender_user.avatar;
+                    } else {
+                        var userMessageAvatar = '/assets/images/noAvatar.png';
+                    }
+                    if(this.archived == false){
+                        var archiveButton = '<li class="archive hidden-xs"><a class="archiveMessage"><i class="archive"></i> Archive</a></li>'
+                    } else {
+                        var archiveButton = '';
+                    }
                     var viewMessages = '<article class="col-xs-12 dialog-section noselect" data-longtap-duration="500" id="'+this.id+'">'+
                         '<div class="wrap clearfix">'+
                         '<div class="avatar">'+
-                        '<img src="'+this.sender_user.avatar+'" alt=""/>'+
+                        '<img src="'+userMessageAvatar+'" alt=""/>'+
                         '</div>'+
                         '<div class="user-info">'+
                         '<span class="user-name">'+this.sender_user.firstname+'</span>'+
@@ -118,6 +128,7 @@ $(function() {
                         '<div class="col-lg-2 col-sm-2  message-controls no-pad">'+
                         '<ul class="ul-reset">'+
                         '<li class="status confirmed"><i class="confirmed"></i> '+this.chat_room.offer.event_offer[0].status+'</li>'+
+                        archiveButton+
                         '</ul>'+
                         '</div>'+
                         '</div>'+

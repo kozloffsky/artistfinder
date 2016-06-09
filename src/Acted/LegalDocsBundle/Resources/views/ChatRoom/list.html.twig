@@ -9,7 +9,7 @@
             {% for chat in chats|reverse %}
             <article class="enq-block clearfix" id="{{ chat.offer.id }}">
                 <span class="received-time">
-                     <i class="enq-icon icon-timing"></i> Received 5 hours ago
+                     <i class="enq-icon icon-timing"></i> Received {{ chat.last_message.time_from_get }} ago
                 </span>
 
                 <div class="col-lg-3 no-pad">
@@ -36,7 +36,14 @@
 
                     <p class="act-request-message" data-max-chars-desktop="150" data-max-chars-mobile="70">
                         <span class="title">Message from client:</span>
-                        <span class="text">{{ chat.offer.comments }}</span>
+
+                        <span class="text">
+                            {%  if chat.offer.comments is defined %}
+                            {{ chat.offer.comments }}
+                            {% else %}
+                            {{ chat.last_message.message_text }}
+                            {% endif %}
+                        </span>
                         <a class="show-more-btn" href="#">+more</a>
                     </p>
 
