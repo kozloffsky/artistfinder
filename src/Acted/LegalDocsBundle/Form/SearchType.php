@@ -51,6 +51,7 @@ class SearchType extends AbstractType
                 'required' => false
             ])
             ->add('page', IntegerType::class)
+            ->add('limit', IntegerType::class)
             ->add('with_video', ChoiceType::class, ['choices_as_values' => true, 'choices' => [true, false]])
             ->add('recommended', ChoiceType::class, ['choices_as_values' => true, 'choices' => [true, false]])
             ->add('mainCategory', IntegerType::class, ['required' => false])
