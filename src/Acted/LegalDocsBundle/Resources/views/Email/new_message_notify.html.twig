@@ -5,10 +5,11 @@
 {% endblock %}
 {% block body_html %}
     {% autoescape false %}
-        <p>Hello {{ artist.firstname }}, we have noticed that you have 1 new enquiries and 2 pending </p>
-        <p>ones waiting for your quotation (1+2 in total).</p>
+        <p>Hello {{ artist.firstname }}, we have noticed that you have 1 new enquiries and {{ amount_enquiries - 1 }}
+            pending </p>
+        <p>ones waiting for your quotation ({{ amount_enquiries }} in total).</p>
         <p>Please keep in mind it’s faster than light speed to send a quote through Acted and get
-            bookings confirmed! Do you want to access your <a href="{{ url('acted_legal_docs_homepage') }}">dashboard now?</a></p>
+            bookings confirmed! Do you want to access your <a href="{{ url('chat_room_list', {'userId': artist.id } ) }}">dashboard now?</a></p>
         <p>Keep up the good work {{ artist.firstname }}, and do not hesitate to reach out to us with your
                 feedback, comments, and love letters.</p>
         <p>Sincerely,</p>
