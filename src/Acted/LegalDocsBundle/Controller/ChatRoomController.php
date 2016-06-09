@@ -188,6 +188,7 @@ class ChatRoomController extends Controller
     public function webSocketPushAction(Request $request)
     {
         $messageText = $request->request->get('message');
+        $uploadedFile = $request->files->get('file');
         $chatId = $request->get('chatId');
 
         $user = $this->getUser();
@@ -195,7 +196,6 @@ class ChatRoomController extends Controller
         if (!$chat) {
             return new JsonResponse(['error' => 'You are not have permission sending messages to this chat'], 400);
         }
-        $chatManager = $this->get('app.chat.manager');
         $pusher = $this->container->get('gos_web_socket.zmq.pusher');
 
         /** checking user is receiver or sender **/
@@ -206,9 +206,16 @@ class ChatRoomController extends Controller
             $sender = $chat->getClient();
             $receiver = $chat->getArtist();
         }
+
+        /** Add new message to chat room **/
         try {
-            /** Add new message to chat room **/
-            $message = $chatManager->newMessage($chat, $sender, $receiver, $messageText);
+            if ($messageText) {
+                $message = $this->get('app.chat.manager')->newMessage($chat, $sender, $receiver, $messageText, null);
+            } else {
+                $mediaManager = $this->get('app.media.manager');
+                $filePath = $mediaManager->uploadFile($uploadedFile);
+                $message = $this->get('app.chat.manager')->newMessage($chat, $sender, $receiver, null, $filePath);
+            }
             $this->getEM()->persist($message);
             $this->getEM()->flush();
 
