@@ -37,7 +37,7 @@ class ChatRoomRepository extends EntityRepository
     public function getChatRoomByParams($userId)
     {
         $query = $this->createQueryBuilder('c')
-            ->where('c.user = :userId')
+            ->where('c.artist = :userId OR c.client = :userId')
             ->setParameter('userId', $userId)
             ;
 
