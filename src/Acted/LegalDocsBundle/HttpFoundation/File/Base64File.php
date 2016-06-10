@@ -29,7 +29,7 @@ class Base64File extends File
         stream_filter_append($file, 'convert.base64-decode');
         fwrite($file, $img);
         $meta_data = stream_get_meta_data($file);
-        $path = $meta_data['uri'];
+        $path = '/'.$meta_data['uri'];
         fclose($file);
         parent::__construct($path, true);
     }
