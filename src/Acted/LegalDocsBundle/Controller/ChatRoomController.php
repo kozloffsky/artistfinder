@@ -184,6 +184,7 @@ class ChatRoomController extends Controller
     /**
      * @param Request $request
      * @return JsonResponse
+     * @throws \Exception
      */
     public function webSocketPushAction(Request $request)
     {
@@ -213,7 +214,16 @@ class ChatRoomController extends Controller
                 $message = $this->get('app.chat.manager')->newMessage($chat, $sender, $receiver, $messageText, null);
             } else {
                 $mediaManager = $this->get('app.media.manager');
-                $filePath = $mediaManager->uploadFile($uploadedFile);
+                $uploadResult = $mediaManager->uploadFile($uploadedFile, 'chat_'.$chatId);
+                try {
+                    if ($uploadResult['status'] === 'success') {
+                        $filePath = $uploadResult['message'];
+                    } else {
+                        throw new \Exception($uploadResult['message']);
+                    }
+                } catch (\Exception $e) {
+                    return new JsonResponse(['error' => $e->getMessage()], 400);
+                }
                 $message = $this->get('app.chat.manager')->newMessage($chat, $sender, $receiver, null, $filePath);
             }
             $this->getEM()->persist($message);
