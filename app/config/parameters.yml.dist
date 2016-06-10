@@ -38,3 +38,4 @@ parameters:
         - application/msword
         - text/plain
         - application/zip
+    chat_upload_dir: uploads
