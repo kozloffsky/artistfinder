@@ -36,18 +36,25 @@ class MediaManager
     private $maxFileSize;
 
     /**
+     * @var string
+     */
+    private $chatUploadsDir;
+
+    /**
      * MediaManager constructor.
      * @param string $dir
      * @param $lip
      * @param array $fileFormats
      * @param integer $maxFileSize
+     * @param string $chatUploadsDir
      */
-    public function __construct($dir, $lip, $fileFormats, $maxFileSize)
+    public function __construct($dir, $lip, $fileFormats, $maxFileSize, $chatUploadsDir)
     {
         $this->dir = $dir;
         $this->lip = $lip;
         $this->fileFormats = $fileFormats;
         $this->maxFileSize = $maxFileSize;
+        $this->chatUploadsDir = $chatUploadsDir;
     }
 
     /**
@@ -169,14 +176,14 @@ class MediaManager
         try {
             if (is_null($filePath)) {
                 /** If not exist directory for upload */
-                $filePath = $this->dir;
+                $filePath = $this->chatUploadsDir;
 
                 if (!$fs->exists($filePath)) {
                     $fs->mkdir($filePath, 0777);
                 }
             } else {
                 /** If exist directory for upload */
-                $filePath = $this->dir . '/' . $filePath;
+                $filePath = $this->chatUploadsDir . '/' . $filePath;
 
                 if (!$fs->exists($filePath)) {
                     $fs->mkdir($filePath, 0777);

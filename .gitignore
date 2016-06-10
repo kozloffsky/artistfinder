@@ -69,4 +69,4 @@ project
 *.sublime-project
 .idea
 *.idea/*
-/web/images/chat*
+/web/uploads/*

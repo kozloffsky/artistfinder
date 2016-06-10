@@ -53,6 +53,7 @@ services:
             - "@liip_imagine.controller"
             - "%file_formats%"
             - "%max_file_size%"
+            - "%chat_upload_dir%"
 
     app.form_errors_serializer:
         class: Acted\LegalDocsBundle\FormErrors\FormErrorsSerializer
