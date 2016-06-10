@@ -1,50 +1,289 @@
-{% if app.user %}
-    <script type="text/javascript" src="{{ asset('bundles/goswebsocket/js/gos_web_socket_client.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/goswebsocket/js/vendor/autobahn.min.js') }}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>
-        var webSocket = WS.connect("ws://127.0.0.1:1337");
+{% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
+<main class="chat-room">
 
-        /**
-         * connect
-         */
-        webSocket.on("socket/connect", function(session){
-            console.log("Successfully Connected!");
-        })
-
-        /**
-         * disconnect
-         */
-        webSocket.on("socket/disconnect", function(error){
-            console.log("Disconnected for " + error.reason + " with code " + error.code);
-        })
-
-        webSocket.on("socket/connect", function(session){
-
-            //the callback function in "subscribe" is called everytime an event is published in that channel.
-            session.subscribe("acted/chat/6", function(uri, payload){
-                console.log('user:    ', payload.msg);
-            });
-
-            $(function () {
-                $('#main').on('click', '#click-but', function () {
-                   var text = $('#chat-room').val();
-                    if (text.length > 1) {
-                        $.post("{{ path('websocket_push', {'chatId': 6}) }}", {'message': text});
-//                        session.publish("acted/chat/1", text);
-                    }
-                });
-
-            });
+    <div class="container">
+        {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
 
 
-        })
-    </script>
-{% else %}
-    <h1>Not auth user</h1>
-{% endif %}
-<div id="main">
-    <textarea name="chat-room" id="chat-room" cols="30" rows="10" value="jsdffh hf sjks"></textarea>
-    <button id="click-but">some button</button>
-</div>
+        <div class="wrap">
+            <a class="btn-back" href="/messages">Back to messages</a>
+            <h2 class="main-title">Chatroom #4</h2>
+            <!--detail form start-->
+            <form action="#" class="detail-form">
+                <div class="row clearfix">
+                    <div class="col-lg-6 col-md-6 col-sm-6 no-padding">
+                        <h2 class="title">Event details</h2>
+                        <div class="frame">
+                            <label for="name_event">Name event</label>
+                            <input type="text" id="name_event" placeholder="Christmas Party">
+                        </div>
+                        <div class="frame">
+                            <label for="country-select">Country</label>
+                            <select data-class="main-select" class="full-width" name="main-select" id="country-select">
+                                <option value="0">United Kingdom</option>
+                                <option value="1">France</option>
+                                <option value="2">Germany</option>
+                            </select>
+                        </div>
+                        <div class="row holder border-b clearfix">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="frame">
+                                    <label for="datetimepicker">Date</label>
+                                    <input id="datetimepicker" placeholder="17/12/2016" type="text">
+                                </div>
+                                <div class="frame">
+                                    <label for="performance">Performance time</label>
+                                    <input type="text" id="performance" placeholder="10 p.m.">
+                                </div>
+                                <div class="frame">
+                                    <label for="arrival">Arrival time</label>
+                                    <input type="text" id="arrival" placeholder="6 p.m.">
+                                </div>
+                                <div class="frame">
+                                    <label for="guests">Number of guests</label>
+                                    <input type="text" id="guests" placeholder="234">
+                                </div>
+                                <div class="frame">
+                                    <label for="vanue">Vanue type</label>
+                                    <input type="text" id="vanue" placeholder="Hotel Ballrom">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 pull-right">
+                                <div class="frame">
+                                    <label for="adress">Adress</label>
+                                    <input type="text" id="adress" placeholder="Sr Regis">
+                                </div>
+                                <div class="frame">
+                                    <label for="city">City</label>
+                                    <select data-class="main-select" class="full-width" name="main-select" id="city">
+                                        <option value="0">London</option>
+                                        <option value="1">Reading</option>
+                                        <option value="2">Oxford</option>
+                                        <option value="3">Winchester</option>
+                                    </select>
+                                </div>
+                                <div class="frame">
+                                    <label for="p-code">Post code</label>
+                                    <input type="text" id="p-code" placeholder="Sr Regis">
+                                </div>
+                                <div class="map-holder">
+                                    <div id="map"></div>
+                                    <em class="note">Pin your location on the map</em>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 no-padding">
+                        <h2 class="title">Quote</h2>
+                        <div class="v-frame">
+                            <div class="v-box">
+                                <div class="box">
+                                    <em class="note">No quote submitted yet</em>
+                                    <div class="controls">
+                                        <div class="button-gradient filled">
+                                            <button class="btn" type="submit">Send quotation</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row list clearfix">
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <label for="c-name">Client name</label>
+                        <input type="text" id="c-name" placeholder="Thomas Man">
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <label for="c-person">Contact person</label>
+                        <input type="text" id="c-person" placeholder="Thomas Hardy">
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <label for="p-number">Phone number</label>
+                        <input type="text" id="p-number" placeholder="+4412321321321">
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <label for="e-address">Email addres</label>
+                        <input type="text" id="e-address" placeholder="smth@gmail.com">
+                    </div>
 
+                </div>
+            </form>
+            <!--detail form end-->
+            <!--miscellaneous list start-->
+            <ul class="miscellaneous-list">
+                <li>
+                    <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i>Share</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-print" aria-hidden="true"></i>Print</a>
+                </li>
+            </ul>
+            <!--miscellaneous list end-->
+        </div>
+        <article class="info-block border-b clearfix">
+            <div class="col-lg-7 col-md-7 col-sm-7 no-padding">
+                <ul class="block-list">
+                    <li>
+                        <dl>
+                            <dt><strong class="bold">Status:</strong></dt>
+                            <dd>
+                                <span class="confirm">Confirmed</span>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt><strong class="bold">Payment:</strong></dt>
+                            <dd></dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>Deposit:</dt>
+                            <dd>1,500 GBP received vie secured payment</dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>Balance:</dt>
+                            <dd>1,500 GBP unpaid</dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-5 no-padding">
+                <ul class="block-list alt">
+                    <li>
+                        <dl>
+                            <dt>Quotation</dt>
+                            <dd>
+                                <a href="#">See</a>
+                                <a href="#">Download</a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>Invoice</dt>
+                            <dd>
+                                <a href="#">See</a>
+                                <a href="#">Download</a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>Contract</dt>
+                            <dd>
+                                <a href="#">See</a>
+                                <a href="#">Download</a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>Booking</dt>
+                            <dd>
+                                <a href="#">See</a>
+                                <a href="#">Download</a>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </article>
+        <!--twocolumns start-->
+        <div id="twocolumns">
+            <div class="col-1">
+                <ul class="comments-list">
+                    <li>
+                        <a href="#" class="img-holder">
+                            <img src="assets/images/avatar.jpg" alt="image description">
+                        </a>
+                        <div class="holder">
+                            <div class="box">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad asperiores aspernatur at commodi consectetur cum, deserunt dolores earum eum eveniet harum impedit libero nisi nobis pariatur perspiciatis placeat provident quis repellat repellendus sed ut velit? Animi atque commodi doloremque esse ex facilis fugit in iusto laudantium magni minima numquam qui saepe soluta tempora ullam, voluptas?</p>
+                                <em class="date">Today at 12.34 pm</em>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="right active">
+                        <a href="#" class="img-holder">
+                            <img src="assets/images/Avatar_profile.jpg" alt="image description">
+                        </a>
+                        <div class="holder">
+                            <div class="box">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto autem maxime optio quis. Consectetur, ducimus illum impedit pariatur temporibus velit!</p>
+                                <em class="date">Today at 12.35 am</em>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="img-holder">
+                            <img src="assets/images/avatar.jpg" alt="image description">
+                        </a>
+                        <div class="holder">
+                            <div class="box">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium alias consequuntur ea eligendi error excepturi facere fugiat ipsum iusto labore laboriosam laudantium, magni maiores molestiae mollitia perspiciatis quam, quos rem repellat repellendus sunt suscipit temporibus, totam vel? Amet deserunt enim iure necessitatibus. Aperiam assumenda dolores eius esse est facere, nisi nostrum quod reprehenderit sint suscipit tempora voluptatum. Assumenda aut dolorum earum fuga odit pariatur quod ratione voluptate. Alias amet, debitis est eveniet fugit ipsam sunt?</p>
+                                <em class="date">Today at 12.34 pm</em>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="right active">
+                        <a href="#" class="img-holder">
+                            <img src="assets/images/Avatar_profile.jpg" alt="image description">
+                        </a>
+                        <div class="holder">
+                            <div class="box">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto autem maxime optio quis. Consectetur, ducimus illum impedit pariatur temporibus velit!</p>
+                                <em class="date">Today at 12.35 am</em>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="img-holder">
+                            <img src="assets/images/avatar.jpg" alt="image description">
+                        </a>
+                        <div class="holder">
+                            <div class="box">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium alias consequuntur ea eligendi error excepturi facere fugiat ipsum iusto labore laboriosam laudantium, magni maiores molestiae mollitia perspiciatis quam, quos rem repellat repellendus sunt suscipit temporibus, totam vel? Amet deserunt enim iure necessitatibus. Aperiam assumenda dolores eius esse est facere, nisi nostrum quod reprehenderit sint suscipit tempora voluptatum. Assumenda aut dolorum earum fuga odit pariatur quod ratione voluptate. Alias amet, debitis est eveniet fugit ipsam sunt?</p>
+                                <em class="date">Today at 12.34 pm</em>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-2">
+                <form class="message-form" action="#">
+                    <textarea class="textarea" placeholder="Write your message"></textarea>
+                    <div class="upload-box">
+                        <div class="row">
+                            <input type="file" name="files[]" id="filer_input1" multiple="multiple">
+                        </div>
+                        <div class="controls">
+                            <div class="button-gradient filled">
+                                <button class="btn" type="submit">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>Technical req</h3>
+                    <div class="frame">
+                        <select data-class="selections-white custom" name="custom" id="custom">
+                            <option value="0">Custom</option>
+                            <option value="1">Custom 1</option>
+                            <option value="2">Custom 2</option>
+                        </select>
+                    </div>
+                    <textarea class="textarea tall" placeholder="Custom"></textarea>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+</main>
+
+
+{% include 'ActedLegalDocsBundle:Default:footer.html.twig' %}

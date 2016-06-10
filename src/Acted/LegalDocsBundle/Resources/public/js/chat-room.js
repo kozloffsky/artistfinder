@@ -1,14 +1,14 @@
 $(function(){
-    'use strict';
+    /*'use strict';
 
-    /*function initialize() {
+    function initialize() {
         var myLatlng = new google.maps.LatLng(-34.397, 150.644);
         var myOptions = {
             zoom: 8,
             center: myLatlng,
             disableDefaultUI: true,
             mapTypeId: google.maps.MapTypeId.ROADMAP
-        }
+        };
         var map = new google.maps.Map(document.getElementById("map"), myOptions);
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(-34.397, 150.644)
@@ -55,4 +55,8 @@ $(function(){
         $select2.data('select2').$selection.addClass(className);
         $select2.data('select2').$results.addClass(className);
     });
+
+    /*$('#datetimepicker').datetimepicker({
+        format: 'DD/MM/YYYY'
+    });*/
 });
