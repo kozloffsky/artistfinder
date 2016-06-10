@@ -223,7 +223,7 @@ class User implements UserInterface, \Serializable
      */
     public function setAvatar($avatar)
     {
-        $this->avatar = $avatar;
+        $this->avatar =  '/' . $avatar;
 
         return $this;
     }
