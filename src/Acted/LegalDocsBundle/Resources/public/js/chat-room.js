@@ -1,8 +1,8 @@
 $(function(){
     'use strict';
 
-    function initialize() {
-        var myLatlng = new google.maps.LatLng(-34.397, 150.644);
+    function initializeMap(eventLocationMap) {
+        var myLatlng = new google.maps.LatLng(eventLocationMap.latitude, eventLocationMap.longitude);
         var myOptions = {
             zoom: 8,
             center: myLatlng,
@@ -11,7 +11,7 @@ $(function(){
         };
         var map = new google.maps.Map(document.getElementById("map"), myOptions);
         var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(-34.397, 150.644)
+            position: new google.maps.LatLng(eventLocationMap.latitude, eventLocationMap.longitude)
         });
         marker.setMap(map);
     }
@@ -65,12 +65,17 @@ $(function(){
         var currentUrl = window.location.pathname;
         var matchesUrl = currentUrl.split('/');
         if (matchesUrl[2] == 'chat'){
-            initialize();
-            chatSocket();
+
+            var chatId = $('#chatId').text();
+            var eventLocationMap= {};
+            eventLocationMap.latitude = $('#eventLocationCoordinates .latitude').text();
+            eventLocationMap.longitude = $('#eventLocationCoordinates .longitude').text();
+            initializeMap(eventLocationMap);
+            chatSocket(chatId);
         }
     }
 
-    function chatSocket(){
+    function chatSocket(chatId){
         var webSocket = WS.connect("ws://127.0.0.1:1337");
 
         /**
@@ -91,21 +96,35 @@ $(function(){
 
             //the callback function in "subscribe" is called everytime an event is published in that channel.
             session.subscribe("acted/chat/1", function(uri, payload){
+                console.log(payload);
                 console.log('user:    ', payload.msg);
+                postMessage(payload.msg)
             });
 
             $(function () {
-                $('#main').on('click', '#click-but', function () {
+                $(document).on('click', '#sendMsg', function (ev) {
+                    ev.preventDefault();
                     var text = $('#chat-room').val();
                     if (text.length > 1) {
-                        $.post("{{ path('websocket_push', {'chatId': 1}) }}", {'message': text});
-//                        session.publish("acted/chat/1", text);
+                        $.post('/dashboard/web/push/'+chatId+'', {'message': text});//
                     }
                 });
-
             });
 
-
+            function postMessage(messageText){
+                var messageBlock = '<li>'+
+                    '<a href="#" class="img-holder">'+
+                    '<img src="/assets/images/noAvatar.png" alt="image description">'+
+                    '</a>'+
+                    '<div class="holder">'+
+                    '<div class="box">'+
+                    '<p>'+messageText+'</p>'+
+                    '<em class="date"></em>'+
+                    '</div>'+
+                    '</div>'+
+                    '</li>';
+                $('#twocolumns .comments-list').prepend(messageBlock);
+            }
         })
     }
 });
