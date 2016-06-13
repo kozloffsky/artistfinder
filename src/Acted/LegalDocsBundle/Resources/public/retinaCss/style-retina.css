@@ -2780,3 +2780,14 @@ a.disabled {
 {
     cursor: pointer;
 }
+
+.btn > a
+{
+    color: #fff;
+    font-size: 15px;
+    font-family: LatoBold;
+}
+.btn > a:hover
+{
+    text-decoration: none;
+}

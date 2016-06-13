@@ -5,8 +5,9 @@
         {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
 
 
+        {{ dump() }}
         <div class="wrap">
-            <a class="btn-back" href="/messages">Back to messages</a>
+            <a class="btn-back" href="/dashboard/messages/{{ app.user.id }}">Back to messages</a>
             <h2 class="main-title">Chatroom #4</h2>
             <!--detail form start-->
             <form action="#" class="detail-form">

@@ -7,6 +7,7 @@
 
         <div class="enquiries-wrap">
             {% for chat in chats|reverse %}
+                {{ dump(chat) }}
             <article class="enq-block clearfix" id="{{ chat.offer.id }}">
                 <span class="received-time">
                      <i class="enq-icon icon-timing"></i> Received {{ chat.last_message.time_from_get }} ago
@@ -53,7 +54,7 @@
                         </div>
 
                         <div class="button-gradient filled blue">
-                            <button type="button" class="btn register">Send Message</button>
+                            <button type="button" class="btn register"><a href="/dashboard/chat/{{ chat.id }}">Send Message</a></button>
                         </div>
 
                         <div class="button-gradient">

@@ -55,7 +55,8 @@ class ChatManager
             $chatRoom = new ChatRoom();
             $chatRoom->setEvent($event);
             $chatRoom->setOffer($offer);
-            $chatRoom->setUser($receiver);
+            $chatRoom->setArtist($receiver);
+            $chatRoom->setClient($event->getUser());
             $message = $this->newChatMessage($chatRoom, $receiver, $data);
             $this->entityManager->persist($chatRoom);
             $this->entityManager->persist($message);
