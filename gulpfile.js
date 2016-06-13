@@ -20,6 +20,8 @@ gulp.task('js', function(){
             "jquery.throttle.min.js",
             "bootstrap.min.js",
             "bootstrap-editable.min.js",
+            "moment.js",
+            "bootstrap-datetimepicker.min.js",
             "*.js",
             "profile.js"
         ]))

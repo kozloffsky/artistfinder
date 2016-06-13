@@ -1,5 +1,5 @@
 $(function(){
-    /*'use strict';
+    'use strict';
 
     function initialize() {
         var myLatlng = new google.maps.LatLng(-34.397, 150.644);
@@ -16,7 +16,7 @@ $(function(){
         marker.setMap(map);
     }
 
-    initialize();*/
+
 
     $('#filer_input1').filer({
         limit: 10,
@@ -56,7 +56,56 @@ $(function(){
         $select2.data('select2').$results.addClass(className);
     });
 
-    /*$('#datetimepicker').datetimepicker({
+    $('#datetimepicker').datetimepicker({
         format: 'DD/MM/YYYY'
-    });*/
+    });
+
+    createChat();
+    function createChat(){
+        var currentUrl = window.location.pathname;
+        var matchesUrl = currentUrl.split('/');
+        if (matchesUrl[2] == 'chat'){
+            initialize();
+            chatSocket();
+        }
+    }
+
+    function chatSocket(){
+        var webSocket = WS.connect("ws://127.0.0.1:1337");
+
+        /**
+         * connect
+         */
+        webSocket.on("socket/connect", function(session){
+            console.log("Successfully Connected!");
+        })
+
+        /**
+         * disconnect
+         */
+        webSocket.on("socket/disconnect", function(error){
+            console.log("Disconnected for " + error.reason + " with code " + error.code);
+        })
+
+        webSocket.on("socket/connect", function(session){
+
+            //the callback function in "subscribe" is called everytime an event is published in that channel.
+            session.subscribe("acted/chat/1", function(uri, payload){
+                console.log('user:    ', payload.msg);
+            });
+
+            $(function () {
+                $('#main').on('click', '#click-but', function () {
+                    var text = $('#chat-room').val();
+                    if (text.length > 1) {
+                        $.post("{{ path('websocket_push', {'chatId': 1}) }}", {'message': text});
+//                        session.publish("acted/chat/1", text);
+                    }
+                });
+
+            });
+
+
+        })
+    }
 });

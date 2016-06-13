@@ -1,3 +1,4 @@
+
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
 <main class="chat-room">
 
@@ -5,10 +6,10 @@
         {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
 
 
-        {{ dump() }}
+        {{ dump(chat) }}
         <div class="wrap">
             <a class="btn-back" href="/dashboard/messages/{{ app.user.id }}">Back to messages</a>
-            <h2 class="main-title">Chatroom #4</h2>
+            <h2 class="main-title">Chatroom #{{ chat.chat_id }}</h2>
             <!--detail form start-->
             <form action="#" class="detail-form">
                 <div class="row clearfix">
@@ -16,7 +17,7 @@
                         <h2 class="title">Event details</h2>
                         <div class="frame">
                             <label for="name_event">Name event</label>
-                            <input type="text" id="name_event" placeholder="Christmas Party">
+                            <input type="text" id="name_event" placeholder="{{ chat.event.title }}" value="{{ chat.event.title }}">
                         </div>
                         <div class="frame">
                             <label for="country-select">Country</label>
@@ -30,7 +31,7 @@
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="frame">
                                     <label for="datetimepicker">Date</label>
-                                    <input id="datetimepicker" placeholder="17/12/2016" type="text">
+                                    <input id="datetimepicker" placeholder="{{ chat.event.starting_date }}" type="text" value="{{ chat.event.starting_date }}">
                                 </div>
                                 <div class="frame">
                                     <label for="performance">Performance time</label>
@@ -286,5 +287,16 @@
 
 </main>
 
+{% if app.user %}
+    <script type="text/javascript" src="{{ asset('bundles/goswebsocket/js/gos_web_socket_client.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/goswebsocket/js/vendor/autobahn.min.js') }}"></script>
+{% else %}
+    <h1>Not auth user</h1>
+{% endif %}
+<div id="main">
+    <textarea name="chat-room" id="chat-room" cols="30" rows="10" value="jsdffh hf sjks"></textarea>
+    <button id="click-but">some button</button>
+</div>
 
 {% include 'ActedLegalDocsBundle:Default:footer.html.twig' %}
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>

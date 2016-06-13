@@ -347,6 +347,17 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @return string
+     */
+    public function getRoleName()
+    {
+        $roles =  $this->roles->map(function($entry) { /** @var RefRole $entry */
+            return $entry->getName();
+        });
+        return $roles->first();
+    }
+
+    /**
      * Returns the password used to authenticate the user.
      *
      * This should be the encoded password. On authentication, a plain-text

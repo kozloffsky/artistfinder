@@ -2,7 +2,7 @@ Acted\LegalDocsBundle\Entity\ChatRoom:
     exclusion_policy: NONE
     properties:
         id:
-            groups: [chat_list, all_messages]
+            groups: [chat_list, all_messages, chat_room]
             serialized_name: chat_id
         event:
             groups: [chat_room, chat_list, all_messages]
