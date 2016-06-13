@@ -597,4 +597,10 @@ class Event
         return ($this->city && $this->city->getRegion()->getCountry()) ? $this->city->getRegion()->getCountry()->getId
         () : null;
     }
+
+    public function getCountryName()
+    {
+        return ($this->city && $this->city->getRegion()->getCountry()) ? $this->city->getRegion()->getCountry()->getName
+        () : null;
+    }
 }
