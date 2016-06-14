@@ -295,4 +295,23 @@ class ChatRoomController extends Controller
 
         return new Response($amount['data']);
     }
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Add quotation to event offer",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function addQuotationAction(Request $request)
+    {
+        $offerId = $request->get('id');
+
+        
+    }
 }

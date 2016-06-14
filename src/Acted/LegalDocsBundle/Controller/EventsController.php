@@ -151,8 +151,13 @@ class EventsController extends Controller
     {
         $userId = $request->query->get('user');
         $events = $this->getEM()->getRepository('ActedLegalDocsBundle:EventOffer')->getEventsByUserId($userId);
-
-        return ['events' => $events];
+        $artists = $this->getEM()->getRepository('ActedLegalDocsBundle:EventOffer')->getArtists($userId);
+        $result = [];
+        foreach ($artists as $artist) {
+            $result[] = $artist['user_id'];
+        }
+        
+        return ['events' => $events, 'artists' => $result];
     }
 
     /**
