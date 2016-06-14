@@ -87,9 +87,44 @@ $(function () {
             success: function(response) {
                 createRequestQuotePerformances(response.artist, performanceRequestId);
                 createArtistDataViewInQuote(response.artist);
+                preventMultipleQuotes(artistSlug);
             }
         })
     }
+
+    function preventMultipleQuotes(artistSlug){
+        var selectedEvent = $('#chosenEvent select').find('option:selected').val();
+        hideFormIfExistEvent(selectedEvent, artistSlug)
+        $('#chosenEvent select').on('change',function(){
+            var selectedEvent = $(this).find('option:selected').val();
+            hideFormIfExistEvent(selectedEvent, artistSlug)
+        });
+
+    }
+
+    function hideFormIfExistEvent(selectedEvent, artistSlug){
+        var getEventsReady = sessionStorage.getItem(selectedEvent);
+        if(getEventsReady){
+            var findArtistInEvent = getEventsReady.search(artistSlug);
+            console.log(findArtistInEvent)
+            if(findArtistInEvent >= 0){
+                preventEventSending()
+            } else {
+                allowEventSending()
+            }
+        }
+    }
+
+    function preventEventSending(){
+        $('#quoteRequestSecond .requestQuotePerformances, #quoteRequestSecond .add-comment-btn, #quoteRequestSecond .controls').hide();
+        $('#quoteRequestSecond .alreadyHasEventArtist').show();
+    }
+
+    function allowEventSending(){
+        $('#quoteRequestSecond .requestQuotePerformances, #quoteRequestSecond .add-comment-btn, #quoteRequestSecond .controls').show();
+        $('#quoteRequestSecond .alreadyHasEventArtist').hide()
+    }
+
 
     function createRequestQuotePerformances(artistData, performanceRequestId){
         $('.requestQuotePerformances').empty();
@@ -149,11 +184,15 @@ $(function () {
             type:'GET',
             url:'/event/user_events?user='+userId,
             success: function(response){
-                var userEvents = response.events;
+                var userEvents = response.events,
+                    userArtistsInEvents = response.artists;
                 if(userEvents.length > 0){
                     createEventsListRequest(userEvents);
                     setDataEvent(userEvents);
-                    saveArtistsInEvents(userEvents);
+                    sessionStorage.clear();
+                    for(var propt in userArtistsInEvents) {
+                        sessionStorage.setItem(propt, userArtistsInEvents[propt]);
+                    }
                 } else {
                     $('.eventChooseRequest').hide();
                 }
@@ -161,9 +200,6 @@ $(function () {
         })
     }
 
-    function saveArtistsInEvents(userEvents){
-        console.log(userEvents)
-    }
 
     function createEventsListRequest(userEvents){
         $(userEvents).each(function(i){
