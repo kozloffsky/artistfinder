@@ -230,13 +230,16 @@ class ChatRoomController extends Controller
             $this->getEM()->flush();
 
             $pusher->push(
-                ['msg' => $messageText],
-                'acted_topic_chat',
-                ['room' => $chatId],
-                [
-                    'avatar' => $user->getAvatar(),
-                    'user_name' => $user->getFullName()
-                ]);
+                    [
+                        'msg' => $messageText,
+                        'avatar' => $user->getAvatar(),
+                        'user_name' => $user->getFullName(),
+                        'room' => $chatId,
+                        'role' => $user->getRoleName()
+                    ],
+                    'acted_topic_chat',
+                    ['room' => $chatId]
+                );
 
         } catch (\Exception $e) {
             return new JsonResponse(['error' => $e->getMessage()], 400);
