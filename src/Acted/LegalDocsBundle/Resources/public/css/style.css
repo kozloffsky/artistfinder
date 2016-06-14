@@ -2589,3 +2589,7 @@ a.disabled {
 {
     text-decoration: none;
 }
+.alreadyHasEventArtist
+{
+    display: none;
+}

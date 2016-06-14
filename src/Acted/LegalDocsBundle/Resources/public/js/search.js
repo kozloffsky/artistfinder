@@ -231,19 +231,21 @@ $(function () {
        }
 
     function chooseCity(selectedCountruOption){
-        $.ajax({
-            type:'GET',
-            url: '/geo/city?_format=json&country=' + selectedCountruOption,
-            success:function(response){
-                $('#region').empty();
-                $('#region').append('<option value="" name="user_city">select a city</option>');
-                $(response).each(function(){
-                    $('#region').append('<option value="'+ this.id +'" name="user_city">'+this.name+'</option>');
-                    selectBoxStyle();
-                });
-                checkUserPosition();
-            }
-        })
+        if(selectedCountruOption) {
+            $.ajax({
+                type: 'GET',
+                url: '/geo/city?_format=json&country=' + selectedCountruOption,
+                success: function (response) {
+                    $('#region').empty();
+                    $('#region').append('<option value="" name="user_city">select a city</option>');
+                    $(response).each(function () {
+                        $('#region').append('<option value="' + this.id + '" name="user_city">' + this.name + '</option>');
+                        selectBoxStyle();
+                    });
+                    checkUserPosition();
+                }
+            })
+        }
     }
 
     $('.searchFormStart').on('click',function (e) {
