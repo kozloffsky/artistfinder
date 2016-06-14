@@ -4149,7 +4149,6 @@ $(function(){
     'use strict';
 
     function initializeMap(eventLocationMap) {
-        console.log(eventLocationMap)
         var myLatlng = new google.maps.LatLng(eventLocationMap.latitude, eventLocationMap.longitude);
         var myOptions = {
             zoom: 8,
@@ -9165,7 +9164,24 @@ $(function () {
                 $('#errorLogIn').hide();
                 var userData = JSON.stringify(response);
                 localStorage.setItem("user", userData);
-                window.location.replace(window.location.href);
+                var quote = localStorage.getItem('quoteRequest');
+                if(quote){
+                    $.ajax({
+                        type:'POST',
+                        url:'/event/create',
+                        data: quote + '&user='+ response.userId,
+                        success: function(){
+                            localStorage.removeItem('quoteRequest');
+                            $('#loginModal').modal('hide');
+                            $('#offerSuccess').modal('show');
+                            setTimeout(function(){
+                                window.location.replace(window.location.href);
+                            }, 2000);
+                        }
+                    })
+                } else {
+                    window.location.replace(window.location.href);
+                }
             },
             error: function(response){
                 var responseTextLogIn = response.responseJSON;
@@ -10525,14 +10541,26 @@ $(function () {
         } else if (!checkUserLoggedIn){
             localStorage.setItem("quoteRequest", requestFormSerialize);
             $('#freeQuoteModal').modal('hide');
-            $('#registrationModal').modal('show');
-            showSecondPage();
+            $('#ChooseAfterRequestModal').modal('show');
+            chooseRogLog();
         } else if(prevEventChosen == true && checkUserLoggedIn && userInformationStorage){
             var chosenEvent = $('#chosenEvent, #requestQuoteForm, #quoteRequestSecond').serialize();
             console.log(chosenEvent)
             sendQuoteRequest(chosenEvent, userInformationStorage);
         }
     });
+
+    function chooseRogLog(){
+        $('#signUpChoose').on('click',function(){
+            $('#ChooseAfterRequestModal').modal('hide');
+            $('#registrationModal').modal('show');
+            showSecondPage();
+        });
+        $('#LogInChoose').on('click',function(){
+            $('#ChooseAfterRequestModal').modal('hide');
+            $('#loginModal').modal('show');
+        })
+    }
 
     function showSecondPage() {
         var text = 'Contact details';
@@ -11559,8 +11587,8 @@ $(function () {
                 $('#searchRecWrapper'+propt+'').append(artistBlockSearch);
             }
             checkUserPosition();
-
         });
+        preventAskQuoteFromArtist();
     }
 
     function createNewFilterResults(response){
@@ -11626,6 +11654,7 @@ $(function () {
         selectBoxStyle();
         //console.log('finish');
         initTabs();
+        preventAskQuoteFromArtist()
 
         $('.filtersCat select').on('change mouseover', function(){
             var filtersCatSelectGroup = $('.filtersCat select');
@@ -11752,6 +11781,7 @@ $(function () {
         });
         setArtistStarsCat();
         checkUserPosition();
+        preventAskQuoteFromArtist();
     }
 
     function setArtistStarsCat(){
@@ -11954,6 +11984,22 @@ $(function () {
             $('html,body').animate({
                 scrollTop: $('.results').offset().top
             });
+        }
+    }
+
+    preventAskQuoteFromArtist()
+
+    function preventAskQuoteFromArtist(){
+        var checkIfUserLoggedIn = $('header #userInformation').length;
+        if(checkIfUserLoggedIn > 0){
+            var userInformationStorage = JSON.parse(localStorage.getItem('user'));
+            if(userInformationStorage) {
+                if (userInformationStorage.role[0] == 'ROLE_ARTIST') {
+                    $('.askQuoteFromSearch').parent('div').css('visibility','hidden');
+                    $('.requestQuotePerformance').hide();
+                    $('.quoteRequestProfile').hide();
+                }
+            }
         }
     }
 
