@@ -223,7 +223,7 @@ class User implements UserInterface, \Serializable
      */
     public function setAvatar($avatar)
     {
-        $this->avatar = $avatar;
+        $this->avatar =  '/' . $avatar;
 
         return $this;
     }
@@ -347,6 +347,17 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @return string
+     */
+    public function getRoleName()
+    {
+        $roles =  $this->roles->map(function($entry) { /** @var RefRole $entry */
+            return $entry->getName();
+        });
+        return $roles->first();
+    }
+
+    /**
      * Returns the password used to authenticate the user.
      *
      * This should be the encoded password. On authentication, a plain-text
@@ -402,7 +413,12 @@ class User implements UserInterface, \Serializable
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $chatRooms;
+    private $chatRoomsArtist;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $chatRoomsClient;
 
     /**
      * Constructor
@@ -410,7 +426,8 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->chatRooms = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->chatRoomsArtist = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->chatRoomsClient = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -468,9 +485,9 @@ class User implements UserInterface, \Serializable
      *
      * @return User
      */
-    public function addChatRoom(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
+    public function addChatRoomArtist(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
     {
-        $this->chatRooms[] = $chatRoom;
+        $this->chatRoomsArtist[] = $chatRoom;
 
         return $this;
     }
@@ -480,17 +497,49 @@ class User implements UserInterface, \Serializable
      *
      * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom
      */
-    public function removeChatRoom(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
+    public function removeChatRoomArtist(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
     {
-        $this->chatRooms->removeElement($chatRoom);
+        $this->chatRoomsArtist->removeElement($chatRoom);
     }
 
     /**
      * @return \Doctrine\Common\Collections\ArrayCollection|\Doctrine\Common\Collections\Collection
      */
-    public function getChatRooms()
+    public function getChatRoomsArtist()
     {
-        return $this->chatRooms;
+        return $this->chatRoomsArtist;
+    }
+
+    /**
+     * Add chatRoom
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom
+     *
+     * @return User
+     */
+    public function addChatRoomClient(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
+    {
+        $this->chatRoomsClient[] = $chatRoom;
+
+        return $this;
+    }
+
+    /**
+     * Remove chatRoom
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom
+     */
+    public function removeChatRoomClient(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
+    {
+        $this->chatRoomsClient->removeElement($chatRoom);
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection|\Doctrine\Common\Collections\Collection
+     */
+    public function getChatRoomsClient()
+    {
+        return $this->chatRoomsClient;
     }
 
     /**
@@ -557,6 +606,11 @@ class User implements UserInterface, \Serializable
     {
         return $this->getPasswordRequestedAt() instanceof \DateTime &&
         $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
+    }
+
+    public function getFullName()
+    {
+        return $this->firstname . ' ' . $this->lastname;
     }
 
     /**

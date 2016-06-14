@@ -17,3 +17,23 @@ services:
         calls:
             - [setSavePath, ['%quotation_dir%']]
         folder: %kernel.root_dir%
+
+    ####### RPC #############
+    socket_chat.rpc_server:
+        class: Acted\LegalDocsBundle\RPC\SocketChat
+        tags:
+            - { name: gos_web_socket.rpc }
+
+    socket_chat.rpc_topic:
+        class: Acted\LegalDocsBundle\RPC\ActedTopic
+        tags:
+            - { name: gos_web_socket.topic }
+
+    gos_web_socket_server.client_event.listener:
+        class: Acted\LegalDocsBundle\EventListener\ChatEventListener
+        tags:
+            - { name: kernel.event_listener, event: 'gos_web_socket.client_connected', method: onClientConnect }
+            - { name: kernel.event_listener, event: 'gos_web_socket.client_disconnected', method: onClientDisconnect }
+            - { name: kernel.event_listener, event: 'gos_web_socket.client_error', method: onClientError }
+            - { name: kernel.event_listener, event: 'gos_web_socket.server_launched', method: onServerStart }
+            - { name: kernel.event_listener, event: 'gos_web_socket.client_rejected', method: onClientRejected }

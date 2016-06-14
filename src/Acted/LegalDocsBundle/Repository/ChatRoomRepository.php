@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Repository;
 
+use Acted\LegalDocsBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 /**
  * ChatRoomRepository
@@ -20,7 +21,7 @@ class ChatRoomRepository extends EntityRepository
     public function getChatByParams($event, $user)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.user = :userId')
+            ->andWhere('c.artist = :userId')
             ->andWhere('c.event = :eventId')
             ->setParameters([
                 'userId' => $user->getId(),
@@ -36,10 +37,30 @@ class ChatRoomRepository extends EntityRepository
     public function getChatRoomByParams($userId)
     {
         $query = $this->createQueryBuilder('c')
-            ->where('c.user = :userId')
+            ->where('c.artist = :userId OR c.client = :userId')
             ->setParameter('userId', $userId)
             ;
 
         return $query->getQuery()->getResult();
+    }
+
+    /**
+     * @param User $user
+     * @param int $chatId
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function checkUserPermission($user, $chatId)
+    {
+        $query = $this->createQueryBuilder('c')
+            ->where('c.artist = :userId OR c.client = :userId')
+            ->andWhere('c.id = :chatId')
+            ->setParameters([
+                'userId' => $user,
+                'chatId' => $chatId
+            ])
+        ;
+
+        return $query->getQuery()->getOneOrNullResult();
     }
 }

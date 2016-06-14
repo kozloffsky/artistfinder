@@ -228,14 +228,26 @@ $(function () {
         } else if (!checkUserLoggedIn){
             localStorage.setItem("quoteRequest", requestFormSerialize);
             $('#freeQuoteModal').modal('hide');
-            $('#registrationModal').modal('show');
-            showSecondPage();
+            $('#ChooseAfterRequestModal').modal('show');
+            chooseRogLog();
         } else if(prevEventChosen == true && checkUserLoggedIn && userInformationStorage){
             var chosenEvent = $('#chosenEvent, #requestQuoteForm, #quoteRequestSecond').serialize();
             console.log(chosenEvent)
             sendQuoteRequest(chosenEvent, userInformationStorage);
         }
     });
+
+    function chooseRogLog(){
+        $('#signUpChoose').on('click',function(){
+            $('#ChooseAfterRequestModal').modal('hide');
+            $('#registrationModal').modal('show');
+            showSecondPage();
+        });
+        $('#LogInChoose').on('click',function(){
+            $('#ChooseAfterRequestModal').modal('hide');
+            $('#loginModal').modal('show');
+        })
+    }
 
     function showSecondPage() {
         var text = 'Contact details';

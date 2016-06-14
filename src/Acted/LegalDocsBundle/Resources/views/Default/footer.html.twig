@@ -62,7 +62,11 @@
         <div id="loadSpinner"></div>
 </footer>
 {% include 'ActedLegalDocsBundle:Default:quoteModal.html.twig' %}
-{% include 'ActedLegalDocsBundle:Default:registration.html.twig' %}
+        {% if app.user %}
+
+        {% else %}
+            {% include 'ActedLegalDocsBundle:Default:registration.html.twig' %}
+        {% endif %}
 <script src="{{ asset('js/javascript.js') }}"></script>
 </body>
 </html>

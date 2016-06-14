@@ -109,7 +109,12 @@
                         <div class="hidden-sm hidden-xs badge">4</div>
                         <a class="hidden-sm hidden-xs" href="/dashboard/messages/{{ app.user.id }}"><img src="{{ asset('assets/images/messages.png') }}" alt=""></a>
                         <!--For screens < 991px-->
-                        <a class="hidden-md hidden-lg" href="/dashboard/messages/{{ app.user.id }}">Messages<span class="badge">13</span></a>
+                        {% if app.user %}
+                            {% set amount = render(controller('ActedLegalDocsBundle:ChatRoom:countNewMessage')) %}
+                            <a class="hidden-md hidden-lg" href="/dashboard/messages/{{ app.user.id }}">Messages<span class="badge">{{ amount|default(0) }}</span></a>
+                        {% else %}
+                            <a class="hidden-md hidden-lg" href="/dashboard/messages/{{ app.user.id }}">Messages<span class="badge">0</span></a>
+                        {% endif %}
                     </li>
                     <li class="profile-dropdown dropdown hidden-sm">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"

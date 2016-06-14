@@ -3,8 +3,6 @@ Acted\LegalDocsBundle\Entity\Event:
     properties:
         id:
             groups: [chat_list, getEvent]
-        country:
-            groups: [Default, getEvent]
         city:
             groups: [Default, getEvent, chat_list, chat_room, all_messages]
         eventRef:
@@ -25,9 +23,9 @@ Acted\LegalDocsBundle\Entity\Event:
         numberOfGuests:
             groups: [getEvent, chat_room]
         venueType:
-            groups: [getEvent]
+            groups: [getEvent, chat_room]
         eventType:
-            groups: [getEvent]
+            groups: [getEvent, chat_room]
         title:
             groups: [Default, getEvent, chat_list, chat_room, all_messages]
         address:
@@ -39,3 +37,6 @@ Acted\LegalDocsBundle\Entity\Event:
         getCountryId:
             serialized_name: countryId
             groups: [getEvent]
+        getCountryName:
+            serialized_name: countryName
+            groups: [chat_room]

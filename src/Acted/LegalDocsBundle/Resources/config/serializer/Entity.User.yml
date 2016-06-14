@@ -17,3 +17,6 @@ Acted\LegalDocsBundle\Entity\User:
       getRoles:
         serialized_name: roles
         type: array<string>
+      getRoleName:
+        serialized_name: role_name
+        groups: [chat_list, chat_room, message, all_messages]

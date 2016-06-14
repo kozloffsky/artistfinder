@@ -101,7 +101,7 @@ class LoadArtistData extends AbstractFixture implements FixtureInterface, Contai
             $user->addRole($this->getReference('artistRole'));
             $user->setPrimaryPhone($faker->unique()->phoneNumber);
             $user->setActive(true);
-            $user->setAvatar('/images/'. rand(1, 30) . '.jpg');
+            $user->setAvatar('images/'. rand(1, 30) . '.jpg');
             $user->setBackground('/images/'. rand(1, 30) . '.jpg');
             $manager->persist($user);
 

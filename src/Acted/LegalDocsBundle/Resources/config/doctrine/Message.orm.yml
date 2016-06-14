@@ -14,7 +14,10 @@ Acted\LegalDocsBundle\Entity\Message:
           notnull: true
         messageText:
           type: text
-          notnull: true
+          nullable: true
+        filePath:
+          type: string(255)
+          nullable: true
         sendDateTime:
           type: datetime
           notnull: true

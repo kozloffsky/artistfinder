@@ -7472,11 +7472,19 @@ main.prices .note{
     color: #3d4248;
     margin: 0 0 50px;
 }
+.chat-room .main-title{
+    font: 32px LatoBold;
+    border-bottom: 1px solid #ff753a;
+    color: #ff753a;
+    margin: 0 0 20px;
+    padding: 0 0 20px;
+    text-align: center;
+}
 .chat-room .border-b{
     border-bottom: 3px solid #000;
     border-bottom: 3px solid rgba(0, 0, 0, .05);
 }
-.chat-room .miscellaneous-list{
+.miscellaneous-list{
     position: absolute;
     right: 0;
     top: 0;
@@ -7487,15 +7495,18 @@ main.prices .note{
     color: #000;
     color: rgba(0,0,0,.67);
 }
-.chat-room .miscellaneous-list li{
+.chat-room .miscellaneous-list{
+    top: 80px;
+}
+.miscellaneous-list li{
     float: left;
     padding: 0 0 0 31px;
 }
-.chat-room .miscellaneous-list a{
+.miscellaneous-list a{
     color: #000;
     color: rgba(0,0,0,.67);
 }
-.chat-room .miscellaneous-list .fa{margin:0 10px 0 -21px;}
+.miscellaneous-list .fa{margin:0 10px 0 -21px;}
 .chat-room .wrap{
     position: relative;
 }
@@ -7505,6 +7516,7 @@ main.prices .note{
     padding: 0 130px;
     margin: 0 0 20px;
     text-align: center;
+    color: #502346;
 }
 .detail-form{
     overflow: hidden;
@@ -7820,6 +7832,7 @@ main.prices .note{
     padding: 5px 15px;
     height: 110px;
     min-width: 100%;
+    max-height: 350px;
     min-height: 110px;
 }
 .message-form .textarea.tall{
@@ -7846,6 +7859,22 @@ main.prices .note{
     font-size: 15px;
     color: #000;
 }
+select.full-width + .select2{
+    width: 100% !important;
+    margin: 0;
+}
+.select2 .main-select{
+    height: 36px !important;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+.select2 .main-select .select2-selection__rendered{
+    line-height: 36px;
+}
+.select2-container--default .select2-results>.select2-results__options.main-select{
+    font-size: 16px;
+    border: none !important;
+}
 .message-form .select2{
     margin: 0;
     width: 220px !important;
@@ -7868,6 +7897,8 @@ main.prices .note{
     padding: 0;
     color: #000;
     color: rgba(0, 0, 0, .87);
+    max-height: 680px;
+    overflow: auto;
 }
 .chat-room .comments-list li{
     margin: 0 0 35px;
@@ -7876,6 +7907,9 @@ main.prices .note{
 .chat-room .comments-list li.right .img-holder{
     float: right;
     margin: 0 0 0 20px;
+}
+.chat-room .comments-list li.active .img-holder{
+    border: 2px solid #ff735a;
 }
 .chat-room .comments-list p{margin: 0 0 10px;}
 .chat-room .comments-list .img-holder{
@@ -7924,6 +7958,21 @@ main.prices .note{
     color: #000;
     color: rgba(0, 0, 0, .67);
 }
+.chat-room .btn-back{
+    position: absolute;
+    left: 0;
+    font-size: 14px;
+    top: 9px;
+    color: #fff;
+    z-index: 1;
+    background: #ff753a;
+    padding: 3px 10px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+.chat-room .btn-back:hover,
+.chat-room .btn-back:focus{text-decoration: none;}
+.chat-room .btn-back:active{background: #f58859;}
 @media (max-width: 991px){
     .chat-room .title{
         font-size: 17px;
@@ -7931,17 +7980,30 @@ main.prices .note{
     }
     .chat-room .miscellaneous-list li{padding-left: 19px;}
     .chat-room .miscellaneous-list .fa{margin: 0 5px 0 -13px;}
+    .message-form .controls{width: 110px;}
 }
 @media (max-width: 767px){
     .chat-room > .container{padding: 0;}
-    .chat-room .wrap{padding: 0 15px;}
+    .chat-room .wrap{padding: 0 20px;}
+    .chat-room .main-title{
+        font-size: 24px;
+        margin: 0 0 15px;
+        padding: 0 0 15px;
+    }
+    .chat-room .btn-back{
+        display: none;
+        top: 0;
+        left: 20px;
+    }
     .detail-form .holder [class^=col-lg-]{padding: 0;}
     .detail-form .holder [class^=col-lg-].pull-right{
         float: none !important;
         padding: 0;
     }
     .detail-form .map-holder{
+        padding-top: 20px;
         margin: 0 0 10px;
+        height: 173px;
     }
     .chat-room .v-frame{
         height: auto;
@@ -7962,29 +8024,33 @@ main.prices .note{
         height: 30px;
         font-size: 14px;
     }
+    .select2 .main-select{height: 30px !important;}
+    .select2 .main-select .select2-selection__rendered{
+        line-height: 30px;
+    }
+    .select2 .main-select .select2-selection__arrow{
+        height: 22px;
+    }
     .detail-form .frame{margin: 0 0 12px;}
     .chat-room .v-frame .note{
         min-height: 100%;
-        font-size: 14px;
     }
     .chat-room .controls .btn{
         font-size: 14px !important;
     }
     .chat-room .miscellaneous-list{
-        right: 15px;
-        top: 6px;
+        right: 20px;
+        top: 60px;
     }
     .detail-form .list{padding: 10px 0;}
     .detail-form .list [class^=col-lg-]{padding: 0 0 10px;}
     .chat-room .info-block{
         font-size: 14px;
-        padding: 10px 15px;
+        padding: 10px 20px;
     }
     .chat-room .block-list > li{margin: 0 0 10px;}
     .chat-room .block-list{padding: 0;}
-    #twocolumns{
-        padding: 20px 15px;
-    }
+    #twocolumns{padding: 20px;}
     #twocolumns .col-1,
     #twocolumns .col-2{
         float: none;
@@ -7996,6 +8062,13 @@ main.prices .note{
     .chat-room .comments-list li{margin: 0 0 20px;}
     .chat-room .comments-list .img-holder{margin-right: 0;}
     .chat-room .comments-list li.right .img-holder{margin-left: 0;}
+    .message-form .upload-box{padding: 0 0 17px;}
+    .message-form .btn-upload{
+        padding: 0 10px;
+        min-width: 80px;
+        max-width: 100px;
+    }
+    .message-form .select2{width: 100% !important;}
 }
 
 @font-face {
@@ -10514,4 +10587,14 @@ a.disabled {
 .archiveMessage
 {
     cursor: pointer;
+}
+.btn > a
+{
+    color: #fff;
+    font-size: 15px;
+    font-family: LatoBold;
+}
+.btn > a:hover
+{
+    text-decoration: none;
 }

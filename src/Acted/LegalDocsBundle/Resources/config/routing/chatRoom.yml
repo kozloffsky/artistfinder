@@ -31,5 +31,20 @@ filter_message:
 show_logs_messaging:
     path: /emails/logs
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:showLogs, _format: json }
+    methods:  GET|POST
+
+websocket_push:
+    path: /web/push/{chatId}
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:webSocketPush }
+    methods:  POST
+
+read_message:
+    path: /read_message/{chatId}
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:readMessagesInChat }
+    methods:  POST
+
+count_new_message:
+    path: /count_new_message
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:countNewMessage }
     methods:  GET
 

@@ -5,6 +5,7 @@ use Acted\LegalDocsBundle\Entity\Media;
 use Embed\Embed;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Created by PhpStorm.
@@ -14,15 +15,54 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class MediaManager
 {
+    /**
+     * @var string
+     */
     private $dir;
+
+    /**
+     * @var LiipImagineBundle
+     */
     private $lip;
 
-    public function __construct($dir, $lip)
+    /**
+     * @var array
+     */
+    private $fileFormats;
+
+    /**
+     * @var integer
+     */
+    private $maxFileSize;
+
+    /**
+     * @var string
+     */
+    private $chatUploadsDir;
+
+    /**
+     * MediaManager constructor.
+     * @param string $dir
+     * @param $lip
+     * @param array $fileFormats
+     * @param integer $maxFileSize
+     * @param string $chatUploadsDir
+     */
+    public function __construct($dir, $lip, $fileFormats, $maxFileSize, $chatUploadsDir)
     {
         $this->dir = $dir;
         $this->lip = $lip;
+        $this->fileFormats = $fileFormats;
+        $this->maxFileSize = $maxFileSize;
+        $this->chatUploadsDir = $chatUploadsDir;
     }
 
+    /**
+     * @param File $file
+     * @param Media $media
+     * @param $request
+     * @return Media
+     */
     public function updatePhoto(File $file, Media $media, $request)
     {
         $media->setActive(true);
@@ -50,6 +90,12 @@ class MediaManager
         return $media;
     }
 
+    /**
+     * @param $link
+     * @param Media $media
+     * @return Media|array
+     * @throws \Embed\Exceptions\InvalidUrlException
+     */
     public function updateVideo($link, Media $media)
     {
         if (strripos($link, 'youtube.com') === false && strripos($link, 'vimeo.com') === false
@@ -75,6 +121,11 @@ class MediaManager
         return $media;
     }
 
+    /**
+     * @param string $link
+     * @param Media $media
+     * @return Media|array
+     */
     public function updateAudio($link, Media $media)
     {
         if (strripos($link, 'soundcloud.com') === false) {
@@ -94,6 +145,64 @@ class MediaManager
         }
 
         return $media;
+    }
+
+    /**
+     * Upload file
+     * @param UploadedFile $uploadedFile
+     * @param string $filePath
+     * @return array
+     */
+    public function uploadFile($uploadedFile, $filePath = null)
+    {
+        $fs = new Filesystem();
+
+        /** Check mime type uploaded file */
+        if (!in_array($uploadedFile->getClientMimeType(), $this->fileFormats)) {
+            return [
+                'status' => 'error',
+                'message' => 'You try upload invalid format file'
+            ];
+        }
+
+        /** Check size uploaded file */
+        if ($uploadedFile->getClientSize() > $this->maxFileSize) {
+            return [
+                'status' => 'error',
+                'message' => 'Max size upload file 15MB'
+            ];
+        }
+
+        try {
+            if (is_null($filePath)) {
+                /** If not exist directory for upload */
+                $filePath = $this->chatUploadsDir;
+
+                if (!$fs->exists($filePath)) {
+                    $fs->mkdir($filePath, 0777);
+                }
+            } else {
+                /** If exist directory for upload */
+                $filePath = $this->chatUploadsDir . '/' . $filePath;
+
+                if (!$fs->exists($filePath)) {
+                    $fs->mkdir($filePath, 0777);
+                }
+            }
+
+            $filename = time() . '_' . $uploadedFile->getClientOriginalName();
+            $uploadedFile->move($filePath, $filename);
+        } catch (\Exception $exp) {
+            return [
+                'status' => 'error',
+                'message' => $exp->getMessage()
+            ];
+        }
+
+        return [
+            'status' => 'success',
+            'message' => '/'.$filePath . '/' . $filename
+        ];
     }
 
 }

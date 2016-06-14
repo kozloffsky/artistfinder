@@ -4,6 +4,10 @@ Acted\LegalDocsBundle\Entity\RefCity:
         region:
             exclude: true
         name:
-            groups: [Default, getEvent, chat_list, all_messages]
+            groups: [Default, getEvent, chat_list, all_messages, chat_room]
         id:
-            groups: [Default, getEvent]
+            groups: [Default, getEvent, chat_room]
+        latitude:
+            groups: [chat_room]
+        longitude:
+            groups: [chat_room]

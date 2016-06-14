@@ -55,7 +55,8 @@ class ChatManager
             $chatRoom = new ChatRoom();
             $chatRoom->setEvent($event);
             $chatRoom->setOffer($offer);
-            $chatRoom->setUser($receiver);
+            $chatRoom->setArtist($receiver);
+            $chatRoom->setClient($event->getUser());
             $message = $this->newChatMessage($chatRoom, $receiver, $data);
             $this->entityManager->persist($chatRoom);
             $this->entityManager->persist($message);
@@ -90,6 +91,30 @@ class ChatManager
         $message->setSenderUser($data->getUser());
         $message->setSubject($data->getName());
         $message->setMessageText($body);
+        $message->setSendDateTime($now);
+
+        return $message;
+    }
+
+    /**
+     * @param ChatRoom $chatRoom
+     * @param User $sender
+     * @param User $receiver
+     * @param string $messageText
+     * @param string $filePath
+     * @return  Message
+     */
+    public function newMessage(ChatRoom $chatRoom, User $sender, User $receiver, $messageText = null, $filePath = null)
+    {
+        $message = new Message();
+        $now = new \DateTime();
+
+        $message->setChatRoom($chatRoom);
+        $message->setReceiverUser($receiver);
+        $message->setSenderUser($sender);
+        $message->setMessageText($messageText);
+        $message->setFilePath($filePath);
+        $message->setSubject($chatRoom->getEvent()->getTitle());
         $message->setSendDateTime($now);
 
         return $message;

@@ -3,3 +3,5 @@ Acted\LegalDocsBundle\Entity\RefEventType:
     properties:
         id:
             groups: [getEvent]
+        eventType:
+            groups: [chat_room]

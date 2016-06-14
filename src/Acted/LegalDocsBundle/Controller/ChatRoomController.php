@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializationContext;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -170,10 +171,9 @@ class ChatRoomController extends Controller
     public function getChatAction(Request $request)
     {
         $chatRoomId = $request->get('chat');
-        $em = $this->getDoctrine()->getManager();
         $serializer = $this->get('jms_serializer');
 
-        $chatRoom = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->find($chatRoomId);
+        $chatRoom = $this->getEM()->getRepository('ActedLegalDocsBundle:ChatRoom')->find($chatRoomId);
         $chat = $serializer->toArray($chatRoom, SerializationContext::create()
             ->setGroups(['chat_room']));
 
@@ -181,5 +181,118 @@ class ChatRoomController extends Controller
             compact('chat'));
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function webSocketPushAction(Request $request)
+    {
+        $messageText = $request->request->get('message');
+        $uploadedFile = $request->files->get('file');
+        $chatId = $request->get('chatId');
 
+        $user = $this->getUser();
+        $chat = $this->getEM()->getRepository('ActedLegalDocsBundle:ChatRoom')->checkUserPermission($user, $chatId);
+        if (!$chat) {
+            return new JsonResponse(['error' => 'You are not have permission sending messages to this chat'], 400);
+        }
+        $pusher = $this->container->get('gos_web_socket.zmq.pusher');
+
+        /** checking user is receiver or sender **/
+        if ($chat->getArtist()->getId() == $user->getId()) {
+            $sender = $chat->getArtist();
+            $receiver = $chat->getClient();
+        } else {
+            $sender = $chat->getClient();
+            $receiver = $chat->getArtist();
+        }
+
+        /** Add new message to chat room **/
+        try {
+            if ($messageText) {
+                $message = $this->get('app.chat.manager')->newMessage($chat, $sender, $receiver, $messageText, null);
+            } else {
+                $mediaManager = $this->get('app.media.manager');
+                $uploadResult = $mediaManager->uploadFile($uploadedFile, 'chat_'.$chatId);
+                try {
+                    if ($uploadResult['status'] === 'success') {
+                        $filePath = $uploadResult['message'];
+                    } else {
+                        throw new \Exception($uploadResult['message']);
+                    }
+                } catch (\Exception $e) {
+                    return new JsonResponse(['error' => $e->getMessage()], 400);
+                }
+                $message = $this->get('app.chat.manager')->newMessage($chat, $sender, $receiver, null, $filePath);
+            }
+            $this->getEM()->persist($message);
+            $this->getEM()->flush();
+
+            $pusher->push(
+                    [
+                        'msg' => $messageText,
+                        'avatar' => $user->getAvatar(),
+                        'user_name' => $user->getFullName(),
+                        'room' => $chatId,
+                        'role' => $user->getRoleName(),
+                        'send_date' => $message->getTimeFromGet(),
+                        'message_id' => $message->getId()
+                    ],
+                    'acted_topic_chat',
+                    ['room' => $chatId]
+                );
+
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 400);
+        }
+
+        return new JsonResponse(['success' => 'Added new message to chat'], 200);
+    }
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Add read date for unread message",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function readMessagesInChatAction(Request $request)
+    {
+        $chatId = $request->get('chatId');
+        $user = $this->getUser();
+        /** Check auth */
+        if (!$user) {
+            return new JsonResponse(['error' => 'Only auth user can visit chat'], 400);
+        }
+        $now = new \DateTime();
+        try {
+            $this->getEM()->getRepository('ActedLegalDocsBundle:Message')->updateReadDate($now, $user, $chatId);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 400);
+        }
+
+        return new JsonResponse(['success'], 200);
+    }
+
+    /**
+     * Count new messages from all chats
+     * @return Response
+     */
+    public function countNewMessageAction()
+    {
+        $user = $this->getUser();
+        /** Check auth */
+        if (!$user) {
+            return new Response(0);
+        }
+        $amount = $this->getEM()->getRepository('ActedLegalDocsBundle:Message')->countNewMessage($user);
+
+        return new Response($amount['data']);
+    }
 }

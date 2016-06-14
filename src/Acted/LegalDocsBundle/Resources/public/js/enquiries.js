@@ -41,11 +41,9 @@ $(function() {
     createActiveMenu();
     function createActiveMenu(){
         var currentUrl = window.location.pathname;
-        console.log(currentUrl)
         var matchesUrl = currentUrl.split('/');
         if (matchesUrl[1] == 'dashboard'){
             var pageName = matchesUrl[2];
-            console.log(pageName)
             $('.menu-block a[href*='+pageName+']').addClass('active');
         }
     }
@@ -86,6 +84,7 @@ $(function() {
         var filterValueSelected = $(this).find('option:selected').val();
         messagesFilter(filterValueSelected)
     });
+
 
     function messagesFilter(val){
         var userId = $('header #userInformation').text();

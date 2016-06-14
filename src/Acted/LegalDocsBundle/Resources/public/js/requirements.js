@@ -1,7 +1,7 @@
 $(function(){
     'use strict';
 
-    $('#filer_input1, #filer_input2, #filer_input3, #filer_input4').filer({
+    /*$('#filer_input1, #filer_input2, #filer_input3, #filer_input4').filer({
         limit: 2,
         maxSize: 10,
         changeInput: '<button type="button" class="btn-upload">Upload</button>',
@@ -25,7 +25,7 @@ $(function(){
             }
         },
         addMore: true
-    });
+    });*/
 
     $('.requirements .add-box').on('click', function(){
         var cur = $(this);

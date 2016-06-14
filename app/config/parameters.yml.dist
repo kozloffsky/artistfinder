@@ -27,3 +27,15 @@ parameters:
     invoice_dir: docs/invoice
     quotation_dir: docs/quotation
     jms_serializer.constraint_violation_handler.class: Acted\LegalDocsBundle\Serializer\ConstraintViolationHandler
+    max_file_size: 15728640 # 1MB = 1048576 B
+    file_formats:
+        - application/x-compressed
+        - image/jpg
+        - image/png
+        - image/jpeg
+        - application/pdf
+        - application/vnd.ms-excel
+        - application/msword
+        - text/plain
+        - application/zip
+    chat_upload_dir: uploads

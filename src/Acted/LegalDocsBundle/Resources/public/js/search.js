@@ -522,8 +522,8 @@ $(function () {
                 $('#searchRecWrapper'+propt+'').append(artistBlockSearch);
             }
             checkUserPosition();
-
         });
+        preventAskQuoteFromArtist();
     }
 
     function createNewFilterResults(response){
@@ -589,6 +589,7 @@ $(function () {
         selectBoxStyle();
         //console.log('finish');
         initTabs();
+        preventAskQuoteFromArtist()
 
         $('.filtersCat select').on('change mouseover', function(){
             var filtersCatSelectGroup = $('.filtersCat select');
@@ -715,6 +716,7 @@ $(function () {
         });
         setArtistStarsCat();
         checkUserPosition();
+        preventAskQuoteFromArtist();
     }
 
     function setArtistStarsCat(){
@@ -917,6 +919,22 @@ $(function () {
             $('html,body').animate({
                 scrollTop: $('.results').offset().top
             });
+        }
+    }
+
+    preventAskQuoteFromArtist()
+
+    function preventAskQuoteFromArtist(){
+        var checkIfUserLoggedIn = $('header #userInformation').length;
+        if(checkIfUserLoggedIn > 0){
+            var userInformationStorage = JSON.parse(localStorage.getItem('user'));
+            if(userInformationStorage) {
+                if (userInformationStorage.role[0] == 'ROLE_ARTIST') {
+                    $('.askQuoteFromSearch').parent('div').css('visibility','hidden');
+                    $('.requestQuotePerformance').hide();
+                    $('.quoteRequestProfile').hide();
+                }
+            }
         }
     }
 

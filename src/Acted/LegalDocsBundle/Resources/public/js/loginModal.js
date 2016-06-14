@@ -27,7 +27,24 @@ $(function () {
                 $('#errorLogIn').hide();
                 var userData = JSON.stringify(response);
                 localStorage.setItem("user", userData);
-                window.location.replace(window.location.href);
+                var quote = localStorage.getItem('quoteRequest');
+                if(quote){
+                    $.ajax({
+                        type:'POST',
+                        url:'/event/create',
+                        data: quote + '&user='+ response.userId,
+                        success: function(){
+                            localStorage.removeItem('quoteRequest');
+                            $('#loginModal').modal('hide');
+                            $('#offerSuccess').modal('show');
+                            setTimeout(function(){
+                                window.location.replace(window.location.href);
+                            }, 2000);
+                        }
+                    })
+                } else {
+                    window.location.replace(window.location.href);
+                }
             },
             error: function(response){
                 var responseTextLogIn = response.responseJSON;
