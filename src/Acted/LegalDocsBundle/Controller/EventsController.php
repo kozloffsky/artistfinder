@@ -27,14 +27,14 @@ class EventsController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function createEventAction(Request $request)
+    public function addEventAction(Request $request)
     {
         $form = $this->createForm(EventOfferType::class);
         $form->handleRequest($request);
         $serializer = $this->get('jms_serializer');
 
         if($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->getEM();
             $validator = $this->get('validator');
             $data = $form->getData();
 
@@ -81,15 +81,15 @@ class EventsController extends Controller
                 return new JsonResponse($prettyErrors, 400);
             }
             $em->flush();
-
             $artist = $data->getPerformance()->first()->getProfile()->getUser();
+
             /** Create ChatRoom */
             $chatManager->createChat($event, $artist, $data, $offer);
             /** Notify Artist */
             $eventManager->createEventNotify($data, $artist, $offer);
             $eventManager->newMessageNotify($data, $artist);
 
-            return new JsonResponse($serializer->toArray($event));
+            return new JsonResponse(['success'=>'Event successfully created!']);
         }
 
         return new JsonResponse($this->get('app.form_errors_serializer')->serializeFormErrors($form, false), 400);

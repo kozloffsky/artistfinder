@@ -1,7 +1,7 @@
 create_event:
     path:     /create
-    defaults: { _controller: ActedLegalDocsBundle:Events:createEvent, _format: json }
-    methods:  POST
+    defaults: { _controller: ActedLegalDocsBundle:Events:addEvent, _format: json }
+    methods:  [POST]
 
 get_events_type:
     path:     /list_events_type
