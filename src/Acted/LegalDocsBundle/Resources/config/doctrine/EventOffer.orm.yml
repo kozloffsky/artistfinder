@@ -28,7 +28,7 @@ Acted\LegalDocsBundle\Entity\EventOffer:
           type: string(256)
           nullable: true
         comments:
-          type: text
+          type: string(500)
           nullable: true
         sendDateTime:
           type: datetime
