@@ -19,6 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Count;
+use Symfony\Component\Validator\Constraints\Length;
 
 class EventOfferType extends AbstractType
 {
@@ -83,7 +84,11 @@ class EventOfferType extends AbstractType
                 'class' => User::class,
                 'description' => 'UserId'
             ])
-            ->add('comment', TextType::class)
+            ->add('comment', TextType::class, [
+                'constraints' => [
+                        new Length(['max' => 500])
+                ]
+            ])
         ;
     }
 
