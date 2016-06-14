@@ -236,7 +236,8 @@ class ChatRoomController extends Controller
                         'user_name' => $user->getFullName(),
                         'room' => $chatId,
                         'role' => $user->getRoleName(),
-                        'send_date' => $message->getTimeFromGet()
+                        'send_date' => $message->getTimeFromGet(),
+                        'message_id' => $message->getId()
                     ],
                     'acted_topic_chat',
                     ['room' => $chatId]
