@@ -370,6 +370,12 @@ $(function () {
         type:'POST',
         url:'/event/create',
         data: quote + '&user='+ userData.id,
+        beforeSend: function () {
+          $('#loadSpinner').fadeIn(500);
+        },
+        complete: function () {
+          $('#loadSpinner').fadeOut(500);
+        },
         success: function(){
           localStorage.removeItem('quoteRequest');
           setTimeout(function(){
