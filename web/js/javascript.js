@@ -7185,7 +7185,7 @@ $(function() {
                         '</div>'+
                         '<div class="user-info">'+
                         '<span class="user-name">'+this.sender_user.firstname+'</span>'+
-                        '<span class="time">Today at 11:34 pm</span>'+
+                        '<span class="time">'+this.time_from_get+'</span>'+
                         '</div>'+
                         '<div class="message-block">'+
                         '<div class="col-lg-10 col-sm-10 text-block">'+
@@ -7193,7 +7193,7 @@ $(function() {
                         '<div class="text">'+this.message_text+'</div>'+
                         '<div class="controls hidden-xs">'+
                         '<div class="button-gradient filled blue">'+
-                        '<a href="/chat-room" class="btn register">See Conversation</a>'+
+                        '<a href="'+this.chat_room.chat_id+'" class="btn register">See Conversation</a>'+
                         '</div>'+
                         '</div>'+
                         '</div>'+
@@ -9170,6 +9170,12 @@ $(function () {
                         type:'POST',
                         url:'/event/create',
                         data: quote + '&user='+ response.userId,
+                        beforeSend: function () {
+                            $('#loadSpinner').fadeIn(500);
+                        },
+                        complete: function () {
+                            $('#loadSpinner').fadeOut(500);
+                        },
                         success: function(){
                             localStorage.removeItem('quoteRequest');
                             $('#loginModal').modal('hide');
@@ -10580,6 +10586,12 @@ $(function () {
             type:'POST',
             url:'/event/create',
             data: data + '&user='+userInformationStorage.userId,
+            beforeSend: function () {
+                $('#loadSpinner').fadeIn(500);
+            },
+            complete: function () {
+                $('#loadSpinner').fadeOut(500);
+            },
             success:function(res){
                 console.log(res);
                 $('#freeQuoteModal').modal('hide');
@@ -10967,6 +10979,12 @@ $(function () {
         type:'POST',
         url:'/event/create',
         data: quote + '&user='+ userData.id,
+        beforeSend: function () {
+          $('#loadSpinner').fadeIn(500);
+        },
+        complete: function () {
+          $('#loadSpinner').fadeOut(500);
+        },
         success: function(){
           localStorage.removeItem('quoteRequest');
           setTimeout(function(){

@@ -267,6 +267,12 @@ $(function () {
             type:'POST',
             url:'/event/create',
             data: data + '&user='+userInformationStorage.userId,
+            beforeSend: function () {
+                $('#loadSpinner').fadeIn(500);
+            },
+            complete: function () {
+                $('#loadSpinner').fadeOut(500);
+            },
             success:function(res){
                 console.log(res);
                 $('#freeQuoteModal').modal('hide');
