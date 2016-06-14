@@ -57,9 +57,11 @@ class ChatManager
             $chatRoom->setOffer($offer);
             $chatRoom->setArtist($receiver);
             $chatRoom->setClient($event->getUser());
-            $message = $this->newChatMessage($chatRoom, $receiver, $data);
             $this->entityManager->persist($chatRoom);
-            $this->entityManager->persist($message);
+            if ($data->getComment()) {
+                $message = $this->newChatMessage($chatRoom, $receiver, $data);
+                $this->entityManager->persist($message);
+            }
             $this->entityManager->flush();
         }
     }
@@ -73,24 +75,13 @@ class ChatManager
      */
     public function newChatMessage($chatRoom, $receiver, $data)
     {
-        $date = $data->getEventDate();
         $now = new \DateTime();
-        $performanceNames = [];
-        foreach ($data->getPerformance() as $performance) {
-            $performanceNames[] = $performance->getTitle();
-        }
-        $path = $this->rootDir . '/../src/Acted/LegalDocsBundle/Resources/views/ChatRoom/propose.txt';
-        $body = sprintf(file_get_contents($path),
-            $receiver->getFirstName(), $data->getCity()->getName(), $data->getName(), $data->getEventTime(),
-            $date->format('Y/m/d'), $data->getVenueType()->getVenueType(), $data->getLocation(),
-            $data->getNumberOfGuests(),  $data->getType()->getEventType(), $data->getComment(),
-            implode(',', $performanceNames));
         $message = new Message();
         $message->setChatRoom($chatRoom);
         $message->setReceiverUser($receiver);
         $message->setSenderUser($data->getUser());
         $message->setSubject($data->getName());
-        $message->setMessageText($body);
+        $message->setMessageText($data->getComment());
         $message->setSendDateTime($now);
 
         return $message;

@@ -154,7 +154,7 @@ class EventsController extends Controller
         $artists = $this->getEM()->getRepository('ActedLegalDocsBundle:EventOffer')->getArtists($userId);
         $result = [];
         foreach ($artists as $artist) {
-            $result[$artist['event_id']][] = $artist['user_id'];
+            $result[$artist['event_id']][] = $artist['user_slug'];
         }
 
         return ['events' => $events, 'artists' => $result];
