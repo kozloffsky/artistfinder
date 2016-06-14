@@ -7185,7 +7185,7 @@ $(function() {
                         '</div>'+
                         '<div class="user-info">'+
                         '<span class="user-name">'+this.sender_user.firstname+'</span>'+
-                        '<span class="time">Today at 11:34 pm</span>'+
+                        '<span class="time">'+this.time_from_get+'</span>'+
                         '</div>'+
                         '<div class="message-block">'+
                         '<div class="col-lg-10 col-sm-10 text-block">'+
@@ -7193,7 +7193,7 @@ $(function() {
                         '<div class="text">'+this.message_text+'</div>'+
                         '<div class="controls hidden-xs">'+
                         '<div class="button-gradient filled blue">'+
-                        '<a href="/chat-room" class="btn register">See Conversation</a>'+
+                        '<a href="'+this.chat_room.chat_id+'" class="btn register">See Conversation</a>'+
                         '</div>'+
                         '</div>'+
                         '</div>'+
@@ -9170,6 +9170,12 @@ $(function () {
                         type:'POST',
                         url:'/event/create',
                         data: quote + '&user='+ response.userId,
+                        beforeSend: function () {
+                            $('#loadSpinner').fadeIn(500);
+                        },
+                        complete: function () {
+                            $('#loadSpinner').fadeOut(500);
+                        },
                         success: function(){
                             localStorage.removeItem('quoteRequest');
                             $('#loginModal').modal('hide');
@@ -10400,9 +10406,44 @@ $(function () {
             success: function(response) {
                 createRequestQuotePerformances(response.artist, performanceRequestId);
                 createArtistDataViewInQuote(response.artist);
+                preventMultipleQuotes(artistSlug);
             }
         })
     }
+
+    function preventMultipleQuotes(artistSlug){
+        var selectedEvent = $('#chosenEvent select').find('option:selected').val();
+        hideFormIfExistEvent(selectedEvent, artistSlug)
+        $('#chosenEvent select').on('change',function(){
+            var selectedEvent = $(this).find('option:selected').val();
+            hideFormIfExistEvent(selectedEvent, artistSlug)
+        });
+
+    }
+
+    function hideFormIfExistEvent(selectedEvent, artistSlug){
+        var getEventsReady = sessionStorage.getItem(selectedEvent);
+        if(getEventsReady){
+            var findArtistInEvent = getEventsReady.search(artistSlug);
+            console.log(findArtistInEvent)
+            if(findArtistInEvent >= 0){
+                preventEventSending()
+            } else {
+                allowEventSending()
+            }
+        }
+    }
+
+    function preventEventSending(){
+        $('#quoteRequestSecond .requestQuotePerformances, #quoteRequestSecond .add-comment-btn, #quoteRequestSecond .controls').hide();
+        $('#quoteRequestSecond .alreadyHasEventArtist').show();
+    }
+
+    function allowEventSending(){
+        $('#quoteRequestSecond .requestQuotePerformances, #quoteRequestSecond .add-comment-btn, #quoteRequestSecond .controls').show();
+        $('#quoteRequestSecond .alreadyHasEventArtist').hide()
+    }
+
 
     function createRequestQuotePerformances(artistData, performanceRequestId){
         $('.requestQuotePerformances').empty();
@@ -10462,18 +10503,22 @@ $(function () {
             type:'GET',
             url:'/event/user_events?user='+userId,
             success: function(response){
-                console.log(response)
-                var userEvents = response.events;
-                console.log(userEvents.length)
+                var userEvents = response.events,
+                    userArtistsInEvents = response.artists;
                 if(userEvents.length > 0){
                     createEventsListRequest(userEvents);
                     setDataEvent(userEvents);
+                    sessionStorage.clear();
+                    for(var propt in userArtistsInEvents) {
+                        sessionStorage.setItem(propt, userArtistsInEvents[propt]);
+                    }
                 } else {
                     $('.eventChooseRequest').hide();
                 }
             }
         })
     }
+
 
     function createEventsListRequest(userEvents){
         $(userEvents).each(function(i){
@@ -10488,9 +10533,7 @@ $(function () {
 
     function setDataEvent(userEvents){
         $('#chosenEvent select').on('change',function(){
-            console.log(userEvents);
             var selectedEvent = $(this).find('option:selected').attr('class');
-            console.log(selectedEvent);
             fillFormWithDataFromEvent(userEvents, selectedEvent)
         });
         var selectedEvent = $('#chosenEvent select').find('option:selected').attr('class');
@@ -10516,17 +10559,19 @@ $(function () {
     });
 
     function chooseCityQuote(selectedCountruOption){
-        $.ajax({
-            type:'GET',
-            url: '/geo/city?_format=json&country=' + selectedCountruOption,
-            success:function(response){
-                $('#event_city').empty();
-                $(response).each(function(){
-                    $('#event_city').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
-                });
-                initSelect();
-            }
-        })
+        if(selectedCountruOption){
+            $.ajax({
+                type:'GET',
+                url: '/geo/city?_format=json&country=' + selectedCountruOption,
+                success:function(response){
+                    $('#event_city').empty();
+                    $(response).each(function(){
+                        $('#event_city').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
+                    });
+                    initSelect();
+                }
+            })
+        }
     }
 
     $('#quoteRequsetSend').on('click',function(e){
@@ -10580,6 +10625,12 @@ $(function () {
             type:'POST',
             url:'/event/create',
             data: data + '&user='+userInformationStorage.userId,
+            beforeSend: function () {
+                $('#loadSpinner').fadeIn(500);
+            },
+            complete: function () {
+                $('#loadSpinner').fadeOut(500);
+            },
             success:function(res){
                 console.log(res);
                 $('#freeQuoteModal').modal('hide');
@@ -10587,9 +10638,13 @@ $(function () {
             },
             error: function(response){
                 $('#requestQuoteForm input').attr('style', '');
+                $('#quoteRequestSecond .errorCat').text().hide();
                 $.each(response.responseJSON, function(key, value) {
                     console.log(key, value);
                     $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
+                    if(key == 'performance'){
+                        $('#quoteRequestSecond .errorCat').text(value).show();
+                    }
                 });
             }
         })
@@ -10903,19 +10958,21 @@ $(function () {
     chooseCityReg(selectedCountruOption);
   })
 
-  function chooseCityReg(selectedCountruOption){
-    $.ajax({
-      type:'GET',
-      url: '/geo/city?_format=json&country=' + selectedCountruOption,
-      success:function(response){
-        $('#cityReg').empty();
-        $('#cityReg').append('<option value="" name="city">select a city</option>');
-        $(response).each(function(){
-          $('#cityReg').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
-        });
-        $("#cityReg").select2();
-      }
-    })
+  function chooseCityReg(selectedCountruOption) {
+    if (selectedCountruOption){
+      $.ajax({
+        type: 'GET',
+        url: '/geo/city?_format=json&country=' + selectedCountruOption,
+        success: function (response) {
+          $('#cityReg').empty();
+          $('#cityReg').append('<option value="" name="city">select a city</option>');
+          $(response).each(function () {
+            $('#cityReg').append('<option value="' + this.id + '" name="city">' + this.name + '</option>');
+          });
+          $("#cityReg").select2();
+        }
+      })
+    }
   }
 
   function customerRegister(){
@@ -10967,6 +11024,12 @@ $(function () {
         type:'POST',
         url:'/event/create',
         data: quote + '&user='+ userData.id,
+        beforeSend: function () {
+          $('#loadSpinner').fadeIn(500);
+        },
+        complete: function () {
+          $('#loadSpinner').fadeOut(500);
+        },
         success: function(){
           localStorage.removeItem('quoteRequest');
           setTimeout(function(){
@@ -11296,19 +11359,21 @@ $(function () {
        }
 
     function chooseCity(selectedCountruOption){
-        $.ajax({
-            type:'GET',
-            url: '/geo/city?_format=json&country=' + selectedCountruOption,
-            success:function(response){
-                $('#region').empty();
-                $('#region').append('<option value="" name="user_city">select a city</option>');
-                $(response).each(function(){
-                    $('#region').append('<option value="'+ this.id +'" name="user_city">'+this.name+'</option>');
-                    selectBoxStyle();
-                });
-                checkUserPosition();
-            }
-        })
+        if(selectedCountruOption) {
+            $.ajax({
+                type: 'GET',
+                url: '/geo/city?_format=json&country=' + selectedCountruOption,
+                success: function (response) {
+                    $('#region').empty();
+                    $('#region').append('<option value="" name="user_city">select a city</option>');
+                    $(response).each(function () {
+                        $('#region').append('<option value="' + this.id + '" name="user_city">' + this.name + '</option>');
+                        selectBoxStyle();
+                    });
+                    checkUserPosition();
+                }
+            })
+        }
     }
 
     $('.searchFormStart').on('click',function (e) {

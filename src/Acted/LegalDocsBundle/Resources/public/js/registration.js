@@ -306,19 +306,21 @@ $(function () {
     chooseCityReg(selectedCountruOption);
   })
 
-  function chooseCityReg(selectedCountruOption){
-    $.ajax({
-      type:'GET',
-      url: '/geo/city?_format=json&country=' + selectedCountruOption,
-      success:function(response){
-        $('#cityReg').empty();
-        $('#cityReg').append('<option value="" name="city">select a city</option>');
-        $(response).each(function(){
-          $('#cityReg').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
-        });
-        $("#cityReg").select2();
-      }
-    })
+  function chooseCityReg(selectedCountruOption) {
+    if (selectedCountruOption){
+      $.ajax({
+        type: 'GET',
+        url: '/geo/city?_format=json&country=' + selectedCountruOption,
+        success: function (response) {
+          $('#cityReg').empty();
+          $('#cityReg').append('<option value="" name="city">select a city</option>');
+          $(response).each(function () {
+            $('#cityReg').append('<option value="' + this.id + '" name="city">' + this.name + '</option>');
+          });
+          $("#cityReg").select2();
+        }
+      })
+    }
   }
 
   function customerRegister(){
@@ -370,6 +372,12 @@ $(function () {
         type:'POST',
         url:'/event/create',
         data: quote + '&user='+ userData.id,
+        beforeSend: function () {
+          $('#loadSpinner').fadeIn(500);
+        },
+        complete: function () {
+          $('#loadSpinner').fadeOut(500);
+        },
         success: function(){
           localStorage.removeItem('quoteRequest');
           setTimeout(function(){

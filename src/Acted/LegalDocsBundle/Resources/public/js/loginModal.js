@@ -33,6 +33,12 @@ $(function () {
                         type:'POST',
                         url:'/event/create',
                         data: quote + '&user='+ response.userId,
+                        beforeSend: function () {
+                            $('#loadSpinner').fadeIn(500);
+                        },
+                        complete: function () {
+                            $('#loadSpinner').fadeOut(500);
+                        },
                         success: function(){
                             localStorage.removeItem('quoteRequest');
                             $('#loginModal').modal('hide');

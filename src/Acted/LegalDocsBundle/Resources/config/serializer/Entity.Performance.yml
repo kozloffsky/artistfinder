@@ -1,9 +1,9 @@
 Acted\LegalDocsBundle\Entity\Performance:
     exclusion_policy: NONE
     properties:
-        profile:
-            exclude: true
         id:
             groups: [chat_list, chat_room, all_messages]
         title:
             groups: [chat_list, chat_room, all_messages]
+        profile:
+            groups: [getEvent]
