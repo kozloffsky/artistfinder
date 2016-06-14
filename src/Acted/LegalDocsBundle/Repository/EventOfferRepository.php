@@ -27,7 +27,7 @@ class EventOfferRepository extends EntityRepository
     public function getArtists($userId)
     {
         return $this->createQueryBuilder('eo')
-            ->select('u.id as user_id')
+            ->select('u.id as user_id, e.id as event_id')
             ->leftJoin('eo.event', 'e')
             ->leftJoin('eo.offer', 'o')
             ->leftJoin('o.performances', 'p')
