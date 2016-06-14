@@ -1,6 +1,8 @@
 Acted\LegalDocsBundle\Entity\User:
   exclusion_policy: NONE
   properties:
+    id:
+      groups: [getEvent]
     passwordHash:
       exclude: true
     confirmationToken:

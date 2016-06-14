@@ -1,0 +1,5 @@
+Acted\LegalDocsBundle\Entity\Profile:
+    exclusion_policy: NONE
+    properties:
+        user:
+            groups: [getEvent]
