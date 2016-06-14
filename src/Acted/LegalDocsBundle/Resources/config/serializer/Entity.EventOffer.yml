@@ -5,3 +5,5 @@ Acted\LegalDocsBundle\Entity\EventOffer:
             groups: [Default, getEvent, all_messages, chat_list]
         event:
             groups: [Default, getEvent]
+        offer:
+            groups: [getEvent]
