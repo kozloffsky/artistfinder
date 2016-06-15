@@ -15,9 +15,6 @@ Acted\LegalDocsBundle\Entity\Message:
         messageText:
           type: text
           nullable: true
-        filePath:
-          type: string(255)
-          nullable: true
         sendDateTime:
           type: datetime
           notnull: true
@@ -36,4 +33,9 @@ Acted\LegalDocsBundle\Entity\Message:
             targetEntity: Acted\LegalDocsBundle\Entity\User
         senderUser:
             targetEntity: Acted\LegalDocsBundle\Entity\User
+    oneToMany:
+        files:
+          targetEntity: Acted\LegalDocsBundle\Entity\MessageFile
+          mappedBy: message
+          cascade: ["remove", "persist"]
     lifecycleCallbacks: {  }

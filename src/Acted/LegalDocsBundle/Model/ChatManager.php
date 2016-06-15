@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Model;
 
 use Acted\LegalDocsBundle\Entity\ChatRoom;
+use Acted\LegalDocsBundle\Entity\MessageFile;
 use Doctrine\ORM\EntityManagerInterface;
 use Acted\LegalDocsBundle\Entity\Event;
 use Acted\LegalDocsBundle\Entity\User;
@@ -92,10 +93,10 @@ class ChatManager
      * @param User $sender
      * @param User $receiver
      * @param string $messageText
-     * @param string $filePath
+     * @param array $filePaths
      * @return  Message
      */
-    public function newMessage(ChatRoom $chatRoom, User $sender, User $receiver, $messageText = null, $filePath = null)
+    public function newMessage(ChatRoom $chatRoom, User $sender, User $receiver, $messageText = null, $filePaths = [])
     {
         $message = new Message();
         $now = new \DateTime();
@@ -104,9 +105,15 @@ class ChatManager
         $message->setReceiverUser($receiver);
         $message->setSenderUser($sender);
         $message->setMessageText($messageText);
-        $message->setFilePath($filePath);
         $message->setSubject($chatRoom->getEvent()->getTitle());
         $message->setSendDateTime($now);
+        foreach ($filePaths as $file) {
+            $messageFile = new MessageFile();
+            $messageFile->setFileName($file);
+            $messageFile->setMessage($message);
+
+            $message->addFile($messageFile);
+        }
 
         return $message;
     }
