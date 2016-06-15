@@ -191,6 +191,7 @@ class ChatRoomController extends Controller
         $messageText = $request->request->get('message');
         $uploadedFile = $request->files->get('file');
         $chatId = $request->get('chatId');
+        $filePath = '';
 
         $user = $this->getUser();
         $chat = $this->getEM()->getRepository('ActedLegalDocsBundle:ChatRoom')->checkUserPermission($user, $chatId);
@@ -235,6 +236,7 @@ class ChatRoomController extends Controller
                         'avatar' => $user->getAvatar(),
                         'user_name' => $user->getFullName(),
                         'room' => $chatId,
+                        'file' => $filePath,
                         'role' => $user->getRoleName(),
                         'send_date' => $message->getTimeFromGet(),
                         'message_id' => $message->getId()
