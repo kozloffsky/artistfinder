@@ -149,11 +149,35 @@ class MediaManager
 
     /**
      * Upload file
+     * @param array $uploadedFiles
+     * @param string $filePath
+     * @return array
+     */
+    public function uploadFilesForMessage($uploadedFiles, $filePath = null)
+    {
+        $result = ['status' => 'success'];
+        foreach ($uploadedFiles as $uploadedFile) {
+            $file = $this->uploadFile($uploadedFile, $filePath);
+            if ($file['status'] === 'error') {
+                return [
+                    'status' => 'error',
+                    'message' => $file['message'] . 'for file '. $uploadedFile->getClientOriginalName()
+                ];
+            } else {
+                $result['message'][] = $file['message'];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Upload file
      * @param UploadedFile $uploadedFile
      * @param string $filePath
      * @return array
      */
-    public function uploadFile($uploadedFile, $filePath = null)
+    private function uploadFile($uploadedFile, $filePath = null)
     {
         $fs = new Filesystem();
 

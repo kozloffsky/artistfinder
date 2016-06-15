@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Entity;
 
+use Acted\LegalDocsBundle\Entity\Message;
 /**
  * MessageFile
  */
@@ -13,9 +14,9 @@ class MessageFile
     private $id;
 
     /**
-     * @var integer
+     * @var Message
      */
-    private $messageId;
+    private $message;
 
     /**
      * @var integer
@@ -39,15 +40,15 @@ class MessageFile
     }
 
     /**
-     * Set messageId
+     * Set Message
      *
-     * @param integer $messageId
+     * @param Message $message
      *
      * @return MessageFile
      */
-    public function setMessageId($messageId)
+    public function setMessage(Message $message)
     {
-        $this->messageId = $messageId;
+        $this->message = $message;
 
         return $this;
     }
@@ -55,11 +56,11 @@ class MessageFile
     /**
      * Get messageId
      *
-     * @return integer
+     * @return Message
      */
-    public function getMessageId()
+    public function getMessage()
     {
-        return $this->messageId;
+        return $this->message;
     }
 
     /**
