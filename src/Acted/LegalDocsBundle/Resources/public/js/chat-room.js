@@ -65,13 +65,45 @@ $(function(){
         var currentUrl = window.location.pathname;
         var matchesUrl = currentUrl.split('/');
         if (matchesUrl[2] == 'chat'){
-
             var chatId = $('#chatId').text();
             var eventLocationMap= {};
             eventLocationMap.latitude = $('#eventLocationCoordinates .latitude').text();
             eventLocationMap.longitude = $('#eventLocationCoordinates .longitude').text();
             initializeMap(eventLocationMap);
             chatSocket(chatId);
+            chekUserReadedMessage(chatId);
+        }
+    }
+
+
+
+    function chekUserReadedMessage(chatId){
+        $(window).scroll(function() {
+            if ($('.comments-list').isVisible()) {
+                setTimeout(function(){
+                    markMessageAsRead(chatId);
+                }, 1500);
+            }
+            return false;
+        });
+    }
+
+    var messageReaded = false;
+
+    function markMessageAsRead(chatId){
+        if (messageReaded == false){
+            console.log(messageReaded)
+            messageReaded = true;
+            $.ajax({
+                type:'POST',
+                url: '/dashboard/read_message/'+chatId,
+                success: function(){
+                    messageReaded = true;
+                },
+                error: function(){
+                    messageReaded = false;
+                }
+            })
         }
     }
 
@@ -95,35 +127,67 @@ $(function(){
         webSocket.on("socket/connect", function(session){
 
             //the callback function in "subscribe" is called everytime an event is published in that channel.
-            session.subscribe("acted/chat/1", function(uri, payload){
-                console.log(payload);
-                console.log('user:    ', payload.msg);
-                postMessage(payload.msg)
+            session.subscribe('acted/chat/'+chatId+'', function(uri, payload){
+                postMessage(payload)
             });
 
             $(function () {
                 $(document).on('click', '#sendMsg', function (ev) {
                     ev.preventDefault();
                     var text = $('#chat-room').val();
-                    if (text.length > 1) {
-                        $.post('/dashboard/web/push/'+chatId+'', {'message': text});//
+                    //var dataFiles = $('#filer_input1')[0].files[0];
+                    var dataFiles = new FormData();
+                    dataFiles.append('files', $('#filer_input1')[0].files[0]);
+                    dataFiles.append('message', text);
+                    console.log(dataFiles)
+                    if (text.length >= 0) {
+                        /*$.post('/dashboard/web/push/'+chatId+'',{
+                            'message': text,
+                            'file': dataFiles
+                        });*/
+                        $.ajax({
+                            type:'POST',
+                            url: '/dashboard/web/push/'+chatId,
+                            processData: false,
+                            contentType: false,
+                            data: dataFiles
+                        })
                     }
+
                 });
             });
 
-            function postMessage(messageText){
-                var messageBlock = '<li>'+
-                    '<a href="#" class="img-holder">'+
-                    '<img src="/assets/images/noAvatar.png" alt="image description">'+
-                    '</a>'+
-                    '<div class="holder">'+
-                    '<div class="box">'+
-                    '<p>'+messageText+'</p>'+
-                    '<em class="date"></em>'+
-                    '</div>'+
-                    '</div>'+
-                    '</li>';
-                $('#twocolumns .comments-list').prepend(messageBlock);
+            function postMessage(messageChat){
+                console.log(messageChat)
+                if(messageChat.role){
+                    if(messageChat.role == 'Client')
+                    {
+                        var messageBlock = '<li>'+
+                            '<a href="#" class="img-holder">'+
+                            '<img src="/assets/images/noAvatar.png" alt="image description">'+
+                            '</a>'+
+                            '<div class="holder">'+
+                            '<div class="box">'+
+                            '<p>'+messageChat.msg+'</p>'+
+                            '<em class="date">'+messageChat.send_date+'</em>'+
+                            '</div>'+
+                            '</div>'+
+                            '</li>';
+                    } else {
+                        var messageBlock = '<li class="right active">'+
+                            '<a href="#" class="img-holder">'+
+                            '<img src="'+messageChat.avatar+'" alt="image description">'+
+                            '</a>'+
+                            '<div class="holder">'+
+                            '<div class="box">'+
+                            '<p>'+messageChat.msg+'</p>'+
+                            '<em class="date">'+messageChat.send_date+'</em>'+
+                            '</div>'+
+                            '</div>'+
+                            '</li>';
+                    }
+                    $('#twocolumns .comments-list').prepend(messageBlock);
+                }
             }
         })
     }
