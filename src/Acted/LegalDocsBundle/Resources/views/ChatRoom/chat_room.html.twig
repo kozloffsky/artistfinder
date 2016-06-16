@@ -5,116 +5,12 @@
     <div class="container">
         {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
 
-
         <div class="wrap">
             <a class="btn-back" href="/dashboard/messages/{{ app.user.id }}">Back to messages</a>
             <h2 class="main-title">Chatroom #{{ chat.chat_id }}</h2>
             <div class="hidden" id="chatId">{{ chat.chat_id }}</div>
             <!--detail form start-->
-            <form action="#" class="detail-form">
-                <div class="row clearfix">
-                    <div class="col-lg-6 col-md-6 col-sm-6 no-padding">
-                        <h2 class="title">Event details</h2>
-                        <div class="frame">
-                            <label for="name_event">Name event</label>
-                            <input type="text" id="name_event" placeholder="{{ chat.event.title }}" value="{{ chat.event.title }}">
-                        </div>
-                        <div class="frame">
-                            <label for="country-select">Country</label>
-                            <select data-class="main-select" class="full-width" name="main-select" id="country-select">
-                                <option value="0">United Kingdom</option>
-                                <option value="1">France</option>
-                                <option value="2">Germany</option>
-                            </select>
-                        </div>
-                        <div class="row holder border-b clearfix">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="frame">
-                                    <label for="datetimepicker">Date</label>
-                                    <input id="datetimepicker" placeholder="{{ chat.event.starting_date }}" type="text" value="{{ chat.event.starting_date }}">
-                                </div>
-                                <div class="frame">
-                                    <label for="performance">Performance time</label>
-                                    <input type="text" id="performance" placeholder="10 p.m.">
-                                </div>
-                                <div class="frame">
-                                    <label for="arrival">Arrival time</label>
-                                    <input type="text" id="arrival" placeholder="6 p.m.">
-                                </div>
-                                <div class="frame">
-                                    <label for="guests">Number of guests</label>
-                                    <input type="text" id="guests" placeholder="234">
-                                </div>
-                                <div class="frame">
-                                    <label for="vanue">Vanue type</label>
-                                    <input type="text" id="vanue" placeholder="Hotel Ballrom">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 pull-right">
-                                <div class="frame">
-                                    <label for="adress">Adress</label>
-                                    <input type="text" id="adress" placeholder="Sr Regis">
-                                </div>
-                                <div class="frame">
-                                    <label for="city">City</label>
-                                    <select data-class="main-select" class="full-width" name="main-select" id="city">
-                                        <option value="0">London</option>
-                                        <option value="1">Reading</option>
-                                        <option value="2">Oxford</option>
-                                        <option value="3">Winchester</option>
-                                    </select>
-                                </div>
-                                <div class="frame">
-                                    <label for="p-code">Post code</label>
-                                    <input type="text" id="p-code" placeholder="Sr Regis">
-                                </div>
-                                <div class="map-holder">
-                                    <div id="map"></div>
-                                    <em class="note">Pin your location on the map</em>
-                                </div>
-                                <div class="hidden" id="eventLocationCoordinates">
-                                    <span class="latitude">{{ chat.event.city.latitude }}</span>
-                                    <span class="longitude">{{ chat.event.city.longitude }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 no-padding">
-                        <h2 class="title">Quote</h2>
-                        <div class="v-frame">
-                            <div class="v-box">
-                                <div class="box">
-                                    <em class="note">No quote submitted yet</em>
-                                    <div class="controls">
-                                        <div class="button-gradient filled">
-                                            <button class="btn" type="submit">Send quotation</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row list clearfix">
-                    <div class="col-lg-3 col-md-3 col-sm-3">
-                        <label for="c-name">Client name</label>
-                        <input type="text" id="c-name" placeholder="Thomas Man">
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3">
-                        <label for="c-person">Contact person</label>
-                        <input type="text" id="c-person" placeholder="Thomas Hardy">
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3">
-                        <label for="p-number">Phone number</label>
-                        <input type="text" id="p-number" placeholder="+4412321321321">
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3">
-                        <label for="e-address">Email addres</label>
-                        <input type="text" id="e-address" placeholder="smth@gmail.com">
-                    </div>
-
-                </div>
-            </form>
+            {% include 'ActedLegalDocsBundle:ChatRoom:chatRoomEvent.html.twig' %}
             <!--detail form end-->
             <!--miscellaneous list start-->
             <ul class="miscellaneous-list">

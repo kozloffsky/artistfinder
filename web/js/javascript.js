@@ -4191,17 +4191,19 @@ $(function(){
         addMore: true
     });
 
-    $('select').each(function () {
-        var placeholder = $(this).attr('data-placeholder');
-        var $select2    = $(this).select2({
-            placeholder            : placeholder || '',
-            minimumResultsForSearch: -1
-        });
+    function initSelect(){
+        $('select').each(function () {
+            var placeholder = $(this).attr('data-placeholder');
+            var $select2    = $(this).select2({
+                placeholder            : placeholder || '',
+                minimumResultsForSearch: -1
+            });
 
-        var className = $(this).attr('data-class');
-        $select2.data('select2').$selection.addClass(className);
-        $select2.data('select2').$results.addClass(className);
-    });
+            var className = $(this).attr('data-class');
+            $select2.data('select2').$selection.addClass(className);
+            $select2.data('select2').$results.addClass(className);
+        });
+    }
 
     $('#datetimepicker').datetimepicker({
         format: 'DD/MM/YYYY'
@@ -4212,13 +4214,103 @@ $(function(){
         var currentUrl = window.location.pathname;
         var matchesUrl = currentUrl.split('/');
         if (matchesUrl[2] == 'chat'){
-
             var chatId = $('#chatId').text();
             var eventLocationMap= {};
             eventLocationMap.latitude = $('#eventLocationCoordinates .latitude').text();
             eventLocationMap.longitude = $('#eventLocationCoordinates .longitude').text();
             initializeMap(eventLocationMap);
             chatSocket(chatId);
+            chekUserReadedMessage(chatId);
+        }
+    }
+
+
+
+    function chekUserReadedMessage(chatId){
+        $(window).scroll(function() {
+            if ($('.comments-list').isVisible()) {
+                setTimeout(function(){
+                    markMessageAsRead(chatId);
+                }, 1500);
+            }
+            return false;
+        });
+    }
+
+    var messageReaded = false;
+
+    function markMessageAsRead(chatId){
+        if (messageReaded == false){
+            console.log(messageReaded)
+            messageReaded = true;
+            $.ajax({
+                type:'POST',
+                url: '/dashboard/read_message/'+chatId,
+                success: function(){
+                    messageReaded = true;
+                },
+                error: function(){
+                    messageReaded = false;
+                }
+            })
+        }
+    }
+
+    $(document).ready(function() {
+        var selectedCountryOption = $('#country-select').find('option:selected').val();
+        var savedCity = $('#eventLocationCoordinates .eventCityId').text();
+        chooseCityQuote(selectedCountryOption, savedCity);
+    });
+
+    $('#country-select').on('change',function(){
+        var selectedCountryOption = $('#country-select').find('option:selected').val();
+        chooseCityQuote(selectedCountryOption);
+    });
+
+    $('#cityEvent').on('change',function(){
+        changeCityOnMapSelect();
+    })
+
+    function changeCityOnMapSelect(){
+        var selectedCityOption = $('#cityEvent').find('option:selected').val(),
+            selectedCityCoordinates = $('#eventLocationCoordinates .eventCityId'+selectedCityOption);
+        console.log(selectedCityCoordinates)
+        var eventLocationMap= {};
+        eventLocationMap.latitude = $(selectedCityCoordinates).find('.latitude').text();
+        eventLocationMap.longitude = $(selectedCityCoordinates).find('.longitude').text();
+        initializeMap(eventLocationMap);
+    }
+
+    function chooseCityQuote(selectedCountryOption, savedCity){
+        if(selectedCountryOption){
+            $.ajax({
+                type:'GET',
+                url: '/geo/city?_format=json&country=' + selectedCountryOption,
+                success:function(response){
+                    $('#cityEvent').empty();
+                    if(savedCity){
+                        $(response).each(function(){
+                            if(savedCity == this.id){
+                                $('#cityEvent').append('<option value="'+ this.id +'" name="city" selected="selected">'+this.name+'</option>');
+                            } else {
+                                $('#cityEvent').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
+                            }
+                        });
+                    } else {
+                        $(response).each(function(){
+                            $('#cityEvent').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
+                        });
+                    }
+                    $(response).each(function(){
+                        var cityCoordinatesBlock = '<div class="eventCityId'+ this.id +'">'+
+                            '<span class="latitude">'+this.latitude+'</span>'+
+                            '<span class="longitude">'+this.longitude+'</span></div>';
+                        $('#eventLocationCoordinates').append(cityCoordinatesBlock);
+                    })
+                    initSelect();
+                    changeCityOnMapSelect();
+                }
+            })
         }
     }
 
@@ -4242,35 +4334,68 @@ $(function(){
         webSocket.on("socket/connect", function(session){
 
             //the callback function in "subscribe" is called everytime an event is published in that channel.
-            session.subscribe("acted/chat/1", function(uri, payload){
-                console.log(payload);
-                console.log('user:    ', payload.msg);
-                postMessage(payload.msg)
+            session.subscribe('acted/chat/'+chatId+'', function(uri, payload){
+                postMessage(payload)
             });
 
             $(function () {
                 $(document).on('click', '#sendMsg', function (ev) {
                     ev.preventDefault();
                     var text = $('#chat-room').val();
-                    if (text.length > 1) {
-                        $.post('/dashboard/web/push/'+chatId+'', {'message': text});//
+                    var dataFiles = new FormData();
+                    dataFiles.append('files', $('#filer_input1')[0].files[0]);
+                    dataFiles.append('message', text);
+                    if (text.length >= 0) {
+                        /*$.post('/dashboard/web/push/'+chatId+'',{
+                            'message': text,
+                            'file': dataFiles
+                        });*/
+                        $.ajax({
+                            type:'POST',
+                            url: '/dashboard/web/push/'+chatId,
+                            processData: false,
+                            contentType: false,
+                            data: dataFiles,
+                            success: function(){
+                                $('#chat-room').val('')
+                            }
+                        })
                     }
+
                 });
             });
 
-            function postMessage(messageText){
-                var messageBlock = '<li>'+
-                    '<a href="#" class="img-holder">'+
-                    '<img src="/assets/images/noAvatar.png" alt="image description">'+
-                    '</a>'+
-                    '<div class="holder">'+
-                    '<div class="box">'+
-                    '<p>'+messageText+'</p>'+
-                    '<em class="date"></em>'+
-                    '</div>'+
-                    '</div>'+
-                    '</li>';
-                $('#twocolumns .comments-list').prepend(messageBlock);
+            function postMessage(messageChat){
+                console.log(messageChat)
+                if(messageChat.role){
+                    if(messageChat.role == 'Client')
+                    {
+                        var messageBlock = '<li>'+
+                            '<a href="#" class="img-holder">'+
+                            '<img src="/assets/images/noAvatar.png" alt="image description">'+
+                            '</a>'+
+                            '<div class="holder">'+
+                            '<div class="box">'+
+                            '<p>'+messageChat.msg+'</p>'+
+                            '<em class="date">'+messageChat.send_date+'</em>'+
+                            '</div>'+
+                            '</div>'+
+                            '</li>';
+                    } else {
+                        var messageBlock = '<li class="right active">'+
+                            '<a href="#" class="img-holder">'+
+                            '<img src="'+messageChat.avatar+'" alt="image description">'+
+                            '</a>'+
+                            '<div class="holder">'+
+                            '<div class="box">'+
+                            '<p>'+messageChat.msg+'</p>'+
+                            '<em class="date">'+messageChat.send_date+'</em>'+
+                            '</div>'+
+                            '</div>'+
+                            '</li>';
+                    }
+                    $('#twocolumns .comments-list').prepend(messageBlock);
+                }
             }
         })
     }
@@ -7112,6 +7237,7 @@ $(function() {
         }
     });
     createActiveMenu();
+
     function createActiveMenu(){
         var currentUrl = window.location.pathname;
         var matchesUrl = currentUrl.split('/');
@@ -10514,6 +10640,7 @@ $(function () {
                     }
                 } else {
                     $('.eventChooseRequest').hide();
+                    sessionStorage.clear();
                 }
             }
         })

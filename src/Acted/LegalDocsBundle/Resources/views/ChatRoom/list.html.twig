@@ -7,6 +7,8 @@
 
         <div class="enquiries-wrap">
             {% for chat in chats|reverse %}
+
+                {% if chat.last_message %}
             <article class="enq-block clearfix" id="{{ chat.offer.id }}">
                 <span class="received-time">
                      <i class="enq-icon icon-timing"></i> Received {{ chat.last_message.time_from_get }} ago
@@ -64,6 +66,7 @@
 
                 </div>
             </article>
+            {% endif %}
             {% endfor %}
         </div>
 
