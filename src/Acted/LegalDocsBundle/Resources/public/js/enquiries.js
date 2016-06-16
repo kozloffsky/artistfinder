@@ -39,6 +39,7 @@ $(function() {
         }
     });
     createActiveMenu();
+
     function createActiveMenu(){
         var currentUrl = window.location.pathname;
         var matchesUrl = currentUrl.split('/');

@@ -44,17 +44,19 @@ $(function(){
         addMore: true
     });
 
-    $('select').each(function () {
-        var placeholder = $(this).attr('data-placeholder');
-        var $select2    = $(this).select2({
-            placeholder            : placeholder || '',
-            minimumResultsForSearch: -1
-        });
+    function initSelect(){
+        $('select').each(function () {
+            var placeholder = $(this).attr('data-placeholder');
+            var $select2    = $(this).select2({
+                placeholder            : placeholder || '',
+                minimumResultsForSearch: -1
+            });
 
-        var className = $(this).attr('data-class');
-        $select2.data('select2').$selection.addClass(className);
-        $select2.data('select2').$results.addClass(className);
-    });
+            var className = $(this).attr('data-class');
+            $select2.data('select2').$selection.addClass(className);
+            $select2.data('select2').$results.addClass(className);
+        });
+    }
 
     $('#datetimepicker').datetimepicker({
         format: 'DD/MM/YYYY'
@@ -107,6 +109,64 @@ $(function(){
         }
     }
 
+    $(document).ready(function() {
+        var selectedCountryOption = $('#country-select').find('option:selected').val();
+        var savedCity = $('#eventLocationCoordinates .eventCityId').text();
+        chooseCityQuote(selectedCountryOption, savedCity);
+    });
+
+    $('#country-select').on('change',function(){
+        var selectedCountryOption = $('#country-select').find('option:selected').val();
+        chooseCityQuote(selectedCountryOption);
+    });
+
+    $('#cityEvent').on('change',function(){
+        changeCityOnMapSelect();
+    })
+
+    function changeCityOnMapSelect(){
+        var selectedCityOption = $('#cityEvent').find('option:selected').val(),
+            selectedCityCoordinates = $('#eventLocationCoordinates .eventCityId'+selectedCityOption);
+        console.log(selectedCityCoordinates)
+        var eventLocationMap= {};
+        eventLocationMap.latitude = $(selectedCityCoordinates).find('.latitude').text();
+        eventLocationMap.longitude = $(selectedCityCoordinates).find('.longitude').text();
+        initializeMap(eventLocationMap);
+    }
+
+    function chooseCityQuote(selectedCountryOption, savedCity){
+        if(selectedCountryOption){
+            $.ajax({
+                type:'GET',
+                url: '/geo/city?_format=json&country=' + selectedCountryOption,
+                success:function(response){
+                    $('#cityEvent').empty();
+                    if(savedCity){
+                        $(response).each(function(){
+                            if(savedCity == this.id){
+                                $('#cityEvent').append('<option value="'+ this.id +'" name="city" selected="selected">'+this.name+'</option>');
+                            } else {
+                                $('#cityEvent').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
+                            }
+                        });
+                    } else {
+                        $(response).each(function(){
+                            $('#cityEvent').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
+                        });
+                    }
+                    $(response).each(function(){
+                        var cityCoordinatesBlock = '<div class="eventCityId'+ this.id +'">'+
+                            '<span class="latitude">'+this.latitude+'</span>'+
+                            '<span class="longitude">'+this.longitude+'</span></div>';
+                        $('#eventLocationCoordinates').append(cityCoordinatesBlock);
+                    })
+                    initSelect();
+                    changeCityOnMapSelect();
+                }
+            })
+        }
+    }
+
     function chatSocket(chatId){
         var webSocket = WS.connect("ws://127.0.0.1:1337");
 
@@ -135,11 +195,9 @@ $(function(){
                 $(document).on('click', '#sendMsg', function (ev) {
                     ev.preventDefault();
                     var text = $('#chat-room').val();
-                    //var dataFiles = $('#filer_input1')[0].files[0];
                     var dataFiles = new FormData();
                     dataFiles.append('files', $('#filer_input1')[0].files[0]);
                     dataFiles.append('message', text);
-                    console.log(dataFiles)
                     if (text.length >= 0) {
                         /*$.post('/dashboard/web/push/'+chatId+'',{
                             'message': text,
@@ -150,7 +208,10 @@ $(function(){
                             url: '/dashboard/web/push/'+chatId,
                             processData: false,
                             contentType: false,
-                            data: dataFiles
+                            data: dataFiles,
+                            success: function(){
+                                $('#chat-room').val('')
+                            }
                         })
                     }
 

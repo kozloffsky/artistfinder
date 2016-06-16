@@ -2593,3 +2593,11 @@ a.disabled {
 {
     display: none;
 }
+.eventArtist
+{
+    margin-left: 3px;
+}
+.quotationDetailsChat
+{
+    padding: 0 15px;
+}
