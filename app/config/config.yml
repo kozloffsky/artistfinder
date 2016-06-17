@@ -131,8 +131,8 @@ jms_serializer:
                 path: "@ActedLegalDocsBundle/Resources/config/serializer"
     handlers:
         datetime:
-            default_format: "c" # ISO8601
-            default_timezone: "UTC" # defaults to whatever timezone set in php.ini or via date_default_t
+            default_format: "d/m/Y"
+            default_timezone: "UTC"
 
 liip_imagine:
     driver: imagick
