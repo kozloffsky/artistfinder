@@ -2,15 +2,15 @@ gos_web_socket:
     topics:
         - @socket_chat.rpc_topic
     server:
-        port: 1337        #The port the socket server will listen on
-        host: 127.0.0.1   #The host ip to bind to
+        port: "%web_socket_server_port%"
+        host: "%web_socket_server_host%"
         router:
             resources:
                 - @ActedLegalDocsBundle/Resources/config/routing/pubsub/routing.yml
     pushers:
         zmq:
             default: true
-            host: 127.0.0.1
-            port: 5555
+            host: "%web_socket_pusher_host%"
+            port: "%web_socket_pusher_port%"
             persistent: true
             protocol: tcp
