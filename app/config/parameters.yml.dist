@@ -39,3 +39,9 @@ parameters:
         - text/plain
         - application/zip
     chat_upload_dir: uploads
+
+    #web socket params
+    web_socket_server_host: 127.0.0.1
+    web_socket_server_port: 1337
+    web_socket_pusher_host: 127.0.0.1
+    web_socket_pusher_port: 5555
