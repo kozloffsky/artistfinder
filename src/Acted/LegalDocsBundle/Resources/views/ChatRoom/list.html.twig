@@ -7,11 +7,11 @@
 
         <div class="enquiries-wrap">
             {% for chat in chats|reverse %}
-{{ dump(chat) }}
-                {% if chat.last_message %}
+
+                {#{% if chat.last_message %}#}
             <article class="enq-block clearfix" id="{{ chat.offer.id }}">
                 <span class="received-time">
-                     <i class="enq-icon icon-timing"></i> Received {{ chat.last_message.time_from_get }} ago
+                     <i class="enq-icon icon-timing"></i> Received {{ chat.offer.event_offer[0].time_from_add }} ago
                 </span>
 
                 <div class="col-lg-3 no-pad">
@@ -44,7 +44,7 @@
                             {%  if chat.offer.comments is defined %}
                             {{ chat.offer.comments }}
                             {% else %}
-                            {{ chat.last_message.message_text }}
+                            There's no message from client.
                             {% endif %}
                         </span>
                         <a class="show-more-btn" href="#">+more</a>
@@ -67,7 +67,7 @@
 
                 </div>
             </article>
-            {% endif %}
+            {#{% endif %}#}
             {% endfor %}
         </div>
 

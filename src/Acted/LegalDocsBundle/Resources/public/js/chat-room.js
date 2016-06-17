@@ -218,7 +218,7 @@ $(function(){
                             data: dataFiles,
                             success: function(){
                                 $('#chat-room').val('');
-                                uploadFilesFiller.remove(0);
+                                //uploadFilesFiller.remove(0);
                             }
                         })
                     }
