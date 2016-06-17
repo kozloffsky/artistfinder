@@ -4165,7 +4165,7 @@ $(function(){
 
 
 
-    $('#filer_input1').filer({
+    var uploadFilesFiller = $('#filer_input1').filer({
         limit: 10,
         maxSize: 40,
         changeInput: '<button type="button" class="btn-upload">Upload</button>',
@@ -4343,7 +4343,14 @@ $(function(){
                     ev.preventDefault();
                     var text = $('#chat-room').val();
                     var dataFiles = new FormData();
-                    dataFiles.append('files', $('#filer_input1')[0].files[0]);
+                    /*$('.chatFileUpload').each(function(){
+                        dataFiles.append('files[]', $(this)[0].files[0]);
+                    });*/
+                    $.each($(".chatFileUpload"), function(i, obj) {
+                        $.each(obj.files,function(j,file){
+                            dataFiles.append('files[]', file);
+                        })
+                    });
                     dataFiles.append('message', text);
                     if (text.length >= 0) {
                         /*$.post('/dashboard/web/push/'+chatId+'',{
@@ -4357,7 +4364,8 @@ $(function(){
                             contentType: false,
                             data: dataFiles,
                             success: function(){
-                                $('#chat-room').val('')
+                                $('#chat-room').val('');
+                                uploadFilesFiller.remove(0);
                             }
                         })
                     }
@@ -4368,6 +4376,15 @@ $(function(){
             function postMessage(messageChat){
                 console.log(messageChat)
                 if(messageChat.role){
+                    var chatMessageFiles = '';
+                    if(messageChat.file){
+                        chatMessageFiles += '<p>';
+                        $(messageChat.file).each(function(){
+                            chatMessageFiles += '<a href="'+this.path+'"><img class="chatImage" src="'+this.path+'"></a>';
+                        })
+                        chatMessageFiles += '</p>';
+                        console.log(chatMessageFiles)
+                    }
                     if(messageChat.role == 'Client')
                     {
                         var messageBlock = '<li>'+
@@ -4376,6 +4393,7 @@ $(function(){
                             '</a>'+
                             '<div class="holder">'+
                             '<div class="box">'+
+                            chatMessageFiles+
                             '<p>'+messageChat.msg+'</p>'+
                             '<em class="date">'+messageChat.send_date+'</em>'+
                             '</div>'+
@@ -4388,6 +4406,7 @@ $(function(){
                             '</a>'+
                             '<div class="holder">'+
                             '<div class="box">'+
+                            chatMessageFiles +
                             '<p>'+messageChat.msg+'</p>'+
                             '<em class="date">'+messageChat.send_date+'</em>'+
                             '</div>'+

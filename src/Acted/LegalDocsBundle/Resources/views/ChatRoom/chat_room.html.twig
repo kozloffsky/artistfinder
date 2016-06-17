@@ -107,7 +107,16 @@
                                 </a>
                                 <div class="holder">
                                     <div class="box">
-                                        <p>{{ chatMessage.message_text }}</p>
+                                        {% if chatMessage.files is defined %}
+                                            <p>
+                                            {% for chatFile in chatMessage.files %}
+                                                <a href="{{ chatFile.file_name }}"><img class="chatImage" src="{{ chatFile.file_name }}"></a>
+                                            {% endfor %}
+                                            </p>
+                                        {% endif %}
+                                        {% if chatMessage.message_text is defined %}
+                                            <p>{{ chatMessage.message_text }}</p>
+                                        {% endif %}
                                         <em class="date">{{ chatMessage.time_from_get }}</em>
                                     </div>
                                 </div>
@@ -119,7 +128,16 @@
                                 </a>
                                 <div class="holder">
                                     <div class="box">
-                                        <p>{{ chatMessage.message_text }}</p>
+                                        {% if chatMessage.files is defined %}
+                                            <p>
+                                                {% for chatFile in chatMessage.files %}
+                                                    <a href="{{ chatFile.file_name }}"><img class="chatImage" src="{{ chatFile.file_name }}"></a>
+                                                {% endfor %}
+                                            </p>
+                                        {% endif %}
+                                        {% if chatMessage.message_text is defined %}
+                                            <p>{{ chatMessage.message_text }}</p>
+                                        {% endif %}
                                         <em class="date">{{ chatMessage.time_from_get }}</em>
                                     </div>
                                 </div>
@@ -133,7 +151,7 @@
                     <textarea class="textarea" id="chat-room" placeholder="Write your message"></textarea>
                     <div class="upload-box">
                         <div class="row">
-                            <input type="file" name="files[]" id="filer_input1" multiple="multiple">
+                            <input type="file" name="files[]" id="filer_input1" class="chatFileUpload" multiple="multiple">
                         </div>
                         <div class="controls">
                             <div class="button-gradient filled">
