@@ -346,4 +346,12 @@ class EventOffer
     {
         return $this->readDateTime;
     }
+
+    public function getTimeFromAdd()
+    {
+        $now = new \DateTime();
+        $period = $now->diff($this->getSendDateTime());
+
+        return $period->format('%d days %H hours %i minutes');
+    }
 }
