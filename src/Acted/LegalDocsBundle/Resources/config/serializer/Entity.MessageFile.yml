@@ -1,0 +1,5 @@
+Acted\LegalDocsBundle\Entity\MessageFile:
+    exclusion_policy: NONE
+    properties:
+        fileName:
+            groups: [chat_room]
