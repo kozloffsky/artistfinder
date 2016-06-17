@@ -109,7 +109,7 @@ class ChatManager
         $message->setSendDateTime($now);
         foreach ($filePaths as $file) {
             $messageFile = new MessageFile();
-            $messageFile->setFileName($file);
+            $messageFile->setFileName($file['path']);
             $messageFile->setMessage($message);
 
             $message->addFile($messageFile);

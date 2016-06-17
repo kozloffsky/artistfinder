@@ -164,7 +164,10 @@ class MediaManager
                     'message' => $file['message'] . 'for file '. $uploadedFile->getClientOriginalName()
                 ];
             } else {
-                $result['message'][] = $file['message'];
+                $result['message'][] = [
+                    'path' => $file['message'],
+                    'type' => $file['type']
+                ];
             }
         }
 
@@ -225,7 +228,8 @@ class MediaManager
 
         return [
             'status' => 'success',
-            'message' => '/'.$filePath . '/' . $filename
+            'message' => '/'.$filePath . '/' . $filename,
+            'type' => $uploadedFile->getClientMimeType()
         ];
     }
 
