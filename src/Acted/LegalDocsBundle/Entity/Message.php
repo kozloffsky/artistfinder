@@ -294,6 +294,6 @@ class Message
         $now = new \DateTime();
         $period = $now->diff($this->getSendDateTime());
 
-        return $period->format('%d days %H hours %i minutes');
+        return $period->format('%d days %h hours %i minutes');
     }
 }
