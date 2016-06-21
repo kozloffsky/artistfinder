@@ -10616,7 +10616,7 @@ $(function () {
         } else {
             $('.quote-profile-avatar').attr('src', '/assets/images/noAvatar.png');
         }
-        
+
     }
 
     $(document).ready(function() {
@@ -10707,6 +10707,8 @@ $(function () {
         $('#requestQuoteForm .modal-body').slideDown();
         $('#requestQuoteForm .modal-body').removeClass('choosePrevEvent');
         $('#requestQuoteForm .modal-body').addClass('newEventRegistered');
+        $('#requestQuoteForm input').val('');
+        $('#requestQuoteForm .guests-num input').prop('checked',false);
     });
 
     function chooseCityQuote(selectedCountruOption){
