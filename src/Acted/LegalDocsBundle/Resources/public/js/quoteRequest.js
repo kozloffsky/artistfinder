@@ -147,7 +147,12 @@ $(function () {
         var artistCatString = artistData.categories.toString();
         $('.quoteRequestArtistData .quote-profile-info h2').html(artistData.name);
         $('.quoteRequestArtistData .quote-profile-info p').html(artistCatString);
-        $('.quote-profile-avatar').attr('src', artistData.user.avatar);
+        if(artistData.user.avatar){
+            $('.quote-profile-avatar').attr('src', artistData.user.avatar);
+        } else {
+            $('.quote-profile-avatar').attr('src', '/assets/images/noAvatar.png');
+        }
+
     }
 
     $(document).ready(function() {
