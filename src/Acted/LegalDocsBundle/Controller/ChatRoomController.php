@@ -170,7 +170,7 @@ class ChatRoomController extends Controller
      */
     public function getChatAction(Request $request)
     {
-        return $this->redirectToRoute('artists_list_by_category');
+        return $this->redirectToRoute('artists_list');
         $chatRoomId = $request->get('chat');
         $serializer = $this->get('jms_serializer');
 
