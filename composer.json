@@ -36,9 +36,7 @@
         "friendsofsymfony/rest-bundle": "^1.7",
         "beberlei/DoctrineExtensions": "^1.0",
         "misd/phone-number-bundle": "^1.1",
-        "tweedegolf/swiftmailer-logger-bundle": "dev-master",
-        "react/zmq": "^0.3.0",
-        "gos/web-socket-bundle": "v1.8.1"
+        "tweedegolf/swiftmailer-logger-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "3.0.6",
