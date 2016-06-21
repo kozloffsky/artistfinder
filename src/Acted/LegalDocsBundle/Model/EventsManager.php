@@ -99,7 +99,8 @@ class EventsManager
     public function createEventOffer(EventOfferData $eventOfferData)
     {
         $eventOffer = new EventOffer();
-        $eventOffer->setSendDateTime($eventOfferData->getEventDate());
+        $now = new \DateTime();
+        $eventOffer->setSendDateTime($now);
         $eventOffer->setStatus(EventOffer::EVENT_OFFER_STATUS_PROPOSE);
 
         return $eventOffer;

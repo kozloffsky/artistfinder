@@ -48,23 +48,15 @@ class ChatManager
      */
     public function createChat($event, $receiver, $data, $offer)
     {
-        $chat = $this->entityManager
-            ->getRepository('ActedLegalDocsBundle:ChatRoom')
-            ->getChatByParams($event, $receiver);
-
-        if (!$chat) {
-            $chatRoom = new ChatRoom();
-            $chatRoom->setEvent($event);
-            $chatRoom->setOffer($offer);
-            $chatRoom->setArtist($receiver);
-            $chatRoom->setClient($event->getUser());
-            $this->entityManager->persist($chatRoom);
-            if ($data->getComment()) {
-                $message = $this->newChatMessage($chatRoom, $receiver, $data);
-                $this->entityManager->persist($message);
-            }
-            $this->entityManager->flush();
-        }
+        $chatRoom = new ChatRoom();
+        $chatRoom->setEvent($event);
+        $chatRoom->setOffer($offer);
+        $chatRoom->setArtist($receiver);
+        $chatRoom->setClient($event->getUser());
+        $this->entityManager->persist($chatRoom);
+        $message = $this->newChatMessage($chatRoom, $receiver, $data);
+        $this->entityManager->persist($message);
+        $this->entityManager->flush();
     }
 
     /**
@@ -76,13 +68,14 @@ class ChatManager
      */
     public function newChatMessage($chatRoom, $receiver, $data)
     {
+        $text = $data->getComment() ? $data->getComment() : 'Hi!';
         $now = new \DateTime();
         $message = new Message();
         $message->setChatRoom($chatRoom);
         $message->setReceiverUser($receiver);
         $message->setSenderUser($data->getUser());
         $message->setSubject($data->getName());
-        $message->setMessageText($data->getComment());
+        $message->setMessageText($text);
         $message->setSendDateTime($now);
 
         return $message;
