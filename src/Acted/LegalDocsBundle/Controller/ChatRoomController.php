@@ -188,9 +188,10 @@ class ChatRoomController extends Controller
      */
     public function webSocketPushAction(Request $request)
     {
-        $messageText = $request->request->get('message');
-        $uploadedFile = $request->files->get('file');
+        $messageText = $request->request->get('message')?$request->request->get('message'):null;
+        $uploadedFiles = $request->files->get('files');
         $chatId = $request->get('chatId');
+        $filePaths = [];
 
         $user = $this->getUser();
         $chat = $this->getEM()->getRepository('ActedLegalDocsBundle:ChatRoom')->checkUserPermission($user, $chatId);
@@ -210,22 +211,17 @@ class ChatRoomController extends Controller
 
         /** Add new message to chat room **/
         try {
-            if ($messageText) {
-                $message = $this->get('app.chat.manager')->newMessage($chat, $sender, $receiver, $messageText, null);
-            } else {
+            if ($uploadedFiles && !empty($uploadedFiles)) {
                 $mediaManager = $this->get('app.media.manager');
-                $uploadResult = $mediaManager->uploadFile($uploadedFile, 'chat_'.$chatId);
-                try {
-                    if ($uploadResult['status'] === 'success') {
-                        $filePath = $uploadResult['message'];
-                    } else {
-                        throw new \Exception($uploadResult['message']);
-                    }
-                } catch (\Exception $e) {
-                    return new JsonResponse(['error' => $e->getMessage()], 400);
+                $uploadResult = $mediaManager->uploadFilesForMessage($uploadedFiles, 'chat_'.$chatId);
+                if ($uploadResult['status'] === 'success') {
+                    $filePaths = $uploadResult['message'];
+                } else {
+                    return new JsonResponse(['error' => $uploadResult['message']], 400);
                 }
-                $message = $this->get('app.chat.manager')->newMessage($chat, $sender, $receiver, null, $filePath);
             }
+            
+            $message = $this->get('app.chat.manager')->newMessage($chat, $sender, $receiver, $messageText, $filePaths);
             $this->getEM()->persist($message);
             $this->getEM()->flush();
 
@@ -235,6 +231,7 @@ class ChatRoomController extends Controller
                         'avatar' => $user->getAvatar(),
                         'user_name' => $user->getFullName(),
                         'room' => $chatId,
+                        'file' => $filePaths,
                         'role' => $user->getRoleName(),
                         'send_date' => $message->getTimeFromGet(),
                         'message_id' => $message->getId()

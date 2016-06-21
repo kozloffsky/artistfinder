@@ -195,6 +195,7 @@ $(function () {
                     }
                 } else {
                     $('.eventChooseRequest').hide();
+                    sessionStorage.clear();
                 }
             }
         })

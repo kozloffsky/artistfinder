@@ -53,11 +53,53 @@ class Message
      * @var boolean
      */
     private $archived = false;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $files;
 
     /**
-     * @var string
+     * Constructor
      */
-    private $filePath;
+    public function __construct()
+    {
+        $this->files = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add file
+     *
+     * @param \Acted\LegalDocsBundle\Entity\MessageFile $file
+     *
+     * @return Event
+     */
+    public function addFile(\Acted\LegalDocsBundle\Entity\MessageFile $file)
+    {
+        $this->files[] = $file;
+
+        return $this;
+    }
+
+    /**
+     * Remove file
+     *
+     * @param \Acted\LegalDocsBundle\Entity\MessageFile $file
+     */
+    public function removeFile(\Acted\LegalDocsBundle\Entity\MessageFile $file)
+    {
+        $this->files->removeElement($file);
+    }
+
+    /**
+     * Get files
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFiles()
+    {
+        return $this->files;
+    }
 
     /**
      * Get id
@@ -245,23 +287,6 @@ class Message
     public function setArchived($archived)
     {
         $this->archived = $archived;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFilePath()
-    {
-        return $this->filePath;
-    }
-
-    /**
-     * @param string $filePath
-     * @return Message
-     */
-    public function setFilePath($filePath)
-    {
-        $this->filePath = $filePath;
     }
 
     public function getTimeFromGet()

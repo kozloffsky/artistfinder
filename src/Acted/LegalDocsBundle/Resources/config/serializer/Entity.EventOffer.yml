@@ -7,3 +7,7 @@ Acted\LegalDocsBundle\Entity\EventOffer:
             groups: [Default, getEvent]
         offer:
             groups: [getEvent]
+    virtual_properties:
+        getTimeFromAdd:
+            serialized_name: time_from_add
+            groups: [chat_list, message, chat_room, all_messages, getEvent]

@@ -128,6 +128,10 @@ jms_serializer:
             ActedLegalDocsBundle:
                 namespace_prefix: ""
                 path: "@ActedLegalDocsBundle/Resources/config/serializer"
+    handlers:
+        datetime:
+            default_format: "d/m/Y"
+            default_timezone: "UTC"
 
 liip_imagine:
     driver: imagick

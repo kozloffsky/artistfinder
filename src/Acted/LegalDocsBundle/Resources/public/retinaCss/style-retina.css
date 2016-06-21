@@ -2795,3 +2795,16 @@ a.disabled {
 {
     display: none;
 }
+.eventArtist
+{
+    margin-left: 3px;
+}
+.quotationDetailsChat
+{
+    padding: 0 15px;
+}
+.comments-list li .chatImage
+{
+    width: 100px;
+    height: 100px;
+}

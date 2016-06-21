@@ -13,12 +13,13 @@ Acted\LegalDocsBundle\Entity\Message:
             groups: [chat_list, message, chat_room, all_messages]
         archived:
             groups: [chat_list, message, chat_room, all_messages]
-        filePath:
-            groups: [chat_list, message, chat_room, all_messages]
         senderUser:
             groups: [chat_room, message, all_messages]
+        files:
+            groups: [chat_room]
         chatRoom:
             groups: [all_messages]
+
     virtual_properties:
         getTimeFromGet:
             serialized_name: time_from_get

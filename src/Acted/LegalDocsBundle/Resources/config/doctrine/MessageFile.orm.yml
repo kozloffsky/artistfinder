@@ -9,13 +9,14 @@ Acted\LegalDocsBundle\Entity\MessageFile:
             generator:
                 strategy: AUTO
     fields:
-        messageId:
-          type: integer(20)
-          notnull: true
         fileName:
-          type: integer(20)
+          type: string(256)
           notnull: true
         fileSize:
           type: integer(9)
-          notnull: true
+          nullable: true
+    manyToOne:
+        message:
+            targetEntity: Acted\LegalDocsBundle\Entity\Message
+            inversedBy: files
     lifecycleCallbacks: {  }
