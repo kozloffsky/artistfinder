@@ -8189,6 +8189,15 @@ $(function () {
       localStorage.setItem("search", searchEntered);
     }
   })
+  checkIfUserForcedLogin()
+  function checkIfUserForcedLogin(){
+    var currentUrl = window.location.href ;
+    var matchesUrl = currentUrl.split('/');
+    console.log(matchesUrl[3])
+    if (matchesUrl[3] == '?login_form'){
+      $('#loginModal').modal('show');
+    }
+  }
   // Add class hover to flip-container elements.
   $(".flip-container").hover(function () {
     $(this).addClass("hover-mouse");
@@ -9310,7 +9319,7 @@ $(function () {
                 var userData = JSON.stringify(response);
                 localStorage.setItem("user", userData);
                 var quote = localStorage.getItem('quoteRequest');
-                if(quote){
+                if(quote && response.role == "ROLE_CLIENT"){
                     $.ajax({
                         type:'POST',
                         url:'/event/create',
@@ -10708,7 +10717,8 @@ $(function () {
         $('#requestQuoteForm .modal-body').removeClass('choosePrevEvent');
         $('#requestQuoteForm .modal-body').addClass('newEventRegistered');
         $('#requestQuoteForm input').val('');
-        $('#requestQuoteForm .guests-num input').prop('checked',false);
+        //$('#requestQuoteForm .guests-num input').prop('checked',false);
+        allowEventSending();
     });
 
     function chooseCityQuote(selectedCountruOption){

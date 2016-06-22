@@ -244,7 +244,8 @@ $(function () {
         $('#requestQuoteForm .modal-body').removeClass('choosePrevEvent');
         $('#requestQuoteForm .modal-body').addClass('newEventRegistered');
         $('#requestQuoteForm input').val('');
-        $('#requestQuoteForm .guests-num input').prop('checked',false);
+        //$('#requestQuoteForm .guests-num input').prop('checked',false);
+        allowEventSending();
     });
 
     function chooseCityQuote(selectedCountruOption){

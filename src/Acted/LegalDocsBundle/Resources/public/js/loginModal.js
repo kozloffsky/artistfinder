@@ -28,7 +28,7 @@ $(function () {
                 var userData = JSON.stringify(response);
                 localStorage.setItem("user", userData);
                 var quote = localStorage.getItem('quoteRequest');
-                if(quote){
+                if(quote && response.role == "ROLE_CLIENT"){
                     $.ajax({
                         type:'POST',
                         url:'/event/create',
