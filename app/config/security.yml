@@ -10,6 +10,9 @@ security:
         database_users:
             entity: { class: Acted\LegalDocsBundle\Entity\User, property: email }
 
+    access_control:
+        - { path: ^/dashboard/.*, roles: [ROLE_ARTIST, ROLE_CLIENT] }
+
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
@@ -19,6 +22,8 @@ security:
         main:
             anonymous: ~
             logout: true
+            form_login:
+                login_path: /?login_form
             knpu_guard:
                 authenticators:
                   - app.form_login_authenticator
