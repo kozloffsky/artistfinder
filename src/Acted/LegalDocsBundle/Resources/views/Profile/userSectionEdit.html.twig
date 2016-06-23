@@ -5,13 +5,13 @@
         <div class="header-background" style="background-image: url({{ asset(artist.user.background)|imagine_filter('background') }})">
             <span id="bgImageSrc" class="hidden">{{ asset(artist.user.background)|imagine_filter('background') }}</span>
             <div class="background-stripe"></div>
-            <div id="editBackground" class="set-background"><a href="#" data-toggle="modal" data-target="#changeBgModal"><i class="fa fa-camera" aria-hidden="true"></i></a></div>
+            <div id="editBackground"><a href="#" data-toggle="modal" data-target="#changeBgModal"><i class="fa fa-pencil-square-o"></i></a></div>
         </div>
     {% else %}
         <div class="header-background" style="background-image: url({{ asset(artist.user.background) }})">
             <span id="bgImageSrc" class="hidden">{{ asset(artist.user.background) }}</span>
             <div class="background-stripe"></div>
-            <div id="editBackground" class="set-background"><a href="#" data-toggle="modal" data-target="#changeBgModal"><i class="fa fa-camera" aria-hidden="true"></i></a></div>
+            <div id="editBackground"><a href="#" data-toggle="modal" data-target="#changeBgModal"><i class="fa fa-pencil-square-o"></i></a></div>
         </div>
     {% endif %}
 {% else %}
@@ -22,28 +22,35 @@
 <span id="slug" class="hidden">{{ artist.slug }}</span>
 <section class="profile-info container">
     {% if is_granted('EDIT', artist) %}
-        <div class="avatar avatarEditable">
+        <div class="avatarEditable">
             <img class="avatar" src="{{ artist.user.avatar }}" alt="Avatar">
-            <div id="editAvatar" class="set-avatar"><a href="#" data-toggle="modal" data-target="#changeImageModal"><i class="fa fa-camera" aria-hidden="true"></i></a></div>
+            <div id="editAvatar"><a href="#" data-toggle="modal" data-target="#changeImageModal"><i class="fa fa-pencil-square-o"></i></a></div>
         </div>
     {% else %}
         <img class="avatar" src="{{ artist.user.avatar }}" alt="Avatar">
     {% endif %}
     <div class="info">
-
+        {#{% if user %}
+            <div href="#" id="username" class="username" data-type="text" data-pk="{{ artist.id }}" data-title="">{{ artist.name }}</div>
+            <div id="editUsername" class="editText"><a href="#"><i class="fa fa-pencil-square-o"></i></a></div>
+        {% else %}
+            <div class="username">{{ artist.name }}</div>
+        {% endif %}#}
         <div class="username">{{ artist.name }}</div>
         <div class="specializations">
             <ul>
+
                 {% for category in artist.user.profile.categories %}
                     <li class="currentCatUser"><a href="#" id="{{ category.id }}">{{ category.title }}</a>
                         <div class="divider"></div>
                     </li>
                 {% endfor %}
+
+                <!--<li><a href="#">See All <span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
+                </li>-->
             </ul>
             {% if is_granted('EDIT', artist) %}
-                <button button="button" class="set-categories">
-                <a href="#" data-toggle="modal" id="editCategories" data-target="#categotiesModal"><i class="fa fa-pencil"></i></a>
-                </button>
+                <a href="#" data-toggle="modal" id="editCategories" data-target="#categotiesModal"><i class="fa fa-pencil-square-o"></i></a>
             {% endif %}
         </div>
 
