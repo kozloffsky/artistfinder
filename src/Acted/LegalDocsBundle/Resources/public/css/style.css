@@ -471,7 +471,7 @@ section.used-by {
 .profile-info .controls .button-gradient .btn{min-width: 176px;}
 .profile-info .controls .button-gradient:not(.filled) .btn{padding-top: 4px;}
 
-.profile-info div.avatar {
+.profile-info .avatar {
     position: relative;
     width: 213px;
     height: 213px;
@@ -483,7 +483,7 @@ section.used-by {
     overflow: hidden;
 }
 
-.profile-info div.avatar img{
+.profile-info .avatar img{
     width: 100%;
     height: auto;
     display: block;
@@ -1279,7 +1279,7 @@ section.used-by {
     position: relative;
     float: left;
     display: inline-block;
-    width: calc(100% - 125px);
+    width: calc(100% - 100px);
     font-size: 20px;
     color: #636363;
     padding-bottom: 30px;
@@ -2129,7 +2129,7 @@ section.used-by {
         display: none;
     }
 
-    .profile-info div.avatar {
+    .profile-info .avatar {
         width: 170px;
         height: 170px;
     }
@@ -2342,7 +2342,7 @@ section.used-by {
         margin-top: -110px;
     }
 
-    .profile-info div.avatar {
+    .profile-info .avatar {
         width: 130px;
         height: 130px;
     }
@@ -2654,7 +2654,7 @@ section.used-by {
     margin: 0 auto 15px!important;
     }
 
-    .profile-info div.avatar {
+    .profile-info .avatar {
         width: 70px;
         height: 70px;
         top: 50px;
@@ -2724,10 +2724,10 @@ section.used-by {
         bottom: -35px!important;
     }
 
-    .profile-info div.avatar{
+    .profile-info .avatar{
         overflow: visible;
     }
-    .profile-info div.avatar img{
+    .profile-info .avatar img{
         border-radius: 50%;
         -webkit-border-radius: 50%;
     }
@@ -2740,13 +2740,9 @@ section.used-by {
 }
 #editAvatar
 {
-    /*position: relative;
+    position: relative;
     color: #000;
-    font-size: 28px;*/
-}
-#editAvatar a
-{
-    color: #fff;
+    font-size: 28px;
 }
 .info #username
 {
@@ -2763,16 +2759,12 @@ section.used-by {
 {
     text-align: center;
 }
-/*#editBackground
+#editBackground
 {
     font-size: 35px;
     right: 20px;
     position: absolute;
     top: 70px;
-}*/
-#editBackground a
-{
-    color:#fff;
 }
 #editBiography
 {
@@ -2781,7 +2773,9 @@ section.used-by {
 }
 #editCategories
 {
-    color: #fff;
+    position: absolute;
+    font-size: 20px;
+    right: 0;
 }
 .editOffer, .deleteOffer
 {
@@ -2800,7 +2794,7 @@ section.used-by {
 {
     width: 395px;
     position: absolute;
-    z-index: 2;
+    z-index: 10;
     background: rgba(0,0,0,0.8);
     color: #fff;
     height: 273px;
@@ -2979,7 +2973,7 @@ a.disabled {
     width: 100%;
     height: 273px;
 }
-/*.editingProf
+.editingProf
 {
     display: none;
     position: absolute;
@@ -2991,7 +2985,7 @@ a.disabled {
     padding: 0px 7px 0 10px;
     border-radius: 0 0 0 8px;
     cursor: pointer;
-}*/
+}
 .imagePerformanceChange {
     width: 100%;
     height: 100%;
@@ -3073,13 +3067,7 @@ a.disabled {
     width: 100px;
     height: 100px;
 }
-.price-list .video iframe {
-    z-index: 1;
-    position: relative;
-    height: 297px;
-}
-
-.price-list .controls.add
+.bx-loading
 {
-    position: relative;
+    display: none;
 }
