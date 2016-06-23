@@ -1,14 +1,41 @@
 
+{% if is_granted('EDIT', artist) %}
+
+    {% if artist.user.background != '/' %}
+    <div class="header-background" style="background-image: url({{ asset(artist.user.background)|imagine_filter('background') }})">
+        <span id="bgImageSrc" class="hidden">{{ asset(artist.user.background)|imagine_filter('background') }}</span>
+        <div class="background-stripe"></div>
+        <div id="editBackground"><a href="#" data-toggle="modal" data-target="#changeBgModal"><i class="fa fa-pencil-square-o"></i></a></div>
+    </div>
+    {% else %}
+        <div class="header-background" style="background-image: url({{ asset(artist.user.background) }})">
+            <span id="bgImageSrc" class="hidden">{{ asset(artist.user.background) }}</span>
+            <div class="background-stripe"></div>
+            <div id="editBackground"><a href="#" data-toggle="modal" data-target="#changeBgModal"><i class="fa fa-pencil-square-o"></i></a></div>
+        </div>
+    {% endif %}
+{% else %}
     <div class="header-background" style="background-image: url({{ artist.user.background }})">
         <div class="background-stripe"></div>
     </div>
-
+{% endif %}
     <span id="slug" class="hidden">{{ artist.slug }}</span>
     <section class="profile-info container">
-        <div class="avatar">
-            <img class="avatar" src="{{ artist.user.avatar }}" alt="Avatar">
-        </div>
+        {% if is_granted('EDIT', artist) %}
+            <div class="avatarEditable">
+               <img class="avatar" src="{{ artist.user.avatar }}" alt="Avatar">
+               <div id="editAvatar"><a href="#" data-toggle="modal" data-target="#changeImageModal"><i class="fa fa-pencil-square-o"></i></a></div>
+            </div>
+        {% else %}
+        <img class="avatar" src="{{ artist.user.avatar }}" alt="Avatar">
+        {% endif %}
         <div class="info">
+            {#{% if user %}
+                <div href="#" id="username" class="username" data-type="text" data-pk="{{ artist.id }}" data-title="">{{ artist.name }}</div>
+                <div id="editUsername" class="editText"><a href="#"><i class="fa fa-pencil-square-o"></i></a></div>
+            {% else %}
+                <div class="username">{{ artist.name }}</div>
+            {% endif %}#}
             <div class="username">{{ artist.name }}</div>
             <div class="specializations">
                 <ul>
@@ -22,6 +49,9 @@
                     <!--<li><a href="#">See All <span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
                     </li>-->
                 </ul>
+                {% if is_granted('EDIT', artist) %}
+                    <a href="#" data-toggle="modal" id="editCategories" data-target="#categotiesModal"><i class="fa fa-pencil-square-o"></i></a>
+                {% endif %}
             </div>
 
             {% if(artist.city) %}
@@ -59,7 +89,9 @@
             </div>
         </div>
         <div class="controls">
+            {% if is_granted('EDIT', artist) %}
 
+            {% else %}
             <div class="button-gradient follow">
                 <button class="btn">Follow me</button>
             </div>
@@ -67,7 +99,7 @@
             <div class="button-gradient filled">
                 <button data-toggle="modal" class="btn quoteRequestProfile">REQUEST FREE QUOTE</button>
             </div>
-
+            {% endif %}
         </div>
     </section>
 
@@ -115,6 +147,8 @@
             <div class="modal-body">
                 <div class="row stage">
                     <div class="row sub-stage categoriesChange" id="artistBlock">
+
+                        {% include 'ActedLegalDocsBundle:Default:categories.html.twig' %}
 
                         <div class="buttons">
                             <div class="vertical-divder"></div>
