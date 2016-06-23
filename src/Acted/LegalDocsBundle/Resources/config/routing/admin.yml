@@ -1,0 +1,4 @@
+admin_dashboard:
+    path:     /
+    defaults: { _controller: ActedLegalDocsBundle:Admin:index, _format: json }
+    methods:  GET

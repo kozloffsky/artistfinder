@@ -35,6 +35,23 @@ class ProfileController extends Controller
         );
     }
 
+    public function editProfileAction(Request $request, Artist $artist)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $categoriesRepo = $em->getRepository('ActedLegalDocsBundle:Category');
+        $categories = $categoriesRepo->childrenHierarchy();
+
+        $user = $this->getUser();
+
+        $performances = $this->getPerformances($artist, 1);
+        $feedbacks = $this->getFeedbacks($artist, 1);
+
+        return $this->render('ActedLegalDocsBundle:Profile:profile_edit.html.twig',
+            compact('artist', 'user', 'performances', 'feedbacks', 'categories')
+        );;
+    }
+
     public function editAction(Request $request, Artist $artist)
     {
         $artistForm = $this->createForm(ArtistType::class, $artist);
