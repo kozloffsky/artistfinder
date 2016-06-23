@@ -25,6 +25,11 @@ class Performance
     /**
      * @var string
      */
+    private $status;
+
+    /**
+     * @var string
+     */
     private $techRequirement;
 
 
@@ -84,6 +89,30 @@ class Performance
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     *
+     * @return Performance
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**
