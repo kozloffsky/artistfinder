@@ -18,10 +18,10 @@ class Version20160623115842 extends AbstractMigration
         $this->addSql("INSERT INTO `RefRole` VALUES (3,'ROLE_ADMIN','Admin')");
 
         $this->addSql('INSERT INTO `User` (`id`, `firstname`, `lastname`, `email`, `active`, `password_hash`) VALUES 
-            (350, \'admin\', \'adminovich\', \'admin@admin.com\', 1, \'$2y$13$QnHR80UrLcQSIc9HQb9xi.5r1lygQ5JO
-            .4b7aEKtEEXJqYuMCuV.K\')');
+            (350, \'admin\', \'adminovich\', \'admin@admin.com\', 1, \'$2y$13$dsUus5tSMZzttIk8Ql59Oe8K5.3gUrDzYMSQTT6rS8dpKdzMYLjPO\')');
 
         $this->addSql("INSERT INTO `user_ref_role` VALUES (350, 3)");
+
     }
 
     /**
