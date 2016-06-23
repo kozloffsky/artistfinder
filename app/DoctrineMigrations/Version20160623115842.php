@@ -21,6 +21,7 @@ class Version20160623115842 extends AbstractMigration
             (350, \'admin\', \'adminovich\', \'admin@admin.com\', 1, \'$2y$13$dsUus5tSMZzttIk8Ql59Oe8K5.3gUrDzYMSQTT6rS8dpKdzMYLjPO\')');
 
         $this->addSql("INSERT INTO `user_ref_role` VALUES (350, 3)");
+
     }
 
     /**
