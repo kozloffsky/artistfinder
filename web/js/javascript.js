@@ -9440,7 +9440,7 @@ $(function () {
 
 $(function() {
 
-    $('.header-background').appendTo('header');
+    $('.header-background').appendTo('.headerProfile');
 
     setRaitingStars();
 

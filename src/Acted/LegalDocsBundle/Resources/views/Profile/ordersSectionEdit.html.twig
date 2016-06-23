@@ -1,0 +1,241 @@
+
+            {% for performance in performances|reverse %}
+
+            {% if is_granted('EDIT', artist) %}
+                <article class="item clearfix">
+                    <h2><span class="perfomanceTitleEdiatable" data-type="textarea" data-pk="{{ performance.id }}" data-title="">{{ performance.title }} </span>
+                        <span class="price">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</span>
+                        <div class="deleteOffer"><button type="button" class="btn btn-danger" data-toggle="confirmation"
+                                                         data-btn-ok-label="Yes"
+                                                         data-btn-ok-icon="glyphicon glyphicon-share-alt"
+                                                         data-btn-ok-class="btn-success"
+                                                         data-btn-cancel-label="No"
+                                                         data-btn-cancel-icon="glyphicon glyphicon-ban-circle"
+                                                         data-btn-cancel-class="btn-danger"><i class="fa fa-trash"></i></button></div>
+                        <div class="editOffer"><button type="button" class="btn btn-info"><i class="fa fa-pencil-square-o"></i></button></div>
+                    </h2>
+                    <span class="performanceId hidden">{{ performance.id }}</span>
+                    {% for mediaOf in performance.media[0:1] %}
+                        <div class="imagePerformanceChangeNew preview imageBlockWrapper">
+                            <div class="editing editingProf editImage">
+                                <span class="hidden mediaId">{{ mediaOf.id }}</span>
+                                <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i>
+                            </div>
+                            <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
+                        </div>
+                        {% else %}
+                        <div class="imagePerformanceChangeNew preview imageBlockWrapper">
+                            <div class="editing editingProf editImage">
+                                <span class="hidden mediaId">NewMedia</span>
+                                <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i></div>
+                            <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
+                        </div>
+
+                    {% endfor %}
+
+                    <div class="video imageBlockWrapper">
+                        {% for mediaOf in performance.media[1:2] %}
+
+                            <div class="editing editingProf editImage">
+                                <span class="hidden mediaId">{{ mediaOf.id }}</span>
+                                <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i>
+                                <i class="fa fa-file-video-o editVideo" aria-hidden="true"></i>
+                            </div>
+
+                            <div class="imagePerformanceChange" id="image-performance-change2">
+                                <span class="hidden mediaId">{{ mediaOf.id }}</span>
+                                <div class="performanceVideoAdd">
+                                    <form class="videoAddForm">
+                                        <span class="videoAddMessage">Added link should be from "youtube.com" or "vimeo.com"</span>
+                                        <input type="text" class="form-control videoPerformanceAdd">
+                                    </form>
+                                    <button type="submit" id="AddPerformanceVideo" class="btn btn-default">Submit</button>
+                                </div>
+                            </div>
+                            <div class="performanceVideo">
+                            </div>
+
+
+                            {% if mediaOf.mediaType == "video" %}
+                                <div class="performanceVideo">
+                                    <iframe src="{{ mediaOf.link }}" width="395" height="274" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+                                </div>
+                                {% else %}
+                                <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
+                            {% endif %}
+
+                        {% else %}
+
+
+                            <div class="editing editingProf editImage newVideoImgAddBtns">
+                                <span class="hidden mediaId">NewMedia</span>
+                                <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i>
+                                <i class="fa fa-file-video-o editVideo" aria-hidden="true"></i>
+                            </div>
+
+
+                            <div class="imagePerformanceChange" id="image-performance-change2">
+                                <span class="hidden mediaId">NewMedia</span>
+                                <div class="performanceVideoAdd">
+                                    <form class="videoAddForm">
+                                        <span class="videoAddMessage">Added link should be from "youtube.com" or "vimeo.com"</span>
+                                        <input type="text" class="form-control videoPerformanceAdd">
+                                    </form>
+                                    <button type="submit" id="AddPerformanceVideo" class="btn btn-default">Submit</button>
+                                </div>
+
+                            </div>
+                            <div class="performanceVideo">
+                            </div>
+
+                            <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
+                        {% endfor %}
+                    </div>
+
+
+                    <div class="info">
+                        <p class="perfomanceInfoEdiatable" data-type="textarea" data-pk="{{ performance.id }}" maxlength="250" data-title="">
+                            {{ performance.techRequirement }}
+                        </p>
+
+                        <!--<div class="controls">
+                            <div class="button-gradient follow">
+                                <button class="btn">REQUEST FREE QUOTE</button>
+                            </div>
+
+                            <p>
+                                <a href="#">Technical requirements</a>
+                            </p>
+                        </div>-->
+                    </div>
+                </article>
+
+
+            {% else %}
+
+                <article class="item clearfix">
+                    <h2>{{ performance.title }} <span class="price">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</span></h2>
+
+                    {% for mediaOf in performance.media[0:1] %}
+                        <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
+                    {% else %}
+                        <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
+                    {% endfor %}
+
+
+                    <div class="video">
+                        {#{% if performance.media[1:2]%}
+                            gfhdsfdgf
+                        {% endif %}
+                        {{ dump(performance.media[1:2]) }}#}
+
+                        {% for mediaOf in performance.media[1:2] %}
+
+                            {% if mediaOf.mediaType == "video" %}
+                                <iframe src="{{ mediaOf.link }}" width="395" height="274" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+                            {% else %}
+                                <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
+                            {% endif %}
+                        <!--<span class="glyphicon glyphicon-play"></span>
+
+                            <div class="name">
+                                <div class="name-text">{{ mediaOf.name }}</div>
+                            </div>-->
+                        {% else %}
+                            <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="info">
+                        <p>
+                            {{ performance.techRequirement }}
+                        </p>
+
+                        <div class="controls">
+                            <div class="button-gradient follow">
+                                <button class="btn requestQuotePerformance" value="{{ performance.id }}">REQUEST FREE QUOTE</button>
+                            </div>
+
+                            <p>
+                                <a href="#">Technical requirements</a>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+            {% endif %}
+
+        {% endfor %}
+
+            {% if is_granted('EDIT', artist) %}
+
+                <article class="item clearfix addPerfomanceCreate emptyPerformance">
+                    <h2><span class="perfomanceTitleEdiatable" data-type="textarea" data-pk="" data-title="" data-placeholder="Your performance title"></span>
+                        <span class="price">Price: from EUR</span>
+                        <div class="deleteOffer"><button type="button" class="btn btn-danger" data-toggle="confirmation"><i class="fa fa-trash"></i></button></div>
+                    </h2>
+                    <span class="performanceId hidden"></span>
+
+                    <div class="imagePerformanceChangeNew preview editImageProfNew imageBlockWrapper">
+                        <div class="editing editingProf editImage">
+                            <span class="hidden mediaId">NewMedia</span>
+                            <i class="fa fa-picture-o editImageModalOpen"  data-target="#addImageModal"></i></div>
+                        <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
+                    </div>
+
+                    <div class="video imageBlockWrapper">
+                        <div class="editing editingProf newVideoImgAddBtns editImage">
+                            <span class="hidden mediaId">NewMedia</span>
+                            <i class="fa fa-picture-o editImageModalOpen" aria-hidden="true"></i>
+                            <i class="fa fa-file-video-o editVideo" aria-hidden="true"></i>
+                        </div>
+
+
+                        <div class="imagePerformanceChange " id="image-performance-change2">
+                            <span class="hidden mediaId">NewMedia</span>
+                            <div class="performanceVideoAdd">
+                                <form class="videoAddForm">
+                                    <span class="videoAddMessage">Added link should be from "youtube.com" or "vimeo.com"</span>
+                                    <input type="text" class="form-control videoPerformanceAdd">
+                                </form>
+                                <button type="submit" id="AddPerformanceVideo" class="btn btn-default">Submit</button>
+                            </div>
+
+                        </div>
+                        <div class="performanceVideo">
+                        </div>
+
+                        <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
+                    </div>
+
+
+                    <div class="info">
+                        <p class="perfomanceInfoEdiatable" data-type="textarea" maxlength="250" data-pk="" data-title="">
+                        </p>
+
+                        <!--<div class="controls">
+                            <div class="button-gradient follow">
+                                <button class="btn">REQUEST FREE QUOTE</button>
+                            </div>
+
+                            <p>
+                                <a href="#">Technical requirements</a>
+                            </p>
+                        </div>-->
+                    </div>
+                </article>
+
+                <div id="addNewPerformance">
+                    <button type="button" class="btn btn-success"><i class="fa fa-plus"></i> Add new performance</button>
+                </div>
+            {% endif %}
+
+        <div class="navigation">
+            {{ knp_pagination_render(performances) }}
+        </div>
+
+        <button class="show-more-info">
+            Show More
+        </button>

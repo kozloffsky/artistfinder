@@ -15,7 +15,7 @@
     {% elseif app.request.get('_route') == 'acted_legal_docs_search' %}
     <header class="search">
     {% elseif app.request.get('_route') == 'profile_show' or app.request.get('_route') == 'profile_edit' or app.request.get('_route') == 'profile_edit_page' %}
-    <header>
+    <header class="headerProfile">
     {% else %}
     <header class="small">
 {% endif %}
