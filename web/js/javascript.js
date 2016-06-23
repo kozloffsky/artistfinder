@@ -10800,13 +10800,19 @@ $(function () {
                 $('#offerSuccess').modal('show');
             },
             error: function(response){
+                console.log(response.responseJSON)
+                $('#loadSpinner').fadeOut(500);
                 $('#requestQuoteForm input').attr('style', '');
-                $('#quoteRequestSecond .errorCat').text().hide();
+                $('#quoteRequestSecond .errorCat').text('').hide();
+                $('#requestQuoteForm .errorCat').text('').hide();
                 $.each(response.responseJSON, function(key, value) {
                     console.log(key, value);
                     $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
                     if(key == 'performance'){
                         $('#quoteRequestSecond .errorCat').text(value).show();
+                    }
+                    if(key == 'number_of_guests'){
+                        $('#requestQuoteForm .errorCat').text(value).show();
                     }
                 });
             }
