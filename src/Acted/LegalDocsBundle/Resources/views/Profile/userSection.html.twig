@@ -1,5 +1,6 @@
 
 {% if is_granted('EDIT', artist) %}
+
     {% if artist.user.background != '/' %}
     <div class="header-background" style="background-image: url({{ asset(artist.user.background)|imagine_filter('background') }})">
         <span id="bgImageSrc" class="hidden">{{ asset(artist.user.background)|imagine_filter('background') }}</span>
@@ -45,8 +46,8 @@
                     </li>
                     {% endfor %}
 
-                    <li><a href="#">See All <span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
-                    </li>
+                    <!--<li><a href="#">See All <span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
+                    </li>-->
                 </ul>
                 {% if is_granted('EDIT', artist) %}
                     <a href="#" data-toggle="modal" id="editCategories" data-target="#categotiesModal"><i class="fa fa-pencil-square-o"></i></a>
