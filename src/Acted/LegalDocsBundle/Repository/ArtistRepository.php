@@ -187,4 +187,40 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery();
     }
+
+    /**
+     * @param string $query
+     * @param int $start
+     * @param int $end
+     * @param bool $order
+     * @return \Doctrine\ORM\Query
+     */
+    public function getArtistsList($query = null, $start = null, $end = null, $order = false)
+    {
+        $qb =  $this->createQueryBuilder('a')
+            ->innerJoin('a.user', 'u')
+            ->where('u.active != 0');
+        if ($query) {
+            $qb
+                ->andWhere('(MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0)')
+                ->setParameter('query', $query);
+        }
+        if ($start) {
+            $qb
+                ->andWhere('a.recommend >= :start')
+                ->setParameter('start', (int)$start);
+        }
+        if($end) {
+            $qb
+                ->andWhere('a.recommend <= :end')
+                ->setParameter('end', (int)$end);
+        }
+        if ($order) {
+            $qb
+                ->andWhere('a.recommend != 0')
+                ->orderBy('a.recommend', 'ASC');
+        }
+
+        return $qb->getQuery();
+    }
 }
