@@ -48,9 +48,9 @@ class EventsController extends Controller
                 $em->persist($event);
             } else {
                 $event = $data->getEvent();
-                $offers = $eventManager->getPerformancesByParams($data->getUser()->getId(), $data->getPerformanceIds());
+                $offers = $eventManager->getOfferByParams($data->getUser()->getId(), $event);
                 if ($offers) {
-                    return new JsonResponse($serializer->toArray($offers));
+                    return new JsonResponse(['error' => 'Offer for artist already exist'], 400);
                 }
             }
 

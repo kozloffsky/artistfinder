@@ -35,29 +35,27 @@ class EventOfferRepository extends EntityRepository
             ->leftJoin('pr.user', 'u')
             ->leftJoin('u.artist', 'a')
             ->where('e.user = :userId')
-            ->groupBy('u.id')
             ->setParameter('userId', $userId)
-            ->getQuery()->getResult();
+            ->getQuery()->getArrayResult();
     }
 
     /**
-     * @param array $performances
+     * @param Event $event
      * @param string $userId
-     * @return array
+     * @return object|null
      */
-    public function getAllPerformance($performances, $userId)
+    public function getOfferByParams($event, $userId)
     {
         return $this->createQueryBuilder('eo')
-            ->select('p.id, p.title')
             ->leftJoin('eo.event', 'e')
             ->leftJoin('eo.offer', 'o')
             ->leftJoin('o.performances', 'p')
-            ->where('e.user = :userId')
-            ->andWhere('p.id IN (:performances)')
-            ->groupBy('p.id')
+            ->leftJoin('p.profile', 'pr')
+            ->where('pr.user = :userId')
+            ->andWhere('eo.event = :event')
             ->setParameters([
                 'userId' => $userId,
-                'performances' => $performances
+                'event' => $event
             ])
             ->getQuery()->getResult();
     }
