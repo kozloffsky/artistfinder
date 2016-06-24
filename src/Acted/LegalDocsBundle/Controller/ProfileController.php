@@ -49,7 +49,7 @@ class ProfileController extends Controller
 
         return $this->render('ActedLegalDocsBundle:Profile:profile_edit.html.twig',
             compact('artist', 'user', 'performances', 'feedbacks', 'categories')
-        );;
+        );
     }
 
     public function editAction(Request $request, Artist $artist)

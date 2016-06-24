@@ -1,4 +1,9 @@
-admin_dashboard:
-    path:     /
-    defaults: { _controller: ActedLegalDocsBundle:Admin:index, _format: json }
+admin_dashboard_recommend:
+    path:     /recommend/{page}
+    defaults: { _controller: ActedLegalDocsBundle:Admin:recommend, page: 1 }
     methods:  GET
+
+admin_manage_recommend:
+    path:     /manage_recommend/{id}
+    defaults: { _controller: ActedLegalDocsBundle:Admin:changeRecommendValue, _format: json }
+    methods:  POST

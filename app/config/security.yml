@@ -25,6 +25,10 @@ security:
             logout: true
             form_login:
                 login_path: /?login_form
+        administration:
+            form_login:
+                default_target_path: /administration
+
             knpu_guard:
                 authenticators:
                   - app.form_login_authenticator

@@ -2,12 +2,16 @@ Acted\LegalDocsBundle\Entity\Artist:
   exclusion_policy: NONE
   custom_accessor_order: [name, slug, rating]
   properties:
+    id:
+      groups: [recommend_artist]
     name:
-      groups: [Default, block, quote_request]
+      groups: [Default, block, quote_request, recommend_artist]
     slug:
-      groups: [Default, block, quote_request]
+      groups: [Default, block, quote_request, recommend_artist]
     user:
       groups: [quote_request]
+    recommend:
+      groups: [recommend_artist]
   virtual_properties:
     getCityName:
       serialized_name: city
