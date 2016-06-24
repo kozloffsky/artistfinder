@@ -243,10 +243,15 @@ $(function () {
         $('#requestQuoteForm .modal-body').slideDown();
         $('#requestQuoteForm .modal-body').removeClass('choosePrevEvent');
         $('#requestQuoteForm .modal-body').addClass('newEventRegistered');
-        $('#requestQuoteForm input').val('');
+        cleanNewEventForm();
         //$('#requestQuoteForm .guests-num input').prop('checked',false);
         allowEventSending();
     });
+
+    function cleanNewEventForm(){
+        $('#requestQuoteForm #event_name, #requestQuoteForm #event_date, #requestQuoteForm #event_time, #requestQuoteForm #event_location').val('');
+        $('#requestQuoteForm .guests-num input').prop('checked',false);
+    }
 
     function chooseCityQuote(selectedCountruOption){
         if(selectedCountruOption){
