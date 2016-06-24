@@ -37,6 +37,10 @@ Acted\LegalDocsBundle\Entity\Artist:
           type: integer
           options:
             default: 0
+        spotlight:
+          type: integer
+          options:
+            default: 0
     manyToOne:
         city:
           targetEntity: Acted\LegalDocsBundle\Entity\RefCity

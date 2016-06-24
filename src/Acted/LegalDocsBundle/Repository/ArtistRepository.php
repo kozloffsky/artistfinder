@@ -142,10 +142,11 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
      * @param string $query
      * @param int $start
      * @param int $end
-     * @param bool $order
+     * @param bool $recommend
+     * @param bool $spotlight
      * @return \Doctrine\ORM\Query
      */
-    public function getArtistsList($query = null, $start = null, $end = null, $order = false)
+    public function getArtistsList($query = null, $start = null, $end = null, $recommend = false, $spotlight = false)
     {
         $qb =  $this->createQueryBuilder('a')
             ->innerJoin('a.user', 'u')
@@ -165,10 +166,15 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->andWhere('a.recommend <= :end')
                 ->setParameter('end', (int)$end);
         }
-        if ($order) {
+        if ($recommend) {
             $qb
                 ->andWhere('a.recommend != 0')
                 ->orderBy('a.recommend', 'ASC');
+        }
+        if ($spotlight) {
+            $qb
+                ->andWhere('a.spotlight != 0')
+                ->orderBy('a.spotlight', 'ASC');
         }
 
         return $qb->getQuery();

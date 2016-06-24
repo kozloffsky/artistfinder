@@ -3,15 +3,17 @@ Acted\LegalDocsBundle\Entity\Artist:
   custom_accessor_order: [name, slug, rating]
   properties:
     id:
-      groups: [recommend_artist]
+      groups: [recommend_artist, spotlight_artist]
     name:
-      groups: [Default, block, quote_request, recommend_artist]
+      groups: [Default, block, quote_request, recommend_artist, spotlight_artist]
     slug:
-      groups: [Default, block, quote_request, recommend_artist]
+      groups: [Default, block, quote_request, recommend_artist, spotlight_artist]
     user:
       groups: [quote_request]
     recommend:
       groups: [recommend_artist]
+    spotlight:
+      groups: [spotlight_artist]
   virtual_properties:
     getCityName:
       serialized_name: city

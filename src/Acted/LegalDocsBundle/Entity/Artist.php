@@ -447,6 +447,10 @@ class Artist
      */
     private $recommend = 0;
 
+    /**
+     * @var int
+     */
+    private $spotlight = 0;
 
     /**
      * Set recommend
@@ -470,6 +474,30 @@ class Artist
     public function getRecommend()
     {
         return $this->recommend;
+    }
+
+    /**
+     * Set spotlight
+     *
+     * @param int $spotlight
+     *
+     * @return Artist
+     */
+    public function setSpotlight($spotlight)
+    {
+        $this->spotlight = $spotlight;
+
+        return $this;
+    }
+
+    /**
+     * Get spotlight
+     *
+     * @return int
+     */
+    public function getSpotlight()
+    {
+        return $this->spotlight;
     }
 
     public function getCityName()
