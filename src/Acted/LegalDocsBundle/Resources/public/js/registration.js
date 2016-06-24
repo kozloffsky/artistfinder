@@ -384,7 +384,25 @@ $(function () {
             $('#registrationModal').modal('hide');
             $('#offerSuccess').modal('show');
            }, 2500);
-
+        },
+        error: function(response){
+          $('#userInformation').text()
+          $('#loadSpinner').fadeOut(500);
+          $('#registrationModal').modal('hide');
+          $('#freeQuoteModal').modal('show');
+          $('#requestQuoteForm input').attr('style', '');
+          $('#quoteRequestSecond .errorCat').text('').hide();
+          $('#requestQuoteForm .errorCat').text('').hide();
+          $.each(response.responseJSON, function(key, value) {
+            console.log(key, value);
+            $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
+            if(key == 'performance'){
+              $('#quoteRequestSecond .errorCat').text(value).show();
+            }
+            if(key == 'number_of_guests'){
+              $('#requestQuoteForm .errorCat').text(value).show();
+            }
+          });
         }
       })
     }

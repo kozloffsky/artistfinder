@@ -9337,8 +9337,35 @@ $(function () {
                             setTimeout(function(){
                                 window.location.replace(window.location.href);
                             }, 2000);
+                        },
+                        error: function(response){
+                            console.log(response.responseJSON)
+                            $('#userInformation').text()
+                            $('#loadSpinner').fadeOut(500);
+                            $('#loginModal').modal('hide');
+                            $('#freeQuoteModal').modal('show');
+                            $('#requestQuoteForm input').attr('style', '');
+                            $('#quoteRequestSecond .errorCat').text('').hide();
+                            $('#requestQuoteForm .errorCat').text('').hide();
+                            $.each(response.responseJSON, function(key, value) {
+                                console.log(key, value);
+                                $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
+                                if(key == 'performance'){
+                                    $('#quoteRequestSecond .errorCat').text(value).show();
+                                }
+                                if(key == 'number_of_guests'){
+                                    $('#requestQuoteForm .errorCat').text(value).show();
+                                }
+                            });
                         }
                     })
+                } else if (quote && response.role == "ROLE_ARTIST"){
+                    localStorage.removeItem('quoteRequest');
+                    $('#loginModal').modal('hide');
+                    $('#offerErrorModal').modal('show');
+                    setTimeout(function(){
+                        window.location.replace(window.location.href);
+                    }, 2500);
                 } else {
                     window.location.replace(window.location.href);
                 }
@@ -10604,8 +10631,8 @@ $(function () {
         $(artistData.allPerformance).each(function(){
             var blockPerformance = '<li>'+
                 '<div class="custom-checkbox">'+
-                '<input id="'+this.id+'" type="checkbox" name="performance[]" value="'+this.id+'">'+
-                '<label for="'+this.id+'">'+this.name+'</label>'+
+                '<input id="perf'+this.id+'" type="checkbox" name="performance[]" value="'+this.id+'">'+
+                '<label for="perf'+this.id+'">'+this.name+'</label>'+
                 '</div>'+
                 '</li>';
             $('.requestQuotePerformances').append(blockPerformance);
@@ -10748,10 +10775,10 @@ $(function () {
             userInformationStorage = JSON.parse(localStorage.getItem('user')),
             checkUserLoggedIn = $('#userInformation').text(),
             prevEventChosen = $('#requestQuoteForm .modal-body').hasClass('choosePrevEvent');
-        console.log(prevEventChosen)
-        if(checkUserLoggedIn && userInformationStorage && prevEventChosen == false){
+        console.log(userInformationStorage)
+        if(userInformationStorage && prevEventChosen == false){
             sendQuoteRequest(requestFormSerialize, userInformationStorage);
-        } else if (!checkUserLoggedIn){
+        } else if (!userInformationStorage){
             localStorage.setItem("quoteRequest", requestFormSerialize);
             $('#freeQuoteModal').modal('hide');
             $('#ChooseAfterRequestModal').modal('show');
@@ -11210,7 +11237,25 @@ $(function () {
             $('#registrationModal').modal('hide');
             $('#offerSuccess').modal('show');
            }, 2500);
-
+        },
+        error: function(response){
+          $('#userInformation').text()
+          $('#loadSpinner').fadeOut(500);
+          $('#registrationModal').modal('hide');
+          $('#freeQuoteModal').modal('show');
+          $('#requestQuoteForm input').attr('style', '');
+          $('#quoteRequestSecond .errorCat').text('').hide();
+          $('#requestQuoteForm .errorCat').text('').hide();
+          $.each(response.responseJSON, function(key, value) {
+            console.log(key, value);
+            $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
+            if(key == 'performance'){
+              $('#quoteRequestSecond .errorCat').text(value).show();
+            }
+            if(key == 'number_of_guests'){
+              $('#requestQuoteForm .errorCat').text(value).show();
+            }
+          });
         }
       })
     }

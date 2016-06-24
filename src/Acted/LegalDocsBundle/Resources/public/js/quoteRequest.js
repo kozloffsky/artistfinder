@@ -131,8 +131,8 @@ $(function () {
         $(artistData.allPerformance).each(function(){
             var blockPerformance = '<li>'+
                 '<div class="custom-checkbox">'+
-                '<input id="'+this.id+'" type="checkbox" name="performance[]" value="'+this.id+'">'+
-                '<label for="'+this.id+'">'+this.name+'</label>'+
+                '<input id="perf'+this.id+'" type="checkbox" name="performance[]" value="'+this.id+'">'+
+                '<label for="perf'+this.id+'">'+this.name+'</label>'+
                 '</div>'+
                 '</li>';
             $('.requestQuotePerformances').append(blockPerformance);
@@ -275,10 +275,10 @@ $(function () {
             userInformationStorage = JSON.parse(localStorage.getItem('user')),
             checkUserLoggedIn = $('#userInformation').text(),
             prevEventChosen = $('#requestQuoteForm .modal-body').hasClass('choosePrevEvent');
-        console.log(prevEventChosen)
-        if(checkUserLoggedIn && userInformationStorage && prevEventChosen == false){
+        console.log(userInformationStorage)
+        if(userInformationStorage && prevEventChosen == false){
             sendQuoteRequest(requestFormSerialize, userInformationStorage);
-        } else if (!checkUserLoggedIn){
+        } else if (!userInformationStorage){
             localStorage.setItem("quoteRequest", requestFormSerialize);
             $('#freeQuoteModal').modal('hide');
             $('#ChooseAfterRequestModal').modal('show');
