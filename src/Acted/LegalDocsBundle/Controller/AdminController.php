@@ -23,15 +23,41 @@ class AdminController extends Controller
         $start = $request->get('start');
         $end = $request->get('end');
 
-        $artistsQuery = $artistRepo->getArtistsList($query, $start, $end);
+        $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, false, false);
         $data = $paginator->paginate($artistsQuery, $page, 10);
 
         $artists = $serializer->toArray($data->getItems(), SerializationContext::create()
             ->setGroups(['recommend_artist']));
         $paginations = $data->getPaginationData();
 
-        return $this->render('ActedLegalDocsBundle:Admin:index.html.twig',
+        return $this->render('ActedLegalDocsBundle:Admin:recommend.html.twig',
            compact('artists', 'paginations')
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function spotlightAction(Request $request)
+    {
+        $page = $request->get('page');
+        $artistRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:Artist');
+        $serializer = $this->get('jms_serializer');
+        $paginator  = $this->get('knp_paginator');
+        $query = $request->get('query');
+        $start = $request->get('start');
+        $end = $request->get('end');
+
+        $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, false, false);
+        $data = $paginator->paginate($artistsQuery, $page, 10);
+
+        $artists = $serializer->toArray($data->getItems(), SerializationContext::create()
+            ->setGroups(['spotlight_artist']));
+        $paginations = $data->getPaginationData();
+
+        return $this->render('ActedLegalDocsBundle:Admin:spotlight.html.twig',
+            compact('artists', 'paginations')
         );
     }
 
@@ -56,7 +82,7 @@ class AdminController extends Controller
             return new JsonResponse(['error' => 'You should set only positive recommend value less or equal 100'], 400);
         }
         $artistRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:Artist');
-        $artists = $artistRepo->getArtistsList(null, $recommend, null, true)->getResult();
+        $artists = $artistRepo->getArtistsList(null, $recommend, null, true, false)->getResult();
         $curArtist = $artistRepo->find($artistId);
 
         $curArtist->setRecommend($recommend);
@@ -75,5 +101,42 @@ class AdminController extends Controller
         $this->getEM()->flush();
 
         return new JsonResponse(['success' => 'Recommendation was changed!']);
+    }
+
+    /**
+     * change spotlight
+     * @ApiDoc(
+     *  description="Change Spotlight",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when not exist offer",
+     *     }
+     * )
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function changeSpotlightValueAction(Request $request)
+    {
+        $artistId = $request->get('id');
+        $spotlight = json_decode($request->getContent())->spotlight;
+        if ($spotlight < 0 ) {
+            return new JsonResponse(['error' => 'You should set only positive spotlight value'], 400);
+        }
+        $artistRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:Artist');
+        $artists = $artistRepo->getArtistsList(null, $spotlight, null, false, true)->getResult();
+        $curArtist = $artistRepo->find($artistId);
+
+        $curArtist->setRecommend($spotlight);
+        $this->getEM()->persist($curArtist);
+
+        foreach ($artists as $artist) {
+            $artist->setRecommend($artist->getSpotlight());
+            $this->getEM()->persist($artist);
+        }
+
+        $this->getEM()->flush();
+
+        return new JsonResponse(['success' => 'Spotlight was changed!']);
     }
 }

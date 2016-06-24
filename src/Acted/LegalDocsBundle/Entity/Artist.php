@@ -445,12 +445,12 @@ class Artist
     /**
      * @var int
      */
-    private $recommend;
+    private $recommend = 0;
 
     /**
      * @var int
      */
-    private $spotlight;
+    private $spotlight = 0;
 
     /**
      * Set recommend
@@ -525,19 +525,12 @@ class Artist
     {
         if ($this->getUser()->getProfile()) {
             /** @var Performance $performance */
-            $performances = $this->getUser()->getProfile()->getPerformances();
-            $performance = '';
-            foreach ($performances as $item ) {
-                if ($item->getStatus() === Performance::STATUS_PUBLISHED) {
-                    $performance = $item;
-                    continue;
-                }
-            }
+            $performance = $this->getUser()->getProfile()->getPerformances()->first();
             if ($performance) {
                 return $performance->getMedia()->first();
             }
         }
-        return '';
+        return null;
     }
 
     public function getAllPerformance()

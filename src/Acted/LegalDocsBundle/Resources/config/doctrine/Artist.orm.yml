@@ -35,10 +35,12 @@ Acted\LegalDocsBundle\Entity\Artist:
           nullable: true
         recommend:
           type: integer
-          nullable: true
+          options:
+            default: 0
         spotlight:
           type: integer
-          nullable: true
+          options:
+            default: 0
     manyToOne:
         city:
           targetEntity: Acted\LegalDocsBundle\Entity\RefCity
