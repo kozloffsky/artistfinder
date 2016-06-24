@@ -3,7 +3,6 @@
 namespace Acted\LegalDocsBundle\Repository;
 
 use Acted\LegalDocsBundle\Entity\Category;
-use Acted\LegalDocsBundle\Entity\Performance;
 use Acted\LegalDocsBundle\Search\FilterCriteria;
 use Acted\LegalDocsBundle\Search\OrderCriteria;
 
@@ -22,11 +21,8 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             ->where('a.recommend != 0')
             ->innerJoin('a.user', 'u')
             ->innerJoin('u.profile', 'p')
-            ->innerJoin('p.performances', 'perf')
-            ->andWhere('perf.status != :status')
             ->andWhere(':category MEMBER OF p.categories')
             ->setParameter('category', $category)
-            ->setParameter('status', Performance::STATUS_DRAFT)
             ->getQuery()
             ->getResult();
     }
@@ -47,8 +43,6 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('pr.offers', 'o')
             ->leftJoin('a.ratings', 'ar')
             ->where('u.active != 0')
-            ->andWhere('pr.status != :status_pr')
-            ->setParameter('status_pr', Performance::STATUS_DRAFT)
             ->groupBy('a.id');
 
         if ($fc->withVideo()) {
@@ -80,8 +74,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         $qb->addSelect($priceFunction.'(o.price) AS HIDDEN price_agr');
         if ($oc->getPrioritized() == 'rating') {
             $qb->addOrderBy('rating_avg', $oc->getRatingOrder())
-                ->addOrderBy('price_agr', $oc->getPriceOrder())
-                ->addOrderBy('a.spotlight', 'ASC');
+                ->addOrderBy('price_agr', $oc->getPriceOrder());
         } else {
             $qb->addOrderBy('price_agr', $oc->getPriceOrder())
                 ->addOrderBy('rating_avg', $oc->getRatingOrder());
@@ -143,48 +136,6 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         }
 
         $qb->addOrderBy('a.spotlight', 'ASC');
-
-        return $qb->getQuery();
-    }
-
-    /**
-     * @param string $query
-     * @param int $start
-     * @param int $end
-     * @param bool $recommend
-     * @param bool $spotlight
-     * @return \Doctrine\ORM\Query
-     */
-    public function getArtistsList($query = null, $start = null, $end = null, $recommend = false, $spotlight = false)
-    {
-        $qb =  $this->createQueryBuilder('a')
-            ->innerJoin('a.user', 'u')
-            ->where('u.active != 0');
-        if ($query) {
-            $qb
-                ->andWhere('(MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0)')
-                ->setParameter('query', $query);
-        }
-        if ($start) {
-            $qb
-                ->andWhere('a.recommend >= :start')
-                ->setParameter('start', (int)$start);
-        }
-        if($end) {
-            $qb
-                ->andWhere('a.recommend <= :end')
-                ->setParameter('end', (int)$end);
-        }
-        if ($recommend) {
-            $qb
-                ->andWhere('a.recommend IS NOT NULL')
-                ->orderBy('a.recommend', 'ASC');
-        }
-        if ($spotlight) {
-            $qb
-                ->andWhere('a.spotlight IS NOT NULL')
-                ->orderBy('a.spotlight', 'ASC');
-        }
 
         return $qb->getQuery();
     }
