@@ -93,7 +93,7 @@ class AdminController extends Controller
             if ($recommend < 101) {
                 $artist->setRecommend($recommend);
             } else {
-                $artist->setRecommend(0);
+                $artist->setRecommend(null);
             }
             $this->getEM()->persist($artist);
         }
@@ -104,7 +104,7 @@ class AdminController extends Controller
     }
 
     /**
-     * change spotlight
+     * Change spotlight
      * @ApiDoc(
      *  description="Change Spotlight",
      *  statusCodes={

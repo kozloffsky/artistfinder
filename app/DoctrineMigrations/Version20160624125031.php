@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20160624102928 extends AbstractMigration
+class Version20160624125031 extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -18,8 +18,7 @@ class Version20160624102928 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE Artist ADD spotlight INT DEFAULT NULL');
-        $this->addSql('UPDATE `Artist` SET `recommend`=null where `recommend`=0');
+        $this->addSql('ALTER TABLE Artist CHANGE recommend recommend INT DEFAULT NULL');
     }
 
     /**
@@ -30,6 +29,6 @@ class Version20160624102928 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE Artist DROP spotlight');
+        $this->addSql('ALTER TABLE Artist CHANGE recommend recommend INT DEFAULT 0');
     }
 }
