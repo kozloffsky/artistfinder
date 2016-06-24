@@ -29,6 +29,8 @@ class AppKernel extends Kernel
             new FOS\RestBundle\FOSRestBundle(),
             new Misd\PhoneNumberBundle\MisdPhoneNumberBundle(),
             new TweedeGolf\SwiftmailerLoggerBundle\TweedeGolfSwiftmailerLoggerBundle(),
+            new Gos\Bundle\WebSocketBundle\GosWebSocketBundle(),
+            new Gos\Bundle\PubSubRouterBundle\GosPubSubRouterBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
