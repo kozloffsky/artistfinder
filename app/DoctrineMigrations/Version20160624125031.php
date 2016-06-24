@@ -19,7 +19,6 @@ class Version20160624125031 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE Artist CHANGE recommend recommend INT DEFAULT NULL');
-        $this->addSql('UPDATE Artist SET recommend = null where recommend = 0');
     }
 
     /**

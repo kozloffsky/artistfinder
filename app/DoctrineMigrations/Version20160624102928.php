@@ -18,7 +18,8 @@ class Version20160624102928 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE Artist ADD spotlight INT DEFAULT 0 NOT NULL');
+        $this->addSql('ALTER TABLE Artist ADD spotlight INT DEFAULT NULL');
+        $this->addSql('UPDATE `Artist` SET `recommend`=null where `recommend`=0');
     }
 
     /**

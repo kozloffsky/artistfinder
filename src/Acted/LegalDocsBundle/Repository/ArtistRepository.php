@@ -80,7 +80,8 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         $qb->addSelect($priceFunction.'(o.price) AS HIDDEN price_agr');
         if ($oc->getPrioritized() == 'rating') {
             $qb->addOrderBy('rating_avg', $oc->getRatingOrder())
-                ->addOrderBy('price_agr', $oc->getPriceOrder());
+                ->addOrderBy('price_agr', $oc->getPriceOrder())
+                ->addOrderBy('a.spotlight', 'ASC');
         } else {
             $qb->addOrderBy('price_agr', $oc->getPriceOrder())
                 ->addOrderBy('rating_avg', $oc->getRatingOrder());
@@ -218,12 +219,12 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         }
         if ($recommend) {
             $qb
-                ->andWhere('a.recommend != 0')
+                ->andWhere('a.recommend IS NOT NULL')
                 ->orderBy('a.recommend', 'ASC');
         }
         if ($spotlight) {
             $qb
-                ->andWhere('a.spotlight != 0')
+                ->andWhere('a.spotlight IS NOT NULL')
                 ->orderBy('a.spotlight', 'ASC');
         }
 

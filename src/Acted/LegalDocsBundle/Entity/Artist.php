@@ -445,12 +445,12 @@ class Artist
     /**
      * @var int
      */
-    private $recommend = 0;
+    private $recommend;
 
     /**
      * @var int
      */
-    private $spotlight = 0;
+    private $spotlight;
 
     /**
      * Set recommend
