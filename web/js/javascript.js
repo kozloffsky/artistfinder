@@ -10662,7 +10662,6 @@ $(function () {
             type:'GET',
             url:'/event/user_events?user='+userId,
             success: function(response){
-                console.log(response)
                 var userEvents = response.events,
                     userArtistsInEvents = response.artists;
                 if(userEvents.length > 0){
@@ -10804,7 +10803,6 @@ $(function () {
                 console.log(res);
                 $('#freeQuoteModal').modal('hide');
                 $('#offerSuccess').modal('show');
-                prepareEventRequestForm();
             },
             error: function(response){
                 console.log(response.responseJSON)
