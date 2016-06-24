@@ -46,8 +46,35 @@ $(function () {
                             setTimeout(function(){
                                 window.location.replace(window.location.href);
                             }, 2000);
+                        },
+                        error: function(response){
+                            console.log(response.responseJSON)
+                            $('#userInformation').text()
+                            $('#loadSpinner').fadeOut(500);
+                            $('#loginModal').modal('hide');
+                            $('#freeQuoteModal').modal('show');
+                            $('#requestQuoteForm input').attr('style', '');
+                            $('#quoteRequestSecond .errorCat').text('').hide();
+                            $('#requestQuoteForm .errorCat').text('').hide();
+                            $.each(response.responseJSON, function(key, value) {
+                                console.log(key, value);
+                                $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
+                                if(key == 'performance'){
+                                    $('#quoteRequestSecond .errorCat').text(value).show();
+                                }
+                                if(key == 'number_of_guests'){
+                                    $('#requestQuoteForm .errorCat').text(value).show();
+                                }
+                            });
                         }
                     })
+                } else if (quote && response.role == "ROLE_ARTIST"){
+                    localStorage.removeItem('quoteRequest');
+                    $('#loginModal').modal('hide');
+                    $('#offerErrorModal').modal('show');
+                    setTimeout(function(){
+                        window.location.replace(window.location.href);
+                    }, 2500);
                 } else {
                     window.location.replace(window.location.href);
                 }
