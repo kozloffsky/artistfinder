@@ -3,7 +3,10 @@
  */
 $(function () {
 
-    $( "#event_date" ).datepicker({dateFormat: 'dd/mm/yy'});
+    $( "#event_date" ).datepicker({
+        dateFormat: 'dd/mm/yy',
+        minDate: 0, }
+    );
 
     function initSelect(){
         $('select').each(function () {
@@ -208,6 +211,7 @@ $(function () {
 
 
     function createEventsListRequest(userEvents){
+        $('#event_preset').empty();
         $(userEvents).each(function(i){
             var eventsOptions='<option value="'+ this.event.id +'" name="event" class="'+i+'">'+this.event.title+'</option>';
             $('#event_preset').append(eventsOptions);
@@ -288,6 +292,7 @@ $(function () {
             console.log(chosenEvent)
             sendQuoteRequest(chosenEvent, userInformationStorage);
         }
+        prepareEventRequestForm();
     });
 
     function chooseRogLog(){
