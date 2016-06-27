@@ -5,7 +5,7 @@ $(function () {
 
     $( "#event_date" ).datepicker({
         dateFormat: 'dd/mm/yy',
-        minDate: 0, }
+        minDate: 0 }
     );
 
     function initSelect(){
@@ -335,6 +335,8 @@ $(function () {
                 console.log(res);
                 $('#freeQuoteModal').modal('hide');
                 $('#offerSuccess').modal('show');
+                $('#comment_area').hide();
+                $('#comment_area textarea').val('');
             },
             error: function(response){
                 console.log(response.responseJSON)
