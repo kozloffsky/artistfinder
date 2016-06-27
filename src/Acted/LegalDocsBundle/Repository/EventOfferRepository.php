@@ -19,7 +19,7 @@ class EventOfferRepository extends EntityRepository
             ->leftJoin('eo.event', 'e')
             ->where('e.user = :userId')
             ->groupBy('e.id')
-            ->orderBy('e.startingDate', 'DESC')
+            ->orderBy('eo.sendDateTime', 'DESC')
             ->setParameter('userId', $userId)
             ->getQuery()->getResult();
     }
