@@ -18,8 +18,16 @@
 
                     <ul class="act-request-data ul-reset">
                         <li><i class="enq-icon icon-date"></i> Date: <span class="value">{{ chat.event.starting_date }}</span></li>
-                        <li><i class="enq-icon icon-timing"></i> Timing: <span class="value">{{ chat.event.timing }}</span></li>
-                        <li><i class="enq-icon icon-location"></i> Location: <span class="value">{{ chat.event.city.name }}</span></li>
+                        <li><i class="enq-icon icon-timing"></i> Timing: <span class="value">
+                                {% if chat.event.timing is defined %}
+                                {{ chat.event.timing }}
+                                {% endif %}
+                            </span></li>
+                        <li><i class="enq-icon icon-location"></i> Location: <span class="value">
+                            {% if chat.event.city.name is defined %}
+                                {{ chat.event.city.name }}
+                            {% endif %}
+                            </span></li>
                         <li><i class="enq-icon icon-event"></i> Event: <span class="value">{{ chat.event.title }}</span></li>
                         <li><i class="enq-icon icon-client"></i> Client: <span class="value">{{ chat.event.user.firstname }}</span>
                         </li>

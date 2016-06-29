@@ -54,9 +54,11 @@ class ChatManager
         $chatRoom->setArtist($receiver);
         $chatRoom->setClient($event->getUser());
         $this->entityManager->persist($chatRoom);
-        $message = $this->newChatMessage($chatRoom, $receiver, $data);
-        $this->entityManager->persist($message);
-        $this->entityManager->flush();
+        if ($data->getComment()) {
+            $message = $this->newChatMessage($chatRoom, $receiver, $data);
+            $this->entityManager->persist($message);
+            $this->entityManager->flush();
+        }
     }
 
     /**
@@ -68,7 +70,7 @@ class ChatManager
      */
     public function newChatMessage($chatRoom, $receiver, $data)
     {
-        $text = $data->getComment() ? $data->getComment() : 'Hi!';
+        $text = $data->getComment() ? $data->getComment() : '';
         $now = new \DateTime();
         $message = new Message();
         $message->setChatRoom($chatRoom);
