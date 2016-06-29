@@ -107,14 +107,15 @@
 
                     <li class="mail">
                         <!--For screens > 991px-->
-                        <div class="hidden-sm hidden-xs badge">4</div>
+                        {% set amount = render(controller('ActedLegalDocsBundle:ChatRoom:countNewMessage')) %}
+                        <div class="hidden-sm hidden-xs badge">{{ amount|default(0) }}</div>
                         <a class="hidden-sm hidden-xs" href="/dashboard/messages/{{ app.user.id }}"><img src="{{ asset('assets/images/messages.png') }}" alt=""></a>
                         <!--For screens < 991px-->
                         {% if app.user %}
-                            {% set amount = render(controller('ActedLegalDocsBundle:ChatRoom:countNewMessage')) %}
+
                             <a class="hidden-md hidden-lg" href="/dashboard/messages/{{ app.user.id }}">Messages<span class="badge">{{ amount|default(0) }}</span></a>
                         {% else %}
-                            <a class="hidden-md hidden-lg" href="/dashboard/messages/{{ app.user.id }}">Messages<span class="badge">0</span></a>
+                            <a class="hidden-md hidden-lg" href="/dashboard/messages/{{ app.user.id }}">Messages<span class="badge">{{ amount|default(0) }}</span></a>
                         {% endif %}
                     </li>
                     <li class="profile-dropdown dropdown hidden-sm">
