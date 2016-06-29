@@ -141,7 +141,7 @@ $(function () {
             $('.requestQuotePerformances').append(blockPerformance);
         });
         if(performanceRequestId){
-            $('.requestQuotePerformances input#'+performanceRequestId).prop('checked', true);
+            $('.requestQuotePerformances input#perf'+performanceRequestId).prop('checked', true);
         }
     }
 
