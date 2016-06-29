@@ -10620,6 +10620,7 @@ $(function () {
 
     function preventEventSending(){
         $('#quoteRequestSecond .requestQuotePerformances, #quoteRequestSecond .add-comment-btn, #quoteRequestSecond .controls').hide();
+        $('#requestQuoteForm .modal-body').hide();
         $('#quoteRequestSecond .alreadyHasEventArtist').show();
     }
 
@@ -10687,7 +10688,7 @@ $(function () {
     }
 
     function getUserEvents(userInf){
-        var userId = userInf.userId
+        var userId = userInf.userId;
         $.ajax({
             type:'GET',
             url:'/event/user_events?user='+userId,
@@ -10701,6 +10702,7 @@ $(function () {
                     for(var propt in userArtistsInEvents) {
                         sessionStorage.setItem(propt, userArtistsInEvents[propt]);
                     }
+                    $('.eventChooseRequest').show();
                 } else {
                     $('.eventChooseRequest').hide();
                     sessionStorage.clear();
@@ -10755,6 +10757,9 @@ $(function () {
     function cleanNewEventForm(){
         $('#requestQuoteForm #event_name, #requestQuoteForm #event_date, #requestQuoteForm #event_time, #requestQuoteForm #event_location').val('');
         $('#requestQuoteForm .guests-num input').prop('checked',false);
+        $('#requestQuoteForm input').attr('style', '');
+        $('#quoteRequestSecond .errorCat').text('').hide();
+        $('#requestQuoteForm .errorCat').text('').hide();
     }
 
     function chooseCityQuote(selectedCountruOption){
@@ -10792,7 +10797,6 @@ $(function () {
             console.log(chosenEvent)
             sendQuoteRequest(chosenEvent, userInformationStorage);
         }
-        prepareEventRequestForm();
     });
 
     function chooseRogLog(){
@@ -10837,9 +10841,12 @@ $(function () {
                 $('#offerSuccess').modal('show');
                 $('#comment_area').hide();
                 $('#comment_area textarea').val('');
+                $('#requestQuoteForm input').attr('style', '');
+                $('#quoteRequestSecond .errorCat').text('').hide();
+                $('#requestQuoteForm .errorCat').text('').hide();
+                prepareEventRequestForm();
             },
             error: function(response){
-                console.log(response.responseJSON)
                 $('#loadSpinner').fadeOut(500);
                 $('#requestQuoteForm input').attr('style', '');
                 $('#quoteRequestSecond .errorCat').text('').hide();
@@ -11798,10 +11805,16 @@ $(function () {
         $(artists).each(function () {
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString();
+            console.log(this.media.link);
+            if(this.media.link){
+                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
+            } else{
+                var imageSearchProf = '<img class="header" src="/assets/images/media-no-image.gif"/>';
+            }
             if (this.video_media){
                 var artistBlockSearch = '<div class=" profile-card bordered">' +
                     '<div class="video-icon"></div>' +
-                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
+                    imageSearchProf +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +
@@ -11837,7 +11850,7 @@ $(function () {
                     '</div>';
             } else {
                 var artistBlockSearch = '<div class=" profile-card bordered">' +
-                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
+                    imageSearchProf +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +
@@ -11994,10 +12007,16 @@ $(function () {
         $(artists).each(function () {
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString();
+            console.log(this.media.link);
+            if(this.media.link){
+                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
+            } else{
+                var imageSearchProf = '<img class="header" src="/assets/images/media-no-image.gif"/>';
+            }
             if (this.video_media) {
                 var artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
                     '<div class="video-icon"></div>' +
-                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
+                    imageSearchProf +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +
@@ -12033,7 +12052,7 @@ $(function () {
                     '</div>';
             } else {
                 var artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
-                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
+                    imageSearchProf +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +

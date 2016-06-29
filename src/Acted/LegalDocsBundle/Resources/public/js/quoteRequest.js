@@ -120,6 +120,7 @@ $(function () {
 
     function preventEventSending(){
         $('#quoteRequestSecond .requestQuotePerformances, #quoteRequestSecond .add-comment-btn, #quoteRequestSecond .controls').hide();
+        $('#requestQuoteForm .modal-body').hide();
         $('#quoteRequestSecond .alreadyHasEventArtist').show();
     }
 
@@ -187,7 +188,7 @@ $(function () {
     }
 
     function getUserEvents(userInf){
-        var userId = userInf.userId
+        var userId = userInf.userId;
         $.ajax({
             type:'GET',
             url:'/event/user_events?user='+userId,
@@ -201,6 +202,7 @@ $(function () {
                     for(var propt in userArtistsInEvents) {
                         sessionStorage.setItem(propt, userArtistsInEvents[propt]);
                     }
+                    $('.eventChooseRequest').show();
                 } else {
                     $('.eventChooseRequest').hide();
                     sessionStorage.clear();
@@ -255,6 +257,9 @@ $(function () {
     function cleanNewEventForm(){
         $('#requestQuoteForm #event_name, #requestQuoteForm #event_date, #requestQuoteForm #event_time, #requestQuoteForm #event_location').val('');
         $('#requestQuoteForm .guests-num input').prop('checked',false);
+        $('#requestQuoteForm input').attr('style', '');
+        $('#quoteRequestSecond .errorCat').text('').hide();
+        $('#requestQuoteForm .errorCat').text('').hide();
     }
 
     function chooseCityQuote(selectedCountruOption){
@@ -292,7 +297,6 @@ $(function () {
             console.log(chosenEvent)
             sendQuoteRequest(chosenEvent, userInformationStorage);
         }
-        prepareEventRequestForm();
     });
 
     function chooseRogLog(){
@@ -337,9 +341,12 @@ $(function () {
                 $('#offerSuccess').modal('show');
                 $('#comment_area').hide();
                 $('#comment_area textarea').val('');
+                $('#requestQuoteForm input').attr('style', '');
+                $('#quoteRequestSecond .errorCat').text('').hide();
+                $('#requestQuoteForm .errorCat').text('').hide();
+                prepareEventRequestForm();
             },
             error: function(response){
-                console.log(response.responseJSON)
                 $('#loadSpinner').fadeOut(500);
                 $('#requestQuoteForm input').attr('style', '');
                 $('#quoteRequestSecond .errorCat').text('').hide();
