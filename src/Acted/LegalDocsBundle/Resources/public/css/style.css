@@ -2606,3 +2606,7 @@ a.disabled {
     width: 100px;
     height: 100px;
 }
+.bx-loading
+{
+    display: none;
+}

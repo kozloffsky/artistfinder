@@ -187,7 +187,7 @@ $(function () {
     }
 
     function getUserEvents(userInf){
-        var userId = userInf.userId
+        var userId = userInf.userId;
         $.ajax({
             type:'GET',
             url:'/event/user_events?user='+userId,
@@ -201,6 +201,7 @@ $(function () {
                     for(var propt in userArtistsInEvents) {
                         sessionStorage.setItem(propt, userArtistsInEvents[propt]);
                     }
+                    $('.eventChooseRequest').show();
                 } else {
                     $('.eventChooseRequest').hide();
                     sessionStorage.clear();
@@ -292,7 +293,9 @@ $(function () {
             console.log(chosenEvent)
             sendQuoteRequest(chosenEvent, userInformationStorage);
         }
-        prepareEventRequestForm();
+        setTimeout(function(){
+            prepareEventRequestForm();
+        }, 1500);
     });
 
     function chooseRogLog(){

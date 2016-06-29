@@ -444,10 +444,16 @@ $(function () {
         $(artists).each(function () {
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString();
+            console.log(this.media.link);
+            if(this.media.link){
+                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
+            } else{
+                var imageSearchProf = '<img class="header" src="/assets/images/media-no-image.gif"/>';
+            }
             if (this.video_media){
                 var artistBlockSearch = '<div class=" profile-card bordered">' +
                     '<div class="video-icon"></div>' +
-                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
+                    imageSearchProf +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +
@@ -483,7 +489,7 @@ $(function () {
                     '</div>';
             } else {
                 var artistBlockSearch = '<div class=" profile-card bordered">' +
-                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
+                    imageSearchProf +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +
@@ -640,10 +646,16 @@ $(function () {
         $(artists).each(function () {
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString();
+            console.log(this.media.link);
+            if(this.media.link){
+                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
+            } else{
+                var imageSearchProf = '<img class="header" src="/assets/images/media-no-image.gif"/>';
+            }
             if (this.video_media) {
                 var artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
                     '<div class="video-icon"></div>' +
-                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
+                    imageSearchProf +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +
@@ -679,7 +691,7 @@ $(function () {
                     '</div>';
             } else {
                 var artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
-                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
+                    imageSearchProf +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +
