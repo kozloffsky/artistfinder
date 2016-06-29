@@ -293,9 +293,6 @@ $(function () {
             console.log(chosenEvent)
             sendQuoteRequest(chosenEvent, userInformationStorage);
         }
-        setTimeout(function(){
-            prepareEventRequestForm();
-        }, 1500);
     });
 
     function chooseRogLog(){
@@ -340,9 +337,12 @@ $(function () {
                 $('#offerSuccess').modal('show');
                 $('#comment_area').hide();
                 $('#comment_area textarea').val('');
+                $('#requestQuoteForm input').attr('style', '');
+                $('#quoteRequestSecond .errorCat').text('').hide();
+                $('#requestQuoteForm .errorCat').text('').hide();
+                prepareEventRequestForm();
             },
             error: function(response){
-                console.log(response.responseJSON)
                 $('#loadSpinner').fadeOut(500);
                 $('#requestQuoteForm input').attr('style', '');
                 $('#quoteRequestSecond .errorCat').text('').hide();
