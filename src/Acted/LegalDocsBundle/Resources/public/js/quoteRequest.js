@@ -120,6 +120,7 @@ $(function () {
 
     function preventEventSending(){
         $('#quoteRequestSecond .requestQuotePerformances, #quoteRequestSecond .add-comment-btn, #quoteRequestSecond .controls').hide();
+        $('#requestQuoteForm .modal-body').hide();
         $('#quoteRequestSecond .alreadyHasEventArtist').show();
     }
 
@@ -256,6 +257,9 @@ $(function () {
     function cleanNewEventForm(){
         $('#requestQuoteForm #event_name, #requestQuoteForm #event_date, #requestQuoteForm #event_time, #requestQuoteForm #event_location').val('');
         $('#requestQuoteForm .guests-num input').prop('checked',false);
+        $('#requestQuoteForm input').attr('style', '');
+        $('#quoteRequestSecond .errorCat').text('').hide();
+        $('#requestQuoteForm .errorCat').text('').hide();
     }
 
     function chooseCityQuote(selectedCountruOption){
