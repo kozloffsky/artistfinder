@@ -35,7 +35,9 @@ class EventOfferType extends AbstractType
                 'constraints' => [new NotBlank()],
                 'description' => 'Event date by format dd/MM/yyyy',
             ])
-            ->add('event_time', TextType::class)
+            ->add('event_time', TextType::class, [
+                'constraints' => [new NotBlank()]
+            ])
             ->add('type', EntityType::class, [
                 'class' => RefEventType::class,
                 'constraints' => [new NotBlank()],
