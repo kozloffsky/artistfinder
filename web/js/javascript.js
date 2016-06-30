@@ -9408,114 +9408,12 @@ $(function() {
         $(".navbar-collapse").collapse('hide');
     });
 
-    setRatingFeedback();
-    function setRatingFeedback(){
-        $('.feedback-block .ratingFeedback').each(function(){
-            var raiting = $(this).find('.ratingFeedbackCount').text();
-            var raitingFull = raiting.toString().split(".")[0];
-            var raitingDigits = raiting.toString().split(".")[1];
-            var ratingstars = $(this).find('.star');
-            var getFullStars = $(ratingstars).slice(0, raitingFull);
-            var getHalfStars = $(ratingstars).eq(raitingFull);
-            $(getFullStars).children('.fill-star').css('width', '100%');
-            $(getHalfStars).children('.fill-star').css('width', raitingDigits + '0%');
-        })
-    }
 
     //$('.deleteOffer button').confirmation();
 
-    var optionsSlider = {
-        photoSettings: {
-            adaptiveHeight: true,
-            mode          : 'fade',
-            pagerCustom   : '#photo-pager',
-            nextSelector  : '#nextSlide',
-            prevSelector  : '#prevSlide',
-            nextText      : '<i class="right fa fa-3x fa-angle-right"></i>',
-            prevText      : '<i class="left fa fa-3x fa-angle-left"></i>',
-            onSlideAfter: function (currentSlideNumber, totalSlideQty, currentSlideHtmlObject) {
-                // console.log(currentSlideHtmlObject);
-                $('.active-slide').removeClass('active-slide');
-                $('.media-content .bxslider li').eq(currentSlideHtmlObject).addClass('active-slide')
-            },
-            onSliderLoad: function () {
-                $('.media-content .bxslider li').eq(0).addClass('active-slide')
-            }
-        },
-        videoSettings: {
-            adaptiveHeight: true,
-            mode: 'fade',
-            useCSS: false,
-            video: true,
-            pagerCustom: '#video-pager',
-            nextSelector: '#nextVideoSlide',
-            prevSelector: '#prevVideoSlide',
-            nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
-            prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
-            // onSliderLoad: function () {
-            //     $('#section-video').hide();
-            // }
-        }
-    };
-
-    slidersInitMedia();
-
-    function slidersInitMedia(){
-        if (($('.bxslider li').length) >= 1){
-            $('.media-content .bxslider').bxSlider(optionsSlider.photoSettings);
-            $('#section-photo').show();
-        }
-        if (($('.bxVideoSlider li').length) >= 1){
-            $('.bxVideoSlider').bxSlider(optionsSlider.videoSettings);
-        }
-    }
-
-    $('.feedback-block .text').each(function () {
-        var $element  = $(this);
-        var $toggler  = $element.find('.more');
-        var $gradient = $element.find('.gradient');
-        var $text     = $element.find('.feedback-text');
-        var text      = $text.html();
-
-        var maxLength = 0;
-        if ($(window).width() < 768) {
-            maxLength = parseInt($element.attr('data-max-chars-mobile'));
-        } else {
-            maxLength = parseInt($element.attr('data-max-chars-desktop'));
-        }
-
-        if (text.length > maxLength) {
-            var newText = text.substring(0, maxLength - 3) + '...';
-            $text.html(newText);
-
-            $element.attr('data-full-text', text);
-            $element.addClass('expandable');
-
-            $toggler.click(function (e) {
-                e.preventDefault();
-                if (!$element.hasClass('opened')) {
-                    $text.html($element.attr('data-full-text'));
-                    $element.addClass('opened');
-                    $toggler.html('-hide');
-                    $gradient.hide();
-                } else {
-                    $element.removeClass('opened');
-                    var newText = $element.attr('data-full-text').substring(0, maxLength - 3) + '...';
-                    $text.html(newText);
-                    $toggler.html('+more');
-                    $gradient.show();
-                }
-            });
 
 
-        } else {
-            $toggler.hide();
-            $gradient.hide();
-        }
-    });
-
-
-    /*var imageSlider = console.log('')
+    var imageSlider = console.log('')
          if (($('.bxslider li').length) >= 1) {
             $('.bxslider').bxSlider({
                 adaptiveHeight: true,
@@ -9549,7 +9447,7 @@ $(function() {
     } else {
         $('#section-video').hide();
         console.log('ffffff')
-    }*/
+    }
 
 
     function resizeThumbs() {
@@ -9626,66 +9524,7 @@ $(function() {
             performanceId = parentPerformance.attr('id');
         $(parentPerformance).find('.holder.video .imagePerformanceChange, .holder.video .imagePerformanceChange .performanceVideoAdd').fadeIn();
         $(parentPerformance).find('.holder.video .btns-list button').css('color','#fff');
-        var imageAddPerf = $(parentPerformance).find('#AddPerformanceVideo');
-        $(imageAddPerf).on('click',function(e){
-            e.preventDefault();
-            var videoAddedVal = $(parentPerformance).find('.videoPerformanceAdd').val();
-            addPerformanceVideo(mediaId, videoAddedVal, parentPerformance, performanceId)
-        })
     });
-
-    function addPerformanceVideo(mediaChangeId, videoAddedVal, parentPerformance, performanceId){
-        var performanceVideoBlock = parentPerformance.find('.performanceVideo'),
-            videoAddBlock = parentPerformance.find('.performanceVideoAdd'),
-            changePerformanceBlock = parentPerformance.find('#image-performance-change2');
-        if (mediaChangeId == 'NewMedia'){
-            $.ajax({
-                type: "POST",
-                url: '/profile/performance/' + performanceId + '/media/new',
-                data: {"video": videoAddedVal,
-                    "position":2},
-                beforeSend: function(){
-                    $('#loadSpinner').fadeIn(500);
-                },
-                complete: function(){
-                    $('#loadSpinner').fadeOut(500);
-                },
-                success: function (responseText) {
-                    console.log(responseText);
-                    $(changePerformanceBlock).parent('.video').find('iframe').remove();
-                    $(changePerformanceBlock).parent('.video').find('img').remove();
-                    $(changePerformanceBlock).parent('.video').find('.editingProf .mediaId').text(responseText.media.id)
-                    $(performanceVideoBlock).html('<iframe src="' + responseText.media.link + '"  width="100%" height="auto" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen>');
-                    videoAddBlock.hide();
-                    changePerformanceBlock.hide();
-                }
-            });
-        } else {
-            $.ajax({
-                type: "POST",
-                url: '/media/' + mediaChangeId + '/edit',
-                data: {"video": videoAddedVal},
-                beforeSend: function(){
-                    $('#loadSpinner').fadeIn(500);
-                },
-                complete: function(){
-                    $('#loadSpinner').fadeOut(500);
-                },
-                success: function (responseText) {
-                    console.log(responseText);
-                    $(changePerformanceBlock).parent('.video').find('iframe').remove();
-                    $(changePerformanceBlock).parent('.video').find('img').attr('src','');
-                    $(performanceVideoBlock).html('<iframe src=' + responseText.media.link + '  width="395" height="274" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen>');
-                    videoAddBlock.hide();
-                    changePerformanceBlock.hide();
-                    videoAddBlock.find('.videoAddMessage').css('color','#fff');
-                },
-                error: function(response){
-                    videoAddBlock.find('.videoAddMessage').css('color','#C9302C');
-                }
-            })
-        }
-    }
 
     $(document).on('click','.imageAddPerf',function(){
         $('#addImageModal').modal('show');
@@ -9698,24 +9537,10 @@ $(function() {
             $(parentPerformance).find('.holder.video .btns-list button').css('color','#333333');
         }
         userPerformanceUpload(parentPerformance, performanceId, mediaId, imageBlockInsert);
-    });
-
-    $(document).on('click','.publishOfferPerf',function(ev){
-        ev.preventDefault();
-        var parentPerformance = $(this).parents('form'),
-            performanceId = parentPerformance.attr('id');
-        $.ajax({
-            type: "PATCH",
-            url: '/profile/performance/' + performanceId + '/edit',
-            data: {"performance[status]":"published"},
-            success: function (responseText) {
-
-            }
-        })
     })
 
     function userPerformanceUpload(parentPerformance, performanceId, mediaId, imageBlockInsert, newPerformance) {
-        console.log(parentPerformance, performanceId, mediaId, imageBlockInsert)
+
         var isActiveCropper = false;
         $('#addImageModal .changeImageContiner').empty().removeClass('croppie-container');
         $('#uploadNewMedia').val('');
@@ -9850,7 +9675,7 @@ $(function() {
                                     $("#uploadNewMedia").val('');
                                     //var placeToAddNewImage = imgChangeBlock.parent('.video');
                                     //console.log(placeToAddNewImage);
-                                    imgChangeBlock.find('.mediaId').text(responseText.media.id);
+                                    imgChangeBlock.find('.editingProf .mediaId').text(responseText.media.id);
                                     imgChangeBlock.find('iframe').remove();
                                     imgChangeBlock.find('img.preview').remove();
                                     imgChangeBlock.append('<img class="preview" src="' + resp + '" alt="Preview">');
@@ -9918,7 +9743,7 @@ $(function() {
                         var indexOfThumb = $('#video-pager .scale-thumb').length;
                         $("#media [data-target='#section-video'] .badge").text(indexOfThumb);
                         $('.bxVideoSlider').unwrap();
-                        /*$('.bxVideoSlider').bxSlider({
+                        $('.bxVideoSlider').bxSlider({
                             adaptiveHeight: true,
                             mode: 'fade',
                             useCSS: false,
@@ -9927,20 +9752,18 @@ $(function() {
                             /*onSliderLoad: function () {
                                 $('#section-video').hide();
                             }*/
-                        //})
-                        $('.bxVideoSlider').bxSlider(optionsSlider.videoSettings);
+                        })
                     } else if (getMediaType[0].id == 'section-photo') {
 
                         var indexOfThumb = $('#photo-pager .scale-thumb').length;
                         $("#media [data-target='#section-photo'] .badge").text(indexOfThumb)
                         $('.bxslider').unwrap();
-                        /*$('.bxslider').bxSlider({
+                        $('.bxslider').bxSlider({
                             adaptiveHeight: true,
                             pagerCustom: '#photo-pager',
                             nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
                             prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
-                        });*/
-                        $('.media-content .bxslider').bxSlider(optionsSlider.photoSettings);
+                        });
                         $('.bxslider .bx-clone').remove();
                     } else if (getMediaType[0].id == 'section-audio') {
                         $(clickedElDelete).parent('.audioEditProfile').remove();
@@ -10338,79 +10161,6 @@ $(function() {
             var numOfmediaElements = $(this).find('.badge').text();
             if (numOfmediaElements == 0){
                 $(this).addClass('disabled');
-            }
-        })
-    }
-
-    $(document).on('click','.deleteOfferBtn', function(){
-        var parentPerformanceForm = $(this).parents('form'),
-            parentPerformance = parentPerformanceForm.parent('article'),
-            performanceId = parentPerformanceForm.attr('id'),
-            slug = $('#slug').text();
-        deleteOffer(slug, performanceId, parentPerformance)
-    });
-
-    function deleteOffer(slug, performanceId, parentPerformance) {
-        $.ajax({
-            type: "DELETE",
-            url: '/profile/' + slug + '/performance/' + performanceId,
-            success: function () {
-                $(parentPerformance).fadeOut(800);
-                setTimeout(function(){
-                    $(parentPerformance).remove();
-                }, 800);
-            }
-        })
-    };
-
-    $(document).on('click','#addNewPerformanceBtn', function(){
-        var newPerformanceBlock = $('.newPerformanceBlank').clone();
-        newPerformanceBlock.insertBefore('.controls.add').removeClass('newPerformanceBlank, hidden').fadeIn(800);
-        createNewPerf(newPerformanceBlock)
-    });
-
-    function createNewPerf(newPerformanceBlock){
-        console.log(newPerformanceBlock)
-        var slug = $('#slug').text();
-        $.ajax({
-            type: "POST",
-            url: '/profile/' + slug + '/performance/new',
-            data: {"performance[title]": 'new event',"performance[status]":"draft"},
-            success: function (response) {
-                console.log(response)
-                $(newPerformanceBlock).find('form').attr('id', response.performance.id);
-            }
-        })
-    }
-
-    $(document).on('click','.saveOfferPerf', function(){
-        console.log('saveOffer')
-        var parentPerformanceForm = $(this).parents('form'),
-            parentPerformance = parentPerformanceForm.parent('article'),
-            performanceId = parentPerformanceForm.attr('id'),
-            slug = $('#slug').text(),
-            dataSendOfferTitile = $(parentPerformanceForm).find('.offerTitlePerf').val(),
-            dataSendOfferInf = $(parentPerformanceForm).find('.description-area').val();
-        console.log(performanceId);
-        var dataToSendOffer = {"performance[title]": dataSendOfferTitile,
-                               "performance[status]":"draft",
-                               "performance[techRequirement]": dataSendOfferInf};
-        if(performanceId == 'NewBlank'){
-            var perfCreateUrl = '/profile/' + slug + '/performance/new';
-        } else {
-            var perfCreateUrl = '/profile/performance/' + performanceId + '/edit';
-        }
-        console.log(slug, perfCreateUrl, dataSendOfferTitile)
-        saveOffer(slug, perfCreateUrl, dataToSendOffer)
-    });
-
-    function saveOffer(slug, perfCreateUrl, dataToSendOffer){
-        $.ajax({
-            type: "PATCH",
-            url: perfCreateUrl,
-            data: dataToSendOffer,
-            success: function (responseText) {
-
             }
         })
     }
