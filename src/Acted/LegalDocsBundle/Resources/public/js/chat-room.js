@@ -169,6 +169,25 @@ $(function(){
             })
         }
     }
+    getFileExtension()
+    function getFileExtension(){
+        $('.comments-list li .holder').each(function(){
+            findFilesInChat(this);
+        });
+        function findFilesInChat(fileElem){
+            var filesInChat = $(fileElem).find('a');
+            $(filesInChat).each(function(){
+                var fileName = $(this).attr('href'),
+                    fileExtension = fileName.split('.').pop();
+                if(fileExtension == 'pdf'){
+                    console.log('pdf');
+                    $(this).find('img').attr('src', '/assets/images/pdf.png');
+                } else if (fileExtension == 'zip'){
+                    $(this).find('img').attr('src', '/assets/images/zip.png');
+                }
+            })
+        }
+    }
 
     function chatSocket(chatId){
         var webSocket = WS.connect("ws://127.0.0.1:1337");
@@ -245,6 +264,7 @@ $(function(){
                 initUploadFilesFiller();
             }
 
+
             function postMessage(messageChat){
                 console.log(messageChat)
                 if(messageChat.role){
@@ -292,6 +312,7 @@ $(function(){
                             '</li>';
                     }
                     $('#twocolumns .comments-list').prepend(messageBlock);
+                    getFileExtension();
                 }
             }
         })

@@ -4316,6 +4316,25 @@ $(function(){
             })
         }
     }
+    getFileExtension()
+    function getFileExtension(){
+        $('.comments-list li .holder').each(function(){
+            findFilesInChat(this);
+        });
+        function findFilesInChat(fileElem){
+            var filesInChat = $(fileElem).find('a');
+            $(filesInChat).each(function(){
+                var fileName = $(this).attr('href'),
+                    fileExtension = fileName.split('.').pop();
+                if(fileExtension == 'pdf'){
+                    console.log('pdf');
+                    $(this).find('img').attr('src', '/assets/images/pdf.png');
+                } else if (fileExtension == 'zip'){
+                    $(this).find('img').attr('src', '/assets/images/zip.png');
+                }
+            })
+        }
+    }
 
     function chatSocket(chatId){
         var webSocket = WS.connect("ws://127.0.0.1:1337");
@@ -4392,6 +4411,7 @@ $(function(){
                 initUploadFilesFiller();
             }
 
+
             function postMessage(messageChat){
                 console.log(messageChat)
                 if(messageChat.role){
@@ -4439,6 +4459,7 @@ $(function(){
                             '</li>';
                     }
                     $('#twocolumns .comments-list').prepend(messageBlock);
+                    getFileExtension();
                 }
             }
         })
@@ -10769,11 +10790,12 @@ $(function () {
         $(userEvents).each(function(i){
             var eventsOptions='<option value="'+ this.event.id +'" name="event" class="'+i+'">'+this.event.title+'</option>';
             $('#event_preset').append(eventsOptions);
+            console.log('preveEventList')
         });
-        initSelect();
         $('.eventUnregistered').hide();
         $('#requestQuoteForm .modal-body').hide();
         $('#requestQuoteForm .modal-body').addClass('choosePrevEvent');
+        initSelect();
     }
 
     function setDataEvent(userEvents){
