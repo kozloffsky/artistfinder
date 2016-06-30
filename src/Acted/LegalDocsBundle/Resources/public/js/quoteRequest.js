@@ -78,7 +78,6 @@ $(function () {
     $(document).on('click','.requestQuotePerformance',function(){
         var artistSlug = $('#slug').text();
         var performanceRequestId = $(this).val();
-        console.log(performanceRequestId)
         getArtistInformationForQuote(artistSlug, performanceRequestId)
         $('#freeQuoteModal').modal('show');
     });

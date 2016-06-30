@@ -10638,6 +10638,7 @@ $(function () {
         var artistSlug = $('#slug').text();
         getArtistInformationForQuote(artistSlug);
         $('#freeQuoteModal').modal('show');
+        $('#quoteRequestSecond .requestQuotePerformances, #quoteRequestSecond .add-comment-btn, #quoteRequestSecond .controls').hide();
     });
 
 
@@ -10645,15 +10646,16 @@ $(function () {
         var artistSlug = $(this).val();
         getArtistInformationForQuote(artistSlug);
         $('#freeQuoteModal').modal('show');
+        $('#quoteRequestSecond .requestQuotePerformances, #quoteRequestSecond .add-comment-btn, #quoteRequestSecond .controls').hide();
     });
 
 
     $(document).on('click','.requestQuotePerformance',function(){
         var artistSlug = $('#slug').text();
         var performanceRequestId = $(this).val();
-        console.log(performanceRequestId)
         getArtistInformationForQuote(artistSlug, performanceRequestId)
         $('#freeQuoteModal').modal('show');
+        $('#quoteRequestSecond .requestQuotePerformances, #quoteRequestSecond .add-comment-btn, #quoteRequestSecond .controls').hide();
     });
 
     function getArtistInformationForQuote(artistSlug, performanceRequestId){
