@@ -67,24 +67,6 @@ $(function() {
         console.log('ffffff')
     }
 
-    /*$('#video-pager img').each(function(){
-     var videoThumbId = $(this).attr('id');
-     getVideoThumbnails(videoThumbId)
-     });
-
-     function getVideoThumbnails(id){
-     $.ajax({
-     type:'GET',
-     url: 'http://vimeo.com/api/v2/video/' + id + '.json',
-     jsonp: 'callback',
-     dataType: 'jsonp',
-     success: function(data){
-     var thumbnail_src = data[0].thumbnail_medium;
-     var thumbs = document.getElementById(id);
-     $(thumbs).attr('src', thumbnail_src);
-     }
-     });
-     }*/
 
     function resizeThumbs() {
         $('.scale-thumb').each(function () {
@@ -153,87 +135,41 @@ $(function() {
         });
     });
 
-
-    $(document).on('click','.editOffer',function (e) {
-        e.stopPropagation();
-        $(this).unbind("click");
-        $(this).children('button').prop('disabled', true)
-        var parentPerformance = $(this).parents('article');
-        var performanceId = $(parentPerformance).children('.performanceId').text();
-        $(parentPerformance).find('.perfomanceInfoEdiatable').editable({
-            type: 'text',
-            mode: 'inline',
-            success: function (response, newValue) {
-                $.ajax({
-                    type: "PATCH",
-                    url: '/profile/performance/' + performanceId + '/edit',
-                    data: {"performance[techRequirement]": newValue}
-                });
-            }
-        });
-
-        $(parentPerformance).find('.perfomanceTitleEdiatable').editable({
-            type: 'text',
-            success: function (response, newValue) {
-                $.ajax({
-                    type: "PATCH",
-                    url: '/profile/performance/' + performanceId + '/edit',
-                    data: {"performance[title]": newValue}
-                });
-            }
-        });
-
-        var getImagePerformanceId = $(parentPerformance).find('.imagePerformanceChangeNew .editImage .mediaId').text();
-        console.log(getImagePerformanceId);
-        if(getImagePerformanceId == 'NewMedia'){
-            $(parentPerformance).find('.imagePerformanceChangeNew .editImage').fadeIn(800)
-        } else {
-            $(parentPerformance).find('.editingProf').fadeIn(800);
-        }
-
-        $('.editImageModalOpen').on('click',function(){
-            var getMediaId = $(this).prev('.mediaId').text(),
-                imageBlockInsert = $(this).parents('.imageBlockWrapper');
-            console.log(imageBlockInsert)
-            userPerformanceUploadSecond(parentPerformance, performanceId, getMediaId, imageBlockInsert)
-        });
-
-        $('.editVideo').on('click',function(){
-            var getBlockEditedVideo = $(this).parents('article');
-            var getMediaId = $(this).prevAll('.mediaId').text(),
-                newPerformance = 'edit';
-            getBlockEditedVideo.find('#image-performance-change2, #image-performance-change2 .performanceVideoAdd').fadeIn(800);
-            $(parentPerformance).find('#AddPerformanceVideo').on('click',function(){
-                var videoAddedVal = $(parentPerformance).find('.videoPerformanceAdd').val();
-                console.log(getMediaId, videoAddedVal, parentPerformance, newPerformance, performanceId)
-                addPerformanceVideo(getMediaId, videoAddedVal, parentPerformance, newPerformance, performanceId)
-            })
-
-        })
-        //userPerformanceUpload(parentPerformance, performanceId);
-        //offerMediaChoose(parentPerformance, performanceId);
+    $(document).on('click','.videoAddPerf',function() {
+        var mediaId = $(this).prev('.mediaId').text(),
+            imageBlockInsert = $(this).parents('.holder'),
+            parentPerformance = $(this).parents('form'),
+            performanceId = parentPerformance.attr('id');
+        $(parentPerformance).find('.holder.video .imagePerformanceChange, .holder.video .imagePerformanceChange .performanceVideoAdd').fadeIn();
+        $(parentPerformance).find('.holder.video .btns-list button').css('color','#fff');
     });
 
-    function userPerformanceUploadSecond(parentPerformance, performanceId, mediaId, imageBlockInsert, newPerformance) {
-        //console.log('opennf')
-        console.log(parentPerformance)
+    $(document).on('click','.imageAddPerf',function(){
+        $('#addImageModal').modal('show');
+        var mediaId = $(this).prev('.mediaId').text(),
+            imageBlockInsert = $(this).parents('.holder'),
+            parentPerformance = $(this).parents('form'),
+            performanceId = parentPerformance.attr('id');
+        if($(imageBlockInsert).hasClass('video')){
+            $(parentPerformance).find('.holder.video .imagePerformanceChange, .holder.video .imagePerformanceChange .performanceVideoAdd').fadeOut();
+            $(parentPerformance).find('.holder.video .btns-list button').css('color','#333333');
+        }
+        userPerformanceUpload(parentPerformance, performanceId, mediaId, imageBlockInsert);
+    })
+
+    function userPerformanceUpload(parentPerformance, performanceId, mediaId, imageBlockInsert, newPerformance) {
+
         var isActiveCropper = false;
         $('#addImageModal .changeImageContiner').empty().removeClass('croppie-container');
         $('#uploadNewMedia').val('');
         $('#addImageModal').modal('show');
-        console.log(parentPerformance)
 
         var imgChangeBlock = imageBlockInsert;
         console.log(imgChangeBlock)
 
-       //imgChangeBlock.fadeIn();
-
         var slug = $('#slug').text();
 
         var $uploadCropMediaOffer;
-
-
-
 
         function readFile(input) {
             if (input.files && input.files[0]) {
@@ -395,20 +331,13 @@ $(function() {
                                 }
                             });
                         }
-                        //imgChangeBlock.nextAll('.preview').attr('src', resp);
-                        //console.log($uploadUserPerfMediaSecond)
-                        //imgChangeBlock.fadeOut();
-                        //$('#addImageModal').modal('hide');
-                        //changeImgContainer.empty();
                     }
                 }
             });
-
             return false;
         });
         //return;
     }
-
 
     deleteMedia();
 
@@ -462,145 +391,6 @@ $(function() {
                 }
             })
         });
-    }
-
-    $(document).on('click','#addNewPerformance', function () {
-        var addNewBtn = $(this);
-        var slug = $('#slug').text();
-        var performanceCreateBlock = $('.emptyPerformance');
-        var getNewBlockPerformance = $(performanceCreateBlock).clone();
-        getNewBlockPerformance.insertBefore(addNewBtn).removeClass('emptyPerformance').fadeIn(800);
-        var newPerfCreated = false;
-        console.log(newPerfCreated)
-        if(newPerfCreated == false) {
-            console.log(newPerfCreated)
-            $(getNewBlockPerformance).find('.perfomanceTitleEdiatable').editable({
-                type: 'text',
-                emptytext: 'Your performance title',
-                success: function (response, newValue) {
-                    $.ajax({
-                        type: "POST",
-                        url: '/profile/' + slug + '/performance/new',
-                        data: {"performance[title]": newValue},
-                        success: function (responseText) {
-                            console.log(getNewBlockPerformance)
-                            $(getNewBlockPerformance).find('.perfomanceTitleEdiatable').editable('option', 'disabled', true);
-                            //$('.perfomanceTitleEdiatable').editable('option', 'disabled', true);
-                            var newPerformanceId = responseText.performance.id;
-                            $(getNewBlockPerformance).find('.performanceId').html(responseText.performance.id);
-
-                            createNewPerformance(getNewBlockPerformance, newPerformanceId);
-                        }
-                    });
-                }
-            });
-        }
-    });
-
-
-
-    function createNewPerformance(getNewBlockPerformance, newPerformanceId) {
-        console.log(newPerformanceId);
-        var deleteBtnNew = $(getNewBlockPerformance).find('.deleteOffer');
-        deleteBtnNew.find('button').confirmation();
-        deleteBtnNew.fadeIn();
-        var newPerformance = true,
-            performanceBlock = false;
-        //userPerformanceUpload(getNewBlockPerformance, newPerformanceId, performanceBlock, newPerformance);
-        //offerMediaChoose(getNewBlockPerformance, newPerformanceId, newPerformance)
-        $(getNewBlockPerformance).find('.perfomanceInfoEdiatable').editable({
-            type: 'text',
-            mode: 'inline',
-            emptytext: 'Your performance description',
-            success: function (response, newValue) {
-                $.ajax({
-                    type: "PATCH",
-                    url: '/profile/performance/' + newPerformanceId + '/edit',
-                    data: {"performance[techRequirement]": newValue}
-                });
-            }
-        });
-        $(deleteBtnNew).click(function () {
-            //$(this).find('button').confirmation('show');
-            var slug = $('#slug').text();
-
-            $(this).confirmation({
-                show:true,
-                onConfirm: function(){
-                    $.ajax({
-                        type: "DELETE",
-                        url: '/profile/' + slug + '/performance/' + newPerformanceId,
-                        success: function () {
-                            $(getNewBlockPerformance).remove();
-                        }
-                    })
-                }
-            });
-
-        });
-
-        console.log(getNewBlockPerformance)
-
-        $(getNewBlockPerformance).find('.editImageProfNew .editImage').fadeIn(800)
-
-        $('.editImageModalOpen').on('click',function(){
-            var getMediaId = $(this).prev('.mediaId').text(),
-                imageBlockInsert = $(this).parents('.imageBlockWrapper');
-            console.log(imageBlockInsert);
-            userPerformanceUploadSecond(getNewBlockPerformance, newPerformanceId, getMediaId, imageBlockInsert)
-        });
-
-        $('.editVideo').on('click',function(){
-            console.log(getNewBlockPerformance)
-            var getBlockEditedVideo = $(this).parents('article');
-            var getMediaId = $(this).prevAll('.mediaId').text(),
-                newPerformance = 'edit';
-            getBlockEditedVideo.find('#image-performance-change2, #image-performance-change2 .performanceVideoAdd').fadeIn(800);
-            $(getNewBlockPerformance).find('#AddPerformanceVideo').on('click',function(){
-                var videoAddedVal = $(getNewBlockPerformance).find('.videoPerformanceAdd').val();
-                //console.log(getMediaId, videoAddedVal, parentPerformance, newPerformance, performanceId)
-                addPerformanceVideo(getMediaId, videoAddedVal, getNewBlockPerformance, newPerformance, newPerformanceId)
-            })
-        })
-    }
-
-    deleteEventBtn();
-
-    function deleteEventBtn(){
-        $('.deleteOffer button').confirmation({
-            show:true,
-            onConfirm: function(){
-                var parentPerformance = $(this).parents('article');
-                var performanceId = $(parentPerformance).children('.performanceId').text();
-                var slug = $('#slug').text();
-                deleteOffer(slug, performanceId, parentPerformance)
-            }
-        });
-    }
-    /*$(document).on('click','.deleteOffer button',function () {
-
-        var parentPerformance = $(this).parents('article');
-        var performanceId = $(parentPerformance).children('.performanceId').text();
-        var slug = $('#slug').text();
-        $(this).confirmation({
-            show:true,
-            onConfirm: function(){
-                deleteOffer(slug, performanceId, parentPerformance)
-            }
-        });
-    });*/
-
-    function deleteOffer(slug, performanceId, parentPerformance) {
-        $.ajax({
-            type: "DELETE",
-            url: '/profile/' + slug + '/performance/' + performanceId,
-            success: function () {
-                $(parentPerformance).fadeOut(800);
-                setTimeout(function(){
-                    $(parentPerformance).remove();
-                }, 800);
-            }
-        })
     }
 
     $('#sendNewVideo').click(function () {
@@ -812,83 +602,6 @@ $(function() {
         return;
     }
 
-
-
-    function addPerformanceVideo(mediaChangeId, videoAddedVal, parentPerformance, newPerformance, performanceId){
-        var performanceVideoBlock = parentPerformance.find('.performanceVideo'),
-            videoAddBlock = parentPerformance.find('.performanceVideoAdd'),
-            changePerformanceBlock = parentPerformance.find('#image-performance-change2');
-        console.log(newPerformance)
-        console.log(mediaChangeId)
-        if (newPerformance == 'new'){
-            $.ajax({
-                type: "POST",
-                url: '/profile/performance/' + performanceId + '/media/new',
-                data: {"video": videoAddedVal,
-                    "position":2},
-                beforeSend: function(){
-                    $('#loadSpinner').fadeIn(500);
-                },
-                complete: function(){
-                    $('#loadSpinner').fadeOut(500);
-                },
-                success: function (responseText) {
-                    console.log(responseText);
-                    $(changePerformanceBlock).parent('.video').find('.editingProf .mediaId').text(responseText.media.id)
-                    $(performanceVideoBlock).html('<iframe src=' + responseText.media.link + '  width="395" height="274" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen>');
-                    videoAddBlock.hide();
-                    changePerformanceBlock.hide();
-                }
-            })
-        } else if (mediaChangeId == 'NewMedia'){
-            $.ajax({
-                type: "POST",
-                url: '/profile/performance/' + performanceId + '/media/new',
-                data: {"video": videoAddedVal,
-                    "position":2},
-                beforeSend: function(){
-                    $('#loadSpinner').fadeIn(500);
-                },
-                complete: function(){
-                    $('#loadSpinner').fadeOut(500);
-                },
-                success: function (responseText) {
-                    console.log(responseText);
-                    $(changePerformanceBlock).parent('.video').find('iframe').remove();
-                    $(changePerformanceBlock).parent('.video').find('img').remove();
-                    $(changePerformanceBlock).parent('.video').find('.editingProf .mediaId').text(responseText.media.id)
-                    $(performanceVideoBlock).html('<iframe src=' + responseText.media.link + '  width="395" height="274" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen>');
-                    videoAddBlock.hide();
-                    changePerformanceBlock.hide();
-                }
-            });
-        } else {
-            $.ajax({
-                type: "POST",
-                url: '/media/' + mediaChangeId + '/edit',
-                data: {"video": videoAddedVal},
-                beforeSend: function(){
-                    $('#loadSpinner').fadeIn(500);
-                },
-                complete: function(){
-                    $('#loadSpinner').fadeOut(500);
-                },
-                success: function (responseText) {
-                    console.log(responseText);
-                    $(changePerformanceBlock).parent('.video').find('iframe').remove();
-                    $(changePerformanceBlock).parent('.video').find('img').attr('src','');
-                    $(performanceVideoBlock).html('<iframe src=' + responseText.media.link + '  width="395" height="274" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen>');
-                    videoAddBlock.hide();
-                    changePerformanceBlock.hide();
-                    videoAddBlock.find('.videoAddMessage').css('color','#fff');
-                },
-                error: function(response){
-                    videoAddBlock.find('.videoAddMessage').css('color','#C9302C');
-                }
-            })
-        }
-    }
-
     $('#editCategories').on('click',function(){
         $('.specializations .currentCatUser a').each(function(){
             var currentCatId = $(this).attr('id');
@@ -948,13 +661,6 @@ $(function() {
         })
     }
 
-    /*function preventMultipleAudio(){
-        console.log('ddddd');
-        var audioGroup = $('#section-audio audio');
-        $(audioGroup).each(function(){
-            this.pause()
-        })
-    }*/
 
     $('#profileAddNewMedia').on('click', function (ev) {
         $('#addImageModal .changeImageContiner').empty().removeClass('croppie-container');
@@ -1067,9 +773,6 @@ $(function() {
         return;
     }
 
-    function startSliderChanger(){
-
-    }
     preventEmptyTabs();
     function preventEmptyTabs(){
         $('.mediaTabProf').each(function(){
@@ -1083,7 +786,6 @@ $(function() {
 
 
 $(document).on('ready ajaxComplete', function(){
-
     $('.price-list .pagination a').on('click', function(event){
         event.preventDefault();
         if ($(this).hasClass('pageArrows')){
@@ -1117,28 +819,4 @@ $(document).on('ready ajaxComplete', function(){
             $(paginationTarget).html(data);
         });
     }
-
-    $('.deleteOffer button').confirmation({
-        show:true,
-        onConfirm: function(){
-            var parentPerformance = $(this).parents('article');
-            var performanceId = $(parentPerformance).children('.performanceId').text();
-            var slug = $('#slug').text();
-            deleteOffer(slug, performanceId, parentPerformance)
-        }
-    });
-
-    function deleteOffer(slug, performanceId, parentPerformance) {
-        $.ajax({
-            type: "DELETE",
-            url: '/profile/' + slug + '/performance/' + performanceId,
-            success: function () {
-                $(parentPerformance).fadeOut(800);
-                setTimeout(function(){
-                    $(parentPerformance).remove();
-                }, 800);
-            }
-        })
-    }
-
 });

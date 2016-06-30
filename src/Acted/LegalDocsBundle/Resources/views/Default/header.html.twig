@@ -93,16 +93,21 @@
                     </li>
 
 
-                        {% if app.user.artist %}
-                    <li class="profile"><a href="/profile/{{ app.user.artist.slug }}">
-                        Profile
-                        <div class="underline">
-                            <div class="top"></div>
-                            <div class="bottom"></div>
-                        </div>
-                        </a>
-                    </li>
-                        {% endif %}
+                    {% if app.user.artist %}
+                        <li class="profile">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Profile
+                            <div class="underline">
+                                <div class="top"></div>
+                                <div class="bottom"></div>
+                            </div>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/profile/{{ app.user.artist.slug }}">see my profile</a></li>
+                                <li><a href="/profile/edit_profile/{{ app.user.artist.slug }}">edit my profile</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
 
                     <li class="mail">
                         <!--For screens > 991px-->
@@ -111,7 +116,6 @@
                         <a class="hidden-sm hidden-xs" href="/dashboard/messages/{{ app.user.id }}"><img src="{{ asset('assets/images/messages.png') }}" alt=""></a>
                         <!--For screens < 991px-->
                         {% if app.user %}
-
                             <a class="hidden-md hidden-lg" href="/dashboard/messages/{{ app.user.id }}">Messages<span class="badge">{{ amount|default(0) }}</span></a>
                         {% else %}
                             <a class="hidden-md hidden-lg" href="/dashboard/messages/{{ app.user.id }}">Messages<span class="badge">{{ amount|default(0) }}</span></a>
@@ -123,15 +127,27 @@
                             <img class="avatar" src="{{ app.user.avatar }}" alt="Avatar">
                             {{ app.user.firstname}} {{ app.user.lastname }} <span class="caret"></span>
                         </a>
+                        {% if app.user.artist %}
                         <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
+                            <li><a href="#">My Dashboard</a></li>
+                            <li><a href="#">Settings</a></li>
                             <li role="separator" class="divider"></li>
                             {% if(app.user) %}
                                 <li><a id="logOut" href="{{ logout_path() }}">Logout</a></li>
                             {% endif %}
                         </ul>
+                        {% else %}
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                {% if(app.user) %}
+                                    <li><a id="logOut" href="{{ logout_path() }}">Logout</a></li>
+                                {% endif %}
+                            </ul>
+                        {% endif %}
+
                         <span id="userInformation" class="hidden">{{ app.user.id }}</span>
                     </li>
                     {% else %}

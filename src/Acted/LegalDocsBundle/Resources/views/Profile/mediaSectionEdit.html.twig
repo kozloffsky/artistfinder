@@ -1,6 +1,31 @@
 <section id="media" class="profile-block media">
     <div class="title"><span>Media</span></div>
 
+    {% if is_granted('EDIT', artist) %}
+    <ul>
+        <li>
+            <a class="tab active" data-target="#section-photo" href="#">
+                Photo
+                <div class="badge">{{ artist.user.profile.photoList|length }}</div>
+                <div class="circle"></div>
+            </a>
+        </li>
+        <li>
+            <a class="tab" data-target="#section-video" href="#">
+                Video
+                <div class="badge">{{ artist.user.profile.videoList|length }}</div>
+                <div class="circle"></div>
+            </a>
+        </li>
+        <li>
+            <a class="tab" data-target="#section-audio" href="#">
+                Audio
+                <div class="badge">{{ artist.user.profile.audioList|length }}</div>
+                <div class="circle"></div>
+            </a>
+        </li>
+    </ul>
+    {% else %}
         <ul>
             <li>
                 <a class="tab active mediaTabProf" data-target="#section-photo" href="#">
@@ -24,12 +49,14 @@
                 </a>
             </li>
         </ul>
-
+    {% endif %}
 
     <div class="row">
 
         <section class="media-content wrapper" id="section-photo">
-
+            {% if is_granted('EDIT', artist) %}
+                <button id="profileAddNewMedia" type="button" class="btn btn-success" data-toggle="modal" data-target="#addImageModal"><i class="fa fa-plus"></i> Add new image</button>
+            {% endif %}
             <div class="slider-controls">
                 <span id="prevSlide"></span>
                 <span id="nextSlide"></span>
@@ -55,7 +82,15 @@
 
 
         <section class="media-content wrapper" id="section-video" >
-
+            {% if is_granted('EDIT', artist) %}
+                <div class="col-md-6 add-video-block">
+                <form class="videoAddForm">
+                    <input type="text" class="form-control videoAdd">
+                </form>
+                    <button type="submit" id="sendNewVideo" class="btn btn-default">Submit</button>
+                </div>
+                <div class="clearfix"></div>
+            {% endif %}
             <div class="slider-controls">
                 <span id="nextVideoSlide"></span>
                 <span id="prevVideoSlide"></span>
@@ -80,7 +115,15 @@
         </section>
 
         <section class="media-content wrapper" id="section-audio" >
-
+            {% if is_granted('EDIT', artist) %}
+                <div class="col-md-6 add-audio-block">
+                    <form class="audioAddForm">
+                        <input type="text" class="form-control audioAdd">
+                    </form>
+                    <button type="submit" id="sendNewAudio" class="btn btn-default">Submit</button>
+                </div>
+                <div class="clearfix"></div>
+            {% endif %}
             <div class="audioBlock">
             {% for audio in artist.user.profile.audioList %}
                 <div class="audioEditProfile">
