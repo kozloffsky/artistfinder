@@ -21,6 +21,7 @@ security:
             security: false
 
         main:
+            pattern: .*
             anonymous: ~
             logout: true
             form_login:
@@ -29,9 +30,13 @@ security:
             knpu_guard:
                 authenticators:
                   - app.form_login_authenticator
-        administration:
+
+        admin:
+            pattern: /administration(.*)
             form_login:
-                default_target_path: /administration
+                check_path: login
+                login_path: /?login_form
+                default_target_path: /administration/recommend
 
             knpu_guard:
                 authenticators:
