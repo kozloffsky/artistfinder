@@ -33,7 +33,9 @@
                                 <p class="message-heading hidden-xs">Enquiry for {{ message.chat_room.event.title }} / {{ message.chat_room.event.city.name }} / {{ message.chat_room.event.starting_date }}</p>
 
                                 <div class="text">
+                                    {% if message.message_text is defined %}
                                     {{ message.message_text }}
+                                    {% endif %}
                                 </div>
 
                                 <div class="controls hidden-xs">
