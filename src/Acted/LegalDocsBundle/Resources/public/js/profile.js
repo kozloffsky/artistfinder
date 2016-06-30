@@ -135,6 +135,11 @@ $(function() {
         });
     });
 
+    $(document).on('click','#addNewPerformanceBtn', function(){
+        var newPerformanceBlock = $('.newPerformanceBlank').clone();
+        newPerformanceBlock.insertBefore('.controls.add').removeClass('newPerformanceBlank, hidden').fadeIn(800);
+    });
+
     $(document).on('click','.videoAddPerf',function() {
         var mediaId = $(this).prev('.mediaId').text(),
             imageBlockInsert = $(this).parents('.holder'),
@@ -155,7 +160,7 @@ $(function() {
             $(parentPerformance).find('.holder.video .btns-list button').css('color','#333333');
         }
         userPerformanceUpload(parentPerformance, performanceId, mediaId, imageBlockInsert);
-    })
+    });
 
     function userPerformanceUpload(parentPerformance, performanceId, mediaId, imageBlockInsert, newPerformance) {
 
@@ -779,6 +784,56 @@ $(function() {
             var numOfmediaElements = $(this).find('.badge').text();
             if (numOfmediaElements == 0){
                 $(this).addClass('disabled');
+            }
+        })
+    }
+
+    $(document).on('click','.deleteOfferBtn', function(){
+        var parentPerformanceForm = $(this).parents('form'),
+            parentPerformance = parentPerformanceForm.parent('article'),
+            performanceId = parentPerformanceForm.attr('id'),
+            slug = $('#slug').text();
+        deleteOffer(slug, performanceId, parentPerformance)
+    });
+
+    function deleteOffer(slug, performanceId, parentPerformance) {
+        $.ajax({
+            type: "DELETE",
+            url: '/profile/' + slug + '/performance/' + performanceId,
+            success: function () {
+                $(parentPerformance).fadeOut(800);
+                setTimeout(function(){
+                    $(parentPerformance).remove();
+                }, 800);
+            }
+        })
+    };
+
+    $(document).on('click','.saveOfferPerf', function(){
+        var parentPerformanceForm = $(this).parents('form'),
+            parentPerformance = parentPerformanceForm.parent('article'),
+            performanceId = parentPerformanceForm.attr('id'),
+            slug = $('#slug').text(),
+            dataSendOfferTitile = $(parentPerformanceForm).find('.offerTitlePerf'),
+            dataSendOfferInf = $(parentPerformanceForm).find('.description-area');
+        console.log(performanceId);
+        var dataToSendOffer = {"performance[title]": dataSendOfferTitile,
+                               /*"performance[techRequirement]": dataSendOfferInf*/};
+        if(performanceId == 'NewBlank'){
+            var perfCreateUrl = '/profile/' + slug + '/performance/new';
+        } else {
+            var perfCreateUrl = '/profile/performance/' + performanceId + '/edit';
+        }
+        saveOffer(slug, perfCreateUrl, dataToSendOffer)
+    });
+
+    function saveOffer(slug, perfCreateUrl, dataToSendOffer){
+        $.ajax({
+            type: "POST",
+            url: perfCreateUrl,
+            data: dataToSendOffer,
+            success: function (responseText) {
+
             }
         })
     }
