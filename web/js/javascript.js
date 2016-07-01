@@ -10305,7 +10305,7 @@ $(function() {
             dataSendOfferInf = $(parentPerformanceForm).find('.description-area').val();
         console.log(performanceId);
         var dataToSendOffer = {"performance[title]": dataSendOfferTitile,
-                               "status":"draft",
+                               "performance[status]":"draft",
                                /*"performance[techRequirement]": dataSendOfferInf*/};
         if(performanceId == 'NewBlank'){
             var perfCreateUrl = '/profile/' + slug + '/performance/new';
