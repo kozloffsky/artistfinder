@@ -4337,7 +4337,7 @@ $(function(){
     }
 
     function chatSocket(chatId){
-        var webSocket = WS.connect("ws://127.0.0.1:1337");
+        var webSocket = WS.connect("ws://51.254.217.4:8686");
 
         /**
          * connect
@@ -10638,7 +10638,6 @@ $(function () {
         var artistSlug = $('#slug').text();
         getArtistInformationForQuote(artistSlug);
         $('#freeQuoteModal').modal('show');
-        $('#quoteRequestSecond .requestQuotePerformances, #quoteRequestSecond .add-comment-btn, #quoteRequestSecond .controls').hide();
     });
 
 
@@ -10646,7 +10645,6 @@ $(function () {
         var artistSlug = $(this).val();
         getArtistInformationForQuote(artistSlug);
         $('#freeQuoteModal').modal('show');
-        $('#quoteRequestSecond .requestQuotePerformances, #quoteRequestSecond .add-comment-btn, #quoteRequestSecond .controls').hide();
     });
 
 
@@ -10655,7 +10653,6 @@ $(function () {
         var performanceRequestId = $(this).val();
         getArtistInformationForQuote(artistSlug, performanceRequestId)
         $('#freeQuoteModal').modal('show');
-        $('#quoteRequestSecond .requestQuotePerformances, #quoteRequestSecond .add-comment-btn, #quoteRequestSecond .controls').hide();
     });
 
     function getArtistInformationForQuote(artistSlug, performanceRequestId){

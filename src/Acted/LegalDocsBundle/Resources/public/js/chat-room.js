@@ -190,7 +190,7 @@ $(function(){
     }
 
     function chatSocket(chatId){
-        var webSocket = WS.connect("ws://127.0.0.1:1337");
+        var webSocket = WS.connect("ws://51.254.217.4:8686");
 
         /**
          * connect
