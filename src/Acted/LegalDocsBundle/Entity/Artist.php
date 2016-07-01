@@ -525,12 +525,19 @@ class Artist
     {
         if ($this->getUser()->getProfile()) {
             /** @var Performance $performance */
-            $performance = $this->getUser()->getProfile()->getPerformances()->first();
+            $performances = $this->getUser()->getProfile()->getPerformances();
+            $performance = '';
+            foreach ($performances as $item ) {
+                if ($item->getStatus() === Performance::STATUS_PUBLISHED) {
+                    $performance = $item;
+                    continue;
+                }
+            }
             if ($performance) {
                 return $performance->getMedia()->first();
             }
         }
-        return null;
+        return '';
     }
 
     public function getAllPerformance()

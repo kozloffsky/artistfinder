@@ -1,5 +1,5 @@
 Acted\LegalDocsBundle\Entity\Artist:
-  exclusion_policy: NONE
+#  exclusion_policy: NONE
   custom_accessor_order: [name, slug, rating]
   properties:
     id:
