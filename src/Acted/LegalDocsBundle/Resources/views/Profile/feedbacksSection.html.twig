@@ -1,6 +1,5 @@
 
 {% for feedback in feedbacks %}
-
     <article class="feedback-block">
         <div class="row">
             <div class="avatar">
@@ -8,14 +7,37 @@
                 <p class="name">{{ feedback.event.user.firstname }}</p>
             </div>
 
-            <div class="text">
-                <p>
+            <div class="text" data-max-chars-desktop="500" data-max-chars-mobile="200">
+                <div class="stars ratingFeedback">
+                    <span class="hidden ratingFeedbackCount">{{ feedback.rating }}</span>
+                    <div class="star">
+                        <div style="" class="fill-star"></div>
+                    </div>
+
+                    <div class="star">
+                        <div style="" class="fill-star"></div>
+                    </div>
+
+                    <div class="star">
+                        <div style="" class="fill-star"></div>
+                    </div>
+
+                    <div class="star">
+                        <div style="" class="fill-star"></div>
+                    </div>
+
+                    <div class="star">
+                        <div style="" class="fill-star"></div>
+                    </div>
+                </div>
+                <p class="feedback-text">
                     {{ feedback.comments }}
                 </p>
+                <a class="more">+more</a>
+                <div class="gradient"></div>
             </div>
         </div>
     </article>
-
 {% endfor %}
 
 <div class="navigation">
