@@ -170,8 +170,12 @@ class ChatRoomController extends Controller
      */
     public function getChatAction(Request $request)
     {
-        return $this->redirectToRoute('artists_list');
         $chatRoomId = $request->get('chat');
+        $user = $this->getUser();
+        $chat = $this->getEM()->getRepository('ActedLegalDocsBundle:ChatRoom')->checkUserPermission($user, $chatRoomId);
+        if (!$chat) {
+            return $this->redirect($this->generateUrl('chat_room_list', ['userId' => $user->getId()]), 301);
+        }
         $serializer = $this->get('jms_serializer');
 
         $chatRoom = $this->getEM()->getRepository('ActedLegalDocsBundle:ChatRoom')->find($chatRoomId);

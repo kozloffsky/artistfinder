@@ -561,21 +561,22 @@ $(function() {
                 //console.log(getMediaId, videoAddedVal, parentPerformance, newPerformance, performanceId)
                 addPerformanceVideo(getMediaId, videoAddedVal, getNewBlockPerformance, newPerformance, newPerformanceId)
             })
-
         })
-
-
     }
 
-    $('.deleteOffer button').confirmation({
-        show:true,
-        onConfirm: function(){
-            var parentPerformance = $(this).parents('article');
-            var performanceId = $(parentPerformance).children('.performanceId').text();
-            var slug = $('#slug').text();
-            deleteOffer(slug, performanceId, parentPerformance)
-        }
-    });
+    deleteEventBtn();
+
+    function deleteEventBtn(){
+        $('.deleteOffer button').confirmation({
+            show:true,
+            onConfirm: function(){
+                var parentPerformance = $(this).parents('article');
+                var performanceId = $(parentPerformance).children('.performanceId').text();
+                var slug = $('#slug').text();
+                deleteOffer(slug, performanceId, parentPerformance)
+            }
+        });
+    }
     /*$(document).on('click','.deleteOffer button',function () {
 
         var parentPerformance = $(this).parents('article');
@@ -1082,6 +1083,7 @@ $(function() {
 
 
 $(document).on('ready ajaxComplete', function(){
+
     $('.price-list .pagination a').on('click', function(event){
         event.preventDefault();
         if ($(this).hasClass('pageArrows')){
@@ -1115,4 +1117,28 @@ $(document).on('ready ajaxComplete', function(){
             $(paginationTarget).html(data);
         });
     }
+
+    $('.deleteOffer button').confirmation({
+        show:true,
+        onConfirm: function(){
+            var parentPerformance = $(this).parents('article');
+            var performanceId = $(parentPerformance).children('.performanceId').text();
+            var slug = $('#slug').text();
+            deleteOffer(slug, performanceId, parentPerformance)
+        }
+    });
+
+    function deleteOffer(slug, performanceId, parentPerformance) {
+        $.ajax({
+            type: "DELETE",
+            url: '/profile/' + slug + '/performance/' + performanceId,
+            success: function () {
+                $(parentPerformance).fadeOut(800);
+                setTimeout(function(){
+                    $(parentPerformance).remove();
+                }, 800);
+            }
+        })
+    }
+
 });

@@ -124,7 +124,11 @@
                         {% else %}
                             <li class="right active">
                                 <a href="#" class="img-holder">
+                                {% if  chatMessage.sender_user.avatar is defined %}
                                     <img src="{{ chatMessage.sender_user.avatar }}" alt="image description">
+                                {% else %}
+                                    <img src="/assets/images/noAvatar.png" alt="image description">
+                                {% endif %}
                                 </a>
                                 <div class="holder">
                                     <div class="box">

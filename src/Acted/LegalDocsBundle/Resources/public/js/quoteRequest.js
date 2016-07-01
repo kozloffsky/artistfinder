@@ -78,7 +78,6 @@ $(function () {
     $(document).on('click','.requestQuotePerformance',function(){
         var artistSlug = $('#slug').text();
         var performanceRequestId = $(this).val();
-        console.log(performanceRequestId)
         getArtistInformationForQuote(artistSlug, performanceRequestId)
         $('#freeQuoteModal').modal('show');
     });
@@ -217,11 +216,12 @@ $(function () {
         $(userEvents).each(function(i){
             var eventsOptions='<option value="'+ this.event.id +'" name="event" class="'+i+'">'+this.event.title+'</option>';
             $('#event_preset').append(eventsOptions);
+            console.log('preveEventList')
         });
-        initSelect();
         $('.eventUnregistered').hide();
         $('#requestQuoteForm .modal-body').hide();
         $('#requestQuoteForm .modal-body').addClass('choosePrevEvent');
+        initSelect();
     }
 
     function setDataEvent(userEvents){
