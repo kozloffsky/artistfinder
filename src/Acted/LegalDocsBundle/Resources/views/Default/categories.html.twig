@@ -61,16 +61,18 @@
                 <div role="tabpanel" class="tab-pane fade" id="tabCatsl{{ category.slug }}">
             {% endif %}
                 <ul class="categories-list">
+                    {% for catChild in category['__children'] %}
+                    {% if loop.index % 5 == 0 or loop.first %}
                     <li>
                         <ul>
-                            {% for catChild in category['__children'] %}
                             <li>
                                 <input class="checkbox" type="checkbox" id="variety_category_id_{{ catChild['id'] }}" name="categories[]" value="{{ catChild['id'] }}">
                                 <label for="variety_category_id_{{ catChild['id'] }}">{{ catChild['title'] }}</label>
                             </li>
-                            {% endfor %}
                         </ul>
                     </li>
+                    {% endif %}
+                    {% endfor %}
                 </ul>
             </div>
             {% endfor %}

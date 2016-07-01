@@ -51,6 +51,8 @@
                                         </div>
                                     </div>
 
+                                    <div class="performanceVideo">
+                                    </div>
                                     {% if mediaOf.mediaType == "video" %}
                                         <div class="performanceVideo">
                                             <iframe src="{{ mediaOf.link }}" width="100%" height="auto" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
@@ -172,13 +174,16 @@
                                     <button type="submit" id="AddPerformanceVideo" class="btn btn-default">Submit</button>
                                 </div>
                             </div>
-
+                            <div class="performanceVideo">
+                            </div>
                             <ul class="btns-list">
                                 <li>
+                                    <span class="hidden mediaId">NewMedia</span>
                                     <button type="button" class="btn-add videoAddPerf"><i class="fa fa-film" aria-hidden="true"></i></button>
                                     <em class="note">Add video</em>
                                 </li>
                                 <li>
+                                    <span class="hidden mediaId">NewMedia</span>
                                     <button type="button" class="btn-add imageAddPerf"><i class="fa fa-camera" aria-hidden="true"></i></button>
                                     <em class="note">Add photo</em>
                                 </li>
