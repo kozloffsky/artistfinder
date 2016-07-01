@@ -9619,11 +9619,6 @@ $(function() {
         });
     });
 
-    $(document).on('click','#addNewPerformanceBtn', function(){
-        var newPerformanceBlock = $('.newPerformanceBlank').clone();
-        newPerformanceBlock.insertBefore('.controls.add').removeClass('newPerformanceBlank, hidden').fadeIn(800);
-    });
-
     $(document).on('click','.videoAddPerf',function() {
         var mediaId = $(this).prev('.mediaId').text(),
             imageBlockInsert = $(this).parents('.holder'),
@@ -9631,7 +9626,66 @@ $(function() {
             performanceId = parentPerformance.attr('id');
         $(parentPerformance).find('.holder.video .imagePerformanceChange, .holder.video .imagePerformanceChange .performanceVideoAdd').fadeIn();
         $(parentPerformance).find('.holder.video .btns-list button').css('color','#fff');
+        var imageAddPerf = $(parentPerformance).find('#AddPerformanceVideo');
+        $(imageAddPerf).on('click',function(e){
+            e.preventDefault();
+            var videoAddedVal = $(parentPerformance).find('.videoPerformanceAdd').val();
+            addPerformanceVideo(mediaId, videoAddedVal, parentPerformance, performanceId)
+        })
     });
+
+    function addPerformanceVideo(mediaChangeId, videoAddedVal, parentPerformance, performanceId){
+        var performanceVideoBlock = parentPerformance.find('.performanceVideo'),
+            videoAddBlock = parentPerformance.find('.performanceVideoAdd'),
+            changePerformanceBlock = parentPerformance.find('#image-performance-change2');
+        if (mediaChangeId == 'NewMedia'){
+            $.ajax({
+                type: "POST",
+                url: '/profile/performance/' + performanceId + '/media/new',
+                data: {"video": videoAddedVal,
+                    "position":2},
+                beforeSend: function(){
+                    $('#loadSpinner').fadeIn(500);
+                },
+                complete: function(){
+                    $('#loadSpinner').fadeOut(500);
+                },
+                success: function (responseText) {
+                    console.log(responseText);
+                    $(changePerformanceBlock).parent('.video').find('iframe').remove();
+                    $(changePerformanceBlock).parent('.video').find('img').remove();
+                    $(changePerformanceBlock).parent('.video').find('.editingProf .mediaId').text(responseText.media.id)
+                    $(performanceVideoBlock).html('<iframe src="' + responseText.media.link + '"  width="100%" height="auto" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen>');
+                    videoAddBlock.hide();
+                    changePerformanceBlock.hide();
+                }
+            });
+        } else {
+            $.ajax({
+                type: "POST",
+                url: '/media/' + mediaChangeId + '/edit',
+                data: {"video": videoAddedVal},
+                beforeSend: function(){
+                    $('#loadSpinner').fadeIn(500);
+                },
+                complete: function(){
+                    $('#loadSpinner').fadeOut(500);
+                },
+                success: function (responseText) {
+                    console.log(responseText);
+                    $(changePerformanceBlock).parent('.video').find('iframe').remove();
+                    $(changePerformanceBlock).parent('.video').find('img').attr('src','');
+                    $(performanceVideoBlock).html('<iframe src=' + responseText.media.link + '  width="395" height="274" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen>');
+                    videoAddBlock.hide();
+                    changePerformanceBlock.hide();
+                    videoAddBlock.find('.videoAddMessage').css('color','#fff');
+                },
+                error: function(response){
+                    videoAddBlock.find('.videoAddMessage').css('color','#C9302C');
+                }
+            })
+        }
+    }
 
     $(document).on('click','.imageAddPerf',function(){
         $('#addImageModal').modal('show');
@@ -9646,8 +9700,22 @@ $(function() {
         userPerformanceUpload(parentPerformance, performanceId, mediaId, imageBlockInsert);
     });
 
-    function userPerformanceUpload(parentPerformance, performanceId, mediaId, imageBlockInsert, newPerformance) {
+    $(document).on('click','.publishOfferPerf',function(ev){
+        ev.preventDefault();
+        var parentPerformance = $(this).parents('form'),
+            performanceId = parentPerformance.attr('id');
+        $.ajax({
+            type: "PATCH",
+            url: '/profile/performance/' + performanceId + '/edit',
+            data: {"performance[status]":"published"},
+            success: function (responseText) {
 
+            }
+        })
+    })
+
+    function userPerformanceUpload(parentPerformance, performanceId, mediaId, imageBlockInsert, newPerformance) {
+        console.log(parentPerformance, performanceId, mediaId, imageBlockInsert)
         var isActiveCropper = false;
         $('#addImageModal .changeImageContiner').empty().removeClass('croppie-container');
         $('#uploadNewMedia').val('');
@@ -9782,7 +9850,7 @@ $(function() {
                                     $("#uploadNewMedia").val('');
                                     //var placeToAddNewImage = imgChangeBlock.parent('.video');
                                     //console.log(placeToAddNewImage);
-                                    imgChangeBlock.find('.editingProf .mediaId').text(responseText.media.id);
+                                    imgChangeBlock.find('.mediaId').text(responseText.media.id);
                                     imgChangeBlock.find('iframe').remove();
                                     imgChangeBlock.find('img.preview').remove();
                                     imgChangeBlock.append('<img class="preview" src="' + resp + '" alt="Preview">');
@@ -10295,6 +10363,26 @@ $(function() {
         })
     };
 
+    $(document).on('click','#addNewPerformanceBtn', function(){
+        var newPerformanceBlock = $('.newPerformanceBlank').clone();
+        newPerformanceBlock.insertBefore('.controls.add').removeClass('newPerformanceBlank, hidden').fadeIn(800);
+        createNewPerf(newPerformanceBlock)
+    });
+
+    function createNewPerf(newPerformanceBlock){
+        console.log(newPerformanceBlock)
+        var slug = $('#slug').text();
+        $.ajax({
+            type: "POST",
+            url: '/profile/' + slug + '/performance/new',
+            data: {"performance[title]": 'new event',"performance[status]":"draft"},
+            success: function (response) {
+                console.log(response)
+                $(newPerformanceBlock).find('form').attr('id', response.performance.id);
+            }
+        })
+    }
+
     $(document).on('click','.saveOfferPerf', function(){
         console.log('saveOffer')
         var parentPerformanceForm = $(this).parents('form'),
@@ -10306,7 +10394,7 @@ $(function() {
         console.log(performanceId);
         var dataToSendOffer = {"performance[title]": dataSendOfferTitile,
                                "performance[status]":"draft",
-                               /*"performance[techRequirement]": dataSendOfferInf*/};
+                               "performance[techRequirement]": dataSendOfferInf};
         if(performanceId == 'NewBlank'){
             var perfCreateUrl = '/profile/' + slug + '/performance/new';
         } else {
@@ -10318,7 +10406,7 @@ $(function() {
 
     function saveOffer(slug, perfCreateUrl, dataToSendOffer){
         $.ajax({
-            type: "POST",
+            type: "PATCH",
             url: perfCreateUrl,
             data: dataToSendOffer,
             success: function (responseText) {
