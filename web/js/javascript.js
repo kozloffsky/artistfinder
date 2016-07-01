@@ -7325,6 +7325,9 @@ $(function() {
             success: function(res){
                 $('article#'+id).appendTo('.enquiries-wrap');
                 $('article#'+id).find('.rejectRequest').attr('disabled',true);
+                $('article#'+id).find('.rejectRequest').text('Rejected');
+                $('article#'+id).find('.quotationSendbtn').attr('disabled',true);
+
             }
         })
     }

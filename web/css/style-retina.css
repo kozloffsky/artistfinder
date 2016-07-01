@@ -3927,9 +3927,11 @@ header.small .navbar {
     margin: 0;
     padding: 0;
     display: -webkit-box;
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
     -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
         -ms-flex-pack: justify;
             justify-content: space-between;
     margin-bottom: 30px;
@@ -4489,6 +4491,7 @@ header.small .navbar {
     .categories-menu {
         display: none;
         -webkit-box-pack: inherit;
+        -webkit-justify-content: inherit;
             -ms-flex-pack: inherit;
                 justify-content: inherit;
     }
