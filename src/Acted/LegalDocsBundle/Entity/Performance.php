@@ -7,6 +7,8 @@ namespace Acted\LegalDocsBundle\Entity;
  */
 class Performance
 {
+    const STATUS_DRAFT = 'draft';
+    const STATUS_PUBLISHED = 'published';
     /**
      * @var integer
      */

@@ -24,6 +24,11 @@ class PerformanceController extends Controller
         if($performanceForm->isSubmitted() && $performanceForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $performance->setProfile($artist->getUser()->getProfile());
+            if ($performance->getStatus() === Performance::STATUS_PUBLISHED) {
+                if (!$performance->getMedia()) {
+                    return new JsonResponse(['error' => 'Performance can not be published without media'], 400);
+                }
+            }
             $em->persist($performance);
             $em->flush();
             $serializer = $this->get('jms_serializer');
@@ -40,6 +45,12 @@ class PerformanceController extends Controller
 
         if($mediaForm->isSubmitted() && $mediaForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            if ($performance->getStatus() === Performance::STATUS_PUBLISHED) {
+                if (!$performance->getMedia()) {
+                    return new JsonResponse(['error' => 'Performance can not be published without media'], 400);
+                }
+            }
             $em->persist($performance);
 
 
