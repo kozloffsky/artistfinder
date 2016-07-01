@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Repository;
 
 use Acted\LegalDocsBundle\Entity\Category;
+use Acted\LegalDocsBundle\Entity\Performance;
 use Acted\LegalDocsBundle\Search\FilterCriteria;
 use Acted\LegalDocsBundle\Search\OrderCriteria;
 
@@ -21,8 +22,11 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             ->where('a.recommend != 0')
             ->innerJoin('a.user', 'u')
             ->innerJoin('u.profile', 'p')
+            ->innerJoin('p.performances', 'perf')
+            ->andWhere('perf.status != :status')
             ->andWhere(':category MEMBER OF p.categories')
             ->setParameter('category', $category)
+            ->setParameter('status', Performance::STATUS_DRAFT)
             ->getQuery()
             ->getResult();
     }
@@ -43,6 +47,8 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('pr.offers', 'o')
             ->leftJoin('a.ratings', 'ar')
             ->where('u.active != 0')
+            ->andWhere('pr.status != :status_pr')
+            ->setParameter('status_pr', Performance::STATUS_DRAFT)
             ->groupBy('a.id');
 
         if ($fc->withVideo()) {

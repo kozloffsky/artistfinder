@@ -165,6 +165,7 @@ nelmio_api_doc: ~
 
 fos_rest:
     view:
+        serialize_null: true
         view_response_listener: true
         formats:
             json: true
