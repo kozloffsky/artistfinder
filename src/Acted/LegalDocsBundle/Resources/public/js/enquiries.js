@@ -60,7 +60,8 @@ $(function() {
             type:'GET',
             url:'/event/change_status/reject/'+id+'?type=no_email',
             success: function(res){
-                $('article#'+id).appendTo('.enquiries-wrap')
+                $('article#'+id).appendTo('.enquiries-wrap');
+                $('article#'+id).find('.rejectRequest').attr('disabled',true);
             }
         })
     }
