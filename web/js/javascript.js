@@ -9463,6 +9463,7 @@ $(function() {
     function slidersInitMedia(){
         if (($('.bxslider li').length) >= 1){
             $('.media-content .bxslider').bxSlider(optionsSlider.photoSettings);
+            $('#section-photo').show();
         }
         if (($('.bxVideoSlider li').length) >= 1){
             $('.bxVideoSlider').bxSlider(optionsSlider.videoSettings);
@@ -9849,7 +9850,7 @@ $(function() {
                         var indexOfThumb = $('#video-pager .scale-thumb').length;
                         $("#media [data-target='#section-video'] .badge").text(indexOfThumb);
                         $('.bxVideoSlider').unwrap();
-                        $('.bxVideoSlider').bxSlider({
+                        /*$('.bxVideoSlider').bxSlider({
                             adaptiveHeight: true,
                             mode: 'fade',
                             useCSS: false,
@@ -9858,18 +9859,20 @@ $(function() {
                             /*onSliderLoad: function () {
                                 $('#section-video').hide();
                             }*/
-                        })
+                        //})
+                        $('.bxVideoSlider').bxSlider(optionsSlider.videoSettings);
                     } else if (getMediaType[0].id == 'section-photo') {
 
                         var indexOfThumb = $('#photo-pager .scale-thumb').length;
                         $("#media [data-target='#section-photo'] .badge").text(indexOfThumb)
                         $('.bxslider').unwrap();
-                        $('.bxslider').bxSlider({
+                        /*$('.bxslider').bxSlider({
                             adaptiveHeight: true,
                             pagerCustom: '#photo-pager',
                             nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
                             prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
-                        });
+                        });*/
+                        $('.media-content .bxslider').bxSlider(optionsSlider.photoSettings);
                         $('.bxslider .bx-clone').remove();
                     } else if (getMediaType[0].id == 'section-audio') {
                         $(clickedElDelete).parent('.audioEditProfile').remove();
