@@ -53,3 +53,8 @@ add_quotation_to_event_offer:
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:addQuotation, _format: json }
     methods:  POST
 
+bookings:
+    path:     /bookings/{userId}
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:bookings }
+    methods:  GET
+

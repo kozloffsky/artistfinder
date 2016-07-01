@@ -5919,6 +5919,17 @@ header.small .navbar {
 .enquiries .categories-menu {
     margin-top: 16px;
     margin-bottom: 50px;
+    position: relative;
+}
+
+.enquiries .categories-menu:after{
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -15px;
+    height: 1px;
+    background-color: #a5a5a5;
 }
 
 .enq-icon {
@@ -6067,6 +6078,65 @@ header.small .navbar {
     right: 0;
 }
 
+.enquiries .container {
+    padding: 0!important;
+}
+
+.enquiries-wrap {
+    padding: 0 15px;
+}
+
+/*booking styles start*/
+.bookings .categories-menu:after{
+    content: none;
+}
+.bookings .note{
+    font-family: LatoRegular;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.68);
+    position: absolute;
+    right: 0;
+    font-style: normal;
+}
+.bookings .note.green b{color: #489442;}
+.bookings .note.blue b{color: #494fc7;}
+.bookings .note.orange b{color: #ff735a;}
+.act-request-list{
+    margin: 0;
+    font-size: 15px;
+    color: #000;
+    color: rgba(0, 0, 0, 0.68);
+}
+.act-request-list dt{
+    float: left;
+    margin: 0 5px 0 0;
+    font-weight: normal;
+    min-width: 68px;
+    max-width: 100px;
+}
+.act-request-list dd{
+    overflow: hidden;
+    margin: 0 0 8px;
+}
+.act-request-list ul{
+    list-style: none;
+    margin: 0;
+    padding: 0 160px 0 0;
+}
+.act-request-list ul li{
+    margin: 0 0 10px;
+}
+.act-request-list ul li:last-child{margin: 0;}
+.act-request-list .bold{
+    color: rgba(0, 0, 0, 1);
+    font-weight: normal;
+    font-family: LatoBold;
+}
+.bookings .act-request .controls{text-align: left;}
+.bookings .act-request .button-gradient{margin: 0 40px 0 0 !important;}
+.bookings .select2{margin: 0 0 30px;}
+/*booking styles end*/
+
 @media (max-width: 767px) {
     .act-request .controls .button-gradient:not(:last-of-type) {
         margin-bottom: 15px!important;
@@ -6083,6 +6153,7 @@ header.small .navbar {
 
     .act-request-title,
     .received-time,
+    .bookings .note,
     .act-request-message span.title,
     .act-request-data li span,
     .act-request-data li {
@@ -6100,6 +6171,25 @@ header.small .navbar {
     .act-request-message span.text {
         font-size: 14px;
     }
+
+    .bookings .act-request{padding: 0 0 85px;}
+    .bookings .act-request .controls{text-align: center;}
+    .bookings .act-request .controls .btn{min-width: 150px;}
+    .bookings .act-request .button-gradient{margin: 0 20px !important;}
+
+    .act-request-list{
+        font-size: 13px;
+    }
+
+    .act-request-list dt{
+        float: none;
+        max-width: 100%;
+        min-width: 100%;
+        margin: 0 0 6px;
+    }
+    .act-request-list ul{padding: 0;}
+    .act-request-list ul li{margin: 0 0 6px;}
+    .act-request-list dd{margin: 0 0 15px;}
 }
 .messages {
     padding-bottom: 100px;
