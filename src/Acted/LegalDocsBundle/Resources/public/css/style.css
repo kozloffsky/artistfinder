@@ -1279,7 +1279,7 @@ section.used-by {
     position: relative;
     float: left;
     display: inline-block;
-    width: calc(100% - 100px);
+    width: calc(100% - 125px);
     font-size: 20px;
     color: #636363;
     padding-bottom: 30px;

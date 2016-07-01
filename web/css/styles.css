@@ -3325,7 +3325,7 @@ header.small .navbar {
     position: relative;
     left: 50%;
     -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
+    transform: translateX(-50%);
     width: 80%;
     max-width: 280px;
 }
@@ -3340,7 +3340,7 @@ header.small .navbar {
 .registration-modal .modal-body .controls.category-controls {
     left: 50%;
     -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 
 .registration-modal .modal-body {
@@ -3377,8 +3377,7 @@ header.small .navbar {
 }
 
 .registration-modal .category-item input {
-    opacity: 0;
-    position: absolute;
+    display: none;
 }
 
 .registration-modal .category-item label:hover {
@@ -3503,7 +3502,7 @@ header.small .navbar {
     width: 50%;
     left: 50%;
     -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 
 .contact-details .form-group {
@@ -3636,7 +3635,7 @@ header.small .navbar {
     top: 50%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     font-family: LatoBlack;
     font-size: 26px;
     color: white;
@@ -3646,7 +3645,7 @@ header.small .navbar {
     position: relative;
     left: 50%;
     -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
+    transform: translateX(-50%);
     margin-bottom: 32px;
 }
 
@@ -3724,6 +3723,122 @@ header.small .navbar {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
+/*tab list styles start*/
+.registration-modal .tab-list{
+    list-style: none;
+    margin: 0;
+    padding: 10px 5px;
+    overflow: hidden;
+    text-align: center;
+    display: inline-block;
+    vertical-align: top;
+    border-bottom: 2px solid rgba(202, 202, 202, 0.25);
+}
+
+.registration-modal .tab-list li{
+    background: transparent;
+    float: left;
+    height: 159px;
+    width: 33.33%;
+    position: relative;
+}
+
+.registration-modal .tab-list li:after{
+    content: "";
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    background: rgb(255, 157, 92);
+    background-image: -webkit-linear-gradient(left, rgba(255, 157, 92, 1) 0%, rgba(255, 129, 66, 1) 100%);
+    background-image: linear-gradient(to right, rgba(255, 157, 92, 1) 0%, rgba(255, 129, 66, 1) 100%);
+    -webkit-transition: opacity .25s;
+    transition: opacity .25s;
+}
+
+.registration-modal .tab-list li.active:after{
+    opacity: 1;
+}
+
+.registration-modal .tab-list li.active h3{
+    color: #fff;
+}
+
+.registration-modal .tab-list .img-box{
+    margin: 0 auto 7px;
+    width: 72px;
+    height: 72px;
+    overflow: hidden;
+}
+.registration-modal .tab-list .img-box img{
+    display: block;
+    height: auto;
+    width: 100%;
+}
+.registration-modal .tab-list  h3{
+    margin: 0;
+    font-size: 18px;
+    color: #222;
+}
+.registration-modal .tab-list a{
+    display: table;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+    z-index: 2;
+    position: relative;
+}
+.registration-modal .tab-list a:hover{
+    text-decoration: none;
+}
+.registration-modal .tab-list figure{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    overflow: hidden;
+}
+/*tab list styles end*/
+/*categories list styles start*/
+.registration-modal .categories-list{
+    overflow: hidden;
+    list-style: none;
+    margin: 0;
+    padding: 15px 0 7px;
+    color: #828282;
+    font-size: 14px;
+}
+.registration-modal .categories-list > li{
+    float: left;
+    padding: 0 5px;
+    width: 33.33%;
+}
+.registration-modal .categories-list ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.registration-modal .categories-list ul li{
+    margin: 0 0 5px;
+    position: relative;
+}
+.registration-modal .categories-list input[type="checkbox"],
+.registration-modal .categories-list input[type="radio"]{
+    display: none;
+}
+.registration-modal .categories-list label{
+    margin: 0;
+    cursor: pointer;
+}
+.registration-modal .categories-list input[type="checkbox"]:checked + label,
+.registration-modal .categories-list input[type="radio"]:checked + label{
+    color: #8BA8FF;
+}
+/*categories list styles end*/
 
 @media (max-width: 767px) {
 
@@ -3773,11 +3888,63 @@ header.small .navbar {
     .registration-modal .modal-body .contact-details .controls {
         left: 50%;
         -webkit-transform: translateX(-50%);
-                transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+
+    .registration-modal .tab-list li{
+        height: 128px;
+    }
+
+    .registration-modal .tab-list .img-box{
+        height: 56px;
+        width: 52px;
+    }
+    .registration-modal .tab-list h3{
+        font-size: 16px;
+    }
+}
+
+
+@media (max-width: 675px){
+    .registration-modal .tab-list a{
+        padding: 18px;
+        display: block;
+    }
+    .registration-modal .tab-list figure{
+        display: block;
     }
 }
 
 @media (max-width: 500px) {
+
+    .registration-modal .tab-list li{
+        height: 80px;
+    }
+
+    .registration-modal .tab-list a{
+        padding: 3px 5px 5px;
+        display: table;
+    }
+
+    .registration-modal .tab-list figure{
+        display: table-cell;
+    }
+
+    .registration-modal .tab-list .img-box{
+        display: none;
+    }
+
+    .registration-modal .categories-list ul li{
+        margin-bottom: 2px;
+    }
+
+    .registration-modal .tab-list li h3{
+        font-size: 14px;
+    }
+    .registration-modal .categories-list{
+        padding-top: 5px;
+    }
+
 
     .gradient-light,
     .gradient-dark {
@@ -3803,7 +3970,7 @@ header.small .navbar {
         display: inline-block;
         left: 50%;
         -webkit-transform: translateX(-50%);
-                transform: translateX(-50%);
+        transform: translateX(-50%);
         position: relative;
     }
 
@@ -3956,7 +4123,7 @@ header.small .navbar {
         position: relative;
         left: 50%;
         -webkit-transform: translateX(-50%);
-                transform: translateX(-50%);
+        transform: translateX(-50%);
         margin-bottom: 20px;
         max-width: 125px;
     }
@@ -3988,7 +4155,7 @@ header.small .navbar {
         display: inline-block;
         left: 50%;
         -webkit-transform: translateX(-50%);
-                transform: translateX(-50%);
+        transform: translateX(-50%);
         position: relative;
     }
 
@@ -4141,7 +4308,7 @@ header.small .navbar {
         position: relative;
         left: 50%;
         -webkit-transform: translateX(-50%);
-                transform: translateX(-50%);
+        transform: translateX(-50%);
         margin-bottom: 20px;
         max-width: 115px;
     }
@@ -9336,7 +9503,7 @@ section.used-by {
     position: relative;
     float: left;
     display: inline-block;
-    width: calc(100% - 100px);
+    width: calc(100% - 125px);
     font-size: 20px;
     color: #636363;
     padding-bottom: 30px;
