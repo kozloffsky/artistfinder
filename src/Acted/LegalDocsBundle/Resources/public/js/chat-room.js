@@ -237,8 +237,15 @@ $(function(){
                             processData: false,
                             contentType: false,
                             data: dataFiles,
+                            beforeSend: function () {
+                                $('.chatMessageSending').fadeIn(500);
+                            },
+                            complete: function () {
+                                $('.chatMessageSending').fadeOut(500);
+                            },
                             success: function(){
                                 $('#chat-room').val('');
+                                $('.chatMessageSending').fadeOut(500);
                                 if(formDataContent.length > 0){
                                     recreateUploader();
                                 };
