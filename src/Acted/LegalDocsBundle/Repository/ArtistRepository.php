@@ -152,27 +152,48 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
      * @param int $end
      * @param bool $recommend
      * @param bool $spotlight
+     * @param int $artistId
      * @return \Doctrine\ORM\Query
      */
-    public function getArtistsList($query = null, $start = null, $end = null, $recommend = false, $spotlight = false)
+    public function getArtistsList($query = null, $start = null, $end = null, $recommend = false, $spotlight = false,
+                                   $artistId = null)
     {
         $qb =  $this->createQueryBuilder('a')
             ->innerJoin('a.user', 'u')
             ->where('u.active != 0');
+        if ($artistId) {
+            $qb
+                ->andWhere('a.id != :artistId')
+                ->setParameter('artistId', $artistId);
+        }
         if ($query) {
             $qb
                 ->andWhere('(MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0)')
                 ->setParameter('query', $query);
         }
         if ($start) {
-            $qb
-                ->andWhere('a.recommend >= :start')
-                ->setParameter('start', (int)$start);
+            if (!$spotlight) {
+                $qb
+                    ->andWhere('a.recommend >= :start')
+                    ->setParameter('start', (int)$start);
+            } else {
+                $qb
+                    ->andWhere('a.spotlight >= :start')
+                    ->setParameter('start', (int)$start);
+            }
+
         }
         if($end) {
-            $qb
-                ->andWhere('a.recommend <= :end')
-                ->setParameter('end', (int)$end);
+            if (!$spotlight) {
+                $qb
+                    ->andWhere('a.recommend <= :end')
+                    ->setParameter('end', (int)$end);
+            } else {
+                $qb
+                    ->andWhere('a.spotlight <= :end')
+                    ->setParameter('end', (int)$end);
+            }
+
         }
         if ($recommend) {
             $qb
@@ -186,5 +207,15 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         }
 
         return $qb->getQuery();
+    }
+
+    public function allSpotlightArtist()
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin('a.user', 'u')
+            ->where('u.active != 0')
+            ->andWhere('a.spotlight IS NOT NULL')
+            ->orderBy('a.spotlight', 'ASC')
+            ->getQuery()->getResult();
     }
 }

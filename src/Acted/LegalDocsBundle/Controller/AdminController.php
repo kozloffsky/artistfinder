@@ -23,7 +23,7 @@ class AdminController extends Controller
         $start = $request->get('start');
         $end = $request->get('end');
 
-        $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, false, false);
+        $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, false, false, null);
         $data = $paginator->paginate($artistsQuery, $page, 10);
 
         $artists = $serializer->toArray($data->getItems(), SerializationContext::create()
@@ -49,7 +49,7 @@ class AdminController extends Controller
         $start = $request->get('start');
         $end = $request->get('end');
 
-        $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, false, false);
+        $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, false, false, null);
         $data = $paginator->paginate($artistsQuery, $page, 10);
 
         $artists = $serializer->toArray($data->getItems(), SerializationContext::create()
@@ -82,8 +82,8 @@ class AdminController extends Controller
             return new JsonResponse(['error' => 'You should set only positive recommend value less or equal 100'], 400);
         }
         $artistRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:Artist');
-        $artists = $artistRepo->getArtistsList(null, $recommend, null, true, false)->getResult();
         $curArtist = $artistRepo->find($artistId);
+        $artists = $artistRepo->getArtistsList(null, $recommend, null, true, false, $artistId)->getResult();
 
         $curArtist->setRecommend($recommend);
         $this->getEM()->persist($curArtist);
@@ -125,14 +125,15 @@ class AdminController extends Controller
             return new JsonResponse(['error' => 'You should set only positive spotlight value'], 400);
         }
         $artistRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:Artist');
-        $artists = $artistRepo->getArtistsList(null, $spotlight, null, false, true)->getResult();
         $curArtist = $artistRepo->find($artistId);
+        $artists = $artistRepo->getArtistsList(null, $spotlight, null, false, true, $artistId)->getResult();
 
-        $curArtist->setRecommend($spotlight);
+
+        $curArtist->setSpotlight($spotlight);
         $this->getEM()->persist($curArtist);
-
         foreach ($artists as $artist) {
-            $artist->setRecommend($artist->getSpotlight());
+            $spotlight++;
+            $artist->setSpotlight($spotlight);
             $this->getEM()->persist($artist);
         }
 
