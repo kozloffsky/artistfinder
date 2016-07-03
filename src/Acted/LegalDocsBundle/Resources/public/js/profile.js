@@ -1024,7 +1024,8 @@ $(function() {
 
     $(document).on('click','#addNewPerformanceBtn', function(){
         var newPerformanceBlock = $('.newPerformanceBlank').clone();
-        newPerformanceBlock.insertBefore('.controls.add').removeClass('newPerformanceBlank, hidden').fadeIn(800);
+        newPerformanceBlock.insertBefore('.controls.add').removeClass('hidden').fadeIn(800);
+        newPerformanceBlock.removeClass('newPerformanceBlank');
         createNewPerf(newPerformanceBlock)
     });
 
