@@ -875,6 +875,7 @@ $(function() {
             url: '/profile/' + slug + '/edit',
             data: {"profile[categories]": selectedCat},
             success: function(){
+                console.log(selectedCatName)
                 $('.currentCatUser').remove();
                 var newCategories = $.map(selectedCatName, function(value, i) {
                     return '<li class="currentCatUser"><a href="#">'+ value +'</a><div class="divider"></div></li>';
