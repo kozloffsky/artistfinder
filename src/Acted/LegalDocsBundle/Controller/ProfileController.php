@@ -52,6 +52,15 @@ class ProfileController extends Controller
         );
     }
 
+    public function editProfilePaginationPerformanceAction(Request $request, Artist $artist)
+    {
+        $performances = $this->getPerformances($artist, $request->get('page', 1));
+
+        return $this->render('@ActedLegalDocs/Profile/ordersSectionEdit.html.twig',
+            compact('artist', 'performances')
+        );
+    }
+
     public function editAction(Request $request, Artist $artist)
     {
         $artistForm = $this->createForm(ArtistType::class, $artist);
