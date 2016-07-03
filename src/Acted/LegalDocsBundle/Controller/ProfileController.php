@@ -44,7 +44,7 @@ class ProfileController extends Controller
 
         $user = $this->getUser();
 
-        $performances = $this->getPerformances($artist, 1);
+        $performances = $this->getPerformances($artist, $request->get('page', 1));
         $feedbacks = $this->getFeedbacks($artist, 1);
 
         return $this->render('ActedLegalDocsBundle:Profile:profile_edit.html.twig',
