@@ -17,20 +17,23 @@
             </thead>
             <tbody>
             {% for artist in artists %}
-                <tr>
+                <tr id="{{ artist.id }}">
                     <td>{{ artist.id }}</td>
                     <td>{{ artist.name }}</td>
                     <td>{{ artist.slug }}</td>
                     <td>
-                        {% if artist.recommend is defined %}
+                        <span class="recommendedIndexAdmin">{% if artist.recommend is defined %}
                             {{ artist.recommend }}
                         {% else %}
                             0
                         {% endif %}
+                        </span>
+                        <input type="number" class="recommendedInput">
                     </td>
                     <td>
                         {#{{ path('admin_manage_spotlight', {'id': artist.id }) }}#}
-                        <a href="#"><button type="button" class="btn btn-info">Manage</button></a>
+                        <a href="#"><button type="button" class="btn btn-info manageRecommended">Manage</button></a>
+                        <a href="#"><button type="button" class="btn btn-info saveRecommended">Save</button></a>
                     </td>
                 </tr>
             {% endfor %}

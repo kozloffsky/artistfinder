@@ -77,7 +77,7 @@ class AdminController extends Controller
     public function changeRecommendValueAction(Request $request)
     {
         $artistId = $request->get('id');
-        $recommend = json_decode($request->getContent())->recommend;
+        $recommend = $request->get('recommend');
         if ($recommend > 100 && $recommend < 0 ) {
             return new JsonResponse(['error' => 'You should set only positive recommend value less or equal 100'], 400);
         }
@@ -119,7 +119,8 @@ class AdminController extends Controller
     public function changeSpotlightValueAction(Request $request)
     {
         $artistId = $request->get('id');
-        $spotlight = json_decode($request->getContent())->spotlight;
+
+        $spotlight = $request->get('spotlight');
         if ($spotlight < 0 ) {
             return new JsonResponse(['error' => 'You should set only positive spotlight value'], 400);
         }
