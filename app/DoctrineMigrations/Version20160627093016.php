@@ -15,7 +15,9 @@ class Version20160627093016 extends AbstractMigration
      */
     public function up(Schema $schema)
     {
-        $this->addSql("UPDATE `category` SET title='Dancers - Dance Shows', description=\"When you want to add a touch of energy and emotion to your event whilst getting everybody's attention\" , slug='dance_shows', lft=1, rgt=20 WHERE id=31");
+        $this->addSql("UPDATE `category` SET title='Dancers - Dance Shows', description=\"When you want to add a touch of energy and emotion
+ to your event whilst getting everybody's attention\" , slug='dance_shows', lft=1, rgt=20, 
+ image='assets/images/dancers.png'  WHERE id=31");
         $this->addSql('UPDATE `category` SET title=\'Dance group\' , slug=\'dance_group\', lft=14, rgt=15, lvl=1 WHERE 
         id=32');
         $this->addSql('UPDATE `category` SET title=\'Flash mobs\' , slug=\'flash_mobs\', lft=16, rgt=17, lvl=1 WHERE 
@@ -38,7 +40,7 @@ class Version20160627093016 extends AbstractMigration
 
         $this->addSql('UPDATE `category` SET title=\'Children Entertainers\', description=\'When you need to give the
          little ones a memorable time, this is where you need to look\' , slug=\'children_entertainers\', lft=1, 
-         rgt=24 WHERE id=35');
+         rgt=24, image=\'assets/images/children.png\' WHERE id=35');
         $this->addSql('UPDATE `category` SET title=\'Magicians for children parties\' , 
         slug=\'magicians_for_children_parties\', lft=2, rgt=3, lvl=1 WHERE id=36');
         $this->addSql('UPDATE `category` SET title=\'Balloon twisters\' , slug=\'balloon_twisters\', lft=4, rgt=5, 
@@ -63,7 +65,7 @@ class Version20160627093016 extends AbstractMigration
 
 
 
-        $this->addSql('UPDATE `category` SET title=\'Speakers, Hosts, Presenters\', description=\'From guest speakers to MCs, presenters and toast-masters, you need the right people to make your event run smoothly\' , slug=\'speakers_hosts_presenters\', lft=1, rgt=22 WHERE id=24');
+        $this->addSql('UPDATE `category` SET title=\'Speakers, Hosts, Presenters\', description=\'From guest speakers to MCs, presenters and toast-masters, you need the right people to make your event run smoothly\' , slug=\'speakers_hosts_presenters\', lft=1, rgt=22, image=\'assets/images/speakers.png\' WHERE id=24');
         $this->addSql('UPDATE `category` SET title=\'Auctioneer\' , slug=\'auctioneer\', lft=2, rgt=3, 
         lvl=1 WHERE id=25');
         $this->addSql('UPDATE `category` SET title=\'Celebrity Speaker\' , slug=\'celebrity_speaker\', lft=4, rgt=5, 
@@ -90,7 +92,7 @@ class Version20160627093016 extends AbstractMigration
 
         
         $this->addSql('UPDATE `category` SET title=\'Specialty Acts\' , slug=\'specialty_acts\', description=\'In the true "cabaret" 
-tradition, these original acts will keep you amazed, laughing and sometimes on the edge of your seat\', lft=1, rgt=46 
+tradition, these original acts will keep you amazed, laughing and sometimes on the edge of your seat\', lft=1, rgt=46, image=\'assets/images/specialty-acts.png\' 
 WHERE 
         id=1');
         $this->addSql('UPDATE `category` SET title=\'Walkabout\' , slug=\'walkabout\', lft=2, rgt=3, lvl=1 WHERE id=2');
@@ -140,7 +142,7 @@ WHERE
 
         $this->addSql('UPDATE `category` SET title=\'Live bands & Singers\', slug=\'live_bands_singers\', 
         description=\'All music styles covered, find the right talents to rock or jazz up your next event\', lft=1, 
-        rgt=56 WHERE id=10');
+        rgt=56, image=\'assets/images/live-bands-&-singers.png\' WHERE id=10');
         $this->addSql('UPDATE `category` SET title=\'Acoustic\', slug=\'acoustic\', lft=2, rgt=3, lvl=1  WHERE id=11');
         $this->addSql('UPDATE `category` SET title=\'Alternative\', slug=\'alternative\', lft=4, rgt=5, lvl=1  WHERE 
         id=12');
@@ -193,7 +195,7 @@ WHERE
         $this->addSql('INSERT INTO `category` (`id`, `root_id`, `parent_id`, `title`, `slug`, `lft`, `rgt`, `lvl`) VALUES (90, 10, 10, 
         \'Choir\', \'choir\',54,55,1)');
 
-        $this->addSql('UPDATE `category` SET title=\'Musicians & DJs\', slug=\'musicians_djs\', description=\'Need a solo musician or DJ? Every style is available to create the right ambience\', lft=1, rgt=60 WHERE id=18');
+        $this->addSql('UPDATE `category` SET title=\'Musicians & DJs\', slug=\'musicians_djs\', description=\'Need a solo musician or DJ? Every style is available to create the right ambience\', lft=1, rgt=60, image=\'assets/images/musicians-&-DJs.png\' WHERE id=18');
         $this->addSql('UPDATE `category` SET title=\'Classical duos\', slug=\'classical_duos\', lft=2, rgt=3, lvl=1  WHERE 
         id=19');
         $this->addSql('UPDATE `category` SET title=\'string trios / quartets\', slug=\'string_trios_quartets\', 
