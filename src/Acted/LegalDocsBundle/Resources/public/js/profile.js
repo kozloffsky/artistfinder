@@ -318,16 +318,68 @@ $(function() {
         userPerformanceUpload(parentPerformance, performanceId, mediaId, imageBlockInsert);
     });
 
+    function validatePerformance(performanceId){
+        var performanceBlock = $('.edit-form#'+performanceId+''),
+            perfTitile = $('.edit-form#'+performanceId+' .offerTitlePerf').val().length,
+            perfDescription = $('.edit-form#'+performanceId+' .description-area').val().length,
+            perfMedia = $('.edit-form#'+performanceId+' .holder');
+        var mediaCount = [];
+        $(perfMedia).each(function(){
+            var mediaInPerf = $(this).find('img, iframe').length;
+            if(mediaInPerf >= 1){
+                mediaCount.push(mediaInPerf);
+            }
+        });
+        if(perfTitile > 0 && perfDescription > 0 && mediaCount.length >= 2)
+        {
+            return true;
+        } else {
+            $(performanceBlock).find('.error').removeClass('hidden');
+            return false;
+        }
+    }
+
     $(document).on('click','.publishOfferPerf',function(ev){
         ev.preventDefault();
+
         var parentPerformance = $(this).parents('form'),
-            performanceId = parentPerformance.attr('id');
+            performanceId = parentPerformance.attr('id'),
+            dataSendOfferTitile = $(parentPerformance).find('.offerTitlePerf').val(),
+            dataSendOfferInf = $(parentPerformance).find('.description-area').val();
+        console.log(performanceId);
+        var dataToSendOffer = {"performance[title]": dataSendOfferTitile,
+            "performance[status]":"published",
+            "performance[techRequirement]": dataSendOfferInf};
+        console.log(validatePerformance(performanceId))
+        if(validatePerformance(performanceId)){
+            $.ajax({
+                type: "PATCH",
+                url: '/profile/performance/' + performanceId + '/edit',
+                data: dataToSendOffer,
+                success: function (responseText) {
+                    $(parentPerformance).find('.publishOfferPerf').addClass('makeDraft').removeClass('publishOfferPerf').text('Make draft now');
+                    $(parentPerformance).find('.error').addClass('hidden');
+                }
+            })
+        }
+    })
+
+    $(document).on('click','.makeDraft',function(ev){
+        ev.preventDefault();
+        var parentPerformance = $(this).parents('form'),
+            performanceId = parentPerformance.attr('id'),
+            dataSendOfferTitile = $(parentPerformance).find('.offerTitlePerf').val(),
+            dataSendOfferInf = $(parentPerformance).find('.description-area').val();
+        console.log(performanceId);
+        var dataToSendOffer = {"performance[title]": dataSendOfferTitile,
+            "performance[status]":"draft",
+            "performance[techRequirement]": dataSendOfferInf};
         $.ajax({
             type: "PATCH",
             url: '/profile/performance/' + performanceId + '/edit',
-            data: {"performance[status]":"published"},
+            data: dataToSendOffer,
             success: function (responseText) {
-
+                $(parentPerformance).find('.makeDraft').addClass('publishOfferPerf').removeClass('makeDraft').text('Publish now');
             }
         })
     })
@@ -536,6 +588,8 @@ $(function() {
                         var indexOfThumb = $('#video-pager .scale-thumb').length;
                         $("#media [data-target='#section-video'] .badge").text(indexOfThumb);
                         $('.bxVideoSlider').unwrap();
+                        $('#section-video .holder a').remove();
+
                         /*$('.bxVideoSlider').bxSlider({
                             adaptiveHeight: true,
                             mode: 'fade',
@@ -552,6 +606,7 @@ $(function() {
                         var indexOfThumb = $('#photo-pager .scale-thumb').length;
                         $("#media [data-target='#section-photo'] .badge").text(indexOfThumb)
                         $('.bxslider').unwrap();
+                        $('#section-photo .holder a').remove();
                         /*$('.bxslider').bxSlider({
                             adaptiveHeight: true,
                             pagerCustom: '#photo-pager',
@@ -598,17 +653,9 @@ $(function() {
                 var videoSliderParent = $('.bxVideoSlider').parent('.bx-viewport').length
                 if (videoSliderParent > 0){
                     $('.bxVideoSlider').unwrap();
+                    $('#section-video .holder a').remove();
                 }
-                $('.bxVideoSlider').bxSlider({
-                    adaptiveHeight: true,
-                    mode: 'fade',
-                    useCSS: false,
-                    video: true,
-                    pagerCustom: '#video-pager'
-                    /*onSliderLoad: function () {
-                        $('#section-video').hide();
-                    }*/
-                });
+                $('.bxVideoSlider').bxSlider(optionsSlider.videoSettings);
                 deleteMedia();
             }
         })
@@ -917,28 +964,17 @@ $(function() {
                             var countNextTabNum = indexOfThumb +1;
                             $("#media [data-target='#section-photo'] .badge").text(indexOfThumb + 1);
                             $('#section-photo .bxslider').append('<li id="imageSlider'+response.media.id+'"><img src="'+resp +'"></li>')
-                            $('#photo-pager').append('<div class="scale-thumb thumb'+countNextTabNum+'" style="width:266px;height:183.54px;">' +
+                            $('#photo-pager').append('<div class="scale-thumb thumb'+countNextTabNum+'" style="height:118.68px;">' +
                                 '<span class="removeNewImage deleteMedia" id="' + response.media.id + '"><i class="fa fa-times-circle-o"></i></span>' +
                                 '<a data-slide-index="' + indexOfThumb + '" href=""><img src="' + resp + '"/></a>'
                             );
 
                             if(indexOfThumb == 0){
-                                $('.bxslider').bxSlider({
-                                    adaptiveHeight: true,
-                                    pagerCustom: '#photo-pager',
-                                    nextSelector: '#nextSlide',
-                                    prevSelector: '#prevSlide',
-                                    nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
-                                    prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
-                                });
+                                $('.media-content .bxslider').bxSlider(optionsSlider.photoSettings);
                             } else {
                                 $('.bxslider').unwrap();
-                                $('.bxslider').bxSlider({
-                                    adaptiveHeight: true,
-                                    pagerCustom: '#photo-pager',
-                                    nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
-                                    prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
-                                });
+                                $('#section-photo .holder a').remove();
+                                $('.media-content .bxslider').bxSlider(optionsSlider.photoSettings);
                             }
                             deleteMedia();
                             resizeThumbs();
@@ -959,6 +995,11 @@ $(function() {
             }
         })
     }
+
+    $(document).on('click','.perfEditViewToggle', function(){
+        var parentPerformanceForm = $(this).parents('article');
+        $(parentPerformanceForm).toggleClass( 'perfBlockView' );
+    })
 
     $(document).on('click','.deleteOfferBtn', function(){
         var parentPerformanceForm = $(this).parents('form'),
@@ -1019,24 +1060,22 @@ $(function() {
             var perfCreateUrl = '/profile/performance/' + performanceId + '/edit';
         }
         console.log(slug, perfCreateUrl, dataSendOfferTitile)
-        saveOffer(slug, perfCreateUrl, dataToSendOffer)
+        saveOffer(slug, perfCreateUrl, dataToSendOffer, parentPerformance)
     });
 
-    function saveOffer(slug, perfCreateUrl, dataToSendOffer){
+    function saveOffer(slug, perfCreateUrl, dataToSendOffer, parentPerformance){
         $.ajax({
             type: "PATCH",
             url: perfCreateUrl,
             data: dataToSendOffer,
             success: function (responseText) {
-
+                $(parentPerformance).find('.successMessagePerf').removeClass('hidden');
+                setTimeout(function() { $(parentPerformance).find('.successMessagePerf').addClass('hidden'); }, 3500)
             }
         })
     }
-});
 
-
-$(document).on('ready ajaxComplete', function(){
-    $('.price-list .pagination a').on('click', function(event){
+    $(document).on('click','.price-list .pagination a', function(event){
         event.preventDefault();
         if ($(this).hasClass('pageArrows')){
             var paginationLink = $(this).attr('href');
@@ -1050,7 +1089,7 @@ $(document).on('ready ajaxComplete', function(){
         getPagination(paginationRoute, paginationTarget);
     });
 
-    $('.feedbacks .pagination a').on('click', function(event){
+    $(document).on('click','.feedbacks .pagination a', function(event){
         event.preventDefault();
         if ($(this).hasClass('pageArrows')){
             var paginationLink = $(this).attr('href');
@@ -1070,3 +1109,8 @@ $(document).on('ready ajaxComplete', function(){
         });
     }
 });
+
+
+
+
+

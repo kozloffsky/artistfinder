@@ -3,75 +3,76 @@
 
             {% if is_granted('EDIT', artist) %}
 
-                <article class="item clearfix">
+                <article class="item clearfix perfBlockView">
 
                     <form class="edit-form" id="{{ performance.id }}">
                         <header class="heading">
+                            <h2 class="perfNotEditing">{{ performance.title }} </h2>
                             <input class="pull-left title offerTitlePerf" type="text" placeholder="Please enter a name for your act" value="{{ performance.title }}">
                             <div class="price pull-right">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</div> <!--<input class="set-price" type="text" placeholder="0,00">-->
                         </header>
 
 
                         <div class="row">
-                            {% for mediaOf in performance.media[0:1] %}
-                                <div class="holder">
-                                    <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
-                                    <ul class="btns-list">
-                                        <li>
-                                            <span class="hidden mediaId">{{ mediaOf.id }}</span>
-                                            <button type="button" class="btn-add imageAddPerf"><i class="fa fa-camera" aria-hidden="true"></i></button>
-                                            <em class="note">Add photo</em>
-                                        </li>
-                                    </ul>
-                                </div>
-                            {% else %}
-                                <div class="holder">
-                                    <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
-                                    <ul class="btns-list">
-                                        <li>
-                                            <span class="hidden mediaId">NewMedia</span>
-                                            <button type="button" class="btn-add"><i class="fa fa-camera" aria-hidden="true"></i></button>
-                                            <em class="note">Add photo</em>
-                                        </li>
-                                    </ul>
-                                </div>
+                            {% for mediaOf in performance.media[0:2] if mediaOf.position == 1 %}
 
-                            {% endfor %}
+                                    <div class="holder">
+                                        <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
+                                        <ul class="btns-list">
+                                            <li>
+                                                <span class="hidden mediaId">{{ mediaOf.id }}</span>
+                                                <button type="button" class="btn-add imageAddPerf"><i class="fa fa-camera" aria-hidden="true"></i></button>
+                                                <em class="note">Add photo</em>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                {% else %}
+                                    <div class="holder">
+                                        <ul class="btns-list">
+                                            <li>
+                                                <span class="hidden mediaId">NewMedia</span>
+                                                <button type="button" class="btn-add imageAddPerf"><i class="fa fa-camera" aria-hidden="true"></i></button>
+                                                <em class="note">Add photo</em>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                {% endfor %}
 
                             <div class="holder video">
-                                {% for mediaOf in performance.media[1:2] %}
-                                    <div class="imagePerformanceChange" id="image-performance-change2">
-                                        <span class="hidden mediaId">{{ mediaOf.id }}</span>
-                                        <div class="performanceVideoAdd">
-                                            <div class="videoAddForm">
-                                                <span class="videoAddMessage">Added link should be from "youtube.com" or "vimeo.com"</span>
-                                                <input type="text" class="form-control videoPerformanceAdd">
-                                            </div>
-                                            <button type="submit" id="AddPerformanceVideo" class="btn btn-default">Submit</button>
-                                        </div>
-                                    </div>
+                                {% for mediaOf in performance.media[0:2] if mediaOf.position == 2 %}
 
-                                    <div class="performanceVideo">
-                                    </div>
-                                    {% if mediaOf.mediaType == "video" %}
-                                        <div class="performanceVideo">
-                                            <iframe src="{{ mediaOf.link }}" width="100%" height="auto" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+                                        <div class="imagePerformanceChange" id="image-performance-change2">
+                                            <span class="hidden mediaId">{{ mediaOf.id }}</span>
+                                            <div class="performanceVideoAdd">
+                                                <div class="videoAddForm">
+                                                    <span class="videoAddMessage">Added link should be from "youtube.com" or "vimeo.com"</span>
+                                                    <input type="text" class="form-control videoPerformanceAdd">
+                                                </div>
+                                                <button type="submit" id="AddPerformanceVideo" class="btn btn-default">Submit</button>
+                                            </div>
                                         </div>
-                                    {% else %}
-                                        <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
-                                    {% endif %}
-                                    <ul class="btns-list">
-                                        <li>
-                                            <span class="hidden mediaId">{{ mediaOf.id }}</span>
-                                            <button type="button" class="btn-add videoAddPerf"><i class="fa fa-film" aria-hidden="true"></i></button>
-                                            <em class="note">Add video</em>
-                                        </li>
-                                        <li>
-                                            <span class="hidden mediaId">{{ mediaOf.id }}</span>
-                                            <button type="button" class="btn-add imageAddPerf"><i class="fa fa-camera" aria-hidden="true"></i></button>
-                                            <em class="note">Add photo</em>
-                                        </li>
-                                    </ul>
+
+                                        <div class="performanceVideo">
+                                        </div>
+                                        {% if mediaOf.mediaType == "video" %}
+                                            <div class="performanceVideo">
+                                                <iframe src="{{ mediaOf.link }}" width="100%" height="auto" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+                                            </div>
+                                        {% else %}
+                                            <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
+                                        {% endif %}
+                                        <ul class="btns-list">
+                                            <li>
+                                                <span class="hidden mediaId">{{ mediaOf.id }}</span>
+                                                <button type="button" class="btn-add videoAddPerf"><i class="fa fa-film" aria-hidden="true"></i></button>
+                                                <em class="note">Add video</em>
+                                            </li>
+                                            <li>
+                                                <span class="hidden mediaId">{{ mediaOf.id }}</span>
+                                                <button type="button" class="btn-add imageAddPerf"><i class="fa fa-camera" aria-hidden="true"></i></button>
+                                                <em class="note">Add photo</em>
+                                            </li>
+                                        </ul>
                                 {% else %}
                                     <div class="imagePerformanceChange" id="image-performance-change2">
 
@@ -85,7 +86,7 @@
                                     </div>
                                     <div class="performanceVideo">
                                     </div>
-                                    <img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">
+                                    {#<img class="preview" src="/assets/images/media-no-image.gif" alt="Preview">#}
                                     <ul class="btns-list">
                                         <li>
                                             <span class="hidden mediaId">NewMedia</span>
@@ -103,23 +104,32 @@
 
                             <div class="info">
                                 <div class="box">
+                                    <p class="perfNotEditing">
+                                        {{ performance.techRequirement }}
+                                    </p>
                                     <textarea class="description-area" placeholder="Write your description">{{ performance.techRequirement }}</textarea>
                                 </div>
 
                                 <div class="controls">
+                                    <div class="hidden error dangerMessagePerf">You should enter all fields to publish performance</div>
+                                    <div class="hidden success successMessagePerf">Your performance saved</div>
                                     <div class="button-gradient follow">
                                         <!--<button data-toggle="modal" data-target="#freeQuoteModalRegisterd" class="btn">REQUEST FREE QUOTE
                                         </button>-->
                                     </div>
                                     <div class="button-gradient white blue follow">
+                                        {% if performance.status == "draft" %}
                                         <button type="submit" class="btn publishOfferPerf">Publish now</button>
+                                        {% else %}
+                                        <button type="submit" class="btn makeDraft">Make draft now</button>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <ul class="options-list">
                             <li>
-                                <button class="btn-option" type="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                <button class="btn-option perfEditViewToggle" type="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                             </li>
                             <li>
                                 <button class="btn-option deleteOfferBtn" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -201,14 +211,15 @@
                                     </button>-->
                                 </div>
                                 <div class="button-gradient white blue follow">
-                                    <button type="submit" class="btn">Publish now</button>
+
+                                    <button type="submit" class="btn publishOfferPerf">Publish now</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <ul class="options-list">
                         <li>
-                            <button class="btn-option" type="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                            <button class="btn-option perfEditViewToggle" type="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                         </li>
                         <li>
                             <button class="btn-option deleteOfferBtn" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button>

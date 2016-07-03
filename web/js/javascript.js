@@ -4163,16 +4163,18 @@ $(function(){
         marker.setMap(map);
     }
 
+    initUploadFilesFiller();
 
-
-    var uploadFilesFiller = $('#filer_input1').filer({
-        limit: 10,
-        maxSize: 40,
-        changeInput: '<button type="button" class="btn-upload">Upload</button>',
-        showThumbs: true,
-        templates: {
-            box: '<ul class="items-list"></ul>',
-            item: '<li class="item">\
+    function initUploadFilesFiller(){
+        $('#filer_input1').filer({
+            limit: 10,
+            maxSize: 40,
+            changeInput: '<button type="button" class="btn-upload">Upload</button>',
+            showThumbs: true,
+            extensions: ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'zip'],
+            templates: {
+                box: '<ul class="items-list"></ul>',
+                item: '<li class="item">\
                     <div class="jFiler-item-thumb">\
                         <div class="jFiler-item-status"></div>\
                         {{fi-image}}\
@@ -4180,16 +4182,17 @@ $(function(){
                     <span class="jFiler-item-title"><b title="{{fi-name}}">{{fi-name | limitTo: 12}}</b></span>\
                     <a class="item-trash"></a>\
                 </li>',
-            itemAppendToEnd: false,
-            removeConfirmation: false,
-            _selectors: {
-                list: '.items-list',
-                item: '.item',
-                remove: '.item-trash'
-            }
-        },
-        addMore: true
-    });
+                itemAppendToEnd: false,
+                removeConfirmation: false,
+                _selectors: {
+                    list: '.items-list',
+                    item: '.item',
+                    remove: '.item-trash'
+                }
+            },
+            addMore: true
+        });
+    }
 
     function initSelect(){
         $('select').each(function () {
@@ -4269,12 +4272,12 @@ $(function(){
 
     $('#cityEvent').on('change',function(){
         changeCityOnMapSelect();
-    })
+    });
 
     function changeCityOnMapSelect(){
         var selectedCityOption = $('#cityEvent').find('option:selected').val(),
             selectedCityCoordinates = $('#eventLocationCoordinates .eventCityId'+selectedCityOption);
-        console.log(selectedCityCoordinates)
+        console.log(selectedCityCoordinates);
         var eventLocationMap= {};
         eventLocationMap.latitude = $(selectedCityCoordinates).find('.latitude').text();
         eventLocationMap.longitude = $(selectedCityCoordinates).find('.longitude').text();
@@ -4313,9 +4316,28 @@ $(function(){
             })
         }
     }
+    getFileExtension()
+    function getFileExtension(){
+        $('.comments-list li .holder').each(function(){
+            findFilesInChat(this);
+        });
+        function findFilesInChat(fileElem){
+            var filesInChat = $(fileElem).find('a');
+            $(filesInChat).each(function(){
+                var fileName = $(this).attr('href'),
+                    fileExtension = fileName.split('.').pop();
+                if(fileExtension == 'pdf'){
+                    console.log('pdf');
+                    $(this).find('img').attr('src', '/assets/images/pdf.png');
+                } else if (fileExtension == 'zip'){
+                    $(this).find('img').attr('src', '/assets/images/zip.png');
+                }
+            })
+        }
+    }
 
     function chatSocket(chatId){
-        var webSocket = WS.connect("ws://127.0.0.1:1337");
+        var webSocket = WS.connect("ws://51.254.217.4:8686");
 
         /**
          * connect
@@ -4329,7 +4351,7 @@ $(function(){
          */
         webSocket.on("socket/disconnect", function(error){
             console.log("Disconnected for " + error.reason + " with code " + error.code);
-        })
+        });
 
         webSocket.on("socket/connect", function(session){
 
@@ -4346,32 +4368,56 @@ $(function(){
                     /*$('.chatFileUpload').each(function(){
                         dataFiles.append('files[]', $(this)[0].files[0]);
                     });*/
+                    var formDataContent = [];
                     $.each($(".chatFileUpload"), function(i, obj) {
                         $.each(obj.files,function(j,file){
+                            formDataContent.push(j);
                             dataFiles.append('files[]', file);
                         })
                     });
+                    console.log(formDataContent.length);
                     dataFiles.append('message', text);
-                    if (text.length >= 0) {
-                        /*$.post('/dashboard/web/push/'+chatId+'',{
-                            'message': text,
-                            'file': dataFiles
-                        });*/
+                    if (text.length > 0 || formDataContent.length > 0) {
                         $.ajax({
                             type:'POST',
                             url: '/dashboard/web/push/'+chatId,
                             processData: false,
                             contentType: false,
                             data: dataFiles,
+                            beforeSend: function () {
+                                $('.chatMessageSending').fadeIn(500);
+                            },
+                            complete: function () {
+                                $('.chatMessageSending').fadeOut(500);
+                            },
                             success: function(){
                                 $('#chat-room').val('');
+                                $('.chatMessageSending').fadeOut(500);
+                                if(formDataContent.length > 0){
+                                    recreateUploader();
+                                };
+                                formDataContent = [];
                                 //uploadFilesFiller.remove(0);
                             }
                         })
                     }
-
                 });
             });
+
+            function recreateUploader(){
+                $('.message-form .upload-box .row').remove();
+                var uploadTemplate = '<div class="row">'+
+                    '<input type="file" name="files[]" id="filer_input1" class="chatFileUpload" multiple="multiple">'+
+                    '</div>'+
+                    '<div class="controls">'+
+                    '<div class="button-gradient filled">'+
+                    '<button class="btn" id="sendMsg" type="submit">Send</button>'+
+                    '</div>'+
+                    '</div>';
+                $('.message-form .upload-box').prepend(uploadTemplate);
+                initUploadFilesFiller();
+            }
+
 
             function postMessage(messageChat){
                 console.log(messageChat)
@@ -4385,6 +4431,12 @@ $(function(){
                         chatMessageFiles += '</p>';
                         console.log(chatMessageFiles)
                     }
+                    if (messageChat.msg){
+                        var chatMessageText = '<p>'+messageChat.msg+'</p>';
+                    } else {
+                        var chatMessageText = '';
+                    }
+
                     if(messageChat.role == 'Client')
                     {
                         var messageBlock = '<li>'+
@@ -4394,7 +4446,7 @@ $(function(){
                             '<div class="holder">'+
                             '<div class="box">'+
                             chatMessageFiles+
-                            '<p>'+messageChat.msg+'</p>'+
+                            chatMessageText +
                             '<em class="date">'+messageChat.send_date+'</em>'+
                             '</div>'+
                             '</div>'+
@@ -4407,13 +4459,14 @@ $(function(){
                             '<div class="holder">'+
                             '<div class="box">'+
                             chatMessageFiles +
-                            '<p>'+messageChat.msg+'</p>'+
+                            chatMessageText +
                             '<em class="date">'+messageChat.send_date+'</em>'+
                             '</div>'+
                             '</div>'+
                             '</li>';
                     }
                     $('#twocolumns .comments-list').prepend(messageBlock);
+                    getFileExtension();
                 }
             }
         })
@@ -7277,7 +7330,11 @@ $(function() {
             type:'GET',
             url:'/event/change_status/reject/'+id+'?type=no_email',
             success: function(res){
-                $('article#'+id).appendTo('.enquiries-wrap')
+                $('article#'+id).appendTo('.enquiries-wrap');
+                $('article#'+id).find('.rejectRequest').attr('disabled',true);
+                $('article#'+id).find('.rejectRequest').text('Rejected');
+                $('article#'+id).find('.quotationSendbtn').attr('disabled',true);
+
             }
         })
     }
@@ -9700,16 +9757,68 @@ $(function() {
         userPerformanceUpload(parentPerformance, performanceId, mediaId, imageBlockInsert);
     });
 
+    function validatePerformance(performanceId){
+        var performanceBlock = $('.edit-form#'+performanceId+''),
+            perfTitile = $('.edit-form#'+performanceId+' .offerTitlePerf').val().length,
+            perfDescription = $('.edit-form#'+performanceId+' .description-area').val().length,
+            perfMedia = $('.edit-form#'+performanceId+' .holder');
+        var mediaCount = [];
+        $(perfMedia).each(function(){
+            var mediaInPerf = $(this).find('img, iframe').length;
+            if(mediaInPerf >= 1){
+                mediaCount.push(mediaInPerf);
+            }
+        });
+        if(perfTitile > 0 && perfDescription > 0 && mediaCount.length >= 2)
+        {
+            return true;
+        } else {
+            $(performanceBlock).find('.error').removeClass('hidden');
+            return false;
+        }
+    }
+
     $(document).on('click','.publishOfferPerf',function(ev){
         ev.preventDefault();
+
         var parentPerformance = $(this).parents('form'),
-            performanceId = parentPerformance.attr('id');
+            performanceId = parentPerformance.attr('id'),
+            dataSendOfferTitile = $(parentPerformance).find('.offerTitlePerf').val(),
+            dataSendOfferInf = $(parentPerformance).find('.description-area').val();
+        console.log(performanceId);
+        var dataToSendOffer = {"performance[title]": dataSendOfferTitile,
+            "performance[status]":"published",
+            "performance[techRequirement]": dataSendOfferInf};
+        console.log(validatePerformance(performanceId))
+        if(validatePerformance(performanceId)){
+            $.ajax({
+                type: "PATCH",
+                url: '/profile/performance/' + performanceId + '/edit',
+                data: dataToSendOffer,
+                success: function (responseText) {
+                    $(parentPerformance).find('.publishOfferPerf').addClass('makeDraft').removeClass('publishOfferPerf').text('Make draft now');
+                    $(parentPerformance).find('.error').addClass('hidden');
+                }
+            })
+        }
+    })
+
+    $(document).on('click','.makeDraft',function(ev){
+        ev.preventDefault();
+        var parentPerformance = $(this).parents('form'),
+            performanceId = parentPerformance.attr('id'),
+            dataSendOfferTitile = $(parentPerformance).find('.offerTitlePerf').val(),
+            dataSendOfferInf = $(parentPerformance).find('.description-area').val();
+        console.log(performanceId);
+        var dataToSendOffer = {"performance[title]": dataSendOfferTitile,
+            "performance[status]":"draft",
+            "performance[techRequirement]": dataSendOfferInf};
         $.ajax({
             type: "PATCH",
             url: '/profile/performance/' + performanceId + '/edit',
-            data: {"performance[status]":"published"},
+            data: dataToSendOffer,
             success: function (responseText) {
-
+                $(parentPerformance).find('.makeDraft').addClass('publishOfferPerf').removeClass('makeDraft').text('Publish now');
             }
         })
     })
@@ -9918,6 +10027,8 @@ $(function() {
                         var indexOfThumb = $('#video-pager .scale-thumb').length;
                         $("#media [data-target='#section-video'] .badge").text(indexOfThumb);
                         $('.bxVideoSlider').unwrap();
+                        $('#section-video .holder a').remove();
+
                         /*$('.bxVideoSlider').bxSlider({
                             adaptiveHeight: true,
                             mode: 'fade',
@@ -9934,6 +10045,7 @@ $(function() {
                         var indexOfThumb = $('#photo-pager .scale-thumb').length;
                         $("#media [data-target='#section-photo'] .badge").text(indexOfThumb)
                         $('.bxslider').unwrap();
+                        $('#section-photo .holder a').remove();
                         /*$('.bxslider').bxSlider({
                             adaptiveHeight: true,
                             pagerCustom: '#photo-pager',
@@ -9980,17 +10092,9 @@ $(function() {
                 var videoSliderParent = $('.bxVideoSlider').parent('.bx-viewport').length
                 if (videoSliderParent > 0){
                     $('.bxVideoSlider').unwrap();
+                    $('#section-video .holder a').remove();
                 }
-                $('.bxVideoSlider').bxSlider({
-                    adaptiveHeight: true,
-                    mode: 'fade',
-                    useCSS: false,
-                    video: true,
-                    pagerCustom: '#video-pager'
-                    /*onSliderLoad: function () {
-                        $('#section-video').hide();
-                    }*/
-                });
+                $('.bxVideoSlider').bxSlider(optionsSlider.videoSettings);
                 deleteMedia();
             }
         })
@@ -10299,28 +10403,17 @@ $(function() {
                             var countNextTabNum = indexOfThumb +1;
                             $("#media [data-target='#section-photo'] .badge").text(indexOfThumb + 1);
                             $('#section-photo .bxslider').append('<li id="imageSlider'+response.media.id+'"><img src="'+resp +'"></li>')
-                            $('#photo-pager').append('<div class="scale-thumb thumb'+countNextTabNum+'" style="width:266px;height:183.54px;">' +
+                            $('#photo-pager').append('<div class="scale-thumb thumb'+countNextTabNum+'" style="height:118.68px;">' +
                                 '<span class="removeNewImage deleteMedia" id="' + response.media.id + '"><i class="fa fa-times-circle-o"></i></span>' +
                                 '<a data-slide-index="' + indexOfThumb + '" href=""><img src="' + resp + '"/></a>'
                             );
 
                             if(indexOfThumb == 0){
-                                $('.bxslider').bxSlider({
-                                    adaptiveHeight: true,
-                                    pagerCustom: '#photo-pager',
-                                    nextSelector: '#nextSlide',
-                                    prevSelector: '#prevSlide',
-                                    nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
-                                    prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
-                                });
+                                $('.media-content .bxslider').bxSlider(optionsSlider.photoSettings);
                             } else {
                                 $('.bxslider').unwrap();
-                                $('.bxslider').bxSlider({
-                                    adaptiveHeight: true,
-                                    pagerCustom: '#photo-pager',
-                                    nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
-                                    prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
-                                });
+                                $('#section-photo .holder a').remove();
+                                $('.media-content .bxslider').bxSlider(optionsSlider.photoSettings);
                             }
                             deleteMedia();
                             resizeThumbs();
@@ -10341,6 +10434,11 @@ $(function() {
             }
         })
     }
+
+    $(document).on('click','.perfEditViewToggle', function(){
+        var parentPerformanceForm = $(this).parents('article');
+        $(parentPerformanceForm).toggleClass( 'perfBlockView' );
+    })
 
     $(document).on('click','.deleteOfferBtn', function(){
         var parentPerformanceForm = $(this).parents('form'),
@@ -10401,24 +10499,22 @@ $(function() {
             var perfCreateUrl = '/profile/performance/' + performanceId + '/edit';
         }
         console.log(slug, perfCreateUrl, dataSendOfferTitile)
-        saveOffer(slug, perfCreateUrl, dataToSendOffer)
+        saveOffer(slug, perfCreateUrl, dataToSendOffer, parentPerformance)
     });
 
-    function saveOffer(slug, perfCreateUrl, dataToSendOffer){
+    function saveOffer(slug, perfCreateUrl, dataToSendOffer, parentPerformance){
         $.ajax({
             type: "PATCH",
             url: perfCreateUrl,
             data: dataToSendOffer,
             success: function (responseText) {
-
+                $(parentPerformance).find('.successMessagePerf').removeClass('hidden');
+                setTimeout(function() { $(parentPerformance).find('.successMessagePerf').addClass('hidden'); }, 3500)
             }
         })
     }
-});
 
-
-$(document).on('ready ajaxComplete', function(){
-    $('.price-list .pagination a').on('click', function(event){
+    $(document).on('click','.price-list .pagination a', function(event){
         event.preventDefault();
         if ($(this).hasClass('pageArrows')){
             var paginationLink = $(this).attr('href');
@@ -10432,7 +10528,7 @@ $(document).on('ready ajaxComplete', function(){
         getPagination(paginationRoute, paginationTarget);
     });
 
-    $('.feedbacks .pagination a').on('click', function(event){
+    $(document).on('click','.feedbacks .pagination a', function(event){
         event.preventDefault();
         if ($(this).hasClass('pageArrows')){
             var paginationLink = $(this).attr('href');
@@ -10452,6 +10548,11 @@ $(document).on('ready ajaxComplete', function(){
         });
     }
 });
+
+
+
+
+
 
 /**
  * Created by pavel on 12.05.16.
@@ -10533,7 +10634,6 @@ $(function () {
     $(document).on('click','.requestQuotePerformance',function(){
         var artistSlug = $('#slug').text();
         var performanceRequestId = $(this).val();
-        console.log(performanceRequestId)
         getArtistInformationForQuote(artistSlug, performanceRequestId)
         $('#freeQuoteModal').modal('show');
     });
@@ -10575,6 +10675,7 @@ $(function () {
 
     function preventEventSending(){
         $('#quoteRequestSecond .requestQuotePerformances, #quoteRequestSecond .add-comment-btn, #quoteRequestSecond .controls').hide();
+        $('#requestQuoteForm .modal-body').hide();
         $('#quoteRequestSecond .alreadyHasEventArtist').show();
     }
 
@@ -10642,7 +10743,7 @@ $(function () {
     }
 
     function getUserEvents(userInf){
-        var userId = userInf.userId
+        var userId = userInf.userId;
         $.ajax({
             type:'GET',
             url:'/event/user_events?user='+userId,
@@ -10656,6 +10757,7 @@ $(function () {
                     for(var propt in userArtistsInEvents) {
                         sessionStorage.setItem(propt, userArtistsInEvents[propt]);
                     }
+                    $('.eventChooseRequest').show();
                 } else {
                     $('.eventChooseRequest').hide();
                     sessionStorage.clear();
@@ -10670,11 +10772,12 @@ $(function () {
         $(userEvents).each(function(i){
             var eventsOptions='<option value="'+ this.event.id +'" name="event" class="'+i+'">'+this.event.title+'</option>';
             $('#event_preset').append(eventsOptions);
+            console.log('preveEventList')
         });
-        initSelect();
         $('.eventUnregistered').hide();
         $('#requestQuoteForm .modal-body').hide();
         $('#requestQuoteForm .modal-body').addClass('choosePrevEvent');
+        initSelect();
     }
 
     function setDataEvent(userEvents){
@@ -10710,6 +10813,9 @@ $(function () {
     function cleanNewEventForm(){
         $('#requestQuoteForm #event_name, #requestQuoteForm #event_date, #requestQuoteForm #event_time, #requestQuoteForm #event_location').val('');
         $('#requestQuoteForm .guests-num input').prop('checked',false);
+        $('#requestQuoteForm input').attr('style', '');
+        $('#quoteRequestSecond .errorCat').text('').hide();
+        $('#requestQuoteForm .errorCat').text('').hide();
     }
 
     function chooseCityQuote(selectedCountruOption){
@@ -10747,7 +10853,6 @@ $(function () {
             console.log(chosenEvent)
             sendQuoteRequest(chosenEvent, userInformationStorage);
         }
-        prepareEventRequestForm();
     });
 
     function chooseRogLog(){
@@ -10792,9 +10897,12 @@ $(function () {
                 $('#offerSuccess').modal('show');
                 $('#comment_area').hide();
                 $('#comment_area textarea').val('');
+                $('#requestQuoteForm input').attr('style', '');
+                $('#quoteRequestSecond .errorCat').text('').hide();
+                $('#requestQuoteForm .errorCat').text('').hide();
+                prepareEventRequestForm();
             },
             error: function(response){
-                console.log(response.responseJSON)
                 $('#loadSpinner').fadeOut(500);
                 $('#requestQuoteForm input').attr('style', '');
                 $('#quoteRequestSecond .errorCat').text('').hide();
@@ -11754,10 +11862,16 @@ $(function () {
         $(artists).each(function () {
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString();
+            console.log(this.media.link);
+            if(this.media.link){
+                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
+            } else{
+                var imageSearchProf = '<img class="header" src="/assets/images/media-no-image.gif"/>';
+            }
             if (this.video_media){
                 var artistBlockSearch = '<div class=" profile-card bordered">' +
                     '<div class="video-icon"></div>' +
-                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
+                    imageSearchProf +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +
@@ -11793,7 +11907,7 @@ $(function () {
                     '</div>';
             } else {
                 var artistBlockSearch = '<div class=" profile-card bordered">' +
-                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
+                    imageSearchProf +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +
@@ -11950,10 +12064,16 @@ $(function () {
         $(artists).each(function () {
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString();
+            console.log(this.media.link);
+            if(this.media.link){
+                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
+            } else{
+                var imageSearchProf = '<img class="header" src="/assets/images/media-no-image.gif"/>';
+            }
             if (this.video_media) {
                 var artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
                     '<div class="video-icon"></div>' +
-                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
+                    imageSearchProf +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +
@@ -11989,7 +12109,7 @@ $(function () {
                     '</div>';
             } else {
                 var artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
-                    '<img class="header" src="/media/cache/small' + this.media.link + '"/>' +
+                    imageSearchProf +
                     '<p class="card-title">' + this.name + '</p>' +
                     '<div class="user-rating clearfix">' +
                     '<div class="stars">' +

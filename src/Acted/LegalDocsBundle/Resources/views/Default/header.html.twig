@@ -93,6 +93,7 @@
                     </li>
 
 
+
                     {% if app.user.artist %}
                         <li class="profile">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -107,6 +108,7 @@
                                 <li><a href="/profile/edit_profile/{{ app.user.artist.slug }}">edit my profile</a></li>
                             </ul>
                         </li>
+                    {% endif %}
                     {% endif %}
 
                         {% if app.user %}

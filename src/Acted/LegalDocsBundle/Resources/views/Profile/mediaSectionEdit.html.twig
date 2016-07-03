@@ -57,16 +57,16 @@
             {% if is_granted('EDIT', artist) %}
                 <button id="profileAddNewMedia" type="button" class="btn btn-success" data-toggle="modal" data-target="#addImageModal"><i class="fa fa-plus"></i> Add new image</button>
             {% endif %}
-            <div class="slider-controls">
-                <span id="prevSlide"></span>
-                <span id="nextSlide"></span>
-            </div>
+            <div class="holder">
+                <span class="btn-prev" id="nextSlide"></span>
+                <span class="btn-next" id="prevSlide"></span>
 
             <ul class="bxslider">
                 {% for photo in artist.user.profile.photoList %}
                     <li id="imageSlider{{ photo.id }}"><img src="{{ asset(photo.link)|imagine_filter('big')}}" alt="{{ photo.name }}"></li>
                 {% endfor %}
             </ul>
+            </div>
 
             <div id="photo-pager" class="bx-pager">
                 {% for photo in artist.user.profile.photoList %}
@@ -91,17 +91,16 @@
                 </div>
                 <div class="clearfix"></div>
             {% endif %}
-            <div class="slider-controls">
-                <span id="nextVideoSlide"></span>
-                <span id="prevVideoSlide"></span>
-            </div>
+            <div class="holder">
+                <span class="btn-prev" id="nextVideoSlide"></span>
+                <span class="btn-next" id="prevVideoSlide"></span>
 
             <ul class="bxVideoSlider">
                 {% for video in artist.user.profile.videoList %}
                     <li id="imageSlider{{ video.videoId }}"><iframe src="{{ video.link }}" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>
                 {% endfor %}
             </ul>
-
+            </div>
             <div id="video-pager" class="bx-pager">
                 {% for video in artist.user.profile.videoList %}
                     <div class="scale-thumb thumb{{ loop.index }}">
