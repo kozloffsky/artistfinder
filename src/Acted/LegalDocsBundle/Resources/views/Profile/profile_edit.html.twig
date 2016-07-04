@@ -1,0 +1,36 @@
+
+{% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
+
+<main>
+{% include 'ActedLegalDocsBundle:Profile:userSectionEdit.html.twig' %}
+
+<div class="container no-pad">
+    <section class="price-list">
+{% include 'ActedLegalDocsBundle:Profile:ordersSectionEdit.html.twig' %}
+    </section>
+{% include 'ActedLegalDocsBundle:Profile:biographySection.html.twig' %}
+
+    <section id="feedbacks" class="profile-block feedbacks">
+        <div class="title">
+                <span>
+                    {{ artist.ratings|length }}
+                    {% if artist.ratings|length <= 1 %}
+                    Feedback
+                    {% else %}
+                    Feedbacks
+                    {% endif %}
+                </span>
+        </div>
+        <div class="feedbacksContainer">
+{% include 'ActedLegalDocsBundle:Profile:feedbacksSection.html.twig' %}
+        </div>
+    </section>
+
+{% include 'ActedLegalDocsBundle:Profile:mediaSectionEdit.html.twig' %}
+
+{% include 'ActedLegalDocsBundle:Profile:feedsSection.html.twig' %}
+
+</div>
+</main>
+{% include 'ActedLegalDocsBundle:Default:footer.html.twig' %}
+{% include 'ActedLegalDocsBundle:Profile:modals.html.twig' %}

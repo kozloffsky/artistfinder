@@ -27,11 +27,37 @@ class ProfileController extends Controller
 
         $user = $this->getUser();
 
-        $performances = $this->getPerformances($artist, 1);
+        $performances = $this->getPerformances($artist, $request->get('page', 1), true);
         $feedbacks = $this->getFeedbacks($artist, 1);
 
         return $this->render('ActedLegalDocsBundle:Profile:show.html.twig',
             compact('artist', 'user', 'performances', 'feedbacks', 'categories')
+        );
+    }
+
+    public function editProfileAction(Request $request, Artist $artist)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $categoriesRepo = $em->getRepository('ActedLegalDocsBundle:Category');
+        $categories = $categoriesRepo->childrenHierarchy();
+
+        $user = $this->getUser();
+
+        $performances = $this->getPerformances($artist, $request->get('page', 1), false);
+        $feedbacks = $this->getFeedbacks($artist, 1);
+
+        return $this->render('ActedLegalDocsBundle:Profile:profile_edit.html.twig',
+            compact('artist', 'user', 'performances', 'feedbacks', 'categories')
+        );
+    }
+
+    public function editProfilePaginationPerformanceAction(Request $request, Artist $artist)
+    {
+        $performances = $this->getPerformances($artist, $request->get('page', 1), false);
+
+        return $this->render('@ActedLegalDocs/Profile/ordersSectionEdit.html.twig',
+            compact('artist', 'performances')
         );
     }
 
@@ -66,7 +92,7 @@ class ProfileController extends Controller
 
     public function performancesAction(Request $request, Artist $artist)
     {
-        $performances = $this->getPerformances($artist, $request->get('page', 1));
+        $performances = $this->getPerformances($artist, $request->get('page', 1), true);
         return $this->render('@ActedLegalDocs/Profile/ordersSection.html.twig', compact('performances', 'artist'));
     }
 
@@ -193,12 +219,12 @@ class ProfileController extends Controller
         return new JsonResponse(['status' => 'success']);
     }
 
-    private function getPerformances(Artist $artist, $page)
+    private function getPerformances(Artist $artist, $page, $status)
     {
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
         return $paginator->paginate(
-            $em->getRepository('ActedLegalDocsBundle:Performance')->findByArtistQuery($artist),
+            $em->getRepository('ActedLegalDocsBundle:Performance')->findByArtistQuery($artist, $status),
             $page,
             $this->getParameter('per_page')
         );

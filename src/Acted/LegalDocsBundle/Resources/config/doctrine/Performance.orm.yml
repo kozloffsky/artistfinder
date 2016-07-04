@@ -18,6 +18,10 @@ Acted\LegalDocsBundle\Entity\Performance:
         techRequirement:
           type: string(512)
           nullable: true
+        status:
+          type: string(128)
+          options:
+            default: 'draft'
     manyToOne:
         profile:
           targetEntity: Acted\LegalDocsBundle\Entity\Profile

@@ -1,0 +1,65 @@
+{% extends '_layout.html.twig' %}
+
+{% block body %}
+
+    <h2 class="sub-header">Spotlight</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>Slug</th>
+                    <th>spotlight</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for artist in artists %}
+                <tr id="{{ artist.id }}">
+                    <td>{{ artist.id }}</td>
+                    <td>{{ artist.name }}</td>
+                    <td>{{ artist.slug }}</td>
+                    <td><span class="spotlightIndexAdmin">
+                        {% if artist.spotlight is defined %}
+                            {{ artist.spotlight }}
+                        {% else %}
+                            0
+                        {% endif %}
+                            </span>
+                        <input type="number" class="spotlightInput">
+                    </td>
+                    <td>
+                        {#{{ path('admin_manage_spotlight', {'id': artist.id }) }}#}
+                        <a href="#"><button type="button" class="btn btn-info manageSpotlight">Manage</button></a>
+                        <a href="#"><button type="button" class="btn btn-info saveSpotlight">Save</button></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <nav>
+        <ul class="pagination">
+            {% if paginations['previous'] is defined %}
+                <li>
+                    <a href="{{ path('admin_dashboard_spotlight', {'page': paginations['previous']  }) }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% for pagin in range(1, paginations['pageRange']) %}
+                <li>
+                    <a href="{{ path('admin_dashboard_spotlight', {'page': pagin }) }}">{{ pagin }}</a>
+                </li>
+            {% endfor %}
+            {% if paginations['next'] is defined %}
+                <li>
+                    <a href="{{ path('admin_dashboard_spotlight', {'page': paginations['next']  }) }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock %}

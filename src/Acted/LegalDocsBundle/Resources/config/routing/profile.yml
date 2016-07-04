@@ -10,6 +10,14 @@ profile_edit:
     path:     /{slug}/edit
     defaults: { _controller: ActedLegalDocsBundle:Profile:edit }
     methods:  [GET, POST, PATCH, PUT]
+profile_edit_page:
+    path:     /edit_profile/{slug}
+    defaults: { _controller: ActedLegalDocsBundle:Profile:editProfile }
+    methods:  [GET]
+profile_edit_page_pagination_performance:
+    path:     /edit_profile/{slug}/performance
+    defaults: { _controller: ActedLegalDocsBundle:Profile:editProfilePaginationPerformance }
+    methods:  [GET]
 profile_performance_list:
     path:     /{slug}/performance
     defaults: { _controller: ActedLegalDocsBundle:Profile:performances }

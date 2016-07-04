@@ -445,8 +445,12 @@ class Artist
     /**
      * @var int
      */
-    private $recommend = 0;
+    private $recommend;
 
+    /**
+     * @var int
+     */
+    private $spotlight;
 
     /**
      * Set recommend
@@ -470,6 +474,30 @@ class Artist
     public function getRecommend()
     {
         return $this->recommend;
+    }
+
+    /**
+     * Set spotlight
+     *
+     * @param int $spotlight
+     *
+     * @return Artist
+     */
+    public function setSpotlight($spotlight)
+    {
+        $this->spotlight = $spotlight;
+
+        return $this;
+    }
+
+    /**
+     * Get spotlight
+     *
+     * @return int
+     */
+    public function getSpotlight()
+    {
+        return $this->spotlight;
     }
 
     public function getCityName()
@@ -497,12 +525,19 @@ class Artist
     {
         if ($this->getUser()->getProfile()) {
             /** @var Performance $performance */
-            $performance = $this->getUser()->getProfile()->getPerformances()->first();
+            $performances = $this->getUser()->getProfile()->getPerformances();
+            $performance = '';
+            foreach ($performances as $item ) {
+                if ($item->getStatus() === Performance::STATUS_PUBLISHED) {
+                    $performance = $item;
+                    continue;
+                }
+            }
             if ($performance) {
                 return $performance->getMedia()->first();
             }
         }
-        return null;
+        return '';
     }
 
     public function getAllPerformance()
