@@ -11837,3 +11837,7 @@ a.disabled {
     font-size: 14px;
     color: rgba(0, 0, 0, .87)
 }
+.abbNewPerfBtnBlock
+{
+    right: 0 !important;
+}
