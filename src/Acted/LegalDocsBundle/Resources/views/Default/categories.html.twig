@@ -1,4 +1,4 @@
-<form id="categoriesForm">
+<!--<form id="categoriesForm">
 {% for category in categories %}
 
     <div data-toggle-desktop="category-2" class="col-sm-6 col-xs-12 no-pad category">
@@ -28,4 +28,52 @@
         <div class="row"></div>
     {% endif %}
 {% endfor %}
+</form>-->
+
+<form id="categoriesForm">
+
+    <div class="col-sm-12 col-xs-12 no-pad category text-center">
+        <ul class="tab-list" role="tablist">
+            {% for category in categories %}
+                {% if  loop.first %}
+                    <li role="presentation" class="active">
+                    {% else %}
+                    <li role="presentation">
+                {% endif %}
+                <a href="#tabCatsl{{ category.slug }}" aria-controls="musicians" role="tab" data-toggle="tab">
+                    <figure>
+                        <div class="img-box">
+                            <img src="/{{ category.image }}" alt="Musicians & DJs" data-rjs="3">
+                        </div>
+                        <figcaption>
+                            <h3>{{ category['title'] }}</h3>
+                        </figcaption>
+                    </figure>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="tab-content">
+            {% for category in categories %}
+            {% if  loop.first %}
+                <div role="tabpanel" class="tab-pane fade in active" id="tabCatsl{{ category.slug }}">
+                {% else %}
+                <div role="tabpanel" class="tab-pane fade" id="tabCatsl{{ category.slug }}">
+            {% endif %}
+                <ul class="categories-list artistCategories">
+                    {% for catChild in category['__children'] %}
+                    <li>
+                        <ul>
+                            <li>
+                                <input class="checkbox" type="checkbox" id="variety_category_id_{{ catChild['id'] }}" name="categories[]" value="{{ catChild['id'] }}">
+                                <label for="variety_category_id_{{ catChild['id'] }}">{{ catChild['title'] }}</label>
+                            </li>
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </form>

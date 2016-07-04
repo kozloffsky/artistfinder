@@ -83,6 +83,22 @@ header.small .navbar {
     background: rgba(68, 78, 232, 0.49);
 }
 
+.header-background .set-background{
+    position: absolute;
+    right: 5%;
+    top: 15%;
+    background: none;
+    font-size: 18px;
+    border: none;
+    margin: 0;
+    color: #fff;
+    cursor: pointer;
+    padding: 0;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+}
+
 .header-block h2 {
     font-family: UbuntuBold;
     font-size: 50px;
@@ -477,6 +493,7 @@ header.small .navbar {
         color: grey!important;
         font-size: 14px;
     }
+    .header-background .set-background{top: 20%;}
 }
 
 @media (max-width: 767px) {
@@ -563,6 +580,7 @@ header.small .navbar {
 }
 
 @media (max-width: 720px) {
+    .header-background .set-background{top: 32%;}
     header {
         height: 250px;
     }

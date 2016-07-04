@@ -316,4 +316,12 @@ class ChatRoomController extends Controller
 
         
     }
+
+    public function bookingsAction(Request $request)
+    {
+        $userId = $request->get('userId');
+        $chat = [];
+        return $this->render('ActedLegalDocsBundle:ChatRoom:bookings.html.twig',
+            compact('chat'));
+    }
 }

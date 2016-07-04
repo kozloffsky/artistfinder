@@ -1,0 +1,19 @@
+admin_dashboard_recommend:
+    path:     /recommend/{page}
+    defaults: { _controller: ActedLegalDocsBundle:Admin:recommend, page: 1 }
+    methods:  GET
+
+admin_dashboard_spotlight:
+    path:     /spotlight/{page}
+    defaults: { _controller: ActedLegalDocsBundle:Admin:spotlight, page: 1 }
+    methods:  GET
+
+admin_manage_recommend:
+    path:     /manage_recommend/{id}
+    defaults: { _controller: ActedLegalDocsBundle:Admin:changeRecommendValue, _format: json }
+    methods:  POST
+
+admin_manage_spotlight:
+    path:     /manage_spotlight/{id}
+    defaults: { _controller: ActedLegalDocsBundle:Admin:changeSpotlightValue, _format: json }
+    methods:  POST

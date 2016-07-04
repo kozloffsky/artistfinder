@@ -1,0 +1,142 @@
+<section id="media" class="profile-block media">
+    <div class="title"><span>Media</span></div>
+
+    {% if is_granted('EDIT', artist) %}
+    <ul>
+        <li>
+            <a class="tab active" data-target="#section-photo" href="#">
+                Photo
+                <div class="badge">{{ artist.user.profile.photoList|length }}</div>
+                <div class="circle"></div>
+            </a>
+        </li>
+        <li>
+            <a class="tab" data-target="#section-video" href="#">
+                Video
+                <div class="badge">{{ artist.user.profile.videoList|length }}</div>
+                <div class="circle"></div>
+            </a>
+        </li>
+        <li>
+            <a class="tab" data-target="#section-audio" href="#">
+                Audio
+                <div class="badge">{{ artist.user.profile.audioList|length }}</div>
+                <div class="circle"></div>
+            </a>
+        </li>
+    </ul>
+    {% else %}
+        <ul>
+            <li>
+                <a class="tab active mediaTabProf" data-target="#section-photo" href="#">
+                    Photo
+                    <div class="badge">{{ artist.user.profile.photoList|length }}</div>
+                    <div class="circle"></div>
+                </a>
+            </li>
+            <li>
+                <a class="tab mediaTabProf" data-target="#section-video" href="#">
+                    Video
+                    <div class="badge">{{ artist.user.profile.videoList|length }}</div>
+                    <div class="circle"></div>
+                </a>
+            </li>
+            <li>
+                <a class="tab mediaTabProf" data-target="#section-audio" href="#">
+                    Audio
+                    <div class="badge">{{ artist.user.profile.audioList|length }}</div>
+                    <div class="circle"></div>
+                </a>
+            </li>
+        </ul>
+    {% endif %}
+
+    <div class="row">
+
+        <section class="media-content wrapper" id="section-photo">
+            {% if is_granted('EDIT', artist) %}
+                <button id="profileAddNewMedia" type="button" class="btn btn-success" data-toggle="modal" data-target="#addImageModal"><i class="fa fa-plus"></i> Add new image</button>
+            {% endif %}
+            <div class="holder">
+                <span class="btn-prev" id="nextSlide"></span>
+                <span class="btn-next" id="prevSlide"></span>
+
+            <ul class="bxslider">
+                {% for photo in artist.user.profile.photoList %}
+                    <li id="imageSlider{{ photo.id }}"><img src="{{ asset(photo.link)|imagine_filter('big')}}" alt="{{ photo.name }}"></li>
+                {% endfor %}
+            </ul>
+            </div>
+
+            <div id="photo-pager" class="bx-pager">
+                {% for photo in artist.user.profile.photoList %}
+                    <div class="scale-thumb thumb{{ loop.index }}">
+                        {% if is_granted('EDIT', artist) %}
+                        <span class="removeNewImage deleteMedia" id="{{ photo.id }}"><i class="fa fa-times-circle-o"></i></span>
+                        {% endif %}
+                        <a data-slide-index="{{ loop.index0 }}" href=""><img src="{{ asset(photo.link)|imagine_filter('small')}}"/></a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+
+        <section class="media-content wrapper" id="section-video" >
+            {% if is_granted('EDIT', artist) %}
+                <div class="col-md-6 add-video-block">
+                <form class="videoAddForm">
+                    <input type="text" class="form-control videoAdd">
+                </form>
+                    <button type="submit" id="sendNewVideo" class="btn btn-default">Submit</button>
+                </div>
+                <div class="clearfix"></div>
+            {% endif %}
+            <div class="holder">
+                <span class="btn-prev" id="nextVideoSlide"></span>
+                <span class="btn-next" id="prevVideoSlide"></span>
+
+            <ul class="bxVideoSlider">
+                {% for video in artist.user.profile.videoList %}
+                    <li id="imageSlider{{ video.videoId }}"><iframe src="{{ video.link }}" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>
+                {% endfor %}
+            </ul>
+            </div>
+            <div id="video-pager" class="bx-pager">
+                {% for video in artist.user.profile.videoList %}
+                    <div class="scale-thumb thumb{{ loop.index }}">
+                        {% if is_granted('EDIT', artist) %}
+                        <span class="removeNewImage deleteMedia" id="{{ video.id }}"><i class="fa fa-times-circle-o"></i></span>
+                        {% endif %}
+                        <a data-slide-index="{{ loop.index0 }}" href=""><img id="{{ video.videoId }}" src="{{ video.thumbnail }}"/></a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="media-content wrapper" id="section-audio" >
+            {% if is_granted('EDIT', artist) %}
+                <div class="col-md-6 add-audio-block">
+                    <form class="audioAddForm">
+                        <input type="text" class="form-control audioAdd">
+                    </form>
+                    <button type="submit" id="sendNewAudio" class="btn btn-default">Submit</button>
+                </div>
+                <div class="clearfix"></div>
+            {% endif %}
+            <div class="audioBlock">
+            {% for audio in artist.user.profile.audioList %}
+                <div class="audioEditProfile">
+                    {% if is_granted('EDIT', artist) %}
+                        <span class="removeNewAudio deleteMedia" id="{{ audio.id }}"><i class="fa fa-times-circle-o"></i></span>
+                    {% endif %}
+                    <iframe width="100%" height="150" scrolling="no" frameborder="no" src="{{ audio.link }}"></iframe>
+                </div>
+            {% endfor %}
+            </div>
+
+        </section>
+
+    </div>
+
+
+</section>

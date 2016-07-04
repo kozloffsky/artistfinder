@@ -12,6 +12,7 @@ security:
 
     access_control:
         - { path: ^/dashboard/.*, roles: [ROLE_ARTIST, ROLE_CLIENT] }
+        - { path: ^/administration/.*, roles: [ROLE_ADMIN] }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -20,10 +21,23 @@ security:
             security: false
 
         main:
+            pattern: .*
             anonymous: ~
             logout: true
             form_login:
                 login_path: /?login_form
+
+            knpu_guard:
+                authenticators:
+                  - app.form_login_authenticator
+
+        admin:
+            pattern: /administration(.*)
+            form_login:
+                check_path: login
+                login_path: /?login_form
+                default_target_path: /administration/recommend
+
             knpu_guard:
                 authenticators:
                   - app.form_login_authenticator

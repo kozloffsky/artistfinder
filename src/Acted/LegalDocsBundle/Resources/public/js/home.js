@@ -23,7 +23,8 @@ $(function () {
       localStorage.setItem("search", searchEntered);
     }
   })
-  checkIfUserForcedLogin()
+  checkIfUserForcedLogin();
+
   function checkIfUserForcedLogin(){
     var currentUrl = window.location.href ;
     var matchesUrl = currentUrl.split('/');

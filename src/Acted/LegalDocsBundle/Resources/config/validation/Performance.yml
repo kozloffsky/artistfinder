@@ -3,3 +3,6 @@ Acted\LegalDocsBundle\Entity\Performance:
         media:
           - Count:
               max: 2
+        title:
+          - NotBlank:
+              message: Title can not be empty

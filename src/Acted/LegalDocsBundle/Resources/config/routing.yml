@@ -57,3 +57,7 @@ acted_legal_docs_event:
 acted_legal_docs_chat_room:
   resource: "@ActedLegalDocsBundle/Resources/config/routing/chatRoom.yml"
   prefix: /dashboard
+
+acted_legal_docs_admin_dashboard:
+  resource: "@ActedLegalDocsBundle/Resources/config/routing/admin.yml"
+  prefix: /administration

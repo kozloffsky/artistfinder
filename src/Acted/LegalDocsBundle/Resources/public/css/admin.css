@@ -1,0 +1,25 @@
+.recommendedIndexAdmin
+{
+    display: block;
+}
+.recommendedInput
+{
+    display: none;
+}
+.saveRecommended
+{
+    display: none;
+}
+
+.spotlightIndexAdmin
+{
+    display: block;
+}
+.spotlightInput
+{
+    display: none;
+}
+.saveSpotlight
+{
+    display: none;
+}
