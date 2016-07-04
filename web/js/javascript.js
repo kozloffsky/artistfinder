@@ -4493,7 +4493,7 @@ $(function(){
                         console.log(chatMessageFiles)
                     }
                     if (messageChat.msg){
-                        var chatMessageText = '<p>'+messageChat.msg+'</p>';
+                        var chatMessageText = '<pre>'+messageChat.msg+'</pre>';
                     } else {
                         var chatMessageText = '';
                     }
