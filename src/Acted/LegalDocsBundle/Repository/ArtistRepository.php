@@ -160,6 +160,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
     {
         $qb =  $this->createQueryBuilder('a')
             ->innerJoin('a.user', 'u')
+            ->innerJoin('u.recommends', 'rec')
             ->where('u.active != 0');
         if ($artistId) {
             $qb
@@ -174,7 +175,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         if ($start) {
             if (!$spotlight) {
                 $qb
-                    ->andWhere('a.recommend >= :start')
+                    ->andWhere('rec.value >= :start')
                     ->setParameter('start', (int)$start);
             } else {
                 $qb
@@ -186,7 +187,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         if($end) {
             if (!$spotlight) {
                 $qb
-                    ->andWhere('a.recommend <= :end')
+                    ->andWhere('rec.value <= :end')
                     ->setParameter('end', (int)$end);
             } else {
                 $qb
@@ -197,8 +198,8 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         }
         if ($recommend) {
             $qb
-                ->andWhere('a.recommend IS NOT NULL')
-                ->orderBy('a.recommend', 'ASC');
+                ->andWhere('rec.value IS NOT NULL')
+                ->orderBy('rec.value', 'ASC');
         }
         if ($spotlight) {
             $qb

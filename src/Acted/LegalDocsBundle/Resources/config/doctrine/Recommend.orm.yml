@@ -1,0 +1,21 @@
+Acted\LegalDocsBundle\Entity\Recommend:
+    type: entity
+    table: Recommend
+    repositoryClass: Acted\LegalDocsBundle\Repository\RecommendRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        value:
+            type: integer
+    manyToOne:
+        artist:
+            targetEntity: Acted\LegalDocsBundle\Entity\Artist
+            inversedBy: recommends
+        category:
+            targetEntity: Acted\LegalDocsBundle\Entity\Category
+            inversedBy: recommends
+    lifecycleCallbacks: {  }

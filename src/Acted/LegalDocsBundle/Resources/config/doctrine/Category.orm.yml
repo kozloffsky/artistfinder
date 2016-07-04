@@ -41,10 +41,6 @@ Acted\LegalDocsBundle\Entity\Category:
             type: integer
             gedmo:
               - treeLevel
-        recommend:
-            type: boolean
-            options:
-              default: false
     manyToOne:
         root:
             targetEntity: Acted\LegalDocsBundle\Entity\Category
@@ -62,6 +58,9 @@ Acted\LegalDocsBundle\Entity\Category:
             gedmo:
               - treeParent
     oneToMany:
+        recommends:
+            targetEntity: Acted\LegalDocsBundle\Entity\Recommend
+            mappedBy: category
         children:
             targetEntity: Acted\LegalDocsBundle\Entity\Category
             mappedBy: parent

@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Controller;
 
+use Acted\LegalDocsBundle\Form\RecommendType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializationContext;
@@ -76,29 +77,41 @@ class AdminController extends Controller
      */
     public function changeRecommendValueAction(Request $request)
     {
-        $artistId = $request->get('id');
-        $recommend = $request->get('recommend');
-        if ($recommend > 100 && $recommend < 0 ) {
-            return new JsonResponse(['error' => 'You should set only positive recommend value less or equal 100'], 400);
-        }
-        $artistRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:Artist');
-        $curArtist = $artistRepo->find($artistId);
-        $artists = $artistRepo->getArtistsList(null, $recommend, null, true, false, $artistId)->getResult();
+        $form = $this->createForm(RecommendType::class);
+        $form->handleRequest($request);
 
-        $curArtist->setRecommend($recommend);
-        $this->getEM()->persist($curArtist);
+        if($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $recommendRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:Recommend');
+            $artists = $recommendRepo->findRecommendByData();
+//            var_dump($data->getUser()->getArtist());die;
 
-        foreach ($artists as $artist) {
-            $recommend++;
-            if ($recommend < 101) {
-                $artist->setRecommend($recommend);
-            } else {
-                $artist->setRecommend(null);
-            }
-            $this->getEM()->persist($artist);
+            dump();die;
         }
 
-        $this->getEM()->flush();
+
+
+
+        die;
+
+//        $artistRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:Artist');
+//        $curArtist = $artistRepo->find($artistId);
+//        $artists = $artistRepo->getArtistsList(null, $recommend, null, true, false, $artistId)->getResult();
+//
+//        $curArtist->setRecommend($recommend);
+//        $this->getEM()->persist($curArtist);
+//
+//        foreach ($artists as $artist) {
+//            $recommend++;
+//            if ($recommend < 101) {
+//                $artist->setRecommend($recommend);
+//            } else {
+//                $artist->setRecommend(null);
+//            }
+//            $this->getEM()->persist($artist);
+//        }
+//
+//        $this->getEM()->flush();
 
         return new JsonResponse(['success' => 'Recommendation was changed!']);
     }
