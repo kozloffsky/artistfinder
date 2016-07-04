@@ -66,17 +66,18 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         }
 
         $categories = $fc->getCategories();
-        if (count($categories) > 0) {
+        if (count($categories) > 0 && !$fc->getRecommended()) {
             $qb->innerJoin('p.categories', 'c')
                 ->andWhere('c IN (:categories)')
                 ->setParameter('categories', $categories);
         }
 
-//        var_dump($fc->getRecommended());die;
-//        if ($fc->getRecommended()) {
-//            $qb->andWhere('a.recommend != 0')
-//                ->addOrderBy('a.recommend', 'ASC');
-//        }
+        if ($fc->getRecommended()) {
+            $qb->leftJoin('a.recommends', 'rec')
+                ->andWhere('rec.category = :par_cat')
+                ->setParameter('par_cat', $categories)
+                ->orderBy('rec.value', 'ASC');
+        }
 
         $priceFunction = ($oc->getPriceOrder() == 'ASC') ? 'MIN' : 'MAX';
         $qb->addSelect($priceFunction.'(o.price) AS HIDDEN price_agr');
