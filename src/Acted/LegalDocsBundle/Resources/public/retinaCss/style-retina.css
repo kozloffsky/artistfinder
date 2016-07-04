@@ -775,32 +775,8 @@ section.used-by {
     top: 31px;
 }
 
-/*.price-list>.item>.preview {*/
-/*position: relative;*/
-/*display: inline-block;*/
-/*float: left;*/
-/*width: 296px;*/
-/*height: 205px;*/
-/*margin-right: 8px;*/
-/*}*/
-
-/*.price-list>.item>.video {*/
-/*cursor: pointer;*/
-/*position: relative;*/
-/*overflow: hidden;*/
-/*display: inline-block;*/
-/*float: left;*/
-/*width: 296px;*/
-/*height: 205px;*/
-/*}*/
-
-/*.price-list>.item>.video img{*/
-/*width: 100%;*/
-/*height: 100%;*/
-/*}*/
-
-/*edit form styles start*/
 .price-list .edit-form{position: relative;}
+
 .price-list .edit-form .heading{
     padding-bottom: 10px;
     padding-right: 294px;

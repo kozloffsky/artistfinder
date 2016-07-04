@@ -52,5 +52,4 @@ gulp.task('cssRetina', function(){
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('web/css'));
 });
-
 gulp.task('default', ['js', 'css', 'cssRetina']);
