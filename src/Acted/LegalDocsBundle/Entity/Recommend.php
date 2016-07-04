@@ -30,7 +30,6 @@ class Recommend
      */
     private $category;
 
-
     /**
      * Get id
      *
@@ -66,7 +65,7 @@ class Recommend
     }
 
     /**
-     * Set user
+     * Set artist
      *
      * @param Artist $artist
      *
@@ -80,7 +79,7 @@ class Recommend
     }
 
     /**
-     * Get user
+     * Get artist
      *
      * @return Artist
      */

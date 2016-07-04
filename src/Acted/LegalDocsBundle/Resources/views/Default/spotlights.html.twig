@@ -11,7 +11,7 @@
                 {% if spotlight.media is defined %}
                     <div class="wrap">
                         <a href="/profile/{{ spotlight.slug }}">
-                            <img src="{{ spotlight.media.link }}" alt="{{ spotlight.name }}" />
+                            <img src="{{ spotlight.media.link|imagine_filter('medium') }}" alt="{{ spotlight.name }}" />
                         </a>
                         <!--<span class="glyphicon glyphicon-play"></span>
 

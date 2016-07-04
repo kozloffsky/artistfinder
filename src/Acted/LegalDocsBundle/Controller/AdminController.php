@@ -2,6 +2,8 @@
 
 namespace Acted\LegalDocsBundle\Controller;
 
+use Acted\LegalDocsBundle\Entity\Artist;
+use Acted\LegalDocsBundle\Entity\Recommend;
 use Acted\LegalDocsBundle\Form\RecommendType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,35 +85,33 @@ class AdminController extends Controller
         if($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $recommendRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:Recommend');
-            $artists = $recommendRepo->findRecommendByData();
-//            var_dump($data->getUser()->getArtist());die;
+            $artist = $recommendRepo->findOneBy(['artist' => $data->getArtist(), 'category' => $data->getCategory()]);
+            $recommends = $recommendRepo->findRecommendByData($data->getCategory(), $data->getArtist(),
+                $data->getValue());
 
-            dump();die;
+            if ($artist) {
+                $artist->setValue($data->getValue());
+            } else {
+                $artist = new Recommend();
+                $artist->setValue($data->getValue());
+                $artist->setCategory($data->getCategory());
+                $artist->setArtist($data->getArtist());
+            }
+            $this->getEM()->persist($artist);
+            $recommendData = $data->getValue();
+
+            foreach ($recommends as $recommend) {
+                $recommendData++;
+                if ($recommendData < 101) {
+                    $recommend->setValue($recommendData);
+                    $this->getEM()->persist($recommend);
+                } else {
+                    $this->getEM()->remove($recommend);
+                }
+            }
+
+            $this->getEM()->flush();
         }
-
-
-
-
-        die;
-
-//        $artistRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:Artist');
-//        $curArtist = $artistRepo->find($artistId);
-//        $artists = $artistRepo->getArtistsList(null, $recommend, null, true, false, $artistId)->getResult();
-//
-//        $curArtist->setRecommend($recommend);
-//        $this->getEM()->persist($curArtist);
-//
-//        foreach ($artists as $artist) {
-//            $recommend++;
-//            if ($recommend < 101) {
-//                $artist->setRecommend($recommend);
-//            } else {
-//                $artist->setRecommend(null);
-//            }
-//            $this->getEM()->persist($artist);
-//        }
-//
-//        $this->getEM()->flush();
 
         return new JsonResponse(['success' => 'Recommendation was changed!']);
     }

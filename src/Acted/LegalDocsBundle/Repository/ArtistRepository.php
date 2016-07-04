@@ -19,14 +19,15 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
     public function getRecommended(Category $category)
     {
         return $this->createQueryBuilder('a')
-            ->where('a.recommend != 0')
             ->innerJoin('a.user', 'u')
+            ->leftJoin('a.recommends', 'rec')
+            ->andWhere('rec.category = :par_cat')
             ->innerJoin('u.profile', 'p')
             ->innerJoin('p.performances', 'perf')
             ->andWhere('perf.status != :status')
-            ->andWhere(':category MEMBER OF p.categories')
-            ->setParameter('category', $category)
+            ->setParameter('par_cat', $category)
             ->setParameter('status', Performance::STATUS_DRAFT)
+            ->orderBy('rec.value', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -71,10 +72,11 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('categories', $categories);
         }
 
-        if ($fc->getRecommended()) {
-            $qb->andWhere('a.recommend != 0')
-                ->addOrderBy('a.recommend', 'ASC');
-        }
+//        var_dump($fc->getRecommended());die;
+//        if ($fc->getRecommended()) {
+//            $qb->andWhere('a.recommend != 0')
+//                ->addOrderBy('a.recommend', 'ASC');
+//        }
 
         $priceFunction = ($oc->getPriceOrder() == 'ASC') ? 'MIN' : 'MAX';
         $qb->addSelect($priceFunction.'(o.price) AS HIDDEN price_agr');
@@ -141,8 +143,6 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('country', $fc->getCountry());
         }
 
-        $qb->addOrderBy('a.spotlight', 'ASC');
-
         return $qb->getQuery();
     }
 
@@ -160,7 +160,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
     {
         $qb =  $this->createQueryBuilder('a')
             ->innerJoin('a.user', 'u')
-            ->innerJoin('u.recommends', 'rec')
+            ->innerJoin('a.recommends', 'rec')
             ->where('u.active != 0');
         if ($artistId) {
             $qb

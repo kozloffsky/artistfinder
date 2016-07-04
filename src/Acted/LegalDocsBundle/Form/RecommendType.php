@@ -35,10 +35,10 @@ class RecommendType extends AbstractType
                 'multiple' => false,
                 'description' => 'Main categories ID'
             ])
-            ->add('user', EntityType::class, [
+            ->add('artist', EntityType::class, [
                 'class' => Artist::class,
-                'constraints' => [new NotBlank(['message' => 'User is required field'])],
-                'description' => 'UserId'
+                'constraints' => [new NotBlank(['message' => 'Artist is required field'])],
+                'description' => 'ArtistId'
             ])
         ;
     }

@@ -14,8 +14,7 @@ class CategoryRepository extends NestedTreeRepository
     public function getRecommended()
     {
         return $this->createQueryBuilder('c')
-            ->where('c.recommend = :recommend')
-            ->setParameter('recommend', true)
+            ->where('c.parent is null')
             ->getQuery()
             ->getResult();
     }

@@ -56,6 +56,11 @@ class Category
     private $recommends;
 
     /**
+     * @var boolean
+     */
+    private $isRecommend = false;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -404,5 +409,29 @@ class Category
     public function getRecommends()
     {
         return $this->recommends;
+    }
+
+    /**
+     * Set isRecommend
+     *
+     * @param boolean $isRecommend
+     *
+     * @return Category
+     */
+    public function setIsRecommend($isRecommend)
+    {
+        $this->isRecommend = $isRecommend;
+
+        return $this;
+    }
+
+    /**
+     * Get isRecommend
+     *
+     * @return boolean
+     */
+    public function getIsRecommend()
+    {
+        return $this->isRcommend;
     }
 }
