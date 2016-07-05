@@ -25,8 +25,15 @@ class AdminController extends Controller
         $query = $request->get('query');
         $start = $request->get('start');
         $end = $request->get('end');
+        $mainCat = $request->get('main');
+        $filters = [
+            'query' => $query,
+            'start' => $start,
+            'end' => $end,
+            'main' => $mainCat
+        ];
 
-        $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, false, false, null);
+        $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, true, false, null, $mainCat);
         $data = $paginator->paginate($artistsQuery, $page, 10);
 
         $artists = $serializer->toArray($data->getItems(), SerializationContext::create()
@@ -34,7 +41,7 @@ class AdminController extends Controller
         $paginations = $data->getPaginationData();
 
         return $this->render('ActedLegalDocsBundle:Admin:recommend.html.twig',
-           compact('artists', 'paginations')
+           compact('artists', 'paginations', 'filters')
         );
     }
 
@@ -52,7 +59,13 @@ class AdminController extends Controller
         $start = $request->get('start');
         $end = $request->get('end');
 
-        $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, false, false, null);
+        $filters = [
+            'query' => $query,
+            'start' => $start,
+            'end' => $end
+        ];
+
+        $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, false, true, null);
         $data = $paginator->paginate($artistsQuery, $page, 10);
 
         $artists = $serializer->toArray($data->getItems(), SerializationContext::create()
@@ -60,7 +73,7 @@ class AdminController extends Controller
         $paginations = $data->getPaginationData();
 
         return $this->render('ActedLegalDocsBundle:Admin:spotlight.html.twig',
-            compact('artists', 'paginations')
+            compact('artists', 'paginations', 'filters')
         );
     }
 

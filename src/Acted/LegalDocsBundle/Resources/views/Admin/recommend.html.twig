@@ -2,8 +2,35 @@
 
 {% block body %}
 
+    <div class="col-md-12">
+        <h2 class="sub-header">Recommended</h2>
+    </div>
+    <div class="col-md-4">
+    <form action="/administration/recommend/1">
+        <fieldset class="form-group">
+            <label for="querySearch">Search</label>
+            <input type="text" class="form-control" name="query" id="querySearch" placeholder="Search">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="start">Start</label>
+            <input type="number" class="form-control" name="start" id="start" placeholder="start">
+        </fieldset>
 
-    <h2 class="sub-header">Recommended</h2>
+        <fieldset class="form-group">
+            <label for="end">End</label>
+            <input type="number" class="form-control" name="end" id="end" placeholder="end">
+        </fieldset>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"> Show only recommended
+            </label>
+        </div>
+        <fieldset class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </fieldset>
+    </form>
+    </div>
+    <div class="col-md-12">
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -63,4 +90,6 @@
             {% endif %}
         </ul>
     </nav>
+    </div>
+
 {% endblock %}

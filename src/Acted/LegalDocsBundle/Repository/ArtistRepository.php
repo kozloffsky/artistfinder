@@ -147,6 +147,16 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery();
     }
 
+    public function allSpotlightArtist()
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin('a.user', 'u')
+            ->where('u.active != 0')
+            ->andWhere('a.spotlight IS NOT NULL')
+            ->orderBy('a.spotlight', 'ASC')
+            ->getQuery()->getResult();
+    }
+
     /**
      * @param string $query
      * @param int $start
@@ -154,14 +164,15 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
      * @param bool $recommend
      * @param bool $spotlight
      * @param int $artistId
+     * @param int $mainCat
      * @return \Doctrine\ORM\Query
      */
     public function getArtistsList($query = null, $start = null, $end = null, $recommend = false, $spotlight = false,
-                                   $artistId = null)
+                                   $artistId = null, $mainCat = null)
     {
         $qb =  $this->createQueryBuilder('a')
             ->innerJoin('a.user', 'u')
-            ->innerJoin('a.recommends', 'rec')
+            ->leftJoin('a.recommends', 'rec')
             ->where('u.active != 0');
         if ($artistId) {
             $qb
@@ -197,28 +208,29 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             }
 
         }
-        if ($recommend) {
+
+        if ($start !== false && $start < 1) {
+            $qb
+                ->andWhere('a.spotlight IS NULL');
+        }
+        if ($recommend && ($start || $end)) {
             $qb
                 ->andWhere('rec.value IS NOT NULL')
                 ->orderBy('rec.value', 'ASC');
         }
-        if ($spotlight) {
+
+        if ($spotlight && ($start || $end)) {
             $qb
                 ->andWhere('a.spotlight IS NOT NULL')
-                ->andWhere('a.spotlight != 0')
+                //->andWhere('a.spotlight != 0')
                 ->orderBy('a.spotlight', 'ASC');
+        }
+        if ($mainCat) {
+            $qb
+                ->andWhere('rec.category = :main')
+                ->setParameter('main', $mainCat);
         }
 
         return $qb->getQuery();
-    }
-
-    public function allSpotlightArtist()
-    {
-        return $this->createQueryBuilder('a')
-            ->innerJoin('a.user', 'u')
-            ->where('u.active != 0')
-            ->andWhere('a.spotlight IS NOT NULL')
-            ->orderBy('a.spotlight', 'ASC')
-            ->getQuery()->getResult();
     }
 }

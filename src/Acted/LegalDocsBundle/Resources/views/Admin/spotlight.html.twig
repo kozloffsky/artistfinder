@@ -2,7 +2,41 @@
 
 {% block body %}
 
-    <h2 class="sub-header">Spotlight</h2>
+
+
+    <div class="col-md-12">
+        <h2 class="sub-header">Spotlight</h2>
+    </div>
+
+    <div class="col-md-4">
+        <form action="/administration/spotlight/1">
+            <fieldset class="form-group">
+                <label for="querySearch">Search</label>
+                <input type="text" class="form-control" name="query" id="querySearch" placeholder="Search" value="{{ filters.query }}">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="start">Min</label>
+                <input type="number" class="form-control" name="start" id="start" placeholder="start" value="{{ filters.start }}">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="end">Max</label>
+                <input type="number" class="form-control" name="end" id="end" placeholder="end" value="{{ filters.end }}">
+            </fieldset>
+            <div class="checkbox">
+                <label>
+                    {% if filters.start >= 1 %}
+                    <input type="checkbox" name="start" value="1" checked> Show only spotlighted
+                        {% else %}
+                    <input type="checkbox" name="start" value="1"> Show only spotlighted
+                    {% endif %}
+                </label>
+            </div>
+            <fieldset class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </fieldset>
+        </form>
+    </div>
+    <div class="col-md-12">
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -27,7 +61,12 @@
                             0
                         {% endif %}
                             </span>
-                        <input type="number" class="spotlightInput">
+                        {% if artist.spotlight is defined %}
+                            <input type="number" class="spotlightInput" value="{{ artist.spotlight }}">
+                        {% else %}
+                            <input type="number" class="spotlightInput" value="0">
+                        {% endif %}
+
                     </td>
                     <td>
                         {#{{ path('admin_manage_spotlight', {'id': artist.id }) }}#}
@@ -43,23 +82,24 @@
         <ul class="pagination">
             {% if paginations['previous'] is defined %}
                 <li>
-                    <a href="{{ path('admin_dashboard_spotlight', {'page': paginations['previous']  }) }}" aria-label="Previous">
+                    <a href="{{ path('admin_dashboard_spotlight', {'page': paginations['previous']  }) }}?query={{ filters.query }}&start={{ filters.start }}&end={{ filters.end }}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
             {% endif %}
             {% for pagin in range(1, paginations['pageRange']) %}
                 <li>
-                    <a href="{{ path('admin_dashboard_spotlight', {'page': pagin }) }}">{{ pagin }}</a>
+                    <a href="{{ path('admin_dashboard_spotlight', {'page': pagin }) }}?query={{ filters.query }}&start={{ filters.start }}&end={{ filters.end }}">{{ pagin }}</a>
                 </li>
             {% endfor %}
             {% if paginations['next'] is defined %}
                 <li>
-                    <a href="{{ path('admin_dashboard_spotlight', {'page': paginations['next']  }) }}" aria-label="Next">
+                    <a href="{{ path('admin_dashboard_spotlight', {'page': paginations['next']  }) }}?query={{ filters.query }}&start={{ filters.start }}&end={{ filters.end }}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             {% endif %}
         </ul>
     </nav>
+    </div>
 {% endblock %}
