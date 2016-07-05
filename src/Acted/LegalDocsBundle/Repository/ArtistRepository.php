@@ -172,6 +172,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
     {
         $qb =  $this->createQueryBuilder('a')
             ->innerJoin('a.user', 'u')
+            ->innerJoin('u.profile', 'p')
             ->leftJoin('a.recommends', 'rec')
             ->where('u.active != 0');
         if ($artistId) {
@@ -228,6 +229,8 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         if ($mainCat) {
             $qb
                 ->andWhere('rec.category = :main')
+                ->innerJoin('p.categories', 'c')
+                ->andWhere('c.parent = :main')
                 ->setParameter('main', $mainCat);
         }
 
