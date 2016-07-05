@@ -16,8 +16,8 @@ class Version20160704183750 extends AbstractMigration
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('delete from acted.Media where media_type = "video" and position = 1');
-        $this->addSql('DELETE FROM acted.Media 
+        $this->addSql('delete from Media where media_type = "video" and position = 1');
+        $this->addSql('DELETE FROM Media 
                             WHERE
                                 id IN (SELECT 
                                     media_id
@@ -25,8 +25,8 @@ class Version20160704183750 extends AbstractMigration
                                     (SELECT 
                                         COUNT(*) AS counter, media_id
                                     FROM
-                                        acted.performance_media AS t1
-                                    LEFT JOIN acted.Media AS t2 ON t1.media_id = t2.id
+                                        performance_media AS t1
+                                    LEFT JOIN Media AS t2 ON t1.media_id = t2.id
                                     
                                     WHERE
                                         position = 1
