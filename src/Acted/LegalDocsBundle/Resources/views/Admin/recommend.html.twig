@@ -60,25 +60,30 @@
             </thead>
             <tbody>
             {% for artist in artists %}
+                
                 <tr id="{{ artist.id }}">
                     <td>{{ artist.id }}</td>
                     <td>{{ artist.name }}</td>
                     <td>{{ artist.slug }}</td>
                     <td>
                         <span class="recommendedIndexAdmin">
-                        {% set recommended = artist.recommends|first %}
-                        {% if recommended.value is defined %}
-                            {{ recommended.value }}
-                        {% else %}
+                        {% if artist.recommends|length < 1 %}
                             0
                         {% endif %}
+                        {% for recommended in artist.recommends %}
+                            {% if recommended.category.id == filters.main %}
+                                {{ recommended.value }}
+                            {% endif %}
+                        {% endfor %}
                         </span>
-                        {% if recommended.value is defined %}
-                            <input type="number" class="recommendedInput" value="{{ recommended.value }}">
-                        {% else %}
+                        {% if artist.recommends|length < 1 %}
                             <input type="number" class="recommendedInput" placeholder="0">
                         {% endif %}
-
+                        {% for recommended in artist.recommends %}
+                            {% if recommended.category.id == filters.main %}
+                                <input type="number" class="recommendedInput" value="{{ recommended.value }}">
+                            {% endif %}
+                        {% endfor %}
                     </td>
                     <td>
                         {#{{ path('admin_manage_spotlight', {'id': artist.id }) }}#}
