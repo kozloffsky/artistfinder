@@ -121,6 +121,7 @@ class AdminController extends Controller
                 $artist->setArtist($data->getArtist());
             }
             $this->getEM()->persist($artist);
+            $this->getEM()->flush();
             $recommendData = $data->getValue();
 
             foreach ($recommends as $recommend) {

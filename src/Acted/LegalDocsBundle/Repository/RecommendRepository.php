@@ -27,7 +27,7 @@ class RecommendRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('r.artist != :artist')
             ->andWhere('r.value >= :value')
             ->setParameters([
-                'category' => $category,
+                'category' => $category->getId(),
                 'artist' => $artist,
                 'value' => $value,
             ])
