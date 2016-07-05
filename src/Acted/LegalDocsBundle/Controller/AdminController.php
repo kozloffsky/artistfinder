@@ -33,6 +33,9 @@ class AdminController extends Controller
             'main' => $mainCat
         ];
         $categories = $this->getEM()->getRepository('ActedLegalDocsBundle:Category')->getRecommended();
+        if (!$mainCat) {
+            $mainCat = $categories[0]->getId();
+        }
 
         $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, true, false, null, $mainCat);
         $data = $paginator->paginate($artistsQuery, $page, 10);
