@@ -134,6 +134,14 @@ class AdminController extends Controller
             }
 
             $this->getEM()->flush();
+        } else {
+            $errors = array();
+
+            foreach ($form->getErrors(true) as $key => $error) {
+                $errors[] = $error->getMessage();
+            }
+
+            return new JsonResponse(['errors' => $errors], 400);
         }
 
         return new JsonResponse(['success' => 'Recommendation was changed!']);
