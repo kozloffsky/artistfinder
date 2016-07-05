@@ -1025,8 +1025,8 @@ $(function() {
 
     $(document).on('click','#addNewPerformanceBtn', function(){
         var newPerformanceBlock = $('.newPerformanceBlank').clone();
-        newPerformanceBlock.insertBefore('.controls.add').removeClass('hidden').fadeIn(800);
-        newPerformanceBlock.removeClass('newPerformanceBlank');
+        /*newPerformanceBlock.insertBefore('.controls.add').removeClass('hidden').fadeIn(800);
+        newPerformanceBlock.removeClass('newPerformanceBlank');*/
         createNewPerf(newPerformanceBlock)
     });
 
@@ -1039,6 +1039,8 @@ $(function() {
             data: {"performance[title]": 'new event',"performance[status]":"draft"},
             success: function (response) {
                 console.log(response)
+                newPerformanceBlock.insertBefore('.controls.add').removeClass('hidden').fadeIn(800);
+                newPerformanceBlock.removeClass('newPerformanceBlank');
                 $(newPerformanceBlock).find('form').attr('id', response.performance.id);
             }
         })

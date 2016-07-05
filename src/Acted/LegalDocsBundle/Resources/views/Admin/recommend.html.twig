@@ -2,8 +2,51 @@
 
 {% block body %}
 
-
-    <h2 class="sub-header">Recommended</h2>
+    <div class="col-md-12">
+        <h2 class="sub-header">Recommended</h2>
+    </div>
+    <div class="col-md-4">
+        <form action="/administration/recommend/1">
+            <fieldset class="form-group">
+                <label for="catMainSel">Select main category</label>
+                <select class="form-control" id="catMainSel" name="main">
+                    {% for category in categories %}
+                        {% if category.id == filters.main %}
+                            <option value="{{ category.id }}" selected="selected">{{ category.title }}</option>
+                        {% else %}
+                            <option value="{{ category.id }}">{{ category.title }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="querySearch">Search</label>
+                <input type="text" class="form-control" name="query" id="querySearch" placeholder="Search" value="{{ filters.query }}">
+            </fieldset>
+            <!--<fieldset class="form-group">
+                <label for="start">Min</label>
+                <input type="number" class="form-control" name="start" id="start" placeholder="start" value="{{ filters.start }}">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="end">Max</label>
+                <input type="number" class="form-control" name="end" id="end" placeholder="end" value="{{ filters.end }}">
+            </fieldset>-->
+            <div class="checkbox">
+                <label>
+                    {% if filters.start >= 1 %}
+                        <input type="checkbox" name="start" value="1" checked> Show only recommended
+                    {% else %}
+                        <input type="checkbox" name="start" value="1"> Show only recommended
+                    {% endif %}
+                </label>
+            </div>
+            <fieldset class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </fieldset>
+        </form>
+    </form>
+    </div>
+    <div class="col-md-12">
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -17,18 +60,30 @@
             </thead>
             <tbody>
             {% for artist in artists %}
+                
                 <tr id="{{ artist.id }}">
                     <td>{{ artist.id }}</td>
                     <td>{{ artist.name }}</td>
                     <td>{{ artist.slug }}</td>
                     <td>
-                        <span class="recommendedIndexAdmin">{% if artist.recommend is defined %}
-                            {{ artist.recommend }}
-                        {% else %}
+                        <span class="recommendedIndexAdmin">
+                        {% if artist.recommends|length < 1 %}
                             0
                         {% endif %}
+                        {% for recommended in artist.recommends %}
+                            {% if recommended.category.id == filters.main %}
+                                {{ recommended.value }}
+                            {% endif %}
+                        {% endfor %}
                         </span>
-                        <input type="number" class="recommendedInput">
+                        {% if artist.recommends|length < 1 %}
+                            <input type="number" class="recommendedInput" placeholder="0">
+                        {% endif %}
+                        {% for recommended in artist.recommends %}
+                            {% if recommended.category.id == filters.main %}
+                                <input type="number" class="recommendedInput" value="{{ recommended.value }}">
+                            {% endif %}
+                        {% endfor %}
                     </td>
                     <td>
                         {#{{ path('admin_manage_spotlight', {'id': artist.id }) }}#}
@@ -44,23 +99,25 @@
         <ul class="pagination">
             {% if paginations['previous'] is defined %}
                 <li>
-                    <a href="{{ path('admin_dashboard_recommend', {'page': paginations['previous']  }) }}" aria-label="Previous">
+                    <a href="{{ path('admin_dashboard_recommend', {'page': paginations['previous']  }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
             {% endif %}
             {% for pagin in range(1, paginations['pageRange']) %}
                 <li>
-                    <a href="{{ path('admin_dashboard_recommend', {'page': pagin }) }}">{{ pagin }}</a>
+                    <a href="{{ path('admin_dashboard_recommend', {'page': pagin }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}">{{ pagin }}</a>
                 </li>
             {% endfor %}
             {% if paginations['next'] is defined %}
                 <li>
-                    <a href="{{ path('admin_dashboard_recommend', {'page': paginations['next']  }) }}" aria-label="Next">
+                    <a href="{{ path('admin_dashboard_recommend', {'page': paginations['next']  }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             {% endif %}
         </ul>
     </nav>
+    </div>
+
 {% endblock %}

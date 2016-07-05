@@ -11,6 +11,7 @@ use Acted\LegalDocsBundle\Form\PerformanceType;
 use Acted\LegalDocsBundle\Model\MediaManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\Request;
 
 class PerformanceController extends Controller
@@ -32,7 +33,8 @@ class PerformanceController extends Controller
             $em->persist($performance);
             $em->flush();
             $serializer = $this->get('jms_serializer');
-            return new JsonResponse(['status' => 'success', 'performance' => $serializer->toArray($performance)]);
+            return new JsonResponse(['status' => 'success', 'performance' => $serializer->toArray($performance, SerializationContext::create()
+                ->setGroups(['performance_create']))]);
         }
 
         return new JsonResponse($this->formErrorResponse($performanceForm));

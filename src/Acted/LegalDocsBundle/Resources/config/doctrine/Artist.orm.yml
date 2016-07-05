@@ -33,9 +33,6 @@ Acted\LegalDocsBundle\Entity\Artist:
         comments:
           type: string(512)
           nullable: true
-        recommend:
-          type: integer
-          nullable: true
         spotlight:
           type: integer
           nullable: true
@@ -50,8 +47,10 @@ Acted\LegalDocsBundle\Entity\Artist:
           inversedBy: artist
     oneToMany:
         ratings:
-          targetEntity: Acted\LegalDocsBundle\Entity\ArtistRating
-          mappedBy: artist
-
+            targetEntity: Acted\LegalDocsBundle\Entity\ArtistRating
+            mappedBy: artist
+        recommends:
+            targetEntity: Acted\LegalDocsBundle\Entity\Recommend
+            mappedBy: artist
 
     lifecycleCallbacks: {  }

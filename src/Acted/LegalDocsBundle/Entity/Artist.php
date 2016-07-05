@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Entity;
 use Cocur\Slugify\Slugify;
+use Acted\LegalDocsBundle\Entity\Recommend;
 
 /**
  * Artist
@@ -53,7 +54,10 @@ class Artist
      */
     private $cityId;
 
-
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $recommends;
     /**
      * Get id
      *
@@ -352,6 +356,7 @@ class Artist
     public function __construct()
     {
         $this->ratings = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->recommends = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -442,39 +447,11 @@ class Artist
     {
         return $this->country;
     }
-    /**
-     * @var int
-     */
-    private $recommend;
 
     /**
      * @var int
      */
     private $spotlight;
-
-    /**
-     * Set recommend
-     *
-     * @param int $recommend
-     *
-     * @return Artist
-     */
-    public function setRecommend($recommend)
-    {
-        $this->recommend = $recommend;
-
-        return $this;
-    }
-
-    /**
-     * Get recommend
-     *
-     * @return int
-     */
-    public function getRecommend()
-    {
-        return $this->recommend;
-    }
 
     /**
      * Set spotlight
@@ -488,6 +465,38 @@ class Artist
         $this->spotlight = $spotlight;
 
         return $this;
+    }
+
+    /**
+     * Add recommend
+     *
+     * @param Recommend $recommend
+     *
+     * @return User
+     */
+    public function addRecommend(Recommend $recommend)
+    {
+        $this->recommends[] = $recommend;
+
+        return $this;
+    }
+
+    /**
+     * Remove recommend
+     *
+     * @param Recommend $recommend
+     */
+    public function removeRecommend(Recommend $recommend)
+    {
+        $this->recommends->removeElement($recommend);
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection|\Doctrine\Common\Collections\Collection
+     */
+    public function getRecommends()
+    {
+        return $this->recommends;
     }
 
     /**

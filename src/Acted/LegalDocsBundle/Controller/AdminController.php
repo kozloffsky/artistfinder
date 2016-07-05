@@ -2,6 +2,9 @@
 
 namespace Acted\LegalDocsBundle\Controller;
 
+use Acted\LegalDocsBundle\Entity\Artist;
+use Acted\LegalDocsBundle\Entity\Recommend;
+use Acted\LegalDocsBundle\Form\RecommendType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializationContext;
@@ -22,16 +25,27 @@ class AdminController extends Controller
         $query = $request->get('query');
         $start = $request->get('start');
         $end = $request->get('end');
+        $mainCat = $request->get('main');
+        $filters = [
+            'query' => $query,
+            'start' => $start,
+            'end' => $end,
+            'main' => $mainCat
+        ];
+        $categories = $this->getEM()->getRepository('ActedLegalDocsBundle:Category')->getRecommended();
+        if (!$mainCat) {
+            $mainCat = $categories[0]->getId();
+        }
 
-        $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, false, false, null);
-        $data = $paginator->paginate($artistsQuery, $page, 10);
+        $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, true, false, null, $mainCat);
+        $data = $paginator->paginate($artistsQuery, $page, 30);
 
         $artists = $serializer->toArray($data->getItems(), SerializationContext::create()
             ->setGroups(['recommend_artist']));
         $paginations = $data->getPaginationData();
 
         return $this->render('ActedLegalDocsBundle:Admin:recommend.html.twig',
-           compact('artists', 'paginations')
+           compact('artists', 'paginations', 'filters', 'categories')
         );
     }
 
@@ -46,18 +60,24 @@ class AdminController extends Controller
         $serializer = $this->get('jms_serializer');
         $paginator  = $this->get('knp_paginator');
         $query = $request->get('query');
-        $start = $request->get('start');
+        $start = empty($request->get('start')) ? $request->get('start'): 1;
         $end = $request->get('end');
 
-        $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, false, false, null);
-        $data = $paginator->paginate($artistsQuery, $page, 10);
+        $filters = [
+            'query' => $query,
+            'start' => $start,
+            'end' => $end
+        ];
+
+        $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, false, true, null);
+        $data = $paginator->paginate($artistsQuery, $page, 30);
 
         $artists = $serializer->toArray($data->getItems(), SerializationContext::create()
             ->setGroups(['spotlight_artist']));
         $paginations = $data->getPaginationData();
 
         return $this->render('ActedLegalDocsBundle:Admin:spotlight.html.twig',
-            compact('artists', 'paginations')
+            compact('artists', 'paginations', 'filters')
         );
     }
 
@@ -76,29 +96,54 @@ class AdminController extends Controller
      */
     public function changeRecommendValueAction(Request $request)
     {
-        $artistId = $request->get('id');
-        $recommend = $request->get('recommend');
-        if ($recommend > 100 && $recommend < 0 ) {
-            return new JsonResponse(['error' => 'You should set only positive recommend value less or equal 100'], 400);
-        }
-        $artistRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:Artist');
-        $curArtist = $artistRepo->find($artistId);
-        $artists = $artistRepo->getArtistsList(null, $recommend, null, true, false, $artistId)->getResult();
+        $form = $this->createForm(RecommendType::class);
+        $form->handleRequest($request);
 
-        $curArtist->setRecommend($recommend);
-        $this->getEM()->persist($curArtist);
+        if($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $recommendRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:Recommend');
+            $artist = $recommendRepo->findOneBy(['artist' => $data->getArtist(), 'category' => $data->getCategory()]);
+            if ($data->getValue() === 0 && $artist) {
+                $this->getEM()->remove($artist);
+                $this->getEM()->flush();
 
-        foreach ($artists as $artist) {
-            $recommend++;
-            if ($recommend < 101) {
-                $artist->setRecommend($recommend);
+                return new JsonResponse(['success' => 'Recommendation was changed!']);
+            }
+            $recommends = $recommendRepo->findRecommendByData($data->getCategory(), $data->getArtist(),
+                $data->getValue());
+
+            if ($artist) {
+                $artist->setValue($data->getValue());
             } else {
-                $artist->setRecommend(null);
+                $artist = new Recommend();
+                $artist->setValue($data->getValue());
+                $artist->setCategory($data->getCategory());
+                $artist->setArtist($data->getArtist());
             }
             $this->getEM()->persist($artist);
-        }
+            $this->getEM()->flush();
+            $recommendData = $data->getValue();
 
-        $this->getEM()->flush();
+            foreach ($recommends as $recommend) {
+                $recommendData++;
+                if ($recommendData < 101) {
+                    $recommend->setValue($recommendData);
+                    $this->getEM()->persist($recommend);
+                } else {
+                    $this->getEM()->remove($recommend);
+                }
+            }
+
+            $this->getEM()->flush();
+        } else {
+            $errors = array();
+
+            foreach ($form->getErrors(true) as $key => $error) {
+                $errors[] = $error->getMessage();
+            }
+
+            return new JsonResponse(['error' => $errors], 400);
+        }
 
         return new JsonResponse(['success' => 'Recommendation was changed!']);
     }
@@ -125,7 +170,15 @@ class AdminController extends Controller
             return new JsonResponse(['error' => 'You should set only positive spotlight value'], 400);
         }
         $artistRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:Artist');
+
         $curArtist = $artistRepo->find($artistId);
+        if ($spotlight === 0) {
+            $curArtist->setSpotlight(0);
+            $this->getEM()->persist($curArtist);
+            $this->getEM()->flush();
+
+            return new JsonResponse(['success' => 'Spotlight was changed!']);
+        }
         $artists = $artistRepo->getArtistsList(null, $spotlight, null, false, true, $artistId)->getResult();
 
 

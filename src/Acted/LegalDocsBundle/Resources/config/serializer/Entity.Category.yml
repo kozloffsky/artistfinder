@@ -1,0 +1,7 @@
+Acted\LegalDocsBundle\Entity\Category:
+    exclusion_policy: NONE
+    properties:
+        id:
+            groups: [recommend_artist]
+        title:
+            groups: [recommend_artist]

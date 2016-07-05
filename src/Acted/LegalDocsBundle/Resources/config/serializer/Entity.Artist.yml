@@ -10,7 +10,7 @@ Acted\LegalDocsBundle\Entity\Artist:
       groups: [Default, block, quote_request, recommend_artist, spotlight_artist]
     user:
       groups: [quote_request]
-    recommend:
+    recommends:
       groups: [recommend_artist]
     spotlight:
       groups: [spotlight_artist]

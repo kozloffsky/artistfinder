@@ -1,7 +1,9 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Entity;
+
 use Cocur\Slugify\Slugify;
+use Acted\LegalDocsBundle\Entity\Recommend;
 
 /**
  * Category
@@ -49,11 +51,22 @@ class Category
     private $parent;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $recommends;
+
+    /**
+     * @var boolean
+     */
+    private $isRecommend = false;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->recommends = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -365,33 +378,60 @@ class Category
     {
         return $this->getTitle();
     }
-    /**
-     * @var boolean
-     */
-    private $recommend = false;
-
 
     /**
-     * Set recommend
+     * Add recommend
      *
-     * @param boolean $recommend
+     * @param Recommend $recommend
      *
-     * @return Category
+     * @return User
      */
-    public function setRecommend($recommend)
+    public function addRecommend(Recommend $recommend)
     {
-        $this->recommend = $recommend;
+        $this->recommends[] = $recommend;
 
         return $this;
     }
 
     /**
-     * Get recommend
+     * Remove recommend
+     *
+     * @param Recommend $recommend
+     */
+    public function removeRecommend(Recommend $recommend)
+    {
+        $this->recommends->removeElement($recommend);
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection|\Doctrine\Common\Collections\Collection
+     */
+    public function getRecommends()
+    {
+        return $this->recommends;
+    }
+
+    /**
+     * Set isRecommend
+     *
+     * @param boolean $isRecommend
+     *
+     * @return Category
+     */
+    public function setIsRecommend($isRecommend)
+    {
+        $this->isRecommend = $isRecommend;
+
+        return $this;
+    }
+
+    /**
+     * Get isRecommend
      *
      * @return boolean
      */
-    public function getRecommend()
+    public function getIsRecommend()
     {
-        return $this->recommend;
+        return $this->isRcommend;
     }
 }

@@ -423,7 +423,7 @@ $(function () {
                 var elementsInCatCount = response[propt].length;
                 if (elementsInCatCount != 0) {
                     var searchCategoryId = propt,
-                        searchCategoryName = $('#searchCategories label[for="search' + searchCategoryId + '"]').text(),
+                        searchCategoryName = $('#mainCategoryList').find('#' + searchCategoryId).text(),
                         tabContentBlockRec = '<div class="slider">' +
                             '<h2 class="title" style="margin-top: 0px">' + searchCategoryName + '</h2>' +
                             '<div class="slider-block">' +

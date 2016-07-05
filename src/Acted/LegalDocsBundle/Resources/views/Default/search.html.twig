@@ -193,9 +193,7 @@
                     </div>
 
                     {% for recommendation in recommended %}
-
-
-
+                    {% if recommendation.artists %}
                     <div class="slider">
 
                         <h2 class="title" style="margin-top: 0px">{{ recommendation.category.title }}</h2>
@@ -276,6 +274,7 @@
                         </div>
 
                     </div>
+                    {% endif %}
                     {% endfor %}
 
                 </div>

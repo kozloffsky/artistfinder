@@ -9,7 +9,7 @@ admin_dashboard_spotlight:
     methods:  GET
 
 admin_manage_recommend:
-    path:     /manage_recommend/{id}
+    path:     /manage_recommend
     defaults: { _controller: ActedLegalDocsBundle:Admin:changeRecommendValue, _format: json }
     methods:  POST
 
