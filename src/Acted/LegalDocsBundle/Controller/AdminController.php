@@ -60,7 +60,7 @@ class AdminController extends Controller
         $serializer = $this->get('jms_serializer');
         $paginator  = $this->get('knp_paginator');
         $query = $request->get('query');
-        $start = $request->get('start') ? $request->get('start'): 1;
+        $start = empty($request->get('start')) ? $request->get('start'): 1;
         $end = $request->get('end');
 
         $filters = [
