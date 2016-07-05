@@ -6,28 +6,45 @@
         <h2 class="sub-header">Recommended</h2>
     </div>
     <div class="col-md-4">
-    <form action="/administration/recommend/1">
-        <fieldset class="form-group">
-            <label for="querySearch">Search</label>
-            <input type="text" class="form-control" name="query" id="querySearch" placeholder="Search">
-        </fieldset>
-        <fieldset class="form-group">
-            <label for="start">Start</label>
-            <input type="number" class="form-control" name="start" id="start" placeholder="start">
-        </fieldset>
-
-        <fieldset class="form-group">
-            <label for="end">End</label>
-            <input type="number" class="form-control" name="end" id="end" placeholder="end">
-        </fieldset>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox"> Show only recommended
-            </label>
-        </div>
-        <fieldset class="form-group">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </fieldset>
+        <form action="/administration/recommend/1">
+            <fieldset class="form-group">
+                <label for="catMainSel">Select main category</label>
+                <select class="form-control" id="catMainSel" name="main" >
+                    <option>All</option>
+                    {% for category in categories %}
+                        {% if category.id == filters.main %}
+                            <option value="{{ category.id }}" selected="selected">{{ category.title }}</option>
+                        {% else %}
+                            <option value="{{ category.id }}">{{ category.title }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="querySearch">Search</label>
+                <input type="text" class="form-control" name="query" id="querySearch" placeholder="Search" value="{{ filters.query }}">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="start">Min</label>
+                <input type="number" class="form-control" name="start" id="start" placeholder="start" value="{{ filters.start }}">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="end">Max</label>
+                <input type="number" class="form-control" name="end" id="end" placeholder="end" value="{{ filters.end }}">
+            </fieldset>
+            <!--<div class="checkbox">
+                <label>
+                    {% if filters.start >= 1 %}
+                        <input type="checkbox" name="start" value="1" checked> Show only recommended
+                    {% else %}
+                        <input type="checkbox" name="start" value="1"> Show only recommended
+                    {% endif %}
+                </label>
+            </div>-->
+            <fieldset class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </fieldset>
+        </form>
     </form>
     </div>
     <div class="col-md-12">
