@@ -32,6 +32,7 @@ class AdminController extends Controller
             'end' => $end,
             'main' => $mainCat
         ];
+        $categories = $this->getEM()->getRepository('ActedLegalDocsBundle:Category')->getRecommended();
 
         $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, true, false, null, $mainCat);
         $data = $paginator->paginate($artistsQuery, $page, 10);
@@ -41,7 +42,7 @@ class AdminController extends Controller
         $paginations = $data->getPaginationData();
 
         return $this->render('ActedLegalDocsBundle:Admin:recommend.html.twig',
-           compact('artists', 'paginations', 'filters')
+           compact('artists', 'paginations', 'filters', 'categories')
         );
     }
 
@@ -160,7 +161,7 @@ class AdminController extends Controller
 
         $curArtist = $artistRepo->find($artistId);
         if ($spotlight === 0) {
-            $curArtist->setSpotlight(null);
+            $curArtist->setSpotlight(0);
             $this->getEM()->persist($curArtist);
             $this->getEM()->flush();
 

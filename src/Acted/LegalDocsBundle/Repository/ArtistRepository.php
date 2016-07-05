@@ -184,7 +184,8 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->andWhere('(MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0)')
                 ->setParameter('query', $query);
         }
-        if ($start) {
+
+        if ($start !== false && strlen($start) > 0) {
             if (!$spotlight) {
                 $qb
                     ->andWhere('rec.value >= :start')
@@ -209,9 +210,9 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
 
         }
 
-        if ($start !== false && $start < 1) {
+        if ($start !== false && $start < 1 && strlen($start) > 0 && !$end) {
             $qb
-                ->andWhere('a.spotlight IS NULL');
+                ->andWhere('a.spotlight = 0');
         }
         if ($recommend && ($start || $end)) {
             $qb
@@ -219,10 +220,9 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->orderBy('rec.value', 'ASC');
         }
 
-        if ($spotlight && ($start || $end)) {
+        if ($spotlight && ((int)$start !== 0)) {
             $qb
-                ->andWhere('a.spotlight IS NOT NULL')
-                //->andWhere('a.spotlight != 0')
+                ->andWhere('a.spotlight != 0')
                 ->orderBy('a.spotlight', 'ASC');
         }
         if ($mainCat) {
