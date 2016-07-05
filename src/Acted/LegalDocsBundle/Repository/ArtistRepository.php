@@ -228,7 +228,6 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         }
         if ($mainCat) {
             $qb
-                ->andWhere('rec.category = :main')
                 ->innerJoin('p.categories', 'c')
                 ->andWhere('c.parent = :main')
                 ->setParameter('main', $mainCat);
