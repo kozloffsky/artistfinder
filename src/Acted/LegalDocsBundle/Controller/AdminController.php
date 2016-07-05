@@ -141,7 +141,7 @@ class AdminController extends Controller
                 $errors[] = $error->getMessage();
             }
 
-            return new JsonResponse(['errors' => $errors], 400);
+            return new JsonResponse(['error' => $errors], 400);
         }
 
         return new JsonResponse(['success' => 'Recommendation was changed!']);
