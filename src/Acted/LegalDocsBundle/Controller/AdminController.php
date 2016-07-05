@@ -172,7 +172,7 @@ class AdminController extends Controller
         $artistRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:Artist');
 
         $curArtist = $artistRepo->find($artistId);
-        if ($spotlight === 0) {
+        if ((int)$spotlight === 0) {
             $curArtist->setSpotlight(0);
             $this->getEM()->persist($curArtist);
             $this->getEM()->flush();
