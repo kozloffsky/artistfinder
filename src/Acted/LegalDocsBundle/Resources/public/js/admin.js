@@ -16,11 +16,14 @@ $(function() {
         console.log(this)
         var artistEditManageId = $(this).parents('tr').attr('id');
         console.log(artistEditManageId);
+        var recommendedCat = $('#catMainSel option:selected').val();
         var artistREcommendedVal = $('tr#'+artistEditManageId+' .recommendedInput').val();
         $.ajax({
             type: "POST",
-            url: '/administration/manage_recommend/'+artistEditManageId,
-            data: {"recommend": artistREcommendedVal},
+            url: '/administration/manage_recommend',
+            data: {"value": artistREcommendedVal,
+                   "artist": artistEditManageId,
+                   "category": recommendedCat},
             success: function(){
                 $('tr#'+artistEditManageId+' .recommendedIndexAdmin').show().text(artistREcommendedVal);
                 $('tr#'+artistEditManageId+' .recommendedInput').hide();

@@ -38,7 +38,7 @@ class AdminController extends Controller
         }
 
         $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, true, false, null, $mainCat);
-        $data = $paginator->paginate($artistsQuery, $page, 10);
+        $data = $paginator->paginate($artistsQuery, $page, 30);
 
         $artists = $serializer->toArray($data->getItems(), SerializationContext::create()
             ->setGroups(['recommend_artist']));
@@ -70,7 +70,7 @@ class AdminController extends Controller
         ];
 
         $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, false, true, null);
-        $data = $paginator->paginate($artistsQuery, $page, 10);
+        $data = $paginator->paginate($artistsQuery, $page, 30);
 
         $artists = $serializer->toArray($data->getItems(), SerializationContext::create()
             ->setGroups(['spotlight_artist']));

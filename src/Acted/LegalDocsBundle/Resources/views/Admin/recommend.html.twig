@@ -9,8 +9,7 @@
         <form action="/administration/recommend/1">
             <fieldset class="form-group">
                 <label for="catMainSel">Select main category</label>
-                <select class="form-control" id="catMainSel" name="main" >
-                    <option>All</option>
+                <select class="form-control" id="catMainSel" name="main">
                     {% for category in categories %}
                         {% if category.id == filters.main %}
                             <option value="{{ category.id }}" selected="selected">{{ category.title }}</option>
@@ -24,15 +23,15 @@
                 <label for="querySearch">Search</label>
                 <input type="text" class="form-control" name="query" id="querySearch" placeholder="Search" value="{{ filters.query }}">
             </fieldset>
-            <fieldset class="form-group">
+            <!--<fieldset class="form-group">
                 <label for="start">Min</label>
                 <input type="number" class="form-control" name="start" id="start" placeholder="start" value="{{ filters.start }}">
             </fieldset>
             <fieldset class="form-group">
                 <label for="end">Max</label>
                 <input type="number" class="form-control" name="end" id="end" placeholder="end" value="{{ filters.end }}">
-            </fieldset>
-            <!--<div class="checkbox">
+            </fieldset>-->
+            <div class="checkbox">
                 <label>
                     {% if filters.start >= 1 %}
                         <input type="checkbox" name="start" value="1" checked> Show only recommended
@@ -40,7 +39,7 @@
                         <input type="checkbox" name="start" value="1"> Show only recommended
                     {% endif %}
                 </label>
-            </div>-->
+            </div>
             <fieldset class="form-group">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </fieldset>
@@ -66,13 +65,20 @@
                     <td>{{ artist.name }}</td>
                     <td>{{ artist.slug }}</td>
                     <td>
-                        <span class="recommendedIndexAdmin">{% if artist.recommend is defined %}
-                            {{ artist.recommend }}
+                        <span class="recommendedIndexAdmin">
+                        {% set recommended = artist.recommends|first %}
+                        {% if recommended.value is defined %}
+                            {{ recommended.value }}
                         {% else %}
                             0
                         {% endif %}
                         </span>
-                        <input type="number" class="recommendedInput">
+                        {% if recommended.value is defined %}
+                            <input type="number" class="recommendedInput" value="{{ recommended.value }}">
+                        {% else %}
+                            <input type="number" class="recommendedInput" placeholder="0">
+                        {% endif %}
+
                     </td>
                     <td>
                         {#{{ path('admin_manage_spotlight', {'id': artist.id }) }}#}
@@ -88,19 +94,19 @@
         <ul class="pagination">
             {% if paginations['previous'] is defined %}
                 <li>
-                    <a href="{{ path('admin_dashboard_recommend', {'page': paginations['previous']  }) }}" aria-label="Previous">
+                    <a href="{{ path('admin_dashboard_recommend', {'page': paginations['previous']  }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
             {% endif %}
             {% for pagin in range(1, paginations['pageRange']) %}
                 <li>
-                    <a href="{{ path('admin_dashboard_recommend', {'page': pagin }) }}">{{ pagin }}</a>
+                    <a href="{{ path('admin_dashboard_recommend', {'page': pagin }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}">{{ pagin }}</a>
                 </li>
             {% endfor %}
             {% if paginations['next'] is defined %}
                 <li>
-                    <a href="{{ path('admin_dashboard_recommend', {'page': paginations['next']  }) }}" aria-label="Next">
+                    <a href="{{ path('admin_dashboard_recommend', {'page': paginations['next']  }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

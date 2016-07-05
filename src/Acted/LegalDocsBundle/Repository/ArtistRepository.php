@@ -217,8 +217,8 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         }
         if ($recommend && ($start || $end)) {
             $qb
-                ->andWhere('rec.value IS NOT NULL')
-                ->orderBy('rec.value', 'ASC');
+                ->andWhere('rec.value IS NOT NULL');
+
         }
 
         if ($spotlight && ((int)$start !== 0)) {

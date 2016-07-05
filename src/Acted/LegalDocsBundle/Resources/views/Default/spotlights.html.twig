@@ -8,18 +8,11 @@
             <div class="prev-control"><i class="right fa fa-3x fa-angle-left"></i></div>
 
             {% for spotlight in homespotlight %}
-                {% if spotlight.media is defined %}
+                {% if spotlight.media is defined and spotlight.media.link is defined %}
                     <div class="wrap">
                         <a href="/profile/{{ spotlight.slug }}">
                             <img src="{{ spotlight.media.link|imagine_filter('medium') }}" alt="{{ spotlight.name }}" />
                         </a>
-                        <!--<span class="glyphicon glyphicon-play"></span>
-
-                        <div class="caption-block">
-                            <div class="name">
-                                <div class="text"></div>
-                            </div>
-                        </div>-->
                     </div>
                 {% endif %}
             {% endfor %}
