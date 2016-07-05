@@ -86,6 +86,12 @@ class AdminController extends Controller
             $data = $form->getData();
             $recommendRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:Recommend');
             $artist = $recommendRepo->findOneBy(['artist' => $data->getArtist(), 'category' => $data->getCategory()]);
+            if ($data->getValue() === 0 && $artist) {
+                $this->getEM()->remove($artist);
+                $this->getEM()->flush();
+
+                return new JsonResponse(['success' => 'Recommendation was changed!']);
+            }
             $recommends = $recommendRepo->findRecommendByData($data->getCategory(), $data->getArtist(),
                 $data->getValue());
 
@@ -138,7 +144,15 @@ class AdminController extends Controller
             return new JsonResponse(['error' => 'You should set only positive spotlight value'], 400);
         }
         $artistRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:Artist');
+
         $curArtist = $artistRepo->find($artistId);
+        if ($spotlight === 0) {
+            $curArtist->setSpotlight(null);
+            $this->getEM()->persist($curArtist);
+            $this->getEM()->flush();
+
+            return new JsonResponse(['success' => 'Spotlight was changed!']);
+        }
         $artists = $artistRepo->getArtistsList(null, $spotlight, null, false, true, $artistId)->getResult();
 
 

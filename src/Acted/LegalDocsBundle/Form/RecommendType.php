@@ -23,7 +23,7 @@ class RecommendType extends AbstractType
         $builder
             ->add('value', IntegerType::class, [
                 'constraints' => [new Range([
-                    'min' => 1,
+                    'min' => 0,
                     'max' => 100,
                     'minMessage' => 'You should set only positive recommend value less or equal 100',
                     'maxMessage' => 'You should set only positive recommend value less or equal 100',
