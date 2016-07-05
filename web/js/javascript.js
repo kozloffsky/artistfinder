@@ -4092,11 +4092,14 @@ $(function() {
         console.log(this)
         var artistEditManageId = $(this).parents('tr').attr('id');
         console.log(artistEditManageId);
+        var recommendedCat = $('#catMainSel option:selected').val();
         var artistREcommendedVal = $('tr#'+artistEditManageId+' .recommendedInput').val();
         $.ajax({
             type: "POST",
-            url: '/administration/manage_recommend/'+artistEditManageId,
-            data: {"recommend": artistREcommendedVal},
+            url: '/administration/manage_recommend',
+            data: {"value": artistREcommendedVal,
+                   "artist": artistEditManageId,
+                   "category": recommendedCat},
             success: function(){
                 $('tr#'+artistEditManageId+' .recommendedIndexAdmin').show().text(artistREcommendedVal);
                 $('tr#'+artistEditManageId+' .recommendedInput').hide();
@@ -10525,8 +10528,8 @@ $(function() {
 
     $(document).on('click','#addNewPerformanceBtn', function(){
         var newPerformanceBlock = $('.newPerformanceBlank').clone();
-        newPerformanceBlock.insertBefore('.controls.add').removeClass('hidden').fadeIn(800);
-        newPerformanceBlock.removeClass('newPerformanceBlank');
+        /*newPerformanceBlock.insertBefore('.controls.add').removeClass('hidden').fadeIn(800);
+        newPerformanceBlock.removeClass('newPerformanceBlank');*/
         createNewPerf(newPerformanceBlock)
     });
 
@@ -10539,6 +10542,8 @@ $(function() {
             data: {"performance[title]": 'new event',"performance[status]":"draft"},
             success: function (response) {
                 console.log(response)
+                newPerformanceBlock.insertBefore('.controls.add').removeClass('hidden').fadeIn(800);
+                newPerformanceBlock.removeClass('newPerformanceBlank');
                 $(newPerformanceBlock).find('form').attr('id', response.performance.id);
             }
         })
