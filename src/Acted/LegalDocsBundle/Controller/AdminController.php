@@ -166,7 +166,8 @@ class AdminController extends Controller
         $artistId = $request->get('id');
 
         $spotlight = $request->get('spotlight');
-        if ($spotlight < 0 ) {
+
+        if ((int)$spotlight < 0 ) {
             return new JsonResponse(['error' => 'You should set only positive spotlight value'], 400);
         }
         $artistRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:Artist');
