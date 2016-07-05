@@ -190,7 +190,9 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             if (!$spotlight) {
                 $qb
                     ->andWhere('rec.value >= :start')
-                    ->setParameter('start', (int)$start);
+                    ->andWhere('rec.category = :category')
+                    ->setParameter('start', (int)$start)
+                    ->setParameter('category', $mainCat);
             } else {
                 $qb
                     ->andWhere('a.spotlight >= :start')
