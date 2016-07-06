@@ -60,8 +60,14 @@ $(function () {
         });
     }
 
+    var retina = window.devicePixelRatio > 1;
 
-    var panelWidth = 204;
+    if(retina) {
+        var panelWidth = 155;
+    } else {
+        var panelWidth = 204;
+    }
+
     var sliderArea = $('.slider-block').width() - 70;
     var visiblePanels = parseInt(sliderArea/panelWidth);
     var margin = (sliderArea - panelWidth * visiblePanels) / visiblePanels;
@@ -73,10 +79,10 @@ $(function () {
         var slidersCount = $('.searchRecomendationWrapper').length;
         if(countSlidersRecommended == 0) {
             $('.searchRecomendationWrapper').bxSlider({
-                slideWidth: 204,
+                slideWidth: panelWidth,
                 minSlides: 1,
                 maxSlides: 5,
-                slideMargin: margin + 1,
+                slideMargin: margin + 2,
                 pager: false,
                 controls: true,
                 nextText: '<i class="fa fa-2x fa-angle-right"></i>',
@@ -98,10 +104,10 @@ $(function () {
         var slidersCount = $('.searchSearchResultWrapper').length;
         if(countSlidersSearch == 0) {
             $('.searchSearchResultWrapper').bxSlider({
-                slideWidth: 204,
+                slideWidth: panelWidth,
                 minSlides: 1,
                 maxSlides: 5,
-                slideMargin: margin + 1,
+                slideMargin: margin + 2,
                 pager: false,
                 controls: true,
                 nextText: '<i class="fa fa-2x fa-angle-right"></i>',
