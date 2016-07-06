@@ -67,14 +67,19 @@
                     <td>{{ artist.slug }}</td>
                     <td>
                         <span class="recommendedIndexAdmin">
-                        {% if artist.recommends|length < 1 %}
-                            0
-                        {% endif %}
+                        {% set existItem = 0 %}
                         {% for recommended in artist.recommends %}
                             {% if recommended.category.id == filters.main %}
                                 {{ recommended.value }}
+                                {% set existItem = 1 %}
                             {% endif %}
                         {% endfor %}
+                        {% if existItem == 0 %}
+                            0
+                        {% endif %}
+                        {% if artist.recommends|length < 1 %}
+                            0
+                        {% endif %}
                         </span>
                         {% if artist.recommends|length < 1 %}
                             <input type="number" class="recommendedInput" placeholder="0">
@@ -84,6 +89,10 @@
                                 <input type="number" class="recommendedInput" value="{{ recommended.value }}">
                             {% endif %}
                         {% endfor %}
+                        {% if existItem == 0 %}
+                            <input type="number" class="recommendedInput" placeholder="0">
+                        {% endif %}
+
                     </td>
                     <td>
                         {#{{ path('admin_manage_spotlight', {'id': artist.id }) }}#}
