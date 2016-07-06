@@ -12349,11 +12349,12 @@ $(function () {
     }
 
     function catSearchRes(searchCatName, searchMainCatId, response){
-        console.log(searchMainCatId)
-        var destinationTab = 'catSearchResNew';
+        console.log(searchCatName)
+        var destinationTab = 'catSearchResNew',
+            searchCategoryName = $('.categories-menu a[data-toggle="#' + searchMainCatId + '"]').text();
         var mainCatS = true;
         $('.results-menu').append('<li data-toggle="#tab-'+searchMainCatId+'" class="tab '+searchMainCatId+'Tab searchMainResTab">'+
-            '<a>'+searchCatName+'</a>'+
+            '<a>'+searchCategoryName+'</a>'+
             '<div class="deleteTabBlock"><span class="hidden">'+searchMainCatId+'</span><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>'+
             '</li>');
         $('.catSearchResNew').attr('id', 'tab-'+searchMainCatId+'');
