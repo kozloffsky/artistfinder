@@ -67,7 +67,7 @@ header.small .navbar {
     text-align: center;
 }
 .home.header-background .header-block {
-    max-width: 257px;
+    max-width: 376px;
 }
 
 .search.header-background .header-block {
@@ -85,7 +85,7 @@ header.small .navbar {
 
 .header-block h2 {
     font-family: UbuntuBold;
-    font-size: 38px;
+    font-size: 26px;
     color: #fff;
     margin-bottom: 55px;
 }
