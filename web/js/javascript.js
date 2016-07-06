@@ -11565,6 +11565,9 @@ $(function () {
 
     selectBoxStyle();
 
+
+
+
     function setTabsCorenersZ() {
         $('.results-menu>li').each(function (index) {
             var count = $('.results-menu>li').length;
@@ -11574,18 +11577,24 @@ $(function () {
 
     var retina = window.devicePixelRatio > 1;
 
-    if(retina) {
-        var panelWidth = 155;
-    } else {
-        var panelWidth = 204;
-    }
-
-    var sliderArea = $('.slider-block').width() - 70;
-    var visiblePanels = parseInt(sliderArea/panelWidth);
-    var margin = (sliderArea - panelWidth * visiblePanels) / visiblePanels;
-
     initSLiderRec();
     function initSLiderRec(){
+        if(retina) {
+            var panelWidth = 155;
+            var margin = 25;
+        } else {
+            var panelWidth = 204;
+            var margin = 11;
+            /*var sliderArea = $('.container').width() - 70;
+            console.log(sliderArea)
+            var visiblePanels = parseInt(sliderArea/panelWidth);
+            console.log(visiblePanels)
+            var margin = (sliderArea - panelWidth * visiblePanels) / visiblePanels;*/
+
+        }
+
+
+
         var countSlidersRecommended = $('.recommendationsTabContent .bx-viewport').length;
         console.log(countSlidersRecommended)
         var slidersCount = $('.searchRecomendationWrapper').length;
@@ -11594,7 +11603,7 @@ $(function () {
                 slideWidth: panelWidth,
                 minSlides: 1,
                 maxSlides: 5,
-                slideMargin: margin + 2,
+                slideMargin: margin+ 2,
                 pager: false,
                 controls: true,
                 nextText: '<i class="fa fa-2x fa-angle-right"></i>',
@@ -11612,6 +11621,20 @@ $(function () {
     }
 
     function initSLiderSearchRes(){
+        if(retina) {
+            var panelWidth = 155;
+            var margin = 25;
+        } else {
+            var panelWidth = 204;
+            var margin = 11;
+            /*var sliderArea = $('.container').width() - 70;
+            console.log(sliderArea)
+            var visiblePanels = parseInt(sliderArea/panelWidth);
+            console.log(visiblePanels)
+            var margin = (sliderArea - panelWidth * visiblePanels) / visiblePanels;*/
+
+        }
+
         var countSlidersSearch = $('.SearchResultTabContent .bx-viewport').length;
         var slidersCount = $('.searchSearchResultWrapper').length;
         if(countSlidersSearch == 0) {
