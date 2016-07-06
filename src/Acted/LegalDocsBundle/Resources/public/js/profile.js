@@ -282,7 +282,8 @@ $(function() {
             $.ajax({
                 type: "POST",
                 url: '/media/' + mediaChangeId + '/edit',
-                data: {"video": videoAddedVal},
+                data: {"video": videoAddedVal,
+                    "position":2},
                 beforeSend: function(){
                     $('#loadSpinner').fadeIn(500);
                 },
@@ -341,7 +342,6 @@ $(function() {
 
     $(document).on('click','.publishOfferPerf',function(ev){
         ev.preventDefault();
-
         var parentPerformance = $(this).parents('form'),
             performanceId = parentPerformance.attr('id'),
             dataSendOfferTitile = $(parentPerformance).find('.offerTitlePerf').val(),
@@ -361,6 +361,11 @@ $(function() {
                     $(parentPerformance).find('.error').addClass('hidden');
                 }
             })
+        } else {
+            var slug = $('#slug').text(),
+                perfCreateUrl = '/profile/performance/' + performanceId + '/edit',
+                parentPerformanceBlock = $(parentPerformance).parent('article');
+            saveOffer(slug, perfCreateUrl, dataToSendOffer, parentPerformanceBlock)
         }
     })
 
@@ -1053,7 +1058,9 @@ $(function() {
             performanceId = parentPerformanceForm.attr('id'),
             slug = $('#slug').text(),
             dataSendOfferTitile = $(parentPerformanceForm).find('.offerTitlePerf').val(),
-            dataSendOfferInf = $(parentPerformanceForm).find('.description-area').val();
+            dataSendOfferInf = $(parentPerformanceForm).find('.description-area').val(),
+            performanceCurentStatus = $(parentPerformanceForm).find('.makeDraft');
+        console.log(performanceCurentStatus);
         console.log(performanceId);
         var dataToSendOffer = {"performance[title]": dataSendOfferTitile,
                                "performance[status]":"draft",
@@ -1064,7 +1071,27 @@ $(function() {
             var perfCreateUrl = '/profile/performance/' + performanceId + '/edit';
         }
         console.log(slug, perfCreateUrl, dataSendOfferTitile)
-        saveOffer(slug, perfCreateUrl, dataToSendOffer, parentPerformance)
+        if(performanceCurentStatus.length > 0){
+            if (validatePerformance(performanceId)){
+                $.ajax({
+                    type: "PATCH",
+                    url: '/profile/performance/' + performanceId + '/edit',
+                    data: {"performance[title]": dataSendOfferTitile,
+                        "performance[status]":"published",
+                        "performance[techRequirement]": dataSendOfferInf},
+                    success: function (responseText) {
+                        //$(parentPerformance).find('.publishOfferPerf').addClass('makeDraft').removeClass('publishOfferPerf').text('Make draft now');
+                        //$(parentPerformance).find('.error').addClass('hidden');
+                    }
+                })
+            } else {
+                $(parentPerformance).find('.makeDraft').addClass('publishOfferPerf').removeClass('makeDraft').text('Publish now');
+                saveOffer(slug, perfCreateUrl, dataToSendOffer, parentPerformance);
+                $(parentPerformance).find('.error').addClass('hidden');
+            }
+        } else {
+            saveOffer(slug, perfCreateUrl, dataToSendOffer, parentPerformance)
+        }
     });
 
     function saveOffer(slug, perfCreateUrl, dataToSendOffer, parentPerformance){
