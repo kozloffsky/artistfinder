@@ -75,7 +75,9 @@ class MediaController extends Controller
                 }
                 $media = $mediaManager->updatePhoto($file, $media, $request);
             }
-
+            if (isset($data['position']) && !empty($data['position'])) {
+                $media->setPosition($data['position']);
+            }
             $em->persist($media);
             $em->flush();
 
