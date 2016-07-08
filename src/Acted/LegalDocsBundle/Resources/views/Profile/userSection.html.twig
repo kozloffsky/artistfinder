@@ -1,7 +1,13 @@
 
-    <div class="header-background" style="background-image: url({{ artist.user.background }})">
+{% if artist.user.background != '/' %}
+    <div class="header-background" style="background-image: url({{ asset(artist.user.background)|imagine_filter('background') }})">
         <div class="background-stripe"></div>
     </div>
+{% else %}
+    <div class="header-background" style="background-image: url({{ asset(artist.user.background) }})">
+        <div class="background-stripe"></div>
+    </div>
+{% endif %}
 
     <span id="slug" class="hidden">{{ artist.slug }}</span>
     <section class="profile-info container">

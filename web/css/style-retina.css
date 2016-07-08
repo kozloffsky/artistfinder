@@ -2960,6 +2960,22 @@ header.small .navbar {
     }
 }
 
+.header-background .set-background {
+    position: absolute;
+    right: 5%;
+    top: 15%;
+    background: none;
+    font-size: 16px;
+    border: none;
+    margin: 0;
+    color: #fff;
+    cursor: pointer;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+}
+
 .registration-modal {
     margin-top: 56px;
 }
