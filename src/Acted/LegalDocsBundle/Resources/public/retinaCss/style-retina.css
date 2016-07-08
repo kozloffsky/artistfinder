@@ -3288,3 +3288,8 @@ a.disabled {
 {
     right: 0 !important;
 }
+.media-content.video .holder {
+    width: 70%;
+    margin: 0 auto 15px;
+    height: 420px;
+}

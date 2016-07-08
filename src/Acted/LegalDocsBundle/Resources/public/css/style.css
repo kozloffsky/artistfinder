@@ -3132,3 +3132,8 @@ a.disabled {
 {
     display: none;
 }
+.media-content.video .holder {
+    width: 70%;
+    margin: 0 auto 15px;
+    height: 480px;
+}

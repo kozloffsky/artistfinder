@@ -10154,7 +10154,7 @@ $(function() {
                 console.log(newVideoLink, videoThumbnail);
                 var indexOfThumb = $('#video-pager .scale-thumb').length;
                 $('.bxVideoSlider').append('<li id="imageSlider'+newVideoId+'"><iframe src='+ newVideoLink +'  width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>');
-                $('#video-pager').append('<div class="scale-thumb thumb'+ indexOfThumb + 1 +'"><span class="removeNewImage deleteMedia" id='+newVideoId+'><i class="fa fa-times-circle-o"></i></span><a data-slide-index='+ indexOfThumb +' href=""><img id='+newVideoId+' src='+videoThumbnail+'/></a></div>');
+                $('#video-pager').append('<div class="scale-thumb thumb'+ indexOfThumb + 1 +'"><span class="removeNewImage deleteMedia" id='+newVideoId+'><i class="fa fa-times-circle-o"></i></span><a data-slide-index='+ indexOfThumb +' href=""><img id="'+newVideoId+'" src="'+videoThumbnail+'"/></a></div>');
                 console.log(indexOfThumb);
                 $("#media [data-target='#section-video'] .badge").text(indexOfThumb + 1);
                 //videoSlider.reloadSlider();

@@ -54,15 +54,16 @@
         </section>
 
 
-        <section class="media-content wrapper" id="section-video" >
+        <section class="media-content video wrapper" id="section-video" >
 
-            <div class="holder">
+            <div class="holder ">
                 <span class="btn-prev" id="nextVideoSlide"></span>
                 <span class="btn-next" id="prevVideoSlide"></span>
 
                 <ul class="bxVideoSlider">
                     {% for video in artist.user.profile.videoList %}
-                        <li id="imageSlider{{ video.videoId }}"><iframe src="{{ video.link }}" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>
+                        <li id="imageSlider{{ video.videoId }}">
+                            <iframe src="{{ video.link }}" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>
                     {% endfor %}
                 </ul>
             </div>

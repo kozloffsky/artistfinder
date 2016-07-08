@@ -81,7 +81,7 @@
         </section>
 
 
-        <section class="media-content wrapper" id="section-video" >
+        <section class="media-content video wrapper" id="section-video" >
             {% if is_granted('EDIT', artist) %}
                 <div class="col-md-6 add-video-block">
                 <form class="videoAddForm">
@@ -107,7 +107,7 @@
                         {% if is_granted('EDIT', artist) %}
                         <span class="removeNewImage deleteMedia" id="{{ video.id }}"><i class="fa fa-times-circle-o"></i></span>
                         {% endif %}
-                        <a data-slide-index="{{ loop.index0 }}" href=""><img id="{{ video.videoId }}" src="{{ video.thumbnail }}"/></a>
+                        <a data-slide-index="{{ loop.index0 }}" href=""><img id="{{ video.videoId }}" src="{{ video.thumbnail }}"></a>
                     </div>
                 {% endfor %}
             </div>
