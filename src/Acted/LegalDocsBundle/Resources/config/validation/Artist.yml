@@ -4,12 +4,6 @@ Acted\LegalDocsBundle\Entity\Artist:
       - NotBlank: ~
       - Length:
           min: 3
-    recommend:
-      - Length:
-          min: 0
-          max: 100
-          minMessage: 'Your recommended value must be bigger or equal {{ limit }}'
-          maxMessage: 'Your recommended value cannot be bigger than {{ limit }}'
   constraints:
     - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
     - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: slug
