@@ -3132,8 +3132,28 @@ a.disabled {
 {
     display: none;
 }
+
 .media-content.video .holder {
     width: 70%;
     margin: 0 auto 15px;
     height: 480px;
 }
+
+.price-list .item .info pre {
+    margin: 0 0 10px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    font-size: 16px;
+    font-family: LatoRegular;
+    color: #636363;
+    word-break: normal;
+    max-height: 196px;
+    overflow-y: auto;
+    white-space: pre-line;
+}
+.price-list .info .box
+{
+    overflow: hidden;
+}
+
