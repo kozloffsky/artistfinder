@@ -7459,7 +7459,7 @@ $(function() {
                         '<div class="text">'+this.message_text+'</div>'+
                         '<div class="controls hidden-xs">'+
                         '<div class="button-gradient filled blue">'+
-                        '<a href="'+this.chat_room.chat_id+'" class="btn register">See Conversation</a>'+
+                        '<a href="/dashboard/chat/'+this.chat_room.chat_id+'" class="btn register">See Conversation</a>'+
                         '</div>'+
                         '</div>'+
                         '</div>'+
@@ -9855,6 +9855,7 @@ $(function() {
             "performance[techRequirement]": dataSendOfferInf};
         console.log(validatePerformance(performanceId))
         if(validatePerformance(performanceId)){
+            console.log('validateTru')
             $.ajax({
                 type: "PATCH",
                 url: '/profile/performance/' + performanceId + '/edit',
@@ -9865,9 +9866,13 @@ $(function() {
                 }
             })
         } else {
+            console.log('validateFalse')
             var slug = $('#slug').text(),
                 perfCreateUrl = '/profile/performance/' + performanceId + '/edit',
                 parentPerformanceBlock = $(parentPerformance).parent('article');
+            var dataToSendOffer = {"performance[title]": dataSendOfferTitile,
+                "performance[status]":"draft",
+                "performance[techRequirement]": dataSendOfferInf};
             saveOffer(slug, perfCreateUrl, dataToSendOffer, parentPerformanceBlock)
         }
     })

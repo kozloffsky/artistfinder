@@ -352,6 +352,7 @@ $(function() {
             "performance[techRequirement]": dataSendOfferInf};
         console.log(validatePerformance(performanceId))
         if(validatePerformance(performanceId)){
+            console.log('validateTru')
             $.ajax({
                 type: "PATCH",
                 url: '/profile/performance/' + performanceId + '/edit',
@@ -362,9 +363,13 @@ $(function() {
                 }
             })
         } else {
+            console.log('validateFalse')
             var slug = $('#slug').text(),
                 perfCreateUrl = '/profile/performance/' + performanceId + '/edit',
                 parentPerformanceBlock = $(parentPerformance).parent('article');
+            var dataToSendOffer = {"performance[title]": dataSendOfferTitile,
+                "performance[status]":"draft",
+                "performance[techRequirement]": dataSendOfferInf};
             saveOffer(slug, perfCreateUrl, dataToSendOffer, parentPerformanceBlock)
         }
     })
