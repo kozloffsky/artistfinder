@@ -1,9 +1,9 @@
 <section id="biography" class="profile-block biography">
     {% if is_granted('EDIT', artist) %}
     <div class="title"><span>Biography</span><div id="editBiography" class=""><i class="fa fa-pencil-square-o"></i></div></div>
-    <p id="biographyEditable" data-type="textarea" data-pk="{{ artist.id }}" data-title="">
+    <pre id="biographyEditable" data-type="textarea" data-pk="{{ artist.id }}" data-title="">
         {{ artist.user.profile.description }}
-    </p>
+    </pre>
     {% else %}
         <div class="title"><span>Biography</span></div>
     <pre>
