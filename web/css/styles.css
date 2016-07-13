@@ -11469,4 +11469,16 @@ a.disabled {
 {
     overflow: hidden;
 }
-
+#photo-pager
+{
+    text-align: center;
+}
+.biography pre {
+    font-size: 20px;
+    font-family: LatoRegular;
+    color: #636363;
+    background-color: transparent;
+    border: none;
+    word-break: normal;
+    white-space: pre-line;
+}
