@@ -112,7 +112,11 @@ class MediaManager
         if($videoInfo) {
             preg_match('/src="(.+?)"/', $videoInfo->getCode(), $videoLinkMatch);
             if(isset($videoLinkMatch[1])) {
-                $media->setLink($videoLinkMatch[1]);
+                if (strripos($link, 'youtube.com') || strripos($link, 'youtu.be')) {
+                    $media->setLink($videoLinkMatch[1] . '&enablejsapi=1&version=3&playerapiid=ytplayer');
+                } else {
+                    $media->setLink($videoLinkMatch[1]);
+                }
             }
             $media->setThumbnail($videoInfo->getImage());
             $media->setName($videoInfo->getTitle());
