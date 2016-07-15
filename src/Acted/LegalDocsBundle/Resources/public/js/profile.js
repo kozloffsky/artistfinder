@@ -489,7 +489,7 @@ $(function() {
                             $.ajax({
                                 type: "POST",
                                 url: '/media/' + mediaId + '/edit',
-                                data: {"file": resp},
+                                data: {"file": resp,"position":2},
                                 beforeSend: function () {
                                     $('#loadSpinner').fadeIn(500);
                                 },
@@ -1142,8 +1142,23 @@ $(function() {
     function getPagination(paginationRoute, paginationTarget){
         $.get(paginationRoute, function( data ) {
             $(paginationTarget).html(data);
+            setPerformanceFrameHeight();
         });
     }
+
+    setPerformanceFrameHeight();
+
+    $( window ).resize(function() {
+        setPerformanceFrameHeight();
+    });
+
+    function setPerformanceFrameHeight(){
+        $('.price-list article:not(.newPerformanceBlank)').each(function(){
+            var firstHolderSize = $(this).find('.holder')[0].clientHeight;
+            $(this).find('iframe').css('height', firstHolderSize);
+        });
+    }
+
     iframeTracking();
 
     function iframeTracking(){
