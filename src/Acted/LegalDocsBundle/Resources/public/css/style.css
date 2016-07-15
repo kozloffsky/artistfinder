@@ -3169,3 +3169,19 @@ a.disabled {
     word-break: normal;
     white-space: pre-line;
 }
+
+/*@media (min-width: 992px) and (max-width: 1200px){
+    .price-list .video iframe {
+        height: 255px;
+    }
+    .price-list .holder {
+        height: auto;
+    }
+}*/
+@media (max-width: 720px) {
+    .price-list .holder {
+        width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+}
