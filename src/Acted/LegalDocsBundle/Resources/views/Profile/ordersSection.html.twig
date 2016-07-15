@@ -19,7 +19,7 @@
                         <div class="holder video">
                             {% for mediaOf in performance.media[0:2] if mediaOf.position == 2 %}
                                 {% if mediaOf.mediaType == "video" %}
-                                    <iframe src="{{ mediaOf.link }}" width="100%" height="auto" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+                                    <iframe id="{{ mediaOf.id }}" src="{{ mediaOf.link }}" width="100%" height="auto" frameborder="0" allowscriptaccess="always" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
                                 {% else %}
                                     <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">
                                 {% endif %}

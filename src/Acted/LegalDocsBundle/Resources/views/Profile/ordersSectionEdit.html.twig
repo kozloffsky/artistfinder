@@ -55,7 +55,7 @@
                                         </div>
                                         {% if mediaOf.mediaType == "video" %}
                                             <div class="performanceVideo">
-                                                <iframe src="{{ mediaOf.link }}" width="100%" height="auto" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+                                                <iframe id="{{ mediaOf.id }}" src="{{ mediaOf.link }}" width="100%" height="auto" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
                                             </div>
                                         {% else %}
                                             <img class="preview" src="{{ asset(mediaOf.link)|imagine_filter('medium')}}" alt="Preview">

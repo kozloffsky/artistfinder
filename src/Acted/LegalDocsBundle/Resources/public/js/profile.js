@@ -1144,6 +1144,65 @@ $(function() {
             $(paginationTarget).html(data);
         });
     }
+    iframeTracking();
+
+    function iframeTracking(){
+
+        var videoClickedIds = {};
+
+        $('iframe').iframeTracker({
+            blurCallback: function(element){
+                var frameStartedId = this._overId;
+                var frameSrc = this._overSrc;
+
+                videoClickedIds[frameStartedId] = frameSrc;
+                stopVideoFrame(frameStartedId)
+            },
+            overCallback: function(element){
+                this._overId = $(element).attr('id');
+                this._overSrc = $(element).attr('src');
+            },
+            outCallback: function(element){
+                this._overId = null; // Reset hover iframe wrapper id
+                this._overSrc = null;
+            },
+            _overId: null
+        });
+
+        function stopVideoFrame(frameStartedId){
+            console.log(frameStartedId);
+            for(var propt in videoClickedIds) {
+                console.log(frameStartedId);
+                if(getVideoFrameName(videoClickedIds[propt]) == 'youtube' && propt != frameStartedId){
+                    $('#'+propt+'')[0].contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
+                }
+                if(getVideoFrameName(videoClickedIds[propt]) == 'vimeo' && propt != frameStartedId){
+                    var iframeVideo = $('#'+propt+'')[0];
+                    var playerVimeo = $f(iframeVideo);
+                    playerVimeo.api('pause');
+                }
+                if(getVideoFrameName(videoClickedIds[propt]) == 'soundcloud' && propt != frameStartedId){
+                    var widgetIframe = document.getElementById(propt),
+                        widget       = SC.Widget(widgetIframe);
+                    widget.pause();
+                }
+            }
+
+        }
+
+        function getVideoFrameName(frameSrc){
+            if(frameSrc.search('youtube.com') > 0 || frameSrc.search('youtu.be') > 0){
+                var frameService = 'youtube';
+            } else if (frameSrc.search('vimeo.com') > 0){
+                var frameService = 'vimeo';
+            } else if (frameSrc.search('soundcloud.com') > 0 ){
+                var frameService = 'soundcloud';
+            } else {
+                var frameService = false;
+            }
+            return frameService;
+        }
+    }
 });
 
 
