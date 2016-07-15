@@ -10849,7 +10849,13 @@ $(function() {
                     var playerVimeo = $f(iframeVideo);
                     playerVimeo.api('pause');
                 }
+                if(getVideoFrameName(videoClickedIds[propt]) == 'soundcloud' && propt != frameStartedId){
+                    var widgetIframe = document.getElementById(propt),
+                        widget       = SC.Widget(widgetIframe);
+                    widget.pause();
+                }
             }
+
         }
 
         function getVideoFrameName(frameSrc){
