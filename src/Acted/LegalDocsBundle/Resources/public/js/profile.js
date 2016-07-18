@@ -1152,6 +1152,12 @@ $(function() {
         setPerformanceFrameHeight();
     });
 
+    var retina = window.devicePixelRatio > 1;
+
+    if(retina) {
+        setTimeout(function() { setPerformanceFrameHeight(); }, 1500)
+    }
+
     function setPerformanceFrameHeight(){
         $('.price-list article:not(.newPerformanceBlank)').each(function(){
             var firstHolderSize = $(this).find('.holder')[0].clientHeight;
