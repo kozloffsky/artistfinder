@@ -10,4 +10,23 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param string $query
+     * @return \Doctrine\ORM\Query
+     */
+    public function getUsersList($query)
+    {
+        $qb =  $this
+            ->createQueryBuilder('u')
+            ->innerJoin('u.artist', 'a')
+            ->orderBy('u.id', 'ASC');
+
+        if ($query) {
+            $qb
+                ->andWhere('(MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0)')
+                ->setParameter('query', $query);
+        }
+
+        return $qb->getQuery();
+    }
 }

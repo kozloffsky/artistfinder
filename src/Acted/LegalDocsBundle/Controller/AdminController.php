@@ -195,4 +195,31 @@ class AdminController extends Controller
 
         return new JsonResponse(['success' => 'Spotlight was changed!']);
     }
+
+    /**
+     * @param Request $request
+     * @param $page
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function userListAction(Request $request, $page)
+    {
+        $serializer = $this->get('jms_serializer');
+        $paginator  = $this->get('knp_paginator');
+        $userRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:User');
+        $query = $request->get('query');
+        $filters = [
+            'query' => $query,
+        ];
+
+        $usersQuery = $userRepo->getUsersList($query);
+        $data = $paginator->paginate($usersQuery, $page, 30);
+
+        $users = $serializer->toArray($data->getItems(), SerializationContext::create()
+            ->setGroups(['users_list']));
+        $paginations = $data->getPaginationData();
+
+        return $this->render('ActedLegalDocsBundle:Admin:usersList.html.twig',
+            compact('users', 'paginations', 'filters')
+        );
+    }
 }

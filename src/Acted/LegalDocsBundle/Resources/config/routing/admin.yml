@@ -17,3 +17,8 @@ admin_manage_spotlight:
     path:     /manage_spotlight/{id}
     defaults: { _controller: ActedLegalDocsBundle:Admin:changeSpotlightValue, _format: json }
     methods:  POST
+
+admin_users_list:
+    path:     /users/list/{page}
+    defaults: { _controller: ActedLegalDocsBundle:Admin:userList, page: 1 }
+    methods:  GET

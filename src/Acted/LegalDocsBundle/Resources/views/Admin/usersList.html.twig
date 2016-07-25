@@ -1,0 +1,72 @@
+{% extends '_layout.html.twig' %}
+
+{% block body %}
+
+    <div class="col-md-12">
+        <h2 class="sub-header">Spotlight</h2>
+    </div>
+
+    <div class="col-md-4">
+        <form action="/administration/spotlight/1">
+            <fieldset class="form-group">
+                <label for="querySearch">Search</label>
+                <input type="text" class="form-control" name="query" id="querySearch" placeholder="Search" value="{{ filters.query }}">
+            </fieldset>
+            <fieldset class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </fieldset>
+        </form>
+    </div>
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Slug</th>
+                    <th>email</th>
+                    <th>active</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr id="{{ user.id }}">
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.artist.slug }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.active }}</td>
+                        <td>
+                            <a href="#"><button type="button" class="btn btn-info manageSpotlight">Manage</button></a>
+                            <a href="#"><button type="button" class="btn btn-info saveSpotlight">Save</button></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <nav>
+            <ul class="pagination">
+                {% if paginations['previous'] is defined %}
+                    <li>
+                        <a href="{{ path('admin_users_list', {'page': paginations['previous']  }) }}?query={{ filters.query }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% for pagin in range(1, paginations['pageRange']) %}
+                    <li>
+                        <a href="{{ path('admin_users_list', {'page': pagin }) }}?query={{ filters.query }}">{{ pagin }}</a>
+                    </li>
+                {% endfor %}
+                {% if paginations['next'] is defined %}
+                    <li>
+                        <a href="{{ path('admin_users_list', {'page': paginations['next']  }) }}?query={{ filters.query }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+{% endblock %}
