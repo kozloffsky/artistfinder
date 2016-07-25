@@ -4,22 +4,14 @@ namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Recommend;
-use Acted\LegalDocsBundle\Form\CreateUserType;
 use Acted\LegalDocsBundle\Form\RecommendType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializationContext;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Acted\LegalDocsBundle\Entity\User;
-use Acted\LegalDocsBundle\Popo\RegisterUser;
 
 class AdminController extends Controller
 {
-
-    public function indexAction()
-    {
-        return $this->render('ActedLegalDocsBundle:Admin:index.html.twig', []);
-    }
     /**
      * @param Request $request
      * @return JsonResponse
@@ -44,7 +36,6 @@ class AdminController extends Controller
         if (!$mainCat) {
             $mainCat = $categories[0]->getId();
         }
-
 
         $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, true, false, null, $mainCat);
         $data = $paginator->paginate($artistsQuery, $page, 30);
@@ -216,19 +207,11 @@ class AdminController extends Controller
         $paginator  = $this->get('knp_paginator');
         $userRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:User');
         $query = $request->get('query');
-        $role = $request->get('role');
-        $fake = $request->get('fake');
-        $userId = $request->get('userId');
         $filters = [
             'query' => $query,
-            'role' => $role,
-            'fake' => $fake,
-            'userId' => $userId
         ];
-        $curUserId = $this->getUser()->getId();
-        $categories = $this->categoriesList();
 
-        $usersQuery = $userRepo->getUsersList($query, $role, $curUserId, $fake, $userId);
+        $usersQuery = $userRepo->getUsersList($query);
         $data = $paginator->paginate($usersQuery, $page, 30);
 
         $users = $serializer->toArray($data->getItems(), SerializationContext::create()
@@ -236,206 +219,7 @@ class AdminController extends Controller
         $paginations = $data->getPaginationData();
 
         return $this->render('ActedLegalDocsBundle:Admin:usersList.html.twig',
-            compact('users', 'paginations', 'filters', 'categories')
+            compact('users', 'paginations', 'filters')
         );
-    }
-
-    /**
-     * Create new user
-     *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Create new user",
-     *  input="Acted\LegalDocsBundle\Form\CreateUserType",
-     *  statusCodes={
-     *         200="Returned when successful",
-     *         400="Returned when the form has validation errors",
-     *     }
-     * )
-     */
-    public function createNewUserAction(Request $request)
-    {
-        $form = $this->createForm(CreateUserType::class);
-        $form->handleRequest($request);
-        $serializer = $this->get('jms_serializer');
-
-        if($form->isSubmitted() && $form->isValid()) {
-            /** @var RegisterUser $data */
-            $data = $form->getData();
-
-            $userManager = $this->get('app.user.manager');
-            $validator = $this->get('validator');
-            $em = $this->getDoctrine()->getManager();
-
-            $user = $userManager->newUser($data);
-
-            if ($data->getRole() == 'ROLE_ARTIST') {
-                $user->setPrimaryPhone($data->getPhone());
-            }
-
-            $validationErrors = $validator->validate($user);
-            $now = new \DateTime();
-            $user->setCreatedAt($now);
-            $user->setPasswordRequestedAt($now);
-            $user->setActive(true);
-            $em->persist($user);
-
-            if ($data->getRole() == 'ROLE_ARTIST') {
-                $profile = $userManager->newProfile($data);
-                $profile->setUser($user);
-                $profile->setActive(true);
-                $validationErrors->addAll($validator->validate($profile));
-
-                $artist = $userManager->newArtist($data);
-                $artist->setUser($user);
-                $validationErrors->addAll($validator->validate($artist));
-
-                $em->persist($profile);
-                $em->persist($artist);
-            }
-
-            if (count($validationErrors) > 0) {
-                $errors = $serializer->toArray($validationErrors);
-                $prettyErrors = [];
-                foreach($errors as $error) {
-                    foreach($error as $key=>$value) {
-                        $prettyErrors[$key] = $value;
-                    }
-                }
-                return new JsonResponse($prettyErrors, 400);
-            }
-
-            $em->flush();
-            if (!$user->isFake()) {
-                $userManager->confirmationForCreatedUser($user);
-            }
-
-            return new JsonResponse($serializer->toArray($user));
-        }
-
-        return new JsonResponse($this->get('app.form_errors_serializer')->serializeFormErrors($form, false), 400);
-    }
-
-    /**
-     * Resend confirmation token
-     *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Resend confirmation token",
-     *  statusCodes={
-     *         200="Returned when successful",
-     *         400="Returned when the form has validation errors",
-     *     }
-     * )
-     * @param integer $userId
-     * @return JsonResponse
-     */
-    public function resendConfirmationTokenAction($userId)
-    {
-        $userRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:User');
-        $userManager = $this->get('app.user.manager');
-        $user = $userRepo->find($userId);
-        if (is_null($user->getConfirmationToken())) {
-            /** if not exist token - generate new token */
-            $user->setConfirmationToken($userManager->generateToken());
-        }
-        $now = new \DateTime();
-        $user->setCreatedAt($now);
-        $user->setPasswordRequestedAt($now);
-        $this->getEM()->persist($user);
-        $this->getEM()->flush();
-
-        try {
-            $userManager->confirmationForCreatedUser($user);
-
-            return new JsonResponse(['success' => 'Message was sent successfully!']);
-        } catch (\Exception $exp) {
-            return new JsonResponse(['error' => $exp->getMessage()], 400);
-        }
-    }
-
-    /**
-     * Delete user by id
-     *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Delete user by id",
-     *  statusCodes={
-     *         200="Returned when successful",
-     *         400="Returned when the form has validation errors",
-     *     }
-     * )
-     * @param User $user
-     * @return JsonResponse
-     */
-    public function deleteUserAction(User $user)
-    {
-        $em = $this->getEM();
-        $mediaManager = $this->container->get('app.media.manager');
-        try {
-            $messageFileRepo = $em->getRepository('ActedLegalDocsBundle:MessageFile');
-            $messageFiles = $messageFileRepo->getFileByUser($user);
-            if ($user->getRoles()[0] === 'ROLE_ARTIST'){
-                $mediaManager->removeFiles($user, $messageFiles);
-            }
-            $em->remove($user);
-            $em->flush();
-
-            return new JsonResponse(['success' => 'User remove successfully']);
-        } catch (\Exception $exp) {
-            return new JsonResponse(['error' => $exp->getMessage()], 400);
-        }
-
-    }
-
-    /**
-     * Change status user
-     *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Change status user status = activate|deactivate",
-     *  statusCodes={
-     *         200="Returned when successful",
-     *         400="Returned when the form has validation errors",
-     *     }
-     * )
-     * @param Request $request
-     * @param User $user
-     * @return JsonResponse
-     */
-    public function changeStatusAction(Request $request, User $user)
-    {
-        try {
-            switch ($request->get('status')){
-                case 'activate':
-                    $user->setActive(1);
-                    $this->getEM()->persist($user);
-                    $this->getEM()->flush();
-                    break;
-                case 'deactivate':
-                    $user->setActive(0);
-                    $this->getEM()->persist($user);
-                    $this->getEM()->flush();
-                    break;
-            }
-
-            return new JsonResponse(['success' => 'Status change successfully!']);
-        } catch (\Exception $exp) {
-            return new JsonResponse(['error' => $exp->getMessage()], 400);
-        }
-
-    }
-
-    /**
-     * List of categories
-     * @return array
-     */
-    public function categoriesList()
-    {
-        return $this
-            ->getEM()
-            ->getRepository('ActedLegalDocsBundle:Category')
-            ->childrenHierarchy();
-
     }
 }

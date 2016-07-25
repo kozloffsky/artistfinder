@@ -17,8 +17,6 @@ Acted\LegalDocsBundle\Entity\User:
       groups: [chat_list, chat_room, message, all_messages, users_list]
     active:
       groups: [users_list]
-    fake:
-      groups: [users_list]
     email:
       groups: [users_list]
     artist:

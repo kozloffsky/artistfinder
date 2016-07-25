@@ -1,8 +1,3 @@
-admin_dashboard_homepage:
-    path:     /
-    defaults: { _controller: ActedLegalDocsBundle:Admin:index }
-    methods:  GET
-
 admin_dashboard_recommend:
     path:     /recommend/{page}
     defaults: { _controller: ActedLegalDocsBundle:Admin:recommend, page: 1 }
@@ -27,23 +22,3 @@ admin_users_list:
     path:     /users/list/{page}
     defaults: { _controller: ActedLegalDocsBundle:Admin:userList, page: 1 }
     methods:  GET
-
-admin_create_user:
-    path:     /users/create
-    defaults: { _controller: ActedLegalDocsBundle:Admin:createNewUser, _format: json }
-    methods:  POST
-
-admin_resend_confirmation_token:
-    path:     /users/resend_confirmation_token/{userId}
-    defaults: { _controller: ActedLegalDocsBundle:Admin:resendConfirmationToken, _format: json }
-    methods:  POST
-
-admin_delete_user:
-    path:     /users/delete/{user}
-    defaults: { _controller: ActedLegalDocsBundle:Admin:deleteUser, _format: json }
-    methods:  DELETE
-
-admin_change_status_user:
-    path:     /users/change_status/{user}
-    defaults: { _controller: ActedLegalDocsBundle:Admin:changeStatus, _format: json }
-    methods:  POST
