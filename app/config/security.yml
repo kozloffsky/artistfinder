@@ -11,7 +11,7 @@ security:
             entity: { class: Acted\LegalDocsBundle\Entity\User, property: email }
 
     access_control:
-        - { path: ^/dashboard/.*, roles: [ROLE_ARTIST, ROLE_CLIENT] }
+        - { path: ^/dashboard/.*, roles: [ROLE_ARTIST, ROLE_CLIENT, ROLE_ADMIN] }
         - { path: ^/administration/.*, roles: [ROLE_ADMIN] }
 
     firewalls:
