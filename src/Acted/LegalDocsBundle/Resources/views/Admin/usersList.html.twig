@@ -20,8 +20,8 @@
             </select><br>
             <select class="form-control" id="catMainSel" name="main">
                 <option value="all" selected="selected">All</option>
-                <option value="isTemporary">Is temporary</option>
-                <option value="notTemporary">Not temporary</option>
+                <option value="isFake">Is fake</option>
+                <option value="notFake">Not fake</option>
             </select><br>
             <fieldset class="form-group">
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -37,7 +37,7 @@
                     <th>Slug</th>
                     <th>email</th>
                     <th>active</th>
-                    <th>temporary</th>
+                    <th>fake</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -55,7 +55,7 @@
                             <input id="active-{{ user.id }}" type="checkbox" {% if user.active %}checked{% endif %}>
                         </td>
                         <td>
-                            <input id="temporary-{{ user.id }}" type="checkbox" {% if user.temporary %}checked{% endif
+                            <input id="temporary-{{ user.id }}" type="checkbox" {% if user.fake %}checked{% endif
                             %}>
                         </td>
                         <td>
@@ -71,20 +71,20 @@
             <ul class="pagination">
                 {% if paginations['previous'] is defined %}
                     <li>
-                        <a href="{{ path('admin_users_list', {'page': paginations['previous']  }) }}?query={{ filters.query }}&role={{ filters.role }}&temporary={{ filters.temporary }}" aria-label="Previous">
+                        <a href="{{ path('admin_users_list', {'page': paginations['previous']  }) }}?query={{ filters.query }}&role={{ filters.role }}&temporary={{ filters.fake }}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                 {% endif %}
                 {% for pagin in range(1, paginations['pageRange']) %}
                     <li>
-                        <a href="{{ path('admin_users_list', {'page': pagin }) }}?query={{ filters.query }}&role={{ filters.role }}&temporary={{ filters.temporary }}">{{ pagin }}</a>
+                        <a href="{{ path('admin_users_list', {'page': pagin }) }}?query={{ filters.query }}&role={{ filters.role }}&temporary={{ filters.fake }}">{{ pagin }}</a>
                     </li>
                 {% endfor %}
                 {% if paginations['next'] is defined %}
                     <li>
                         <a href="{{ path('admin_users_list', {'page': paginations['next']  }) }}?query={{ filters
-                        .query }}&role={{ filters.role }}&temporary={{ filters.temporary }}" aria-label="Next">
+                        .query }}&role={{ filters.role }}&temporary={{ filters.fake }}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

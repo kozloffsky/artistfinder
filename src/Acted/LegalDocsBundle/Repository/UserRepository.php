@@ -15,10 +15,10 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
      * @param string $query
      * @param string $role
      * @param integer $curUserId
-     * @param string $temporary
+     * @param string $fake
      * @return \Doctrine\ORM\Query
      */
-    public function getUsersList($query, $role, $curUserId, $temporary)
+    public function getUsersList($query, $role, $curUserId, $fake)
     {
         $qb =  $this
             ->createQueryBuilder('u')
@@ -32,12 +32,12 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
                 ->andWhere('(MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0)')
                 ->setParameter('query', $query);
         }
-        switch ($temporary) {
-            case 'isTemporary':
-                $qb->andWhere('u.temporary = 1');
+        switch ($fake) {
+            case 'isFake':
+                $qb->andWhere('u.fake = 1');
                 break;
-            case 'notTemporary':
-                $qb->andWhere('u.temporary = 0');
+            case 'notFake':
+                $qb->andWhere('u.fake = 0');
                 break;
             default:
                 break;
