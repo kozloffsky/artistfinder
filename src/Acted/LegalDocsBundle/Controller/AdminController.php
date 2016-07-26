@@ -292,7 +292,7 @@ class AdminController extends Controller
             }
 
             $em->flush();
-            if (!$user->isTemporary()) {
+            if (!$user->isFake()) {
                 $userManager->sendConfirmationEmailMessage($user);
             }
 

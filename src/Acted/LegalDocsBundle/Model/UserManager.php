@@ -62,7 +62,7 @@ class UserManager
         $user->setFirstname($registerUser->getFirstname());
         $user->setLastname($registerUser->getLastname());
         $user->setEmail($registerUser->getEmail());
-        $user->setTemporary($registerUser->getTemporary());
+        $user->setFake($registerUser->getFake());
 
         $role = $this->entityManager->getRepository('ActedLegalDocsBundle:RefRole')->findOneByCode($registerUser->getRole());
 

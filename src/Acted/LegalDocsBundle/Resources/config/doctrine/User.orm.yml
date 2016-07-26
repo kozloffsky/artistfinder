@@ -31,7 +31,7 @@ Acted\LegalDocsBundle\Entity\User:
           type: boolean
           options:
             default: false
-        temporary:
+        fake:
           type: boolean
           options:
             default: false
