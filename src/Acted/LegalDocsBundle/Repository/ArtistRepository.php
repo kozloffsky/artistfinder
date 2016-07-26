@@ -160,12 +160,11 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('a')
             ->innerJoin('a.user', 'u')
             ->where('u.active != 0')
-            ->where('a.spotlight != 0')
+            ->andWhere('a.spotlight != 0')
             ->orderBy('a.spotlight', 'ASC');
         /** check fake user */
         if ($fake) {
-            $qb->andWhere('u.fake = :fake')
-            ->setParameter('fake', $fake);
+            $qb->andWhere('u.fake != 1');
         }
 
         return $qb->getQuery()->getResult();
