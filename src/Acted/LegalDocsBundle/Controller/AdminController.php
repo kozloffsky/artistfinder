@@ -211,15 +211,15 @@ class AdminController extends Controller
         $userRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:User');
         $query = $request->get('query');
         $role = $request->get('role');
-        $temporary = $request->get('temporary');
+        $fake = $request->get('fake');
         $filters = [
             'query' => $query,
             'role' => $role,
-            'temporary' => $temporary
+            'temporary' => $fake
         ];
         $curUserId = $this->getUser()->getId();
 
-        $usersQuery = $userRepo->getUsersList($query, $role, $curUserId, $temporary);
+        $usersQuery = $userRepo->getUsersList($query, $role, $curUserId, $fake);
         $data = $paginator->paginate($usersQuery, $page, 30);
 
         $users = $serializer->toArray($data->getItems(), SerializationContext::create()
