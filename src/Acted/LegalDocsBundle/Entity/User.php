@@ -47,7 +47,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var boolean
      */
-    private $temporary = false;
+    private $fake = false;
 
 
     /**
@@ -660,17 +660,17 @@ class User implements UserInterface, \Serializable
     /**
      * @return boolean
      */
-    public function isTemporary()
+    public function isFake()
     {
-        return $this->temporary;
+        return $this->fake;
     }
 
     /**
-     * @param boolean $temporary
+     * @param boolean $fake
      */
-    public function setTemporary($temporary)
+    public function setFake($fake)
     {
-        $this->temporary = $temporary;
+        $this->fake = $fake;
     }
 
 
