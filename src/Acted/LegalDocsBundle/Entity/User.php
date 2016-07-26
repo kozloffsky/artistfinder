@@ -44,6 +44,11 @@ class User implements UserInterface, \Serializable
      */
     private $active = false;
 
+    /**
+     * @var boolean
+     */
+    private $temporary = false;
+
 
     /**
      * Get id
@@ -651,4 +656,22 @@ class User implements UserInterface, \Serializable
             $this->primaryPhone,
         ) = unserialize($serialized);
     }
+
+    /**
+     * @return boolean
+     */
+    public function isTemporary()
+    {
+        return $this->temporary;
+    }
+
+    /**
+     * @param boolean $temporary
+     */
+    public function setTemporary($temporary)
+    {
+        $this->temporary = $temporary;
+    }
+
+
 }

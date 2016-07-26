@@ -14,6 +14,7 @@ final class RegisterUser
     private $country;
     private $phone;
     private $city;
+    private $temporary;
 
     /**
      * @return mixed
@@ -174,4 +175,21 @@ final class RegisterUser
     {
         $this->phone = $phone;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTemporary()
+    {
+        return $this->temporary;
+    }
+
+    /**
+     * @param mixed $temporary
+     */
+    public function setTemporary($temporary)
+    {
+        $this->temporary = $temporary;
+    }
+
 }

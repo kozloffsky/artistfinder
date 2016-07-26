@@ -22,3 +22,13 @@ admin_users_list:
     path:     /users/list/{page}
     defaults: { _controller: ActedLegalDocsBundle:Admin:userList, page: 1 }
     methods:  GET
+
+admin_create_user:
+    path:     /users/create
+    defaults: { _controller: ActedLegalDocsBundle:Admin:createNewUser, _format: json }
+    methods:  POST
+
+admin_resend_confirmation_token:
+    path:     /users/resend_confirmation_token/{userId}
+    defaults: { _controller: ActedLegalDocsBundle:Admin:resendConfirmationToken, _format: json }
+    methods:  POST

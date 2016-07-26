@@ -31,6 +31,10 @@ Acted\LegalDocsBundle\Entity\User:
           type: boolean
           options:
             default: false
+        temporary:
+          type: boolean
+          options:
+            default: false
         avatar:
           type: string(256)
           nullable: true
