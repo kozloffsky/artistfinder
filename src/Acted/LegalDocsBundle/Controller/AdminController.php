@@ -215,14 +215,16 @@ class AdminController extends Controller
         $query = $request->get('query');
         $role = $request->get('role');
         $fake = $request->get('fake');
+        $userId = $request->get('userId');
         $filters = [
             'query' => $query,
             'role' => $role,
-            'temporary' => $fake
+            'fake' => $fake,
+            'userId' => $userId
         ];
         $curUserId = $this->getUser()->getId();
 
-        $usersQuery = $userRepo->getUsersList($query, $role, $curUserId, $fake);
+        $usersQuery = $userRepo->getUsersList($query, $role, $curUserId, $fake, $userId);
         $data = $paginator->paginate($usersQuery, $page, 30);
 
         $users = $serializer->toArray($data->getItems(), SerializationContext::create()

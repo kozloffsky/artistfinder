@@ -16,9 +16,10 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
      * @param string $role
      * @param integer $curUserId
      * @param string $fake
+     * @param int $userId
      * @return \Doctrine\ORM\Query
      */
-    public function getUsersList($query, $role, $curUserId, $fake)
+    public function getUsersList($query, $role, $curUserId, $fake, $userId)
     {
         $qb =  $this
             ->createQueryBuilder('u')
@@ -63,6 +64,13 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
                 break;
             default:
                 break;
+        }
+
+        if ($userId) {
+           $qb
+               ->andWhere('u.id = :userId')
+               ->setParameter('userId', $userId)
+           ;
         }
 
         return $qb->getQuery();
