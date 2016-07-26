@@ -47,12 +47,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var boolean
      */
-    private $fake = false;
-
-    /**
-     * @var \DateTime
-     */
-    private $createdAt;
+    private $temporary = false;
 
 
     /**
@@ -665,32 +660,18 @@ class User implements UserInterface, \Serializable
     /**
      * @return boolean
      */
-    public function isFake()
+    public function isTemporary()
     {
-        return $this->fake;
+        return $this->temporary;
     }
 
     /**
-     * @param boolean $fake
+     * @param boolean $temporary
      */
-    public function setFake($fake)
+    public function setTemporary($temporary)
     {
-        $this->fake = $fake;
+        $this->temporary = $temporary;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
 
-    /**
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
 }

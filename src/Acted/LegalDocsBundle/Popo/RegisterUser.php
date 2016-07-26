@@ -14,7 +14,7 @@ final class RegisterUser
     private $country;
     private $phone;
     private $city;
-    private $fake;
+    private $temporary;
 
     /**
      * @return mixed
@@ -179,17 +179,17 @@ final class RegisterUser
     /**
      * @return mixed
      */
-    public function getFake()
+    public function getTemporary()
     {
-        return $this->fake;
+        return $this->temporary;
     }
 
     /**
-     * @param mixed $fake
+     * @param mixed $temporary
      */
-    public function setFake($fake)
+    public function setTemporary($temporary)
     {
-        $this->fake = $fake;
+        $this->temporary = $temporary;
     }
 
 }

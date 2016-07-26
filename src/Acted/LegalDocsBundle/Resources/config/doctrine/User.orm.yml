@@ -15,7 +15,7 @@ Acted\LegalDocsBundle\Entity\User:
           type: string(128)
         email:
           type: string(100)
-          nullable: true
+          notnull: true
           unique: true
         passwordHash:
           type: string(256)
@@ -31,7 +31,7 @@ Acted\LegalDocsBundle\Entity\User:
           type: boolean
           options:
             default: false
-        fake:
+        temporary:
           type: boolean
           options:
             default: false
@@ -47,18 +47,13 @@ Acted\LegalDocsBundle\Entity\User:
         passwordRequestedAt:
           type: datetime
           nullable: true
-        createdAt:
-          type: datetime
-          nullable: true
     oneToOne:
         profile:
           targetEntity: Acted\LegalDocsBundle\Entity\Profile
           mappedBy: user
-          cascade: ["remove", "persist"]
         artist:
           targetEntity: Acted\LegalDocsBundle\Entity\Artist
           mappedBy: user
-          cascade: ["remove", "persist"]
     manyToMany:
         roles:
           targetEntity: Acted\LegalDocsBundle\Entity\RefRole
@@ -67,9 +62,7 @@ Acted\LegalDocsBundle\Entity\User:
         chatRoomsArtist:
             targetEntity: Acted\LegalDocsBundle\Entity\ChatRoom
             mappedBy: artist
-            cascade: ["remove", "persist"]
         chatRoomsClient:
             targetEntity: Acted\LegalDocsBundle\Entity\ChatRoom
             mappedBy: client
-            cascade: ["remove", "persist"]
     lifecycleCallbacks: {  }

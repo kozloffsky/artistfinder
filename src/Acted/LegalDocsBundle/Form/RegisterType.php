@@ -90,7 +90,7 @@ class RegisterType extends AbstractType
                 'description' => 'City ID (for ROLE_ARTIST)',
                 'required' => false
             ])
-            ->add('fake', CheckboxType::class, [
+            ->add('temporary', CheckboxType::class, [
                 'required' => false,
             ])
         ;

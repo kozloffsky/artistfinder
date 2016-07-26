@@ -1,6 +1,7 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Repository;
+use Acted\LegalDocsBundle\Entity\RefRole;
 
 /**
  * UserRepository
@@ -12,19 +13,56 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 {
     /**
      * @param string $query
+     * @param string $role
+     * @param integer $curUserId
+     * @param string $temporary
      * @return \Doctrine\ORM\Query
      */
-    public function getUsersList($query)
+    public function getUsersList($query, $role, $curUserId, $temporary)
     {
         $qb =  $this
             ->createQueryBuilder('u')
-            ->innerJoin('u.artist', 'a')
+            ->leftJoin('u.artist', 'a')
+            ->where('u.id != :userId')
+            ->setParameter('userId', $curUserId)
             ->orderBy('u.id', 'ASC');
 
         if ($query) {
             $qb
                 ->andWhere('(MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0)')
                 ->setParameter('query', $query);
+        }
+        switch ($temporary) {
+            case 'isTemporary':
+                $qb->andWhere('u.temporary = 1');
+                break;
+            case 'notTemporary':
+                $qb->andWhere('u.temporary = 0');
+                break;
+            default:
+                break;
+        }
+        switch ($role) {
+            case 'client':
+                $qb
+                    ->leftJoin('u.roles', 'r')
+                    ->andWhere('r.code = :code')
+                    ->setParameter('code', 'ROLE_CLIENT');
+                break;
+            case 'artist':
+                $qb
+                    ->leftJoin('u.roles', 'r')
+                    ->andWhere('r.code = :code')
+                    ->setParameter('code', 'ROLE_ARTIST');
+                break;
+            case 'admin':
+                $qb
+                    ->leftJoin('u.roles', 'r')
+                    ->andWhere('r.code = :code')
+                    ->setParameter('code', 'ROLE_ADMIN');
+                break;
+            default:
+                break;
         }
 
         return $qb->getQuery();

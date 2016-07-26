@@ -18,8 +18,8 @@ class Version20160725182702 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE User ADD fake TINYINT(1) DEFAULT \'0\' NOT NULL');
-        $this->addSql('Update User set fake = 1 where id <= 300');
+        $this->addSql('ALTER TABLE User ADD temporary TINYINT(1) DEFAULT \'0\' NOT NULL');
+        $this->addSql('Update User set temporary = 1 where id <= 300');
     }
 
     /**
@@ -30,6 +30,6 @@ class Version20160725182702 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE User DROP fake');
+        $this->addSql('ALTER TABLE User DROP temporary');
     }
 }
