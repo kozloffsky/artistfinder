@@ -237,4 +237,50 @@ class MediaManager
         ];
     }
 
+    /**
+     * Remove all file from system
+     * @param User $user
+     * @param array $messageFiles
+     */
+    public function removeFiles($user, $messageFiles)
+    {
+        $fs = new Filesystem();
+        $userMedia = $user->getProfile()->getMedia()->toArray();
+
+        /** Remove message file */
+        foreach ($messageFiles as $messageFile) {
+            if ($fs->exists($messageFile->getFileName())) {
+                $fs->remove($messageFile->getFileName());
+            }
+        }
+
+        /** Check background */
+        if ($user->getBackground() && $fs->exists($user->getBackground())) {
+            $fs->remove($user->getBackground());
+        }
+
+        /** Check media */
+        foreach ($userMedia as $media) {
+            if ($media->getMediaType() === 'photo' && $fs->exists('../web'.$media->getLink())) {
+                $fs->remove('../web'.$media->getLink());
+                /** Background thumbnail */
+                if ($fs->exists('../web/media/cache/background' . $media->getLink())) {
+                    $fs->remove('../web/media/cache/background' . $media->getLink());
+                }
+                /** Big thumbnail */
+                if ($fs->exists('../web/media/cache/big' . $media->getLink())) {
+                    $fs->remove('../web/media/cache/big' . $media->getLink());
+                }
+                /** Medium thumbnail */
+                if ($fs->exists('../web/media/cache/medium' . $media->getLink())) {
+                    $fs->remove('../web/media/cache/medium' . $media->getLink());
+                }
+                /** Small thumbnail*/
+                if ($fs->exists('../web/media/cache/small' . $media->getLink())) {
+                    $fs->remove('../web/media/cache/small' . $media->getLink());
+                }
+            }
+        }
+    }
+
 }

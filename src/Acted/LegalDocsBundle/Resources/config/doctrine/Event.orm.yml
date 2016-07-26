@@ -45,6 +45,9 @@ Acted\LegalDocsBundle\Entity\Event:
     manyToOne:
           user:
             targetEntity: Acted\LegalDocsBundle\Entity\User
+            joinColumn:
+              referencedColumnName: id
+              onDelete: CASCADE
           city:
             targetEntity: Acted\LegalDocsBundle\Entity\RefCity
           eventType:

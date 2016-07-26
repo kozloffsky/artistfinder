@@ -24,5 +24,8 @@ Acted\LegalDocsBundle\Entity\ArtistRating:
           targetEntity: Acted\LegalDocsBundle\Entity\Event
         artist:
           targetEntity: Acted\LegalDocsBundle\Entity\Artist
+          joinColumn:
+            referencedColumnName: id
+            onDelete: CASCADE
           inversedBy: ratings
     lifecycleCallbacks: {  }

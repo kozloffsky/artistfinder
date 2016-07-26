@@ -26,6 +26,9 @@ Acted\LegalDocsBundle\Entity\Performance:
         profile:
           targetEntity: Acted\LegalDocsBundle\Entity\Profile
           inversedBy: performances
+          joinColumn:
+              referencedColumnName: id
+              onDelete: CASCADE
     manyToMany:
         media:
           targetEntity: Acted\LegalDocsBundle\Entity\Media

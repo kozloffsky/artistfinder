@@ -16,13 +16,25 @@ Acted\LegalDocsBundle\Entity\ChatRoom:
         artist:
             targetEntity: Acted\LegalDocsBundle\Entity\User
             inversedBy: chatRoomsArtist
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
         client:
             targetEntity: Acted\LegalDocsBundle\Entity\User
             inversedBy: chatRoomsClient
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
         event:
             targetEntity: Acted\LegalDocsBundle\Entity\Event
             inversedBy: chatRooms
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
     oneToOne:
         offer:
             targetEntity: Acted\LegalDocsBundle\Entity\Offer
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
     lifecycleCallbacks: {  }

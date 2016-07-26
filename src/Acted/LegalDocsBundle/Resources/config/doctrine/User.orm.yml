@@ -51,9 +51,11 @@ Acted\LegalDocsBundle\Entity\User:
         profile:
           targetEntity: Acted\LegalDocsBundle\Entity\Profile
           mappedBy: user
+          cascade: ["remove", "persist"]
         artist:
           targetEntity: Acted\LegalDocsBundle\Entity\Artist
           mappedBy: user
+          cascade: ["remove", "persist"]
     manyToMany:
         roles:
           targetEntity: Acted\LegalDocsBundle\Entity\RefRole
@@ -62,7 +64,9 @@ Acted\LegalDocsBundle\Entity\User:
         chatRoomsArtist:
             targetEntity: Acted\LegalDocsBundle\Entity\ChatRoom
             mappedBy: artist
+            cascade: ["remove", "persist"]
         chatRoomsClient:
             targetEntity: Acted\LegalDocsBundle\Entity\ChatRoom
             mappedBy: client
+            cascade: ["remove", "persist"]
     lifecycleCallbacks: {  }

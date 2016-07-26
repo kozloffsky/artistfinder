@@ -226,4 +226,7 @@ Acted\LegalDocsBundle\Entity\InvoiceType:
     manyToOne:
         event:
             targetEntity: Acted\LegalDocsBundle\Entity\Event
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
     lifecycleCallbacks: {  }

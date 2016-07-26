@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\Artist;
+use Acted\LegalDocsBundle\Entity\Media;
 use Acted\LegalDocsBundle\Entity\Recommend;
 use Acted\LegalDocsBundle\Form\RecommendType;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,6 +13,8 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Form\RegisterType;
 use Acted\LegalDocsBundle\Popo\RegisterUser;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 class AdminController extends Controller
 {
@@ -336,4 +339,39 @@ class AdminController extends Controller
             return new JsonResponse(['error' => $exp->getMessage()], 400);
         }
     }
+
+    /**
+     * Delete user by id
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Delete user by id",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function deleteUserAction(User $user)
+    {
+        $em = $this->getEM();
+        $mediaManager = $this->container->get('app.media.manager');
+        try {
+            $messageFileRepo = $em->getRepository('ActedLegalDocsBundle:MessageFile');
+            $messageFiles = $messageFileRepo->getFileByUser($user);
+            $mediaManager->removeFiles($user, $messageFiles);
+            $em->remove($user);
+            $em->flush();
+
+            return new JsonResponse(['success' => 'User remove successfully']);
+        } catch (\Exception $exp) {
+            return new JsonResponse(['error' => $exp->getMessage()], 400);
+        }
+
+    }
+
+
+
 }

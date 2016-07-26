@@ -2,6 +2,8 @@
 
 namespace Acted\LegalDocsBundle\Repository;
 
+use Acted\LegalDocsBundle\Entity\User;
+
 /**
  * MessageFileRepository
  *
@@ -10,4 +12,19 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class MessageFileRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param User $user
+     * @return array
+     */
+    public function getFileByUser(User $user)
+    {
+        return $this->createQueryBuilder('f')
+            ->join('f.message', 'm')
+            ->where('m.receiverUser = :user')
+            ->orWhere('m.senderUser = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

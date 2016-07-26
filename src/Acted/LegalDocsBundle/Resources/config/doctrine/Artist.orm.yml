@@ -44,13 +44,18 @@ Acted\LegalDocsBundle\Entity\Artist:
     oneToOne:
         user:
           targetEntity: Acted\LegalDocsBundle\Entity\User
+          joinColumn:
+            referencedColumnName: id
+            onDelete: CASCADE
           inversedBy: artist
     oneToMany:
         ratings:
             targetEntity: Acted\LegalDocsBundle\Entity\ArtistRating
             mappedBy: artist
+            cascade: ["remove", "persist"]
         recommends:
             targetEntity: Acted\LegalDocsBundle\Entity\Recommend
             mappedBy: artist
+            cascade: ["remove", "persist"]
 
     lifecycleCallbacks: {  }

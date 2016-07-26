@@ -29,10 +29,19 @@ Acted\LegalDocsBundle\Entity\Message:
         chatRoom:
             targetEntity: Acted\LegalDocsBundle\Entity\ChatRoom
             inversedBy: message
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
         receiverUser:
             targetEntity: Acted\LegalDocsBundle\Entity\User
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
         senderUser:
             targetEntity: Acted\LegalDocsBundle\Entity\User
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
     oneToMany:
         files:
           targetEntity: Acted\LegalDocsBundle\Entity\MessageFile
