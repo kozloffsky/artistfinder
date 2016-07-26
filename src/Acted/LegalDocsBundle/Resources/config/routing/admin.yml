@@ -32,3 +32,8 @@ admin_resend_confirmation_token:
     path:     /users/resend_confirmation_token/{userId}
     defaults: { _controller: ActedLegalDocsBundle:Admin:resendConfirmationToken, _format: json }
     methods:  POST
+
+admin_delete_user:
+    path:     /users/delete/{user}
+    defaults: { _controller: ActedLegalDocsBundle:Admin:deleteUser, _format: json }
+    methods:  DELETE
