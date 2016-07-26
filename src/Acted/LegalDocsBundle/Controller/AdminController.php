@@ -372,6 +372,42 @@ class AdminController extends Controller
 
     }
 
+    /**
+     * Change status user
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Change status user status = activate|deactivate",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function changeStatusAction(Request $request, User $user)
+    {
+        try {
+            switch ($request->get('status')){
+                case 'activate':
+                    $user->setActive(1);
+                    $this->getEM()->persist($user);
+                    $this->getEM()->flush();
+                    break;
+                case 'deactivate':
+                    $user->setActive(0);
+                    $this->getEM()->persist($user);
+                    $this->getEM()->flush();
+                    break;
+            }
 
+            return new JsonResponse(['success' => 'Status change successfully!']);
+        } catch (\Exception $exp) {
+            return new JsonResponse(['error' => $exp->getMessage()], 400);
+        }
+
+    }
 
 }
