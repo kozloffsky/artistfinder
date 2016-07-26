@@ -77,7 +77,7 @@ services:
 
     app.search:
         class: Acted\LegalDocsBundle\Service\DoctrineSearch
-        arguments: ["@doctrine.orm.entity_manager", "@knp_paginator"]
+        arguments: ["@doctrine.orm.entity_manager", "@knp_paginator", "%fake_users%"]
 
     app.artist_serializer_subscriber:
         class: Acted\LegalDocsBundle\Serializer\ArtistSerializerSubscriber

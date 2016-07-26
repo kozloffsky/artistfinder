@@ -32,7 +32,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function getFilteredQuery(OrderCriteria $oc, FilterCriteria $fc)
+    public function getFilteredQuery(OrderCriteria $oc, FilterCriteria $fc, $fake = 0)
     {
         $needRegionJoin = ($fc->getCountry()
             || ($fc->getLocation() && in_array($fc->getLocation(), [FilterCriteria::LOCATION_SAME_COUNTRY, FilterCriteria::LOCATION_100_KM])));
@@ -51,6 +51,10 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('pr.status != :status_pr')
             ->setParameter('status_pr', Performance::STATUS_DRAFT)
             ->groupBy('a.id');
+
+        if ($fake) {
+            $qb->andWhere('u.fake != 1');
+        }
 
         if ($fc->withVideo()) {
             $qb->innerJoin('pr.media', 'prm')
@@ -147,14 +151,23 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery();
     }
 
-    public function allSpotlightArtist()
+    /**
+     * @param int $fake
+     * @return array
+     */
+    public function allSpotlightArtist($fake = 0)
     {
-        return $this->createQueryBuilder('a')
+        $qb = $this->createQueryBuilder('a')
             ->innerJoin('a.user', 'u')
             ->where('u.active != 0')
             ->andWhere('a.spotlight != 0')
-            ->orderBy('a.spotlight', 'ASC')
-            ->getQuery()->getResult();
+            ->orderBy('a.spotlight', 'ASC');
+        /** check fake user */
+        if ($fake) {
+            $qb->andWhere('u.fake != 1');
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

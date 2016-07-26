@@ -45,3 +45,5 @@ parameters:
     web_socket_server_port: 8686
     web_socket_pusher_host: 51.254.217.4
     web_socket_pusher_port: 5555
+
+    fake_users: show  # show | hide
