@@ -42,7 +42,7 @@ $(function() {
         $('tr#'+artistEditManageId+' .spotlightInput').show();
         $('tr#'+artistEditManageId+' .saveSpotlight').show();
         $('tr#'+artistEditManageId+' .manageSpotlight').hide();
-    })
+    });
 
     $(document).on('click','.saveSpotlight',function(){
         console.log(this)
@@ -60,5 +60,49 @@ $(function() {
                 $('tr#'+artistEditManageId+' .manageSpotlight').show();
             }
         });
-    })
+    });
+    $(document).on('click', '.deleteUser', function(){
+        var userRow = $(this).parents('tr'),
+            username = $(userRow).find('.usernameAdmin').text(),
+            userId = $(userRow).attr('id'),
+            wordToDelete = 'Delete';
+        var userDeletechoice = prompt('Enter "'+wordToDelete+'" if you want to delete '+username+'');
+        if(userDeletechoice == wordToDelete){
+            deleteUser(userId)
+        }
+    });
+
+    $(document).on('change', '.userStatusAd', function() {
+        var userRow = $(this).parents('tr'),
+            username = $(userRow).find('.usernameAdmin').text(),
+            userId = $(userRow).attr('id'),
+            userStatus = $(this).prop('checked');
+        if(userStatus == true){
+            var status = 'activate';
+        } else {
+            var status = 'deactivate';
+        }
+        changeStatus(userId, status)
+    });
+
+    function deleteUser(userId){
+        $.ajax({
+            type: "DELETE",
+            url: '/administration/users/delete/'+userId,
+            success: function(){
+                $('tr#'+userId+'').remove();
+            }
+        });
+    }
+
+    function changeStatus(userId, status){
+        $.ajax({
+            type: "POST",
+            url: '/administration/users/change_status/'+userId,
+            data: {'status':status},
+            success: function(){
+
+            }
+        });
+    }
 });

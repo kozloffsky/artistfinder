@@ -13,10 +13,10 @@ class UserController extends Controller
         return $this->render('', ['name' => $name]);
     }
 
-    public function editAction(Request $request)
+    public function editAction(Request $request, $slug)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getUser();
+        $user = $em->getRepository('ActedLegalDocsBundle:Artist')->findOneBySlug($slug)->getUser();
 
         $userForm = $this->createForm(UserType::class, $user);
         $userForm->handleRequest($request);

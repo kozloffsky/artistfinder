@@ -24,8 +24,8 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         $qb =  $this
             ->createQueryBuilder('u')
             ->leftJoin('u.artist', 'a')
-            ->where('u.id != :userId')
-            ->setParameter('userId', $curUserId)
+            ->where('u.id != :curUserId')
+            ->setParameter('curUserId', $curUserId)
             ->orderBy('u.id', 'ASC');
 
         if ($query) {

@@ -23,3 +23,7 @@
 {
     display: none;
 }
+header.adminHeader .navbar
+{
+    background: #000!important;
+}
