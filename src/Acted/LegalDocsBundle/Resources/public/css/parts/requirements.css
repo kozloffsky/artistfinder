@@ -1,8 +1,5 @@
 .requirements{margin-bottom: 70px;}
-.requirements .categories-dropdown{z-index: 3;}
-.requirement-form .holder:after,
-.requirement-form .jFiler-theme-default:after,
-.requirement-form .items-lis:after{
+.requirement-form .holder:after{
     content: "";
     display: block;
     clear: both;
@@ -121,28 +118,30 @@
     border: none;
     outline: none;
 }
-.requirement-form .btn-close{
-    overflow: hidden;
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    text-indent: -9999px;
-    border: none;
-    background: url("../../assets/images/close-modal.png") no-repeat;
-    width: 28px;
-    height: 28px;
-    outline: none;
-}
+/*.requirement-form .btn-close{*/
+    /*overflow: hidden;*/
+    /*position: absolute;*/
+    /*top: 10px;*/
+    /*right: 5px;*/
+    /*text-indent: -9999px;*/
+    /*background: url("../../assets/images/close.png") no-repeat;*/
+    /*width: 12px;*/
+    /*border: none;*/
+    /*height: 12px;*/
+    /*outline: none;*/
+    /*-webkit-box-shadow: none;*/
+    /*box-shadow: none;*/
+/*}*/
 .requirement-form .btn-upload{
     background: #fff;
     border: none;
     border-radius: 6px;
     -webkit-border-radius: 6px;
     overflow: hidden;
-    padding: 0 30px;
-    max-width: 130px;
-    height: 36px;
-    font-size: 16px;
+    padding: 0 20px;
+    max-width: 120px;
+    height: 30px;
+    font-size: 14px;
     outline: none;
     float: left;
     margin-right: 10px;
@@ -189,6 +188,20 @@
     width: 15px;
     height: 15px;
     cursor: pointer;
+}
+.requirement-form .btn-close{
+    overflow: hidden;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    text-indent: -9999px;
+    border: none;
+    background: url("../../assets/images/close-modal.png") no-repeat;
+    width: 28px;
+    height: 28px;
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 .requirement-form .jFiler-icon-file{
     position: relative;
@@ -255,6 +268,14 @@
     content: '\f1c7';
 }
 @media (max-width: 991px){
+    .requirement-form h2{
+        font-size: 14px;
+        margin: 0 0 15px;
+    }
+    .requirement-form input[type="text"],
+    .requirement-form input[type="password"],
+    .requirement-form input[type="email"],
+    .requirement-form .textarea{margin: 0 0 15px;}
     .requirements .col{
         float: none;
         padding: 0 !important;
@@ -266,11 +287,6 @@
         left: 0 !important;
         right: 0 !important;
     }
-    .requirement-form h2{
-        font-size: 16px;
-        margin: 0 0 15px;
-    }
-    .requirement-form{padding: 20px 20px 30px;}
     .requirement-form .textarea{
         height: 150px;
     }

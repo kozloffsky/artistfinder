@@ -214,7 +214,7 @@ class SecurityController extends Controller
         $form = $this->createForm(ResettingFormType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isValid()) {
             $data = $form->getData();
 
             $userManager = $this->get('app.user.manager');
@@ -226,11 +226,13 @@ class SecurityController extends Controller
 
             $em->flush();
 
-            return $this->redirect($this->generateUrl('security_login'));
+            return new JsonResponse(['asdasd']);
         }
+
 
         return $this->render('@ActedLegalDocs/Security/changePassword.html.twig', [
            'form' => $form->createView(),
+            'currentToken' => $token
         ]);
     }
 }

@@ -727,7 +727,7 @@ $(function() {
                 height: 300
             },
         });
-        var AvatarCurrent = $('.avatarEditable .avatar').attr('src');
+        var AvatarCurrent = $('.avatarEditable .avatarImg').attr('src');
         $uploadCropAvatar.croppie('bind', {
            // url: AvatarCurrent
         });
@@ -746,7 +746,7 @@ $(function() {
                     url: '/user/edit',
                     data: {"user[avatar]": resp},
                     success: function(){
-                        $('.avatarEditable .avatar').attr('src', resp);
+                        $('.avatarEditable .avatarImg').attr('src', resp);
                         $('#changeImageModal').modal('hide');
                     },
                     error: function(response){

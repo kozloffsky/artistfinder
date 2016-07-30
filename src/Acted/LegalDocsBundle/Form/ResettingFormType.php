@@ -22,7 +22,7 @@ class ResettingFormType extends AbstractType
     {
         $builder->add('password', RepeatedType::class, [
             'first_options' => ['label' => 'Password'],
-            'second_options' => ['label' => 'Password confirmation'],
+//            'second_options' => ['label' => 'Password confirmation'],
             'constraints' => [new NotBlank(), new Length(['min' => 6])]]
         );
     }

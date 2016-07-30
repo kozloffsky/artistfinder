@@ -6,7 +6,7 @@ $(function () {
   checkAvatar();
 
   function checkAvatar() {
-      $('img.avatar').each(function(){
+      $('img.avatar , img.avatarImg').each(function(){
         var imageSrc = $(this).attr('src');
         if(imageSrc != undefined) {
           console.log(imageSrc.length);

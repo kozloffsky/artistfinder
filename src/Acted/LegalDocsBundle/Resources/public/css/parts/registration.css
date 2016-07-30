@@ -1,31 +1,31 @@
 .registration-modal {
-    margin-top: 75px;
+    margin-top: 56px;
 }
 
 .registration-modal #stage-1 {
-    margin-bottom: 58px;
+    margin-bottom: 44px;
 }
 
 .registration-modal #stage-2 {
-    padding-top: 7px;
+    padding-top: 5px;
 }
 
 .registration-modal .modal-dialog {
     width: 95%;
-    max-width: 900px;
-    margin-top: 20px;
+    max-width: 675px;
+    margin-top: 15px;
 }
 
 .registration-modal .modal-dialog .modal-title {
     text-align: center;
     font-family: UbuntuMedium;
-    font-size: 26px;
+    font-size: 20px;
     color: #3d4248;
     line-height: normal;
 }
 
 .registration-modal .modal-header {
-    padding: 13px 32px 0;
+    padding: 10px 24px 0;
 }
 
 .registration-modal .modal-header,
@@ -35,14 +35,14 @@
 
 .registration-modal .modal-content .close {
     position: absolute;
-    height: 38px;
-    width: 38px;
-    top: -19px;
-    right: -19px;
+    height: 29px;
+    width: 29px;
+    top: -14px;
+    right: -14px;
     border-radius: 50%;
     background: #F2F2F2;
     opacity: 1;
-    font-size: 28px;
+    font-size: 21px;
 }
 
 .registration-modal .modal-content .close > span {
@@ -60,11 +60,11 @@
     margin: 0;
     outline: none;
     float: left;
-    padding: 20px 0;
+    padding: 15px 0;
     width: 50%;
     box-shadow: none;
     font-family: UbuntuMedium;
-    font-size: 28px;
+    font-size: 21px;
     color: #3d4248;
     border-top: 2px solid rgba(202, 202, 202, 0.25);
 }
@@ -85,13 +85,13 @@
 .registration-modal .modal-header #step-counter {
     position: absolute;
     font-family: UbuntuBold;
-    font-size: 22px;
+    font-size: 17px;
     color: #ffae6c;
 }
 
 .registration-modal .modal-body .category-img {
     cursor: pointer;
-    margin-top: 35px;
+    margin-top: 26px;
     position: relative;
     left: 50%;
     -webkit-transform: translateX(-50%);
@@ -99,13 +99,14 @@
     -ms-transform: translateX(-50%);
     -o-transform: translateX(-50%);
     transform: translateX(-50%);
-    width: 80%;
-    max-width: 280px;
+    width: auto;
+    height: 203px;
+    max-width: 260px;
 }
 
 .registration-modal .modal-body .controls {
     position: relative;
-    margin: 62px 0 20px;
+    margin: 47px 0 15px;
     padding: 0;
 }
 
@@ -120,7 +121,7 @@
 }
 
 .registration-modal .modal-body {
-    padding: 5px 0 0;
+    padding: 4px 0 0;
 }
 
 .registration-modal .modal-body .controls > .button-gradient {
@@ -145,11 +146,11 @@
 }
 
 .registration-modal .category-content {
-    padding: 0 6px;
+    padding: 0 5px;
 }
 
 .registration-modal .category-item {
-    margin-top: 10px;
+    margin-top: 8px;
 }
 
 .registration-modal .category-item input {
@@ -163,7 +164,7 @@
 .registration-modal .category-item label {
     margin-bottom: 0;
     font-family: LatoRegular;
-    font-size: 14px;
+    font-size: 11px;
     color: #828282;
     cursor: pointer;
 
@@ -184,11 +185,11 @@
     background: #DDD;
     display: inline-block;
     vertical-align: middle;
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     padding: 2px;
-    margin-top: -4px;
-    margin-right: 10px;
+    margin-top: -3px;
+    margin-right: 8px;
     text-align: center;
     border-radius: 50%;
 }
@@ -202,10 +203,10 @@
     border: none;
     outline: none;
     color: #808080;
-    font-size: 16px;
+    font-size: 12px;
     font-family: LatoBold;
 
-    margin: 10px 30px 5px;
+    margin: 8px 23px 4px;
 }
 
 .category-content .show-more:hover {
@@ -214,36 +215,36 @@
 
 .registration-modal .tip {
     font-family: LatoRegular;
-    margin-top: 30px;
-    font-size: 18px;
+    margin-top: 23px;
+    font-size: 14px;
     color: #afafaf;
     position: absolute;
-    bottom: 28px;
-    right: 30px;
+    bottom: 21px;
+    right: 23px;
 }
 
 .category-header {
     cursor: pointer;
-    line-height: 50px;
+    line-height: 38px;
     width: 100%;
 }
 
 .category-header .image-container {
     display: inline-block;
-    width: 60px;
-    padding-left: 18px;
+    width: 45px;
+    padding-left: 14px;
 }
 
 .category-header .image-container img {
     max-width: 100%;
-    max-height: 45px;
+    max-height: 34px;
 }
 
 .category-header .title {
     color: white;
     font-family: UbuntuMedium;
-    font-size: 21px;
-    margin-left: 24px;
+    font-size: 16px;
+    margin-left: 18px;
     vertical-align: middle;
 }
 
@@ -269,7 +270,7 @@
 }
 
 .contact-details {
-    padding: 0 30px 0 19px;
+    padding: 0 23px 0 14px;
 }
 
 .contact-details .details-form {
@@ -290,12 +291,12 @@
 
 .contact-details .form-group {
     margin-bottom: 0px;
-    max-height: 70px;
+    max-height: 60px;
 }
 
 .contact-details .form-group label {
     font-family: LatoRegular;
-    font-size: 20px;
+    font-size: 15px;
     color: #808080;
     font-weight: normal;
     width: 100%;
@@ -306,37 +307,37 @@
 .contact-details .form-group label:last-child::after {
     content: '';
     position: absolute;
-    width: 20px;
-    height: 15px;
-    top: -41px;
-    right: 25px;
+    width: 15px;
+    height: 11px;
+    top: -34px;
+    right: 19px;
 }
 
 #customerBlock .contact-details .form-group label:last-child::after {
-    right: 5px;
+    right: 4px;
 }
 
 .contact-details .form-group label.error {
-    font-size: 14px;
+    font-size: 11px;
     color: #f97c7d;
 }
 
 .contact-details .form-group input {
     font-family: LatoRegular;
     font-weight: normal;
-    font-size: 16px;
+    font-size: 12px;
     color: #4c4c4c;
-    padding-left: 18px;
-    height: 34px;
-    border-radius: 8px;
+    padding-left: 14px;
+    height: 26px;
+    border-radius: 6px;
     border: 2px solid #e5e5e5;
     box-shadow: none;
-    max-width: 390px;
+    max-width: 293px;
     display: inline-block;
 }
 
 #customerBlock .contact-details .form-group input {
-    height: 34px;
+    height: 26px;
 }
 
 .contact-details .form-group input.error {
@@ -350,17 +351,18 @@
 .contact-details .form-group input.valid + label.error + label.icon:after,
 .contact-details .form-group input.valid + label.icon:after {
     background: url("../../assets/images/done.png") center no-repeat;
+    background-size: cover;
 }
 
 .contact-details .form-group input.error + label.error + label.icon:after {
-    top: -62px;
+    top: -53px;
     background: url("../../assets/images/not_done.png") center no-repeat;
 }
 
 .registration-modal .modal-body .contact-details .controls {
-    margin-top: 5px;
-    margin-bottom: 10px;
-    width: 390px;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    width: 293px;
     text-align: center;
 }
 
@@ -370,14 +372,14 @@
 
 .registration-modal .modal-body .contact-details .controls .btn.register {
     font-family: LatoBold;
-    font-size: 17px;
-    padding: 5px 35px;
-    height: 35px;
+    font-size: 13px;
+    padding: 4px 26px;
+    height: 26px;
 }
 
 .registration-modal .modal-body .contact-details .hint {
     font-family: LatoRegular;
-    font-size: 16px;
+    font-size: 12px;
     color: #BBB;
 }
 
@@ -388,8 +390,8 @@
     border: none;
     font-family: UbuntuMedium;
     padding: 0px;
-    font-size: 22px;
-    margin-top: 26px;
+    font-size: 17px;
+    margin-top: 20px;
 }
 
 .registration-modal .modal-body .preview-block {
@@ -406,10 +408,10 @@
 
 .registration-modal .modal-body .preview-block .overlay {
     position: absolute;
-    top: 9px;
-    left: 9px;
-    bottom: 9px;
-    right: 9px;
+    top: 7px;
+    left: 7px;
+    bottom: 7px;
+    right: 7px;
     background: rgba(0, 0, 0, 0.20);
 }
 
@@ -423,7 +425,7 @@
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     font-family: LatoBlack;
-    font-size: 26px;
+    font-size: 20px;
     color: white;
 }
 
@@ -435,7 +437,7 @@
     -ms-transform: translateX(-50%);
     -o-transform: translateX(-50%);
     transform: translateX(-50%);
-    margin-bottom: 32px;
+    margin-bottom: 24px;
 }
 
 .registration-modal .modal-body .final-stage h2 {
@@ -443,16 +445,16 @@
     position: relative;
     width: 100%;
     font-family: UbuntuBold;
-    font-size: 30px;
+    font-size: 23px;
     color: #7f9eff;
     text-align: center;
     margin: 0;
 }
 
 .registration-modal .modal-body .final-stage .description {
-    margin: 30px 0 0;
+    margin: 23px 0 0;
     font-family: LatoRegular;
-    font-size: 17px;
+    font-size: 13px;
     color: #939393;
     text-align: center;
 }
@@ -462,30 +464,30 @@
 }
 
 .registration-modal .modal-body .final-stage .controls {
-    margin: 38px 0 44px;
+    margin: 29px 0 33px;
 }
 
 .registration-modal .modal-body .final-stage .controls > .button-gradient {
-    border-radius: 25px;
+    border-radius: 19px;
 }
 
 .registration-modal .modal-body .final-stage .controls .btn {
     font-family: LatoBlack;
-    font-size: 19px;
-    height: 38px;
-    padding: 6px 16px;
-    line-height: 25px;
+    font-size: 14px;
+    height: 29px;
+    padding: 5px 12px;
+    line-height: 19px;
 }
 
 .registration-modal .select2 {
     outline: none;
-    border-radius: 8px;
+    border-radius: 6px;
     border: 2px solid #e5e5e5;
     overflow: hidden;
-    height: 36px;
-    max-width: 390px;
+    height: 27px;
+    max-width: 293px;
     width: 100% !important;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .registration-modal .select2-selection {
@@ -494,11 +496,11 @@
 }
 
 .registration-modal .select2-selection--single .select2-selection__rendered {
-    padding-left: 18px;
-    line-height: 38px;
+    padding-left: 14px;
+    line-height: 29px;
     font-family: LatoRegular;
     font-weight: normal;
-    font-size: 18px;
+    font-size: 14px;
     color: #4c4c4c;
 }
 
@@ -509,9 +511,14 @@
 .registrations-selection {
     border: 1px solid #e5e5e5;
     border-top: none;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
+
+.selections-white.select2-selection {
+    background: white!important;
+}
+
 /*tab list styles start*/
 .registration-modal .tab-list{
     list-style: none;
@@ -527,7 +534,7 @@
 .registration-modal .tab-list li{
     background: transparent;
     float: left;
-    height: 159px;
+    height: 128px;
     width: 33.33%;
     position: relative;
 }
@@ -575,7 +582,7 @@
 }
 .registration-modal .tab-list  h3{
     margin: 0;
-    font-size: 18px;
+    font-size: 14px;
     color: #222;
 }
 .registration-modal .tab-list a{
@@ -601,9 +608,9 @@
     overflow: hidden;
     list-style: none;
     margin: 0;
-    padding: 15px 0 7px;
+    padding: 10px 0 5px;
     color: #828282;
-    font-size: 14px;
+    font-size: 12px;
 }
 .registration-modal .categories-list > li{
     float: left;
@@ -637,18 +644,18 @@
 
 
     .registration-modal {
-        margin-top: 72px;
+        margin-top: 54px;
     }
 
     .registration-modal .modal-content .close {
         background: transparent;
-        top: 10px;
-        right: 10px;
+        top: 8px;
+        right: 8px;
     }
 
     .registration-modal .modal-dialog {
         display: inline;
-        margin: 0px !important;
+        margin: 0 !important;
         width: 100%;
         min-height: 100%;
     }
@@ -660,7 +667,7 @@
 
     .registration-modal .select2,
     .contact-details .form-group input {
-        width: calc(100% - 35px)!important;
+        width: calc(100% - 26px)!important;
         max-width: none;
     }
 
@@ -670,12 +677,12 @@
     }
 
     .registration-modal .category-item {
-        margin-top: 5px;
-        margin-bottom: 5px;
+        margin-top: 4px;
+        margin-bottom: 4px;
     }
 
     .registration-modal .modal-body .controls {
-        margin: 40px 0 20px;
+        margin: 30px 0 15px;
     }
 
     .registration-modal .modal-body .contact-details .controls {
@@ -688,22 +695,29 @@
     }
 
     .registration-modal .tab-list li{
-        height: 128px;
+        height: 112px;
     }
 
     .registration-modal .tab-list .img-box{
-        height: 56px;
-        width: 52px;
+        height: 40px;
+        width: 46px;
     }
-    .registration-modal .tab-list h3{
-        font-size: 16px;
+
+    .registration-modal .modal-body .category-img{
+        margin: 26px auto;
+        -webkit-transform: none;
+        -moz-transform: none;
+        -ms-transform: none;
+        -o-transform: none;
+        transform: none;
+        left: auto;
+        display: block;
     }
 }
 
-
 @media (max-width: 675px){
     .registration-modal .tab-list a{
-        padding: 18px;
+        padding: 13px;
         display: block;
     }
     .registration-modal .tab-list figure{
@@ -714,7 +728,7 @@
 @media (max-width: 500px) {
 
     .registration-modal .tab-list li{
-        height: 80px;
+        height: 60px;
     }
 
     .registration-modal .tab-list a{
@@ -735,12 +749,11 @@
     }
 
     .registration-modal .tab-list li h3{
-        font-size: 14px;
+        font-size: 12px;
     }
     .registration-modal .categories-list{
         padding-top: 5px;
     }
-
 
     .gradient-light,
     .gradient-dark {
@@ -756,14 +769,14 @@
     }
 
     .registration-modal .modal-header #step-counter {
-        font-size: 14px;
-        left: 15px;
+        font-size: 11px;
+        left: 11px;
     }
 
     .registration-modal .modal-dialog .modal-title {
-        font-size: 15px;
-        max-width: 250px;
-        width: 150px;
+        font-size: 11px;
+        max-width: 188px;
+        width: 113px;
         display: inline-block;
         left: 50%;
         -webkit-transform: translateX(-50%);
@@ -775,7 +788,7 @@
     }
 
     .registration-modal .modal-body {
-        padding: 25px 0 0;
+        padding: 19px 0 0;
     }
 
     #customerBlock .contact-details .details-form,
@@ -788,16 +801,16 @@
     }
 
     .contact-details .form-group input.error + label.error + label.icon:after {
-        top: -65px;
+        top: -49px;
     }
 
     .contact-details .form-group input {
-        width: calc(100% - 35px);
+        width: calc(100% - 26px);
         max-width: none;
     }
 
     .registration-modal .modal-body .final-stage .row {
-        padding: 0 35px;
+        padding: 0 26px;
     }
 
     .registration-modal .modal-body .contact-details .controls {
@@ -805,118 +818,118 @@
     }
 
     .registration-modal .select2 {
-        max-width: calc(100% - 35px);
-        height: 30px;
+        max-width: calc(100% - 26px);
+        height: 23px;
     }
 
     .category-header .title {
-        font-size: 16px;
+        font-size: 12px;
     }
 
     .registration-modal .modal-body .final-stage .controls .btn {
-        font-size: 12px;
-        height: 36px;
+        font-size: 9px;
+        height: 27px;
     }
 
     .contact-details .form-group input {
-        font-size: 12px;
-        padding-left: 12px;
-        height: 30px;
+        font-size: 9px;
+        padding-left: 9px;
+        height: 23px;
     }
 
     .registration-modal .select2-selection--single .select2-selection__rendered {
-        font-size: 12px;
-        padding-left: 12px;
-        line-height: 26px;
+        font-size: 9px;
+        padding-left: 9px;
+        line-height: 20px;
     }
 
     .registration-modal .select2-selection--single .select2-selection__arrow {
-        top: 0px;
+        top: 0;
     }
 
     .registration-modal .modal-body .contact-details .controls .btn.register {
-        font-size: 14px;
+        font-size: 11px;
     }
 
     .registration-modal .modal-body .contact-details .hint {
-        font-size: 12px;
+        font-size: 9px;
     }
 
     .registration-modal .modal-body .contact-details .btn-back {
-        font-size: 22px;
+        font-size: 17px;
         margin-top: 0;
     }
 
     .registration-modal .buttons .btn {
-        font-size: 16px;
+        font-size: 12px;
     }
 
     .registration-modal .modal-body .final-stage h2 {
-        font-size: 16px;
+        font-size: 12px;
     }
 
     .registration-modal .modal-body .final-stage .description {
-        font-size: 12px;
+        font-size: 9px;
     }
 
     .registration-modal .modal-body .category:not(:last-of-type) {
         border-bottom: 1px solid white;
     }
 
-    .registration-modal .modal-body .category-img {
-        max-width: 200px;
-        margin-top: 0;
-    }
+    /*.registration-modal .modal-body .category-img {*/
+        /*max-width: 150px;*/
+        /*margin-top: 0;*/
+    /*}*/
 
     .registration-modal .modal-body .controls > .button-gradient .btn {
-        font-size: 14px;
-        height: 34px;
+        font-size: 11px;
+        height: 26px;
     }
 
     .registration-modal .modal-body .controls {
-        margin: 12px 0;
+        margin: 9px 0;
     }
 
     .registration-modal .modal-body .final-stage .controls {
-        margin: 33px 0;
+        margin: 25px 0;
     }
 
     .registration-modal .category-item label {
-        font-size: 12px;
+        font-size: 9px;
     }
 
     .registration-modal .category-item .checkbox + label:before {
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
     }
 
     .registration-modal .category-item {
-        margin-top: 5px;
-        margin-bottom: 5px;
+        margin-top: 4px;
+        margin-bottom: 4px;
     }
 
     .category-content .show-more {
-        font-size: 14px;
-        margin: 6px 30px 6px;
+        font-size: 11px;
+        margin: 5px 23px 5px;
     }
 
     .category-header {
         padding-left: 0px;
-        line-height: 63px;
+        line-height: 47px;
     }
 
     .registration-modal .modal-body .final-stage h2 {
-        font-size: 24px;
+        font-size: 18px;
     }
 
     .registration-modal .modal-body .final-stage .description {
-        font-size: 16px;
+        font-size: 12px;
     }
 
     .registration-modal .modal-body .controls > .button-gradient .btn {
-        font-size: 16px;
-        line-height: 22px;
-        height: 36px;
+        font-size: 12px;
+        line-height: 17px;
+        height: 27px;
     }
 
     .registration-modal .modal-body .final-stage .final-image {
@@ -927,8 +940,8 @@
         -ms-transform: translateX(-50%);
         -o-transform: translateX(-50%);
         transform: translateX(-50%);
-        margin-bottom: 20px;
-        max-width: 125px;
+        margin-bottom: 15px;
+        max-width: 94px;
     }
 }
 
@@ -948,14 +961,14 @@
     }
 
     .registration-modal .modal-header #step-counter {
-        font-size: 14px;
-        left: 15px;
+        font-size: 11px;
+        left: 11px;
     }
 
     .registration-modal .modal-dialog .modal-title {
-        font-size: 15px;
-        max-width: 250px;
-        width: 150px;
+        font-size: 11px;
+        max-width: 188px;
+        width: 113px;
         display: inline-block;
         left: 50%;
         -webkit-transform: translateX(-50%);
@@ -967,7 +980,7 @@
     }
 
     .registration-modal .modal-body {
-        padding: 25px 0 0;
+        padding: 19px 0 0;
     }
 
     #customerBlock .contact-details .details-form,
@@ -980,16 +993,16 @@
     }
 
     .contact-details .form-group input.error + label.error + label.icon:after {
-        top: -65px;
+        top: -49px;
     }
 
     .contact-details .form-group input {
-        width: calc(100% - 35px);
+        width: calc(100% - 26px);
         max-width: none;
     }
 
     .registration-modal .modal-body .final-stage .row {
-        padding: 0 35px;
+        padding: 0 26px;
     }
 
     .registration-modal .modal-body .contact-details .controls {
@@ -997,29 +1010,29 @@
     }
 
     .registration-modal .select2 {
-        max-width: calc(100% - 35px);
-        height: 30px;
+        max-width: calc(100% - 26px);
+        height: 23px;
     }
 
     .category-header .title {
-        font-size: 16px;
+        font-size: 12px;
     }
 
     .registration-modal .modal-body .final-stage .controls .btn {
-        font-size: 12px;
-        height: 36px;
+        font-size: 9px;
+        height: 27px;
     }
 
     .contact-details .form-group input {
-        font-size: 12px;
-        padding-left: 12px;
-        height: 30px;
+        font-size: 9px;
+        padding-left: 9px;
+        height: 23px;
     }
 
     .registration-modal .select2-selection--single .select2-selection__rendered {
-        font-size: 12px;
-        padding-left: 12px;
-        line-height: 26px;
+        font-size: 9px;
+        padding-left: 9px;
+        line-height: 20px;
     }
 
     .registration-modal .select2-selection--single .select2-selection__arrow {
@@ -1027,88 +1040,88 @@
     }
 
     .registration-modal .modal-body .contact-details .controls .btn.register {
-        font-size: 14px;
+        font-size: 11px;
     }
 
     .registration-modal .modal-body .contact-details .hint {
-        font-size: 12px;
+        font-size: 9px;
     }
 
     .registration-modal .modal-body .contact-details .btn-back {
-        font-size: 22px;
+        font-size: 17px;
         margin-top: 0;
     }
 
     .registration-modal .buttons .btn {
-        font-size: 16px;
+        font-size: 12px;
     }
 
     .registration-modal .modal-body .final-stage h2 {
-        font-size: 16px;
+        font-size: 12px;
     }
 
     .registration-modal .modal-body .final-stage .description {
-        font-size: 12px;
+        font-size: 9px;
     }
 
     .registration-modal .modal-body .category:not(:last-of-type) {
         border-bottom: 1px solid white;
     }
 
-    .registration-modal .modal-body .category-img {
-        max-width: 135px;
-        margin-top: 0;
-    }
+    /*.registration-modal .modal-body .category-img {*/
+        /*max-width: 101px;*/
+        /*margin-top: 0;*/
+    /*}*/
 
     .registration-modal .modal-body .controls > .button-gradient .btn {
-        font-size: 14px;
-        height: 34px;
+        font-size: 11px;
+        height: 26px;
     }
 
     .registration-modal .modal-body .controls {
-        margin: 12px 0;
+        margin: 9px 0;
     }
 
     .registration-modal .modal-body .final-stage .controls {
-        margin: 33px 0;
+        margin: 25px 0;
     }
 
     .registration-modal .category-item label {
-        font-size: 12px;
+        font-size: 9px;
     }
 
     .registration-modal .category-item .checkbox + label:before {
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
     }
 
     .registration-modal .category-item {
-        margin-top: 5px;
-        margin-bottom: 5px;
+        margin-top: 4px;
+        margin-bottom: 4px;
     }
 
     .category-content .show-more {
-        font-size: 14px;
-        margin: 6px 30px 6px;
+        font-size: 11px;
+        margin: 5px 23px 5px;
     }
 
     .category-header {
         padding-left: 0px;
-        line-height: 63px;
+        line-height: 47px;
     }
 
     .registration-modal .modal-body .final-stage h2 {
-        font-size: 24px;
+        font-size: 18px;
     }
 
     .registration-modal .modal-body .final-stage .description {
-        font-size: 16px;
+        font-size: 12px;
     }
 
     .registration-modal .modal-body .controls > .button-gradient .btn {
-        font-size: 16px;
-        line-height: 22px;
-        height: 36px;
+        font-size: 12px;
+        line-height: 17px;
+        height: 27px;
     }
 
     .registration-modal .modal-body .final-stage .final-image {
@@ -1119,37 +1132,38 @@
         -ms-transform: translateX(-50%);
         -o-transform: translateX(-50%);
         transform: translateX(-50%);
-        margin-bottom: 20px;
-        max-width: 115px;
+        margin-bottom: 15px;
+        max-width: 86px;
     }
 
 }
 
 
 @media (max-width: 400px) and (max-height: 480px) {
-    .registration-modal .modal-body .category-img {
-        max-width: 100px!important;
-    }
+    /*.registration-modal .modal-body .category-img {*/
+        /*max-width: 75px!important;*/
+    /*}*/
 
     .registration-modal .modal-body .final-stage h2 {
-        font-size: 16px;
-    }
-
-    .registration-modal .modal-body .final-stage .description {
         font-size: 12px;
     }
 
+    .registration-modal .modal-body .final-stage .description {
+        font-size: 9px;
+    }
+
     .registration-modal .modal-body .controls > .button-gradient .btn {
-        font-size: 14px;
-        line-height: 22px;
-        height: 34px;
+        font-size: 11px;
+        line-height: 17px;
+        height: 26px;
     }
 
 }
 
-@media (max-width: 400px) and (max-height: 650px) {
+@media (max-width: 400px){
     .registration-modal .modal-body .category-img {
-        max-width: 150px;
+        max-width: 182px;
+        max-height: 147px;
     }
 
 }

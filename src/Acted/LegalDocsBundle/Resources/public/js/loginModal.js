@@ -57,7 +57,6 @@ $(function () {
                             $('#quoteRequestSecond .errorCat').text('').hide();
                             $('#requestQuoteForm .errorCat').text('').hide();
                             $.each(response.responseJSON, function(key, value) {
-                                console.log(key, value);
                                 $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
                                 if(key == 'performance'){
                                     $('#quoteRequestSecond .errorCat').text(value).show();

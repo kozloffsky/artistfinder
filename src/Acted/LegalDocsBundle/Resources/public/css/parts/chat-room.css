@@ -12,11 +12,11 @@
     margin: 0 0 50px;
 }
 .chat-room .main-title{
-    font: 32px LatoBold;
+    font: 22px LatoBold;
     border-bottom: 1px solid #ff753a;
     color: #ff753a;
-    margin: 0 0 20px;
-    padding: 0 0 20px;
+    margin: 0 0 15px;
+    padding: 0 0 15px;
     text-align: center;
 }
 .chat-room .border-b{
@@ -31,12 +31,11 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
+    font-size: 12px;
     color: #000;
     color: rgba(0,0,0,.67);
 }
-.chat-room .miscellaneous-list{
-    top: 80px;
-}
+.chat-room .miscellaneous-list{top: 57px;}
 .miscellaneous-list li{
     float: left;
     padding: 0 0 0 31px;
@@ -51,11 +50,14 @@
 }
 .chat-room .title{
     font-family: LatoBold;
-    font-size: 18px;
+    font-size: 14px;
     padding: 0 130px;
-    margin: 0 0 20px;
+    margin: 0 0 10px;
     text-align: center;
     color: #502346;
+}
+.chat-room .quote-section .title{
+    margin: 0 0 18px;
 }
 .detail-form{
     overflow: hidden;
@@ -64,19 +66,21 @@
     border-bottom: 3px solid #000;
     border-bottom: 3px solid rgba(0, 0, 0, .05);
 }
-.detail-form .frame{margin: 0 0 18px;}
+.detail-form .frame{margin: 0 0 11px;}
 .detail-form label{
     margin-left: 3px;
-    font-family: LatoBold;
+    font-family: LatoRegular;
     cursor: pointer;
+    font-size: 12px;
 }
 .detail-form input[type="text"],
 .detail-form input[type="email"],
 .detail-form input[type="password"]{
     border: none;
     background: #f1f1f1;
-    height: 36px;
+    height: 30px;
     padding: 0 12px;
+    font-size: 12px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
     outline: none;
@@ -84,7 +88,7 @@
 }
 .detail-form .holder [class^=col-lg-]{padding: 0 23px 0 0;}
 .detail-form .holder [class^=col-lg-].pull-right{padding: 0 0 0 22px;}
-.detail-form .map-holder{height: 152px;}
+.detail-form .map-holder{height: 133px;}
 .detail-form #map{
     height: 80%;
     width: 100%;
@@ -101,10 +105,10 @@
     color: #000;
     color: rgba(0, 0, 0, .3);
 }
-.detail-form .list{padding: 10px 0 30px;}
+.detail-form .list{padding: 7px 0 18px;}
 .detail-form .list [class^=col-lg-]{padding: 0 20px 0 0;}
 .chat-room .v-frame{
-    height: 486px;
+    height: 396px;
     display: table;
     overflow: hidden;
     width: 100%;
@@ -119,11 +123,11 @@
     margin: 0 auto;
 }
 .chat-room .v-frame .note{
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
     display: inline-block;
     vertical-align: top;
-    min-height: 60px;
+    min-height: 50px;
     margin-bottom: 10px;
 }
 .chat-room .controls{
@@ -136,14 +140,14 @@
     width: 100%;
 }
 .chat-room .controls .btn{
-    font-size: 16px !important;
+    font-size: 12px !important;
     padding-top: 4px !important;
-    height: 33px !important;
+    height: 30px !important;
     width: 100% !important;
 }
 .chat-room .info-block{
-    padding: 30px 10px 15px;
-    font-size: 15px;
+    padding: 17px 10px 7px;
+    font-size: 12px;
     color: #000;
     color: rgba(0, 0, 0, .87);
 }
@@ -153,7 +157,7 @@
     padding: 0 12px;
 }
 .chat-room .block-list > li{
-    margin: 0 0 15px;
+    margin: 0 0 9px;
 }
 .chat-room .block-list dl{
     overflow: hidden;
@@ -177,7 +181,7 @@
     width: 18px;
     height: 18px;
     content: "";
-    margin: 2px 7px 0 0;
+    margin: 0 7px 0 0;
 }
 .chat-room .block-list dd{
     overflow: hidden;
@@ -187,7 +191,7 @@
     max-width: 100%;
     width: 75px;
 }
-.chat-room .block-list.alt dd{font-size: 14px;}
+.chat-room .block-list.alt dd{font-size: 11px;}
 .chat-room .block-list.alt a{
     margin-right: 21px;
     color: #000;
@@ -195,7 +199,7 @@
 }
 #twocolumns{
     overflow: hidden;
-    padding: 40px 0 0 42%;
+    padding: 24px 0 0 42%;
 }
 #twocolumns .col-2{
     float: left;
@@ -218,7 +222,7 @@
     overflow: hidden;
     padding: 0 20px;
     height: 28px;
-    font-size: 14px;
+    font-size: 12px;
     outline: none;
     display: inline-block;
     vertical-align: top;
@@ -247,7 +251,7 @@
     display: block;
     overflow: hidden;
     width: 100%;
-    padding: 19px 0 16px;
+    padding: 19px 0 0;
 }
 .message-form .items-list{
     list-style: none;
@@ -275,10 +279,12 @@
 }
 .message-form .jFiler-item-title{
     display: block;
+    font-size: 12px;
     text-align: center;
     font-weight: normal;
     text-transform: lowercase;
 }
+.message-form .jFiler-item-title b{font-weight: normal;}
 .message-form .item-trash{
     position: absolute;
     right: -1px;
@@ -290,7 +296,7 @@
 }
 .message-form .jFiler-icon-file{
     position: relative;
-    width: 48px;
+    width: 46px;
     height: 58px;
     display: inline-block;
     vertical-align: top;
@@ -299,8 +305,8 @@
     border-radius: 3px;
     color: #fff;
     font-family: sans-serif;
-    font-size: 11px;
-    font-weight: bold;
+    font-size: 10px;
+    font-weight: normal;
     overflow: hidden;
     box-shadow: #3f4fd3 36px -46px 0 0 inset;
     -webkit-box-shadow: #3f4fd3 36px -46px 0 0 inset;
@@ -372,12 +378,12 @@
     padding: 5px 15px;
     height: 110px;
     min-width: 100%;
-    max-height: 350px;
     min-height: 110px;
+    max-height: 350px;
 }
 .message-form .textarea.tall{
-    height: 390px;
-    max-height: 520px;
+    height: 290px;
+    max-height: 420px;
 }
 .message-form .controls{
     width: 160px;
@@ -388,15 +394,15 @@
 }
 .message-form .controls .btn{font-size: 14px;}
 .message-form .upload-box{
-    padding: 0 0 25px;
+    padding: 0 0 15px;
     margin: 0 0 20px;
     position: relative;
     border-bottom: 3px solid #000;
     border-bottom: 3px solid rgba(0, 0, 0, .05);
 }
 .message-form h3{
-    margin: 0 0 15px;
-    font-size: 15px;
+    margin: 0 0 10px;
+    font-size: 13px;
     color: #000;
 }
 select.full-width + .select2{
@@ -404,15 +410,19 @@ select.full-width + .select2{
     margin: 0;
 }
 .select2 .main-select{
-    height: 36px !important;
+    height: 30px !important;
     border-radius: 8px;
     -webkit-border-radius: 8px;
 }
 .select2 .main-select .select2-selection__rendered{
-    line-height: 36px;
+    line-height: 30px;
+    font-size: 12px;
+}
+.select2 .main-select .select2-selection__arrow{
+    height: 30px;
 }
 .select2-container--default .select2-results>.select2-results__options.main-select{
-    font-size: 16px;
+    font-size: 12px;
     border: none !important;
 }
 .message-form .select2{
@@ -422,26 +432,27 @@ select.full-width + .select2{
 .message-form .select2-selection--single.custom{
     background: #fff !important;
     border: 2px solid #eee;
-    height: 36px !important;
+    height: 32px !important;
     border-radius: 8px;
     -webkit-border-radius: 8px;
 }
 .message-form .select2-selection--single .select2-selection__rendered{
-    line-height: 32px;
-    font-size: 14px;
+    line-height: 28px;
+    font-size: 12px;
 }
 .message-form .select2-container--default .select2-selection--single .select2-selection__arrow{top: 4px;}
+.select2-results__options.custom{font-size: 12px;}
 .chat-room .comments-list{
     list-style: none;
     margin: 0;
     padding: 0;
     color: #000;
     color: rgba(0, 0, 0, .87);
-    max-height: 680px;
+    max-height: 570px;
     overflow: auto;
 }
 .chat-room .comments-list li{
-    margin: 0 0 35px;
+    margin: 0 0 20px;
     overflow: hidden;
 }
 .chat-room .comments-list li.right .img-holder{
@@ -457,7 +468,7 @@ select.full-width + .select2{
     width: 50px;
     height: 50px;
     overflow: hidden;
-    margin-right: 20px;
+    margin-right: 11px;
     border-radius: 50px;
     -webkit-border-radius: 50px;
 }
@@ -471,13 +482,14 @@ select.full-width + .select2{
     position: relative;
     padding-left: 20px;
 }
-.chat-room .comments-list li.right .holder{padding: 0 20px 0 0;}
+.chat-room .comments-list li.right .holder{padding: 0 11px 0 0;}
 .chat-room .comments-list .box{
     background: #f1f1f1;
     -webkit-border-radius: 8px;
     border-radius: 8px;
-    padding: 16px 25px;
+    padding: 11px 18px;
     position: relative;
+    font-size: 12px;
 }
 .chat-room .comments-list .box:after{
     content: "";
@@ -502,18 +514,78 @@ select.full-width + .select2{
 .chat-room .btn-back{
     position: absolute;
     left: 0;
-    font-size: 14px;
-    top: 9px;
+    font-size: 12px;
+    top: 6px;
     color: #fff;
     z-index: 1;
     background: #ff753a;
-    padding: 3px 10px;
+    padding: 2px 10px 3px;
     border-radius: 10px;
     -webkit-border-radius: 10px;
 }
 .chat-room .btn-back:hover,
 .chat-room .btn-back:focus{text-decoration: none;}
 .chat-room .btn-back:active{background: #f58859;}
+.chat-room .quote-section .holder{
+    max-height: 497px;
+    overflow: auto;
+    padding-left: 37px;
+}
+.chat-room .quote-section .price-list{
+    margin: 0;
+    padding-left: 10px;
+}
+.chat-room .quote-section .price-list li{
+    border-bottom: 0;
+    border-top: 2px solid #f2efef;
+    padding-top: 18px;
+}
+.chat-room .quote-section .price-list li:first-child{
+    padding-top: 0;
+    border-top: 0;
+}
+.chat-room .quote-section .package-name{
+    margin: 0 0 8px;
+    padding: 8px 10px 10px;
+    font: 15px LatoBold, Serif, sans-serif;
+    color: #fff;
+}
+.chat-room .quote-section .price-list .col:after{
+    border: none;
+}
+.chat-room .quote-section input[type="text"],
+.chat-room .quote-section input[type="email"],
+.chat-room .quote-section input[type="password"]{
+    height: 28px;
+    font-size: 14px;
+    background: #fff;
+}
+.chat-room .quote-section .text-box{
+    margin: 0 0 18px;
+    font-size: 13px;
+}
+.chat-room .quote-section .text-box h3{
+    font: 14px LatoBold, Serif, sans-serif;
+    margin: 0 0 10px;
+}
+.chat-room .quote-section .controls{
+    margin: 0 auto;
+    width: 150px;
+}
+.chat-room .quote-section .controls .btn{
+    font-size: 13px;
+    text-transform: uppercase;
+}
+@media (max-width: 1199px){
+    .chat-room .quote-section .price-list .col,
+    .chat-room .quote-section .price-list .col:first-child{
+        padding: 0;
+        width: 100%;
+    }
+    .chat-room .quote-section .custom-checkbox.small{
+        margin-bottom: 8px;
+    }
+}
 @media (max-width: 991px){
     .chat-room .title{
         font-size: 17px;
@@ -527,14 +599,14 @@ select.full-width + .select2{
     .chat-room > .container{padding: 0;}
     .chat-room .wrap{padding: 0 20px;}
     .chat-room .main-title{
-        font-size: 24px;
-        margin: 0 0 15px;
-        padding: 0 0 15px;
+        font-size: 18px;
+        margin: 0 0 10px;
+        padding: 0 0 10px;
     }
     .chat-room .btn-back{
         display: none;
-        top: 0;
         left: 20px;
+        top: 6px;
     }
     .detail-form .holder [class^=col-lg-]{padding: 0;}
     .detail-form .holder [class^=col-lg-].pull-right{
@@ -544,7 +616,7 @@ select.full-width + .select2{
     .detail-form .map-holder{
         padding-top: 20px;
         margin: 0 0 10px;
-        height: 173px;
+        height: 163px;
     }
     .chat-room .v-frame{
         height: auto;
@@ -557,37 +629,22 @@ select.full-width + .select2{
         margin: 7px 0;
         padding: 0;
     }
-    .detail-form .row [class^=col-lg-]:first-child .title{margin: 30px 0 7px;}
-    .detail-form label{font: 14px LatoRegular;}
-    .detail-form input[type="text"],
-    .detail-form input[type="email"],
-    .detail-form input[type="password"]{
-        height: 30px;
-        font-size: 14px;
-    }
-    .select2 .main-select{height: 30px !important;}
-    .select2 .main-select .select2-selection__rendered{
-        line-height: 30px;
-    }
-    .select2 .main-select .select2-selection__arrow{
-        height: 22px;
-    }
-    .detail-form .frame{margin: 0 0 12px;}
+    .detail-form .row [class^=col-lg-]:first-child .title{margin: 28px 0 7px;}
     .chat-room .v-frame .note{
         min-height: 100%;
+        font-size: 14px;
     }
     .chat-room .controls .btn{
         font-size: 14px !important;
     }
     .chat-room .miscellaneous-list{
         right: 20px;
-        top: 60px;
+        top: 46px;
     }
     .detail-form .list{padding: 10px 0;}
     .detail-form .list [class^=col-lg-]{padding: 0 0 10px;}
     .chat-room .info-block{
-        font-size: 14px;
-        padding: 10px 20px;
+        padding: 17px 20px 7px;
     }
     .chat-room .block-list > li{margin: 0 0 10px;}
     .chat-room .block-list{padding: 0;}
@@ -610,4 +667,22 @@ select.full-width + .select2{
         max-width: 100px;
     }
     .message-form .select2{width: 100% !important;}
+    .chat-room .quote-section{
+        padding-top: 12px;
+    }
+    .chat-room .quote-section .holder{
+        padding: 0;
+        max-height: 100%;
+        overflow: auto;
+    }
+    .chat-room .quote-section .price-list .col,
+    .chat-room .quote-section .price-list .col:first-child{
+        width: 50%;
+    }
+}
+@media (max-width: 599px){
+    .chat-room .quote-section .price-list .col,
+    .chat-room .quote-section .price-list .col:first-child{
+        width: 100%;
+    }
 }
