@@ -43,6 +43,7 @@ class AdminController extends Controller
             $mainCat = $categories[0]->getId();
         }
 
+
         $artistsQuery = $artistRepo->getArtistsList($query, $start, $end, true, false, null, $mainCat);
         $data = $paginator->paginate($artistsQuery, $page, 30);
 
@@ -223,6 +224,7 @@ class AdminController extends Controller
             'userId' => $userId
         ];
         $curUserId = $this->getUser()->getId();
+        $categories = $this->categoriesList();
 
         $usersQuery = $userRepo->getUsersList($query, $role, $curUserId, $fake, $userId);
         $data = $paginator->paginate($usersQuery, $page, 30);
@@ -232,7 +234,7 @@ class AdminController extends Controller
         $paginations = $data->getPaginationData();
 
         return $this->render('ActedLegalDocsBundle:Admin:usersList.html.twig',
-            compact('users', 'paginations', 'filters')
+            compact('users', 'paginations', 'filters', 'categories')
         );
     }
 
@@ -416,4 +418,16 @@ class AdminController extends Controller
 
     }
 
+    /**
+     * List of categories
+     * @return array
+     */
+    public function categoriesList()
+    {
+        return $this
+            ->getEM()
+            ->getRepository('ActedLegalDocsBundle:Category')
+            ->childrenHierarchy();
+
+    }
 }

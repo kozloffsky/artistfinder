@@ -741,9 +741,10 @@ $(function() {
                 size: 'viewport',
                 format: 'png'
             }).then(function (resp) {
+                var slug = $('#slug').text();
                 $.ajax({
                     type: "PATCH",
-                    url: '/user/edit',
+                    url: '/user/edit/'+slug,
                     data: {"user[avatar]": resp},
                     success: function(){
                         $('.avatarEditable .avatarImg').attr('src', resp);
@@ -816,9 +817,10 @@ $(function() {
                 type: 'canvas',
                 size: 'original'
             }).then(function (resp) {
+                var slug = $('#slug').text();
                 $.ajax({
                     type: "PATCH",
-                    url: '/user/edit',
+                    url: '/user/edit/'+slug,
                     data: {"user[background]": resp},
                     beforeSend: function () {
                         $('#loadSpinner').fadeIn(500);

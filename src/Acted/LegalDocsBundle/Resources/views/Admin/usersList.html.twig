@@ -3,27 +3,27 @@
 {% block body %}
 
     <div class="col-md-12">
-        <h2 class="sub-header">Spotlight</h2>
+        <h2 class="sub-header">Users</h2>
     </div>
 
     <div class="col-md-4">
-        <form action="/administration/spotlight/1">
+        <form action="/administration/users/list/1">
             <fieldset class="form-group">
                 <label for="querySearch">Search</label>
                 <input type="text" class="form-control" name="query" id="querySearch" placeholder="Search" value="{{ filters.query }}">
             </fieldset>
             <fieldset class="form-group">
                 <label for="querySearch">UserId</label>
-                <input type="number" class="form-control" name="query" id="userId" placeholder="id" value="{{ filters
+                <input type="number" class="form-control" name="userId" id="userId" placeholder="id" value="{{ filters
                 .userId }}">
             </fieldset>
-            <select class="form-control" id="catMainSel" name="main">
+            <select class="form-control" id="catMainSel" name="role">
                 <option value="all" selected="selected">All role</option>
                 <option value="client">Client</option>
                 <option value="artist">Artist</option>
                 <option value="admin">Admin</option>
             </select><br>
-            <select class="form-control" id="catMainSel" name="main">
+            <select class="form-control" id="catMainSel" name="fake">
                 <option value="all" selected="selected">All</option>
                 <option value="isFake">Is fake</option>
                 <option value="notFake">Not fake</option>
@@ -32,6 +32,9 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </fieldset>
         </form>
+        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#registrationModal">
+            Create new user
+        </a>
     </div>
     <div class="col-md-12">
         <div class="table-responsive">
@@ -39,6 +42,7 @@
                 <thead>
                 <tr>
                     <th>id</th>
+                    <th>Name</th>
                     <th>Slug</th>
                     <th>email</th>
                     <th>active</th>
@@ -50,6 +54,7 @@
                 {% for user in users %}
                     <tr id="{{ user.id }}">
                         <td>{{ user.id }}</td>
+                        <td class="usernameAdmin">{{ user.firstname }} {{ user.lastname }}</td>
                         {% if user.artist is defined %}
                             <td>{{ user.artist.slug }}</td>
                         {% else %}
@@ -57,15 +62,21 @@
                         {% endif %}
                         <td>{{ user.email }}</td>
                         <td>
-                            <input id="active-{{ user.id }}" type="checkbox" {% if user.active %}checked{% endif %}>
+                            <input id="active-{{ user.id }}"  class="userStatusAd" type="checkbox" {% if user.active %}checked{% endif %}>
                         </td>
                         <td>
-                            <input id="temporary-{{ user.id }}" type="checkbox" {% if user.fake %}checked{% endif
-                            %}>
+                            {% if user.fake %}
+                            Fake
+                            {% else %}
+                            Real
+                            {% endif%}
                         </td>
                         <td>
-                            <a href="#"><button type="button" class="btn btn-info manageSpotlight">Manage</button></a>
-                            <a href="#"><button type="button" class="btn btn-info saveSpotlight">Save</button></a>
+                            {% if user.artist is defined %}
+                                <a href="/profile/edit_profile/{{ user.artist.slug }}" target="_blank"><button type="button" class="btn btn-info manageUsers">Manage</button></a>
+                            {% endif %}
+                            <button type="button" class="btn btn-danger deleteUser" >Delete</button>
+                            {#<a href="#"><button type="button" class="btn btn-info saveSpotlight">Save</button></a>#}
                         </td>
                     </tr>
                 {% endfor %}
@@ -98,4 +109,8 @@
             </ul>
         </nav>
     </div>
+
+    {% include 'ActedLegalDocsBundle:Admin:createUserAdmin.html.twig' %}
 {% endblock %}
+
+
