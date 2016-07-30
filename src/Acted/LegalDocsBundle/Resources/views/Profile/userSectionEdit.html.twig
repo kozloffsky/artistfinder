@@ -2,20 +2,44 @@
 {% if is_granted('EDIT', artist) or is_granted('ROLE_ADMIN') %}
 
     {% if artist.user.background != '/' %}
-        <div class="header-background" style="background-image: url({{ asset(artist.user.background)|imagine_filter('background') }})">
+        <div class="header-background edit" style="background-image: url({{ asset(artist.user.background)|imagine_filter('background') }})">
             <span id="bgImageSrc" class="hidden">{{ asset(artist.user.background)|imagine_filter('background') }}</span>
             <div class="background-stripe"></div>
-            <div id="editBackground" class="set-background"><a href="#" data-toggle="modal" data-target="#changeBgModal"><i class="fa fa-camera" aria-hidden="true"></i></a></div>
+            <div id="editBackground" class="set-box set-background">
+                <button button="button" href="#" data-toggle="modal" data-target="#changeBgModal" class="set-background">
+                    <i class="ico"></i>
+                </button>
+                <em class="note">
+                    <span>Change background photo</span>
+                </em>
+            </div>
+            {#<div id="editBackground" class="set-background">#}
+                {#<a href="#" data-toggle="modal" data-target="#changeBgModal">#}
+                    {#<i class="fa fa-camera" aria-hidden="true"></i>#}
+                {#</a>#}
+            {#</div>#}
         </div>
     {% else %}
-        <div class="header-background" style="background-image: url({{ asset(artist.user.background) }})">
+        <div class="header-background edit" style="background-image: url({{ asset(artist.user.background) }})">
             <span id="bgImageSrc" class="hidden">{{ asset(artist.user.background) }}</span>
             <div class="background-stripe"></div>
-            <div id="editBackground" class="set-background"><a href="#" data-toggle="modal" data-target="#changeBgModal"><i class="fa fa-camera" aria-hidden="true"></i></a></div>
+            <div id="editBackground" class="set-box set-background">
+                <button button="button" href="#" data-toggle="modal" data-target="#changeBgModal" class="set-background">
+                    <i class="ico"></i>
+                </button>
+                <em class="note">
+                    <span>Change background photo</span>
+                </em>
+            </div>
+            {#<div id="editBackground" class="set-background">#}
+                {#<a href="#" data-toggle="modal" data-target="#changeBgModal">#}
+                    {#<i class="fa fa-camera" aria-hidden="true"></i>#}
+                {#</a>#}
+            {#</div>#}
         </div>
     {% endif %}
 {% else %}
-    <div class="header-background" style="background-image: url({{ artist.user.background }})">
+    <div class="header-background edit" style="background-image: url({{ artist.user.background }})">
         <div class="background-stripe"></div>
     </div>
 {% endif %}
@@ -23,11 +47,18 @@
 <section class="profile-info container">
     {% if is_granted('EDIT', artist) or is_granted('ROLE_ADMIN') %}
         <div class="avatar avatarEditable">
-            <img class="avatar" src="{{ artist.user.avatar }}" alt="Avatar">
-            <div id="editAvatar" class="set-avatar"><a href="#" data-toggle="modal" data-target="#changeImageModal"><i class="fa fa-camera" aria-hidden="true"></i></a></div>
+            <img class="avatarImg" src="{{ artist.user.avatar }}" alt="Avatar">
+            <div id="editAvatar" class="set-avatar set-avatar-box">
+                <button button="button" class="set-avatar" data-toggle="modal" data-target="#changeImageModal">
+                    <i class="ico"></i>
+                </button>
+                <em class="note">
+                    <span>Change avatar picture</span>
+                </em>
+            </div>
         </div>
     {% else %}
-        <img class="avatar" src="{{ artist.user.avatar }}" alt="Avatar">
+        <img class="avatarImg" src="{{ artist.user.avatar }}" alt="Avatar">
     {% endif %}
     <div class="info">
 
@@ -40,10 +71,15 @@
                     </li>
                 {% endfor %}
             </ul>
-            {% if is_granted('EDIT', artist) or is_granted('ROLE_ADMIN') %}
-                <button button="button" class="set-categories">
-                <a href="#" data-toggle="modal" id="editCategories" data-target="#categotiesModal"><i class="fa fa-pencil"></i></a>
-                </button>
+            {% if is_granted('EDIT', artist) %}
+                <div class="set-box-categories">
+                    <button button="button" data-toggle="modal" id="editCategories" data-target="#categotiesModal" class="set-categories">
+                        <i class="ico"></i>
+                    </button>
+                    <em class="note">
+                        <span>Change my categories</span>
+                    </em>
+                </div>
             {% endif %}
         </div>
 
