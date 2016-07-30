@@ -47,6 +47,9 @@ Acted\LegalDocsBundle\Entity\User:
         passwordRequestedAt:
           type: datetime
           nullable: true
+        createdAt:
+          type: datetime
+          nullable: true
     oneToOne:
         profile:
           targetEntity: Acted\LegalDocsBundle\Entity\Profile

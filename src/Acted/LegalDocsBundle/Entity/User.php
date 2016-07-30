@@ -49,6 +49,11 @@ class User implements UserInterface, \Serializable
      */
     private $fake = false;
 
+    /**
+     * @var \DateTime
+     */
+    private $createdAt;
+
 
     /**
      * Get id
@@ -673,5 +678,19 @@ class User implements UserInterface, \Serializable
         $this->fake = $fake;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
 
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
 }

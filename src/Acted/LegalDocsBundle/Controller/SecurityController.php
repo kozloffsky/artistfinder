@@ -149,7 +149,19 @@ class SecurityController extends Controller
             throw new NotFoundHttpException(sprintf('The user with confirmation token "%s" does not exist', $token));
         }
 
+        if ($userCreated = $user->getCreatedAt()) {
+            $now = new \DateTime();
+            $activatePeriod = $this->container->getParameter('confirmation_period');
+            $period = strtotime($userCreated->format('Y-m-d H:i:s')) + $activatePeriod;
+            if ($period < strtotime($now->format('Y-m-d H:i:s'))) {
+                $this->get('session')->getFlashBag()->set('error', 'Confirmation time left!');
+
+                return $this->redirect($this->generateUrl('acted_legal_docs_homepage'));
+            }
+        }
+
         $user->setConfirmationToken(null);
+        $user->setCreatedAt(null);
         $user->setActive(true);
 
         $this->get('session')->getFlashBag()->set('confirm', 'Your account is now activated');

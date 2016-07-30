@@ -47,3 +47,4 @@ parameters:
     web_socket_pusher_port: 5555
 
     fake_users: show  # show | hide
+    confirmation_period: 86400 #24 hours
