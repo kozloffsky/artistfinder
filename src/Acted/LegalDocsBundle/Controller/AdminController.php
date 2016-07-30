@@ -270,6 +270,8 @@ class AdminController extends Controller
             }
 
             $validationErrors = $validator->validate($user);
+            $now = new \DateTime();
+            $user->setCreatedAt($now);
             $em->persist($user);
 
             if ($data->getRole() == 'ROLE_ARTIST') {
@@ -329,9 +331,11 @@ class AdminController extends Controller
         if (is_null($user->getConfirmationToken())) {
             /** if not exist token - generate new token */
             $user->setConfirmationToken($userManager->generateToken());
-            $this->getEM()->persist($user);
-            $this->getEM()->flush();
         }
+        $now = new \DateTime();
+        $user->setCreatedAt($now);
+        $this->getEM()->persist($user);
+        $this->getEM()->flush();
 
         try {
             $userManager->sendConfirmationEmailMessage($user);
