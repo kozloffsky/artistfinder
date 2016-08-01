@@ -73,9 +73,15 @@
                         </td>
                         <td>
                             {% if user.artist is defined %}
-                                <a href="/profile/edit_profile/{{ user.artist.slug }}" target="_blank"><button type="button" class="btn btn-info manageUsers">Manage</button></a>
+                                <a href="/profile/edit_profile/{{ user.artist.slug }}" target="_blank">
+                                    <button type="button" class="btn btn-info manageUsers">Manage</button>
+                                </a>
+                                {% if user.active == false and user.fake == false %}
+                                    <button type="button" class="btn btn-success tokenResendUser" >Resent token</button>
+                                {% endif %}
                             {% endif %}
                             <button type="button" class="btn btn-danger deleteUser" >Delete</button>
+
                             {#<a href="#"><button type="button" class="btn btn-info saveSpotlight">Save</button></a>#}
                         </td>
                     </tr>

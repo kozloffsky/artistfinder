@@ -105,4 +105,21 @@ $(function() {
             }
         });
     }
+
+    $(document).on('click', '.tokenResendUser', function() {
+        var userRow = $(this).parents('tr'),
+            userId = $(userRow).attr('id');
+
+        sendToken(userId)
+    });
+
+    function sendToken(userId){
+        $.ajax({
+            type: "POST",
+            url: '/administration/users/resend_confirmation_token/'+userId,
+            success: function(response){
+                alert(response.success)
+            }
+        });
+    }
 });

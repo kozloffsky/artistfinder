@@ -245,7 +245,6 @@ class MediaManager
     public function removeFiles($user, $messageFiles)
     {
         $fs = new Filesystem();
-        $userMedia = $user->getProfile()->getMedia()->toArray();
 
         /** Remove message file */
         foreach ($messageFiles as $messageFile) {
@@ -260,6 +259,8 @@ class MediaManager
         }
 
         /** Check media */
+        $userMedia = $user->getProfile()->getMedia()->toArray();
+
         foreach ($userMedia as $media) {
             if ($media->getMediaType() === 'photo' && $fs->exists('../web'.$media->getLink())) {
                 $fs->remove('../web'.$media->getLink());
