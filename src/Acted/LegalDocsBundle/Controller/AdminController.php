@@ -302,7 +302,7 @@ class AdminController extends Controller
 
             $em->flush();
             if (!$user->isFake()) {
-                $userManager->sendConfirmationEmailMessage($user);
+                $userManager->confirmationForCreatedUser($user);
             }
 
             return new JsonResponse($serializer->toArray($user));
@@ -340,7 +340,7 @@ class AdminController extends Controller
         $this->getEM()->flush();
 
         try {
-            $userManager->sendConfirmationEmailMessage($user);
+            $userManager->confirmationForCreatedUser($user);
 
             return new JsonResponse(['success' => 'Message was sent successfully!']);
         } catch (\Exception $exp) {
