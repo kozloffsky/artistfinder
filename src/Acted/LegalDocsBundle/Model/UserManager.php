@@ -117,7 +117,7 @@ class UserManager
 
     public function confirmationForCreatedUser(User $user)
     {
-        $url = $this->router->generate('security_confirm', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->router->generate('security_resetting_reset', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
         $rendered = $this->templating->render('@ActedLegalDocs/Security/create_user_confirmation.txt.twig', [
             'user' => $user,
             'confirmationUrl' =>  $url

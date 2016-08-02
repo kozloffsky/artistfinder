@@ -274,11 +274,13 @@ class AdminController extends Controller
             $validationErrors = $validator->validate($user);
             $now = new \DateTime();
             $user->setCreatedAt($now);
+            $user->setActive(true);
             $em->persist($user);
 
             if ($data->getRole() == 'ROLE_ARTIST') {
                 $profile = $userManager->newProfile($data);
                 $profile->setUser($user);
+                $profile->setActive(true);
                 $validationErrors->addAll($validator->validate($profile));
 
                 $artist = $userManager->newArtist($data);
