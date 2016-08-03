@@ -274,6 +274,7 @@ class AdminController extends Controller
             $validationErrors = $validator->validate($user);
             $now = new \DateTime();
             $user->setCreatedAt($now);
+            $user->setPasswordRequestedAt($now);
             $user->setActive(true);
             $em->persist($user);
 
@@ -338,6 +339,7 @@ class AdminController extends Controller
         }
         $now = new \DateTime();
         $user->setCreatedAt($now);
+        $user->setPasswordRequestedAt($now);
         $this->getEM()->persist($user);
         $this->getEM()->flush();
 
