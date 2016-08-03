@@ -19,27 +19,96 @@ class CreateUserCommand extends ContainerAwareCommand
             ->setDescription('Create new admin')
             ->addArgument(
                 'email',
-                InputArgument::OPTIONAL,
+                InputArgument::REQUIRED,
                 'user email'
+            )
+            ->addArgument(
+                'flag',
+                InputArgument::REQUIRED,
+                'ability flag'
             )
             ->addArgument(
                 'password',
                 InputArgument::OPTIONAL,
                 'user password'
             )
+            ->addArgument(
+                'search_email',
+                InputArgument::OPTIONAL,
+                'email for search'
+            )
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $email = $input->getArgument('email');
-        $password = $input->getArgument('password');
         $em = $this->getContainer()->get('doctrine')->getManager();
         $userRepo = $em->getRepository('ActedLegalDocsBundle:User');
+        $email = $input->getArgument('email');
+        $searchEmail = $input->getArgument('search_email');
+        $password = $input->getArgument('password');
+        $encoder = $this->getContainer()->get('security.password_encoder');
+        $roleRepo = $em->getRepository('ActedLegalDocsBundle:RefRole');
 
         if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new Exception('Not valid email');
         }
+
+        switch ($input->getArgument('flag')){
+            case 'create':
+                $this->createUser($email, $password, $userRepo, $roleRepo, $encoder, $em);
+                $output->writeln(sprintf('New admin create successfully! email: %s , password: %s', $email, $password ));
+                break;
+            case 'edit':
+                $this->editUser($email, $password, $encoder, $userRepo, $em, $searchEmail);
+                $output->writeln(sprintf('Admin edit successfully! email: %s , password: %s', $email, $password ));
+                break;
+            case 'delete':
+                $user = $userRepo->findOneByEmail($email);
+                $em->remove($user);
+                $em->flush();
+
+                $output->writeln(sprintf('Admin delete successfully! email: %s ', $email));
+                break;
+        }
+    }
+
+    /**
+     * @param string $email
+     * @param string $searchEmail
+     * @param string $password
+     * @param $encoder
+     * @param $userRepo
+     * @param $em
+     */
+    private function editUser($email, $password, $encoder, $userRepo, $em, $searchEmail)
+    {
+        $editAdmin = $userRepo->findOneBy(['email' => $searchEmail]);
+        $editAdmin->setEmail($email);
+        /** validate password */
+        if($password) {
+            if ($this->validationPassword($password)['status']) {
+                throw new Exception($this->validationPassword($password)['message']);
+            }
+            $editAdmin->setPasswordHash($encoder->encodePassword($editAdmin, $password));
+        }
+
+        $em->persist($editAdmin);
+        $em->flush();
+    }
+
+    /**
+     * @param string $email
+     * @param string $password
+     * @param string $userRepo
+     * @param $roleRepo
+     * @param $encoder
+     * @param $em
+     */
+    private function createUser($email, $password, $userRepo, $roleRepo, $encoder, $em)
+    {
+        /** Check exist email */
+        $admin = $userRepo->findOneBy(['email' => $email]);
         if (!$password) {
             throw new Exception('Not valid password');
         }
@@ -47,14 +116,9 @@ class CreateUserCommand extends ContainerAwareCommand
         if ($this->validationPassword($password)['status']) {
             throw new Exception($this->validationPassword($password)['message']);
         }
-        /** Check exist email */
-        $admin = $userRepo->findOneBy(['email' => $email]);
         if ($admin) {
             throw new Exception(sprintf('Admin with email %s already exist!', $email));
         }
-
-        $encoder = $this->getContainer()->get('security.password_encoder');
-        $roleRepo = $em->getRepository('ActedLegalDocsBundle:RefRole');
         $adminRole = $roleRepo->findOneBy(['code' => 'ROLE_ADMIN']);
         /**
          * Create new user
@@ -69,8 +133,6 @@ class CreateUserCommand extends ContainerAwareCommand
 
         $em->persist($user);
         $em->flush();
-
-        $output->writeln(sprintf('New admin create successfully! email: %s , password: %s', $email, $password ));
     }
 
     /**
