@@ -76,6 +76,9 @@
                                 <a href="/profile/edit_profile/{{ user.artist.slug }}" target="_blank">
                                     <button type="button" class="btn btn-info manageUsers">Manage</button>
                                 </a>
+                                <a href="/profile/{{ user.artist.slug }}" target="_blank">
+                                    <button type="button" class="btn btn-info manageUsers">View</button>
+                                </a>
                                 {% if user.active == false and user.fake == false %}
                                     <button type="button" class="btn btn-success tokenResendUser" >Resent token</button>
                                 {% endif %}
@@ -98,15 +101,14 @@
                         </a>
                     </li>
                 {% endif %}
-                {% for pagin in range(1, paginations['pageRange']) %}
+                {% for pagin in paginations['pagesInRange'] %}
                     <li>
                         <a href="{{ path('admin_users_list', {'page': pagin }) }}?query={{ filters.query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}">{{ pagin }}</a>
                     </li>
                 {% endfor %}
                 {% if paginations['next'] is defined %}
                     <li>
-                        <a href="{{ path('admin_users_list', {'page': paginations['next']  }) }}?query={{ filters
-                        .query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}"
+                        <a href="{{ path('admin_users_list', {'page': paginations['next']  }) }}?query={{ filters.query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}"
                            aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
