@@ -1,4 +1,4 @@
-$(function () {
+/*$(function () {
     "use strict";
 
     var retina = window.devicePixelRatio > 1;
@@ -13,4 +13,4 @@ $(function () {
         $('body').css('display', 'block');
     }
 
-});
+});*/
