@@ -67,24 +67,15 @@ $(function () {
 
     initSLiderRec();
     function initSLiderRec(){
-        if(retina) {
-            var panelWidth = 155;
-            var margin = 25;
-        } else {
-            var panelWidth = 204;
-            var margin = 11;
-            /*var sliderArea = $('.container').width() - 70;
-            console.log(sliderArea)
-            var visiblePanels = parseInt(sliderArea/panelWidth);
-            console.log(visiblePanels)
-            var margin = (sliderArea - panelWidth * visiblePanels) / visiblePanels;*/
-
-        }
-
-
-
+        var slidersCount = $('.slider-wrapper').length;
+        var panelWidth = 153;
+        var sliderArea = $('.slider-block').width() - 70;
+        var visiblePanels = parseInt(sliderArea/panelWidth);
+        var margin = (sliderArea - panelWidth * visiblePanels) / visiblePanels;
         var countSlidersRecommended = $('.recommendationsTabContent .bx-viewport').length;
-        console.log(countSlidersRecommended)
+
+        console.log(margin)
+
         var slidersCount = $('.searchRecomendationWrapper').length;
         if(countSlidersRecommended == 0) {
             $('.searchRecomendationWrapper').bxSlider({
@@ -109,22 +100,15 @@ $(function () {
     }
 
     function initSLiderSearchRes(){
-        if(retina) {
-            var panelWidth = 155;
-            var margin = 25;
-        } else {
-            var panelWidth = 204;
-            var margin = 11;
-            /*var sliderArea = $('.container').width() - 70;
-            console.log(sliderArea)
-            var visiblePanels = parseInt(sliderArea/panelWidth);
-            console.log(visiblePanels)
-            var margin = (sliderArea - panelWidth * visiblePanels) / visiblePanels;*/
-
-        }
-
+        var slidersCount = $('.slider-wrapper').length;
+        var panelWidth = 153;
+        var sliderArea = $('.SearchResultTabContent .slider-block').width() - 70;
+        var visiblePanels = parseInt(sliderArea/panelWidth);
+        var margin = (sliderArea - panelWidth * visiblePanels) / visiblePanels;
         var countSlidersSearch = $('.SearchResultTabContent .bx-viewport').length;
         var slidersCount = $('.searchSearchResultWrapper').length;
+
+        console.log(sliderArea, panelWidth , visiblePanels,  visiblePanels)
         if(countSlidersSearch == 0) {
             $('.searchSearchResultWrapper').bxSlider({
                 slideWidth: panelWidth,
@@ -222,7 +206,6 @@ $(function () {
 
     function checkUserPosition(){
         var cityChosen = $('#eventLocationForm #region').val();
-        console.log(cityChosen)
         if(!cityChosen){
                 $('.results select[name="distance"]').prop('disabled', true);
                 $('#range-near').prop('disabled', true);
@@ -434,13 +417,14 @@ $(function () {
         //console.log('finish');
         initTabs();
         //$('.recomendedFilter select').prop('disabled',false);
-        initSLiderSearchRes();
         selectBoxStyle();
 
         $('.tab').removeClass('active');
         $('.SearchResultTab').addClass('active');
         $('.tab-block').hide();
         $('.SearchResultTabContent').show();
+
+        initSLiderSearchRes();
     }
 
     function recomendedSearchRes(response){
@@ -474,7 +458,6 @@ $(function () {
         $(artists).each(function () {
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString();
-            console.log(this.media.link);
             if(this.media.link){
                 var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
             } else{
