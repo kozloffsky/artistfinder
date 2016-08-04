@@ -18,6 +18,11 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 class AdminController extends Controller
 {
+
+    public function indexAction()
+    {
+        return $this->render('ActedLegalDocsBundle:Admin:index.html.twig', []);
+    }
     /**
      * @param Request $request
      * @return JsonResponse
