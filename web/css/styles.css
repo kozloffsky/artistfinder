@@ -23,6 +23,11 @@
 {
     display: none;
 }
+header.adminHeader .navbar
+{
+    background: #000!important;
+}
+
 /*! X-editable - v1.5.1
 * In-place editing with Twitter Bootstrap, jQuery UI or pure jQuery
 * http://github.com/vitalets/x-editable
