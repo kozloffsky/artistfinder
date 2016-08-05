@@ -248,13 +248,13 @@ class MediaManager
 
         /** Remove message file */
         foreach ($messageFiles as $messageFile) {
-            if ($fs->exists($messageFile->getFileName())) {
+            if ($fs->exists($messageFile->getFileName()) && $messageFile->getFileName() !== '/') {
                 $fs->remove($messageFile->getFileName());
             }
         }
 
         /** Check background */
-        if ($user->getBackground() && $fs->exists($user->getBackground())) {
+        if ($user->getBackground() && $fs->exists($user->getBackground()) && $user->getBackground() !== '/') {
             $fs->remove($user->getBackground());
         }
 
@@ -262,7 +262,8 @@ class MediaManager
         $userMedia = $user->getProfile()->getMedia()->toArray();
 
         foreach ($userMedia as $media) {
-            if ($media->getMediaType() === 'photo' && $fs->exists('../web'.$media->getLink())) {
+            if ($media->getMediaType() === 'photo' && $fs->exists('../web'.$media->getLink()) && $media->getLink()
+                !== '/') {
                 $fs->remove('../web'.$media->getLink());
                 /** Background thumbnail */
                 if ($fs->exists('../web/media/cache/background' . $media->getLink())) {
