@@ -7420,21 +7420,26 @@ $(function() {
 
             $toggler.click(function(e) {
                 e.preventDefault();
-               if(!$element.hasClass('opened')) {
-                   $text.html( $element.attr('data-full-text'));
-                   $element.addClass('opened');
-                   $toggler.html('-hide');
-               } else {
-                   $element.removeClass('opened');
-                   var newText = $element.attr('data-full-text').substring(0, maxLength - 3) + '...';
-                   $text.html(newText);
-                   $toggler.html('+more');
-               }
+                if(!$element.hasClass('opened')) {
+                    $text.html( $element.attr('data-full-text'));
+                    $element.addClass('opened');
+                    $toggler.html('-hide');
+                } else {
+                    $element.removeClass('opened');
+                    var newText = $element.attr('data-full-text').substring(0, maxLength - 3) + '...';
+                    $text.html(newText);
+                    $toggler.html('+more');
+                }
             });
         } else {
             $toggler.hide();
         }
     });
+});
+/**
+ * Created by pavel on 09.08.16.
+ */
+$(function() {
     createActiveMenu();
 
     function createActiveMenu(){
@@ -11833,6 +11838,13 @@ $(function(){
     //         });
     //     }
     // });
+
+});
+/**
+ * Created by pavel on 09.08.16.
+ */
+$(function(){
+    'use strict';
 
     $('#passwordRecoveryForm').on('click', function(e)  {
         e.preventDefault();
