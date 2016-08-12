@@ -267,6 +267,12 @@ class AdminController extends Controller
             $validator = $this->get('validator');
             $em = $this->getDoctrine()->getManager();
 
+            if($data->getFake() === 'false') {
+                $data->setFake(false);
+            } else {
+                $data->setFake(true);
+            }
+
             $user = $userManager->newUser($data);
 
             if ($data->getRole() == 'ROLE_ARTIST') {

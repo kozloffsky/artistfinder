@@ -27,3 +27,7 @@ header.adminHeader .navbar
 {
     background: #000!important;
 }
+.fakeSelection
+{
+    text-align: center;
+}

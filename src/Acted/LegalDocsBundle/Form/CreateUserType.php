@@ -85,7 +85,7 @@ class CreateUserType extends AbstractType
                 'description' => 'City ID (for ROLE_ARTIST)',
                 'required' => false
             ])
-            ->add('fake', CheckboxType::class, [
+            ->add('fake', TextType::class, [
                 'required' => false,
             ])
         ;
