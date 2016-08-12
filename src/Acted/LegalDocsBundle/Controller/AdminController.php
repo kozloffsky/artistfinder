@@ -3,18 +3,15 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\Artist;
-use Acted\LegalDocsBundle\Entity\Media;
 use Acted\LegalDocsBundle\Entity\Recommend;
+use Acted\LegalDocsBundle\Form\CreateUserType;
 use Acted\LegalDocsBundle\Form\RecommendType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializationContext;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Acted\LegalDocsBundle\Entity\User;
-use Acted\LegalDocsBundle\Form\RegisterType;
 use Acted\LegalDocsBundle\Popo\RegisterUser;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 class AdminController extends Controller
 {
@@ -249,7 +246,7 @@ class AdminController extends Controller
      * @ApiDoc(
      *  resource=true,
      *  description="Create new user",
-     *  input="Acted\LegalDocsBundle\Form\RegisterType",
+     *  input="Acted\LegalDocsBundle\Form\CreateUserType",
      *  statusCodes={
      *         200="Returned when successful",
      *         400="Returned when the form has validation errors",
@@ -258,7 +255,7 @@ class AdminController extends Controller
      */
     public function createNewUserAction(Request $request)
     {
-        $form = $this->createForm(RegisterType::class);
+        $form = $this->createForm(CreateUserType::class);
         $form->handleRequest($request);
         $serializer = $this->get('jms_serializer');
 
