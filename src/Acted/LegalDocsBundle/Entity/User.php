@@ -416,6 +416,11 @@ class User implements UserInterface, \Serializable
     private $confirmationToken;
 
     /**
+     * @var string
+     */
+    private $confirmationPeriod;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $roles;
@@ -612,10 +617,17 @@ class User implements UserInterface, \Serializable
         return $this->passwordRequestedAt;
     }
 
-    public function isPasswordRequestNonExpired($ttl)
+    public function isPasswordRequestNonExpired($ttl, $confPeriod)
     {
-        return $this->getPasswordRequestedAt() instanceof \DateTime &&
-        $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
+        if (!$this->getConfirmationPeriod()) {
+            $result = $this->getPasswordRequestedAt() instanceof \DateTime &&
+                $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
+        } else {
+            $result = $this->getConfirmationPeriod() instanceof \DateTime &&
+                $this->getConfirmationPeriod()->getTimestamp() + $confPeriod > time();
+        }
+
+        return $result;
     }
 
     public function getFullName()
@@ -693,4 +705,22 @@ class User implements UserInterface, \Serializable
     {
         $this->createdAt = $createdAt;
     }
+
+    /**
+     * @return \DateTime
+     */
+    public function getConfirmationPeriod()
+    {
+        return $this->confirmationPeriod;
+    }
+
+    /**
+     * @param \DateTime $confirmationPeriod
+     */
+    public function setConfirmationPeriod($confirmationPeriod)
+    {
+        $this->confirmationPeriod = $confirmationPeriod;
+    }
+
+
 }

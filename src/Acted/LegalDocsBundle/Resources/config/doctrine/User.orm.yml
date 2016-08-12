@@ -50,6 +50,9 @@ Acted\LegalDocsBundle\Entity\User:
         createdAt:
           type: datetime
           nullable: true
+        confirmationPeriod:
+          type: datetime
+          nullable: true
     oneToOne:
         profile:
           targetEntity: Acted\LegalDocsBundle\Entity\Profile

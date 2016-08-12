@@ -219,7 +219,8 @@ class SecurityController extends Controller
             throw new NotFoundHttpException(sprintf('The user with confirmation token "%s" does not exist', $token));
         }
 
-        if (!$user->isPasswordRequestNonExpired($this->getParameter('resetting.token_ttl'))) {
+        if (!$user->isPasswordRequestNonExpired($this->getParameter('resetting.token_ttl'), $this->getParameter('confirmation_period_resend')
+        )) {
             return $this->redirect($this->generateUrl('security_resetting_request'));
         }
 
@@ -233,6 +234,7 @@ class SecurityController extends Controller
 
             $user->setConfirmationToken(null);
             $user->setPasswordRequestedAt(null);
+            $user->setConfirmationPeriod(null);
             $user = $userManager->updatePassword($user, $data['password']);
             $user->setActive(true);
 

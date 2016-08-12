@@ -346,7 +346,7 @@ class AdminController extends Controller
             $user->setConfirmationToken($userManager->generateToken());
         }
         $now = new \DateTime();
-        $user->setCreatedAt($now);
+        $user->setConfirmationPeriod($now);
         $user->setPasswordRequestedAt($now);
         $this->getEM()->persist($user);
         $this->getEM()->flush();
