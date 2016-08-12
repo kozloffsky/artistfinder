@@ -722,5 +722,8 @@ class User implements UserInterface, \Serializable
         $this->confirmationPeriod = $confirmationPeriod;
     }
 
-
+    public function getUserEmail()
+    {
+        return $this->getEmail()?$this->getEmail():'';
+    }
 }

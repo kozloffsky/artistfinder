@@ -19,11 +19,12 @@ Acted\LegalDocsBundle\Entity\User:
       groups: [users_list]
     fake:
       groups: [users_list]
-    email:
-      groups: [users_list]
     artist:
       groups: [users_list]
   virtual_properties:
+      getUserEmail:
+        serialized_name: email
+        groups: [users_list]
       getRoles:
         serialized_name: roles
         type: array<string>
