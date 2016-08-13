@@ -9744,7 +9744,13 @@ $(function () {
                         window.location.replace(window.location.href);
                     }, 2500);
                 } else {
-                    window.location.replace(window.location.href);
+                    console.log(response)
+                    if (response.tempUserToken.length > 0){
+                        var redirectUrl = window.location.protocol + "//" + window.location.host + '/resend_token/reset/' + response.tempUserToken;
+                        window.location.replace(redirectUrl);
+                    } else {
+                        window.location.replace(window.location.href);
+                    }
                 }
             },
             error: function(response){
@@ -11852,7 +11858,12 @@ $(function(){
         var tokenVal = $('#currentToken').text();
         $('.recoveryFormSub #password_first, .recoveryFormSub #password_second').val(passwordValue);
         var recoveryPasswordVal = $('.recoveryFormSub form').serialize();
-        sendNewPassword(recoveryPasswordVal, tokenVal);
+        var classResend = $(this).hasClass('resendToken');
+        if(classResend){
+            resendNewToken(recoveryPasswordVal, tokenVal);
+        } else {
+            sendNewPassword(recoveryPasswordVal, tokenVal);
+        }
     });
 
 
@@ -11860,6 +11871,17 @@ $(function(){
         $.ajax({
             type: "POST",
             url: '/resetting/reset/' + tokenVal,
+            data: recoveryPasswordVal,
+            success: function(){
+                document.location.href="/";
+            }
+        })
+    }
+
+    function resendNewToken(recoveryPasswordVal, tokenVal){
+        $.ajax({
+            type: "POST",
+            url: '/resend_token/reset/' + tokenVal,
             data: recoveryPasswordVal,
             success: function(){
                 document.location.href="/";
@@ -13664,7 +13686,7 @@ $(function () {
 
     function resetModal() {
         $('#registrationModal [type="checkbox"]').prop('checked', false);
-        $('.details-form input').val('');
+        /*$('.details-form input').val('');*/
         $('.category').removeClass('open');
         showFirstPage();
     }
@@ -13687,6 +13709,16 @@ $(function () {
     });
 
     $('#artistBlock input').on('change', disableCatNext);
+
+    $('.fakeSelection input').on('change', function(){
+        var currentFakeVal = $(this).val();
+        console.log(currentFakeVal)
+        if(currentFakeVal == 'true'){
+            $('.emailAdminDash').hide();
+        } else {
+            $('.emailAdminDash').show();
+        }
+    });
 
     function checkCategories(){
         var numberCatChecked = $('#registrationModal #categoriesForm input:checkbox:checked').length;
@@ -13758,14 +13790,16 @@ $(function () {
         var userInformation = $('.artistRegForm').serialize();
         var categoriesForm = $('.artistCategoriesChoose > #categoriesForm').serialize();
         var userRole = 'role=ROLE_ARTIST';
-        registerArtist(userInformation, categoriesForm, userRole);
+        var userStatusFake = $('.fakeSelection').serialize();
+        console.log(userStatusFake)
+        registerArtist(userInformation, categoriesForm, userRole, userStatusFake);
     };
 
-    function registerArtist(userInformation, categoriesForm, userRole) {
+    function registerArtist(userInformation, categoriesForm, userRole, userStatusFake) {
         $.ajax({
             type: "POST",
             url: '/administration/users/create',
-            data: userRole + '&' + userInformation + '&' + categoriesForm,
+            data: userRole + '&' + userInformation + '&' + categoriesForm +'&' + userStatusFake,
             success: function(){
                 finishRegistration()
                 resetModal()
@@ -13846,13 +13880,14 @@ $(function () {
     function customerRegister(){
         var customerValues = $('.customerRegForm').serialize();
         var customerRole = 'role=ROLE_CLIENT';
+        var userStatusFake = $('.fakeSelection').serialize();
         $.ajax({
             type: "POST",
             url: '/administration/users/create',
-            data: customerRole +'&'+customerValues,
+            data: customerRole +'&'+customerValues + '&' + userStatusFake,
             success: function(response){
                 finishRegistration();
-                resetModal()
+                resetModal();
             },
             error: function(response){
                 var regestrationResponse = response.responseJSON;

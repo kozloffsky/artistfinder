@@ -162,6 +162,7 @@ class SecurityController extends Controller
 
         $user->setConfirmationToken(null);
         $user->setCreatedAt(null);
+        $user->setPasswordRequestedAt(null);
         $user->setActive(true);
 
         $this->get('session')->getFlashBag()->set('confirm', 'Your account is now activated');
@@ -191,7 +192,7 @@ class SecurityController extends Controller
                 return new JsonResponse(['error' => 'User with email '. $data['email'] . ' not exist.']);
             }
 
-            if ($user->isPasswordRequestNonExpired($this->getParameter('resetting.token_ttl'))) {
+            if ($user->isPasswordRequestNonExpired($this->getParameter('resetting.token_ttl'), $this->getParameter('confirmation_period_resend'))) {
                 return new JsonResponse(['error' => 'Message has been already sent to your email.']);
             }
 
@@ -240,13 +241,82 @@ class SecurityController extends Controller
 
             $em->flush();
 
-            return new JsonResponse(['asdasd']);
+            return new JsonResponse(['ok']);
         }
-
 
         return $this->render('@ActedLegalDocs/Security/changePassword.html.twig', [
            'form' => $form->createView(),
             'currentToken' => $token
         ]);
+    }
+
+    public function resendConfirmationTokenAction(Request $request, $token)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var User $user */
+        $user = $em->getRepository('ActedLegalDocsBundle:User')->findOneByConfirmationToken($token);
+
+        if (null === $user) {
+            throw new NotFoundHttpException(sprintf('The user with confirmation token "%s" does not exist', $token));
+        }
+
+        if ($this->checkPeriodAuth($user)) {
+            return $this->redirect($this->generateUrl('security_resetting_request'));
+        }
+
+        $form = $this->createForm(ResettingFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $data = $form->getData();
+
+            $userManager = $this->get('app.user.manager');
+
+            $user->setConfirmationToken(null);
+            $user->setPasswordRequestedAt(null);
+            $user->setConfirmationPeriod(null);
+            $user->setTempPassword(null);
+            $user = $userManager->updatePassword($user, $data['password']);
+            $user->setActive(true);
+
+            $em->flush();
+
+            return new JsonResponse(['ok']);
+        }
+        return $this->render('@ActedLegalDocs/Security/resendToken.html.twig', [
+            'form' => $form->createView(),
+            'currentToken' => $token
+        ]);
+    }
+
+    /**
+     * Check expired time
+     * @param $user
+     * @return bool
+     */
+    private function checkPeriodAuth($user)
+    {
+        $now = new \DateTime();
+
+        if ( !$user->getActive() && $user->getTempPassword()) {
+            if ($passwordRequestedAt = $user->getPasswordRequestedAt()) {
+                $activatePeriodResend = $this->getParameter('confirmation_period_resend');
+                $periodResend = strtotime($passwordRequestedAt->format('Y-m-d H:i:s')) + $activatePeriodResend;
+                if ($periodResend < strtotime($now->format('Y-m-d H:i:s'))) {
+                    return true;
+                }
+            }
+
+            if ($userCreated = $user->getCreatedAt()) {
+                $activatePeriod = $this->getParameter('confirmation_period');
+                $period = strtotime($userCreated->format('Y-m-d H:i:s')) + $activatePeriod;
+                if ($period < strtotime($now->format('Y-m-d H:i:s'))) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

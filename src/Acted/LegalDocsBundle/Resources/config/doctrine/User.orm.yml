@@ -44,6 +44,9 @@ Acted\LegalDocsBundle\Entity\User:
         confirmationToken:
           type: string(255)
           nullable: true
+        tempPassword:
+          type: string(255)
+          nullable: true
         passwordRequestedAt:
           type: datetime
           nullable: true

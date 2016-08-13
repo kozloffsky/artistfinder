@@ -10,7 +10,12 @@ $(function(){
         var tokenVal = $('#currentToken').text();
         $('.recoveryFormSub #password_first, .recoveryFormSub #password_second').val(passwordValue);
         var recoveryPasswordVal = $('.recoveryFormSub form').serialize();
-        sendNewPassword(recoveryPasswordVal, tokenVal);
+        var classResend = $(this).hasClass('resendToken');
+        if(classResend){
+            resendNewToken(recoveryPasswordVal, tokenVal);
+        } else {
+            sendNewPassword(recoveryPasswordVal, tokenVal);
+        }
     });
 
 
@@ -18,6 +23,17 @@ $(function(){
         $.ajax({
             type: "POST",
             url: '/resetting/reset/' + tokenVal,
+            data: recoveryPasswordVal,
+            success: function(){
+                document.location.href="/";
+            }
+        })
+    }
+
+    function resendNewToken(recoveryPasswordVal, tokenVal){
+        $.ajax({
+            type: "POST",
+            url: '/resend_token/reset/' + tokenVal,
             data: recoveryPasswordVal,
             success: function(){
                 document.location.href="/";

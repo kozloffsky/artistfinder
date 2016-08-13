@@ -15,6 +15,7 @@ final class RegisterUser
     private $phone;
     private $city;
     private $fake;
+    private $tempPassword;
 
     /**
      * @return mixed
@@ -192,4 +193,19 @@ final class RegisterUser
         $this->fake = $fake;
     }
 
+    /**
+     * @return string
+     */
+    public function getTempPassword()
+    {
+        return $this->tempPassword;
+    }
+
+    /**
+     * @param string $tempPassword
+     */
+    public function setTempPassword($tempPassword)
+    {
+        $this->tempPassword = $tempPassword;
+    }
 }

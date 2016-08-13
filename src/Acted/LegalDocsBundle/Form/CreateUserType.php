@@ -88,6 +88,12 @@ class CreateUserType extends AbstractType
             ->add('fake', TextType::class, [
                 'required' => false,
             ])
+            ->add('temp_password', TextType::class, [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+                'description' => 'Temp password for created user',
+            ])
         ;
 
         $builder->get('phone')->addModelTransformer(new PhoneTransformer());

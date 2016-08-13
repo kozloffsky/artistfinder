@@ -66,7 +66,13 @@ $(function () {
                         window.location.replace(window.location.href);
                     }, 2500);
                 } else {
-                    window.location.replace(window.location.href);
+                    console.log(response)
+                    if (response.tempUserToken.length > 0){
+                        var redirectUrl = window.location.protocol + "//" + window.location.host + '/resend_token/reset/' + response.tempUserToken;
+                        window.location.replace(redirectUrl);
+                    } else {
+                        window.location.replace(window.location.href);
+                    }
                 }
             },
             error: function(response){

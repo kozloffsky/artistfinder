@@ -40,6 +40,11 @@ class User implements UserInterface, \Serializable
     private $secondaryPhone;
 
     /**
+     * @var string
+     */
+    private $tempPassword;
+
+    /**
      * @var boolean
      */
     private $active = false;
@@ -725,5 +730,21 @@ class User implements UserInterface, \Serializable
     public function getUserEmail()
     {
         return $this->getEmail()?$this->getEmail():'';
+    }
+
+    /**
+     * @return string
+     */
+    public function getTempPassword()
+    {
+        return $this->tempPassword;
+    }
+
+    /**
+     * @param string $tempPassword
+     */
+    public function setTempPassword($tempPassword)
+    {
+        $this->tempPassword = $tempPassword;
     }
 }
