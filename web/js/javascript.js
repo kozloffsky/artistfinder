@@ -13792,14 +13792,19 @@ $(function () {
         var userRole = 'role=ROLE_ARTIST';
         var userStatusFake = $('.fakeSelection').serialize();
         console.log(userStatusFake)
-        registerArtist(userInformation, categoriesForm, userRole, userStatusFake);
+        var tempPass = 'A' + Math.random().toString(36).substring(7);
+        registerArtist(userInformation, categoriesForm, userRole, userStatusFake, tempPass);
     };
 
-    function registerArtist(userInformation, categoriesForm, userRole, userStatusFake) {
+    function registerArtist(userInformation, categoriesForm, userRole, userStatusFake, tempPass) {
         $.ajax({
             type: "POST",
             url: '/administration/users/create',
-            data: userRole + '&' + userInformation + '&' + categoriesForm +'&' + userStatusFake,
+            data: userRole + '&' + userInformation +
+            '&' + categoriesForm +
+            '&' + userStatusFake +
+            '&temp_password='+tempPass +
+            '&password%5Bfirst%5D='+ tempPass +'&password%5Bsecond%5D=' + tempPass,
             success: function(){
                 finishRegistration()
                 resetModal()
