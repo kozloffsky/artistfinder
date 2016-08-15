@@ -31,3 +31,7 @@ header.adminHeader .navbar
 {
     text-align: center;
 }
+.saveMailAdmin, .userEmailChange
+{
+    display: none;
+}

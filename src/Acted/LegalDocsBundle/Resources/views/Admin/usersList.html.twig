@@ -60,7 +60,18 @@
                         {% else %}
                             <td>client</td>
                         {% endif %}
-                        <td>{{ user.email }}</td>
+                        <td>
+                            <span class="userEmail">
+                                {{ user.email }}
+                            </span>
+                            <input type="email" class="userEmailChange" placeholder="{{ user.email }}">
+                            <buttom class="btn btn-info editMailAdmin pull-right" type="button">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </buttom>
+                            <buttom class="btn btn-info saveMailAdmin pull-right" type="button">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                            </buttom>
+                        </td>
                         <td>
                             <input id="active-{{ user.id }}"  class="userStatusAd" type="checkbox" {% if user.active %}checked{% endif %}>
                         </td>

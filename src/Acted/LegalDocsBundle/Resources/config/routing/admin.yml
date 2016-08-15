@@ -47,3 +47,9 @@ admin_change_status_user:
     path:     /users/change_status/{user}
     defaults: { _controller: ActedLegalDocsBundle:Admin:changeStatus, _format: json }
     methods:  POST
+
+admin_change_email_user:
+    path:     /users/change_email/{user}
+    defaults: { _controller: ActedLegalDocsBundle:Admin:changeEmail, _format: json }
+    methods:  POST
+

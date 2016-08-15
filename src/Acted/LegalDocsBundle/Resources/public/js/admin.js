@@ -85,6 +85,29 @@ $(function() {
         changeStatus(userId, status)
     });
 
+    $(document).on('click', '.editMailAdmin', function () {
+        var userRow = $(this).parents('tr'),
+            userId = $(userRow).attr('id');
+        $(userRow).find('.userEmail, .editMailAdmin').hide();
+        $(userRow).find('.userEmailChange, .saveMailAdmin').show();
+    });
+
+    $(document).on('click', '.saveMailAdmin', function () {
+        var userRow = $(this).parents('tr'),
+            userId = $(userRow).attr('id'),
+            email = $(userRow).find('.userEmailChange').val();
+        $.ajax({
+            type: "POST",
+            url: '/administration/users/change_email/'+userId,
+            data: {'email':email},
+            success: function(){
+                $(userRow).find('.userEmail, .editMailAdmin').show();
+                $(userRow).find('.userEmailChange, .saveMailAdmin').hide();
+                $(userRow).find('.userEmail').text(email);
+            }
+        });
+    });
+
     function deleteUser(userId){
         $.ajax({
             type: "DELETE",

@@ -283,7 +283,7 @@ class AdminController extends Controller
             $now = new \DateTime();
             $user->setCreatedAt($now);
             $user->setPasswordRequestedAt($now);
-            $user->setActive(true);
+            $user->setActive(false);
             $em->persist($user);
 
             if ($data->getRole() == 'ROLE_ARTIST') {
@@ -341,6 +341,10 @@ class AdminController extends Controller
         $userRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:User');
         $userManager = $this->get('app.user.manager');
         $user = $userRepo->find($userId);
+        if (!$user->getEmail()) {
+            return new JsonResponse(['error' => 'User haven\'t email']);
+        }
+
         if (is_null($user->getConfirmationToken())) {
             /** if not exist token - generate new token */
             $user->setConfirmationToken($userManager->generateToken());
@@ -430,6 +434,44 @@ class AdminController extends Controller
             return new JsonResponse(['error' => $exp->getMessage()], 400);
         }
 
+    }
+
+    /**
+     * Change email user
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Change status user email",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function changeEmailAction(Request $request, User $user)
+    {
+        if (!$user) {
+            return new JsonResponse(['error' => 'No exist user'], 400);
+        }
+
+        $email = $request->get('email');
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return new JsonResponse(['error' => 'Not valid email'], 400);
+        }
+
+        $existEmail = $this->getEM()->getRepository('ActedLegalDocsBundle:User')->findOneBy(['email' => $email]);
+        if ($existEmail && $existEmail->getId() !== $user->getId()) {
+            return new JsonResponse(['error' => 'Email already used'], 400);
+        }
+
+        $user->setEmail($email);
+        $this->getEM()->persist($user);
+        $this->getEM()->flush();
+
+        return new JsonResponse(['success' => 'Email change successfully!']);
     }
 
     /**
