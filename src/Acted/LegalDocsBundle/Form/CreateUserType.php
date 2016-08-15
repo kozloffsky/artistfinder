@@ -37,6 +37,9 @@ class CreateUserType extends AbstractType
             ])
 
             ->add('firstname', TextType::class, ['constraints' => [new NotBlank()], 'description' => 'First name'])
+            ->add('email', TextType::class, [
+                'required' => false
+            ])
 
             ->add('lastname', TextType::class, ['constraints' => [new NotBlank()], 'description' => 'Last name'])
 
