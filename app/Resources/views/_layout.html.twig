@@ -29,7 +29,7 @@
                     <div class="profile-dropdown dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
-                            <img class="avatar" src="{{ app.user.avatar }}" alt="Avatar">
+                            <img class="avatar" src="/assets/images/noAvatar.png" alt="Avatar">
                             {{ app.user.firstname}} {{ app.user.lastname }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -37,11 +37,9 @@
                             <li class="orange_settings"><a href="#">Settings</a></li>
                             <li class="orange_logout"><a href="#">logout</a></li>
 
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
+                            <li><a href="{{ path('admin_users_list') }}">Users List</a></li>
+                            <li><a href="{{ path('admin_dashboard_spotlight') }}">Spotlight</a></li>
+                            <li><a href="{{ path('admin_dashboard_recommend') }}">Recomended</a></li>
                         </ul>
                     </div>
                 {% endif %}
@@ -111,7 +109,7 @@
                         <li class="profile-dropdown dropdown hidden-sm">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                aria-expanded="false">
-                                <img class="avatar" src="{{ app.user.avatar }}" alt="Avatar">
+                                <img class="avatar" src="/assets/images/noAvatar.png" alt="Avatar">
                                 {{ app.user.firstname}} {{ app.user.lastname }} <span class="caret"></span>
                             </a>
                             {% if app.user.artist %}
@@ -128,9 +126,9 @@
                                 </ul>
                             {% else %}
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
+                                    <li><a href="{{ path('admin_users_list') }}">Users List</a></li>
+                                    <li><a href="{{ path('admin_dashboard_spotlight') }}">Spotlight</a></li>
+                                    <li><a href="{{ path('admin_dashboard_recommend') }}">Recomended</a></li>
                                     <li role="separator" class="divider"></li>
                                     {% if(app.user) %}
                                         <li><a id="logOut" href="{{ logout_path() }}">Logout</a></li>
