@@ -119,9 +119,11 @@ class UserManager
     public function confirmationForCreatedUser(User $user)
     {
         $url = $this->router->generate('security_resend_token', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $homepageUrl = $this->router->generate('acted_legal_docs_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
         $rendered = $this->templating->render('@ActedLegalDocs/Security/create_user_confirmation.html.twig', [
             'user' => $user,
-            'confirmationUrl' =>  $url
+            'confirmationUrl' =>  $url,
+            'homepageUrl' => $homepageUrl
         ]);
         $this->sendEmailMessage($rendered, $this->mailFrom, $user->getEmail());
     }
