@@ -258,11 +258,11 @@ class SecurityController extends Controller
         $user = $em->getRepository('ActedLegalDocsBundle:User')->findOneByConfirmationToken($token);
 
         if (null === $user) {
-            throw new NotFoundHttpException(sprintf('The user with confirmation token "%s" does not exist', $token));
+            return $this->redirect($this->generateUrl('acted_legal_docs_homepage'));
         }
 
         if ($this->checkPeriodAuth($user)) {
-            return $this->redirect($this->generateUrl('security_resetting_request'));
+            return $this->redirect($this->generateUrl('acted_legal_docs_homepage'));
         }
 
         $form = $this->createForm(ResettingFormType::class);

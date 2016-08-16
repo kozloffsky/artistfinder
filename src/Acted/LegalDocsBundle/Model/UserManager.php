@@ -123,7 +123,7 @@ class UserManager
         $rendered = $this->templating->render('@ActedLegalDocs/Security/create_user_confirmation.html.twig', [
             'user' => $user,
             'confirmationUrl' =>  $url,
-            'homepageUrl' => $homepageUrl
+            'homepageUrl' => $homepageUrl .'#how-it-works'
         ]);
         $this->sendEmailMessage($rendered, $this->mailFrom, $user->getEmail());
     }
