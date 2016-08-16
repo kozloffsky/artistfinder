@@ -90,10 +90,13 @@
                                 <a href="/profile/{{ user.artist.slug }}" target="_blank">
                                     <button type="button" class="btn btn-info manageUsers">View</button>
                                 </a>
+                            {% endif %}
+                            {% if user.artist is defined or user.role_name == 'Client' %}
                                 {% if user.active == false and user.fake == false %}
                                     <button type="button" class="btn btn-success tokenResendUser" >Resent token</button>
                                 {% endif %}
                             {% endif %}
+
                             <button type="button" class="btn btn-danger deleteUser" >Delete</button>
 
                             {#<a href="#"><button type="button" class="btn btn-info saveSpotlight">Save</button></a>#}
@@ -103,30 +106,33 @@
                 </tbody>
             </table>
         </div>
-        <nav>
-            <ul class="pagination">
-                {% if paginations['previous'] is defined %}
-                    <li>
-                        <a href="{{ path('admin_users_list', {'page': paginations['previous']  }) }}?query={{ filters.query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                {% endif %}
-                {% for pagin in paginations['pagesInRange'] %}
-                    <li>
-                        <a href="{{ path('admin_users_list', {'page': pagin }) }}?query={{ filters.query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}">{{ pagin }}</a>
-                    </li>
-                {% endfor %}
-                {% if paginations['next'] is defined %}
-                    <li>
-                        <a href="{{ path('admin_users_list', {'page': paginations['next']  }) }}?query={{ filters.query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}"
-                           aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
-        </nav>
+        {% if paginations.pageCount > 1 %}
+            <nav>
+                <ul class="pagination">
+                    {% if paginations['previous'] is defined %}
+                        <li>
+                            <a href="{{ path('admin_users_list', {'page': paginations['previous']  }) }}?query={{ filters.query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for pagin in paginations['pagesInRange'] %}
+                        <li>
+                            <a href="{{ path('admin_users_list', {'page': pagin }) }}?query={{ filters.query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}">{{ pagin }}</a>
+                        </li>
+                    {% endfor %}
+                    {% if paginations['next'] is defined %}
+                        <li>
+                            <a href="{{ path('admin_users_list', {'page': paginations['next']  }) }}?query={{ filters.query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}"
+                               aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+
     </div>
 
     {% include 'ActedLegalDocsBundle:Admin:createUserAdmin.html.twig' %}
