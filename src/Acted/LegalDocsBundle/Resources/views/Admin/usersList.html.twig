@@ -112,6 +112,11 @@
                 <ul class="pagination">
                     {% if paginations['previous'] is defined %}
                         <li>
+                            <a href="{{ path('admin_users_list', {'page': 1  }) }}?query={{ filters.query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}" aria-label="First page">
+                                <span aria-hidden="true">first</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ path('admin_users_list', {'page': paginations['previous']  }) }}?query={{ filters.query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
@@ -127,6 +132,11 @@
                             <a href="{{ path('admin_users_list', {'page': paginations['next']  }) }}?query={{ filters.query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}"
                                aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_users_list', {'page': paginations['pageCount']  }) }}?query={{ filters.query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}">
+                                <span aria-hidden="true">last</span>
                             </a>
                         </li>
                     {% endif %}
