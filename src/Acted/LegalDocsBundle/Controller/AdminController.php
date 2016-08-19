@@ -312,7 +312,7 @@ class AdminController extends Controller
             }
 
             $em->flush();
-            if (!$user->isFake()) {
+            if (!$user->isFake() && $user->getEmail()) {
                 $userManager->confirmationForCreatedUser($user);
             }
 

@@ -4179,9 +4179,13 @@ $(function() {
             url: '/administration/users/change_email/'+userId,
             data: {'email':email},
             success: function(){
+                $('.error').hide();
                 $(userRow).find('.userEmail, .editMailAdmin').show();
                 $(userRow).find('.userEmailChange, .saveMailAdmin').hide();
                 $(userRow).find('.userEmail').text(email);
+            },
+            error: function(){
+                console.log(1111)
             }
         });
     });

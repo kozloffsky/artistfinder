@@ -101,9 +101,14 @@ $(function() {
             url: '/administration/users/change_email/'+userId,
             data: {'email':email},
             success: function(){
+                $('.error_'+userId).text('');
                 $(userRow).find('.userEmail, .editMailAdmin').show();
                 $(userRow).find('.userEmailChange, .saveMailAdmin').hide();
                 $(userRow).find('.userEmail').text(email);
+            },
+            error: function(res){
+                $('.error_'+userId).text();
+                $('.error_'+userId).text(res.responseJSON.error);
             }
         });
     });
