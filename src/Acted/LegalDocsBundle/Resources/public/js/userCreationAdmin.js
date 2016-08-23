@@ -326,10 +326,15 @@ $(function () {
         var customerValues = $('.customerRegForm').serialize();
         var customerRole = 'role=ROLE_CLIENT';
         var userStatusFake = $('.fakeSelection').serialize();
+        var tempPass = 'A' + Math.random().toString(36).substring(7);
+
         $.ajax({
             type: "POST",
             url: '/administration/users/create',
-            data: customerRole +'&'+customerValues + '&' + userStatusFake,
+            data: customerRole +'&'+customerValues + '&' + userStatusFake +
+                '&temp_password='+tempPass +
+                '&password%5Bfirst%5D='+ tempPass +
+                '&password%5Bsecond%5D=' + tempPass,
             success: function(response){
                 finishRegistration();
                 resetModal();
