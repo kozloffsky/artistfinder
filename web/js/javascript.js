@@ -4179,13 +4179,14 @@ $(function() {
             url: '/administration/users/change_email/'+userId,
             data: {'email':email},
             success: function(){
-                $('.error').hide();
+                $('.error_'+userId).text('');
                 $(userRow).find('.userEmail, .editMailAdmin').show();
                 $(userRow).find('.userEmailChange, .saveMailAdmin').hide();
                 $(userRow).find('.userEmail').text(email);
             },
-            error: function(){
-                console.log(1111)
+            error: function(res){
+                $('.error_'+userId).text();
+                $('.error_'+userId).text(res.responseJSON.error);
             }
         });
     });
@@ -10982,7 +10983,8 @@ $(function() {
         $('.upload-resultBg').on('click', function (ev) {
             $uploadCropBackground.croppie('result', {
                 type: 'canvas',
-                size: 'original'
+                size: 'original',
+                format: 'png'
             }).then(function (resp) {
                 var slug = $('#slug').text();
                 $.ajax({

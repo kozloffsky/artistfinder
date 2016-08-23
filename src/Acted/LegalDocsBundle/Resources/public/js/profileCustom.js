@@ -801,7 +801,8 @@ $(function() {
         $('.upload-resultBg').on('click', function (ev) {
             $uploadCropBackground.croppie('result', {
                 type: 'canvas',
-                size: 'original'
+                size: 'original',
+                format: 'png'
             }).then(function (resp) {
                 var slug = $('#slug').text();
                 $.ajax({
