@@ -10973,7 +10973,7 @@ $(function() {
         var backgroundCurrentSrc = $('#bgImageSrc').text();
         console.log(backgroundCurrentSrc);
         $uploadCropBackground.croppie('bind', {
-            url: backgroundCurrentSrc
+            // url: backgroundCurrentSrc
         });
 
 
@@ -10983,8 +10983,7 @@ $(function() {
         $('.upload-resultBg').on('click', function (ev) {
             $uploadCropBackground.croppie('result', {
                 type: 'canvas',
-                size: 'original',
-                format: 'png'
+                size: 'original'
             }).then(function (resp) {
                 var slug = $('#slug').text();
                 $.ajax({
