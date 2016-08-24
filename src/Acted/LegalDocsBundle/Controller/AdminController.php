@@ -4,6 +4,8 @@ namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Recommend;
+use Acted\LegalDocsBundle\Entity\Performance;
+use Acted\LegalDocsBundle\Entity\Media;
 use Acted\LegalDocsBundle\Form\CreateUserType;
 use Acted\LegalDocsBundle\Form\RecommendType;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -314,6 +316,39 @@ class AdminController extends Controller
             $em->flush();
             if (!$user->isFake() && $user->getEmail()) {
                 $userManager->confirmationForCreatedUser($user);
+            }
+
+            if ($data->getRole() == 'ROLE_ARTIST') {
+                /** careate default performance */
+                $performance = new Performance();
+                $performance->setTitle('draft');
+                $performance->setStatus('draft');
+                $performance->setProfile($profile);
+                $performance->setTechRequirement('draft');
+
+                $em->persist($performance);
+
+                $photo1 = new Media();
+                $photo1->setName(uniqid());
+                $photo1->setMediaType('photo');
+                $photo1->setLink('/images/1.jpg');
+                $photo1->setPosition(1);
+                $photo1->setActive(true);
+                $em->persist($photo1);
+
+                $performance->addMedia($photo1);
+
+                $photo2 = new Media();
+                $photo2->setName(uniqid());
+                $photo2->setMediaType('photo');
+                $photo2->setLink('/images/1.jpg');
+                $photo2->setPosition(2);
+                $photo2->setActive(true);
+                $em->persist($photo2);
+
+                $performance->addMedia($photo2);
+
+                $em->flush();
             }
 
             return new JsonResponse($serializer->toArray($user));
