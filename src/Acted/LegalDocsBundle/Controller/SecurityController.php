@@ -305,6 +305,8 @@ class SecurityController extends Controller
                 $periodResend = strtotime($passwordRequestedAt->format('Y-m-d H:i:s')) + $activatePeriodResend;
                 if ($periodResend < strtotime($now->format('Y-m-d H:i:s'))) {
                     return true;
+                } else {
+                    return false;
                 }
             }
 
