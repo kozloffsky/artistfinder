@@ -998,7 +998,14 @@ $(function() {
     $(document).on('click','.perfEditViewToggle', function(){
         var parentPerformanceForm = $(this).parents('article');
         $(parentPerformanceForm).toggleClass( 'perfBlockView' );
-    })
+    });
+
+    $( ".perfEditViewToggle" ).each(function( index ) {
+        if ($(this).attr('data-origin-title') === 'draft') {
+            var parentPerformanceForm = $(this).parents('article');
+            $(parentPerformanceForm).toggleClass( 'perfBlockView' );
+        }
+    });
 
     $(document).on('click','.deleteOfferBtn', function(){
         var parentPerformanceForm = $(this).parents('form'),
