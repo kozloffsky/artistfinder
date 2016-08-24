@@ -4,7 +4,11 @@
                 <article class="item clearfix">
                     <header class="heading">
                         <h2>{{ performance.title }} </h2>
-                        <span class="price">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</span>
+                        {% if performance.offerMinPrice %}
+                            <span class="price">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</span>
+                        {% else %}
+                            <span class="price">Price: on request</span>
+                        {% endif %}
                     </header>
 
                     <div class="row">

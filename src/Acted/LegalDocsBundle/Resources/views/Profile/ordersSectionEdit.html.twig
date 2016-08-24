@@ -9,7 +9,12 @@
                         <header class="heading">
                             <h2 class="perfNotEditing">{{ performance.title }} </h2>
                             <input class="pull-left title offerTitlePerf" type="text" placeholder="Please enter a name for your act" value="{{ performance.title }}">
-                            <div class="price pull-right">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</div> <!--<input class="set-price" type="text" placeholder="0,00">-->
+                            {% if performance.offerMinPrice %}
+                                <div class="price pull-right">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</div> <!--<input class="set-price" type="text" placeholder="0,00">-->
+                            {% else %}
+                                <span class="price">Price: on request</span>
+                            {% endif %}
+                            
                         </header>
 
 
@@ -151,12 +156,12 @@
                 </div>
             </div>
 
-            <article class="item clearfix hidden newPerformanceBlank">
+            <article class="item clearfix {% if performances|length > 0 %}hidden{% endif %} newPerformanceBlank">
 
                 <form class="edit-form" id="NewBlank">
                     <header class="heading">
-                        <input class="pull-left title offerTitlePerf" type="text" placeholder="Please enter a name for your act" value="">
-                        <div class="price pull-right">Price: from  EUR</div> <!--<input class="set-price" type="text" placeholder="0,00">-->
+                        <input class="pull-left title offerTitlePerf" type="text" placeholder="Please enter a name for your act" value="Draft">
+                        <div class="price pull-right">Price: on request</div> <!--<input class="set-price" type="text" placeholder="0,00">-->
                     </header>
 
 
