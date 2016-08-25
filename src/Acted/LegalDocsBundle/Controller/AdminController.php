@@ -384,12 +384,11 @@ class AdminController extends Controller
             /** if not exist token - generate new token */
             $user->setConfirmationToken($userManager->generateToken());
         }
-        if (is_null($user->getTempPassword())) {
-            /** if not exist token - generate new token */
-            $tempPass = 'Ab12'.uniqid();
-            $user->setTempPassword($tempPass);
-            $user->setPasswordHash($userManager->updatePassword($user, $tempPass));
-        }
+
+        $tempPass = 'Ab12'.uniqid();
+        $user->setTempPassword($tempPass);
+        $user->setPasswordHash($userManager->updatePassword($user, $tempPass));
+
         $now = new \DateTime();
         $user->setConfirmationPeriod($now);
         $user->setPasswordRequestedAt($now);
