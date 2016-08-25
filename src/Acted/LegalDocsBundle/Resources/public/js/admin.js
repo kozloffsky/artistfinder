@@ -85,6 +85,19 @@ $(function() {
         changeStatus(userId, status)
     });
 
+    $(document).on('change', '.userStatusFakeAd', function() {
+        var userRowFake = $(this).parents('tr'),
+            usernameFake = $(userRowFake).find('.usernameAdmin').text(),
+            userIdFake = $(userRowFake).attr('id'),
+            userStatusFake = $(this).prop('checked');
+        if(userStatusFake == true){
+            var statusFake = 'isFake';
+        } else {
+            var statusFake = 'isNotFake';
+        }
+        changeStatusFake(userIdFake, statusFake)
+    });
+
     $(document).on('click', '.editMailAdmin', function () {
         var userRow = $(this).parents('tr'),
             userId = $(userRow).attr('id');
@@ -128,6 +141,17 @@ $(function() {
             type: "POST",
             url: '/administration/users/change_status/'+userId,
             data: {'status':status},
+            success: function(){
+
+            }
+        });
+    }
+
+    function changeStatusFake(userId, status){
+        $.ajax({
+            type: "POST",
+            url: '/administration/users/change_status_fake/'+userId,
+            data: {'fake':status},
             success: function(){
 
             }

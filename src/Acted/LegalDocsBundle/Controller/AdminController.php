@@ -477,6 +477,44 @@ class AdminController extends Controller
 
     }
 
+        /**
+     * Change status user
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Change fake user status = isFake|isNotFake",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function changeStatusFakeAction(Request $request, User $user)
+    {
+        try {
+            switch ($request->get('fake')){
+                case 'isFake':
+                    $user->setFake(1);
+                    $this->getEM()->persist($user);
+                    $this->getEM()->flush();
+                    break;
+                case 'isNotFake':
+                    $user->setFake(0);
+                    $this->getEM()->persist($user);
+                    $this->getEM()->flush();
+                    break;
+            }
+
+            return new JsonResponse(['success' => 'Fake field change successfully!']);
+        } catch (\Exception $exp) {
+            return new JsonResponse(['error' => $exp->getMessage()], 400);
+        }
+
+    }
+
     /**
      * Change email user
      *

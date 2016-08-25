@@ -77,11 +77,7 @@
                             <input id="active-{{ user.id }}"  class="userStatusAd" type="checkbox" {% if user.active %}checked{% endif %}>
                         </td>
                         <td>
-                            {% if user.fake %}
-                            Fake
-                            {% else %}
-                            Real
-                            {% endif%}
+                            <input id="fake-{{ user.id }}"  class="userStatusFakeAd" type="checkbox" {% if user.fake %}checked{% endif %}>
                         </td>
                         <td>
                             {% if user.artist is defined %}
