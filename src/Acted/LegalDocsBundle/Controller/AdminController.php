@@ -375,6 +375,7 @@ class AdminController extends Controller
     {
         $userRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:User');
         $userManager = $this->get('app.user.manager');
+        $encoder = $this->get('security.password_encoder');
         $user = $userRepo->find($userId);
         if (!$user->getEmail()) {
             return new JsonResponse(['error' => 'User haven\'t email']);
@@ -387,7 +388,7 @@ class AdminController extends Controller
 
         $tempPass = 'Ab12'.uniqid();
         $user->setTempPassword($tempPass);
-        $user->setPasswordHash($userManager->updatePassword($user, $tempPass));
+        $user->setPasswordHash($encoder->encodePassword($user, $tempPass));
 
         $now = new \DateTime();
         $user->setConfirmationPeriod($now);

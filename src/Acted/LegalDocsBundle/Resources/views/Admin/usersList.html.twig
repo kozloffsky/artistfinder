@@ -93,7 +93,7 @@
                                 </a>
                             {% endif %}
                             {% if user.artist is defined or user.role_name == 'Client' %}
-                                {% if user.active == false and user.fake == false %}
+                                {% if user.active == false and user.fake == false and user.email %}
                                     <button type="button" class="btn btn-success tokenResendUser" >Resend token</button>
                                 {% endif %}
                             {% endif %}
