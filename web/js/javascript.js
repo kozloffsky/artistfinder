@@ -9724,8 +9724,9 @@ $(function () {
                 $('#errorLogIn').hide();
                 var userData = JSON.stringify(response);
                 localStorage.setItem("user", userData);
+                var tempUserToken = response.tempUserToken;
                 var quote = localStorage.getItem('quoteRequest');
-                if(quote && response.role == "ROLE_CLIENT"){
+                if(quote && response.role == "ROLE_CLIENT" && tempUserToken.length > 2){
                     $.ajax({
                         type:'POST',
                         url:'/event/create',
@@ -9764,7 +9765,7 @@ $(function () {
                             });
                         }
                     })
-                } else if (quote && response.role == "ROLE_ARTIST"){
+                } else if (quote && response.role == "ROLE_ARTIST" && tempUserToken.length > 2){
                     localStorage.removeItem('quoteRequest');
                     $('#loginModal').modal('hide');
                     $('#offerErrorModal').modal('show');
@@ -9774,7 +9775,7 @@ $(function () {
                 } else {
                     console.log(response)
                     if (response.tempUserToken.length > 0){
-                        var redirectUrl = window.location.protocol + "//" + window.location.host + '/resend_token/reset/' + response.tempUserToken;
+                        var redirectUrl = window.location.protocol + "//" + window.location.host + '/resend_token/reset/' + tempUserToken;
                         window.location.replace(redirectUrl);
                     } else {
                         window.location.replace(window.location.href);
