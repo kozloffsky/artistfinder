@@ -246,6 +246,7 @@ $(function () {
             '&temp_password='+tempPass +
             '&password%5Bfirst%5D='+ tempPass +'&password%5Bsecond%5D=' + tempPass,
             success: function(){
+                location.reload();
                 finishRegistration()
                 resetModal()
             },
@@ -336,6 +337,7 @@ $(function () {
                 '&password%5Bfirst%5D='+ tempPass +
                 '&password%5Bsecond%5D=' + tempPass,
             success: function(response){
+                location.reload();
                 finishRegistration();
                 resetModal();
             },
