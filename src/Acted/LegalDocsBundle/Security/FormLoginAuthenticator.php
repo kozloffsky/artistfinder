@@ -163,7 +163,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
             throw new ExpiredTokenException();
         }
 
-        if($user instanceof User && (!$user->getActive())){
+        if($user instanceof User && (!$user->getActive()) && is_null($user->getTempPassword())){
             throw new ActivationException();
         }
     }
