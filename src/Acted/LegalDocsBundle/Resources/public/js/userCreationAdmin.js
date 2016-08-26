@@ -232,7 +232,7 @@ $(function () {
         var userRole = 'role=ROLE_ARTIST';
         var userStatusFake = $('.fakeSelection').serialize();
         console.log(userStatusFake)
-        var tempPass = 'A' + Math.random().toString(36).substring(15);
+        var tempPass = 'A' + Math.random().toString(36) + '123';
         registerArtist(userInformation, categoriesForm, userRole, userStatusFake, tempPass);
     };
 
@@ -327,7 +327,7 @@ $(function () {
         var customerValues = $('.customerRegForm').serialize();
         var customerRole = 'role=ROLE_CLIENT';
         var userStatusFake = $('.fakeSelection').serialize();
-        var tempPass = 'A' + Math.random().toString(36).substring(15);
+        var tempPass = 'A' + Math.random().toString(36) + '111';
 
         $.ajax({
             type: "POST",
