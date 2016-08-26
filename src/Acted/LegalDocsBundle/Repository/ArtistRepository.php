@@ -16,9 +16,9 @@ use Acted\LegalDocsBundle\Search\OrderCriteria;
 class ArtistRepository extends \Doctrine\ORM\EntityRepository
 {
 
-    public function getRecommended(Category $category)
+    public function getRecommended(Category $category, $fake)
     {
-        return $this->createQueryBuilder('a')
+        $qb = $this->createQueryBuilder('a')
             ->innerJoin('a.user', 'u')
             ->leftJoin('a.recommends', 'rec')
             ->andWhere('rec.category = :par_cat')
@@ -27,9 +27,13 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('perf.status != :status')
             ->setParameter('par_cat', $category)
             ->setParameter('status', Performance::STATUS_DRAFT)
-            ->orderBy('rec.value', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ;
+
+        if ($fake) {
+            $qb->andWhere('u.fake != 1');
+        }
+
+        return $qb->orderBy('rec.value', 'ASC')->groupBy('u.id')->getQuery()->getResult();
     }
 
     public function getFilteredQuery(OrderCriteria $oc, FilterCriteria $fc, $fake = 0)
