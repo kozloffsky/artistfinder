@@ -4163,6 +4163,19 @@ $(function() {
         changeStatus(userId, status)
     });
 
+    $(document).on('change', '.userStatusFakeAd', function() {
+        var userRowFake = $(this).parents('tr'),
+            usernameFake = $(userRowFake).find('.usernameAdmin').text(),
+            userIdFake = $(userRowFake).attr('id'),
+            userStatusFake = $(this).prop('checked');
+        if(userStatusFake == true){
+            var statusFake = 'isFake';
+        } else {
+            var statusFake = 'isNotFake';
+        }
+        changeStatusFake(userIdFake, statusFake)
+    });
+
     $(document).on('click', '.editMailAdmin', function () {
         var userRow = $(this).parents('tr'),
             userId = $(userRow).attr('id');
@@ -4206,6 +4219,17 @@ $(function() {
             type: "POST",
             url: '/administration/users/change_status/'+userId,
             data: {'status':status},
+            success: function(){
+
+            }
+        });
+    }
+
+    function changeStatusFake(userId, status){
+        $.ajax({
+            type: "POST",
+            url: '/administration/users/change_status_fake/'+userId,
+            data: {'fake':status},
             success: function(){
 
             }
@@ -13828,7 +13852,7 @@ $(function () {
         var userRole = 'role=ROLE_ARTIST';
         var userStatusFake = $('.fakeSelection').serialize();
         console.log(userStatusFake)
-        var tempPass = 'A' + Math.random().toString(36).substring(7);
+        var tempPass = 'A' + Math.random().toString(36).substring(15);
         registerArtist(userInformation, categoriesForm, userRole, userStatusFake, tempPass);
     };
 
@@ -13842,6 +13866,7 @@ $(function () {
             '&temp_password='+tempPass +
             '&password%5Bfirst%5D='+ tempPass +'&password%5Bsecond%5D=' + tempPass,
             success: function(){
+                location.reload();
                 finishRegistration()
                 resetModal()
             },
@@ -13922,7 +13947,7 @@ $(function () {
         var customerValues = $('.customerRegForm').serialize();
         var customerRole = 'role=ROLE_CLIENT';
         var userStatusFake = $('.fakeSelection').serialize();
-        var tempPass = 'A' + Math.random().toString(36).substring(7);
+        var tempPass = 'A' + Math.random().toString(36).substring(15);
 
         $.ajax({
             type: "POST",
@@ -13932,6 +13957,7 @@ $(function () {
                 '&password%5Bfirst%5D='+ tempPass +
                 '&password%5Bsecond%5D=' + tempPass,
             success: function(response){
+                location.reload();
                 finishRegistration();
                 resetModal();
             },
