@@ -38,9 +38,12 @@
 
             <div class="price">
                 <img src="{{ asset('assets/images/price_ic.png') }}" alt="Price">
-                {#${{ artist.user.profile.minPrice|number_format(2, '.', ',') }} - ${{ artist.user.profile.maxPrice|number_format(2, '.', ',') }#} on-request per event
+                {% if artist.user.profile.minPrice %}
+                    ${{ artist.user.profile.minPrice|number_format(2, '.', ',') }} - ${{ artist.user.profile.maxPrice|number_format(2, '.', ',') }} per event
+                {% else %}
+                    on-request per event
+                {% endif %}
             </div>
-
             <div class="user-rating">
                 <div class="stars">
                     <div class="star">
