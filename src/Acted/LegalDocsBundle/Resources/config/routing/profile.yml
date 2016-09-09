@@ -2,6 +2,14 @@ profile_list:
     path:     /list
     defaults: { _controller: ActedLegalDocsBundle:Profile:list }
     methods:  GET
+profile_settings_edit:
+    path:     /settings/edit/{id}
+    defaults: { _controller: ActedLegalDocsBundle:Profile:editProfileSettings }
+    methods:  [PUT]
+profile_settings:
+    path:     /settings/{id}
+    defaults: { _controller: ActedLegalDocsBundle:Profile:getProfileSettings }
+    methods:  GET
 profile_show:
     path:     /{slug}
     defaults: { _controller: ActedLegalDocsBundle:Profile:show }

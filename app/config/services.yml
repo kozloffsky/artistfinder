@@ -30,6 +30,10 @@ services:
           - "@templating.engine.twig"
           - "@router"
           - "%mailer_from_address%"
+          - "@liip_imagine.controller"
+          - "%avatar_dir%"
+          - %kernel.root_dir%
+
 
     app.event.manager:
         class: Acted\LegalDocsBundle\Model\EventsManager

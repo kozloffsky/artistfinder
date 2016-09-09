@@ -1,0 +1,31 @@
+Acted\LegalDocsBundle\Entity\PaymentSetting:
+    type: entity
+    table: PaymentSetting
+    repositoryClass: Acted\LegalDocsBundle\Repository\PaymentSettingRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        billingAddress:
+          type: string(512)
+        accountName:
+          type: string(512)
+        accountNumber:
+          type: string(32)
+          nullable: true
+        iban:
+          type: string(32)
+        bankName:
+          type: string(128)
+        swiftCode:
+          type: string(11)
+        vatNumber:
+          type: string(32)
+    oneToOne:
+        user:
+          targetEntity: Acted\LegalDocsBundle\Entity\User
+          inversedBy: paymentSetting
+    lifecycleCallbacks: {  }

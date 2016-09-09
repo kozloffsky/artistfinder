@@ -58,6 +58,12 @@ class Artist
      * @var \Doctrine\Common\Collections\Collection
      */
     private $recommends;
+
+    /**
+     * @var boolean
+     */
+    private $workAbroad = false;
+
     /**
      * Get id
      *
@@ -561,6 +567,30 @@ class Artist
             return $result;
         }
         return null;
+    }
+
+    /**
+     * Set workAbroad
+     *
+     * @param boolean $workAbroad
+     *
+     * @return Artist
+     */
+    public function setWorkAbroad($workAbroad)
+    {
+        $this->workAbroad = $workAbroad;
+
+        return $this;
+    }
+
+    /**
+     * Get workAbroad
+     *
+     * @return boolean
+     */
+    public function getWorkAbroad()
+    {
+        return $this->workAbroad;
     }
 
 

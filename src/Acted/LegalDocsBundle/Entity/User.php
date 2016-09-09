@@ -44,6 +44,11 @@ class User implements UserInterface, \Serializable
      */
     private $active = false;
 
+    /**
+     * @var string
+     */
+    private $postcode;
+
 
     /**
      * Get id
@@ -203,6 +208,31 @@ class User implements UserInterface, \Serializable
     {
         return $this->active;
     }
+
+    /**
+     * Set postcode
+     *
+     * @param string $postcode
+     *
+     * @return User
+     */
+    public function setPostcode($postcode)
+    {
+        $this->postcode = $postcode;
+
+        return $this;
+    }
+
+    /**
+     * Get postcode
+     *
+     * @return string
+     */
+    public function getPostcode()
+    {
+        return $this->postcode;
+    }
+
     /**
      * @var string
      */
@@ -290,6 +320,37 @@ class User implements UserInterface, \Serializable
     {
         return $this->profile;
     }
+
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\Profile
+     */
+    private $paymentSetting;
+
+
+    /**
+     * Set paymentSetting
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Profile $profile
+     *
+     * @return User
+     */
+    public function setPaymentSetting(\Acted\LegalDocsBundle\Entity\PaymentSetting $paymentSetting = null)
+    {
+        $this->paymentSetting = $paymentSetting;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentSetting
+     *
+     * @return \Acted\LegalDocsBundle\Entity\PaymentSetting
+     */
+    public function getPaymentSetting()
+    {
+        return $this->paymentSetting;
+    }
+
     /**
      * @var \Acted\LegalDocsBundle\Entity\Artist
      */

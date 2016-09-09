@@ -43,12 +43,17 @@ Acted\LegalDocsBundle\Entity\User:
         passwordRequestedAt:
           type: datetime
           nullable: true
+        postcode:
+          type: string(32)
     oneToOne:
         profile:
           targetEntity: Acted\LegalDocsBundle\Entity\Profile
           mappedBy: user
         artist:
           targetEntity: Acted\LegalDocsBundle\Entity\Artist
+          mappedBy: user
+        paymentSetting:
+          targetEntity: Acted\LegalDocsBundle\Entity\PaymentSetting
           mappedBy: user
     manyToMany:
         roles:

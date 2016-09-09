@@ -9,6 +9,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Acted\LegalDocsBundle\Entity\Profile;
+
 class PerformanceType extends AbstractType
 {
     /**

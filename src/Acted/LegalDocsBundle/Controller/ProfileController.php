@@ -6,6 +6,7 @@ use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Media;
 use Acted\LegalDocsBundle\Entity\Offer;
 use Acted\LegalDocsBundle\Entity\Performance;
+use Acted\LegalDocsBundle\Entity\PaymentSetting;
 use Acted\LegalDocsBundle\Form\ArtistType;
 use Acted\LegalDocsBundle\Form\MediaUploadType;
 use Acted\LegalDocsBundle\Form\OfferType;
@@ -15,6 +16,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Acted\LegalDocsBundle\Form\ProfileSettingsType;
+use FOS\RestBundle\View\View;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProfileController extends Controller
 {
@@ -67,7 +71,6 @@ class ProfileController extends Controller
         $artistForm->handleRequest($request);
         $profileForm = $this->createForm(ProfileType::class, $artist->getUser()->getProfile());
         $profileForm->handleRequest($request);
-
 
         if($artistForm->isSubmitted() && $artistForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -245,6 +248,93 @@ class ProfileController extends Controller
     {
         $entities = $this->getDoctrine()->getManager()->getRepository('ActedLegalDocsBundle:Artist')->findAll();
         return $this->render('ActedLegalDocsBundle:Profile:list.html.twig', ['entities' => $entities]);
+    }
+
+    public function getProfileSettingsAction(Request $request, Artist $artist)
+    {
+        $serializer = $this->get('jms_serializer');
+        $user = $artist->getUser();
+        return new JsonResponse($serializer->toArray($user));
+    }
+
+    public function editProfileSettingsAction(Request $request, Artist $artist)
+    {
+        $serializer = $this->get('jms_serializer');
+
+
+        $em = $this->getDoctrine()->getManager();
+        $userManager = $this->get('app.user.manager');
+        $user = $artist->getUser();
+
+        $profileSettingsForm = $this->createForm(ProfileSettingsType::class);
+        $profileSettingsForm->handleRequest($request);
+
+        if ($profileSettingsForm->isSubmitted() && (!$profileSettingsForm->isValid())) {
+            return new JsonResponse($serializer->toArray($profileSettingsForm->getErrors()), Response::HTTP_BAD_REQUEST);
+        }
+
+        $data = $profileSettingsForm->getData();
+
+        $file = $data['file'];
+        if (!empty($file)) {
+
+            if (!in_array($file->getExtension(), ['png', 'jpg', 'jpeg'])) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'You should upload only png or jpg images'
+                ],  400);
+            }
+
+            $user = $userManager->updateAvatar($file, $user, $request);
+        }
+
+
+        $data['post_code'] = (empty($data['post_code']) ? '' : $data['post_code']);
+        $data['account_name'] = (empty($data['account_name']) ? '' : $data['account_name']);
+        $data['account_number'] = (empty($data['account_number']) ? '' : $data['account_number']);
+        $data['bank_name'] = (empty($data['bank_name']) ? '' : $data['bank_name']);
+        $data['billing_address'] = (empty($data['billing_address']) ? '' : $data['billing_address']);
+        $data['iban'] = (empty($data['iban']) ? '' : $data['iban']);
+        $data['swift_code'] = (empty($data['swift_code']) ? '' : $data['swift_code']);
+        $data['vat_number'] = (empty($data['vat_number']) ? '' : $data['vat_number']);
+
+
+        $user->setFirstname($data['first_name']);
+        $user->setLastname($data['last_name']);
+        $user->setPostcode($data['post_code']);
+
+        if (!empty($data['password'])) {
+            $user = $userManager->updatePassword($user, $data['password']);
+        }
+
+
+        $artist->setName($data['name']);
+        $artist->setCountry($data['country']);
+        $artist->setCity($data['city']);
+
+        $paymentSettingRepo = $em->getRepository('ActedLegalDocsBundle:PaymentSetting');
+
+        $paymentSettingObj = $paymentSettingRepo->findOneBy(array(
+            'user' => $user
+        ));
+
+        if (empty($paymentSettingObj)) {
+            $paymentSettingObj = new PaymentSetting();
+        }
+
+        $paymentSettingObj->setAccountName($data['account_name']);
+        $paymentSettingObj->setAccountNumber($data['account_number']);
+        $paymentSettingObj->setBankName($data['bank_name']);
+        $paymentSettingObj->setBillingAddress($data['billing_address']);
+        $paymentSettingObj->setIban($data['iban']);
+        $paymentSettingObj->setSwiftCode($data['swift_code']);
+        $paymentSettingObj->setVatNumber($data['vat_number']);
+        $paymentSettingObj->setUser($user);
+
+        $em->persist($paymentSettingObj);
+        $em->flush();
+
+        return new JsonResponse($serializer->toArray($user));
     }
 
 }

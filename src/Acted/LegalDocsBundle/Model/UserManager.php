@@ -17,6 +17,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Templating\EngineInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 
 class UserManager
 {
@@ -44,9 +46,19 @@ class UserManager
 
     protected $mailFrom;
 
+    protected $avatarDir;
+
+    protected $rootDir;
+
+    /**
+     * @var LiipImagineBundle
+     */
+    private $lip;
+
     public function __construct(EncoderFactoryInterface $encoderFactory,
                                 EntityManagerInterface $entityManagerInterface, $mailer,
-                                EngineInterface $templating, UrlGeneratorInterface $router, $mailFrom)
+                                EngineInterface $templating, UrlGeneratorInterface $router, $mailFrom,
+                                $lip, $avatarDir, $rootDir)
     {
         $this->encoderFactory = $encoderFactory;
         $this->entityManager = $entityManagerInterface;
@@ -54,6 +66,9 @@ class UserManager
         $this->templating = $templating;
         $this->router = $router;
         $this->mailFrom = $mailFrom;
+        $this->lip = $lip;
+        $this->avatarDir = $avatarDir;
+        $this->rootDir = $rootDir;
     }
 
     public function newUser(RegisterUser $registerUser)
@@ -153,5 +168,58 @@ class UserManager
             ->setBody($body, 'text/html');
 
         $this->mailer->send($message);
+    }
+
+    /**
+     * @param File $file
+     * @param Media $media
+     * @param $request
+     * @return Media
+     */
+    public function updateAvatar(File $file, User $user, $request)
+    {
+        $fileName = uniqid(). '.' . $file->getExtension();
+
+        if (!file_exists($this->avatarDir) && !is_dir($this->avatarDir)) {
+            mkdir($this->avatarDir, 0777, true);
+        }
+
+        $this->lip->filterAction($request, '/'.$file->move($this->avatarDir, $fileName), 'avatar_thumbnail');
+
+        $fileTemporal = new File('media/cache/avatar_thumbnail/images/avatars/' . $fileName);
+
+        if (!file_exists($this->avatarDir . '/thumbnail') && !is_dir($this->avatarDir . '/thumbnail')) {
+            mkdir($this->avatarDir . '/thumbnail', 0777, true);
+        }
+
+        $fileTemporal->move($this->avatarDir . '/thumbnail', $fileName);
+
+        $path = $this->rootDir . '/../web/images/UploadedFile*.*';
+        array_map('unlink', glob($path));
+
+        $avatar = $user->getAvatar();
+        if (!empty($avatar)) {
+            $avatar = explode('/', $avatar);
+            $fileNameOld = array_pop($avatar);
+            $basePath = implode('/', $avatar);
+
+            $fileNameOldThumbnail = implode('/', array($basePath, 'thumbnail', $fileNameOld));
+            $fileNameOldBase = implode('/', array($basePath, $fileNameOld));
+
+            $path = $this->rootDir . '/../web' . $fileNameOldThumbnail;
+            if(file_exists($path)){
+                unlink($path);
+            }
+
+            $path = $this->rootDir . '/../web' . $fileNameOldBase;
+            if(file_exists($path)) {
+                unlink($path);
+            }
+        }
+
+
+        $user->setAvatar($this->avatarDir . '/' . $fileName);
+
+        return $user;
     }
 }
