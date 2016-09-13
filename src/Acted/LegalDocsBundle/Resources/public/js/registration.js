@@ -140,9 +140,9 @@ $(function () {
   $('#stageTwoNext').click(function () {
     chageState(3);
   });
-  $('#stageThreeNext, #stageThreeNextCustomer').click(function () {
-    chageState(4);
-  });
+  //$('#stageThreeNext, #stageThreeNextCustomer').click(function () {
+  //  chageState(4);
+  //});
   $('.back-button').click(function () {
     if (currentState - 1 == 2) {
       chageState(currentState - 1, userIsArtist);

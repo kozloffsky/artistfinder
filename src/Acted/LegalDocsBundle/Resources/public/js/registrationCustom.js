@@ -250,9 +250,11 @@ $(function () {
             url: '/register',
             data: userRole + '&' + userInformation + '&' + categoriesForm,
             success: function(){
+                console.log('successReg');
                 finishRegistration()
             },
             error: function(response){
+                console.log('errorReg');
                 var regestrationResponse = response.responseJSON;
                 var fields = Object.keys(regestrationResponse);
                 $(fields).each(function(){
@@ -291,6 +293,11 @@ $(function () {
                     if (placeToShowErr == 'password' && errorMsg.first){
                         artistValidation.showErrors({
                             'password[first]': errorMsg.first
+                        });
+                    }
+                    if (placeToShowErr == 'city'){
+                        artistValidation.showErrors({
+                            'city': errorMsg
                         });
                     }
                 })

@@ -23,6 +23,7 @@ $(function () {
             localStorage.setItem("search", searchEntered);
         }
     });
+
     checkIfUserForcedLogin();
 
     function checkIfUserForcedLogin(){
