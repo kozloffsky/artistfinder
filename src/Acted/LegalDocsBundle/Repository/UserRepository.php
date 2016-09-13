@@ -30,7 +30,9 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 
         if ($query) {
             $qb
-                ->andWhere('(MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0)')
+                ->andWhere('(MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0
+                            OR MATCH(u.firstname, u.lastname) AGAINST (:query BOOLEAN) > 0)
+                ')
                 ->setParameter('query', $query);
         }
         switch ($fake) {
