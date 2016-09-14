@@ -1,0 +1,29 @@
+Acted\LegalDocsBundle\Entity\PricePackage:
+    type: entity
+    table: PricePackage
+    repositoryClass: Acted\LegalDocsBundle\Repository\PricePackageRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+      name:
+        type: string(128)
+      deletedTime:
+        type: datetime
+        nullable: true
+    oneToMany:
+      priceOptions:
+        targetEntity: Acted\LegalDocsBundle\Entity\PriceOption
+        mappedBy: pricePackage
+        joinColumn:
+          onDelete: RESTRICT
+    manyToOne:
+      price:
+        targetEntity: Acted\LegalDocsBundle\Entity\Price
+        inversedBy: pricePackages
+        joinColumn:
+          onDelete: RESTRICT
+    lifecycleCallbacks: {  }

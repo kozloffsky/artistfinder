@@ -61,3 +61,19 @@ acted_legal_docs_chat_room:
 acted_legal_docs_admin_dashboard:
   resource: "@ActedLegalDocsBundle/Resources/config/routing/admin.yml"
   prefix: /administration
+
+acted_legal_docs_price:
+    resource: "@ActedLegalDocsBundle/Resources/config/routing/price.yml"
+    prefix:   /price
+
+acted_legal_docs_price_option:
+    resource: "@ActedLegalDocsBundle/Resources/config/routing/priceOption.yml"
+    prefix:   /price/option
+
+acted_legal_docs_price_package:
+    resource: "@ActedLegalDocsBundle/Resources/config/routing/pricePackage.yml"
+    prefix:   /price/package
+
+acted_legal_docs_service:
+  resource: "@ActedLegalDocsBundle/Resources/config/routing/service.yml"
+  prefix: /service

@@ -17,6 +17,45 @@ class RefCountry
      */
     private $name;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $refCurrencies;
+
+    /**
+     * Set refCurrency
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefCurrency $refCurrency
+     *
+     * @return RefCountry
+     */
+    public function addRefCurrency(\Acted\LegalDocsBundle\Entity\RefCurrency $refCurrency = null)
+    {
+        $this->refCurrencies[] = $refCurrency;
+
+        return $this;
+    }
+
+    /**
+     * Remove refCurrency
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefCurrency $refCurrency
+     */
+    public function removeRefCurrency(\Acted\LegalDocsBundle\Entity\RefCurrency $refCurrency)
+    {
+        $this->refCurrencies->removeElement($refCurrency);
+    }
+
+    /**
+     * Get refCurrencies
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRefCurrencies()
+    {
+        return $this->refCurrencies;
+    }
+
 
     /**
      * Get id

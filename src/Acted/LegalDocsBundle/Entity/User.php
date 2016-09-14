@@ -47,7 +47,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      */
-    private $postcode;
+    private $postcode = '';
 
 
     /**

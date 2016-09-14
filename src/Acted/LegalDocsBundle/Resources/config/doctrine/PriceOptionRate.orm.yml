@@ -1,0 +1,24 @@
+Acted\LegalDocsBundle\Entity\PriceOptionRate:
+    type: entity
+    table: PriceOptionRate
+    repositoryClass: Acted\LegalDocsBundle\Repository\PriceOptionRateRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+      price:
+        type: integer(11)
+        nullable: true
+      deletedTime:
+        type: datetime
+        nullable: true
+    manyToOne:
+      priceOption:
+        targetEntity: Acted\LegalDocsBundle\Entity\PriceOption
+        inversedBy: PriceOptionRate
+        joinColumn:
+          onDelete: RESTRICT
+    lifecycleCallbacks: {  }

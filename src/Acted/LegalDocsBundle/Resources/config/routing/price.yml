@@ -1,0 +1,9 @@
+price_create:
+    path: /create
+    defaults: { _controller: ActedLegalDocsBundle:Price:create }
+    methods:  POST
+
+price_edit:
+    path: /{id}/edit
+    defaults: { _controller: ActedLegalDocsBundle:Price:edit }
+    methods:  PATCH

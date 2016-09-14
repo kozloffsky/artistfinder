@@ -49,4 +49,11 @@ Acted\LegalDocsBundle\Entity\Profile:
           targetEntity: Acted\LegalDocsBundle\Entity\Performance
           mappedBy: profile
           orderBy: { 'id': 'DESC' }
+        services:
+          targetEntity: Acted\LegalDocsBundle\Entity\Service
+          mappedBy: profile
+          orderBy: { 'id': 'DESC' }
+        prices:
+          targetEntity: Acted\LegalDocsBundle\Entity\Price
+          mappedBy: profile
     lifecycleCallbacks: {  }

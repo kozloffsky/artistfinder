@@ -13,44 +13,77 @@ class Service
     private $id;
 
     /**
-     * @var integer
-     */
-    private $performanceId;
-
-    /**
      * @var string
      */
     private $title;
 
     /**
-     * @var float
+     * @var boolean
+     */
+    private $isVisible = true;
+
+    /**
+     * @var \DateTime
+     */
+    private $deletedTime;
+
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\Price
      */
     private $price;
 
     /**
-     * @var integer
+     * @var \Acted\LegalDocsBundle\Entity\Profile
      */
-    private $currencyId;
+    private $profile;
 
     /**
-     * @var float
+     * Set profile
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Profile $profile
+     *
+     * @return Service
      */
-    private $depositValue;
+    public function setProfile(\Acted\LegalDocsBundle\Entity\Profile $profile = null)
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
 
     /**
-     * @var string
+     * Get profile
+     *
+     * @return \Acted\LegalDocsBundle\Entity\Profile
      */
-    private $depositType;
+    public function getProfile()
+    {
+        return $this->profile;
+    }
 
     /**
-     * @var string
+     * Set price
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Price $price
+     *
+     * @return Service
      */
-    private $paymentTerms;
+    public function setPrice(\Acted\LegalDocsBundle\Entity\Price $price = null)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
 
     /**
-     * @var string
+     * Get price
+     *
+     * @return \Acted\LegalDocsBundle\Entity\Price
      */
-    private $comments;
+    public function getPrice()
+    {
+        return $this->price;
+    }
 
 
     /**
@@ -61,30 +94,6 @@ class Service
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set performanceId
-     *
-     * @param integer $performanceId
-     *
-     * @return Service
-     */
-    public function setPerformanceId($performanceId)
-    {
-        $this->performanceId = $performanceId;
-
-        return $this;
-    }
-
-    /**
-     * Get performanceId
-     *
-     * @return integer
-     */
-    public function getPerformanceId()
-    {
-        return $this->performanceId;
     }
 
     /**
@@ -112,146 +121,50 @@ class Service
     }
 
     /**
-     * Set price
+     * Set isVisible
      *
-     * @param float $price
+     * @param string $isVisible
      *
      * @return Service
      */
-    public function setPrice($price)
+    public function setIsVisible($isVisible)
     {
-        $this->price = $price;
+        $this->isVisible = $isVisible;
 
         return $this;
     }
 
     /**
-     * Get price
-     *
-     * @return float
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    /**
-     * Set currencyId
-     *
-     * @param integer $currencyId
-     *
-     * @return Service
-     */
-    public function setCurrencyId($currencyId)
-    {
-        $this->currencyId = $currencyId;
-
-        return $this;
-    }
-
-    /**
-     * Get currencyId
-     *
-     * @return integer
-     */
-    public function getCurrencyId()
-    {
-        return $this->currencyId;
-    }
-
-    /**
-     * Set depositValue
-     *
-     * @param float $depositValue
-     *
-     * @return Service
-     */
-    public function setDepositValue($depositValue)
-    {
-        $this->depositValue = $depositValue;
-
-        return $this;
-    }
-
-    /**
-     * Get depositValue
-     *
-     * @return float
-     */
-    public function getDepositValue()
-    {
-        return $this->depositValue;
-    }
-
-    /**
-     * Set depositType
-     *
-     * @param string $depositType
-     *
-     * @return Service
-     */
-    public function setDepositType($depositType)
-    {
-        $this->depositType = $depositType;
-
-        return $this;
-    }
-
-    /**
-     * Get depositType
+     * Get isVisible
      *
      * @return string
      */
-    public function getDepositType()
+    public function getIsVisible()
     {
-        return $this->depositType;
+        return $this->isVisible;
     }
 
     /**
-     * Set paymentTerms
+     * Set deletedTime
      *
-     * @param string $paymentTerms
+     * @param \DateTime $deletedTime
      *
      * @return Service
      */
-    public function setPaymentTerms($paymentTerms)
+    public function setDeletedTime($deletedTime)
     {
-        $this->paymentTerms = $paymentTerms;
+        $this->deletedTime = $deletedTime;
 
         return $this;
     }
 
     /**
-     * Get paymentTerms
+     * Get deletedTime
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getPaymentTerms()
+    public function getDeletedTime()
     {
-        return $this->paymentTerms;
-    }
-
-    /**
-     * Set comments
-     *
-     * @param string $comments
-     *
-     * @return Service
-     */
-    public function setComments($comments)
-    {
-        $this->comments = $comments;
-
-        return $this;
-    }
-
-    /**
-     * Get comments
-     *
-     * @return string
-     */
-    public function getComments()
-    {
-        return $this->comments;
+        return $this->deletedTime;
     }
 }

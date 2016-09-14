@@ -312,6 +312,46 @@ class Profile
     {
         return $this->user;
     }
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $prices;
+
+    /**
+     * Add price
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Price $price
+     *
+     * @return Profile
+     */
+    public function addPrice(\Acted\LegalDocsBundle\Entity\Price $price)
+    {
+        $this->prices[] = $price;
+
+        return $this;
+    }
+
+    /**
+     * Remove price
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Media $price
+     */
+    public function removePrice(\Acted\LegalDocsBundle\Entity\Price $price)
+    {
+        $this->prices->removeElement($price);
+    }
+
+    /**
+     * Get prices
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPrices()
+    {
+        return $this->prices;
+    }
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
@@ -420,6 +460,46 @@ class Profile
     {
         return $this->performances;
     }
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $services;
+
+    /**
+     * Add service
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Service $service
+     *
+     * @return Profile
+     */
+    public function addService(\Acted\LegalDocsBundle\Entity\Service $service)
+    {
+        $this->services[] = $service;
+
+        return $this;
+    }
+
+    /**
+     * Remove service
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Service $service
+     */
+    public function removeService(\Acted\LegalDocsBundle\Entity\Service $service)
+    {
+        $this->services->removeElement($service);
+    }
+
+    /**
+     * Get services
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getServices()
+    {
+        return $this->services;
+    }
+
 
     public function getMinPrice()
     {

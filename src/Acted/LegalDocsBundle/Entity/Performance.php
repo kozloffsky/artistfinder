@@ -34,6 +34,42 @@ class Performance
      */
     private $techRequirement;
 
+    /**
+     * @var boolean
+     */
+    private $isVisible = true;
+
+    /**
+     * @var \DateTime
+     */
+    private $deletedTime;
+
+    private $price;
+
+    /**
+     * Set price
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Price $price
+     *
+     * @return Performance
+     */
+    public function setPrice(\Acted\LegalDocsBundle\Entity\Price $price = null)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return \Acted\LegalDocsBundle\Entity\Price
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
 
     /**
      * Get id
@@ -290,5 +326,53 @@ class Performance
     public function __toString()
     {
         return $this->getTitle();
+    }
+
+    /**
+     * Set isVisible
+     *
+     * @param string $isVisible
+     *
+     * @return Performance
+     */
+    public function setIsVisible($isVisible)
+    {
+        $this->isVisible = $isVisible;
+
+        return $this;
+    }
+
+    /**
+     * Get isVisible
+     *
+     * @return string
+     */
+    public function getIsVisible()
+    {
+        return $this->isVisible;
+    }
+
+    /**
+     * Set deletedTime
+     *
+     * @param \DateTime $deletedTime
+     *
+     * @return Performance
+     */
+    public function setDeletedTime($deletedTime)
+    {
+        $this->deletedTime = $deletedTime;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedTime
+     *
+     * @return \DateTime
+     */
+    public function getDeletedTime()
+    {
+        return $this->deletedTime;
     }
 }

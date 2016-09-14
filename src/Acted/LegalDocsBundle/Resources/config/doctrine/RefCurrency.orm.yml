@@ -16,4 +16,8 @@ Acted\LegalDocsBundle\Entity\RefCurrency:
         symbol:
           type: string(8)
           notnull: true
+    oneToMany:
+      refCountry:
+        targetEntity: Acted\LegalDocsBundle\Entity\RefCountry
+        mappedBy: refCurrencies
     lifecycleCallbacks: {  }
