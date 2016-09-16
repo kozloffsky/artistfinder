@@ -5,6 +5,8 @@ namespace Acted\LegalDocsBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,6 +33,10 @@ class PerformanceType extends AbstractType
                 'choices' => ['draft', 'published'],
                 'description' => 'Performance status',
             ])
+            /*->add('isPricePage', IntegerType::class, [
+                'constraints' => [
+                    new Length(['max' => 1, 'min' => 0])
+                ], 'description' => 'Checking - Is it price page'])*/
         ;
     }
     

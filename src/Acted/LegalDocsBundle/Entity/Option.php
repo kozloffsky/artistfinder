@@ -3,19 +3,14 @@
 namespace Acted\LegalDocsBundle\Entity;
 
 /**
- * PriceOption
+ * Option
  */
-class PriceOption
+class Option
 {
     /**
      * @var integer
      */
     private $id;
-
-    /**
-     * @var integer
-     */
-    private $packageId;
 
     /**
      * @var integer
@@ -32,70 +27,72 @@ class PriceOption
      */
     private $deletedTime;
 
-    private $pricePackage;
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\Package
+     */
+    private $package;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $priceOptionRates;
+    private $rates;
 
     /**
-     * Add priceOptionRate
+     * Add rate
      *
-     * @param \Acted\LegalDocsBundle\Entity\PriceOptionRate $priceOptionRate
+     * @param \Acted\LegalDocsBundle\Entity\Rate $rate
      *
-     * @return PriceOption
+     * @return Option
      */
-    public function addPriceOptionRate(\Acted\LegalDocsBundle\Entity\PriceOptionRate $priceOptionRate)
+    public function addRate(\Acted\LegalDocsBundle\Entity\Rate $rate)
     {
-        $this->priceOptionRates[] = $priceOptionRate;
+        $this->rates[] = $rate;
 
         return $this;
     }
 
     /**
-     * Remove priceOptionRate
+     * Remove rate
      *
-     * @param \Acted\LegalDocsBundle\Entity\PriceOptionRate $priceOptionRate
+     * @param \Acted\LegalDocsBundle\Entity\Rate $rate
      */
-    public function removePriceOptionRate(\Acted\LegalDocsBundle\Entity\PriceOptionRate $priceOptionRate)
+    public function removeRate(\Acted\LegalDocsBundle\Entity\Rate $rate)
     {
-        $this->priceOptionRates->removeElement($priceOptionRate);
+        $this->rates->removeElement($rate);
     }
 
     /**
-     * Get priceOptionRates
+     * Get rates
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPriceOptionRates()
+    public function getRates()
     {
-        return $this->priceOptionRates;
+        return $this->rates;
     }
 
-
     /**
-     * Set pricePackage
+     * Set package
      *
-     * @param \Acted\LegalDocsBundle\Entity\PricePackage $pricePackage
+     * @param \Acted\LegalDocsBundle\Entity\Package $package
      *
-     * @return PriceOption
+     * @return Option
      */
-    public function setPricePackage(\Acted\LegalDocsBundle\Entity\PricePackage $pricePackage = null)
+    public function setPackage(\Acted\LegalDocsBundle\Entity\Package $package)
     {
-        $this->pricePackage = $pricePackage;
+        $this->package = $package;
 
         return $this;
     }
 
     /**
-     * Get pricePackage
+     * Get package
      *
-     * @return \Acted\LegalDocsBundle\Entity\PricePackage
+     * @return \Acted\LegalDocsBundle\Entity\Package
      */
-    public function getPricePackage()
+    public function getPackage()
     {
-        return $this->pricePackage;
+        return $this->package;
     }
 
     /**
@@ -109,35 +106,11 @@ class PriceOption
     }
 
     /**
-     * Set packageId
-     *
-     * @param integer $packageId
-     *
-     * @return PriceOption
-     */
-    public function setPackageId($packageId)
-    {
-        $this->packageId = $packageId;
-
-        return $this;
-    }
-
-    /**
-     * Get packageId
-     *
-     * @return integer
-     */
-    public function getPackageId()
-    {
-        return $this->packageId;
-    }
-
-    /**
      * Set qty
      *
      * @param integer $qty
      *
-     * @return PriceOption
+     * @return Option
      */
     public function setQty($qty)
     {
@@ -161,7 +134,7 @@ class PriceOption
      *
      * @param integer $duration
      *
-     * @return PriceOption
+     * @return Option
      */
     public function setDuration($duration)
     {
@@ -185,7 +158,7 @@ class PriceOption
      *
      * @param \DateTime $deletedTime
      *
-     * @return PriceOption
+     * @return Option
      */
     public function setDeletedTime($deletedTime)
     {

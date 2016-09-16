@@ -1,9 +1,25 @@
 service_create:
-    path: /create
-    defaults: { _controller: ActedLegalDocsBundle:Service:create }
+    path: /package/create
+    defaults: { _controller: ActedLegalDocsBundle:Service:createPackage }
     methods:  POST
 
 service_edit:
-    path: /
+    path: /{id}/edit
     defaults: { _controller: ActedLegalDocsBundle:Service:edit }
     methods:  PATCH
+
+service_remove:
+    path: /{id}/remove
+    defaults: { _controller: ActedLegalDocsBundle:Service:remove }
+    methods:  DELETE
+
+service_list:
+    path: /list/{id}
+    defaults: { _controller: ActedLegalDocsBundle:Service:get }
+    methods:  GET
+
+service_profile_list:
+    path: /{id}/list
+    defaults: { _controller: ActedLegalDocsBundle:Service:getList }
+    methods:  GET
+

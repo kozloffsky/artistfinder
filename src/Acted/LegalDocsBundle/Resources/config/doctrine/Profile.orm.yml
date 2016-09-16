@@ -45,6 +45,9 @@ Acted\LegalDocsBundle\Entity\Profile:
         categories:
           targetEntity: Acted\LegalDocsBundle\Entity\Category
     oneToMany:
+        packages:
+          targetEntity: Acted\LegalDocsBundle\Entity\Package
+          mappedBy: profile
         performances:
           targetEntity: Acted\LegalDocsBundle\Entity\Performance
           mappedBy: profile
@@ -53,7 +56,4 @@ Acted\LegalDocsBundle\Entity\Profile:
           targetEntity: Acted\LegalDocsBundle\Entity\Service
           mappedBy: profile
           orderBy: { 'id': 'DESC' }
-        prices:
-          targetEntity: Acted\LegalDocsBundle\Entity\Price
-          mappedBy: profile
     lifecycleCallbacks: {  }

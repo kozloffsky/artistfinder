@@ -40,8 +40,8 @@ Acted\LegalDocsBundle\Entity\Performance:
         offers:
           targetEntity: Acted\LegalDocsBundle\Entity\Offer
           mappedBy: performances
-    OneToMany:
-        price:
-          targetEntity: Acted\LegalDocsBundle\Entity\Price
-          inversedBy: performances
+    oneToMany:
+        packages:
+          targetEntity: Acted\LegalDocsBundle\Entity\Package
+          mappedBy: performance
     lifecycleCallbacks: {  }

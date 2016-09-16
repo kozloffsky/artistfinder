@@ -45,6 +45,14 @@ class ServiceType extends AbstractType
                     new NotBlank(),
                     new Length(['max' => 128]),
                 ], 'description' => 'Service title'])
+            ->add('qty', IntegerType::class, [
+                'constraints' => [
+                    new Length(['max' => 128, 'min' => 1])
+                ], 'description' => 'qty'])
+            ->add('duration', IntegerType::class, [
+                'constraints' => [
+                    new Length(['max' => 123456789, 'min' => 1])
+                ], 'description' => 'Duration'])
             ->add('artist', EntityType::class, [
                 'class' => Artist::class,
                 'constraints' => [new NotBlank(['message' => 'Artist is required field'])],

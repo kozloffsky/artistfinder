@@ -1,6 +1,7 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Repository;
+use Acted\LegalDocsBundle\Entity\Service;
 
 /**
  * ServiceRepository
@@ -10,4 +11,64 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class ServiceRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Get service by id
+     * @param $id
+     * @return Service
+     */
+    public function getServiceById($id)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $params = array('serviceId' => $id);
+
+        $qb->from('ActedLegalDocsBundle:Service', 's');
+        $qb->select('s');
+        $qb->where($qb->expr()->eq('s.id', ':serviceId'));
+
+        $qb->setParameters($params);
+
+        return $qb->getQuery()->getSingleResult();
+    }
+
+    /**
+     * Get services
+     * @param $profileId
+     * @return array
+     */
+    public function getServices($profileId)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $params = array('profileId' => $profileId);
+
+        $qb->from('ActedLegalDocsBundle:Service', 's');
+        $qb->select('s');
+        $qb->where('s.deletedTime IS NULL AND s.profile = :profileId');
+        $qb->setParameters($params);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function removeService($id)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $date = date("Y-m-d H:i:s");
+        $params = array('deletedTime' => $date, 'serviceId' => $id);
+
+        $whereCriteria = 's.deletedTime IS NULL AND s.id IN (:serviceId)';
+
+
+        $qb->update('ActedLegalDocsBundle:Service', 's')
+            ->set('s.deletedTime', ":deletedTime")
+            ->where($whereCriteria)
+            ->setParameters($params);
+
+//        \Doctrine\Common\Util\Debug::dump($date);exit;
+//        \Doctrine\Common\Util\Debug::dump($qb->getQuery()->getSql());exit;
+        $qb->getQuery()->execute();
+    }
 }

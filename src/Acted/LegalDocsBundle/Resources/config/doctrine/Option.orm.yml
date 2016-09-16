@@ -1,7 +1,7 @@
-Acted\LegalDocsBundle\Entity\PriceOption:
+Acted\LegalDocsBundle\Entity\Option:
     type: entity
-    table: PriceOption
-    repositoryClass: Acted\LegalDocsBundle\Repository\PriceOptionRepository
+    table: `Option`
+    repositoryClass: Acted\LegalDocsBundle\Repository\OptionRepository
     id:
         id:
             type: integer
@@ -19,15 +19,17 @@ Acted\LegalDocsBundle\Entity\PriceOption:
         type: datetime
         nullable: true
     manyToOne:
-      pricePackage:
-        targetEntity: Acted\LegalDocsBundle\Entity\PricePackage
-        inversedBy: PriceOption
+      package:
+        targetEntity: Acted\LegalDocsBundle\Entity\Package
+        inversedBy: options
         joinColumn:
+          name: package_id
+          referencedColumnName: id
           onDelete: RESTRICT
     oneToMany:
-      priceOptionRates:
-        targetEntity: Acted\LegalDocsBundle\Entity\PriceOptionRate
-        mappedBy: priceOption
+      rates:
+        targetEntity: Acted\LegalDocsBundle\Entity\Rate
+        mappedBy: option
         joinColumn:
           onDelete: RESTRICT
     lifecycleCallbacks: {  }

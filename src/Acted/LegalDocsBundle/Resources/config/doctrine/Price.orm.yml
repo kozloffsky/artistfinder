@@ -9,29 +9,12 @@ Acted\LegalDocsBundle\Entity\Price:
             generator:
                 strategy: AUTO
     fields:
-      deletedTime:
-        type: datetime
-        nullable: true
-    manyToOne:
-      performances:
-        targetEntity: Acted\LegalDocsBundle\Entity\Performance
-        inversedBy: price
-        joinColumn:
-          onDelete: RESTRICT
-      profile:
-        targetEntity: Acted\LegalDocsBundle\Entity\Profile
-        inversedBy: prices
-        joinColumn:
-          onDelete: "SET NULL"
-    oneToMany:
-      services:
-        targetEntity: Acted\LegalDocsBundle\Entity\Service
+      amount:
+        type: decimal(12,2)
+        #type: integer(11)
+    oneToOne:
+      rate:
+        targetEntity: Acted\LegalDocsBundle\Entity\Rate
         mappedBy: price
-        joinColumn:
-          onDelete: RESTRICT
-      pricePackages:
-        targetEntity: Acted\LegalDocsBundle\Entity\PricePackage
-        mappedBy: price
-        joinColumn:
-          onDelete: RESTRICT
+
     lifecycleCallbacks: {  }

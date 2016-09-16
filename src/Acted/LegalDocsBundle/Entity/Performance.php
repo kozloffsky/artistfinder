@@ -44,30 +44,60 @@ class Performance
      */
     private $deletedTime;
 
-    private $price;
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $packages;
 
     /**
-     * Set price
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $media;
+
+    /**
+     * @var integer
+     */
+    public $isPricePage = 0;
+
+    public function __construct()
+    {
+        $this->packages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->offers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->media = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add package
      *
-     * @param \Acted\LegalDocsBundle\Entity\Price $price
+     * @param \Acted\LegalDocsBundle\Entity\Package $package
      *
      * @return Performance
      */
-    public function setPrice(\Acted\LegalDocsBundle\Entity\Price $price = null)
+    public function addPackage(\Acted\LegalDocsBundle\Entity\Package $package)
     {
-        $this->price = $price;
-
+        $this->packages[] = $package;
         return $this;
     }
 
     /**
-     * Get price
+     * Remove package
      *
-     * @return \Acted\LegalDocsBundle\Entity\Price
+     * @param \Acted\LegalDocsBundle\Entity\Package $package
      */
-    public function getPrice()
+    public function removePackage(\Acted\LegalDocsBundle\Entity\Package $package)
     {
-        return $this->price;
+        $this->packages->removeElement($package);
+    }
+
+
+    /**
+     * Get packages
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPackages()
+    {
+        return $this->packages;
     }
 
 
@@ -271,22 +301,6 @@ class Performance
         }
 
         return max($prices->toArray());
-    }
-
-
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $media;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->offers = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->media = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

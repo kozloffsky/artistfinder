@@ -13,6 +13,11 @@ class Service
     private $id;
 
     /**
+     * @var integer
+     */
+    public $profileId;
+
+    /**
      * @var string
      */
     private $title;
@@ -36,6 +41,49 @@ class Service
      * @var \Acted\LegalDocsBundle\Entity\Profile
      */
     private $profile;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $packages;
+
+    public function __construct() {
+        $this->packages = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add package
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Package $package
+     *
+     * @return Service
+     */
+    public function addPackage(\Acted\LegalDocsBundle\Entity\Package $package)
+    {
+        $this->packages[] = $package;
+        return $this;
+    }
+
+    /**
+     * Remove package
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Package $package
+     */
+    public function removePackage(\Acted\LegalDocsBundle\Entity\Package $package)
+    {
+        $this->packages->removeElement($package);
+    }
+
+
+    /**
+     * Get packages
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPackages()
+    {
+        return $this->packages;
+    }
 
     /**
      * Set profile
@@ -94,6 +142,30 @@ class Service
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set profileId
+     *
+     * @param integer $profileId
+     *
+     * @return Service
+     */
+    public function setProfileId($profileId)
+    {
+        $this->profileId = $profileId;
+
+        return $this;
+    }
+
+    /**
+     * Get profileId
+     *
+     * @return integer
+     */
+    public function getProfileId()
+    {
+        return $this->profileId;
     }
 
     /**

@@ -1,9 +1,9 @@
-price_create:
-    path: /create
-    defaults: { _controller: ActedLegalDocsBundle:Price:create }
+price_service_create:
+    path: /service/create
+    defaults: { _controller: ActedLegalDocsBundle:Service:create }
     methods:  POST
 
-price_edit:
-    path: /{id}/edit
-    defaults: { _controller: ActedLegalDocsBundle:Price:edit }
-    methods:  PATCH
+price_performance_create:
+    path: /{slug}/performance/create
+    defaults: { _controller: ActedLegalDocsBundle:Performance:new }
+    methods:  POST

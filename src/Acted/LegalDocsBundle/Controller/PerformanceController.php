@@ -23,6 +23,7 @@ class PerformanceController extends Controller
         $performanceForm->handleRequest($request);
 
         if($performanceForm->isSubmitted() && $performanceForm->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
             $performance->setProfile($artist->getUser()->getProfile());
             if ($performance->getStatus() === Performance::STATUS_PUBLISHED) {
@@ -39,6 +40,11 @@ class PerformanceController extends Controller
 
         return new JsonResponse($this->formErrorResponse($performanceForm));
     }
+
+    /*public function createAction(Request $request)
+    {
+        \Doctrine\Common\Util\Debug::dump('!!');exit;
+    }*/
 
     public function editAction(Request $request, Performance $performance)
     {

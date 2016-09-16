@@ -67,11 +67,11 @@ acted_legal_docs_price:
     prefix:   /price
 
 acted_legal_docs_price_option:
-    resource: "@ActedLegalDocsBundle/Resources/config/routing/priceOption.yml"
+    resource: "@ActedLegalDocsBundle/Resources/config/routing/option.yml"
     prefix:   /price/option
 
 acted_legal_docs_price_package:
-    resource: "@ActedLegalDocsBundle/Resources/config/routing/pricePackage.yml"
+    resource: "@ActedLegalDocsBundle/Resources/config/routing/package.yml"
     prefix:   /price/package
 
 acted_legal_docs_service:

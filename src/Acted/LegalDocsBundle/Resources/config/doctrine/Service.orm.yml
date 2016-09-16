@@ -18,12 +18,12 @@ Acted\LegalDocsBundle\Entity\Service:
         deletedTime:
           type: datetime
           nullable: true
-    #oneToMany:
+    oneToMany:
+      packages:
+        targetEntity: Acted\LegalDocsBundle\Entity\Package
+        mappedBy: service
     manyToOne:
       profile:
         targetEntity: Acted\LegalDocsBundle\Entity\Profile
-        inversedBy: services
-      price:
-        targetEntity: Acted\LegalDocsBundle\Entity\Price
         inversedBy: services
     lifecycleCallbacks: {  }

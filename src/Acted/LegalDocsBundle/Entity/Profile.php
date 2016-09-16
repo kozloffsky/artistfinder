@@ -52,6 +52,45 @@ class Profile
      */
     private $active = false;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $packages;
+
+    /**
+     * Add package
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Package $package
+     *
+     * @return Profile
+     */
+    public function addPackage(\Acted\LegalDocsBundle\Entity\Package $package)
+    {
+        $this->packages[] = $package;
+        return $this;
+    }
+
+    /**
+     * Remove package
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Package $package
+     */
+    public function removePackage(\Acted\LegalDocsBundle\Entity\Package $package)
+    {
+        $this->packages->removeElement($package);
+    }
+
+
+    /**
+     * Get packages
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPackages()
+    {
+        return $this->packages;
+    }
+
 
     /**
      * Get id
@@ -363,6 +402,7 @@ class Profile
     public function __construct()
     {
         $this->media = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->packages = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
