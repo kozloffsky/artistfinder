@@ -198,7 +198,7 @@ class UserManager
         array_map('unlink', glob($path));
 
         $avatar = $user->getAvatar();
-        if (!empty($avatar)) {
+        if (!empty($avatar) && $avatar != '/') {
             $avatar = explode('/', $avatar);
             $fileNameOld = array_pop($avatar);
             $basePath = implode('/', $avatar);
