@@ -44,6 +44,7 @@ class OptionRepository extends \Doctrine\ORM\EntityRepository
         $qb->setParameters($params);
 
         $optionIds = $qb->getQuery()->getResult();
+
         foreach($optionIds as $key => $value) {
             $optionIds[$key] = $value['id'];
         }

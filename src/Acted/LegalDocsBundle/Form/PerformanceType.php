@@ -33,10 +33,6 @@ class PerformanceType extends AbstractType
                 'choices' => ['draft', 'published'],
                 'description' => 'Performance status',
             ])
-            /*->add('isPricePage', IntegerType::class, [
-                'constraints' => [
-                    new Length(['max' => 1, 'min' => 0])
-                ], 'description' => 'Checking - Is it price page'])*/
         ;
     }
     

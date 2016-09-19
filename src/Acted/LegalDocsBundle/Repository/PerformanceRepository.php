@@ -30,4 +30,63 @@ class PerformanceRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->orderBy('p.id', 'DESC')->getQuery();
     }
+
+    /**
+     * Get performance by id
+     * @param $id
+     * @return Performance
+     */
+    public function getPerformanceById($id)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $params = array('performanceId' => $id);
+
+        $qb->from('ActedLegalDocsBundle:Performance', 'per');
+        $qb->select('per');
+        $qb->where($qb->expr()->eq('per.id', ':performanceId'));
+
+        $qb->setParameters($params);
+
+        return $qb->getQuery()->getSingleResult();
+    }
+
+    /**
+     * Get performances
+     * @param $profileId
+     * @return array
+     */
+    public function getPerformances($profileId)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $params = array('profileId' => $profileId);
+
+        $qb->from('ActedLegalDocsBundle:Performance', 'per');
+        $qb->select('per');
+        $qb->where('per.deletedTime IS NULL AND per.profile = :profileId');
+        $qb->setParameters($params);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function removePerformance($id)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $date = date("Y-m-d H:i:s");
+        $params = array('deletedTime' => $date, 'performanceId' => $id);
+
+        $whereCriteria = 'per.deletedTime IS NULL AND per.id IN (:performanceId)';
+
+
+        $qb->update('ActedLegalDocsBundle:Performance', 'per')
+            ->set('per.deletedTime', ":deletedTime")
+            ->where($whereCriteria)
+            ->setParameters($params);
+
+        $qb->getQuery()->execute();
+    }
 }

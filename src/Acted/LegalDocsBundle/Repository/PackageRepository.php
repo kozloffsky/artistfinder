@@ -40,14 +40,10 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
         $qb->where($whereCriteria);
         $qb->setParameters($params);
 
-        //return $qb->getQuery()->getSingleResult();
-        //\Doctrine\Common\Util\Debug::dump($qb->getQuery()->getSql());exit;
-
         $packageIds = $qb->getQuery()->getResult();
         foreach($packageIds as $key => $value) {
             $packageIds[$key] = $value['id'];
         }
-//        \Doctrine\Common\Util\Debug::dump($packageIds);exit;
 
         return $packageIds;
     }
@@ -68,4 +64,54 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getPackageIdsByPerformanceId($id)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $params = array('performanceId' => $id);
+        $whereCriteria = 'pac.performance = :performanceId';
+        $qb->from('ActedLegalDocsBundle:Package', 'pac');
+        $qb->select('pac.id');
+        $qb->where($whereCriteria);
+        $qb->setParameters($params);
+
+        $packageIds = $qb->getQuery()->getResult();
+        foreach($packageIds as $key => $value) {
+            $packageIds[$key] = $value['id'];
+        }
+
+        return $packageIds;
+    }
+
+    public function getPackagesByPerformanceId($id)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $params = array('performanceId' => $id);
+
+        $whereCriteria = '(pac.deletedTime IS NULL) AND pac.performance = :performanceId';
+
+        $qb->from('ActedLegalDocsBundle:Package', 'pac');
+        $qb->select('pac');
+        $qb->where($whereCriteria);
+        $qb->setParameters($params);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getPackageById($id)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $params = array('packageId' => $id);
+
+        $whereCriteria = '(pac.deletedTime IS NULL) AND pac.id = :packageId';
+
+        $qb->from('ActedLegalDocsBundle:Package', 'pac');
+        $qb->select('pac');
+        $qb->where($whereCriteria);
+        $qb->setParameters($params);
+
+        return $qb->getQuery()->getSingleResult();
+    }
 }
