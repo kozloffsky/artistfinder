@@ -13,7 +13,6 @@ use Acted\LegalDocsBundle\Entity\Rate;
 use Acted\LegalDocsBundle\Form\MediaUploadType;
 use Acted\LegalDocsBundle\Form\PerformanceType;
 use Acted\LegalDocsBundle\Form\PerformancePriceType;
-use Acted\LegalDocsBundle\Form\PricePackageType;
 use Acted\LegalDocsBundle\Form\PerformancePricePackageType;
 use Symfony\Component\HttpFoundation\Response;
 use Acted\LegalDocsBundle\Model\MediaManager;
@@ -22,139 +21,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\Request;
 
-class PerformanceController extends Controller
+class PriceOptionController extends Controller
 {
-    public function newAction(Request $request, Artist $artist)
-    {
-        $performance = new Performance();
-        $performanceForm = $this->createForm(PerformanceType::class, $performance, ['method' => 'POST']);
-        $performanceForm->handleRequest($request);
-
-        if($performanceForm->isSubmitted() && $performanceForm->isValid()) {
-
-            $em = $this->getDoctrine()->getManager();
-            $performance->setProfile($artist->getUser()->getProfile());
-            if ($performance->getStatus() === Performance::STATUS_PUBLISHED) {
-                if (!$performance->getMedia()) {
-                    return new JsonResponse(['error' => 'Performance can not be published without media'], 400);
-                }
-            }
-            $em->persist($performance);
-
-            $profile = $artist->getUser()->getProfile();
-            $package = new Package();
-            $package->setProfile($profile);
-            $package->setPerformance($performance);
-            $package->setName('default package');
-            $em->persist($package);
-
-            $option = new Option();
-            $option->setPackage($package);
-            $em->persist($option);
-
-            $price = new Price();
-            $price->setAmount(3000);
-            $em->persist($price);
-
-            $rate = new Rate();
-            $rate->setOption($option);
-            $rate->setPrice($price);
-            $em->persist($rate);
-
-            $em->flush();
-            $serializer = $this->get('jms_serializer');
-            return new JsonResponse(['status' => 'success', 'performance' => $serializer->toArray($performance, SerializationContext::create()
-                ->setGroups(['performance_create']))]);
-        }
-
-        return new JsonResponse($this->formErrorResponse($performanceForm));
-    }
-
-    public function editAction(Request $request, Performance $performance)
-    {
-        $mediaForm = $this->createForm(PerformanceType::class, $performance, ['method' => 'PATCH']);
-        $mediaForm->handleRequest($request);
-
-        if($mediaForm->isSubmitted() && $mediaForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            if ($performance->getStatus() === Performance::STATUS_PUBLISHED) {
-                if (!$performance->getMedia()) {
-                    return new JsonResponse(['error' => 'Performance can not be published without media'], 400);
-                }
-            }
-            $em->persist($performance);
-
-
-            $em->flush();
-            return new JsonResponse(['status' => 'success']);
-        }
-
-        return new JsonResponse($this->formErrorResponse($mediaForm));
-    }
-
-    public function newMediaAction(Request $request, Performance $performance)
-    {
-        $serializer = $this->get('jms_serializer');
-        $form = $this->createForm(MediaUploadType::class);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $data = $form->getData();
-            $mediaManager = $this->get('app.media.manager');
-            $media = new Media();
-            $performance->addMedia($media);
-
-            $validator = $this->get('validator');
-            $validationErrors = $validator->validate($performance);
-
-            if (count($validationErrors) > 0) {
-                return new JsonResponse($serializer->toArray($validationErrors), 400);
-            }
-
-            if(!is_null($data['video'])) {
-                if (strripos($data['video'], 'youtube.com') === false && strripos($data['video'], 'vimeo.com') === false
-                    &&  strripos($data['video'], 'youtu.be') === false ) {
-                    return new JsonResponse([
-                        'status' => 'error',
-                        'message' => 'Added link should be from "youtube.com" or "vimeo.com"'
-                    ],  400);
-                }
-                $media = $mediaManager->updateVideo($data['video'], $media);
-            } elseif(!is_null($data['audio'])) {
-                if (strripos($data['audio'], 'soundcloud.com') === false || strripos($data['audio'], 'iframe')) {
-                    return new JsonResponse([
-                        'status' => 'error',
-                        'message' => 'Added link should be from "soundcloud.com" embed'
-                    ],  400);
-                }
-                $media = $mediaManager->updateAudio($data['audio'], $media);
-            } else {
-                /** @var UploadedFile $file */
-                $file = $data['file'];
-                if (!in_array($file->getExtension(), ['png', 'jpg', 'jpeg'])) {
-                    return new JsonResponse([
-                        'status' => 'error',
-                        'message' => 'You should upload only png or jpg images'
-                    ],  400);
-                }
-                $media = $mediaManager->updatePhoto($file, $media, $request);
-            }
-
-            if (isset($data['position']) && !empty($data['position'])) {
-                $media->setPosition($data['position']);
-            }
-            $em->persist($media);
-            $em->flush();
-
-            return new JsonResponse(['status' => 'success', 'media' => $serializer->toArray($media)]);
-        }
-
-        return new JsonResponse($serializer->toArray($form->getErrors()));
-    }
-
-    public function createPricePerformanceAction(Request $request)
+    public function createAction(Request $request)
     {
         $serializer = $this->get('jms_serializer');
 
@@ -224,19 +93,104 @@ class PerformanceController extends Controller
     public function editPricePerformanceAction(Request $request, Performance $performance)
     {
         $serializer = $this->get('jms_serializer');
-        $performanceFrom = $this->createForm(PerformanceType::class, $performance, ['method' => 'PATCH']);
-        $performanceFrom->handleRequest($request);
 
-        if ($performanceFrom->isSubmitted() && (!$performanceFrom->isValid())) {
-            return new JsonResponse($serializer->toArray($performanceFrom->getErrors()), Response::HTTP_BAD_REQUEST);
+        $performancePriceForm = $this->createForm(PerformancePriceType::class, null, ['method' => 'PATCH']);
+        $performancePriceForm->handleRequest($request);
+
+        if ($performancePriceForm->isSubmitted() && (!$performancePriceForm->isValid())) {
+            return new JsonResponse($serializer->toArray($performancePriceForm->getErrors()), Response::HTTP_BAD_REQUEST);
         }
 
         $em = $this->getDoctrine()->getManager();
+        $userManager = $this->get('app.user.manager');
 
-        $em->persist($performance);
-        $em->flush();
+        $em->getConnection()->beginTransaction();
 
-        return new JsonResponse($this->formErrorResponse($performanceFrom));
+        try {
+            $performanceRepository = $this->getDoctrine()
+                ->getRepository('ActedLegalDocsBundle:Performance');
+
+            $packageRepository = $this->getDoctrine()
+                ->getRepository('ActedLegalDocsBundle:Package');
+
+            $optionRepository = $this->getDoctrine()
+                ->getRepository('ActedLegalDocsBundle:Option');
+
+            $rateRepository = $this->getDoctrine()
+                ->getRepository('ActedLegalDocsBundle:Rate');
+            $packageIds = $packageRepository->getPackageIdsByPerformanceId($performance->getId());
+            $optionIds = $optionRepository->getOptionIdsByPackageIds($packageIds);
+            $rateIds = $rateRepository->getRateIdsByOptionIds($optionIds);
+
+            $performanceRepository->removePerformance($performance->getId());
+
+            $packageRepository->removePackages($packageIds);
+
+            $optionRepository->removeOptions($optionIds);
+            $rateRepository->removeRates($rateIds);
+
+            $performance = new Performance();
+
+            $data = $performancePriceForm->getData();
+            $artist = $data['artist'];
+            $profile = $artist->getUser()->getProfile();
+
+            $performance->setTitle($data['title']);
+            $performance->setProfile($profile);
+            $performance->setStatus(Performance::STATUS_PUBLISHED);
+            $performance->setIsVisible(false);
+            $em->persist($performance);
+
+            $package = new Package();
+            $package->setProfile($profile);
+            $package->setPerformance($performance);
+            $package->setName($data['package_name']);
+            $em->persist($package);
+
+            foreach ($data['options'] as $currentOption) {
+                $option = new Option();
+                $option->setPackage($package);
+                $option->setDuration($currentOption['duration']);
+                $option->setQty($currentOption['qty']);
+                $em->persist($option);
+
+                $price = new Price();
+                $price->setAmount($currentOption['price1']);
+                $em->persist($price);
+
+                $rate = new Rate();
+                $rate->setOption($option);
+                $rate->setPrice($price);
+                $em->persist($rate);
+
+                if (!empty($currentOption['price2'])) {
+                    $price = new Price();
+                    $price->setAmount($currentOption['price2']);
+                    $em->persist($price);
+
+                    $rate = new Rate();
+                    $rate->setOption($option);
+                    $rate->setPrice($price);
+                    $em->persist($rate);
+                }
+            }
+
+            $em->flush();
+
+            $em->getConnection()->commit();
+        } catch (\Exception $e) {
+            $em->getConnection()->rollback();
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Edit error'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
+
+        return new JsonResponse(array(
+            'performance' => array(
+                'id' => $performance->getId()
+            )
+        ));
     }
 
     public function removePricePerformanceAction(Request $request, Performance $performance)
@@ -300,7 +254,7 @@ class PerformanceController extends Controller
         if (empty($performance)) {
             return new JsonResponse([
                 'status' => 'error',
-                'message' => 'Performance is not found'
+                'message' => 'Service is not found'
             ],  Response::HTTP_BAD_REQUEST);
         }
 
@@ -434,16 +388,15 @@ class PerformanceController extends Controller
         return new JsonResponse(array());
     }
 
-    //transfer to
     public function editPricePerformancePackageAction(Request $request, Package $package)
     {
         $serializer = $this->get('jms_serializer');
 
-        $pricePackageForm = $this->createForm(PricePackageType::class, null, ['method' => 'PATCH']);
-        $pricePackageForm->handleRequest($request);
+        $performancePricePackageForm = $this->createForm(PerformancePricePackageType::class, null, ['method' => 'PATCH']);
+        $performancePricePackageForm->handleRequest($request);
 
-        if ($pricePackageForm->isSubmitted() && (!$pricePackageForm->isValid())) {
-            return new JsonResponse($serializer->toArray($pricePackageForm->getErrors()), Response::HTTP_BAD_REQUEST);
+        if ($performancePricePackageForm->isSubmitted() && (!$performancePricePackageForm->isValid())) {
+            return new JsonResponse($serializer->toArray($performancePricePackageForm->getErrors()), Response::HTTP_BAD_REQUEST);
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -451,8 +404,7 @@ class PerformanceController extends Controller
         $em->getConnection()->beginTransaction();
 
         try {
-            $data = $pricePackageForm->getData();
-
+            $data = $performancePricePackageForm->getData();
             $artist = $data['artist'];
             $performance = $data['performance'];
             $profile = $artist->getUser()->getProfile();

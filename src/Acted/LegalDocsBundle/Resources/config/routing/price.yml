@@ -54,3 +54,34 @@ price_service_package_remove:
     path: /service/package/{id}/remove
     defaults: { _controller: ActedLegalDocsBundle:Service:removePriceServicePackage }
     methods:  DELETE
+
+price_option_create:
+    path: /option/create
+    defaults: { _controller: ActedLegalDocsBundle:PriceOption:create }
+    methods:  POST
+
+price_option_edit:
+    path: /option/{id}/edit
+    defaults: { _controller: ActedLegalDocsBundle:PriceOption:edit }
+    methods:  PATCH
+
+price_option_remove:
+    path: /option/{id}/remove
+    defaults: { _controller: ActedLegalDocsBundle:PriceOption:remove }
+    methods:  DELETE
+
+
+price_rate_create:
+    path: /rate/create
+    defaults: { _controller: ActedLegalDocsBundle:PriceRate:create }
+    methods:  POST
+
+price_rate_edit:
+    path: /rate/{id}/edit
+    defaults: { _controller: ActedLegalDocsBundle:PriceRate:edit }
+    methods:  PATCH
+
+price_rate_remove:
+    path: /rate/{id}/remove
+    defaults: { _controller: ActedLegalDocsBundle:PriceRate:remove }
+    methods:  DELETE
