@@ -7,7 +7,7 @@ Acted\LegalDocsBundle\Entity\PaymentSetting:
       groups: [profile_settings]
     accountNumber:
       groups: [profile_settings]
-    iBan:
+    iban:
       groups: [profile_settings]
     bankName:
       groups: [profile_settings]
