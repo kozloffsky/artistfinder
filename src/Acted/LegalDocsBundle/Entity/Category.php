@@ -432,6 +432,6 @@ class Category
      */
     public function getIsRecommend()
     {
-        return $this->isRcommend;
+        return $this->isRecommend;
     }
 }

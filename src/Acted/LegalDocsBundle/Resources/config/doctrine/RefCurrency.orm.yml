@@ -19,5 +19,5 @@ Acted\LegalDocsBundle\Entity\RefCurrency:
     oneToMany:
       refCountry:
         targetEntity: Acted\LegalDocsBundle\Entity\RefCountry
-        mappedBy: refCurrencies
+        mappedBy: refCurrency
     lifecycleCallbacks: {  }

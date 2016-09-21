@@ -18,7 +18,7 @@ Acted\LegalDocsBundle\Entity\RefCountry:
           targetEntity: Acted\LegalDocsBundle\Entity\RefRegion
           mappedBy: country
     manyToOne:
-        refCurrencies:
+        refCurrency:
           targetEntity: Acted\LegalDocsBundle\Entity\RefCurrency
           inversedBy: refCountry
           joinColumn:

@@ -46,7 +46,7 @@ class Price
     /**
      * Get amount
      *
-     * @return integer
+     * @return Price
      */
     public function setAmount($amount)
     {

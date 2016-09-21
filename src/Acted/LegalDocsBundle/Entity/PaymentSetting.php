@@ -52,7 +52,6 @@ class PaymentSetting
      */
     private $vatNumber;
 
-
     /**
      * Get id
      *

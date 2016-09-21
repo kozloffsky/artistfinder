@@ -1,0 +1,19 @@
+Acted\LegalDocsBundle\Entity\PaymentSetting:
+  #exclusion_policy: NONE
+  properties:
+    id:
+      groups: [profile_settings]
+    accountName:
+      groups: [profile_settings]
+    accountNumber:
+      groups: [profile_settings]
+    iBan:
+      groups: [profile_settings]
+    bankName:
+      groups: [profile_settings]
+    billingAddress:
+      groups: [profile_settings]
+    swiftCode:
+      groups: [profile_settings]
+    vatNumber:
+      groups: [profile_settings]

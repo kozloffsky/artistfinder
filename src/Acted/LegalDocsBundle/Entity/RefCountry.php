@@ -18,9 +18,9 @@ class RefCountry
     private $name;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var  \Acted\LegalDocsBundle\Entity\RefCurrency
      */
-    private $refCurrencies;
+    private $refCurrency;
 
     /**
      * Set refCurrency
@@ -29,31 +29,21 @@ class RefCountry
      *
      * @return RefCountry
      */
-    public function addRefCurrency(\Acted\LegalDocsBundle\Entity\RefCurrency $refCurrency = null)
+    public function setRefCurrency(\Acted\LegalDocsBundle\Entity\RefCurrency $refCurrency = null)
     {
-        $this->refCurrencies[] = $refCurrency;
+        $this->refCurrency = $refCurrency;
 
         return $this;
     }
 
     /**
-     * Remove refCurrency
-     *
-     * @param \Acted\LegalDocsBundle\Entity\RefCurrency $refCurrency
-     */
-    public function removeRefCurrency(\Acted\LegalDocsBundle\Entity\RefCurrency $refCurrency)
-    {
-        $this->refCurrencies->removeElement($refCurrency);
-    }
-
-    /**
      * Get refCurrencies
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Acted\LegalDocsBundle\Entity\RefCurrency
      */
-    public function getRefCurrencies()
+    public function getRefCurrency()
     {
-        return $this->refCurrencies;
+        return $this->refCurrency;
     }
 
 

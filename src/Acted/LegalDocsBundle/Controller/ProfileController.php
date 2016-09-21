@@ -19,6 +19,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Acted\LegalDocsBundle\Form\ProfileSettingsType;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;
+//use JMS\Serializer\SerializationContext;
+
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use JMS\Serializer\SerializationContext;
+
+
 
 class ProfileController extends Controller
 {
@@ -253,14 +261,13 @@ class ProfileController extends Controller
     public function getProfileSettingsAction(Request $request, Artist $artist)
     {
         $serializer = $this->get('jms_serializer');
-        $user = $artist->getUser();
-        return new JsonResponse($serializer->toArray($user));
+        return new JsonResponse(['status' => 'success', 'artist' => $serializer->toArray($artist, SerializationContext::create()
+            ->setGroups(['profile_settings']))]);
     }
 
     public function editProfileSettingsAction(Request $request, Artist $artist)
     {
         $serializer = $this->get('jms_serializer');
-
 
         $em = $this->getDoctrine()->getManager();
         $userManager = $this->get('app.user.manager');
@@ -288,7 +295,6 @@ class ProfileController extends Controller
             $user = $userManager->updateAvatar($file, $user, $request);
         }
 
-
         $data['post_code'] = (empty($data['post_code']) ? '' : $data['post_code']);
         $data['account_name'] = (empty($data['account_name']) ? '' : $data['account_name']);
         $data['account_number'] = (empty($data['account_number']) ? '' : $data['account_number']);
@@ -302,11 +308,13 @@ class ProfileController extends Controller
         $user->setFirstname($data['first_name']);
         $user->setLastname($data['last_name']);
         $user->setPostcode($data['post_code']);
+        $user->setPrimaryPhone($data['phone']);
 
         if (!empty($data['password'])) {
             $user = $userManager->updatePassword($user, $data['password']);
         }
 
+        $em->persist($user);
 
         $artist->setName($data['name']);
         $artist->setCountry($data['country']);
@@ -334,7 +342,8 @@ class ProfileController extends Controller
         $em->persist($paymentSettingObj);
         $em->flush();
 
-        return new JsonResponse($serializer->toArray($user));
+        return new JsonResponse(['status' => 'success', 'artist' => $serializer->toArray($artist, SerializationContext::create()
+            ->setGroups(['profile_settings']))]);
     }
 
 }

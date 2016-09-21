@@ -49,6 +49,61 @@ class User implements UserInterface, \Serializable
      */
     private $postcode = '';
 
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\Profile
+     */
+    private $profile;
+
+
+    /**
+     * @var string
+     */
+    private $avatar;
+
+    /**
+     * @var string
+     */
+    private $background;
+
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\Artist
+     */
+    private $artist;
+
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\PaymentSetting
+     */
+    private $paymentSetting;
+
+    /**
+     * @var string
+     */
+    private $confirmationToken;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $roles;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $chatRoomsArtist;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $chatRoomsClient;
+
+    /**
+     * @var string
+     */
+    private $email;
+
+    /**
+     * @var \DateTime
+     */
+    private $passwordRequestedAt;
 
     /**
      * Get id
@@ -234,17 +289,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @var string
-     */
-    private $avatar;
-
-    /**
-     * @var string
-     */
-    private $background;
-
-
-    /**
      * Set avatar
      *
      * @param string $avatar
@@ -291,11 +335,6 @@ class User implements UserInterface, \Serializable
     {
         return $this->rel2abs($this->background);
     }
-    /**
-     * @var \Acted\LegalDocsBundle\Entity\Profile
-     */
-    private $profile;
-
 
     /**
      * Set profile
@@ -322,15 +361,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @var \Acted\LegalDocsBundle\Entity\Profile
-     */
-    private $paymentSetting;
-
-
-    /**
      * Set paymentSetting
      *
-     * @param \Acted\LegalDocsBundle\Entity\Profile $profile
+     * @param \Acted\LegalDocsBundle\Entity\PaymentSetting $paymentSetting
      *
      * @return User
      */
@@ -346,16 +379,10 @@ class User implements UserInterface, \Serializable
      *
      * @return \Acted\LegalDocsBundle\Entity\PaymentSetting
      */
-    public function getPaymentSetting()
+    public function getProfilePaymentSetting()
     {
         return $this->paymentSetting;
     }
-
-    /**
-     * @var \Acted\LegalDocsBundle\Entity\Artist
-     */
-    private $artist;
-
 
     /**
      * Set artist
@@ -461,25 +488,7 @@ class User implements UserInterface, \Serializable
     {
 
     }
-    /**
-     * @var string
-     */
-    private $confirmationToken;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $roles;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $chatRoomsArtist;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $chatRoomsClient;
 
     /**
      * Constructor
@@ -604,12 +613,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @var string
-     */
-    private $email;
-
-
-    /**
      * Set email
      *
      * @param string $email
@@ -632,12 +635,6 @@ class User implements UserInterface, \Serializable
     {
         return $this->email;
     }
-
-    /**
-     * @var \DateTime
-     */
-    private $passwordRequestedAt;
-
 
     /**
      * Set passwordRequestedAt

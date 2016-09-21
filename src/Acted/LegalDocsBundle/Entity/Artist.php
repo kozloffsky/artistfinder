@@ -264,6 +264,13 @@ class Artist
     {
         return $this->cityId;
     }
+
+
+    public function getCityProfileId()
+    {
+        return ($this->city) ? $this->city->getId() : null;
+    }
+
     /**
      * @var string
      */
@@ -454,6 +461,11 @@ class Artist
         return $this->country;
     }
 
+    public function getCurrency()
+    {
+        return ($this->country && $this->country->getRefCurrency()) ? $this->country->getRefCurrency() : null;
+    }
+
     /**
      * @var int
      */
@@ -478,7 +490,7 @@ class Artist
      *
      * @param Recommend $recommend
      *
-     * @return User
+     * @return Artist
      */
     public function addRecommend(Recommend $recommend)
     {
@@ -523,6 +535,11 @@ class Artist
     public function getCountryName()
     {
         return ($this->city && $this->city->getRegion()->getCountry()) ? $this->city->getRegion()->getCountry()->getName() : null;
+    }
+
+    public function getCountryId()
+    {
+        return ($this->city && $this->city->getRegion()->getCountry()) ? $this->city->getRegion()->getCountry()->getId() : null;
     }
 
     public function getCategoriesNames()

@@ -10,11 +10,17 @@ Acted\LegalDocsBundle\Entity\User:
     roles:
       exclude: true
     avatar:
-      groups: [quote_request, chat_room, message, all_messages]
+      groups: [quote_request, chat_room, message, all_messages, profile_settings]
     firstname:
-      groups: [chat_list, chat_room, message, all_messages]
+      groups: [chat_list, chat_room, message, all_messages, profile_settings]
     lastname:
-      groups: [chat_list, chat_room, message, all_messages]
+      groups: [chat_list, chat_room, message, all_messages, profile_settings]
+    postcode:
+      groups: [profile_settings]
+    email:
+      groups: [profile_settings]
+    primaryPhone:
+      groups: [profile_settings]
   virtual_properties:
       getRoles:
         serialized_name: roles
@@ -22,3 +28,6 @@ Acted\LegalDocsBundle\Entity\User:
       getRoleName:
         serialized_name: role_name
         groups: [chat_list, chat_room, message, all_messages]
+      getProfilePaymentSetting:
+        serialized_name: payment_settings
+        groups: [profile_settings]
