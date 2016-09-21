@@ -292,7 +292,7 @@ class ProfileController extends Controller
                 ],  400);
             }
 
-            $user = $userManager->updateAvatar($file, $user, $request);
+            $artist = $userManager->updateSearchImage($file, $artist, $request);
         }
 
         $data['post_code'] = (empty($data['post_code']) ? '' : $data['post_code']);

@@ -32,6 +32,7 @@ services:
           - "%mailer_from_address%"
           - "@liip_imagine.controller"
           - "%avatar_dir%"
+          - "%search_image_dir%"
           - %kernel.root_dir%
 
 

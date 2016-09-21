@@ -65,6 +65,11 @@ class Artist
     private $workAbroad = false;
 
     /**
+     * @var string
+     */
+    private $searchImage;
+
+    /**
      * Get id
      *
      * @return integer
@@ -610,5 +615,36 @@ class Artist
         return $this->workAbroad;
     }
 
+    /**
+     * Set search image
+     *
+     * @param string $searchImage
+     *
+     * @return Artist
+     */
+    public function setSearchImage($searchImage)
+    {
+        $this->searchImage =  '/' . $searchImage;
 
+        return $this;
+    }
+
+    /**
+     * Get search image
+     *
+     * @return string
+     */
+    public function getSearchImage()
+    {
+        return $this->rel2abs($this->searchImage);
+    }
+
+    protected  function rel2abs($link)
+    {
+        if (strpos($link, 'http') === 0) {
+            return $link;
+        }
+
+        return '/'.ltrim($link, '/');
+    }
 }

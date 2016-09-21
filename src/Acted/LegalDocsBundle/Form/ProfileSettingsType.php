@@ -51,7 +51,7 @@ class ProfileSettingsType extends AbstractType
 
             ->add('name', TextType::class, [
                 'constraints' => [
-                    new NotBlank(['groups' => 'artist']),
+                    new NotBlank(),
                     new Length(['max' => 128]),
                     new Regex(['pattern' =>"#^[^<>$:!@\#$%*\(\)\^]+$#", 'message' => 'Last name should not contain special characters'])
                 ],
@@ -65,13 +65,14 @@ class ProfileSettingsType extends AbstractType
 
             ->add('country', EntityType::class, [
                 'class' => RefCountry::class,
-                'constraints' => [new NotBlank(['groups' => 'artist'])],
+                'constraints' => [new NotBlank()],
+                'required' => true,
                 'description' => 'Country ID (for ROLE_ARTIST)',
             ])
 
             ->add('phone', TextType::class, [
                 'constraints' => [
-                    new NotBlank(['groups' => 'artist']),
+                    new NotBlank(),
                     new Regex([
                         'pattern' => '/^[\d\+\(\) -]+$/',
                         'message' => 'Phone can contain digits, brackets, +'
@@ -81,9 +82,8 @@ class ProfileSettingsType extends AbstractType
             ])
             ->add('city',  EntityType::class, [
                 'class' => RefCity::class,
-                'constraints' => [new NotBlank(['groups' => 'artist'])],
+                'constraints' => [new NotBlank()],
                 'description' => 'City ID (for ROLE_ARTIST)',
-                'required' => false
             ])
 
             ->add('email', EmailType::class, ['constraints' => [
@@ -102,7 +102,7 @@ class ProfileSettingsType extends AbstractType
             ])
 
 
-            ->add('file', 'file', ['constraints' => [new NotBlank(['groups' => 'photo']), new Image()]])
+            ->add('file', 'file', ['constraints' => [new NotBlank(), new Image()]])
             ->add('work_abroad', TextType::class, ['constraints' => [], 'description' => 'Work abroad'])
 
 

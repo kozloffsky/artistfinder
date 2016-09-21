@@ -48,6 +48,8 @@ class UserManager
 
     protected $avatarDir;
 
+    protected $searchImageDir;
+
     protected $rootDir;
 
     /**
@@ -58,7 +60,7 @@ class UserManager
     public function __construct(EncoderFactoryInterface $encoderFactory,
                                 EntityManagerInterface $entityManagerInterface, $mailer,
                                 EngineInterface $templating, UrlGeneratorInterface $router, $mailFrom,
-                                $lip, $avatarDir, $rootDir)
+                                $lip, $avatarDir, $searchImageDir, $rootDir)
     {
         $this->encoderFactory = $encoderFactory;
         $this->entityManager = $entityManagerInterface;
@@ -68,6 +70,7 @@ class UserManager
         $this->mailFrom = $mailFrom;
         $this->lip = $lip;
         $this->avatarDir = $avatarDir;
+        $this->searchImageDir = $searchImageDir;
         $this->rootDir = $rootDir;
     }
 
@@ -172,9 +175,9 @@ class UserManager
 
     /**
      * @param File $file
-     * @param Media $media
+     * @param User $user
      * @param $request
-     * @return Media
+     * @return User
      */
     public function updateAvatar(File $file, User $user, $request)
     {
@@ -221,5 +224,58 @@ class UserManager
         $user->setAvatar($this->avatarDir . '/' . $fileName);
 
         return $user;
+    }
+
+    /**
+     * @param File $file
+     * @param Artist $artist
+     * @param $request
+     * @return Artist
+     */
+    public function updateSearchImage(File $file, Artist $artist, $request)
+    {
+        $fileName = uniqid(). '.' . $file->getExtension();
+
+        if (!file_exists($this->searchImageDir) && !is_dir($this->searchImageDir)) {
+            mkdir($this->searchImageDir, 0777, true);
+        }
+
+        $this->lip->filterAction($request, '/'.$file->move($this->searchImageDir, $fileName), 'search_image_thumbnail');
+
+        $fileTemporal = new File('media/cache/search_image_thumbnail/images/search_images/' . $fileName);
+
+        if (!file_exists($this->searchImageDir . '/thumbnail') && !is_dir($this->searchImageDir . '/thumbnail')) {
+            mkdir($this->searchImageDir . '/thumbnail', 0777, true);
+        }
+
+        $fileTemporal->move($this->searchImageDir . '/thumbnail', $fileName);
+
+        $path = $this->rootDir . '/../web/images/UploadedFile*.*';
+        array_map('unlink', glob($path));
+
+        $searchImage = $artist->getSearchImage();
+        if (!empty($searchImage) && $searchImage != '/') {
+            $searchImage = explode('/', $searchImage);
+            $fileNameOld = array_pop($searchImage);
+            $basePath = implode('/', $searchImage);
+
+            $fileNameOldThumbnail = implode('/', array($basePath, 'thumbnail', $fileNameOld));
+            $fileNameOldBase = implode('/', array($basePath, $fileNameOld));
+
+            $path = $this->rootDir . '/../web' . $fileNameOldThumbnail;
+            if(file_exists($path)){
+                unlink($path);
+            }
+
+            $path = $this->rootDir . '/../web' . $fileNameOldBase;
+            if(file_exists($path)) {
+                unlink($path);
+            }
+        }
+
+
+        $artist->setSearchImage($this->searchImageDir . '/' . $fileName);
+
+        return $artist;
     }
 }
