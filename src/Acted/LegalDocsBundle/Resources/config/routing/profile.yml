@@ -2,10 +2,18 @@ profile_list:
     path:     /list
     defaults: { _controller: ActedLegalDocsBundle:Profile:list }
     methods:  GET
+profile_prices:
+    path:     /prices
+    defaults: { _controller: ActedLegalDocsBundle:Profile:getCurrentProfilePrices }
+    methods:  GET
 profile_settings_edit:
     path:     /settings/edit/{id}
     defaults: { _controller: ActedLegalDocsBundle:Profile:editProfileSettings }
     methods:  [PUT]
+profile_settings_current:
+    path:     /settings
+    defaults: { _controller: ActedLegalDocsBundle:Profile:getCurrentProfileSettings }
+    methods:  GET
 profile_settings:
     path:     /settings/{id}
     defaults: { _controller: ActedLegalDocsBundle:Profile:getProfileSettings }

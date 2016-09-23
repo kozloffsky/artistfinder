@@ -2,7 +2,6 @@
 
 namespace Acted\LegalDocsBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JMS\Serializer\SerializationContext;
 
 class DefaultController extends Controller

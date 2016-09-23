@@ -11,19 +11,11 @@ use Acted\LegalDocsBundle\Form\ArtistType;
 use Acted\LegalDocsBundle\Form\MediaUploadType;
 use Acted\LegalDocsBundle\Form\OfferType;
 use Acted\LegalDocsBundle\Form\ProfileType;
-use Acted\LegalDocsBundle\Model\MediaManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Acted\LegalDocsBundle\Form\ProfileSettingsType;
-use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;
-//use JMS\Serializer\SerializationContext;
-
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use JMS\Serializer\SerializationContext;
 
 
@@ -304,7 +296,6 @@ class ProfileController extends Controller
         $data['swift_code'] = (empty($data['swift_code']) ? '' : $data['swift_code']);
         $data['vat_number'] = (empty($data['vat_number']) ? '' : $data['vat_number']);
 
-
         $user->setFirstname($data['first_name']);
         $user->setLastname($data['last_name']);
         $user->setPostcode($data['post_code']);
@@ -346,4 +337,29 @@ class ProfileController extends Controller
             ->setGroups(['profile_settings']))]);
     }
 
+    public function getCurrentProfileSettingsAction() {
+        $em = $this->getDoctrine()->getManager();
+        $serializer = $this->get('jms_serializer');
+
+        $homespotlights = $em->getRepository('ActedLegalDocsBundle:Artist')->allSpotlightArtist();
+        $homespotlight = $serializer->toArray($homespotlights, SerializationContext::create()
+            ->setGroups(['block']));
+
+        $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
+
+        return $this->render('ActedLegalDocsBundle:Profile:settings.html.twig',
+            compact('homespotlight', 'categories'));
+    }
+
+    public function getCurrentProfilePricesAction() {
+        $em = $this->getDoctrine()->getManager();
+        $serializer = $this->get('jms_serializer');
+        $homespotlights = $em->getRepository('ActedLegalDocsBundle:Artist')->allSpotlightArtist();
+        $homespotlight = $serializer->toArray($homespotlights, SerializationContext::create()
+            ->setGroups(['block']));
+
+        $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
+
+        return $this->render('ActedLegalDocsBundle:Profile:prices.html.twig', compact('homespotlight', 'categories'));
+    }
 }

@@ -1,0 +1,281 @@
+{% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
+
+<main class="settings">
+    <div class="container">
+
+        <div class="dropdown categories-dropdown hidden-lg hidden-md hidden-sm visible-xs">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Artist selection
+                <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li class="menu-block"><a href="/messages">Messages</a></li>
+                <li class="menu-block"><a href="/enquiries">Enquiries</a></li>
+                <li class="menu-block"><a href="/agenda">Agenda</a></li>
+                <li class="menu-block"><a href="/bookings">Feedbacks</a></li>
+                <li class="menu-block"><a href="/prices">Prices</a></li>
+                <li class="menu-block"><a href="/payment">Payment & Accounts</a></li>
+                <li class="menu-block"><a href="/reports">Reports</a></li>
+                <li class="menu-block"><a href="/feedbacks">Feedbacks</a></li>
+            </ul>
+        </div>
+
+        <div class="clearfix">
+            <div class="sidebar no-pad col-lg-2 col-sm-2 col-md-2">
+                <ul class="tabs-list">
+                    <li role="presentation" data-toggle="contact_details" class="active">
+                        <a href="#contact_details" aria-controls="contact_details" role="tab" data-toggle="tab">Contact details</a>
+                    </li>
+                    <li role="presentation" data-toggle="profile-settings">
+                        <a href="#profile_settings" aria-controls="profile_settings" role="tab" data-toggle="tab">Profile settings</a>
+                    </li>
+                    <li role="presentation" data-toggle="contact_details">
+                        <a href="#payment_settings" aria-controls="payment_settings" role="tab" data-toggle="tab">Payment settings</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content col-lg-10 col-sm-10 col-md-10">
+                <article role="tabpanel-category" class="tab active" id="contact_details">
+                    <form action="#" class="main-form" name="contactForm" novalidate>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">First name</label>
+                            </div>
+                            <div class="box">
+                                <input type="text" placeholder="First name" name="first_name">
+                                <h2>First name</h2>
+                                <button type="button" class="btn-edit"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Last name</label>
+                            </div>
+                            <div class="box">
+                                <input type="text" placeholder="Last name" name="last_name">
+                                <h2>Last name</h2>
+                                <button type="button" class="btn-edit"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Artist name</label>
+                            </div>
+                            <div class="box">
+                                <input type="text" placeholder="Artist name" name="name">
+                                <h2>Artist name</h2>
+                                <button type="button" class="btn-edit"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Country</label>
+                            </div>
+                            <div class="box">
+                                <input type="text" placeholder="Country" name="country">
+                                <h2>Ukraine</h2>
+                                <button type="button" class="btn-edit"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Location (city)</label>
+                            </div>
+                            <div class="box">
+                                <input type="text" placeholder="Location" name="city">
+                                <h2>Dnipro</h2>
+                                <button type="button" class="btn-edit"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Post code</label>
+                            </div>
+                            <div class="box">
+                                <input type="number" placeholder="Post code" name="post_code">
+                                <h2>12345</h2>
+                                <button type="button" class="btn-edit"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Email</label>
+                            </div>
+                            <div class="box">
+                                <input type="email" placeholder="Email" name="email">
+                                <h2>email@gmail.com</h2>
+                                <button type="button" class="btn-edit"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Mobile phone number</label>
+                            </div>
+                            <div class="box">
+                                <input type="tel" placeholder="Mobile phone number" name="phone">
+                                <h2>0931234122</h2>
+                                <button type="button" class="btn-edit"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Password</label>
+                            </div>
+                            <div class="box">
+                                <input type="password" placeholder="Password" name="password">
+                                <h2>Never update</h2>
+                                <button type="button" class="btn-edit"></button>
+                            </div>
+                        </div>
+                    </form>
+                </article>
+                <article role="tabpanel-category" class="tab" id="profile_settings">
+                    <form action="#" class="main-form" name="profileForm" novalidate>
+                        <div class="row">
+                            <h2 class="title">Upload profile picture for search engine</h2>
+                            <div class="img-box"></div>
+                            <div class="btn-upload">
+                                <input type="file" class="file" name="photo">
+                                <span>Select-file</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Your URL:</label>
+                            </div>
+                            <div class="box">
+                                <h2 class="show">http://www.acted.co/ArtistName</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Your tiny URL:</label>
+                            </div>
+                            <div class="box">
+                                <h2 class="show">http://www.acted.co/ArtistName</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Are you ready to work abroad?</label>
+                            </div>
+                            <div class="box">
+                                <div class="custom-checkbox big">
+                                    <input id="ready_1" type="radio" name="ready">
+                                    <label for="ready_1">Yes</label>
+                                </div>
+                                <div class="custom-checkbox big">
+                                    <input id="ready_2" type="radio" name="ready">
+                                    <label for="ready_2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </article>
+                <article role="tabpanel-category" class="tab" id="payment_settings">
+                    <form action="#" class="main-form" name="paymentForm" novalidate>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Billing adress</label>
+                            </div>
+                            <div class="box">
+                                <input type="text" placeholder="Billing adress" name="billing_address">
+                                <h2>Billing adress</h2>
+                                <button type="button" class="btn-edit"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Account name</label>
+                            </div>
+                            <div class="box">
+                                <input type="text" placeholder="Account name" name="account_name">
+                                <h2>Account name</h2>
+                                <button type="button" class="btn-edit"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Account number</label>
+                            </div>
+                            <div class="box">
+                                <input type="number" placeholder="Account number" name="account_number">
+                                <h2>34534534</h2>
+                                <button type="button" class="btn-edit"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">IBAN</label>
+                            </div>
+                            <div class="box">
+                                <input type="number" placeholder="IBAN" name="iban">
+                                <h2>23144</h2>
+                                <button type="button" class="btn-edit"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Bank name</label>
+                            </div>
+                            <div class="box">
+                                <input type="text" placeholder="Location" name="bank_name">
+                                <h2>Privat</h2>
+                                <button type="button" class="btn-edit"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Swift code</label>
+                            </div>
+                            <div class="box">
+                                <input type="number" placeholder="Swift code" name="swift_code">
+                                <h2>12345</h2>
+                                <button type="button" class="btn-edit"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">VAT number</label>
+                            </div>
+                            <div class="box">
+                                <input type="number" placeholder="VAT number" name="vat_number">
+                                <h2>12314</h2>
+                                <button type="button" class="btn-edit"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Your currency</label>
+                            </div>
+                            <div class="box active">
+                                <input type="text" placeholder="Your currency" name="currency">
+                                <h2>GBP</h2>
+                            </div>
+                        </div>
+                    </form>
+                </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div class="modal fade" id="cropperModal" role="dialog" aria-labelledby="modalLabel" tabindex="-1">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="modalLabel">Cropper</h4>
+          </div>
+          <div class="modal-body">
+            <div class="img-container text-center">
+              <img style="display:none;" id="image" src="../assets/images/picture.jpg" alt="Picture" class="text-center">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% include 'ActedLegalDocsBundle:Default:footer.html.twig' %}

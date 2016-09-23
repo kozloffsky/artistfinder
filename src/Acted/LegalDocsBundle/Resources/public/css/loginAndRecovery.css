@@ -1,31 +1,31 @@
 .login-modal .modal-dialog {
-    margin-top: 150px;
-    max-width: 561px;
+    margin-top: 113px;
+    max-width: 421px;
 }
 
 .login-modal .modal-header {
     border-bottom: none;
-    padding: 20px 15px 10px;
+    padding: 15px 11px 8px;
 }
 
 .login-modal .modal-title {
     font-family: UbuntuMedium;
-    font-size: 36px;
+    font-size: 27px;
     color: #3d4248;
-    line-height: 47px;
+    line-height: 35px;
     text-align: center;
 }
 
 .login-modal .modal-content .close {
     position: absolute;
-    height: 38px;
-    width: 38px;
-    top: -19px;
-    right: -19px;
+    height: 29px;
+    width: 29px;
+    top: -14px;
+    right: -14px;
     border-radius: 50%;
     background: #F2F2F2;
     opacity: 1;
-    font-size: 28px;
+    font-size: 21px;
     outline: none!important;
 }
 
@@ -34,28 +34,28 @@
 }
 
 .login-modal .modal-body {
-    padding: 0px 85px;
+    padding: 0px 64px;
 }
 
 .login-modal .modal-body label {
     font-family: LatoRegular;
-    font-size: 20px;
+    font-size: 15px;
     color: #797979;
-    line-height: 34px;
+    line-height: 26px;
     margin-bottom: 2px;
 }
 
 .login-modal .modal-body input {
     box-shadow: none;
     outline: none;
-    border-radius: 8px;
+    border-radius: 6px;
     border: 2px solid #EEEEEE;
-    margin-bottom: 14px;
+    margin-bottom: 11px;
     font-family: LatoRegular;
-    font-size: 18px;
+    font-size: 14px;
     color: #4c4c4c;
-    line-height: 28px;
-    height: 42px;
+    line-height: 21px;
+    height: 32px;
 }
 
 .login-modal .controls {
@@ -63,20 +63,24 @@
     float: none;
     height: 100%;
     padding-left: 0;
-    padding-top: 26px;
-    margin-bottom: 39px;
+    padding-top: 20px;
+    margin-bottom: 29px;
 }
 
 .login-modal .controls>.button-gradient.filled {
     padding: 0;
     left: 50%;
     position: relative;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
     transform: translateX(-50%);
     margin-right: 0px;
 }
 
 .login-modal .controls>.button-gradient.filled .btn {
-    font-size: 20px;
+    font-size: 15px;
     font-family: LatoRegular;
 }
 
@@ -86,16 +90,16 @@
 
 .login-modal .forgot-password {
     position: absolute;
-    bottom: 12px;
-    font-size: 15px;
-    right: 26px;
+    bottom: 9px;
+    font-size: 11px;
+    right: 20px;
     color: #797979;
 }
 
 .login-modal .recovery-form .tip {
     font-family: LatoRegular;
-    font-size: 16px;
-    line-height: 27px;
+    font-size: 12px;
+    line-height: 20px;
     color: #3d4248;
 }
 
@@ -110,46 +114,46 @@
     .login-modal .modal-content {
         border: none;
         height: 100%;
-        padding-top: 70px;
+        padding-top: 53px;
     }
 
     .login-modal .modal-title {
-        font-size: 26px;
+        font-size: 20px;
     }
 
     .login-modal .modal-body {
-        padding: 10px 45px;
+        padding: 8px 34px;
     }
 
     .login-modal .controls>.button-gradient.filled .btn {
-        height: 42px;
+        height: 32px;
     }
 
     .login-modal .modal-body label {
-        font-size: 22px;
+        font-size: 17px;
     }
 
     .login-modal .modal-body input {
-        font-size: 20px;
-        height: 42px;
+        font-size: 15px;
+        height: 32px;
     }
 
     .login-modal .forgot-password {
-        bottom: 10px;
-        font-size: 15px;
-        right: 12px;
+        bottom: 8px;
+        font-size: 11px;
+        right: 9px;
     }
 
     .login-modal .modal-content .close {
-        top: 98px;
-        right: 20px;
+        top: 74px;
+        right: 15px;
         background: transparent;
     }
 }
 
 @media (max-width: 360px) {
     .login-modal .recovery-form .tip {
-        font-size: 12px;
+        font-size: 9px;
     }
 
     .login-modal .modal-content {
@@ -157,35 +161,35 @@
     }
 
     .login-modal .modal-title {
-        font-size: 22px;
+        font-size: 17px;
     }
 
     .login-modal .modal-body {
-        padding: 10px 45px;
+        padding: 8px 34px;
     }
 
     .login-modal .controls>.button-gradient.filled .btn {
-        height: 42px;
+        height: 32px;
     }
 
     .login-modal .modal-body label {
-        font-size: 14px;
+        font-size: 11px;
     }
 
     .login-modal .modal-body input {
-        font-size: 12px;
-        height: 28px;
+        font-size: 9px;
+        height: 21px;
     }
 
     .login-modal .forgot-password {
-        bottom: 5px;
-        font-size: 12px;
-        right: 12px;
+        bottom: 4px;
+        font-size: 9px;
+        right: 9px;
     }
 
     .login-modal .modal-content .close {
-        top: 98px;
-        right: 20px;
+        top: 74px;
+        right: 15px;
         background: transparent;
     }
 }

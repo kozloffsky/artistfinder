@@ -1,0 +1,224 @@
+.settings{
+    min-height: 651px;
+    position: relative;
+}
+.settings > .container{
+    height: 100%;
+}
+.settings .sidebar{
+    border-right: 2px solid #eee;
+}
+.settings .content{
+    padding: 40px 0 !important;
+}
+.settings .tabs-list{
+    list-style: none;
+    margin: 0;
+    padding: 30px 0 0;
+}
+.settings .tabs-list li{
+    position: relative;
+}
+.settings .tabs-list .active{
+    background: #ff753a;
+    background: rgba(255, 117, 58, .11);
+}
+.settings .tabs-list .active:after{
+    content: '';
+    position: absolute;
+    right: -2px;
+    width: 3px;
+    height: 100%;
+    top: 0;
+    background: #ff753a;
+}
+.settings .tabs-list a{
+    display: block;
+    padding: 15px 18px;
+    color: #333;
+}
+.settings .tabs-list a:hover,
+.settings .tabs-list a:focus{
+    text-decoration: none;
+}
+.settings .main-form{
+    max-width: 600px;
+    margin: 0;
+}
+.settings .row{
+    margin: 0 0 30px;
+}
+.settings  #profile_settings .row{
+    margin: 0 0 10px;
+}
+.settings .box{
+    position: relative;
+    overflow: hidden;
+    float: left;
+    padding: 0 10px;
+    width: 350px;
+}
+.settings .box:first-child{width: 250px;}
+.settings .box h2{
+    font-size: 12px;
+    margin: 0;
+    width: 70%;
+    line-height: 34px;
+    color: #333;
+    font-weight: 600;
+    display: none;
+    float: left;
+}
+.settings .box.active h2{display: block;}
+.settings .info-label{
+    display: inline-block;
+    vertical-align: top;
+    color: #756f6f;
+    margin: 8px 0 0;
+}
+.settings .box.active input[type="text"],
+.settings .box.active input[type="password"],
+.settings .box.active input[type="email"],
+.settings .box.active input[type="number"],
+.settings .box.active input[type="tel"]{display: none;}
+.settings  input[type="text"],
+.settings  input[type="password"],
+.settings  input[type="email"],
+.settings  input[type="number"],
+.settings  input[type="tel"]{
+    height: 34px;
+    border: 2px solid #eee;
+    background: transparent;
+    padding: 0 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    outline: none;
+    width: 70%;
+}
+.settings  input[type="text"]:focus,
+.settings  input[type="password"]:focus,
+.settings  input[type="email"]:focus,
+.settings  input[type="number"]:focus,
+.settings  input[type="tel"]:focus{
+    border-color: #a0a0a0;
+    color: #333;
+}
+.settings .btn-edit{
+    background: url("../../assets/images/edit-darkgray.png") no-repeat;
+    border: none;
+    margin: 5px 0 0;
+    float: right;
+    height: 24px;
+    outline: none;
+    width: 24px;
+}
+.settings .img-box{
+    background: url('../../assets/images/m-band.png');
+    overflow: hidden;
+    height: 240px;
+    max-width: 320px;
+    margin: 0 auto 20px;
+    position: relative;
+    background-size: contain !important;
+}
+.settings .img-box:after{
+    content: '320x240';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: 12px;
+    color: #333;
+    text-align: center;
+    -webkit-transform: translate3d(-50%, -50%, 0);
+    -moz-transform: translate3d(-50%, -50%, 0);
+    -ms-transform: translate3d(-50%, -50%, 0);
+    -o-transform: translate3d(-50%, -50%, 0);
+    transform: translate3d(-50%, -50%, 0);
+}
+.settings .img-box.error:after{
+    content: 'Image size must be not more then 320x240';
+    color: #f00;
+    z-index: 3;
+    font-weight: 700;
+}
+.settings .img-box img{
+    display: block;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+}
+.settings .btn-upload{
+    position: relative;
+    margin: 0 auto;
+    text-decoration: underline;
+    text-align: center;
+    cursor: pointer;
+    width: 100px;
+}
+.settings .btn-upload:hover{text-decoration: none;}
+.settings .btn-upload span{cursor: pointer;}
+.settings .btn-upload .file{
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+.settings .custom-checkbox{
+    margin: 9px 5px 0 0;
+}
+.settings .custom-checkbox label:before,
+.settings .custom-checkbox label:after{
+    width: 20px;
+    height: 20px;
+    top: -2px;
+}
+.settings .custom-checkbox label{
+    font-size: 12px;
+    padding-left: 25px;
+    color: #333;
+}
+.settings  h2.title{
+    font-size: 12px !important;
+    line-height: 18px !important;
+    margin: 0 0 10px;
+    font-weight: 700 !important;
+    font-family: LatoRegular, Serif, sans-serif !important;
+}
+.carousel-inner, .embed-responsive, .modal, .modal-open, .progress {
+    overflow: visible;
+}
+
+.darkroom-image-container .canvas-container {
+    margin: 0 auto;
+}
+
+.img-container img {
+    width: 320px;
+    height: 240px;
+}
+
+@media (max-width: 991px) {
+    .settings .tabs-list a{
+        padding: 10px 8px;
+        margin-right: -8px;
+    }
+}
+@media (max-width: 767px) {
+    .settings .content{padding: 20px 0 40px!important;}
+    .settings .sidebar{border: none;}
+    .settings .tabs-list{padding: 0;}
+    .settings .tabs-list .active:after{width: 0;}
+    .settings .tabs-list{border-bottom: 2px solid #ff753a;}
+    .settings .main-form{max-width: 100%;}
+    .settings .box{
+        width: 100%;
+        float: none;
+        margin: 0 0 10px;
+        text-align: left;
+    }
+    .settings .row{margin:0;}
+}

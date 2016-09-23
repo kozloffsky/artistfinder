@@ -1,11 +1,11 @@
 .enquiries {
-    padding-bottom: 50px;
-    min-height: 600px;
+    padding-bottom: 38px;
+    min-height: 450px;
 }
 
 .enquiries .categories-menu {
-    margin-top: 16px;
-    margin-bottom: 50px;
+    margin-top: 12px;
+    margin-bottom: 38px;
     position: relative;
 }
 
@@ -14,25 +14,25 @@
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -15px;
+    bottom: 0;
     height: 1px;
     background-color: #a5a5a5;
 }
 
 .enq-icon {
-    width: 18px;
-    height: 18px;
+    width: 14px;
+    height: 14px;
     display: inline-block;
     vertical-align: middle;
-    margin-top: -5px;
+    margin-top: -4px;
     position: relative;
 }
 
 .enq-block {
     position: relative;
-    min-height: 160px;
-    margin-bottom: 35px;
-    padding-bottom: 15px;
+    min-height: 120px;
+    margin-bottom: 26px;
+    padding-bottom: 11px;
     border-bottom: 2px solid #e7e7e7;
 }
 
@@ -42,20 +42,20 @@
 
 .act-request-data li {
     font-family: LatoRegular;
-    font-size: 15px;
+    font-size: 11px;
     color: rgba(0, 0, 0, 0.68);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .act-request-data li span {
-    font-size: 15px;
+    font-size: 11px;
     font-family: LatoBold;
     color: rgba(0, 0, 0, 0.86);
 }
 
 .act-request {
     min-height: 100%;
-    padding: 0 0 40px;
+    padding: 0 0 30px;
     position: relative;
 }
 
@@ -69,19 +69,19 @@
 }
 
 .act-request .controls>.button-gradient.filled>.btn {
-    font-size: 15px!important;
-    height: 34px!important;
+    font-size: 11px!important;
+    height: 26px!important;
 }
 
 .act-request .controls>.button-gradient .btn {
-    font-size: 15px!important;
-    height: 30px!important;
-    padding: 0 30px;
+    font-size: 11px!important;
+    height: 23px!important;
+    padding: 0 23px;
     width: auto!important;
 }
 
 .act-request .controls>.button-gradient {
-    margin: 0 20px!important;
+    margin: 0 15px!important;
 }
 
 .act-request .button-gradient.blue {
@@ -118,7 +118,7 @@
 
 .act-request-title {
     font-family: LatoRegular;
-    font-size: 16px;
+    font-size: 12px;
     color: rgba(0, 0, 0, 0.68);
 }
 
@@ -129,7 +129,7 @@
 
 .act-request-title .see-more {
     color: rgba(0, 0, 0, 0.6);
-    font-size: 14px;
+    font-size: 11px;
     font-family: LatoRegular;
 }
 
@@ -138,29 +138,33 @@
     color: rgba(0, 0, 0, 0.6);
 }
 
+.act-request-title .see-more a:hover{
+    text-decoration: none;
+}
+
 .act-request-message span.text {
     font-family: LatoRegular;
-    font-size: 16px;
+    font-size: 12px;
     color: rgba(0, 0, 0, 0.87);
-    line-height: 23px;
-    max-height: 45px;
+    line-height: 17px;
+    max-height: 34px;
     overflow: hidden;
 }
 
 .act-request-message span.title {
-    font-size: 15px;
+    font-size: 11px;
     color: rgba(0, 0, 0, 0.69);
 }
 
 .act-request .show-more-btn {
     font-family: LatoRegular;
-    font-size: 16px;
+    font-size: 12px;
     color: rgba(0, 0, 0, 0.68);
 }
 
 .received-time {
     font-family: LatoRegular;
-    font-size: 16px;
+    font-size: 12px;
     color: rgba(0, 0, 0, 0.68);
     position: absolute;
     right: 0;
@@ -180,18 +184,19 @@
 }
 .bookings .note{
     font-family: LatoRegular;
-    font-size: 16px;
+    font-size: 11px;
     color: rgba(0, 0, 0, 0.68);
     position: absolute;
     right: 0;
     font-style: normal;
+    letter-spacing: 0;
 }
 .bookings .note.green b{color: #489442;}
 .bookings .note.blue b{color: #494fc7;}
 .bookings .note.orange b{color: #ff735a;}
 .act-request-list{
     margin: 0;
-    font-size: 15px;
+    font-size: 11px;
     color: #000;
     color: rgba(0, 0, 0, 0.68);
 }
@@ -199,7 +204,7 @@
     float: left;
     margin: 0 5px 0 0;
     font-weight: normal;
-    min-width: 68px;
+    min-width: 48px;
     max-width: 100px;
 }
 .act-request-list dd{
@@ -227,37 +232,40 @@
 
 @media (max-width: 767px) {
     .act-request .controls .button-gradient:not(:last-of-type) {
-        margin-bottom: 15px!important;
+        margin-bottom: 11px!important;
     }
 
     .act-request {
-        padding: 0 0 140px;
+        padding: 0 0 105px;
     }
 
     .enquiries {
-        padding-bottom: 15px;
-        min-height: 450px;
+        padding-bottom: 11px;
+        min-height: 338px;
     }
 
     .act-request-title,
     .received-time,
-    .bookings .note,
     .act-request-message span.title,
     .act-request-data li span,
     .act-request-data li {
-        font-size: 13px;
+        font-size: 10px;
     }
 
     .act-request-data {
-        margin-bottom: 30px!important;
+        margin-bottom: 23px!important;
     }
 
     .act-request-title {
-        margin-bottom: 30px;
+        margin-bottom: 23px;
     }
 
     .act-request-message span.text {
-        font-size: 14px;
+        font-size: 11px;
+    }
+    .bookings .select2 .select2-selection__rendered,
+    #select2-booking-results{
+        font-size: 11px !important;
     }
 
     .bookings .act-request{padding: 0 0 85px;}
@@ -265,17 +273,13 @@
     .bookings .act-request .controls .btn{min-width: 150px;}
     .bookings .act-request .button-gradient{margin: 0 20px !important;}
 
-    .act-request-list{
-        font-size: 13px;
-    }
-
     .act-request-list dt{
         float: none;
         max-width: 100%;
         min-width: 100%;
-        margin: 0 0 6px;
+        margin: 0 0 4px;
     }
     .act-request-list ul{padding: 0;}
-    .act-request-list ul li{margin: 0 0 6px;}
+    .act-request-list ul li{margin: 0 0 4px;}
     .act-request-list dd{margin: 0 0 15px;}
 }
