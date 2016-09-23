@@ -249,13 +249,17 @@ class MediaManager
         /** Remove message file */
         foreach ($messageFiles as $messageFile) {
             if ($fs->exists($messageFile->getFileName()) && $messageFile->getFileName() !== '/') {
-                $fs->remove($messageFile->getFileName());
+                if($this->checkFileName($messageFile->getFileName())) {
+                    $fs->remove($messageFile->getFileName());
+                }
             }
         }
 
         /** Check background */
         if ($user->getBackground() && $fs->exists($user->getBackground()) && $user->getBackground() !== '/') {
-            $fs->remove($user->getBackground());
+            if ($this->checkFileName($user->getBackground())) {
+                $fs->remove($user->getBackground());
+            }
         }
 
         /** Check media */
@@ -264,25 +268,54 @@ class MediaManager
         foreach ($userMedia as $media) {
             if ($media->getMediaType() === 'photo' && $fs->exists('../web'.$media->getLink()) && $media->getLink()
                 !== '/') {
-                $fs->remove('../web'.$media->getLink());
+                if ($this->checkFileName(str_replace('/', '', $media->getLink()))){
+                    $fs->remove('../web'.$media->getLink());
+                }
                 /** Background thumbnail */
                 if ($fs->exists('../web/media/cache/background' . $media->getLink())) {
-                    $fs->remove('../web/media/cache/background' . $media->getLink());
+                    if ($this->checkFileName(str_replace('/', '', $media->getLink()))){
+                        $fs->remove('../web/media/cache/background' . $media->getLink());
+                    }
                 }
                 /** Big thumbnail */
                 if ($fs->exists('../web/media/cache/big' . $media->getLink())) {
-                    $fs->remove('../web/media/cache/big' . $media->getLink());
+                    if ($this->checkFileName(str_replace('/', '', $media->getLink()))){
+                        $fs->remove('../web/media/cache/big' . $media->getLink());
+                    }
                 }
                 /** Medium thumbnail */
                 if ($fs->exists('../web/media/cache/medium' . $media->getLink())) {
-                    $fs->remove('../web/media/cache/medium' . $media->getLink());
+                    if ($this->checkFileName(str_replace('/', '', $media->getLink()))){
+                        $fs->remove('../web/media/cache/medium' . $media->getLink());
+                    }
                 }
                 /** Small thumbnail*/
                 if ($fs->exists('../web/media/cache/small' . $media->getLink())) {
-                    $fs->remove('../web/media/cache/small' . $media->getLink());
+                    if ($this->checkFileName(str_replace('/', '', $media->getLink()))){
+                        $fs->remove('../web/media/cache/small' . $media->getLink());
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * Check file name
+     * @param  string $name
+     * @return boolean
+     */
+    private function checkFileName($name)
+    {
+        $nameArr = [];
+        for ($i = 1; $i < 31; $i++) {
+            $nameArr[] = $i . 'jpg';
+        }
+        $result = true;
+        if (!in_array($name, $nameArr)) {
+            $result = false;
+        }
+
+        return $result;
     }
 
 }
