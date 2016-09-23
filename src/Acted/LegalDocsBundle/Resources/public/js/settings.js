@@ -1,100 +1,102 @@
-/**
-  * Settings page.
-  *
-  */
-var file = "";
+$(function(){
+    'use strict';
 
-function readFile() {
-  if (this.files && this.files[0]) {
-        var FR = new FileReader();
+    var win = $(window),
+        activeClass = 'active',
+        errorClass = 'error',
+        box = 'box',
+        setingsSection = $('.settings'),
+        sideBar = setingsSection.find('.sidebar'),
+        btnEdit = setingsSection.find('.btn-edit'),
+        fileUpload = setingsSection.find('.file'),
+        URL = window.URL,
+        imgBox = setingsSection.find('.img-box'),
+        img,
+        file,
+        base64,
+        imgNaturWidth = 320,
+        imgNaturHeight = 240;
 
-        FR.onload = function(e) {
-          $("div.img-box").html("<img src='"+e.target.result+"'>");
-          $("#cropperModal .img-container img").attr("src", e.target.result)
+    function prepareSettingsData() {
 
-          file = e.target.result;
-          $("#cropperModal").modal();
-        };       
+        var contactForm = $("form[name=\"contactForm\"]").serializeArray(),
+            profileForm = $("form[name=\"profileForm\"]").serializeArray(),
+            paymentForm = $("form[name=\"paymentForm\"]").serializeArray(),
+            allForms = contactForm.concat(profileForm, paymentForm),
+            sendForm = "";
 
-        FR.readAsDataURL( this.files[0] );
-      }
-}
-
-
-function prepareSettingsData() {
-
-  var contactForm = $("form[name=\"contactForm\"]").serializeArray(),
-    profileForm = $("form[name=\"profileForm\"]").serializeArray(),
-    paymentForm = $("form[name=\"paymentForm\"]").serializeArray(),
-    allForms = contactForm.concat(profileForm, paymentForm),
-    sendForm = "";
-
-  for(key in allForms) {
-    //sendForm.append("profile_settings["+allForms[key].name+"]",  allForms[key].value);
-    sendForm += "profile_settings["+allForms[key].name+"]="+allForms[key].value+"&";
-  }
-
-  return sendForm;
-}
-
-$("input[name=\"photo\"]").change(readFile);
-
-$("button.btn-edit").on("click", function(e) {
-  e.preventDefault();
-  var form = prepareSettingsData();
-
-  //form.append("profile_settings[file]", file);
-  form += "profile_settings[file]="+file;
-
-  HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/1" });
-
-  HTTPProvider.send(form);
-})
-
-
-var cropBoxData;
-var canvasData;
-var cropper;
-
-$('#cropperModal').on('shown.bs.modal', function () {
-  var dkrm = new Darkroom("#cropperModal .img-container img", {
-      minWidth: 100,
-      minHeight: 100,
-      maxWidth: 320,
-      maxHeight: 240,
-      ratio: 4/3,
-      backgroundColor: '#000',
-      plugins: {
-        crop: {
-          minHeight: 50,
-          minWidth: 50,
-          maxHeight: 240,
-          maxWidth: 320,
-          ratio: 4/3
-        },
-        save: {
-          callback: function() {
-        this.darkroom.selfDestroy();
-        var newImage = dkrm.canvas.toDataURL();
-        file = newImage;
-
-        $("div.img-box").html("<img src='"+file+"'>");
-        $("#cropperModal").modal("hide");
-
-        var form = prepareSettingsData();
-
-        form += "profile_settings[file]="+file;
-
-        HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/1" });
-
-        HTTPProvider.send(form);
+        for(var key in allForms) {
+            sendForm += "profile_settings["+allForms[key].name+"]="+allForms[key].value+"&";
         }
+
+
+        sendForm += "profile_settings[file]=" + base64;
+
+        return sendForm;
     }
-      },
-      initialize: function() {
-        var cropPlugin = this.plugins['crop'];
-        
-        cropPlugin.requireFocus();
-      }
+
+    btnEdit.on({
+        'click': function (e) {
+            e.preventDefault();
+            var cur = $(this);
+
+            if(cur.closest('.'+box).hasClass(activeClass)){
+                cur.closest('.'+box).removeClass(activeClass);
+            } else {
+                cur.closest('.'+box).addClass(activeClass);
+
+                var form = prepareSettingsData();
+
+                HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/1" });
+                HTTPProvider.send(form);
+            }
+        }
     });
-}).on('hidden.bs.modal', function () {});
+
+    fileUpload.change(function () {
+        if ((file = this.files[0])) {
+            img = new Image();
+            img.onload = function () {
+                if(this.naturalWidth <= imgNaturWidth && this.naturalHeight <= imgNaturHeight){
+                    imgBox.append(img);
+                    imgBox.removeClass('error');
+
+                    var FR = new FileReader();
+
+                    FR.onload = function(e) {
+                        base64 = e.target.result;
+
+                        var form = prepareSettingsData();
+
+                        HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/1" });
+                        HTTPProvider.send(form);
+
+                    };
+
+                    FR.readAsDataURL(file);
+                } else {
+                    imgBox.addClass('error');
+                    imgBox.find('img').remove();
+                }
+            };
+
+            img.src = URL.createObjectURL(file);
+        }
+    });
+
+    function setHeight(param) {
+        sideBar.css({
+            height: param || setingsSection.height()
+        });
+    }
+
+    win.on({
+        'load resize orientationchange': function() {
+            if(win.width() < 768){
+                setHeight('auto');
+            } else {
+                setHeight();
+            }
+        }
+    });
+});

@@ -59,7 +59,7 @@
     width: 350px;
 }
 .settings .box:first-child{width: 250px;}
-.settings .box h2{
+.settings .box h2 {
     font-size: 12px;
     margin: 0;
     width: 70%;
@@ -70,6 +70,7 @@
     float: left;
 }
 .settings .box.active h2{display: block;}
+.settings .box.error { color: #FF0000; }
 .settings .info-label{
     display: inline-block;
     vertical-align: top;
