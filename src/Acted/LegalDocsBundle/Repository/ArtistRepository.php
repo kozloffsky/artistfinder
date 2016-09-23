@@ -168,8 +168,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             ->orderBy('a.spotlight', 'ASC');
         /** check fake user */
         if ($fake) {
-            $qb->andWhere('u.fake = :fake')
-            ->setParameter('fake', $fake);
+            $qb->andWhere('u.fake != 1');
         }
 
         return $qb->getQuery()->getResult();
