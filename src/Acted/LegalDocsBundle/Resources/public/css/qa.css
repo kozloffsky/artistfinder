@@ -154,7 +154,7 @@ article.tab {
 }
 
 @media (max-width: 767px) {
-    .categories-menu li.menu-block {
+    .qa .categories-menu li.menu-block {
         width: auto;
         line-height: 30px;
         padding: 0 0;

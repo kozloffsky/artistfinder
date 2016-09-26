@@ -55,7 +55,7 @@
                 <div class="divider-vertical"></div>
                 <ul class="nav navbar-nav navbar-left">
                     <li class="active">
-                        <a href="#">
+                        <a href="/how-it-works">
                             How it works
                             <div class="underline">
                                 <div class="top"></div>
@@ -110,7 +110,6 @@
                         </li>
                     {% endif %}
                     {% endif %}
-
                         {% if app.user %}
                         {% set amount = render(controller('ActedLegalDocsBundle:ChatRoom:countNewMessage')) %}
                     <li class="mail">
@@ -133,8 +132,8 @@
                         </a>
                         {% if app.user.artist %}
                         <ul class="dropdown-menu">
-                            <li><a href="#">My Dashboard</a></li>
-                            <li><a href="#">Settings</a></li>
+                            <li><a href="/dashboard">My Dashboard</a></li>
+                            <li><a href="/profile/settings">Settings</a></li>
                             <li role="separator" class="divider"></li>
                             {% if(app.user) %}
                                 <li><a id="logOut" href="{{ logout_path() }}">Logout</a></li>
