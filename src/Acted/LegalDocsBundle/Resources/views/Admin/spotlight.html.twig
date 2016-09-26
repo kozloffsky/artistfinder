@@ -49,7 +49,6 @@
             </thead>
             <tbody>
             {% for artist in artists %}
-                {{ dump(artist) }}
                 <tr id="{{ artist.id }}">
                     <td>{{ artist.id }}</td>
                     <td>{{ artist.user.id }}</td>
