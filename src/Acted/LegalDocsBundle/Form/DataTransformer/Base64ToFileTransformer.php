@@ -10,6 +10,7 @@
 namespace Acted\LegalDocsBundle\Form\DataTransformer;
 
 use Acted\LegalDocsBundle\HttpFoundation\File\Base64File;
+use Ratchet\Wamp\Exception;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -52,7 +53,11 @@ class Base64ToFileTransformer implements DataTransformerInterface
         }
         preg_match('/data:([^;]*);base64,(.*)/', $value, $matches);
 
-        $file = new Base64File($value, $matches[1]);
+        try {
+            $file = new Base64File($value, $matches[1]);
+        } catch (\Exception $e) {
+            return null;
+        }
         return $file->move('images', $file->getBasename());
     }
 }

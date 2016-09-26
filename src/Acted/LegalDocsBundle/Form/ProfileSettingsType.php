@@ -102,7 +102,9 @@ class ProfileSettingsType extends AbstractType
             ])
 
 
-            ->add('file', 'file', ['constraints' => [new NotBlank(), new Image()]])
+            ->add('file', TextType::class, [
+                'required' => false
+            ])
             ->add('work_abroad', TextType::class, ['constraints' => [], 'description' => 'Work abroad'])
 
 
