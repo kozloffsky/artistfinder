@@ -46,7 +46,7 @@ class Version20160926165803 extends AbstractMigration implements ContainerAwareI
             $photo2 = new Media();
             $photo2->setName(uniqid());
             $photo2->setMediaType('photo');
-            $photo2->setLink('/images/1.jpg');
+            $photo2->setLink('/images/'. rand(1,30) .'.jpg');
             $photo2->setPosition(2);
             $photo2->setActive(true);
             $em->persist($photo2);
