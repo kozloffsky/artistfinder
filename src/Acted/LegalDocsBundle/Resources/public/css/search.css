@@ -590,12 +590,12 @@
         margin-right: 8px;
     }
 
-    .categories-menu {
+    .qa .categories-menu {
         display: none;
         justify-content: inherit;
     }
 
-    .categories-menu li.menu-block {
+    .qa .categories-menu li.menu-block {
         width: 100%;
         line-height: 30px;
         padding: 0 20px;
@@ -603,7 +603,7 @@
         text-align: center;
     }
 
-    .categories-menu li a:after {
+    .qa .categories-menu li a:after {
         display: none;
     }
 
