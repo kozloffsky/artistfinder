@@ -12469,6 +12469,7 @@ $(function () {
         nextText   : '<i class="fa fa-2x fa-angle-right"></i>',
         prevText   : '<i class="fa fa-2x fa-angle-left"></i>',
         moveSlides : 1,
+        infiniteLoop: false,
         onSliderLoad: function() {
             var viewportsCount = $('.bx-viewport').length;
             if(slidersCount == viewportsCount) {
