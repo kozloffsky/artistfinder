@@ -11,13 +11,13 @@ $(function(){
         sum;
 
     // bxslider init
-    $('.bxslider').bxSlider({
+    /*$('.bxslider').bxSlider({
         adaptiveHeight: true,
         mode          : 'fade',
         nextSelector  : '#nextSlide',
         prevSelector  : '#prevSlide',
         pager         : false
-    });
+    });*/
 
     // add animate to note
     $('.month-table .note').on({

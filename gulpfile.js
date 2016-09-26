@@ -36,7 +36,7 @@ gulp.task('js', function(){
         .pipe(gulp.dest('web/js'));
 });
 gulp.task('css', function(){
-    return gulp.src('src/Acted/LegalDocsBundle/Resources/public/**/*.css')
+    return gulp.src('src/Acted/LegalDocsBundle/Resources/public/css/**/*.css')
         .pipe(minifyCss())
         .pipe(concat('styles.min.css'))
         .pipe(cssimport({}))
@@ -47,7 +47,7 @@ gulp.task('css', function(){
 });
 gulp.task('cssRetina', function(){
     return gulp.src([
-            'src/Acted/LegalDocsBundle/Resources/public/retinaCss/*.css'])
+            'src/Acted/LegalDocsBundle/Resources/public/retinaCss/**/*.css'])
         .pipe(concat('style-retina.css'))
         .pipe(cssimport({}))
         .pipe(autoprefixer())
