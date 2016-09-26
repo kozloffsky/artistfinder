@@ -114,4 +114,17 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getSingleResult();
     }
+
+    public function getFullPackageById($id)
+    {
+        $whereCriteria = 'pac.id IN (:packageId) AND pac.deletedTime IS NULL AND opt.deletedTime IS NULL AND rate.deletedTime IS NULL';
+        return $this->createQueryBuilder('pac')
+            ->select('pac, opt, rate, price')
+            ->leftJoin('pac.options', 'opt')
+            ->leftJoin('opt.rates', 'rate')
+            ->leftJoin('rate.price', 'price')
+            ->where($whereCriteria)
+            ->setParameter('packageId', $id)
+            ->getQuery()->getArrayResult();
+    }
 }

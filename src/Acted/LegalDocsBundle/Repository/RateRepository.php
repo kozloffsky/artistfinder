@@ -50,4 +50,22 @@ class RateRepository extends \Doctrine\ORM\EntityRepository
 
         return $rateIds;
     }
+
+    public function getPriceIdsByRateIds($id)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $params = array('rateId' => $id);
+
+        $whereCriteria = 'rate.deletedTime IS NULL AND rate.id = :rateId';
+
+        $qb->from('ActedLegalDocsBundle:Rate', 'rate');
+        $qb->select('rate');
+        $qb->where($whereCriteria);
+        $qb->setParameters($params);
+
+        $priceId = array();
+        $rate = $qb->getQuery()->getSingleResult();
+        return $rate->getPrice()->getId();
+    }
 }

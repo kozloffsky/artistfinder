@@ -13,7 +13,7 @@ use Acted\LegalDocsBundle\Entity\Rate;
 use Acted\LegalDocsBundle\Form\MediaUploadType;
 use Acted\LegalDocsBundle\Form\PerformanceType;
 use Acted\LegalDocsBundle\Form\PerformancePriceType;
-use Acted\LegalDocsBundle\Form\PricePackageType;
+use Acted\LegalDocsBundle\Form\PriceRateCreateType;
 use Acted\LegalDocsBundle\Form\PerformancePricePackageType;
 use Symfony\Component\HttpFoundation\Response;
 use Acted\LegalDocsBundle\Model\MediaManager;
@@ -214,11 +214,16 @@ class PerformanceController extends Controller
             }
         }
 
-
         $em->flush();
-        \Doctrine\Common\Util\Debug::dump($package);exit;
 
-        /*return new JsonResponse(array('serviceId'=>$service->getId()));*/
+        $performanceRepo = $em->getRepository('ActedLegalDocsBundle:Performance');
+
+        $createdPerformance = $performanceRepo->getFullPerformanceById($performance->getId());
+        if (!empty($createdPerformance)) {
+            $createdPerformance = $createdPerformance[0];
+        }
+
+        return new JsonResponse(['status' => 'success', 'performance' => $createdPerformance]);
     }
 
     public function editPricePerformanceAction(Request $request, Performance $performance)
@@ -232,11 +237,13 @@ class PerformanceController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
+        $performanceData = $performanceFrom->getData();
+        $performance->setTitle($performanceData->getTitle());
 
         $em->persist($performance);
         $em->flush();
 
-        return new JsonResponse($this->formErrorResponse($performanceFrom));
+        return new JsonResponse(array('status' => 'success'));
     }
 
     public function removePricePerformanceAction(Request $request, Performance $performance)
@@ -280,7 +287,7 @@ class PerformanceController extends Controller
             ],  Response::HTTP_BAD_REQUEST);
         }
 
-        return new JsonResponse(array());
+        return new JsonResponse(array('status' => 'success'));
     }
 
     public function getListAction(Request $request, Artist $artist)
@@ -290,9 +297,9 @@ class PerformanceController extends Controller
         $repository = $this->getDoctrine()
             ->getRepository('ActedLegalDocsBundle:Performance');
 
-        $performances = $repository->getPerformances($artist->getUser()->getProfile());
+        $performances = $repository->getPerformancesByProfileId($artist->getUser()->getProfile());
 
-        return new JsonResponse($serializer->toArray($performances), Response::HTTP_OK);
+        return new JsonResponse(array('performances' => $performances), Response::HTTP_OK);
     }
 
     public function getAction(Request $request, Performance $performance = null)
@@ -309,9 +316,13 @@ class PerformanceController extends Controller
         $repository = $this->getDoctrine()
             ->getRepository('ActedLegalDocsBundle:Performance');
 
-        $performance = $repository->getPerformanceById($performance->getId());
+        $performance = $repository->getFullPerformanceById($performance->getId());
 
-        return new JsonResponse($serializer->toArray($performance), Response::HTTP_OK);
+        if (!empty($performance)) {
+            $performance = $performance[0];
+        }
+
+        return new JsonResponse(array('performance' => $performance), Response::HTTP_OK);
     }
 
     public function createPricePerformancePackageAction(Request $request)
@@ -380,70 +391,25 @@ class PerformanceController extends Controller
             ],  Response::HTTP_BAD_REQUEST);
         }
 
-        return new JsonResponse(array());
-    }
+        $packageRepo = $em->getRepository('ActedLegalDocsBundle:Package');
 
-    public function removePricePerformancePackageAction(Request $request, Package $package)
-    {
-        $serializer = $this->get('jms_serializer');
-
-        $em = $this->getDoctrine()->getManager();
-
-        $em->getConnection()->beginTransaction();
-
-        try {
-            $performanceRepository = $this->getDoctrine()
-                ->getRepository('ActedLegalDocsBundle:Performance');
-
-            $packageRepository = $this->getDoctrine()
-                ->getRepository('ActedLegalDocsBundle:Package');
-
-            $optionRepository = $this->getDoctrine()
-                ->getRepository('ActedLegalDocsBundle:Option');
-
-            $rateRepository = $this->getDoctrine()
-                ->getRepository('ActedLegalDocsBundle:Rate');
-
-            $package = $packageRepository->getPackageById($package->getId());
-
-            $packagesIds = $packageRepository->getPackageIdsByPerformanceId($package->getPerformance()->getId());
-
-            //check - is this package last in performance
-            if (count($packagesIds) < 2) {
-                $performanceRepository->removePerformance($package->getPerformance()->getId());
-            }
-
-            $optionIds = $optionRepository->getOptionIdsByPackageIds(array($package->getId()));
-            $rateIds = $rateRepository->getRateIdsByOptionIds($optionIds);
-
-            $packageRepository->removePackages(array($package->getId()));
-
-            $optionRepository->removeOptions($optionIds);
-            $rateRepository->removeRates($rateIds);
-            $em->flush();
-
-            $em->getConnection()->commit();
-        } catch (\Exception $e) {
-            $em->getConnection()->rollback();
-            return new JsonResponse([
-                'status' => 'error',
-                'message' => 'Removing error'
-            ],  Response::HTTP_BAD_REQUEST);
+        $createdPackage = $packageRepo->getFullPackageById($package->getId());
+        if (!empty($createdPackage)) {
+            $createdPackage = $createdPackage[0];
         }
 
-        return new JsonResponse(array());
+        return new JsonResponse(['status' => 'success', 'package' => $createdPackage]);
     }
 
-    //transfer to
-    public function editPricePerformancePackageAction(Request $request, Package $package)
+    public function createPricePerformanceRateAction(Request $request)
     {
         $serializer = $this->get('jms_serializer');
 
-        $pricePackageForm = $this->createForm(PricePackageType::class, null, ['method' => 'PATCH']);
-        $pricePackageForm->handleRequest($request);
+        $performancePriceRateCreateForm = $this->createForm(PriceRateCreateType::class, null, ['method' => 'POST']);
+        $performancePriceRateCreateForm->handleRequest($request);
 
-        if ($pricePackageForm->isSubmitted() && (!$pricePackageForm->isValid())) {
-            return new JsonResponse($serializer->toArray($pricePackageForm->getErrors()), Response::HTTP_BAD_REQUEST);
+        if ($performancePriceRateCreateForm->isSubmitted() && (!$performancePriceRateCreateForm->isValid())) {
+            return new JsonResponse($serializer->toArray($performancePriceRateCreateForm->getErrors()), Response::HTTP_BAD_REQUEST);
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -451,75 +417,51 @@ class PerformanceController extends Controller
         $em->getConnection()->beginTransaction();
 
         try {
-            $data = $pricePackageForm->getData();
+            $data = $performancePriceRateCreateForm->getData();
 
-            $artist = $data['artist'];
-            $performance = $data['performance'];
-            $profile = $artist->getUser()->getProfile();
+            if (empty($data)) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'There are not any data'
+                ],  Response::HTTP_BAD_REQUEST);
+            }
 
-            $packageRepository = $this->getDoctrine()
-                ->getRepository('ActedLegalDocsBundle:Package');
-
-            $optionRepository = $this->getDoctrine()
-                ->getRepository('ActedLegalDocsBundle:Option');
+            $priceAmount = $data['price'];
+            $option = $data['option'];
+            $optionId = $option->getId();
 
             $rateRepository = $this->getDoctrine()
                 ->getRepository('ActedLegalDocsBundle:Rate');
 
-            $optionIds = $optionRepository->getOptionIdsByPackageIds(array($package->getId()));
-            $rateIds = $rateRepository->getRateIdsByOptionIds($optionIds);
-
-            $packageRepository->removePackages(array($package->getId()));
-
-            $optionRepository->removeOptions($optionIds);
-            $rateRepository->removeRates($rateIds);
-
-            $package = new Package();
-            $package->setProfile($profile);
-            $package->setPerformance($performance);
-            $package->setName($data['package_name']);
-            $em->persist($package);
-
-            foreach ($data['options'] as $currentOption) {
-                $option = new Option();
-                $option->setPackage($package);
-                $option->setDuration($currentOption['duration']);
-                $option->setQty($currentOption['qty']);
-                $em->persist($option);
-
-                $price = new Price();
-                $price->setAmount($currentOption['price1']);
-                $em->persist($price);
-
-                $rate = new Rate();
-                $rate->setOption($option);
-                $rate->setPrice($price);
-                $em->persist($rate);
-
-                if (!empty($currentOption['price2'])) {
-                    $price = new Price();
-                    $price->setAmount($currentOption['price2']);
-                    $em->persist($price);
-
-                    $rate = new Rate();
-                    $rate->setOption($option);
-                    $rate->setPrice($price);
-                    $em->persist($rate);
-                }
+            //check what count prices in option and if more than 1 than show error
+            $rateIds = $rateRepository->getRateIdsByOptionIds($optionId);
+            if (count($rateIds) > 1) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'Options already consists price'
+                ],  Response::HTTP_BAD_REQUEST);
             }
+
+            $price = new Price();
+            $price->setAmount($priceAmount);
+            $em->persist($price);
+
+            $rate = new Rate();
+            $rate->setOption($option);
+            $rate->setPrice($price);
+            $em->persist($rate);
 
             $em->flush();
 
             $em->getConnection()->commit();
         } catch (\Exception $e) {
-            \Doctrine\Common\Util\Debug::dump($e->getMessage());exit;
             $em->getConnection()->rollback();
             return new JsonResponse([
                 'status' => 'error',
-                'message' => 'Editing error'
+                'message' => 'Creating error'
             ],  Response::HTTP_BAD_REQUEST);
         }
 
-        return new JsonResponse(array());
+        return new JsonResponse(array('status' => 'success'));
     }
 }
