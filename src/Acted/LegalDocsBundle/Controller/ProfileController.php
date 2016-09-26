@@ -40,7 +40,7 @@ class ProfileController extends Controller
 
         $performances = $this->getPerformances($artist, $request->get('page', 1), true);
         $feedbacks = $this->getFeedbacks($artist, 1);
-
+//        dump($performances);die;
         return $this->render('ActedLegalDocsBundle:Profile:show.html.twig',
             compact('artist', 'user', 'performances', 'feedbacks', 'categories')
         );
