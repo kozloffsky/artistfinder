@@ -18,6 +18,10 @@ acted_legal_docs_homepage:
     path:     /
     defaults: { _controller: ActedLegalDocsBundle:Default:index }
 
+acted_legal_docs_howitworks:
+    path:     /how-it-works
+    defaults: { _controller: ActedLegalDocsBundle:Default:howItWorks }
+
 acted_legal_docs_profile:
   resource: "@ActedLegalDocsBundle/Resources/config/routing/profile.yml"
   prefix: /profile

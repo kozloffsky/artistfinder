@@ -20,4 +20,8 @@ class DefaultController extends Controller
         return $this->render('ActedLegalDocsBundle:Default:index.html.twig',
             compact('homespotlight', 'categories'));
     }
+
+    public function howItWorksAction() {
+        return $this->render('ActedLegalDocsBundle:Default:how-it-works.html.twig');
+    }
 }
