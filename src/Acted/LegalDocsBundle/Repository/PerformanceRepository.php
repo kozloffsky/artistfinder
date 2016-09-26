@@ -89,4 +89,32 @@ class PerformanceRepository extends \Doctrine\ORM\EntityRepository
 
         $qb->getQuery()->execute();
     }
+
+    public function getFullPerformanceById($id)
+    {
+        $whereCriteria = 'p.deletedTime IS NULL AND p.id IN (:performanceId) AND pac.deletedTime IS NULL AND opt.deletedTime IS NULL AND rate.deletedTime IS NULL';
+        return $this->createQueryBuilder('p')
+            ->select('p, pac, opt, rate, price')
+            ->leftJoin('p.packages', 'pac')
+            ->leftJoin('pac.options', 'opt')
+            ->leftJoin('opt.rates', 'rate')
+            ->leftJoin('rate.price', 'price')
+            ->where($whereCriteria)
+            ->setParameter('performanceId', $id)
+            ->getQuery()->getArrayResult();
+    }
+
+    public function getPerformancesByProfileId($profileId)
+    {
+        $whereCriteria = 'p.profile = :profileId AND p.deletedTime IS NULL AND pac.deletedTime IS NULL AND opt.deletedTime IS NULL AND rate.deletedTime IS NULL';
+        return $this->createQueryBuilder('p')
+            ->select('p, pac, opt, rate, price')
+            ->leftJoin('p.packages', 'pac')
+            ->leftJoin('pac.options', 'opt')
+            ->leftJoin('opt.rates', 'rate')
+            ->leftJoin('rate.price', 'price')
+            ->where($whereCriteria)
+            ->setParameter('profileId', $profileId)
+            ->getQuery()->getArrayResult();
+    }
 }

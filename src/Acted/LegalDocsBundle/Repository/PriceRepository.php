@@ -10,4 +10,18 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class PriceRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function updatePriceById($id, $price)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $params = array('id' => $id, 'price' => $price);
+
+        $whereCriteria = 'price.id = :id';
+
+        $qb->update('ActedLegalDocsBundle:Price', 'price')
+            ->set('price.amount', ":price")
+            ->where($whereCriteria)
+            ->setParameters($params);
+        $qb->getQuery()->execute();
+    }
 }

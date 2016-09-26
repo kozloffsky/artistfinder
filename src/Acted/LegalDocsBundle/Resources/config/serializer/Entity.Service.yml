@@ -1,0 +1,11 @@
+Acted\LegalDocsBundle\Entity\Service:
+#  exclusion_policy: NONE
+  properties:
+    id:
+      groups: [price_service]
+    title:
+      groups: [price_service]
+  virtual_properties:
+    getPackages:
+      serialized_name: packages
+      groups: [price_service]
