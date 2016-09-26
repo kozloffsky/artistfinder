@@ -39,7 +39,8 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>id</th>
+                    <th>Artist id</th>
+                    <th>User id</th>
                     <th>Name</th>
                     <th>Slug</th>
                     <th>spotlight</th>
@@ -48,8 +49,10 @@
             </thead>
             <tbody>
             {% for artist in artists %}
+                {{ dump(artist) }}
                 <tr id="{{ artist.id }}">
                     <td>{{ artist.id }}</td>
+                    <td>{{ artist.user.id }}</td>
                     <td>{{ artist.name }}</td>
                     <td>{{ artist.slug }}</td>
                     <td><span class="spotlightIndexAdmin">

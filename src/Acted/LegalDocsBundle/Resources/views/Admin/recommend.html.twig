@@ -51,7 +51,8 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>id</th>
+                <th>Artist id</th>
+                <th>User id</th>
                 <th>Name</th>
                 <th>Slug</th>
                 <th>Recommended</th>
@@ -60,9 +61,9 @@
             </thead>
             <tbody>
             {% for artist in artists %}
-                
                 <tr id="{{ artist.id }}">
                     <td>{{ artist.id }}</td>
+                    <td>{{ artist.user.id }}</td>
                     <td>{{ artist.name }}</td>
                     <td>{{ artist.slug }}</td>
                     <td>

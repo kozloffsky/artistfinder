@@ -59,6 +59,8 @@ class User implements UserInterface, \Serializable
      */
     private $createdAt;
 
+    private $user;
+
 
     /**
      * Get id

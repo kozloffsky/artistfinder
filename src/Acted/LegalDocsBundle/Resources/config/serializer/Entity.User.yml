@@ -2,7 +2,7 @@ Acted\LegalDocsBundle\Entity\User:
   exclusion_policy: NONE
   properties:
     id:
-      groups: [getEvent, users_list]
+      groups: [getEvent, users_list, recommend_artist, spotlight_artist]
     passwordHash:
       exclude: true
     confirmationToken:
