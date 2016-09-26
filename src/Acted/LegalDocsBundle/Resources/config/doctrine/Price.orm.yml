@@ -10,8 +10,9 @@ Acted\LegalDocsBundle\Entity\Price:
                 strategy: AUTO
     fields:
       amount:
-        type: decimal(12,2)
-        #type: integer(11)
+        type: decimal
+        precision: 16
+        scale: 2
     oneToOne:
       rate:
         targetEntity: Acted\LegalDocsBundle\Entity\Rate
