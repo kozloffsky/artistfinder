@@ -103,26 +103,21 @@ $(function(){
         if ((file = this.files[0])) {
             img = new Image();
             img.onload = function () {
-                if(this.naturalWidth <= imgNaturWidth && this.naturalHeight <= imgNaturHeight){
-                    imgBox.append(img);
-                    imgBox.removeClass('error');
+                imgBox.append(img);
+                imgBox.removeClass('error');
 
-                    var FR = new FileReader();
+                var FR = new FileReader();
 
-                    FR.onload = function(e) {
-                        base64 = e.target.result;
+                FR.onload = function(e) {
+                    base64 = e.target.result;
 
-                        var form = prepareSettingsData();
+                    var form = prepareSettingsData();
 
-                        HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
-                        HTTPProvider.send(form, settingsFormErrorHandler);
-                    };
+                    HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
+                    HTTPProvider.send(form, settingsFormErrorHandler);
+                };
 
-                    FR.readAsDataURL(file);
-                } else {
-                    imgBox.addClass('error');
-                    imgBox.find('img').remove();
-                }
+                FR.readAsDataURL(file);
             };
 
             img.src = URL.createObjectURL(file);

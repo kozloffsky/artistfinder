@@ -164,7 +164,13 @@
                     <form action="#" class="main-form" name="profileForm" novalidate>
                         <div class="row">
                             <h2 class="title">Upload profile picture for search engine</h2>
-                            <div class="img-box"></div>
+
+                            {% if artist.search_image is defined %}
+                                <div class="img-box" style="background: url('{{ artist.search_image }}') no-repeat;"></div>
+                            {% else %}
+                                <div class="img-box"></div>
+                            {% endif %}
+
                             <div class="btn-upload">
                                 <input type="file" class="file" name="photo">
                                 <span>Select-file</span>
