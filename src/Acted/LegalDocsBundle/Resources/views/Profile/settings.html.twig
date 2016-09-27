@@ -102,8 +102,14 @@
                             </div>
                             <div class="box">
                                 <label error class="error">Error!</label>
-                                <input type="text" placeholder="{{ artist.user.postcode }}" name="post_code" value="{{ artist.user.postcode }}">
-                                <h2>{{ artist.user.postcode }}</h2>
+                                {% if artist.user is defined %}
+                                    <input type="text" placeholder="{{ artist.user.postcode }}" name="post_code" value="{{ artist.user.postcode }}">
+                                    <h2>{{ artist.user.postcode }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="post_code" value="">
+                                    <h2></h2>
+                                {% endif %}
+
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -113,8 +119,14 @@
                             </div>
                             <div class="box">
                                 <label error class="error">Error!</label>
-                                <input type="email" placeholder="{{ artist.user.email }}" name="email" value="{{ artist.user.email }}">
-                                <h2>{{ artist.user.email }}</h2>
+                                {% if artist.user is defined %}
+                                    <input type="email" placeholder="{{ artist.user.email }}" name="email" value="{{ artist.user.email }}">
+                                    <h2>{{ artist.user.email }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="email" value="">
+                                    <h2></h2>
+                                {% endif %}
+
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -124,8 +136,14 @@
                             </div>
                             <div class="box">
                                 <label error class="error">Error!</label>
-                                <input type="tel" placeholder="{{ artist.user.primary_phone }}" name="phone" value="{{ artist.user.primary_phone }}">
-                                <h2>{{ artist.user.primary_phone }}</h2>
+                                {% if artist.user is defined %}
+                                    <input type="tel" placeholder="{{ artist.user.primary_phone }}" name="phone" value="{{ artist.user.primary_phone }}">
+                                    <h2>{{ artist.user.primary_phone }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="phone" value="">
+                                    <h2></h2>
+                                {% endif %}
+
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -193,8 +211,13 @@
                             </div>
                             <div class="box">
                                 <label error class="error">Error!</label>
-                                <input type="text" placeholder="{{ artist.user.payment_settings.billing_address }}" name="billing_address" value="{{ artist.user.payment_settings.billing_address }}">
-                                <h2>{{ artist.user.payment_settings.billing_address }}</h2>
+                                {% if artist.user.payment_settings is defined %}
+                                    <input type="text" placeholder="{{ artist.user.payment_settings.billing_address }}" name="billing_address" value="{{ artist.user.payment_settings.billing_address }}">
+                                    <h2>{{ artist.user.payment_settings.billing_address }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="billing_address" value="">
+                                    <h2></h2>
+                                {% endif %}
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -204,8 +227,14 @@
                             </div>
                             <div class="box">
                                 <label error class="error">Error!</label>
-                                <input type="text" placeholder="{{ artist.user.payment_settings.account_name }}" name="account_name" value="{{ artist.user.payment_settings.account_name }}">
-                                <h2>{{ artist.user.payment_settings.account_name }}</h2>
+                                {% if artist.user.payment_settings is defined %}
+                                    <input type="text" placeholder="{{ artist.user.payment_settings.account_name }}" name="account_name" value="{{ artist.user.payment_settings.account_name }}">
+                                    <h2>{{ artist.user.payment_settings.account_name }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="account_name" value="">
+                                    <h2></h2>
+                                {% endif %}
+
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -215,8 +244,14 @@
                             </div>
                             <div class="box">
                                 <label error class="error">Error!</label>
-                                <input type="text" placeholder="{{ artist.user.payment_settings.account_number }}" name="account_number" value="{{ artist.user.payment_settings.account_number }}">
-                                <h2>{{ artist.user.payment_settings.account_number }}</h2>
+                                {% if artist.user.payment_settings is defined %}
+                                    <input type="text" placeholder="{{ artist.user.payment_settings.account_number }}" name="account_number" value="{{ artist.user.payment_settings.account_number }}">
+                                    <h2>{{ artist.user.payment_settings.account_number }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="account_number" value="">
+                                    <h2></h2>
+                                {% endif %}
+
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -226,8 +261,14 @@
                             </div>
                             <div class="box">
                                 <label error class="error">Error!</label>
-                                <input type="text" placeholder="{{ artist.user.payment_settings.iban }}" name="iban" value="{{ artist.user.payment_settings.iban }}">
-                                <h2>{{ artist.user.payment_settings.iban }}</h2>
+                                {% if artist.user.payment_settings is defined %}
+                                    <input type="text" placeholder="{{ artist.user.payment_settings.iban }}" name="iban" value="{{ artist.user.payment_settings.iban }}">
+                                    <h2>{{ artist.user.payment_settings.iban }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="iban" value="">
+                                    <h2></h2>
+                                {% endif %}
+
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -237,8 +278,14 @@
                             </div>
                             <div class="box">
                                 <label error class="error">Error!</label>
-                                <input type="text" placeholder="{{ artist.user.payment_settings.bank_name }}" name="bank_name" value="{{ artist.user.payment_settings.bank_name }}">
-                                <h2>{{ artist.user.payment_settings.bank_name }}</h2>
+                                {% if artist.user.payment_settings is defined %}
+                                    <input type="text" placeholder="{{ artist.user.payment_settings.bank_name }}" name="bank_name" value="{{ artist.user.payment_settings.bank_name }}">
+                                    <h2>{{ artist.user.payment_settings.bank_name }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="bank_name" value="">
+                                    <h2></h2>
+                                {% endif %}
+
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -248,8 +295,14 @@
                             </div>
                             <div class="box">
                                 <label error class="error">Error!</label>
-                                <input type="text" placeholder="{{ artist.user.payment_settings.swift_code }}" name="swift_code" value="{{ artist.user.payment_settings.swift_code }}">
-                                <h2>{{ artist.user.payment_settings.swift_code }}</h2>
+                                {% if artist.user.payment_settings is defined %}
+                                    <input type="text" placeholder="{{ artist.user.payment_settings.swift_code }}" name="swift_code" value="{{ artist.user.payment_settings.swift_code }}">
+                                    <h2>{{ artist.user.payment_settings.swift_code }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="swift_code" value="">
+                                    <h2></h2>
+                                {% endif %}
+
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -259,8 +312,14 @@
                             </div>
                             <div class="box">
                                 <label error class="error">Error!</label>
-                                <input type="text" placeholder="{{ artist.user.payment_settings.vat_number }}" name="vat_number" value="{{ artist.user.payment_settings.vat_number }}">
-                                <h2>{{ artist.user.payment_settings.vat_number }}</h2>
+                                {% if artist.user.payment_settings is defined %}
+                                    <input type="text" placeholder="{{ artist.user.payment_settings.vat_number }}" name="vat_number" value="{{ artist.user.payment_settings.vat_number }}">
+                                    <h2>{{ artist.user.payment_settings.vat_number }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="vat_number" value="">
+                                    <h2></h2>
+                                {% endif %}
+
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
