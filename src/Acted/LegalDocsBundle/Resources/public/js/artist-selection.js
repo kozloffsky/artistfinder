@@ -5,7 +5,7 @@ $(function(){
         slide = slider.find('li'),
         btnNext = $('.tabs-block .btn-next'),
         btnNextFake = $('.btn-next-fake'),
-        select = $('select'),
+        select = $('.artist-selection select'),
         tabs = $('.tab'),
         tabLi = $('.tabs-block .list li'),
         categoryli = $('.categories-list li'),
@@ -59,7 +59,7 @@ $(function(){
 
     initialize();
 
-    $('select').each(function () {
+    $('.artist-selection select').each(function () {
         var placeholder = $(this).attr('data-placeholder');
         var $select2    = $(this).select2({
             placeholder            : placeholder || '',

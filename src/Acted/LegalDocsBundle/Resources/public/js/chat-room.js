@@ -48,7 +48,7 @@ $(function(){
     }
 
     function initSelect(){
-        $('select').each(function () {
+        $('.chat-room select').each(function () {
             var placeholder = $(this).attr('data-placeholder');
             var $select2    = $(this).select2({
                 placeholder            : placeholder || '',

@@ -22,8 +22,7 @@ use JMS\Serializer\SerializationContext;
 
 class ProfileController extends Controller
 {
-    public function showAction(Request $request, Artist $artist)
-    {
+    public function showAction(Request $request, Artist $artist) {
         $em = $this->getDoctrine()->getManager();
 
         $categoriesRepo = $em->getRepository('ActedLegalDocsBundle:Category');
@@ -269,7 +268,7 @@ class ProfileController extends Controller
         $profileSettingsForm->handleRequest($request);
 
         if ($profileSettingsForm->isSubmitted() && (!$profileSettingsForm->isValid())) {
-            return new JsonResponse($serializer->toArray($profileSettingsForm->getErrors()), Response::HTTP_BAD_REQUEST);
+            return new JsonResponse($serializer->toArray($profileSettingsForm->getErrors(true)), Response::HTTP_BAD_REQUEST);
         }
 
         $data = $profileSettingsForm->getData();
@@ -338,28 +337,13 @@ class ProfileController extends Controller
     }
 
     public function getCurrentProfileSettingsAction() {
-        $em = $this->getDoctrine()->getManager();
+        $artist = $this->getUser()->getArtist();
         $serializer = $this->get('jms_serializer');
 
-        $homespotlights = $em->getRepository('ActedLegalDocsBundle:Artist')->allSpotlightArtist();
-        $homespotlight = $serializer->toArray($homespotlights, SerializationContext::create()
-            ->setGroups(['block']));
+        $artist_id = $artist->getId();
 
-        $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
+        $artist = $serializer->toArray($artist, SerializationContext::create()->setGroups(['profile_settings']));
 
-        return $this->render('ActedLegalDocsBundle:Profile:settings.html.twig',
-            compact('homespotlight', 'categories'));
-    }
-
-    public function getCurrentProfilePricesAction() {
-        $em = $this->getDoctrine()->getManager();
-        $serializer = $this->get('jms_serializer');
-        $homespotlights = $em->getRepository('ActedLegalDocsBundle:Artist')->allSpotlightArtist();
-        $homespotlight = $serializer->toArray($homespotlights, SerializationContext::create()
-            ->setGroups(['block']));
-
-        $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
-
-        return $this->render('ActedLegalDocsBundle:Profile:prices.html.twig', compact('homespotlight', 'categories'));
+        return $this->render('ActedLegalDocsBundle:Profile:settings.html.twig', compact('artist', 'artist_id'));
     }
 }

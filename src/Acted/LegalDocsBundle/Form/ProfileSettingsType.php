@@ -39,21 +39,21 @@ class ProfileSettingsType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Length(['max' => 128]),
-                    new Regex(['pattern' =>"#^[^<>$:!@\#$%*\(\)\^]+$#", 'message' => 'First name should not contain special characters']),
+                    new Regex(['pattern' =>"#^[^<>$:!@\#$%*\(\)\^]+$#", 'message' => 'First name should not contain special characters.']),
                 ], 'description' => 'First name'])
 
             ->add('last_name', TextType::class, [
                 'constraints' => [
                     new NotBlank(),
                     new Length(['max' => 128]),
-                    new Regex(['pattern' =>"#^[^<>$:!@\#$%*\(\)\^]+$#", 'message' => 'Last name should not contain special characters'])
+                    new Regex(['pattern' =>"#^[^<>$:!@\#$%*\(\)\^]+$#", 'message' => 'Last name should not contain special characters.'])
                 ], 'description' => 'Last name'])
 
             ->add('name', TextType::class, [
                 'constraints' => [
                     new NotBlank(),
                     new Length(['max' => 128]),
-                    new Regex(['pattern' =>"#^[^<>$:!@\#$%*\(\)\^]+$#", 'message' => 'Last name should not contain special characters'])
+                    new Regex(['pattern' =>"#^[^<>$:!@\#$%*\(\)\^]+$#", 'message' => 'Last name should not contain special characters.'])
                 ],
                 'description' => 'Artist name'
             ])
@@ -88,15 +88,15 @@ class ProfileSettingsType extends AbstractType
 
             ->add('email', EmailType::class, ['constraints' => [
                 new NotBlank(),
-                new Email(['message' => 'Please provide a valid email address'])], 'description' => 'Email'
+                new Email(['message' => 'Please provide a valid email address.'])], 'description' => 'Email'
             ])
 
             ->add('password', TextType::class, [
                 'constraints' => [
                     new Length(['min' => 8]),
-                    new Regex(['pattern' =>'/[a-z]/', 'message' => 'Password should contain lowercase char, uppercase char, and digit']),
-                    new Regex(['pattern' =>'/[A-Z]/', 'message' => 'Password should contain lowercase char, uppercase char, and digit']),
-                    new Regex(['pattern' =>'/[0-9]/', 'message' => 'Password should contain lowercase char, uppercase char, and digit']),
+                    new Regex(['pattern' =>'/[a-z]/', 'message' => 'Password should contain lowercase char.']),
+                    new Regex(['pattern' =>'/[A-Z]/', 'message' => 'Password should contain uppercase char.']),
+                    new Regex(['pattern' =>'/[0-9]/', 'message' => 'Password should contain a digit.']),
                 ],
                 'description' => 'Password'
             ])
@@ -137,7 +137,7 @@ class ProfileSettingsType extends AbstractType
                 'constraints' => [
                     new Regex([
                         'pattern' => '/^([a-zA-Z]){4}([a-zA-Z]){2}([0-9a-zA-Z]){2}([0-9a-zA-Z]{3})?$/',
-                        'message' => 'This swift code is not correct'
+                        'message' => 'This swift code is not correct.'
                     ]),
                 ],
                 'description' => ''
@@ -177,7 +177,7 @@ class ProfileSettingsType extends AbstractType
                                 $odd = fmod($odd, 97);
                             }
                             if (1 != $odd) {
-                                $context->buildViolation('IBAN is formed incorrectly')
+                                $context->buildViolation('IBAN is formed incorrectly.')
                                     ->atPath('iban')
                                     ->addViolation();
                             }

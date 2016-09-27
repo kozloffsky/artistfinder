@@ -35,13 +35,15 @@
             <div class="content col-lg-10 col-sm-10 col-md-10">
                 <article role="tabpanel-category" class="tab active" id="contact_details">
                     <form action="#" class="main-form" name="contactForm" novalidate>
+                        <input hidden type="text" id="artist_id" value="{{ artist_id }}"\>
                         <div class="row">
                             <div class="box text-right">
                                 <label class="info-label">First name</label>
                             </div>
                             <div class="box">
-                                <input type="text" placeholder="First name" name="first_name">
-                                <h2>First name</h2>
+                                <label error class="error">Error!</label>
+                                <input type="text" placeholder="{{ artist.user.firstname }}" name="first_name" value="{{ artist.user.firstname }}">
+                                <h2>{{ artist.user.firstname }}</h2>
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -50,8 +52,9 @@
                                 <label class="info-label">Last name</label>
                             </div>
                             <div class="box">
-                                <input type="text" placeholder="Last name" name="last_name">
-                                <h2>Last name</h2>
+                                <label error class="error">Error!</label>
+                                <input type="text" placeholder="{{ artist.user.lastname }}" name="last_name" value="{{ artist.user.lastname }}">
+                                <h2>{{ artist.user.lastname }}</h2>
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -60,8 +63,9 @@
                                 <label class="info-label">Artist name</label>
                             </div>
                             <div class="box">
-                                <input type="text" placeholder="Artist name" name="name">
-                                <h2>Artist name</h2>
+                                <label error class="error">Error!</label>
+                                <input type="text" placeholder="{{ artist.name }}" name="name" value="{{ artist.name }}">
+                                <h2>{{ artist.name }}</h2>
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -70,8 +74,15 @@
                                 <label class="info-label">Country</label>
                             </div>
                             <div class="box">
-                                <input type="text" placeholder="Country" name="country">
-                                <h2>Ukraine</h2>
+                                <select name="country" id="settings_country" value="{{ artist.country }}">
+                                    {% for country in countries() %}
+                                        {% if country.name == artist.country %}
+                                            <option value="{{ country.id }}" name="country" selected="selected">{{ country.name }}</option>
+                                        {% else %}
+                                            <option value="{{ country.id }}" name="country">{{ country.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -80,8 +91,8 @@
                                 <label class="info-label">Location (city)</label>
                             </div>
                             <div class="box">
-                                <input type="text" placeholder="Location" name="city">
-                                <h2>Dnipro</h2>
+                                <select name="city" id="setting_city" value="{{ artist.city }}"></select>
+                                <h2>{{ artist.city }}</h2>
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -90,8 +101,9 @@
                                 <label class="info-label">Post code</label>
                             </div>
                             <div class="box">
-                                <input type="number" placeholder="Post code" name="post_code">
-                                <h2>12345</h2>
+                                <label error class="error">Error!</label>
+                                <input type="text" placeholder="{{ artist.user.postcode }}" name="post_code" value="{{ artist.user.postcode }}">
+                                <h2>{{ artist.user.postcode }}</h2>
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -100,8 +112,9 @@
                                 <label class="info-label">Email</label>
                             </div>
                             <div class="box">
-                                <input type="email" placeholder="Email" name="email">
-                                <h2>email@gmail.com</h2>
+                                <label error class="error">Error!</label>
+                                <input type="email" placeholder="{{ artist.user.email }}" name="email" value="{{ artist.user.email }}">
+                                <h2>{{ artist.user.email }}</h2>
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -110,8 +123,9 @@
                                 <label class="info-label">Mobile phone number</label>
                             </div>
                             <div class="box">
-                                <input type="tel" placeholder="Mobile phone number" name="phone">
-                                <h2>0931234122</h2>
+                                <label error class="error">Error!</label>
+                                <input type="tel" placeholder="{{ artist.user.primary_phone }}" name="phone" value="{{ artist.user.primary_phone }}">
+                                <h2>{{ artist.user.primary_phone }}</h2>
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -120,6 +134,7 @@
                                 <label class="info-label">Password</label>
                             </div>
                             <div class="box">
+                                <label error class="error">Error!</label>
                                 <input type="password" placeholder="Password" name="password">
                                 <h2>Never update</h2>
                                 <button type="button" class="btn-edit"></button>
@@ -159,11 +174,11 @@
                             </div>
                             <div class="box">
                                 <div class="custom-checkbox big">
-                                    <input id="ready_1" type="radio" name="ready">
+                                    <input id="ready_1" type="radio" name="work_abroad" {% if artist.work_abroad == true %} checked="checked"{% endif %}\>
                                     <label for="ready_1">Yes</label>
                                 </div>
                                 <div class="custom-checkbox big">
-                                    <input id="ready_2" type="radio" name="ready">
+                                    <input id="ready_2" type="radio" name="work_abroad" {% if artist.work_abroad == false %} checked="checked"{% endif %}>
                                     <label for="ready_2">No</label>
                                 </div>
                             </div>
@@ -177,8 +192,9 @@
                                 <label class="info-label">Billing adress</label>
                             </div>
                             <div class="box">
-                                <input type="text" placeholder="Billing adress" name="billing_address">
-                                <h2>Billing adress</h2>
+                                <label error class="error">Error!</label>
+                                <input type="text" placeholder="{{ artist.user.payment_settings.billing_address }}" name="billing_address" value="{{ artist.user.payment_settings.billing_address }}">
+                                <h2>{{ artist.user.payment_settings.billing_address }}</h2>
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -187,8 +203,9 @@
                                 <label class="info-label">Account name</label>
                             </div>
                             <div class="box">
-                                <input type="text" placeholder="Account name" name="account_name">
-                                <h2>Account name</h2>
+                                <label error class="error">Error!</label>
+                                <input type="text" placeholder="{{ artist.user.payment_settings.account_name }}" name="account_name" value="{{ artist.user.payment_settings.account_name }}">
+                                <h2>{{ artist.user.payment_settings.account_name }}</h2>
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -197,8 +214,9 @@
                                 <label class="info-label">Account number</label>
                             </div>
                             <div class="box">
-                                <input type="number" placeholder="Account number" name="account_number">
-                                <h2>34534534</h2>
+                                <label error class="error">Error!</label>
+                                <input type="text" placeholder="{{ artist.user.payment_settings.account_number }}" name="account_number" value="{{ artist.user.payment_settings.account_number }}">
+                                <h2>{{ artist.user.payment_settings.account_number }}</h2>
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -207,8 +225,9 @@
                                 <label class="info-label">IBAN</label>
                             </div>
                             <div class="box">
-                                <input type="number" placeholder="IBAN" name="iban">
-                                <h2>23144</h2>
+                                <label error class="error">Error!</label>
+                                <input type="text" placeholder="{{ artist.user.payment_settings.iban }}" name="iban" value="{{ artist.user.payment_settings.iban }}">
+                                <h2>{{ artist.user.payment_settings.iban }}</h2>
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -217,8 +236,9 @@
                                 <label class="info-label">Bank name</label>
                             </div>
                             <div class="box">
-                                <input type="text" placeholder="Location" name="bank_name">
-                                <h2>Privat</h2>
+                                <label error class="error">Error!</label>
+                                <input type="text" placeholder="{{ artist.user.payment_settings.bank_name }}" name="bank_name" value="{{ artist.user.payment_settings.bank_name }}">
+                                <h2>{{ artist.user.payment_settings.bank_name }}</h2>
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -227,8 +247,9 @@
                                 <label class="info-label">Swift code</label>
                             </div>
                             <div class="box">
-                                <input type="number" placeholder="Swift code" name="swift_code">
-                                <h2>12345</h2>
+                                <label error class="error">Error!</label>
+                                <input type="text" placeholder="{{ artist.user.payment_settings.swift_code }}" name="swift_code" value="{{ artist.user.payment_settings.swift_code }}">
+                                <h2>{{ artist.user.payment_settings.swift_code }}</h2>
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -237,8 +258,9 @@
                                 <label class="info-label">VAT number</label>
                             </div>
                             <div class="box">
-                                <input type="number" placeholder="VAT number" name="vat_number">
-                                <h2>12314</h2>
+                                <label error class="error">Error!</label>
+                                <input type="text" placeholder="{{ artist.user.payment_settings.vat_number }}" name="vat_number" value="{{ artist.user.payment_settings.vat_number }}">
+                                <h2>{{ artist.user.payment_settings.vat_number }}</h2>
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -247,8 +269,9 @@
                                 <label class="info-label">Your currency</label>
                             </div>
                             <div class="box active">
-                                <input type="text" placeholder="Your currency" name="currency">
-                                <h2>GBP</h2>
+                                <label error class="error">Error!</label>
+                                <input type="text" placeholder="{{ artist.currency.iso_code }}" name="currency" value="{{ artist.currency.iso_code }}">
+                                <h2>{{ artist.currency.iso_code }}</h2>
                             </div>
                         </div>
                     </form>

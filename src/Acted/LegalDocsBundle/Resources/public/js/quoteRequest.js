@@ -9,7 +9,7 @@ $(function () {
     );
 
     function initSelect(){
-        $('select').each(function () {
+        $('.free-quote-modal select').each(function () {
             var placeholder = $(this).attr('data-placeholder');
             var $select2    = $(this).select2({
                 placeholder            : placeholder || '',

@@ -80,6 +80,8 @@ $(function () {
     $('#modal-title').html('Sign Up');
     $('#stage-1').show();
     $('#completionTime').show();
+
+    $("#country").select2({});
   }
 
   function showSecondPage(isArtist) {
@@ -331,9 +333,8 @@ $(function () {
       url: '/register',
       data: customerRole +'&'+customerValues,
       success: function(response){
-        console.log(response)
-        //finishRegistration();
-        //sendQuoteIfExist(response);
+        finishRegistration();
+        sendQuoteIfExist(response);
       },
       error: function(response){
         var regestrationResponse = response.responseJSON;
