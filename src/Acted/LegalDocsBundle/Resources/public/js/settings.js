@@ -101,28 +101,61 @@ $(function(){
 
     fileUpload.change(function () {
         if ((file = this.files[0])) {
-            img = new Image();
-            img.onload = function () {
-                imgBox.append(img);
-                imgBox.removeClass('error');
+            var FR = new FileReader();
 
-                var FR = new FileReader();
+            FR.onload = function(e) {
+                base64 = e.target.result;
 
-                FR.onload = function(e) {
-                    base64 = e.target.result;
-
-                    var form = prepareSettingsData();
-
-                    HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
-                    HTTPProvider.send(form, settingsFormErrorHandler);
-                };
-
-                FR.readAsDataURL(file);
+                $("div.img-box").removeAttr("style");
+                $("div.img-box").css("background", "url('"+base64+"') no-repeat");
+                $("#cropperModal #image").attr("src", base64);
+                $("#cropperModal").modal();
             };
 
-            img.src = URL.createObjectURL(file);
+            FR.readAsDataURL(file);
         }
     });
+
+    $('#cropperModal').on('shown.bs.modal', function () {
+        var dkrm = new Darkroom("#cropperModal .img-container img", {
+            minWidth: 100,
+            minHeight: 100,
+            maxWidth: 320,
+            maxHeight: 240,
+            ratio: 4/3,
+            backgroundColor: '#000',
+            plugins: {
+                crop: {
+                    minHeight: 50,
+                    minWidth: 50,
+                    maxHeight: 240,
+                    maxWidth: 320,
+                    ratio: 4/3
+                },
+                save: {
+                    callback: function() {
+                        this.darkroom.selfDestroy();
+                        base64 = dkrm.canvas.toDataURL();
+
+                        $("div.img-box").css("background", "url('"+base64+"') no-repeat");
+                        $("#cropperModal #image").attr("src", base64);
+                        $("#cropperModal").modal("hide");
+
+                        var form = prepareSettingsData();
+
+                        HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
+                        HTTPProvider.send(form, settingsFormErrorHandler);
+                    }
+                }
+            },
+            initialize: function() {
+                var cropPlugin = this.plugins['crop'];
+
+                cropPlugin.requireFocus();
+            }
+        });
+    }).on('hidden.bs.modal', function () {});
+
     btnEdit.on({
         'click': function (e) {
             e.preventDefault();
