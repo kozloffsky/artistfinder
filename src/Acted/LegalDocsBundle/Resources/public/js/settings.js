@@ -42,6 +42,10 @@ $(function(){
         var selectedCountryOption = $('#settings_country').find('option:selected').val();
         chooseCityQuote(selectedCountryOption);
     }
+    function settingCityEventHandler() {
+        var cur = $(this);
+        cur.closest('.box').find('h2').text(cur.closest('.box').find('option:selected').text());
+    }
     function radioBoxEventHandler(e) {
         $(this).attr("value", $(this).attr("id") === "ready_1" ? true : false);
     }
@@ -84,8 +88,6 @@ $(function(){
                     for (var i = 0; i < len; i++)
                         textError += errors[k][i] + " ";
 
-
-                $("[name=\"" + k + "\"]").closest('.box').find('h2').text($("[name=\"" + k + "\"]").closest('.box').find('input').val());
                 $("[name=\"" + k + "\"]").closest('.box').find('label').css("opacity", 1);
                 $("[name=\"" + k + "\"]").closest('.box').find('label').text(textError);
             }
@@ -94,6 +96,7 @@ $(function(){
     selectBoxEventHandler();
 
     $('#settings_country').on('change', selectBoxEventHandler);
+    $('#setting_city').on('change', settingCityEventHandler);
     $('.settings input[type="radio"]').on('change', radioBoxEventHandler);
 
     fileUpload.change(function () {
@@ -136,6 +139,8 @@ $(function(){
                 cur.closest('.'+box).addClass(activeClass);
 
                 var form = prepareSettingsData();
+
+                cur.closest('.box').find('h2').text(cur.closest('.box').find('input').val());
 
                 HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
                 HTTPProvider.send(form, settingsFormErrorHandler);
