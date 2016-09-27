@@ -40,33 +40,30 @@
                             <div class="box text-right">
                                 <label class="info-label">First name</label>
                             </div>
-                            <div class="box">
+                            <div class="box active">
                                 <label error class="error">Error!</label>
-                                <input type="text" placeholder="{{ artist.user.firstname }}" name="first_name" value="{{ artist.user.firstname }}">
+                                <input hidden type="text" placeholder="{{ artist.user.firstname }}" name="first_name" value="{{ artist.user.firstname }}">
                                 <h2>{{ artist.user.firstname }}</h2>
-                                <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
                         <div class="row">
                             <div class="box text-right">
                                 <label class="info-label">Last name</label>
                             </div>
-                            <div class="box">
+                            <div class="box active">
                                 <label error class="error">Error!</label>
-                                <input type="text" placeholder="{{ artist.user.lastname }}" name="last_name" value="{{ artist.user.lastname }}">
+                                <input hidden type="text" placeholder="{{ artist.user.lastname }}" name="last_name" value="{{ artist.user.lastname }}">
                                 <h2>{{ artist.user.lastname }}</h2>
-                                <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
                         <div class="row">
                             <div class="box text-right">
                                 <label class="info-label">Artist name</label>
                             </div>
-                            <div class="box">
+                            <div class="box active">
                                 <label error class="error">Error!</label>
-                                <input type="text" placeholder="{{ artist.name }}" name="name" value="{{ artist.name }}">
+                                <input hidden type="text" placeholder="{{ artist.name }}" name="name" value="{{ artist.name }}">
                                 <h2>{{ artist.name }}</h2>
-                                <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
                         <div class="row">
@@ -144,17 +141,6 @@
                                     <h2></h2>
                                 {% endif %}
 
-                                <button type="button" class="btn-edit"></button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="box text-right">
-                                <label class="info-label">Password</label>
-                            </div>
-                            <div class="box">
-                                <label error class="error">Error!</label>
-                                <input type="password" placeholder="Password" name="password">
-                                <h2>Never update</h2>
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
