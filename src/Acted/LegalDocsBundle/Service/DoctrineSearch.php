@@ -27,17 +27,32 @@ class DoctrineSearch implements Search
      */
     protected $paginator;
 
+    /**
+     * @var string
+     */
+    protected $fakeUsers;
 
-    public function __construct(EntityManagerInterface $entityManagerInterface, PaginatorInterface $paginator)
+
+    public function __construct(EntityManagerInterface $entityManagerInterface, PaginatorInterface $paginator,
+                                $fakeUsers)
     {
         $this->entityManager = $entityManagerInterface;
         $this->paginator = $paginator;
+        $this->fakeUsers = $fakeUsers;
     }
 
     public function getFilteredArtists(OrderCriteria $oc, FilterCriteria $fc, $page = 1, $limit = 15)
     {
         $artistRepo = $this->entityManager->getRepository('ActedLegalDocsBundle:Artist');
-        $artistsQuery = $artistRepo->getFilteredQuery($oc, $fc);
+        switch ($this->fakeUsers) {
+            case 'show':
+                $fake = 0;
+                break;
+            case 'hide':
+                $fake = 1;
+                break;
+        }
+        $artistsQuery = $artistRepo->getFilteredQuery($oc, $fc, $fake);
 
         return $this->paginator->paginate($artistsQuery, $page, $limit, ['wrap-queries' => true]);
     }

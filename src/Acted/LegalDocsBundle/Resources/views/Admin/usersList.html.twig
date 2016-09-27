@@ -1,0 +1,148 @@
+{% extends '_layout.html.twig' %}
+
+{% block body %}
+
+    <div class="col-md-12">
+        <h2 class="sub-header">Users</h2>
+    </div>
+
+    <div class="col-md-4">
+        <form action="/administration/users/list/1">
+            <fieldset class="form-group">
+                <label for="querySearch">Search</label>
+                <input type="text" class="form-control" name="query" id="querySearch" placeholder="Search" value="{{ filters.query }}">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="querySearch">UserId</label>
+                <input type="number" class="form-control" name="userId" id="userId" placeholder="id" value="{{ filters
+                .userId }}">
+            </fieldset>
+            <select class="form-control" id="catMainSel" name="role">
+                <option value="all" selected="selected">All role</option>
+                <option value="client">Client</option>
+                <option value="artist">Artist</option>
+                <option value="admin">Admin</option>
+            </select><br>
+            <select class="form-control" id="catMainSel" name="fake">
+                <option value="all" selected="selected">All</option>
+                <option value="isFake">Is fake</option>
+                <option value="notFake">Not fake</option>
+            </select><br>
+            <fieldset class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </fieldset>
+        </form>
+        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#registrationModal">
+            Create new user
+        </a>
+    </div>
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>Slug</th>
+                    <th>email</th>
+                    <th>active</th>
+                    <th>fake</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr id="{{ user.id }}">
+                        <td>{{ user.id }}</td>
+                        <td class="usernameAdmin">{{ user.firstname }} {{ user.lastname }}</td>
+                        {% if user.artist is defined %}
+                            <td>{{ user.artist.slug }}</td>
+                        {% else %}
+                            <td>client</td>
+                        {% endif %}
+                        <td>
+                            <p class="error {{ 'error_' ~ user.id }}"></p>
+                            <span class="userEmail">
+                                {{ user.email }}
+                            </span>
+                            <input type="email" class="userEmailChange" placeholder="{{ user.email }}">
+                            <buttom class="btn btn-info editMailAdmin pull-right" type="button">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </buttom>
+                            <buttom class="btn btn-info saveMailAdmin pull-right" type="button">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                            </buttom>
+                        </td>
+                        <td>
+                            <input id="active-{{ user.id }}"  class="userStatusAd" type="checkbox" {% if user.active %}checked{% endif %}>
+                        </td>
+                        <td>
+                            <input id="fake-{{ user.id }}"  class="userStatusFakeAd" type="checkbox" {% if user.fake %}checked{% endif %}>
+                        </td>
+                        <td>
+                            {% if user.artist is defined %}
+                                <a href="/profile/edit_profile/{{ user.artist.slug }}" target="_blank">
+                                    <button type="button" class="btn btn-info manageUsers">Manage</button>
+                                </a>
+                                <a href="/profile/{{ user.artist.slug }}" target="_blank">
+                                    <button type="button" class="btn btn-info manageUsers">View</button>
+                                </a>
+                            {% endif %}
+                            {% if user.artist is defined or user.role_name == 'Client' %}
+                                {% if user.active == false and user.fake == false and user.email %}
+                                    <button type="button" class="btn btn-success tokenResendUser" >Resend token</button>
+                                {% endif %}
+                            {% endif %}
+
+                            <button type="button" class="btn btn-danger deleteUser" >Delete</button>
+
+                            {#<a href="#"><button type="button" class="btn btn-info saveSpotlight">Save</button></a>#}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if paginations.pageCount > 1 %}
+            <nav>
+                <ul class="pagination">
+                    {% if paginations['previous'] is defined %}
+                        <li>
+                            <a href="{{ path('admin_users_list', {'page': 1  }) }}?query={{ filters.query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}" aria-label="First page">
+                                <span aria-hidden="true">first</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_users_list', {'page': paginations['previous']  }) }}?query={{ filters.query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for pagin in paginations['pagesInRange'] %}
+                        <li>
+                            <a href="{{ path('admin_users_list', {'page': pagin }) }}?query={{ filters.query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}">{{ pagin }}</a>
+                        </li>
+                    {% endfor %}
+                    {% if paginations['next'] is defined %}
+                        <li>
+                            <a href="{{ path('admin_users_list', {'page': paginations['next']  }) }}?query={{ filters.query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}"
+                               aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_users_list', {'page': paginations['pageCount']  }) }}?query={{ filters.query }}&role={{ filters.role }}&fake={{ filters.fake }}&userId={{ filters.userId }}">
+                                <span aria-hidden="true">last</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+
+    </div>
+
+    {% include 'ActedLegalDocsBundle:Admin:createUserAdmin.html.twig' %}
+{% endblock %}
+
+

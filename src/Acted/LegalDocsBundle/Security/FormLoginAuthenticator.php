@@ -5,6 +5,7 @@ namespace Acted\LegalDocsBundle\Security;
 
 use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Security\Exception\ActivationException;
+use Acted\LegalDocsBundle\Security\Exception\ExpiredTokenException;
 use KnpU\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,6 +17,8 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Created by PhpStorm.
@@ -38,7 +41,9 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
             return new JsonResponse(
                 [
                     'userId' => $token->getUser()->getId(),
-                    'role' => $token->getUser()->getRoles()
+                    'role' => $token->getUser()->getRoles(),
+                    'tempUserToken' => $token->getUser()->getConfirmationToken()?$token->getUser()
+                        ->getConfirmationToken():''
                 ]
             );
         }
@@ -143,18 +148,22 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      * @param UserInterface $user
      *
      * @throws AuthenticationException
+     * @return  RedirectResponse
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
         $plainPassword = $credentials['password'];
         $encoder = $this->container->get('security.password_encoder');
-
+        $expirePeriodAuth = $this->checkPeriodAuth($user);
         if (!$encoder->isPasswordValid($user, $plainPassword)) {
             // throw any AuthenticationException
             throw new BadCredentialsException();
         }
+        if ($expirePeriodAuth) {
+            throw new ExpiredTokenException();
+        }
 
-        if($user instanceof User && (!$user->getActive())){
+        if($user instanceof User && (!$user->getActive()) && is_null($user->getTempPassword())){
             throw new ActivationException();
         }
     }
@@ -165,5 +174,37 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
             return new JsonResponse(['error' => $exception->getMessageKey()], 403);
         }
         return parent::onAuthenticationFailure($request, $exception);
+    }
+
+    /**
+     * Check expired time
+     * @param $user
+     * @return bool
+     */
+    private function checkPeriodAuth($user)
+    {
+        $now = new \DateTime();
+
+        if ( !$user->getActive() && $user->getTempPassword()) {
+            if ($passwordRequestedAt = $user->getPasswordRequestedAt()) {
+                $activatePeriodResend = $this->container->getParameter('confirmation_period_resend');
+                $periodResend = strtotime($passwordRequestedAt->format('Y-m-d H:i:s')) + $activatePeriodResend;
+                if ($periodResend < strtotime($now->format('Y-m-d H:i:s'))) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            if ($userCreated = $user->getCreatedAt()) {
+                $activatePeriod = $this->container->getParameter('confirmation_period');
+                $period = strtotime($userCreated->format('Y-m-d H:i:s')) + $activatePeriod;
+                if ($period < strtotime($now->format('Y-m-d H:i:s'))) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

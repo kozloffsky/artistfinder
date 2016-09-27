@@ -1,0 +1,43 @@
+{% block subject %}
+{% autoescape false %}
+Hello {{ user.firstname }} {{ user.lastname }}!
+{% endautoescape %}
+{% endblock %}
+{% block body_text %}
+{% autoescape false %}
+<h2>Dear {{ user.firstname }}</h2>
+<div>
+We are delighted to inform you that our team has created a
+temporary <b>Acted</b> profile on your behalf. Acted is a brand 
+new UK marketplace for entertainment with hundreds of 
+artists already pre-signed up. We are going live soon, 
+and all our first signups will get amazing rewards.
+<br><br>
+Don’t worry, Acted is a free service for you. We are building amazing free tools for you to manage your 
+bookings, payments, contracts, paperwork and much more.
+<br><br>
+Oh, did I mention our website will bring you many direct
+leads & bookings? As an entertainment marketplace, our
+clients are your clients. Event managers, wedding planners,
+private & corporate events, can contact you directly.
+This is the value we are bringing to you.
+<br><br>
+Please take a couple of minutes to review and validate your 
+profile by clicking the following <a href="{{ confirmationUrl }}">link</a>
+<br><br>
+If the link doesn't work, your login name will be: <b>{{ user.email }}</b> , and your password will be: <b>{{ user.tempPassword }}</b>
+<br>
+You will have to enter a new password at the first connection.
+<br><br>
+Any questions about Acted and how it works? Please have a look here: <a href="{{ homepageUrl }}">Acted marketplace</a>
+<br><br>
+Please do not hesitate to contact us per email (marketing (at) acted.co ) and share your feedback. Always happy to
+have a chat and understand how we can improve your experience on Acted. 
+<br><br>
+Warm regards, 
+<br><br>
+[JULIEN]
+<br><br>
+</div>
+{% endautoescape %}
+{% endblock %}

@@ -1,7 +1,7 @@
 
             {% for performance in performances|reverse %}
 
-            {% if is_granted('EDIT', artist) %}
+            {% if is_granted('EDIT', artist) or is_granted('ROLE_ADMIN') %}
 
                 <article class="item clearfix perfBlockView">
 
@@ -9,7 +9,12 @@
                         <header class="heading">
                             <h2 class="perfNotEditing">{{ performance.title }} </h2>
                             <input class="pull-left title offerTitlePerf" type="text" placeholder="Please enter a name for your act" value="{{ performance.title }}">
-                            <div class="price pull-right">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</div> <!--<input class="set-price" type="text" placeholder="0,00">-->
+                            {% if performance.offerMinPrice %}
+                                <div class="price pull-right">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</div> <!--<input class="set-price" type="text" placeholder="0,00">-->
+                            {% else %}
+                                <span class="price">Price: on request</span>
+                            {% endif %}
+                            
                         </header>
 
 
@@ -21,7 +26,7 @@
                                         <ul class="btns-list">
                                             <li>
                                                 <span class="hidden mediaId">{{ mediaOf.id }}</span>
-                                                <button type="button" class="btn-add imageAddPerf"><i class="fa fa-camera" aria-hidden="true"></i></button>
+                                                <button type="button" class="btn-add imageAddPerf photo"><i class="ico"></i></button></button>
                                                 <em class="note">Add photo</em>
                                             </li>
                                         </ul>
@@ -31,7 +36,7 @@
                                         <ul class="btns-list">
                                             <li>
                                                 <span class="hidden mediaId">NewMedia</span>
-                                                <button type="button" class="btn-add imageAddPerf"><i class="fa fa-camera" aria-hidden="true"></i></button>
+                                                <button type="button" class="btn-add imageAddPerf photo"><i class="ico"></i></button></button>
                                                 <em class="note">Add photo</em>
                                             </li>
                                         </ul>
@@ -63,12 +68,12 @@
                                         <ul class="btns-list">
                                             <li>
                                                 <span class="hidden mediaId">{{ mediaOf.id }}</span>
-                                                <button type="button" class="btn-add videoAddPerf"><i class="fa fa-film" aria-hidden="true"></i></button>
+                                                <button type="button" class="btn-add videoAddPerf  video"><i class="ico"></i></button>
                                                 <em class="note">Add video</em>
                                             </li>
                                             <li>
                                                 <span class="hidden mediaId">{{ mediaOf.id }}</span>
-                                                <button type="button" class="btn-add imageAddPerf"><i class="fa fa-camera" aria-hidden="true"></i></button>
+                                                <button type="button" class="btn-add imageAddPerf photo"><i class="ico"></i></button>
                                                 <em class="note">Add photo</em>
                                             </li>
                                         </ul>
@@ -89,12 +94,12 @@
                                     <ul class="btns-list">
                                         <li>
                                             <span class="hidden mediaId">NewMedia</span>
-                                            <button type="button" class="btn-add videoAddPerf"><i class="fa fa-film" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn-add videoAddPerf  video"><i class="ico"></i></button>
                                             <em class="note">Add video</em>
                                         </li>
                                         <li>
                                             <span class="hidden mediaId">NewMedia</span>
-                                            <button type="button" class="btn-add imageAddPerf"><i class="fa fa-camera" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn-add imageAddPerf photo"><i class="ico"></i></button>
                                             <em class="note">Add photo</em>
                                         </li>
                                     </ul>
@@ -128,13 +133,13 @@
                         </div>
                         <ul class="options-list">
                             <li>
-                                <button class="btn-option perfEditViewToggle" type="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                <button class="btn-option perfEditViewToggle edit" data-origin-title="{{performance.title}}" type="button"><i class="ico"></i></button>
                             </li>
                             <li>
-                                <button class="btn-option deleteOfferBtn" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                <button class="btn-option deleteOfferBtn remove" type="button"><i class="ico"></i></button>
                             </li>
                             <li>
-                                <button class="btn-option saveOfferPerf" type="button"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                <button class="btn-option saveOfferPerf check" type="button"><i class="ico"></i></button>
                             </li>
                         </ul>
                     </form>
@@ -145,18 +150,18 @@
 
             {% endfor %}
 
-                    <div class="controls add abbNewPerfBtnBlock">
-                        <div class="button-gradient orange white follow">
-                            <button type="button" class="btn" id="addNewPerformanceBtn">Add new performance</button>
-                        </div>
-                    </div>
+            <div class="controls add abbNewPerfBtnBlock">
+                <div class="button-gradient orange white follow">
+                    <button type="button" class="btn" id="addNewPerformanceBtn">Add new performance</button>
+                </div>
+            </div>
 
             <article class="item clearfix hidden newPerformanceBlank">
 
                 <form class="edit-form" id="NewBlank">
                     <header class="heading">
-                        <input class="pull-left title offerTitlePerf" type="text" placeholder="Please enter a name for your act" value="">
-                        <div class="price pull-right">Price: from  EUR</div> <!--<input class="set-price" type="text" placeholder="0,00">-->
+                        <input class="pull-left title offerTitlePerf" type="text" placeholder="Please enter a name for your act" value="Draft">
+                        <div class="price pull-right">Price: on request</div> <!--<input class="set-price" type="text" placeholder="0,00">-->
                     </header>
 
 
@@ -165,7 +170,7 @@
                                 <ul class="btns-list">
                                     <li>
                                         <span class="hidden mediaId">NewMedia</span>
-                                        <button type="button" class="btn-add imageAddPerf"><i class="fa fa-camera" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn-add imageAddPerf photo"><i class="ico"></i></button></button>
                                         <em class="note">Add photo</em>
                                     </li>
                                 </ul>
@@ -188,12 +193,12 @@
                             <ul class="btns-list">
                                 <li>
                                     <span class="hidden mediaId">NewMedia</span>
-                                    <button type="button" class="btn-add videoAddPerf"><i class="fa fa-film" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn-add videoAddPerf  video"><i class="ico"></i></button>
                                     <em class="note">Add video</em>
                                 </li>
                                 <li>
                                     <span class="hidden mediaId">NewMedia</span>
-                                    <button type="button" class="btn-add imageAddPerf"><i class="fa fa-camera" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn-add imageAddPerf photo"><i class="ico"></i></button>
                                     <em class="note">Add photo</em>
                                 </li>
                             </ul>
@@ -219,14 +224,14 @@
                         </div>
                     </div>
                     <ul class="options-list">
-                        <!--<li>
-                            <button class="btn-option perfEditViewToggle" type="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                        </li>-->
+                        {#<li>#}
+                            {#<button class="btn-option perfEditViewToggle edit" type="button"><i class="ico"></i></button>#}
+                        {#</li>#}
                         <li>
-                            <button class="btn-option deleteOfferBtn" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            <button class="btn-option deleteOfferBtn remove" type="button"><i class="ico"></i></button>
                         </li>
                         <li>
-                            <button class="btn-option saveOfferPerf" type="button"><i class="fa fa-check" aria-hidden="true"></i></button>
+                            <button class="btn-option saveOfferPerf check" type="button"><i class="ico"></i></button>
                         </li>
                     </ul>
                 </form>

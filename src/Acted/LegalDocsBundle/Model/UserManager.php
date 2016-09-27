@@ -62,6 +62,8 @@ class UserManager
         $user->setFirstname($registerUser->getFirstname());
         $user->setLastname($registerUser->getLastname());
         $user->setEmail($registerUser->getEmail());
+        $user->setTempPassword($registerUser->getTempPassword());
+        $user->setFake($registerUser->getFake());
 
         $role = $this->entityManager->getRepository('ActedLegalDocsBundle:RefRole')->findOneByCode($registerUser->getRole());
 
@@ -110,6 +112,18 @@ class UserManager
         $rendered = $this->templating->render('@ActedLegalDocs/Security/confirmation.txt.twig', [
             'user' => $user,
             'confirmationUrl' =>  $url
+        ]);
+        $this->sendEmailMessage($rendered, $this->mailFrom, $user->getEmail());
+    }
+
+    public function confirmationForCreatedUser(User $user)
+    {
+        $url = $this->router->generate('security_resend_token', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $homepageUrl = $this->router->generate('acted_legal_docs_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        $rendered = $this->templating->render('@ActedLegalDocs/Security/create_user_confirmation.html.twig', [
+            'user' => $user,
+            'confirmationUrl' =>  $url,
+            'homepageUrl' => $homepageUrl .'#how-it-works'
         ]);
         $this->sendEmailMessage($rendered, $this->mailFrom, $user->getEmail());
     }

@@ -2,7 +2,7 @@ Acted\LegalDocsBundle\Entity\User:
   exclusion_policy: NONE
   properties:
     id:
-      groups: [getEvent]
+      groups: [getEvent, users_list, recommend_artist, spotlight_artist]
     passwordHash:
       exclude: true
     confirmationToken:
@@ -12,13 +12,22 @@ Acted\LegalDocsBundle\Entity\User:
     avatar:
       groups: [quote_request, chat_room, message, all_messages]
     firstname:
-      groups: [chat_list, chat_room, message, all_messages]
+      groups: [chat_list, chat_room, message, all_messages, users_list]
     lastname:
-      groups: [chat_list, chat_room, message, all_messages]
+      groups: [chat_list, chat_room, message, all_messages, users_list]
+    active:
+      groups: [users_list]
+    fake:
+      groups: [users_list]
+    artist:
+      groups: [users_list]
   virtual_properties:
+      getUserEmail:
+        serialized_name: email
+        groups: [users_list]
       getRoles:
         serialized_name: roles
         type: array<string>
       getRoleName:
         serialized_name: role_name
-        groups: [chat_list, chat_room, message, all_messages]
+        groups: [chat_list, chat_room, message, all_messages, users_list]

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
+</head>
+<body>
+<header class="hidden"></header>
+<main class="promo-view">
+
+    <div class="holder">
+        <h1 class="logo big">Acted</h1>
+        <form action="#" class="recovery-form">
+            <h2>Password recovery</h2>
+            <div class="row text-left">
+                <label for="password">Please enter your new password</label>
+                <div class="box">
+                    <input class="almost-full" id="password" name="password[first]" type="password">
+                    <button type="button" class="ico show-pass active">
+                        <i class="hidden fa fa-eye" aria-hidden="true"></i>
+                        <i class="showing fa fa-eye-slash" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <input type="hidden" id="_token" name="_token" value="{{ form.children._token.vars.value }}">
+                <span id="currentToken" class="hidden">{{ currentToken }}</span>
+                <!--<button type="button" class="ico closest hide-pass"><i class="fa fa-eye-slash" aria-hidden="true"></i></button>-->
+            </div>
+            <ul class="notify-list text-left">
+                <li class="limit">Please enter a password with at least 8 characters</li>
+                <li class="uppercase">Password must includes at least 1 capitalised letter</li>
+                <li class="number">Password must includes at least 1 number</li>
+            </ul>
+            <div class="clearfix text-center">
+                <div class="controls">
+                    <div class="button-gradient filled">
+                        <button disabled type="submit" id="passwordRecoveryForm" class="btn register resendToken">Submit</button>
+                    </div>
+                </div>
+                <a href="/" class="go-back">Go back to the Acted</a>
+            </div>
+        </form>
+    </div>
+
+</main>
+<div class="hidden recoveryFormSub">
+{{ form_start(form) }}
+{{ form_widget(form) }}
+{{ form_end(form) }}
+
+</div>
+<script src="{{ asset('js/javascript.js') }}"></script>
+</body>
+</html>

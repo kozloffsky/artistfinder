@@ -17,6 +17,15 @@ class SearchController extends Controller
         $serializer = $this->get('jms_serializer');
         $searchForm = $this->createForm(SearchType::class);
         $searchForm->handleRequest($request);
+        $fakeUsers = $this->container->getParameter('fake_users');
+        switch ($fakeUsers) {
+            case 'show':
+                $fake = 0;
+                break;
+            case 'hide':
+                $fake = 1;
+                break;
+        }
 
         $data = $searchForm->getData();
 
@@ -29,7 +38,7 @@ class SearchController extends Controller
         foreach ($recommendedCategories as $category) {
             $recommended[] = [
                 'category' => $category,
-                'artists' => $serializer->toArray($artistRepo->getRecommended($category), SerializationContext::create()->setGroups(['block']))
+                'artists' => $serializer->toArray($artistRepo->getRecommended($category, $fake), SerializationContext::create()->setGroups(['block']))
             ];
         }
 

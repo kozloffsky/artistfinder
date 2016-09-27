@@ -2,6 +2,10 @@ Acted\LegalDocsBundle\Entity\User:
     type: entity
     table: User
     repositoryClass: Acted\LegalDocsBundle\Repository\UserRepository
+    indexes:
+        search_index:
+            columns: [firstname, lastname]
+            flags: [fulltext]
     id:
         id:
             type: integer
@@ -15,7 +19,7 @@ Acted\LegalDocsBundle\Entity\User:
           type: string(128)
         email:
           type: string(100)
-          notnull: true
+          nullable: true
           unique: true
         passwordHash:
           type: string(256)
@@ -31,6 +35,10 @@ Acted\LegalDocsBundle\Entity\User:
           type: boolean
           options:
             default: false
+        fake:
+          type: boolean
+          options:
+            default: false
         avatar:
           type: string(256)
           nullable: true
@@ -40,16 +48,27 @@ Acted\LegalDocsBundle\Entity\User:
         confirmationToken:
           type: string(255)
           nullable: true
+        tempPassword:
+          type: string(255)
+          nullable: true
         passwordRequestedAt:
+          type: datetime
+          nullable: true
+        createdAt:
+          type: datetime
+          nullable: true
+        confirmationPeriod:
           type: datetime
           nullable: true
     oneToOne:
         profile:
           targetEntity: Acted\LegalDocsBundle\Entity\Profile
           mappedBy: user
+          cascade: ["remove", "persist"]
         artist:
           targetEntity: Acted\LegalDocsBundle\Entity\Artist
           mappedBy: user
+          cascade: ["remove", "persist"]
     manyToMany:
         roles:
           targetEntity: Acted\LegalDocsBundle\Entity\RefRole
@@ -58,7 +77,9 @@ Acted\LegalDocsBundle\Entity\User:
         chatRoomsArtist:
             targetEntity: Acted\LegalDocsBundle\Entity\ChatRoom
             mappedBy: artist
+            cascade: ["remove", "persist"]
         chatRoomsClient:
             targetEntity: Acted\LegalDocsBundle\Entity\ChatRoom
             mappedBy: client
+            cascade: ["remove", "persist"]
     lifecycleCallbacks: {  }

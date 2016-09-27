@@ -4,7 +4,7 @@
         <div class="background-stripe"></div>
     </div>
 {% else %}
-    <div class="header-background" style="background-image: url({{ asset(artist.user.background) }})">
+    <div class="header-background" style="background-image: url({{ asset('assets/images/band-bg.png') }})">
         <div class="background-stripe"></div>
     </div>
 {% endif %}
@@ -12,7 +12,7 @@
     <span id="slug" class="hidden">{{ artist.slug }}</span>
     <section class="profile-info container">
         <div class="avatar">
-            <img class="avatar" src="{{ artist.user.avatar }}" alt="Avatar">
+            <img class="avatarImg" src="{{ artist.user.avatar }}" alt="Avatar">
         </div>
         <div class="info">
             <div class="username">{{ artist.name }}</div>
@@ -38,9 +38,12 @@
 
             <div class="price">
                 <img src="{{ asset('assets/images/price_ic.png') }}" alt="Price">
-                ${{ artist.user.profile.minPrice|number_format(2, '.', ',') }} - ${{ artist.user.profile.maxPrice|number_format(2, '.', ',') }} per event
+                {% if artist.user.profile.minPrice %}
+                    ${{ artist.user.profile.minPrice|number_format(2, '.', ',') }} - ${{ artist.user.profile.maxPrice|number_format(2, '.', ',') }} per event
+                {% else %}
+                    on-request per event
+                {% endif %}
             </div>
-
             <div class="user-rating">
                 <div class="stars">
                     <div class="star">

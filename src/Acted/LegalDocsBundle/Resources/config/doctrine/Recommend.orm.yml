@@ -15,6 +15,9 @@ Acted\LegalDocsBundle\Entity\Recommend:
         artist:
             targetEntity: Acted\LegalDocsBundle\Entity\Artist
             inversedBy: recommends
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
         category:
             targetEntity: Acted\LegalDocsBundle\Entity\Category
             inversedBy: recommends

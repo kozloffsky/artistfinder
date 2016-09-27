@@ -1,7 +1,7 @@
 <section id="media" class="profile-block media">
     <div class="title"><span>Media</span></div>
 
-    {% if is_granted('EDIT', artist) %}
+    {% if is_granted('EDIT', artist) or is_granted('ROLE_ADMIN') %}
     <ul>
         <li>
             <a class="tab active" data-target="#section-photo" href="#">
@@ -54,7 +54,7 @@
     <div class="row">
 
         <section class="media-content wrapper" id="section-photo">
-            {% if is_granted('EDIT', artist) %}
+            {% if is_granted('EDIT', artist) or is_granted('ROLE_ADMIN') %}
                 <button id="profileAddNewMedia" type="button" class="btn btn-success" data-toggle="modal" data-target="#addImageModal"><i class="fa fa-plus"></i> Add new image</button>
             {% endif %}
             <div class="holder">
@@ -71,7 +71,7 @@
             <div id="photo-pager" class="bx-pager">
                 {% for photo in artist.user.profile.photoList %}
                     <div class="scale-thumb thumb{{ loop.index }}">
-                        {% if is_granted('EDIT', artist) %}
+                        {% if is_granted('EDIT', artist) or is_granted('ROLE_ADMIN') %}
                         <span class="removeNewImage deleteMedia" id="{{ photo.id }}"><i class="fa fa-times-circle-o"></i></span>
                         {% endif %}
                         <a data-slide-index="{{ loop.index0 }}" href=""><img src="{{ asset(photo.link)|imagine_filter('small')}}"/></a>
@@ -82,7 +82,7 @@
 
 
         <section class="media-content video wrapper" id="section-video" >
-            {% if is_granted('EDIT', artist) %}
+            {% if is_granted('EDIT', artist) or is_granted('ROLE_ADMIN') %}
                 <div class="col-md-6 add-video-block">
                 <form class="videoAddForm">
                     <input type="text" class="form-control videoAdd">
@@ -104,7 +104,7 @@
             <div id="video-pager" class="bx-pager">
                 {% for video in artist.user.profile.videoList %}
                     <div class="scale-thumb thumb{{ loop.index }}">
-                        {% if is_granted('EDIT', artist) %}
+                        {% if is_granted('EDIT', artist) or is_granted('ROLE_ADMIN') %}
                         <span class="removeNewImage deleteMedia" id="{{ video.id }}"><i class="fa fa-times-circle-o"></i></span>
                         {% endif %}
                         <a data-slide-index="{{ loop.index0 }}" href=""><img id="{{ video.videoId }}" src="{{ video.thumbnail }}"></a>
@@ -114,7 +114,7 @@
         </section>
 
         <section class="media-content wrapper" id="section-audio" >
-            {% if is_granted('EDIT', artist) %}
+            {% if is_granted('EDIT', artist) or is_granted('ROLE_ADMIN') %}
                 <div class="col-md-6 add-audio-block">
                     <form class="audioAddForm">
                         <input type="text" class="form-control audioAdd">
@@ -126,7 +126,7 @@
             <div class="audioBlock">
             {% for audio in artist.user.profile.audioList %}
                 <div class="audioEditProfile">
-                    {% if is_granted('EDIT', artist) %}
+                    {% if is_granted('EDIT', artist) or is_granted('ROLE_ADMIN') %}
                         <span class="removeNewAudio deleteMedia" id="{{ audio.id }}"><i class="fa fa-times-circle-o"></i></span>
                     {% endif %}
                     <iframe id="{{ audio.id }}" width="100%" height="150" scrolling="no" frameborder="no" src="{{ audio.link }}"></iframe>

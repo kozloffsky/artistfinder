@@ -27,6 +27,17 @@ class ProfileController extends Controller
 
         $user = $this->getUser();
 
+        if ($user) {
+            if ($user->getRoles()[0] !== 'ROLE_ADMIN' && !($artist->getUser()->getActive())) {
+                return $this->redirect($this->generateUrl('acted_legal_docs_homepage'));
+            }
+        } else {
+            if (!($artist->getUser()->getActive())) {
+                return $this->redirect($this->generateUrl('acted_legal_docs_homepage'));
+            }
+        }
+
+
         $performances = $this->getPerformances($artist, $request->get('page', 1), true);
         $feedbacks = $this->getFeedbacks($artist, 1);
 

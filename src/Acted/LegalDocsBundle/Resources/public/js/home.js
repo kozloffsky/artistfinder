@@ -3,36 +3,6 @@ $(function () {
     $(".navbar-collapse").collapse('hide');
   });
 
-  checkAvatar();
-
-  function checkAvatar() {
-      $('img.avatar').each(function(){
-        var imageSrc = $(this).attr('src');
-        if(imageSrc != undefined) {
-          console.log(imageSrc.length);
-          if (imageSrc.length <= 1) {
-            $(this).attr('src', '/assets/images/noAvatar.png');
-          }
-        }
-      })
-  };
-
-  $('.homeSearchStart').on('click',function () {
-    var searchEntered = $(homeSearchInput).val();
-    if (searchEntered.length >= 1) {
-      localStorage.setItem("search", searchEntered);
-    }
-  })
-  checkIfUserForcedLogin();
-
-  function checkIfUserForcedLogin(){
-    var currentUrl = window.location.href ;
-    var matchesUrl = currentUrl.split('/');
-    console.log(matchesUrl[3])
-    if (matchesUrl[3] == '?login_form'){
-      $('#loginModal').modal('show');
-    }
-  }
   // Add class hover to flip-container elements.
   $(".flip-container").hover(function () {
     $(this).addClass("hover-mouse");
@@ -62,6 +32,7 @@ $(function () {
     shieldFlip();
     cardFlip();
   }, 3000);
+
   //Change header color on scroll
   function changeHeaderColorOnScroll() {
     if ($('body').scrollTop() > $('header').offset().top + 100) {
@@ -85,8 +56,9 @@ $(function () {
       if (bottom_of_window > bottom_of_object) {
         if (!$(this).hasClass('animated')) {
           $(this).addClass('animated');
-          $(this).animate({'opacity': '1'}, {queue: false, duration: 1200});
+          $(this).animate({'opacity': '1'}, {queue: false, duration: 1700});
           $(this).animate({'bottom': '0'}, {queue: false, duration: 600});
+          $(this).show();
         }
       }
     });
@@ -135,7 +107,7 @@ $(function () {
   } else {
     //Initialize for desktop
     $(window).on({
-      'load': function(){
+      'resize': function(){
         carousel = $("#carousel").waterwheelCarousel({
           flankingItems: 2,
           forcedImageWidth: 364,
@@ -147,6 +119,17 @@ $(function () {
       }
     });
   }
+
+  carousel = $("#carousel").waterwheelCarousel({
+    flankingItems: 2,
+    forcedImageWidth: 364,
+    forcedImageHeight: 273,
+    separation: 250,
+    opacityMultiplier: 1,
+    movedToCenter: movedToCenter
+  });
+
+
   $('.next-control').click(function () {
     carousel.next();
   });
@@ -168,17 +151,6 @@ $(function () {
     }, 1200);
   }
 
-  $("#homeSearchInput").keypress(function(e) {
-    if (e.keyCode == 13) {
-      $('.homeSearchStart button').trigger('click');
-    }
-  });
-
-  $('#logOut').on('click',function(){
-    localStorage.removeItem('user');
-  })
 });
-
-
 
 //TODO: jQuery.mb.YTPlayer add to header youtube video.

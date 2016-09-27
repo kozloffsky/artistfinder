@@ -11,8 +11,17 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $serializer = $this->get('jms_serializer');
+        $fakeUsers = $this->container->getParameter('fake_users');
+        switch ($fakeUsers) {
+            case 'show':
+                $fake = 0;
+                break;
+            case 'hide':
+                $fake = 1;
+                break;
+        }
 
-        $homespotlights = $em->getRepository('ActedLegalDocsBundle:Artist')->allSpotlightArtist();
+        $homespotlights = $em->getRepository('ActedLegalDocsBundle:Artist')->allSpotlightArtist($fake);
         $homespotlight = $serializer->toArray($homespotlights, SerializationContext::create()
             ->setGroups(['block']));
 

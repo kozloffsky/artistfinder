@@ -51,8 +51,9 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>id</th>
-                <th>Name</th>
+                <th>Artist id</th>
+                <th>User id</th>
+                <th>Artist Name</th>
                 <th>Slug</th>
                 <th>Recommended</th>
                 <th>Recommended index</th>
@@ -60,9 +61,9 @@
             </thead>
             <tbody>
             {% for artist in artists %}
-                
                 <tr id="{{ artist.id }}">
                     <td>{{ artist.id }}</td>
+                    <td>{{ artist.user.id }}</td>
                     <td>{{ artist.name }}</td>
                     <td>{{ artist.slug }}</td>
                     <td>
@@ -98,29 +99,41 @@
             </tbody>
         </table>
     </div>
-    <nav>
-        <ul class="pagination">
-            {% if paginations['previous'] is defined %}
-                <li>
-                    <a href="{{ path('admin_dashboard_recommend', {'page': paginations['previous']  }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-            {% endif %}
-            {% for pagin in range(1, paginations['pageRange']) %}
-                <li>
-                    <a href="{{ path('admin_dashboard_recommend', {'page': pagin }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}">{{ pagin }}</a>
-                </li>
-            {% endfor %}
-            {% if paginations['next'] is defined %}
-                <li>
-                    <a href="{{ path('admin_dashboard_recommend', {'page': paginations['next']  }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            {% endif %}
-        </ul>
-    </nav>
-    </div>
-
+    {% if paginations.pageCount > 1 %}
+            <nav>
+                <ul class="pagination">
+                    {% if paginations['previous'] is defined %}
+                        <li>
+                            <a href="{{ path('admin_dashboard_recommend', {'page': 1  }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}" aria-label="First page">
+                                <span aria-hidden="true">first</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_dashboard_recommend', {'page': paginations['previous']  }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for pagin in paginations['pagesInRange'] %}
+                        <li>
+                            <a href="{{ path('admin_dashboard_recommend', {'page': pagin }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}">{{ pagin }}</a>
+                        </li>
+                    {% endfor %}
+                    {% if paginations['next'] is defined %}
+                        <li>
+                            <a href="{{ path('admin_dashboard_recommend', {'page': paginations['next']  }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}"
+                               aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_dashboard_recommend', {'page': paginations['pageCount']  }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}">
+                                <span aria-hidden="true">last</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+        <br><br>
 {% endblock %}

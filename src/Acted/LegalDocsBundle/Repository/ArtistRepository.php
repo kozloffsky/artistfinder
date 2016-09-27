@@ -16,9 +16,9 @@ use Acted\LegalDocsBundle\Search\OrderCriteria;
 class ArtistRepository extends \Doctrine\ORM\EntityRepository
 {
 
-    public function getRecommended(Category $category)
+    public function getRecommended(Category $category, $fake)
     {
-        return $this->createQueryBuilder('a')
+        $qb = $this->createQueryBuilder('a')
             ->innerJoin('a.user', 'u')
             ->leftJoin('a.recommends', 'rec')
             ->andWhere('rec.category = :par_cat')
@@ -27,12 +27,16 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('perf.status != :status')
             ->setParameter('par_cat', $category)
             ->setParameter('status', Performance::STATUS_DRAFT)
-            ->orderBy('rec.value', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ;
+
+        if ($fake) {
+            $qb->andWhere('u.fake != 1');
+        }
+
+        return $qb->orderBy('rec.value', 'ASC')->groupBy('u.id')->getQuery()->getResult();
     }
 
-    public function getFilteredQuery(OrderCriteria $oc, FilterCriteria $fc)
+    public function getFilteredQuery(OrderCriteria $oc, FilterCriteria $fc, $fake = 0)
     {
         $needRegionJoin = ($fc->getCountry()
             || ($fc->getLocation() && in_array($fc->getLocation(), [FilterCriteria::LOCATION_SAME_COUNTRY, FilterCriteria::LOCATION_100_KM])));
@@ -51,6 +55,10 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('pr.status != :status_pr')
             ->setParameter('status_pr', Performance::STATUS_DRAFT)
             ->groupBy('a.id');
+
+        if ($fake) {
+            $qb->andWhere('u.fake != 1');
+        }
 
         if ($fc->withVideo()) {
             $qb->innerJoin('pr.media', 'prm')
@@ -147,14 +155,23 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery();
     }
 
-    public function allSpotlightArtist()
+    /**
+     * @param int $fake
+     * @return array
+     */
+    public function allSpotlightArtist($fake = 0)
     {
-        return $this->createQueryBuilder('a')
+        $qb = $this->createQueryBuilder('a')
             ->innerJoin('a.user', 'u')
             ->where('u.active != 0')
-            ->andWhere('a.spotlight != 0')
-            ->orderBy('a.spotlight', 'ASC')
-            ->getQuery()->getResult();
+            ->where('a.spotlight != 0')
+            ->orderBy('a.spotlight', 'ASC');
+        /** check fake user */
+        if ($fake) {
+            $qb->andWhere('u.fake != 1');
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -182,7 +199,9 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
         }
         if ($query) {
             $qb
-                ->andWhere('(MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0)')
+                ->andWhere('(MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0
+                            OR MATCH(u.firstname, u.lastname) AGAINST (:query BOOLEAN) > 0)
+                ')
                 ->setParameter('query', $query);
         }
 

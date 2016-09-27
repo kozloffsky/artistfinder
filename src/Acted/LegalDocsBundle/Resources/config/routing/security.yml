@@ -27,6 +27,10 @@ security_resetting_reset:
     path:     /resetting/reset/{token}
     defaults: { _controller: "ActedLegalDocsBundle:Security:reset" }
 
+security_resend_token:
+    path:     /resend_token/reset/{token}
+    defaults: { _controller: "ActedLegalDocsBundle:Security:resendConfirmationToken" }
+
 security_check_email:
     path: /is_email_exists/{email}
     defaults: { _controller: ActedLegalDocsBundle:Security:isEmailExists }

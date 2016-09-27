@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -88,6 +89,9 @@ class RegisterType extends AbstractType
                 'constraints' => [new NotBlank(['groups' => 'artist'])],
                 'description' => 'City ID (for ROLE_ARTIST)',
                 'required' => false
+            ])
+            ->add('fake', CheckboxType::class, [
+                'required' => false,
             ])
         ;
 

@@ -1,0 +1,258 @@
+
+<div class="modal registration-modal fade" id="registrationModal" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-header" style="display: block">
+                <div id="step-counter">
+                    Step 3/3
+                </div>
+                <h4 class="modal-title" id="modal-title">Contact details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row stage" style="display: none" id="stage-1">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-sm-push-0 col-xs-8 col-xs-push-2">
+                        <img id="entertainerImg" class="category-img" src="{{ asset('assets/images/pers1.png') }}" alt="">
+
+                        <div class="controls category-controls">
+                            <div class="button-gradient follow">
+                                <button id="entertainerBtn" class="btn">I am an entertainer</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-sm-push-0 col-xs-8 col-xs-push-2">
+                        <img id="customerImg" class="category-img" src="{{ asset('assets/images/Group23.png') }}" alt="">
+
+                        <div class="controls category-controls">
+                            <div class="button-gradient follow">
+                                <button id="customerBtn" class="btn">I want to book entertainment</button>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="form-group fakeSelection">
+                        <label for="fakeUser">Fake</label>
+                        <input id="fakeUser" name="fake" type="radio" value="true">
+                        <label for="notfakeUser">Not fake</label>
+                        <input id="notfakeUser" name="fake" type="radio" value="false" checked>
+                    </form>
+                </div>
+
+                <div class="row stage" style="display: none" id="stage-2">
+                    <div class="row sub-stage artistCategoriesChoose" id="artistBlock">
+                        <div class="errorCat">Choose at least one category</div>
+
+                        {% include 'ActedLegalDocsBundle:Default:categories.html.twig' %}
+
+                        <div class="buttons">
+                            <div class="vertical-divder"></div>
+                            <button class="btn back-button">Back</button>
+                            <button id="stageTwoNext" class="btn">Next</button>
+                        </div>
+
+                    </div>
+
+                    <div class="row sub-stage" id="customerBlock">
+
+                        <div class="row contact-details">
+                            <form class="details-form no-pad customerRegForm" id="customerRegForm">
+                                <div class="form-group">
+                                    <label for="first_name">First name</label>
+                                    <input type="text" name="firstname" class="form-control" minlength="3" id="customerFirst_name" placeholder="First name" required>
+                                    <label class="icon"></label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last_name">Last name</label>
+                                    <input type="text" name="lastname" class="form-control" minlength="3" id="customerLast_name" placeholder="Last name" required>
+                                    <label class="icon"></label>
+                                </div>
+
+                                <div class="form-group emailAdminDash">
+                                    <label for="email">Email</label>
+                                    <input type="email" name="email" class="form-control" id="customerEmail" placeholder="Email" required>
+                                    <label class="icon"></label>
+                                </div>
+                                <div class="form-group hidden">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="customerPassword" value="Aa12345678" name="password[first]">
+                                    <label class="icon"></label>
+                                </div>
+                                <div class="form-group hidden">
+                                    <label for="password">Password confirmation</label>
+                                    <input type="password" class="form-control" id="customerPasswordConfirm" value="Aa12345678" name="password[second]">
+                                    <label class="icon"></label>
+                                </div>
+
+                                <div class="controls">
+                                    <div class="button-gradient filled">
+                                        <button id="stageThreeNextCustomer" type="submit" class="btn register submit">Register Now</button>
+                                    </div>
+
+                                    <button type="button" style="width: 100%; margin-top: 10px;" class="btn-back back-button">Back</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row stage" style="display: block" id="stage-3">
+                    <div class="row contact-details">
+                        <form class="details-form no-pad artistRegForm" id="artistForm">
+                            <div class="form-group">
+                                <label for="first_name">First name</label>
+                                <input type="text" name="firstname" class="form-control" minlength="3" id="first_name" placeholder="First name" required>
+                                <label class="icon"></label>
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name">Last name</label>
+                                <input type="text" name="lastname" class="form-control" minlength="3" id="last_name" placeholder="Last name" required>
+                                <label class="icon"></label>
+                            </div>
+                            <div class="form-group">
+                                <label for="band_name">Artist/Band name</label>
+                                <input type="text" name="name" class="form-control" minlength="3" maxlength="20" id="band_name" placeholder="Artist/Band name" required>
+                                <label class="icon"></label>
+                            </div>
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <select name="country" id="country">
+                                    {% for country in countries() %}
+                                        {% if country.name == 'United Kingdom' %}
+                                            <option value="{{ country.id }}" name="country" selected="selected">{{ country.name }}</option>
+                                        {% else %}
+                                            <option value="{{ country.id }}" name="country">{{ country.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cityReg">City</label>
+                                <select name="city" id="cityReg">
+                                </select>
+                            </div>
+
+                            <div class="form-group emailAdminDash">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
+                                <label class="icon"></label>
+                            </div>
+                            {#<div class="form-group hidden">#}
+                                {#<label for="password">Password</label>#}
+                                {#<input type="password" class="form-control" value="Aa12345678" id="password" name="password[first]">#}
+                                {#<label class="icon"></label>#}
+                            {#</div>#}
+                            {#<div class="form-group hidden">#}
+                                {#<label for="password">Password confirmation</label>#}
+                                {#<input type="password" class="form-control" value="Aa12345678" id="passwordSecond" name="password[second]">#}
+                                {#<label class="icon"></label>#}
+                            {#</div>#}
+                            <div class="form-group">
+                                <label for="phone_number">Phone number</label>
+                                <input type="text" name="phone" class="form-control" minlength="9" id="phone_number" placeholder="+111111111111" required>
+                                <label class="icon"></label>
+                            </div>
+
+                            <div class="controls">
+                                <div class="button-gradient filled">
+                                    <button  id="stageThreeNext" type="submit" class="btn register submit">Register Now</button>
+                                </div>
+
+                                <p class="hint">After registration you can start editing your profile</p>
+
+                                <button type="button" class="btn-back back-button">Back</button>
+                            </div>
+                        </form>
+
+                        <div class="preview-block hidden-xs no-pad">
+                            <div class="overlay">
+                                <span>Sample Profile</span>
+                            </div>
+                            <img src="{{ asset('assets/images/Example.png') }}" alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row stage" style="display: none" id="stage-4">
+                    <div class="final-stage">
+                        <div class="col-xs-12">
+                            <img class="final-image" src="{{ asset('assets/images/congratulations.png') }}" alt="">
+                        </div>
+                        <div class="row">
+                            <h2>Welcome to ACTED</h2>
+
+                            <p class="description">
+                                We have sent you an email to validate your account. <br>If you haven't received it, please click
+                                <a href="#">here</a>
+                            </p>
+                            <p class="description">
+                                And if you need any help, please do not hesitate to use the FAQ
+                            </p>
+
+                            <div class="controls">
+                                <div class="button-gradient filled">
+                                    <button data-dismiss="modal" class="btn">Have a nice journey on ACTED</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="completionTime" class="tip">
+                Completion time: 2 minutes
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade login-modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Log In</h4>
+            </div>
+
+            <div class="modal-body">
+                <form class="form-block login-form" action="{{ path('security_login_check') }}" method="post">
+                    <span class="error" id="errorLogIn"></span>
+                    <div class="form-group">
+                        <label for="user_email">Email</label>
+                        <input type="email" class="form-control" id="user_email" placeholder="Email" name="_username">
+                    </div>
+                    <div class="form-group">
+                        <label for="user_password">Password</label>
+                        <input type="password" class="form-control" id="user_password" placeholder="Password" name="_password">
+                        <a class="forgot-password" href="#">Forgot?</a>
+                    </div>
+
+                    <div class="controls">
+                        <div class="button-gradient filled">
+                            <button class="btn submit" id="loginBtn">Login</button>
+                        </div>
+                    </div>
+                </form>
+
+                <form class="form-block recovery-form" id="recoveryForm" style="display: none">
+                    <p class="tip">Please enter the email address that you used when creating your account.</p>
+                    <span class="error" id="errorLogRecovery"></span>
+
+                    <div class="form-group">
+                        <label for="user_email_rec">Email</label>
+                        <input name="email" type="email" class="form-control" id="user_email_rec" placeholder="Email">
+                    </div>
+
+                    <div class="controls">
+                        <div class="button-gradient filled">
+                            <button style="width: 220px;" class="btn" id="passwordRecovery">Send new password</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

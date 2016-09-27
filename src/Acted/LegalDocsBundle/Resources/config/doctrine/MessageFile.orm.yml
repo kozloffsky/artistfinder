@@ -19,4 +19,7 @@ Acted\LegalDocsBundle\Entity\MessageFile:
         message:
             targetEntity: Acted\LegalDocsBundle\Entity\Message
             inversedBy: files
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
     lifecycleCallbacks: {  }

@@ -14,7 +14,7 @@ var env = process.env.GULP_ENV;
 
 gulp.task('js', function(){
     return gulp.src([
-            'src/Acted/LegalDocsBundle/Resources/public/js/*.js'])
+            'src/Acted/LegalDocsBundle/Resources/public/js/*.js', "!src/Acted/LegalDocsBundle/Resources/public/js/admin.js", "!src/Acted/LegalDocsBundle/Resources/public/js/userCreationAdmin.js"])
         .pipe(order([
             "jquery.min.js",
             "jquery.throttle.min.js",
@@ -22,8 +22,8 @@ gulp.task('js', function(){
             "bootstrap-editable.min.js",
             "moment.js",
             "bootstrap-datetimepicker.min.js",
-            "*.js",
-            "profile.js"
+            "select2.min.js",
+            "*.js"
         ]))
         .pipe(concat('javascript.js'))
         .pipe(gulpif(env === 'prod', uglify()))
@@ -42,14 +42,14 @@ gulp.task('css', function(){
         .pipe(gulp.dest('web/css'));
 });
 
-gulp.task('cssRetina', function(){
-    return gulp.src([
-            'src/Acted/LegalDocsBundle/Resources/public/retinaCss/*.css'])
-        .pipe(concat('style-retina.css'))
-        .pipe(cssimport({}))
-        .pipe(autoprefixer())
-        .pipe(gulpif(env === 'prod', uglifycss()))
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('web/css'));
-});
-gulp.task('default', ['js', 'css', 'cssRetina']);
+//gulp.task('cssRetina', function(){
+//    return gulp.src([
+//            'src/Acted/LegalDocsBundle/Resources/public/retinaCss/*.css'])
+//        .pipe(concat('style-retina.css'))
+//        .pipe(cssimport({}))
+//        .pipe(autoprefixer())
+//        .pipe(gulpif(env === 'prod', uglifycss()))
+//        .pipe(sourcemaps.write('./'))
+//        .pipe(gulp.dest('web/css'));
+//});
+gulp.task('default', ['js', 'css']);

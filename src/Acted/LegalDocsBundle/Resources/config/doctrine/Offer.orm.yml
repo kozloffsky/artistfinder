@@ -32,6 +32,9 @@ Acted\LegalDocsBundle\Entity\Offer:
         performances:
           targetEntity: Acted\LegalDocsBundle\Entity\Performance
           inversedBy: offers
+          joinColumn:
+              referencedColumnName: id
+              onDelete: CASCADE
     oneToMany:
         eventOffer:
           targetEntity: Acted\LegalDocsBundle\Entity\EventOffer
