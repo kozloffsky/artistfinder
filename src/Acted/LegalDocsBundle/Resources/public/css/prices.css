@@ -222,7 +222,7 @@ main.prices{
     position: relative;
     text-align: left;
 }
-.act .price-list .add{padding-top: 1px; position: absolute;}
+/*.act .price-list .add{padding-top: 1px; position: absolute;}*/
 .act .add .ico-box{margin-left: 8px;}
 .act .add.alt:after{
     content: "";
