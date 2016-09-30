@@ -23,6 +23,7 @@ class ServiceType extends AbstractType
             ->add('title', TextType::class, [
                 'constraints' => [new NotBlank()],
             ])
+            ->add('isVisible')
         ;
     }
 

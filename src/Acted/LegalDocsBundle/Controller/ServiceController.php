@@ -73,7 +73,7 @@ class ServiceController extends Controller
         return new JsonResponse(['status' => 'success', 'service' => $createdService]);
     }
 
-    public function editAction(Request $request, Service $service)
+    public function editPriceServiceAction(Request $request, Service $service)
     {
         $serializer = $this->get('jms_serializer');
 

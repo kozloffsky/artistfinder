@@ -5,7 +5,7 @@ price_service_create:
 
 price_service_edit:
     path: /service/{id}/edit
-    defaults: { _controller: ActedLegalDocsBundle:Service:edit }
+    defaults: { _controller: ActedLegalDocsBundle:Service:editPriceService }
     methods:  PATCH
 
 price_service_remove:

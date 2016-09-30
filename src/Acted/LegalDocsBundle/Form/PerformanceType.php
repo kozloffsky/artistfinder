@@ -27,6 +27,7 @@ class PerformanceType extends AbstractType
             ])
             ->add('techRequirement')
             ->add('profile')
+            ->add('isVisible')
             ->add('media')
             ->add('status', ChoiceType::class, [
                 'choices_as_values' => true,
