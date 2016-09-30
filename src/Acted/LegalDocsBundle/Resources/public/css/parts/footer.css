@@ -1,0 +1,134 @@
+footer {
+    position: relative;
+    padding-top: 52px;
+    background: white;
+}
+
+footer .menus {
+    margin-bottom: 60px;
+}
+
+footer .copyright {
+    text-align: center;
+    color: #a6a6a6;
+    font-size: 12px;
+    padding-bottom: 20px;
+}
+
+footer .social-icons {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    margin-top: -29px;
+}
+
+footer .social-icons ul {
+    padding: 0;
+}
+
+footer .social-icons ul>li {
+    list-style-type: none;
+    display: inline-block;
+    width: 58px;
+    height: 58px;
+    background: white;
+    border-radius: 29px;
+    margin: 0 27px;
+}
+
+footer .social-icons .icon {
+    width: 58px;
+    height: 58px;
+}
+
+footer .social-icons .icon.facebook {
+    background-image: url("../../assets/images/fb.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+footer .social-icons .icon.instagram {
+    background-image: url("../../assets/images/inst.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+footer .social-icons .icon.twitter {
+    background-image: url("../../assets/images/twit.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+footer.footer-dark .social-icons .icon.facebook {
+    background-image: url("../../assets/images/fb_white.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+footer.footer-dark .social-icons .icon.instagram {
+    background-image: url("../../assets/images/inst_white.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+footer.footer-dark .social-icons .icon.twitter {
+    background-image: url('../../assets/images/twit_white.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+footer .menus ul {
+    padding-left: 45%;
+}
+
+footer .menus ul>li {
+    list-style-type: none;
+    margin-bottom: 7px;
+}
+
+footer .menus ul>li.title {
+    font-family: LatoBold;
+    font-size: 18px;
+    color: #808080;
+}
+
+footer .menus ul>li>a {
+    font-family: LatoRegular;
+    font-size: 16px;
+    color:  #999999;
+    text-decoration: none;
+}
+
+footer .menus ul>li>a:hover {
+    text-decoration: underline;
+}
+
+
+
+footer.footer-dark {
+    background-color: #222428;
+}
+
+footer.footer-dark .social-icons ul>li {
+    background-color: #222428;
+}
+
+@media (max-width: 991px) {
+    footer .menus ul {
+        padding-left: 33%;
+    }
+}
+
+@media (max-width: 767px) {
+    footer .menus ul {
+        padding-left: 38%;
+        padding-bottom: 20px;
+    }
+}
+
+@media (max-width: 400px) {
+    footer .social-icons ul > li {
+        margin: 0 20px;
+    }
+}
