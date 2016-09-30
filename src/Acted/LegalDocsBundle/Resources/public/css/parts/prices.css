@@ -368,6 +368,10 @@ main.prices .note{
 .prices .act-section .btn-row .button-gradient{margin-right: 20px;}
 .prices .fa-trash { padding-left: 12px; color: rgba(121, 121, 121, 0.41); font-size: 22px;}
 
+.prices .fa.fa-trash:hover {
+    cursor: pointer;
+}
+
 @media (max-width: 1199px) {
     .prices .act,
     .prices .act .quantity{
