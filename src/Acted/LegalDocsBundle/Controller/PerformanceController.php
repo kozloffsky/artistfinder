@@ -171,6 +171,14 @@ class PerformanceController extends Controller
         $performance = new Performance();
 
         $data = $performancePriceForm->getData();
+
+        if (empty($data)) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'There are not any data'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
+
         $artist = $data['artist'];
         $profile = $artist->getUser()->getProfile();
 
@@ -342,6 +350,14 @@ class PerformanceController extends Controller
 
         try {
             $data = $performancePricePackageForm->getData();
+
+            if (empty($data)) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'There are not any data'
+                ],  Response::HTTP_BAD_REQUEST);
+            }
+
             $artist = $data['artist'];
             $performance = $data['performance'];
             $profile = $artist->getUser()->getProfile();

@@ -31,6 +31,14 @@ class PriceRateController extends Controller
         /*Begin transcation*/
         try {
             $data = $priceRateEditForm->getData();
+
+            if (empty($data)) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'There are not any data'
+                ],  Response::HTTP_BAD_REQUEST);
+            }
+
             $priceAmount = $data['price'];
 
             $priceRepository = $this->getDoctrine()
