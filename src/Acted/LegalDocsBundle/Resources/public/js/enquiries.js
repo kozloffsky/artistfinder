@@ -55,7 +55,7 @@ $(function() {
     })
 
     function rejectRequest(id){
-        console.log(id)
+        //console.log(id)
         $.ajax({
             type:'GET',
             url:'/event/change_status/reject/'+id+'?type=no_email',
@@ -75,7 +75,7 @@ $(function() {
     })
 
     function archiveMessage(id){
-        console.log(id)
+        //console.log(id)
         $.ajax({
             type:'POST',
             url:'/dashboard/archived/message/'+id,
@@ -93,7 +93,7 @@ $(function() {
 
     function messagesFilter(val){
         var userId = $('header #userInformation').text();
-        console.log(val)
+        //console.log(val)
         $.ajax({
             type:'GET',
             url:'/dashboard/filter/messages/'+userId+'?filters='+val,

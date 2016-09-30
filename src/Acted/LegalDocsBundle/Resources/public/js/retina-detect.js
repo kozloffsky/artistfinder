@@ -3,7 +3,7 @@ $(function () {
 
     var retina = window.devicePixelRatio > 1;
 
-    console.log(retina)
+    //console.log(retina)
     if(retina) {
         $("link[href*='css/styles.css']").attr('href', '/css/style-retina.css');
         $('body').animate({'opacity': 1}, 800);

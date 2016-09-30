@@ -19,6 +19,8 @@ $(function(){
         imgNaturWidth = 320,
         imgNaturHeight = 240;
 
+    var $uploadCropMediaOffer;
+
     function chooseCityQuote(selectedCountryOption){
         if(selectedCountryOption){
             $.ajax({
@@ -91,6 +93,8 @@ $(function(){
                 $("[name=\"" + k + "\"]").closest('.box').find('label').css("opacity", 1);
                 $("[name=\"" + k + "\"]").closest('.box').find('label').text(textError);
             }
+
+        $("#addImageModal").modal('hide');
     }
 
     selectBoxEventHandler();
@@ -99,62 +103,64 @@ $(function(){
     $('#setting_city').on('change', settingCityEventHandler);
     $('.settings input[type="radio"]').on('change', radioBoxEventHandler);
 
-    fileUpload.change(function () {
-        if ((file = this.files[0])) {
-            var FR = new FileReader();
+    function readFile(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
-            FR.onload = function(e) {
-                base64 = e.target.result;
+            reader.onload = function (e) {
+                $uploadCropMediaOffer.croppie('bind', {
+                    url: e.target.result
+                });
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+        else {
+            swal("Sorry - you're browser doesn't support the FileReader API");
+        }
+    }
+
+    $('#uploadNewMedia').on('change', function () {
+        readFile(this);
+    });
+
+    $("button.upload-NewMedia").on('click', function(e) {
+       e.preventDefault();
+        $('#hidden-demo').croppie('bind')
+        $uploadCropMediaOffer.croppie('result', {
+            type: 'canvas',
+            size: 'viewport'
+        }).then(function (resp) {
+                base64 = resp;
 
                 $("div.img-box").removeAttr("style");
                 $("div.img-box").css("background", "url('"+base64+"') no-repeat");
-                $("#cropperModal #image").attr("src", base64);
-                $("#cropperModal").modal();
-            };
 
-            FR.readAsDataURL(file);
-        }
+                var form = prepareSettingsData();
+                HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
+                HTTPProvider.send(form, settingsFormErrorHandler);
+        });
     });
 
-    $('#cropperModal').on('shown.bs.modal', function () {
-        var dkrm = new Darkroom("#cropperModal .img-container img", {
-            minWidth: 100,
-            minHeight: 100,
-            maxWidth: 320,
-            maxHeight: 240,
-            ratio: 4/3,
-            backgroundColor: '#000',
-            plugins: {
-                crop: {
-                    minHeight: 50,
-                    minWidth: 50,
-                    maxHeight: 240,
-                    maxWidth: 320,
-                    ratio: 4/3
-                },
-                save: {
-                    callback: function() {
-                        this.darkroom.selfDestroy();
-                        base64 = dkrm.canvas.toDataURL();
+    $("input[name=\"photo\"]").on('click', function(e) {
+        e.preventDefault();
 
-                        $("div.img-box").css("background", "url('"+base64+"') no-repeat");
-                        $("#cropperModal #image").attr("src", base64);
-                        $("#cropperModal").modal("hide");
-
-                        var form = prepareSettingsData();
-
-                        HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
-                        HTTPProvider.send(form, settingsFormErrorHandler);
-                    }
-                }
+        $uploadCropMediaOffer = $('#addImageModal .changeImageContiner').croppie({
+            viewport: {
+                width: 320,
+                height: 240
             },
-            initialize: function() {
-                var cropPlugin = this.plugins['crop'];
-
-                cropPlugin.requireFocus();
+            boundary: {
+                width: 300,
+                height: 300
             }
         });
-    }).on('hidden.bs.modal', function () {});
+
+        setTimeout(function(){
+            $('#addImageModal .changeImageContiner').croppie('bind');
+        }, 1000);
+
+        $("#addImageModal").modal();
+    });
 
     btnEdit.on({
         'click': function (e) {

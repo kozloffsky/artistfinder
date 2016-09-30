@@ -269,7 +269,7 @@ $(function() {
                     $('#loadSpinner').fadeOut(500);
                 },
                 success: function (responseText) {
-                    console.log(responseText);
+                    //console.log(responseText);
                     $(changePerformanceBlock).parent('.video').find('iframe').remove();
                     $(changePerformanceBlock).parent('.video').find('img').remove();
                     $(changePerformanceBlock).parent('.video').find('.editingProf .mediaId').text(responseText.media.id)
@@ -291,7 +291,7 @@ $(function() {
                     $('#loadSpinner').fadeOut(500);
                 },
                 success: function (responseText) {
-                    console.log(responseText);
+                    //console.log(responseText);
                     $(changePerformanceBlock).parent('.video').find('iframe').remove();
                     $(changePerformanceBlock).parent('.video').find('img').attr('src','');
                     $(performanceVideoBlock).html('<iframe src=' + responseText.media.link + '  width="395" height="274" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen>');
@@ -346,13 +346,13 @@ $(function() {
             performanceId = parentPerformance.attr('id'),
             dataSendOfferTitile = $(parentPerformance).find('.offerTitlePerf').val(),
             dataSendOfferInf = $(parentPerformance).find('.description-area').val();
-        console.log(performanceId);
+        //console.log(performanceId);
         var dataToSendOffer = {"performance[title]": dataSendOfferTitile,
             "performance[status]":"published",
             "performance[techRequirement]": dataSendOfferInf};
-        console.log(validatePerformance(performanceId))
+        //console.log(validatePerformance(performanceId))
         if(validatePerformance(performanceId)){
-            console.log('validateTru')
+            //console.log('validateTru')
             $.ajax({
                 type: "PATCH",
                 url: '/profile/performance/' + performanceId + '/edit',
@@ -363,7 +363,7 @@ $(function() {
                 }
             })
         } else {
-            console.log('validateFalse')
+            //console.log('validateFalse')
             var slug = $('#slug').text(),
                 perfCreateUrl = '/profile/performance/' + performanceId + '/edit',
                 parentPerformanceBlock = $(parentPerformance).parent('article');
@@ -380,7 +380,7 @@ $(function() {
             performanceId = parentPerformance.attr('id'),
             dataSendOfferTitile = $(parentPerformance).find('.offerTitlePerf').val(),
             dataSendOfferInf = $(parentPerformance).find('.description-area').val();
-        console.log(performanceId);
+        //console.log(performanceId);
         var dataToSendOffer = {"performance[title]": dataSendOfferTitile,
             "performance[status]":"draft",
             "performance[techRequirement]": dataSendOfferInf};
@@ -395,14 +395,14 @@ $(function() {
     })
 
     function userPerformanceUpload(parentPerformance, performanceId, mediaId, imageBlockInsert, newPerformance) {
-        console.log(parentPerformance, performanceId, mediaId, imageBlockInsert)
+        //console.log(parentPerformance, performanceId, mediaId, imageBlockInsert)
         var isActiveCropper = false;
         $('#addImageModal .changeImageContiner').empty().removeClass('croppie-container');
         $('#uploadNewMedia').val('');
         $('#addImageModal').modal('show');
 
         var imgChangeBlock = imageBlockInsert;
-        console.log(imgChangeBlock)
+        //console.log(imgChangeBlock)
 
         var slug = $('#slug').text();
 
@@ -470,7 +470,7 @@ $(function() {
                                 },
                                 success: function (responseText) {
                                     isActiveCropper = true;
-                                    console.log(imgChangeBlock)
+                                    //console.log(imgChangeBlock)
                                     $("#uploadNewMedia").val('');
                                     //var placeToAddNewImage = imgChangeBlock.parent('.video');
                                     //console.log(placeToAddNewImage);
@@ -498,7 +498,7 @@ $(function() {
                                 },
                                 success: function () {
                                     isActiveCropper = true;
-                                    console.log(imgChangeBlock)
+                                    //console.log(imgChangeBlock)
                                     $("#uploadNewMedia").val('');
                                     //var placeToAddNewImage = imgChangeBlock.parent('.video');
                                     //console.log(placeToAddNewImage);
@@ -526,7 +526,7 @@ $(function() {
                                 },
                                 success: function (responseText) {
                                     isActiveCropper = true;
-                                    console.log(imgChangeBlock)
+                                    //console.log(imgChangeBlock)
                                     $("#uploadNewMedia").val('');
                                     //var placeToAddNewImage = imgChangeBlock.parent('.video');
                                     //console.log(placeToAddNewImage);
@@ -554,7 +554,7 @@ $(function() {
                                 },
                                 success: function () {
                                     isActiveCropper = true;
-                                    console.log(imgChangeBlock)
+                                    //console.log(imgChangeBlock)
                                     $("#uploadNewMedia").val('');
                                     //var placeToAddNewImage = imgChangeBlock.parent('.video');
                                     //console.log(placeToAddNewImage);
@@ -586,7 +586,7 @@ $(function() {
             var getBigSliderContent = $('#imageSlider' + mediaId);
             var getMediaType = $(this).parents('section');
             var clickedElDelete = $(this);
-            console.log(getMediaType[0].id)
+            //console.log(getMediaType[0].id)
             $.ajax({
                 type: "DELETE",
                 url: '/profile/' + slug + '/media/' + mediaId,
@@ -649,15 +649,15 @@ $(function() {
             url: '/profile/' + slug + '/media/new',
             data: {"video": videoLink},
             success: function(responseText){
-                console.log(responseText)
+                //console.log(responseText)
                 var newVideoLink = responseText.media.link;
                 var videoThumbnail = responseText.media.thumbnail;
                 var newVideoId = responseText.media.id;
-                console.log(newVideoLink, videoThumbnail);
+                //console.log(newVideoLink, videoThumbnail);
                 var indexOfThumb = $('#video-pager .scale-thumb').length;
                 $('.bxVideoSlider').append('<li id="imageSlider'+newVideoId+'"><iframe src='+ newVideoLink +'  width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>');
                 $('#video-pager').append('<div class="scale-thumb thumb'+ indexOfThumb + 1 +'"><span class="removeNewImage deleteMedia" id='+newVideoId+'><i class="fa fa-times-circle-o"></i></span><a data-slide-index='+ indexOfThumb +' href=""><img id="'+newVideoId+'" src="'+videoThumbnail+'"/></a></div>');
-                console.log(indexOfThumb);
+                //console.log(indexOfThumb);
                 $("#media [data-target='#section-video'] .badge").text(indexOfThumb + 1);
                 //videoSlider.reloadSlider();
                 var videoSliderParent = $('.bxVideoSlider').parent('.bx-viewport').length
@@ -802,7 +802,7 @@ $(function() {
         });
 
         var backgroundCurrentSrc = $('#bgImageSrc').text();
-        console.log(backgroundCurrentSrc);
+        //console.log(backgroundCurrentSrc);
         $uploadCropBackground.croppie('bind', {
             url: backgroundCurrentSrc
         });
@@ -885,7 +885,7 @@ $(function() {
             url: '/profile/' + slug + '/edit',
             data: {"profile[categories]": selectedCat},
             success: function(){
-                console.log(selectedCatName)
+                //console.log(selectedCatName)
                 $('.currentCatUser').remove();
                 var newCategories = $.map(selectedCatName, function(value, i) {
                     return '<li class="currentCatUser"><a href="#">'+ value +'</a><div class="divider"></div></li>';
@@ -964,8 +964,8 @@ $(function() {
                             $('#loadSpinner').fadeOut(500);
                         },
                         success: function (response) {
-                            console.log(response);
-                            console.log(isActiveCropper)
+                            //console.log(response);
+                            //console.log(isActiveCropper)
                             isActiveCropper = true;
                             $("#uploadNewMedia").val('');
                             //$('#addImageModal .changeImageContiner').croppie('destroy');
@@ -1041,14 +1041,14 @@ $(function() {
     });
 
     function createNewPerf(newPerformanceBlock){
-        console.log(newPerformanceBlock)
+        //console.log(newPerformanceBlock)
         var slug = $('#slug').text();
         $.ajax({
             type: "POST",
             url: '/profile/' + slug + '/performance/new',
             data: {"performance[title]": 'new event',"performance[status]":"draft"},
             success: function (response) {
-                console.log(response)
+                //console.log(response)
                 newPerformanceBlock.insertBefore('.controls.add').removeClass('hidden').fadeIn(800);
                 newPerformanceBlock.removeClass('newPerformanceBlank');
                 $(newPerformanceBlock).find('form').attr('id', response.performance.id);
@@ -1057,7 +1057,7 @@ $(function() {
     }
 
     $(document).on('click','.saveOfferPerf', function(){
-        console.log('saveOffer')
+        //console.log('saveOffer')
         var parentPerformanceForm = $(this).parents('form'),
             parentPerformance = parentPerformanceForm.parent('article'),
             performanceId = parentPerformanceForm.attr('id'),
@@ -1065,8 +1065,8 @@ $(function() {
             dataSendOfferTitile = $(parentPerformanceForm).find('.offerTitlePerf').val(),
             dataSendOfferInf = $(parentPerformanceForm).find('.description-area').val(),
             performanceCurentStatus = $(parentPerformanceForm).find('.makeDraft');
-        console.log(performanceCurentStatus);
-        console.log(performanceId);
+        //console.log(performanceCurentStatus);
+        //console.log(performanceId);
         var dataToSendOffer = {"performance[title]": dataSendOfferTitile,
                                "performance[status]":"draft",
                                "performance[techRequirement]": dataSendOfferInf};
@@ -1075,7 +1075,7 @@ $(function() {
         } else {
             var perfCreateUrl = '/profile/performance/' + performanceId + '/edit';
         }
-        console.log(slug, perfCreateUrl, dataSendOfferTitile)
+        //console.log(slug, perfCreateUrl, dataSendOfferTitile)
         if(performanceCurentStatus.length > 0){
             if (validatePerformance(performanceId)){
                 $.ajax({
@@ -1191,9 +1191,9 @@ $(function() {
         });
 
         function stopVideoFrame(frameStartedId){
-            console.log(frameStartedId);
+            //console.log(frameStartedId);
             for(var propt in videoClickedIds) {
-                console.log(frameStartedId);
+                //console.log(frameStartedId);
                 if(getVideoFrameName(videoClickedIds[propt]) == 'youtube' && propt != frameStartedId){
                     $('#'+propt+'')[0].contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
                 }

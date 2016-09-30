@@ -48,7 +48,7 @@ $(function () {
   //Change registration modal state.
   function chageState(state, isArtist) {
     currentState = state;
-    console.log(state, isArtist);
+    //console.log(state, isArtist);
     switch (state) {
       case 1:
         showFirstPage();
@@ -222,7 +222,7 @@ $(function () {
     var userInformation = $('.artistRegForm').serialize();
     var categoriesForm = $('.artistCategoriesChoose > #categoriesForm').serialize();
     var userRole = 'role=ROLE_ARTIST';
-    console.log(categoriesForm)
+    //console.log(categoriesForm)
     registerArtist(userInformation, categoriesForm, userRole);
   };
 
@@ -368,7 +368,7 @@ $(function () {
 
   function sendQuoteIfExist(userData){
     var quote = localStorage.getItem('quoteRequest');
-    console.log(quote)
+    //console.log(quote)
     if(quote){
       $.ajax({
         type:'POST',
@@ -396,7 +396,7 @@ $(function () {
           $('#quoteRequestSecond .errorCat').text('').hide();
           $('#requestQuoteForm .errorCat').text('').hide();
           $.each(response.responseJSON, function(key, value) {
-            console.log(key, value);
+            //console.log(key, value);
             $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
             if(key == 'performance'){
               $('#quoteRequestSecond .errorCat').text(value).show();
@@ -423,7 +423,7 @@ $(function () {
       url: '/resetting/request',
       data: recoveryPasswordVal,
       success: function(response){
-        console.log(response)
+        //console.log(response)
         if(response.error){
           $('#errorLogRecovery').text(response.error).show();
         } else {
