@@ -97,7 +97,7 @@ $(function(){
 
     function markMessageAsRead(chatId){
         if (messageReaded == false){
-            console.log(messageReaded)
+            //console.log(messageReaded)
             messageReaded = true;
             $.ajax({
                 type:'POST',
@@ -130,7 +130,7 @@ $(function(){
     function changeCityOnMapSelect(){
         var selectedCityOption = $('#cityEvent').find('option:selected').val(),
             selectedCityCoordinates = $('#eventLocationCoordinates .eventCityId'+selectedCityOption);
-        console.log(selectedCityCoordinates);
+        //console.log(selectedCityCoordinates);
         var eventLocationMap= {};
         eventLocationMap.latitude = $(selectedCityCoordinates).find('.latitude').text();
         eventLocationMap.longitude = $(selectedCityCoordinates).find('.longitude').text();
@@ -180,7 +180,7 @@ $(function(){
                 var fileName = $(this).attr('href'),
                     fileExtension = fileName.split('.').pop();
                 if(fileExtension == 'pdf'){
-                    console.log('pdf');
+                    //console.log('pdf');
                     $(this).find('img').attr('src', '/assets/images/pdf.png');
                 } else if (fileExtension == 'zip'){
                     $(this).find('img').attr('src', '/assets/images/zip.png');
@@ -196,14 +196,14 @@ $(function(){
          * connect
          */
         webSocket.on("socket/connect", function(session){
-            console.log("Successfully Connected!");
+            //console.log("Successfully Connected!");
         })
 
         /**
          * disconnect
          */
         webSocket.on("socket/disconnect", function(error){
-            console.log("Disconnected for " + error.reason + " with code " + error.code);
+            //console.log("Disconnected for " + error.reason + " with code " + error.code);
         });
 
         webSocket.on("socket/connect", function(session){
@@ -228,7 +228,7 @@ $(function(){
                             dataFiles.append('files[]', file);
                         })
                     });
-                    console.log(formDataContent.length);
+                    //console.log(formDataContent.length);
                     dataFiles.append('message', text);
                     if (text.length > 0 || formDataContent.length > 0) {
                         $.ajax({
@@ -273,7 +273,7 @@ $(function(){
 
 
             function postMessage(messageChat){
-                console.log(messageChat)
+                //console.log(messageChat)
                 if(messageChat.role){
                     var chatMessageFiles = '';
                     if(messageChat.file){
@@ -282,7 +282,7 @@ $(function(){
                             chatMessageFiles += '<a href="'+this.path+'"><img class="chatImage" src="'+this.path+'"></a>';
                         })
                         chatMessageFiles += '</p>';
-                        console.log(chatMessageFiles)
+                        //console.log(chatMessageFiles)
                     }
                     if (messageChat.msg){
                         var chatMessageText = '<pre>'+messageChat.msg+'</pre>';

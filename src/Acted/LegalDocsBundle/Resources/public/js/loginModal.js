@@ -48,7 +48,7 @@ $(function () {
                             }, 2000);
                         },
                         error: function(response){
-                            console.log(response.responseJSON)
+                            //console.log(response.responseJSON)
                             $('#userInformation').text()
                             $('#loadSpinner').fadeOut(500);
                             $('#loginModal').modal('hide');
@@ -57,7 +57,7 @@ $(function () {
                             $('#quoteRequestSecond .errorCat').text('').hide();
                             $('#requestQuoteForm .errorCat').text('').hide();
                             $.each(response.responseJSON, function(key, value) {
-                                console.log(key, value);
+                                //console.log(key, value);
                                 $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
                                 if(key == 'performance'){
                                     $('#quoteRequestSecond .errorCat').text(value).show();
@@ -81,7 +81,7 @@ $(function () {
             },
             error: function(response){
                 var responseTextLogIn = response.responseJSON;
-                console.log(responseTextLogIn.error);
+                //console.log(responseTextLogIn.error);
                 $('#errorLogIn').text(responseTextLogIn.error);
                 $('#errorLogIn').css('display', 'block');
             }

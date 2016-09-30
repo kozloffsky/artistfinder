@@ -9,7 +9,7 @@ $(function () {
       $('img.avatar').each(function(){
         var imageSrc = $(this).attr('src');
         if(imageSrc != undefined) {
-          console.log(imageSrc.length);
+          //console.log(imageSrc.length);
           if (imageSrc.length <= 1) {
             $(this).attr('src', '/assets/images/noAvatar.png');
           }
@@ -28,7 +28,7 @@ $(function () {
   function checkIfUserForcedLogin(){
     var currentUrl = window.location.href ;
     var matchesUrl = currentUrl.split('/');
-    console.log(matchesUrl[3])
+    //console.log(matchesUrl[3])
     if (matchesUrl[3] == '?login_form'){
       $('#loginModal').modal('show');
     }
@@ -111,7 +111,7 @@ $(function () {
     var $nameBlock = $($item.parent().find('.caption-block')[0]);
     $nameBlock.attr('style', style);
 
-    console.log();
+    //console.log();
   }
 
   var carousel;

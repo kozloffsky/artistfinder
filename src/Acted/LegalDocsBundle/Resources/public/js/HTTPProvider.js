@@ -24,16 +24,16 @@ HTTPProvider.prototype.onLoad = function(event) {
 };
 
 HTTPProvider.prototype.onError = function(e) {
-    console.log("ERROR: ", e);
+    //console.log("ERROR: ", e);
 };
 
 HTTPProvider.prototype.listenRequests = function() {
-    console.log("an ajax request was made")
+    //console.log("an ajax request was made")
 };
 
 HTTPProvider.prototype.onProgress = function(e) {
     var percentComplete = (e.position / e.totalSize)*100;
-    console.log("Percent %: " + percentComplete);
+    //console.log("Percent %: " + percentComplete);
 };
 /**
  * Sends request

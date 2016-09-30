@@ -23,7 +23,7 @@ $(function () {
 
     function getNumOfBlocksToShow(){
         var windowWidth = window.innerWidth;
-        console.log(windowWidth)
+        //console.log(windowWidth)
         if(windowWidth <= 991 && windowWidth >= 839){
             blocksToShow = 16;
         } else {
@@ -31,7 +31,7 @@ $(function () {
         }
     }
     getNumOfBlocksToShow();
-    console.log(blocksToShow);
+    //console.log(blocksToShow);
 
 
     $('.header-background').appendTo('header.search');
@@ -84,7 +84,7 @@ $(function () {
 
 
         var countSlidersRecommended = $('.recommendationsTabContent .bx-viewport').length;
-        console.log(countSlidersRecommended)
+        //console.log(countSlidersRecommended)
         var slidersCount = $('.searchRecomendationWrapper').length;
         if(countSlidersRecommended == 0) {
             $('.searchRecomendationWrapper').bxSlider({
@@ -222,7 +222,7 @@ $(function () {
 
     function checkUserPosition(){
         var cityChosen = $('#eventLocationForm #region').val();
-        console.log(cityChosen)
+        //console.log(cityChosen)
         if(!cityChosen){
                 $('.results select[name="distance"]').prop('disabled', true);
                 $('#range-near').prop('disabled', true);
@@ -281,7 +281,7 @@ $(function () {
     $('.searchFormStart').on('click',function (e) {
         e.preventDefault();
         var searchFormSerialize = $('#searchLoc, #eventLocationForm, #searchCategory, #artistLocationSearch').serialize();
-        console.log(searchFormSerialize);
+        //console.log(searchFormSerialize);
         getFilteredRes(searchFormSerialize)
         $('html,body').animate({
             scrollTop: $('.results').offset().top
@@ -291,7 +291,7 @@ $(function () {
 
     $('#search-region, #region, #searchCategory input, #artistLocationSearch input').on('change', function(){
         var searchFormSerialize = $('#searchLoc, #eventLocationForm, #searchCategory, #artistLocationSearch').serialize();
-        console.log(searchFormSerialize);
+        //console.log(searchFormSerialize);
         getFilteredRes(searchFormSerialize);
     });
 
@@ -302,7 +302,7 @@ $(function () {
             data: searchFormSerialize + '&limit=' +blocksToShow,
             success: function(response){
                 var checkedCategoriesFind = $('#searchCategory input:checkbox:checked').length;
-                console.log(checkedCategoriesFind);
+                //console.log(checkedCategoriesFind);
                 if(checkedCategoriesFind > 0 && !searchResMain) {
                     createNewFilterResults(response);
                 } else {
@@ -314,7 +314,7 @@ $(function () {
 
     $('#recomendedFilter select').on('change', function(){
         var filtersCatSelectGroup = $('#recomendedFilter select');
-        console.log(this.id);
+        //console.log(this.id);
         if (this.id == 'recFilterRating') {
             $('#recomendedFilter #recFilterPrice').prop("disabled", true);
         } else if (this.id == 'recFilterRating'){
@@ -337,7 +337,7 @@ $(function () {
 /**/
     $('#recomendedFilterSearch select').on('change', function(){
         var filtersCatSelectGroup = $('#recomendedFilterSearch select');
-        console.log(this.id);
+        //console.log(this.id);
         var searchResTabMain = true;
         if (this.id == 'recFilterRating') {
             $('#recomendedFilterSearch #recFilterPrice').prop("disabled", true);
@@ -350,7 +350,7 @@ $(function () {
     });
 
     $('#recomendedFilterSearch input:checkbox').on('change', function(){
-        console.log('fgdgdfgfsdgf')
+        //console.log('fgdgdfgfsdgf')
         var searchResTabMain = true;
         $('#recomendedFilter select').prop( "disabled", true );
         var searchAllCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch, #recomendedFilterSearch').serialize()
@@ -378,7 +378,7 @@ $(function () {
 
 
     function filterRecomended(recommendedCatFiltering){
-        console.log(recommendedCatFiltering)
+        //console.log(recommendedCatFiltering)
         $.ajax({
             type:'GET',
             url: '/batch/artist',
@@ -390,7 +390,7 @@ $(function () {
     }
 
     function searchResultMainCategories(response){
-        console.log(response);
+        //console.log(response);
         $('.SearchResultTab').remove();
         $('<li data-toggle="#tab-SearchResultTabContent" class="tab SearchResultTab tab recommendations">'+
             '<a>Search result</a>'+
@@ -421,7 +421,7 @@ $(function () {
         $.each(searchResLength,function() {
             totalCategories += this;
         });
-        console.log(totalCategories)
+        //console.log(totalCategories)
         if(totalCategories == 0){
             var searchCat = 'SearchResultTabContent'
             noResInCat(searchCat);
@@ -444,7 +444,7 @@ $(function () {
     }
 
     function recomendedSearchRes(response){
-        console.log(response);
+        //console.log(response);
         $('.recommendations .slider').remove();
         loopSearchRes();
         function loopSearchRes(){
@@ -474,7 +474,7 @@ $(function () {
         $(artists).each(function () {
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString();
-            console.log(this.media.link);
+            //console.log(this.media.link);
             if(this.media.link){
                 var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
             } else{
@@ -603,7 +603,7 @@ $(function () {
                     '</div>';
 
                 var checkIfTabExist = $('#tab-'+propt+'').length;
-                console.log(checkIfTabExist)
+                //console.log(checkIfTabExist)
                 if(checkIfTabExist == 0) {
                     $(tabContentBlock).appendTo('.results-content > .container');
                 }
@@ -612,7 +612,7 @@ $(function () {
                     '<a>'+searchCategoryName+'</a>'+
                     '<div class="deleteTabBlock"><span class="hidden">'+searchCategoryId+'</span><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>'+
                     '</li>');
-                console.log(response[propt].length)
+                //console.log(response[propt].length)
                 if (response[propt].length == 0){
                     noResInCat(propt)
                 } else {
@@ -671,12 +671,12 @@ $(function () {
     }
 
     function loopArtistsInCat(artists, propt) {
-        console.log(propt)
+        //console.log(propt)
 
         $(artists).each(function () {
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString();
-            console.log(this.media.link);
+            //console.log(this.media.link);
             if(this.media.link){
                 var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
             } else{
@@ -777,11 +777,11 @@ $(function () {
     }
 
     function catFilteringSearch(categoryFiltering, mainCats){
-        console.log(categoryFiltering)
+        //console.log(categoryFiltering)
         var formsWithoutCat = $('#searchLoc, #eventLocationForm, #artistLocationSearch, #'+categoryFiltering+' .filtersCat').serialize();
         //var catFilteringSerialize = $('#'+categoryFiltering+' .filtersCat').serialize();
         $('.filtersCat select').prop( "disabled", false );
-        console.log(mainCats);
+        ///console.log(mainCats);
         if(mainCats){
             var datasendSearch = formsWithoutCat + '&mainCategory=' + categoryFiltering;
         } else {
@@ -794,7 +794,7 @@ $(function () {
             success: function(response){
                 //console.log(response);
                 $('#tab-'+categoryFiltering+' > .row .categoriesCardsSearch, #tab-'+categoryFiltering+' > .row .no-res-block, #tab-'+categoryFiltering+' > .row .show-more').remove();
-                console.log(response.length)
+                //console.log(response.length)
                 if (response.length == 0){
                     noResInCat(categoryFiltering)
                 } else {
@@ -880,20 +880,20 @@ $(function () {
 
     function findSearchMainCat(searchCatName) {
         var searchMainCatId = $('#mainCategoryList').find('#' + searchCatName).text();
-        console.log('searchMainCategory')
+        //console.log('searchMainCategory')
         $.ajax({
             type: 'GET',
             url: '/artist',
             data: {'mainCategory': searchMainCatId, 'limit': blocksToShow},
             success: function (response) {
-                console.log(response);
+                //console.log(response);
                 catSearchRes(searchCatName, searchMainCatId, response);
             }
         })
     }
 
     function catSearchRes(searchCatName, searchMainCatId, response){
-        console.log(searchCatName)
+        //console.log(searchCatName)
         var destinationTab = 'catSearchResNew',
             searchCategoryName = $('.categories-menu a[data-toggle="#' + searchMainCatId + '"]').text();
         var mainCatS = true;
@@ -934,7 +934,7 @@ $(function () {
             var clickedBlockDel = this,
                 tabContentToDel = $(clickedBlockDel).find('span').text(),
                 tabBlock = $(clickedBlockDel).parent('.tab');
-            console.log(tabBlock.hasClass('active'));
+            //console.log(tabBlock.hasClass('active'));
             if(tabBlock.hasClass('active')){
                 $('.tab').removeClass('active');
                 $('.recommendedTab').addClass('active');
@@ -986,7 +986,7 @@ $(function () {
     $('#searchCategory input').on('change',function(){
         var searchCategoryId = this.value;
         var catPostion = $(this).prop( "checked" );
-        console.log(catPostion);
+        //console.log(catPostion);
         if(catPostion){
             setTimeout(function(){
                 setActiveTab(searchCategoryId);
