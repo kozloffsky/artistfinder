@@ -5,7 +5,6 @@
         artist = JSON.parse(localStorage.getItem("user")).artistId;
     } catch (e) {
         artist = 0;
-        throw new Error("Local storage empty! Can't access to user object.");
     }
 
     function pricesApi() {
@@ -782,6 +781,7 @@
                 }
             ]
         };
+
         pricesApi.endpoints.performance.post({ performance_price: data });
         pricesApi.send(function(resp) {
             temp.data = resp.performance;

@@ -19,7 +19,7 @@ $(function(){
         imgNaturWidth = 320,
         imgNaturHeight = 240;
 
-    var $uploadCropMediaOffer;
+    var uploadCropMediaOffer;
 
     function chooseCityQuote(selectedCountryOption){
         if(selectedCountryOption){
@@ -108,7 +108,7 @@ $(function(){
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                $uploadCropMediaOffer.croppie('bind', {
+                uploadCropMediaOffer.croppie('bind', {
                     url: e.target.result
                 });
             };
@@ -126,7 +126,7 @@ $(function(){
     $("button.upload-NewMedia").on('click', function(e) {
        e.preventDefault();
         $('#hidden-demo').croppie('bind')
-        $uploadCropMediaOffer.croppie('result', {
+        uploadCropMediaOffer.croppie('result', {
             type: 'canvas',
             size: 'viewport'
         }).then(function (resp) {
@@ -144,7 +144,7 @@ $(function(){
     $("input[name=\"photo\"]").on('click', function(e) {
         e.preventDefault();
 
-        $uploadCropMediaOffer = $('#addImageModal .changeImageContiner').croppie({
+        uploadCropMediaOffer = $('#addImageModal .changeImageContiner').croppie({
             viewport: {
                 width: 320,
                 height: 240
