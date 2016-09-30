@@ -69,7 +69,7 @@
                  */
                 patch: function (id, data) {
                     options = {
-                        url: "/price/performance/" + id + "/remove",
+                        url: "/price/performance/" + id + "/edit",
                         method: "PATCH",
                         data: data
                     };
@@ -82,6 +82,24 @@
                         url: "/price/performance/" + id + "/remove",
                         method: "PATCH"
                     };
+                },
+                package: {
+                    /**
+                     * performance_price_package[package_name]
+                     * performance_price_package[artist]
+                     * performance_price_package[options][0][qty]
+                     * performance_price_package[options][0][duration]
+                     * performance_price_package[options][0][price1]
+                     * performance_price_package[performance]
+                     * @params:
+                     */
+                    post: function(data) {
+                        options = {
+                            url: "/price/performance/package/create",
+                            method: "POST",
+                            data: data
+                        };
+                    }
                 }
             },
             service: {
@@ -104,16 +122,6 @@
                     };
                 },
                 post: {
-                    /**
-                     * @params: none
-                     */
-                    package: function(data) {
-                        options = {
-                            url: "/price/service/package/create",
-                            method: "POST",
-                            data: data
-                        };
-                    },
                     /**
                      * @params:
                      * service_price[title]
@@ -160,18 +168,21 @@
                         url: "/price/service/"+id+"/remove",
                         method: "PATCH"
                     };
+                },
+                package: {
+                    /**
+                     * @params: none
+                     */
+                    post: function(data) {
+                        options = {
+                            url: "/price/service/package/create",
+                            method: "POST",
+                            data: data
+                        };
+                    }
                 }
             },
             package: {
-                /**
-                 * @params: none
-                 */
-                post: function() {
-                    options = {
-                        url: "/price/performance/package/create",
-                        method: "POST"
-                    };
-                },
                 /**
                  * @params: package id
                  * price_package[name]
@@ -304,9 +315,9 @@
             return html;
         };
 
-        this.rateComp = function() {
+        this.rateComp = function(option) {
 
-            var rates = this.data.currentPackage.options[0].rates,
+            var rates = option.rates,
                 len = rates.length,
                 html = "";
 
@@ -319,24 +330,17 @@
 
                     html += '<li>' + this.priceComp(rate, { i: i, len: len }) + '</li>';
 
-                    if(len <= 1) {
+                    if(len <= 1 && (this.data.type !== 'service')) {
                         html += '\
-                            <li>\
-                                <div class="add">\
-                                    <a add_price href="#">Add price</a><a class="ico-box" href="#"><i class="ico question">?</i></a>\
-                                </div>\
-                            </li>';
+                        <li>\
+                            <div class="add">\
+                                <a add_price href="#">Add price</a><a class="ico-box" href="#"><i class="ico question">?</i></a>\
+                            </div>\
+                        </li>';
                     }
-
-
                 }
 
                 html += '</ul>';
-                // if(!len) {
-                //     html += '<li>' + this.priceComp({ id: 1, price: { amount: 3000 }}, 1) + '</li>';
-                // }
-
-
 
             return html;
         };
@@ -381,7 +385,7 @@
         /**
          * Sets component
          */
-        this.setComp = function() {
+        this.setComp = function(rate) {
             var html = "",
                 addSetBtn = "";
 
@@ -410,12 +414,15 @@
         this.divComp = function(comp, flag) {
             var html = "";
 
+            var options = this.data.currentPackage.options;
+
+            // console.log("OPTIONS: ", options);
+
             if(comp == 'service') {
-                html += '<div class="col-2">'+this.rateComp() + '</div>';
+                html += '<div class="col-2">'+this.rateComp(options[0]) + '</div>';
             }
 
             if(comp == 'performance') {
-                var options = this.data.currentPackage.options;
 
                 if(!flag)
                     this.data.trashcanshow = options.length > 1 ? false : true;
@@ -430,8 +437,8 @@
                     if( key == (options.length - 1) )
                         this.data.lastset = true;
 
-                    html += '<div id="'+ options[key].id +'" set_option class="col">'+this.setComp()+'</div>';
-                    html += '<div class="col-2">'+this.rateComp() + '</div>';
+                    html += '<div id="'+ options[key].id +'" set_option class="col">'+this.setComp(options[key])+'</div>';
+                    html += '<div class="col-2">'+this.rateComp(options[key]) + '</div>';
                 }
             }
 
@@ -473,6 +480,7 @@
 
             var packCompHtml = "";
             var packages = this.data.packages;
+            var packageBtnHtml = "";
 
             for(var k in packages) {
                 this.data.currentPackage = packages[k];
@@ -485,9 +493,17 @@
                 packCompHtml += '</li></ul>';
             }
 
+            if(comp == 'performance') {
+                packageBtnHtml += '\
+                    <div class="button-gradient add-btn">\
+                        <button add_package type="button" class="btn register">Add Package</button>\
+                    </div>';
+            }
+
             return '<article '+comp+' act_id="'+ this.data.id+ '" class="act private">\
                         '+ this.headingComp() +'\
                         '+ packCompHtml +'\
+                        '+packageBtnHtml+'\
                     </article>';
         };
 
@@ -495,6 +511,7 @@
          * Performance component
          */
         this.PerformanceComp = function() {
+            this.data.type = 'performance';
             return this.containerComp('performance');
         };
 
@@ -502,6 +519,7 @@
          * Service component
          */
         this.ServiceComp = function() {
+            this.data.type = 'service';
             return this.containerComp('service');
         };
     };
@@ -559,32 +577,6 @@
             });
 
         })
-        .on("click", "[delete_price]", function(e) {
-            e.preventDefault();
-            var ul = $(this).closest("ul");
-            var list = ul.find("li");
-
-            var idx = $(this).closest("li").index();
-
-            var rateId = $(this).closest("dl").find("input").attr("id");
-
-            if(!idx) {
-                $(this).closest("ul").find("li").find("dt").text("Price: 1");
-                $(this).closest("ul").find("li").find("input[name=\"price_2\"]").attr("name", "price_1");
-            }
-
-            $(this).closest("li").remove();
-
-            if(list.length - 2  < 2) {
-                ul.find("a[add_price]").closest("li").show();
-                list.find("i.fa.fa-trash").hide();
-            }
-
-            pricesApi.endpoints.rate.delete(rateId);
-            pricesApi.send(function(resp) {
-                console.log(resp);
-            });
-        })
         .on("click", "[add_set]", function(e) {
             e.preventDefault();
 
@@ -611,6 +603,68 @@
                 _this.closest("div.add").remove();
             });
 
+        })
+        .on("click", "[add_package]", function() {
+
+            var article = $(this).closest("article");
+
+            var id = article.attr("act_id"),
+                comp;
+
+            if( typeof(article.attr("performance")) != "undefined" )
+                comp = "performance";
+
+            if( typeof(article.attr("service")) != "undefined" )
+                comp = "service";
+
+
+            var id = $(this).closest("article").attr("act_id");
+
+
+            var data = {
+                package_name: "Package template",
+                artist: artist,
+                options: [{
+                    qty: 1,
+                    duration: 45,
+                    price1: 3000
+                }],
+                performance: id
+            };
+
+            pricesApi.endpoints[comp].package.post({ performance_price_package: data});
+            pricesApi.send(function(resp) {
+                console.log(resp)
+            });
+        })
+        .on("click", "[edit_rate]", function(e) {
+            e.defaultPrevented;
+        })
+        .on("click", "[delete_price]", function(e) {
+            e.preventDefault();
+            var ul = $(this).closest("ul");
+            var list = ul.find("li");
+
+            var idx = $(this).closest("li").index();
+
+            var rateId = $(this).closest("dl").find("input").attr("id");
+
+            if(!idx) {
+                $(this).closest("ul").find("li").find("dt").text("Price: 1");
+                $(this).closest("ul").find("li").find("input[name=\"price_2\"]").attr("name", "price_1");
+            }
+
+            $(this).closest("li").remove();
+
+            if(list.length - 2  < 2) {
+                ul.find("a[add_price]").closest("li").show();
+                list.find("i.fa.fa-trash").hide();
+            }
+
+            pricesApi.endpoints.rate.delete(rateId);
+            pricesApi.send(function(resp) {
+                console.log(resp);
+            });
         })
         .on("click", "[delete_set]", function(e) {
             e.preventDefault();
@@ -689,7 +743,11 @@
                     if( typeof(article.attr("service")) != "undefined" )
                         comp = "service";
 
-                    pricesApi.endpoints[comp].patch(id, { service: data });
+                    var obj = {};
+
+                        obj[comp] = data;
+
+                    pricesApi.endpoints[comp].patch(id, obj);
                     pricesApi.send(function(resp) {
                         console.log(resp)
                     });
@@ -709,11 +767,7 @@
                 console.log(resp);
             });
 
-        })
-        .on("click", "[edit_rate]", function(e) {
-            e.defaultPrevented;
-        })
-
+        });
     /* -------------------------------------------------------------------------------------------------------------- */
     function actCreate(e) {
         var data = {
@@ -758,7 +812,6 @@
     $("button[act-add]")
         .on("click", actCreate);
     /* -------------------------------------------------------------------------------------------------------------- */
-
 
     /**
      * Get all performances
