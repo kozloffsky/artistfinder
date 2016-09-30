@@ -35,6 +35,14 @@ class ServiceController extends Controller
         }
 
         $data = $serviceForm->getData();
+
+        if (empty($data)) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'There are not any data'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
+
         $artist = $data['artist'];
         $profile = $artist->getUser()->getProfile();
 
