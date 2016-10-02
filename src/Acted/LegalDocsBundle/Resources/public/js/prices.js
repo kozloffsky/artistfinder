@@ -212,8 +212,8 @@
                  */
                 patch: function(id, data) {
                     options = {
-                        url: "price/rate/"+id+"/edit",
-                        method: "POST",
+                        url: "/price/rate/"+id+"/edit",
+                        method: "PATCH",
                         data: data
                     };
                 },
@@ -283,7 +283,7 @@
 
     function TemplateBuilder() {
         this.data = {};
-        
+
         this.trashCan = function(option, hidden) {
             if(hidden)
                 hidden = 'style="display: none"';
@@ -296,11 +296,11 @@
             var html = "",
                 trash;
 
-            if(lenobj.len < 2) {
-                trash = this.trashCan("delete_price", true);
-            } else {
+            // if(lenobj.len < 2) {
+            //     trash = this.trashCan("delete_price", true);
+            // } else {
                 trash = this.trashCan("delete_price");
-            }
+            // }
 
             html += '\
                 <div class="box">\
@@ -330,7 +330,7 @@
 
                     var i = new Number(key) + 1;
 
-                    html += '<li>' + this.priceComp(rate, { i: i, len: len }) + '</li>';
+                    html += '<li price_comp>' + this.priceComp(rate, { i: i, len: len }) + '</li>';
 
                     if(len <= 1 && (this.data.type !== 'service')) {
                         html += '\
@@ -562,31 +562,45 @@
      * Event listeners
      */
     $("body")
+        /**
+         * TODO
+         * Return id of created price (backend)
+         */
         .on("click", "[add_price]", function(e) {
             e.preventDefault();
 
             var lic = $(this).closest("ul").find("li");
             var optId = $(this).closest("div.col-2").prev("div[set_option]").attr("id");
+            var article = $(this).closest("article"),
+                comp;
 
             var i = lic.length;
 
-            $(this).closest("li").before("<li>"+temp.priceComp({ id: 2, price: { amount: 3000 } }, { i: i })+"</li>");
 
-            if(lic.length >= 2) {
-                $(this).closest("ul").find("a[add_price]").closest("li").remove();
-                $(this).closest("ul").find("li").find("i.fa.fa-trash").show();
-            }
+            if( typeof(article.attr("performance")) != "undefined" )
+                comp = "performance";
+
+            if( typeof(article.attr("service")) != "undefined" )
+                comp = "service";
 
             var data = {
                 option: optId,
                 price: 3000
             };
 
-            pricesApi.endpoints.rate.post({ price_rate_create: data });
+            pricesApi.endpoints.rate.post(comp, { price_rate_create: data });
             pricesApi.send(function(resp) {
                 console.log(resp);
-            });
 
+
+
+                $(this).closest("li").before("<li>"+temp.priceComp({ id: 2, price: { amount: 3000 } }, { i: i })+"</li>");
+
+                if(lic.length >= 2) {
+                    $(this).closest("ul").find("a[add_price]").closest("li").remove();
+                    $(this).closest("ul").find("li").find("i.fa.fa-trash").show();
+                }
+            });
         })
         .on("click", "[add_set]", function(e) {
             e.preventDefault();
@@ -614,7 +628,7 @@
 
                 temp.data.trashcanshow = true;
                 _this.closest("ul.info-list").children("li").append(temp.divComp('performance', true));
-                temp.data.trashcanshow = false;
+                //temp.data.trashcanshow = false;
 
                 var div = _this.closest("div.col");
                 div.find("i.fa.fa-trash").show();
@@ -664,7 +678,7 @@
             pricesApi.endpoints[comp].package.post({ performance_price_package: data});
             pricesApi.send(function(resp) {
                 temp.data.packages = [resp.package];
-                _this.closest("article").append(temp.packageContainerComp('performance'));
+                article.children("div.button-gradient.add-btn").before(temp.packageContainerComp('performance'));
             });
         })
         .on("focusout", "[edit_rate]", function(e) {
@@ -700,42 +714,62 @@
         })
         .on("click", "[delete_price]", function(e) {
             e.preventDefault();
-            var ul = $(this).closest("ul");
-            var list = ul.find("li");
 
-            var idx = $(this).closest("li").index();
+            var _this = $(this);
 
-            var rateId = $(this).closest("dl").find("input").attr("id");
+            var ul = _this.closest("ul");
+            var article = _this.closest("article"),
+                packagesCount = article.children("ul[package]");
+            var packageElem = _this.closest("ul[package]");
+            var list = ul.find("li[price_comp]");
+            var idx = _this.closest("li").index();
+            var rateId = _this.closest("dl").find("input").attr("id");
+            var deletePackage = false;
 
             if(!idx) {
-                $(this).closest("ul").find("li").find("dt").text("Price: 1");
-                $(this).closest("ul").find("li").find("input[name=\"price_2\"]").attr("name", "price_1");
+                _this.closest("ul").find("li").find("dt").text("Price: 1");
+                _this.closest("ul").find("li").find("input[name=\"price_2\"]").attr("name", "price_1");
             }
 
-            $(this).closest("li").remove();
+            _this.closest("li").remove();
 
-            if(list.length - 2  < 2) {
+            if(list.length - 1  < 2) {
                 ul.find("a[add_price]").closest("li").show();
-                list.find("i.fa.fa-trash").hide();
+                // list.find("i.fa.fa-trash").hide();
+            }
+
+            if((list.length - 1) == 0) {
+                deletePackage = true;
             }
 
             pricesApi.endpoints.rate.delete(rateId);
             pricesApi.send(function(resp) {
-                console.log(resp);
+                if(deletePackage) {
+                     packageElem.remove();
+                    if((packagesCount.length - 1) == 0) {
+                        article.remove();
+                    }
+                }
             });
         })
         .on("click", "[delete_set]", function(e) {
             e.preventDefault();
 
-            var rows = $(this).closest("ul.info-list").find("div[set_option]");
-            var div = $(this).closest("div.col");
-            var id = $(this).closest("div[set_option]").attr("id");
+            var rows = $(this).closest("ul.info-list").find("div[set_option]"),
+                div = $(this).closest("div.col"),
+                id = $(this).closest("div[set_option]").attr("id"),
+                idx = div.index();
 
             var rows_length = rows.length;
 
             if(rows_length > 1) {
                 div.find("i.fa.fa-trash").show();
-                div.prev("[empty_col]").remove();
+
+                if(idx == 1)
+                    div.next().next("[empty_col]").remove();
+                else
+                    div.prev("[empty_col]").remove();
+
                 div.next().remove();
                 div.remove();
             }
@@ -826,6 +860,9 @@
 
         });
     /* -------------------------------------------------------------------------------------------------------------- */
+    /**
+     * Act
+     */
     function actCreate(e) {
         var data = {
             title: "Act template",
@@ -880,7 +917,7 @@
 
         for(var k in performances) {
             temp.data = performances[k] || new Array(0);
-            $("div[perf-created-sec]").append(addTemplate('performance'));
+            $("div[act-section]").append(addTemplate('performance'));
         }
     });
 

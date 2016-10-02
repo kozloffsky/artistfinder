@@ -103,8 +103,8 @@ $(function(){
     $('#setting_city').on('change', settingCityEventHandler);
     $('.settings input[type="radio"]').on('change', radioBoxEventHandler);
 
-    function readFile(input) {
-        if (input.files && input.files[0]) {
+    function readFile(e) {
+        if (e.target.files && e.target.files[0]) {
             var reader = new FileReader();
 
             reader.onload = function (e) {
@@ -112,36 +112,35 @@ $(function(){
                     url: e.target.result
                 });
             };
-            reader.readAsDataURL(input.files[0]);
+            reader.readAsDataURL(e.target.files[0]);
         }
         else {
-            swal("Sorry - you're browser doesn't support the FileReader API");
+            console.error("Sorry - you're browser doesn't support the FileReader API");
         }
     }
 
-    $('#uploadNewMedia').on('change', function () {
-        readFile(this);
-    });
+    $('.settings #uploadNewMedia').on('change', readFile);
 
-    $("button.upload-NewMedia").on('click', function(e) {
+    $(".settings button.upload-NewMedia").on('click', function(e) {
        e.preventDefault();
         $('#hidden-demo').croppie('bind')
         uploadCropMediaOffer.croppie('result', {
             type: 'canvas',
             size: 'viewport'
-        }).then(function (resp) {
-                base64 = resp;
+        })
+        .then(function (resp) {
+            base64 = resp;
 
-                $("div.img-box").removeAttr("style");
-                $("div.img-box").css("background", "url('"+base64+"') no-repeat");
+            $("div.img-box").removeAttr("style");
+            $("div.img-box").css("background", "url('"+base64+"') no-repeat");
 
-                var form = prepareSettingsData();
-                HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
-                HTTPProvider.send(form, settingsFormErrorHandler);
+            var form = prepareSettingsData();
+            HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
+            HTTPProvider.send(form, settingsFormErrorHandler);
         });
     });
 
-    $("input[name=\"photo\"]").on('click', function(e) {
+    $(".settings input[name=\"photo\"]").on('click', function(e) {
         e.preventDefault();
 
         uploadCropMediaOffer = $('#addImageModal .changeImageContiner').croppie({
@@ -157,37 +156,50 @@ $(function(){
 
         setTimeout(function(){
             $('#addImageModal .changeImageContiner').croppie('bind');
-        }, 1000);
+        }, 500);
 
         $("#addImageModal").modal();
     });
 
-    btnEdit.on({
-        'click': function (e) {
-            e.preventDefault();
-            var cur = $(this);
 
-            if(cur.closest('.'+box).hasClass(activeClass)){
-                cur.closest('.'+box).removeClass(activeClass);
-            } else {
-                cur.closest('.'+box).addClass(activeClass);
 
-                var form = prepareSettingsData();
 
-                cur.closest('.box').find('h2').text(cur.closest('.box').find('input').val());
 
-                HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
-                HTTPProvider.send(form, settingsFormErrorHandler);
-            }
+
+    function editButtonHandle(e) {
+        e.preventDefault();
+        var cur = $(this);
+
+        if(cur.closest('.'+box).hasClass(activeClass)){
+            cur.closest('.'+box).removeClass(activeClass);
+        } else {
+            cur.closest('.'+box).addClass(activeClass);
+
+            var form = prepareSettingsData();
+
+            cur.closest('.box').find('h2').text(cur.closest('.box').find('input').val());
+
+            $.ajax({
+                url: "/profile/settings/edit/"+userId,
+                data: form,
+                type: "PUT",
+                success: function(resp) {
+                    console.log("resp", resp)
+                },
+                error: settingsFormErrorHandler
+            });
         }
-    });
-    win.on({
-        'load resize orientationchange': function() {
-            if(win.width() < 768){
-                setHeight('auto');
-            } else {
-                setHeight();
-            }
+    }
+    function resizeHandle() {
+        if(win.width() < 768){
+            setHeight('auto');
+        } else {
+            setHeight();
         }
-    });
+    }
+
+
+
+    btnEdit.on('click', editButtonHandle);
+    win.on('load resize orientationchange', resizeHandle);
 });
