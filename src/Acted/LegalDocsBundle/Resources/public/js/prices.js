@@ -244,6 +244,8 @@
                     };
                 },
                 /**
+                 * price_option_edit[duration]
+                 * price_option_edit[qty]
                  * @params: price id
                  *          data
                  */
@@ -359,27 +361,43 @@
             var qty = this.data.currentOption.qty;
             var dur = this.data.currentOption.duration;
 
+            var qtyMap = [1, 2, 3];
+            var durMap = [45, 50, 55];
+
             if(this.data.trashcanshow)
                 trashcan = this.trashCan("delete_set", true);
             else
                 trashcan = this.trashCan("delete_set");
+
+
+            var qtyHtml, durHtml;
+
+            for(var i = 0; i < 3; i++) {
+                if(qtyMap[i] == qty) {
+                    qtyHtml += '<option selected="selected" value="'+qtyMap[i]+'">'+qtyMap[i]+'</option>';
+                } else {
+                    qtyHtml += '<option value="'+qtyMap[i]+'">'+qtyMap[i]+'</option>';
+                }
+
+                if(durMap[i] == dur) {
+                    durHtml += '<option selected="selected" value="'+durMap[i]+'">'+durMap[i]+' min</option>';
+                } else {
+                    durHtml += '<option value="'+durMap[i]+'">'+durMap[i]+' min</option>';
+                }
+            }
 
             html=
             '<div class="box">\
                 <dl>\
                     <dt>\
                         <select edit_qty data-class="selections-white curr-select" class="short" name="qty">\
-                            <option value="1">1</option>\
-                            <option value="2">2</option>\
-                            <option value="3">3</option>\
+                            '+qtyHtml+'\
                         </select>\
                         <span class="note-x">x</span>\
                     </dt>\
                     <dd>\
                         <select edit_duration data-class="selections-white curr-select" name="duration">\
-                            <option value="45">45 min</option>\
-                            <option value="50">50 min</option>\
-                            <option value="55">55 min</option>\
+                            '+durHtml+'\
                         </select>\
                     </dd>\
                     '+trashcan+'\
@@ -558,6 +576,22 @@
         return html;
     };
 
+    function editSetsValues() {
+        var qty = $(this).closest("dl").find("[edit_qty]").find("option:selected").val();
+        var duration = $(this).closest("dl").find("[edit_duration]").find("option:selected").val();
+        var id = $(this).closest("div[set_option]").attr("id");
+
+        var data = {
+            qty: qty,
+            duration: duration
+        };
+
+        pricesApi.endpoints.price.patch(id, { price_option_edit:data });
+        pricesApi.send(function(resp) {
+            console.log(resp)
+        });
+    }
+
     /**
      * Event listeners
      */
@@ -700,18 +734,8 @@
                 console.log(resp);
             });
         })
-        .on("change", "[edit_qty]", function(e) {
-            var qty = $(this).find("option:selected").val();
-
-
-            //pricesApi.endpoints.price.patch();
-        })
-        .on("change", "[edit_duration]", function(e) {
-            var duration = $(this).find("option:selected").val();
-
-
-
-        })
+        .on("change", "[edit_qty]", editSetsValues)
+        .on("change", "[edit_duration]", editSetsValues)
         .on("click", "[delete_price]", function(e) {
             e.preventDefault();
 
