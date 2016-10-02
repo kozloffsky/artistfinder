@@ -5,7 +5,6 @@
         artist = JSON.parse(localStorage.getItem("user")).artistId;
     } catch (e) {
         artist = 0;
-        throw new Error("Local storage empty! Can't access to user object.");
     }
 
     function pricesApi() {
@@ -137,16 +136,6 @@
                             method: "POST",
                             data: data
                         };
-                    },
-                    /**
-                     * @params: none
-                     */
-                    rate: function(data) {
-                        options = {
-                            url: "/price/service/rate/create",
-                            method: "POST",
-                            data: data
-                        };
                     }
                 },
                 /**
@@ -210,9 +199,20 @@
                  * price_rate_create[price]
                  * @params: none
                  */
-                post: function(data) {
+                post: function(url, data) {
                     options = {
-                        url: "/price/performance/rate/create",
+                        url: "/price/"+url+"/rate/create",
+                        method: "POST",
+                        data: data
+                    };
+                },
+                /**
+                 * price_rate_edit[price]
+                 * @params: none
+                 */
+                patch: function(id, data) {
+                    options = {
+                        url: "price/rate/"+id+"/edit",
                         method: "POST",
                         data: data
                     };
@@ -245,11 +245,13 @@
                 },
                 /**
                  * @params: price id
+                 *          data
                  */
-                patch: function(id) {
+                patch: function(id, data) {
                     options = {
                         url: "/price/option/" + id + "/edit",
-                        method: "PATCH"
+                        method: "PATCH",
+                        data: data
                     };
 
                 },
@@ -352,7 +354,12 @@
             var html = "",
                 trashcan;
 
-            if(!this.data.trashcanshow)
+            var selected = 'selected="selected"';
+
+            var qty = this.data.currentOption.qty;
+            var dur = this.data.currentOption.duration;
+
+            if(this.data.trashcanshow)
                 trashcan = this.trashCan("delete_set", true);
             else
                 trashcan = this.trashCan("delete_set");
@@ -361,7 +368,7 @@
             '<div class="box">\
                 <dl>\
                     <dt>\
-                        <select data-class="selections-white curr-select" class="short" name="qty">\
+                        <select edit_qty data-class="selections-white curr-select" class="short" name="qty">\
                             <option value="1">1</option>\
                             <option value="2">2</option>\
                             <option value="3">3</option>\
@@ -369,7 +376,7 @@
                         <span class="note-x">x</span>\
                     </dt>\
                     <dd>\
-                        <select data-class="selections-white curr-select" name="duration">\
+                        <select edit_duration data-class="selections-white curr-select" name="duration">\
                             <option value="45">45 min</option>\
                             <option value="50">50 min</option>\
                             <option value="55">55 min</option>\
@@ -416,8 +423,6 @@
 
             var options = this.data.currentPackage.options;
 
-            // console.log("OPTIONS: ", options);
-
             if(comp == 'service') {
                 html += '<div class="col-2">'+this.rateComp(options[0]) + '</div>';
             }
@@ -436,6 +441,8 @@
 
                     if( key == (options.length - 1) )
                         this.data.lastset = true;
+
+                    this.data.currentOption = options[key];
 
                     html += '<div id="'+ options[key].id +'" set_option class="col">'+this.setComp(options[key])+'</div>';
                     html += '<div class="col-2">'+this.rateComp(options[key]) + '</div>';
@@ -476,11 +483,9 @@
             return html;
         };
 
-        this.containerComp = function(comp) {
-
-            var packCompHtml = "";
+        this.packageContainerComp = function(comp) {
             var packages = this.data.packages;
-            var packageBtnHtml = "";
+            var packCompHtml = "";
 
             for(var k in packages) {
                 this.data.currentPackage = packages[k];
@@ -488,10 +493,16 @@
                 packCompHtml += '<ul package="'+packages[k].id+'" class="info-list"><li>';
 
                 packCompHtml += this.packageComp(packages[k]);
-                packCompHtml += this.divComp(comp);
+                packCompHtml += this.divComp(comp, false);
 
                 packCompHtml += '</li></ul>';
             }
+
+            return packCompHtml;
+        };
+
+        this.containerComp = function(comp) {
+            var packageBtnHtml = "";
 
             if(comp == 'performance') {
                 packageBtnHtml += '\
@@ -502,7 +513,7 @@
 
             return '<article '+comp+' act_id="'+ this.data.id+ '" class="act private">\
                         '+ this.headingComp() +'\
-                        '+ packCompHtml +'\
+                        '+ this.packageContainerComp(comp) +'\
                         '+packageBtnHtml+'\
                     </article>';
         };
@@ -559,10 +570,10 @@
 
             var i = lic.length;
 
-            $(this).closest("li").before("<li>"+temp.priceComp({ id: 2, price: { amount: 3000 } }, i)+"</li>");
+            $(this).closest("li").before("<li>"+temp.priceComp({ id: 2, price: { amount: 3000 } }, { i: i })+"</li>");
 
             if(lic.length >= 2) {
-                $(this).closest("ul").find("a[add_price]").closest("li").hide();
+                $(this).closest("ul").find("a[add_price]").closest("li").remove();
                 $(this).closest("ul").find("li").find("i.fa.fa-trash").show();
             }
 
@@ -582,6 +593,14 @@
 
             var _this = $(this);
             var packId = $(this).closest("ul.info-list").attr("package");
+            var article = $(this).closest("article"),
+                comp;
+
+            if( typeof(article.attr("performance")) != "undefined" )
+                comp = "performance";
+
+            if( typeof(article.attr("service")) != "undefined" )
+                comp = "service";
 
             var data = {
                 duration: 45,
@@ -599,14 +618,26 @@
 
                 var div = _this.closest("div.col");
                 div.find("i.fa.fa-trash").show();
-
                 _this.closest("div.add").remove();
+
+                var pricedata = {
+                    option: id,
+                    price: 3000
+                };
+
+                pricesApi.endpoints.rate.post(comp, { price_rate_create: pricedata });
+                pricesApi.send(function(resp) {
+                    console.log(resp);
+                });
+
             });
 
         })
         .on("click", "[add_package]", function() {
 
             var article = $(this).closest("article");
+
+            var _this = $(this);
 
             var id = article.attr("act_id"),
                 comp;
@@ -617,9 +648,7 @@
             if( typeof(article.attr("service")) != "undefined" )
                 comp = "service";
 
-
             var id = $(this).closest("article").attr("act_id");
-
 
             var data = {
                 package_name: "Package template",
@@ -634,11 +663,40 @@
 
             pricesApi.endpoints[comp].package.post({ performance_price_package: data});
             pricesApi.send(function(resp) {
-                console.log(resp)
+                temp.data.packages = [resp.package];
+                _this.closest("article").append(temp.packageContainerComp('performance'));
             });
         })
-        .on("click", "[edit_rate]", function(e) {
-            e.defaultPrevented;
+        .on("focusout", "[edit_rate]", function(e) {
+
+            var id = $(this).attr("id");
+            var new_rate = $(this).val();
+
+
+            /**
+             * price_rate_edit[price]
+             * @params: none
+             */
+            var data = {
+                price: new_rate
+            };
+
+            pricesApi.endpoints.rate.patch(id, { price_rate_edit: data });
+            pricesApi.send(function(resp) {
+                console.log(resp);
+            });
+        })
+        .on("change", "[edit_qty]", function(e) {
+            var qty = $(this).find("option:selected").val();
+
+
+            //pricesApi.endpoints.price.patch();
+        })
+        .on("change", "[edit_duration]", function(e) {
+            var duration = $(this).find("option:selected").val();
+
+
+
         })
         .on("click", "[delete_price]", function(e) {
             e.preventDefault();
@@ -757,7 +815,6 @@
             }
         })
         .on("focusout", "[package_name]", function(e) {
-            e.defaultPrevented;
 
             var id = $(this).attr("id");
             var data = { name: $(this).val() };
@@ -782,6 +839,7 @@
                 }
             ]
         };
+
         pricesApi.endpoints.performance.post({ performance_price: data });
         pricesApi.send(function(resp) {
             temp.data = resp.performance;
