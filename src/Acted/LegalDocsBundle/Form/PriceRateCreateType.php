@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class PriceRateCreateType extends AbstractType
 {
@@ -20,7 +21,7 @@ class PriceRateCreateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('price', IntegerType::class, [
+            ->add('price', NumberType::class, [
                 'constraints' => [
                     new NotBlank(),
                     new Length(['max' => 123456789, 'min' => 1])
