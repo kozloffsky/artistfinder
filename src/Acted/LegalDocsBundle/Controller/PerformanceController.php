@@ -61,6 +61,8 @@ class PerformanceController extends Controller
             $rate->setPrice($price);
             $em->persist($rate);
 
+            $performance->setIsVisible(true);
+
             $em->flush();
             $serializer = $this->get('jms_serializer');
             return new JsonResponse(['status' => 'success', 'performance' => $serializer->toArray($performance, SerializationContext::create()
@@ -85,6 +87,7 @@ class PerformanceController extends Controller
             }
             $em->persist($performance);
 
+            $performance->setIsVisible(true);
 
             $em->flush();
             return new JsonResponse(['status' => 'success']);
