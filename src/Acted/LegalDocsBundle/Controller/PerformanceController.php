@@ -481,6 +481,6 @@ class PerformanceController extends Controller
             ],  Response::HTTP_BAD_REQUEST);
         }
 
-        return new JsonResponse(array('status' => 'success'));
+        return new JsonResponse(array('status' => 'success', 'price' => ['id' => $price->getId()]));
     }
 }

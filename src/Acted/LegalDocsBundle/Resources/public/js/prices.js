@@ -334,10 +334,16 @@
 
                     html += '<li price_comp>' + this.priceComp(rate, { i: i, len: len }) + '</li>';
 
-                    if(len <= 1 && (this.data.type !== 'service')) {
-                        html += '\
-                        <li>\
-                            <div class="add">\
+                    if( (len == i) && (this.data.type !== 'service') ) {
+                        html += '';
+
+                        if(len < 2) {
+                            html += '<li>';
+                        } else {
+                            html += '<li style="display: none">';
+                        }
+
+                        html +='<div class="add">\
                                 <a add_price href="#">Add price</a><a class="ico-box" href="#"><i class="ico question">?</i></a>\
                             </div>\
                         </li>';
@@ -522,7 +528,9 @@
         this.containerComp = function(comp) {
             var packageBtnHtml = "";
 
-            if(comp == 'performance') {
+            var visible = this.data.visible;
+
+            if(comp == 'performance' && visible) {
                 packageBtnHtml += '\
                     <div class="button-gradient add-btn">\
                         <button add_package type="button" class="btn register">Add Package</button>\
@@ -603,9 +611,11 @@
         .on("click", "[add_price]", function(e) {
             e.preventDefault();
 
-            var lic = $(this).closest("ul").find("li");
-            var optId = $(this).closest("div.col-2").prev("div[set_option]").attr("id");
-            var article = $(this).closest("article"),
+            var _this = $(this);
+
+            var lic = _this.closest("ul").find("li");
+            var optId = _this.closest("div.col-2").prev("div[set_option]").attr("id");
+            var article = _this.closest("article"),
                 comp;
 
             var i = lic.length;
@@ -624,15 +634,11 @@
 
             pricesApi.endpoints.rate.post(comp, { price_rate_create: data });
             pricesApi.send(function(resp) {
-                console.log(resp);
-
-
-
-                $(this).closest("li").before("<li>"+temp.priceComp({ id: 2, price: { amount: 3000 } }, { i: i })+"</li>");
+                _this.closest("li").before("<li>"+temp.priceComp({ id: resp.price.id, price: { amount: 3000 } }, { i: i })+"</li>");
 
                 if(lic.length >= 2) {
-                    $(this).closest("ul").find("a[add_price]").closest("li").remove();
-                    $(this).closest("ul").find("li").find("i.fa.fa-trash").show();
+                    _this.closest("ul").find("a[add_price]").closest("li").hide();
+                    _this.closest("ul").find("li").find("i.fa.fa-trash").show();
                 }
             });
         })
@@ -759,6 +765,7 @@
 
             if(list.length - 1  < 2) {
                 ul.find("a[add_price]").closest("li").show();
+                _this.closest("ul").find("a[add_price]").closest("li").show();
                 // list.find("i.fa.fa-trash").hide();
             }
 
@@ -941,7 +948,14 @@
 
         for(var k in performances) {
             temp.data = performances[k] || new Array(0);
-            $("div[act-section]").append(addTemplate('performance'));
+
+            if(temp.data.isVisible) {
+                temp.data.visible = temp.data.isVisible;
+                $("div[perf-created-sec]").append(addTemplate('performance'));
+            } else {
+                temp.data.visible = temp.data.isVisible;
+                $("div[act-section]").append(addTemplate('performance'));
+            }
         }
     });
 
