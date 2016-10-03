@@ -15,7 +15,7 @@ $(function(){
 
     var uploadCropMediaOffer;
 
-    function chooseCityQuote(selectedCountryOption){
+    function chooseCityQuote(selectedCountryOption) {
         if(selectedCountryOption){
             $.ajax({
                 type:'GET',
@@ -148,9 +148,9 @@ $(function(){
             }
         });
 
-        setTimeout(function(){
+        setTimeout(function() {
             $('#addImageModal .changeImageContiner').croppie('bind');
-        }, 500);
+        }, 1000);
 
         $("#addImageModal").modal();
     });
@@ -169,15 +169,10 @@ $(function(){
 
             cur.closest('.box').find('h2').text(cur.closest('.box').find('input').val());
 
-            $.ajax({
-                url: "/profile/settings/edit/"+userId,
-                data: form,
-                type: "PUT",
-                success: function(resp) {
-                    console.log("resp", resp)
-                },
-                error: settingsFormErrorHandler
-            });
+
+            var form = prepareSettingsData();
+            HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
+            HTTPProvider.send(form, settingsFormErrorHandler);
         }
     }
 
