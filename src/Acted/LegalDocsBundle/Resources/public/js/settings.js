@@ -5,19 +5,13 @@ $(function(){
         userId = "",
         defaultCity = "",
         activeClass = 'active',
-        errorClass = 'error',
         box = 'box',
         setingsSection = $('.settings'),
         sideBar = setingsSection.find('.sidebar'),
         btnEdit = setingsSection.find('.btn-edit'),
-        fileUpload = setingsSection.find('.file'),
-        URL = window.URL,
-        imgBox = setingsSection.find('.img-box'),
         img,
         file,
-        base64,
-        imgNaturWidth = 320,
-        imgNaturHeight = 240;
+        base64;
 
     var uploadCropMediaOffer;
 
@@ -162,10 +156,6 @@ $(function(){
     });
 
 
-
-
-
-
     function editButtonHandle(e) {
         e.preventDefault();
         var cur = $(this);
@@ -190,6 +180,7 @@ $(function(){
             });
         }
     }
+
     function resizeHandle() {
         if(win.width() < 768){
             setHeight('auto');
@@ -197,8 +188,6 @@ $(function(){
             setHeight();
         }
     }
-
-
 
     btnEdit.on('click', editButtonHandle);
     win.on('load resize orientationchange', resizeHandle);
