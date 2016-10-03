@@ -33,11 +33,6 @@ price_service_profile_list:
     defaults: { _controller: ActedLegalDocsBundle:Service:getList }
     methods:  GET
 
-price_service_rate_edit:
-    path: /service/rate/{id}/edit
-    defaults: { _controller: ActedLegalDocsBundle:Performance:editPricePerformancePackage }
-    methods:  PATCH
-
 price_service_rate_create:
     path: /service/rate/create
     defaults: { _controller: ActedLegalDocsBundle:Service:createPriceServiceRate }
