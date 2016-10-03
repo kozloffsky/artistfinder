@@ -277,7 +277,7 @@ class ProfileController extends Controller
             $user = $em->getRepository('ActedLegalDocsBundle:User')->findOneByEmail($data['email']);
 
             if (!empty($user)) {
-                return new JsonResponse(['form' => ['children' => ['email' => [0 => ['errors' => [0 =>'User with email '. $data['email'] . ' already exist.']]]]]], Response::HTTP_BAD_REQUEST);
+                return new JsonResponse(['form' => ['children' => ['email' => ['errors' => [0 =>'User with email '. $data['email'] . ' already exist.']]]] ], Response::HTTP_BAD_REQUEST);
             }
         }
 
