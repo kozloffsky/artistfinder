@@ -334,5 +334,21 @@
     </div>
 </main>
 
-{% include 'ActedLegalDocsBundle:Profile:modals.html.twig' %}
+<div class="modal registration-modal fade" id="settingsPageModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="changeImageContiner"></div>
+            <div class="actions">
+                <a class="btn file-btn">
+                    <input type="file" id="uploadNewMedia" value="Choose a file" accept="image/*" />
+                </a>
+                <button class="upload-NewMedia">Upload Image</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% include 'ActedLegalDocsBundle:Default:footer.html.twig' %}

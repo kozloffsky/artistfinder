@@ -88,7 +88,7 @@ $(function(){
                 $("[name=\"" + k + "\"]").closest('.box').find('label').text(textError);
             }
 
-        $("#addImageModal").modal('hide');
+        $("#settingsPageModal").modal('hide');
     }
 
     selectBoxEventHandler();
@@ -102,6 +102,9 @@ $(function(){
             var reader = new FileReader();
 
             reader.onload = function (e) {
+
+                console.log(e.target.result);
+
                 uploadCropMediaOffer.croppie('bind', {
                     url: e.target.result
                 });
@@ -113,11 +116,11 @@ $(function(){
         }
     }
 
-    $('.settings #uploadNewMedia').on('change', readFile);
+    $('#settingsPageModal input[type="file"]').on('change', readFile);
 
-    $(".settings button.upload-NewMedia").on('click', function(e) {
+    $('#settingsPageModal button.upload-NewMedia').on('click', function(e) {
        e.preventDefault();
-        $('#hidden-demo').croppie('bind')
+
         uploadCropMediaOffer.croppie('result', {
             type: 'canvas',
             size: 'viewport'
@@ -137,7 +140,9 @@ $(function(){
     $(".settings input[name=\"photo\"]").on('click', function(e) {
         e.preventDefault();
 
-        uploadCropMediaOffer = $('#addImageModal .changeImageContiner').croppie({
+        $('#settingsPageModal .changeImageContiner').empty().removeClass('croppie-container');
+
+        uploadCropMediaOffer = $('#settingsPageModal .changeImageContiner').croppie({
             viewport: {
                 width: 320,
                 height: 240
@@ -148,11 +153,7 @@ $(function(){
             }
         });
 
-        setTimeout(function() {
-            $('#addImageModal .changeImageContiner').croppie('bind');
-        }, 1000);
-
-        $("#addImageModal").modal();
+        $("#settingsPageModal").modal();
     });
 
 
