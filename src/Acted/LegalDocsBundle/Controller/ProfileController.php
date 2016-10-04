@@ -273,13 +273,13 @@ class ProfileController extends Controller
 
         $data = $profileSettingsForm->getData();
 
-        if (!empty($data['email'])) {
-            $user = $em->getRepository('ActedLegalDocsBundle:User')->findOneByEmail($data['email']);
+        /*if (!empty($data['email'])) {
+            $user = $em->getRepository('ActedLegalDocsBundle:User')->findOneBy(array('email' => $data['email'], 'id' => $user->getId()));
 
             if (!empty($user)) {
                 return new JsonResponse(['form' => ['children' => ['email' => ['errors' => [0 =>'User with email '. $data['email'] . ' already exist.']]]] ], Response::HTTP_BAD_REQUEST);
             }
-        }
+        }*/
 
         $file = $data['file'];
         if (!empty($file)) {
