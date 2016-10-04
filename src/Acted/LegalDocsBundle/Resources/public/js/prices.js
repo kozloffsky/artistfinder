@@ -345,6 +345,7 @@
 
                     html += '<li price_comp>' + this.priceComp(rate, { i: i, len: len }) + '</li>';
 
+                    console.log( (len == i) && (this.data.type !== 'service') )
                     if( (len == i) && (this.data.type !== 'service') ) {
                         html += '';
 
@@ -465,7 +466,7 @@
             if(comp == 'performance') {
 
                 if(flag)
-                    this.data.trashcanhide = (options.length > 1 ? false : true) || !customCreated;
+                    this.data.trashcanhide = (options.length > 1 ? false : true) & !customCreated;
 
                 this.data.lastset = false;
 
@@ -479,6 +480,7 @@
                         this.data.lastset = true;
 
                     this.data.currentOption = options[key];
+                    this.data.type = 'performance';
 
                     html += '<div id="'+ options[key].id +'" set_option class="col">'+this.setComp(options[key])+'</div>';
                     html += '<div class="col-2">'+this.rateComp(options[key]) + '</div>';
