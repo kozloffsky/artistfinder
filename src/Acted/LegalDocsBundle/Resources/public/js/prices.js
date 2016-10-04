@@ -818,19 +818,23 @@
 
             var rows_length = rows.length - 1;
 
-            if( (rows_length == 0) && ((list.length - 1) < 1) ) {
-
+            /**
+             * Delete last service price -> delete package and article
+             * OR
+             * Delete last performance price and last set -> delete package and article
+             */
+            if(temp.data.type == 'service' && ((list.length - 1) < 1) || ((rows_length == 0) && ((list.length - 1) < 1)) )
                 deletePackage = true;
-            }
 
             _this.closest("li").remove();
 
             pricesApi.endpoints.rate.delete(rateId);
             pricesApi.send(function(resp) {
-
+                temp.data;
+                debugger;
                 if(deletePackage) {
                      packageElem.remove();
-                    if(rows_length == 0) {
+                    if(list.length - 1 < 1) {
                         mainSection.find("article")[articleIndex].remove();
                     }
                 }
