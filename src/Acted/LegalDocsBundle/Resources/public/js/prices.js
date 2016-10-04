@@ -845,10 +845,6 @@
 
             rows_length = rows.length - 1;
 
-            if(rows_length < 2) {
-                rows.find("i.fa.fa-trash").hide();
-            }
-
             pricesApi.endpoints.price.delete(id);
             pricesApi.send(function(resp) {
                 console.log(resp)
