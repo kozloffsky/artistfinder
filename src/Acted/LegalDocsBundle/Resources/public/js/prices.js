@@ -395,12 +395,6 @@
                 } else {
                     qtyHtml += '<option value="'+qtyMap[i]+'">'+qtyMap[i]+'</option>';
                 }
-
-                if(durMap[i] == dur) {
-                    durHtml += '<option selected="selected" value="'+durMap[i]+'">'+durMap[i]+' min</option>';
-                } else {
-                    durHtml += '<option value="'+durMap[i]+'">'+durMap[i]+' min</option>';
-                }
             }
 
             html=
@@ -413,9 +407,7 @@
                         <span class="note-x">x</span>\
                     </dt>\
                     <dd>\
-                        <select edit_duration data-class="selections-white curr-select" name="duration">\
-                            '+durHtml+'\
-                        </select>\
+                        <input edit_duration name="duration" class="input-num" type="text" placeholder="'+dur+'" value="'+dur+'" onkeypress="return isNumberKey(event)">\
                     </dd>\
                     '+trashcan+'\
                 </dl>\
@@ -609,7 +601,7 @@
 
     function editSetsValues() {
         var qty = $(this).closest("dl").find("[edit_qty]").find("option:selected").val();
-        var duration = $(this).closest("dl").find("[edit_duration]").find("option:selected").val();
+        var duration = $(this).closest("dl").find("[edit_duration]").val();
         var id = $(this).closest("div[set_option]").attr("id");
 
         var data = {
@@ -772,7 +764,7 @@
             });
         })
         .on("change", "[edit_qty]", editSetsValues)
-        .on("change", "[edit_duration]", editSetsValues)
+        .on("focusout", "[edit_duration]", editSetsValues)
         .on("click", "[delete_price]", function(e) {
             e.preventDefault();
 
