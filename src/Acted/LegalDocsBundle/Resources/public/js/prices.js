@@ -345,7 +345,6 @@
 
                     html += '<li price_comp>' + this.priceComp(rate, { i: i, len: len }) + '</li>';
 
-                    console.log( (len == i) && (this.data.type !== 'service') )
                     if( (len == i) && (this.data.type !== 'service') ) {
                         html += '';
 
@@ -435,6 +434,12 @@
             if(this.data.lastset) {
                 addSetBtn = '\
                     <div class="add">\
+                        <a add_set href="#">Add sets</a><a class="ico-box" href="#"><i class="ico question">?</i></a>\
+                    </div>\
+                ';
+            } else {
+                addSetBtn = '\
+                    <div style="display: none" class="add">\
                         <a add_set href="#">Add sets</a><a class="ico-box" href="#"><i class="ico question">?</i></a>\
                     </div>\
                 ';
@@ -652,7 +657,7 @@
 
             pricesApi.endpoints.rate.post(comp, { price_rate_create: data });
             pricesApi.send(function(resp) {
-                _this.closest("li").before("<li>"+temp.priceComp({ id: resp.price.id, price: { amount: 3000 } }, { i: i })+"</li>");
+                _this.closest("li").before("<li price_comp>"+temp.priceComp({ id: resp.price.id, price: { amount: 3000 } }, { i: i })+"</li>");
 
                 if(lic.length >= 2) {
                     _this.closest("ul").find("a[add_price]").closest("li").hide();
@@ -684,14 +689,6 @@
             pricesApi.send(function(resp) {
                 var id = resp.id;
 
-                temp.data.trashcanhide = true;
-                _this.closest("ul.info-list").children("li").append(temp.divComp('performance', true, true));
-                //temp.data.trashcanhide = false;
-
-                var div = _this.closest("div.col");
-                div.find("i.fa.fa-trash").show();
-                _this.closest("div.add").remove();
-
                 var pricedata = {
                     option: id,
                     price: 3000
@@ -699,6 +696,22 @@
 
                 pricesApi.endpoints.rate.post(comp, { price_rate_create: pricedata });
                 pricesApi.send(function(resp) {
+
+                    temp.data.trashcanhide = true;
+                    temp.data.currentPackage.options = [{
+                        id: id,
+                        rates: [
+                            { id: resp.price.id, price: { amount: 3000 } }
+                        ]
+                    }];
+
+                    _this.closest("ul.info-list").children("li").append(temp.divComp('performance', true, true));
+                    //temp.data.trashcanhide = false;
+
+                    var div = _this.closest("div.col");
+                    div.find("i.fa.fa-trash").show();
+                    _this.closest("div.add").hide();
+
                     console.log(resp);
                 });
 
@@ -767,6 +780,8 @@
 
             var ul = _this.closest("ul");
             var article = _this.closest("article"),
+                articleIndex = article.index(),
+                mainSection = article.closest("div"),
                 packagesCount = article.children("ul[package]");
             var packageElem = _this.closest("ul[package]");
             var list = ul.find("li[price_comp]");
@@ -787,47 +802,57 @@
                 // list.find("i.fa.fa-trash").hide();
             }
 
-            if((list.length - 1) == 0) {
+            var div = _this.closest("div.col-2");
+            idx = div.prev().index();
+
+            if((list.length - 1) < 1) {
+                if(idx == 1)
+                    div.next("[empty_col]").remove();
+                else
+                    div.prev().prev("[empty_col]").remove();
+
+                div.prev("[set_option]").remove();
+                div.prev().prev().find("div.add").show();
+                div.remove();
+            }
+
+            var rows_length = rows.length - 1;
+
+            if( (rows_length == 0) && ((list.length - 1) < 1) ) {
+
                 deletePackage = true;
-
-                var rows_length = rows.length;
-
-                var div = _this.closest("div.col-2");
-                idx = div.prev().index();
-
-                if(rows_length > 1) {
-
-                    if(idx == 1)
-                        div.next("[empty_col]").remove();
-                    else
-                        div.prev().prev("[empty_col]").remove();
-
-                    div.prev("[set_option]").remove();
-                    div.remove();
-                }
             }
 
             _this.closest("li").remove();
 
-            // console.log(deletePackage, packagesCount.length - 1)
+            pricesApi.endpoints.rate.delete(rateId);
+            pricesApi.send(function(resp) {
 
-            // pricesApi.endpoints.rate.delete(rateId);
-            // pricesApi.send(function(resp) {
-            //     if(deletePackage) {
-            //          packageElem.remove();
-            //         if((packagesCount.length - 1) == 0) {
-            //             article.remove();
-            //         }
-            //     }
-            // });
+                if(deletePackage) {
+                     packageElem.remove();
+                    if(rows_length == 0) {
+                        mainSection.find("article")[articleIndex].remove();
+                    }
+                }
+            });
         })
         .on("click", "[delete_set]", function(e) {
             e.preventDefault();
 
-            var rows = $(this).closest("ul.info-list").find("div[set_option]"),
-                div = $(this).closest("div.col"),
-                id = $(this).closest("div[set_option]").attr("id"),
-                idx = div.index();
+            var _this = $(this);
+
+            var rows = _this.closest("ul.info-list").find("div[set_option]"),
+                div = _this.closest("div.col"),
+                id = _this.closest("div[set_option]").attr("id"),
+                idx = div.index(),
+                deletePackage;
+
+            var article = _this.closest("article"),
+                articleIndex = article.index(),
+                mainSection = article.closest("div");
+            var packageElem = _this.closest("ul[package]");
+
+            _this.closest("div[set_option]").prev().prev().prev().find("div.add").show();
 
             var rows_length = rows.length;
 
@@ -843,11 +868,20 @@
                 div.remove();
             }
 
-            rows_length = rows.length - 1;
+            var rows_length = rows.length - 1;
+
+            if(rows_length == 0) {
+                deletePackage = true;
+            }
 
             pricesApi.endpoints.price.delete(id);
             pricesApi.send(function(resp) {
-                console.log(resp)
+                if(deletePackage) {
+                    packageElem.remove();
+                    if(rows_length == 0) {
+                        mainSection.find("article")[articleIndex].remove();
+                    }
+                }
             });
         })
         .on("click", "[delete_act]", function(e) {
