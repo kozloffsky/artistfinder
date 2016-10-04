@@ -103,6 +103,9 @@
     border-color: #a0a0a0;
     color: #333;
 }
+.settings .email-title {
+    display: block !important;
+}
 .settings .btn-edit{
     background: url("../../assets/images/edit-darkgray.png") no-repeat;
     border: none;
