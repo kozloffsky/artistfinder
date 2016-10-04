@@ -117,16 +117,7 @@
                                 <label class="info-label">Email</label>
                             </div>
                             <div class="box">
-                                <label error class="error">Error!</label>
-                                {% if artist.user is defined %}
-                                    <input type="email" placeholder="{{ artist.user.email }}" name="email" value="{{ artist.user.email }}">
-                                    <h2>{{ artist.user.email }}</h2>
-                                {% else %}
-                                    <input type="text" placeholder="" name="email" value="">
-                                    <h2></h2>
-                                {% endif %}
-
-                                <button type="button" class="btn-edit"></button>
+                                <h2 class="email-title">{{ artist.user.email }}</h2>
                             </div>
                         </div>
                         <div class="row">
