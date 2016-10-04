@@ -1,3 +1,14 @@
+;function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : event.keyCode;
+    if(charCode == 46)
+        return true;
+
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+
+    return true;
+}
+
 ;(function() {
     var artist;
 
@@ -309,7 +320,7 @@
                     <dl>\
                         <dt>Price '+lenobj.i+':</dt>\
                         <dd>\
-                            <input id="'+rate.id+'" edit_rate name="price_'+rate.id+'" class="input-num" type="text" placeholder="'+rate.price.amount+'" value="'+rate.price.amount+'">\
+                            <input id="'+rate.id+'" edit_rate name="price_'+rate.id+'" class="input-num" type="text" placeholder="'+rate.price.amount+'" value="'+rate.price.amount+'" onkeypress="return isNumberKey(event)">\
                             <span class="curr">GBP</span>\
                         </dd>\
                         '+trash+'\
@@ -334,6 +345,7 @@
 
                     html += '<li price_comp>' + this.priceComp(rate, { i: i, len: len }) + '</li>';
 
+                    console.log( (len == i) && (this.data.type !== 'service') )
                     if( (len == i) && (this.data.type !== 'service') ) {
                         html += '';
 
@@ -370,7 +382,7 @@
             var qtyMap = [1, 2, 3];
             var durMap = [45, 50, 55];
 
-            if(this.data.trashcanshow)
+            if(this.data.trashcanhide)
                 trashcan = this.trashCan("delete_set", true);
             else
                 trashcan = this.trashCan("delete_set");
@@ -442,7 +454,7 @@
         /**
          * Container for sets and rates
          */
-        this.divComp = function(comp, flag) {
+        this.divComp = function(comp, flag, customCreated) {
             var html = "";
 
             var options = this.data.currentPackage.options;
@@ -453,23 +465,28 @@
 
             if(comp == 'performance') {
 
-                if(!flag)
-                    this.data.trashcanshow = options.length > 1 ? false : true;
+                if(flag)
+                    this.data.trashcanhide = (options.length > 1 ? false : true) & !customCreated;
 
                 this.data.lastset = false;
 
                 for(var key in options) {
-                    if( key > 0 || flag) {
+
+                    if( key > 0 || flag || customCreated) {
                         html += '<div empty_col class="col"></div>';
                     }
 
-                    if( key == (options.length - 1) )
+                    if( (key == (options.length - 1)) || customCreated )
                         this.data.lastset = true;
 
                     this.data.currentOption = options[key];
+                    this.data.type = 'performance';
 
                     html += '<div id="'+ options[key].id +'" set_option class="col">'+this.setComp(options[key])+'</div>';
                     html += '<div class="col-2">'+this.rateComp(options[key]) + '</div>';
+
+                    if(customCreated)
+                        break;
                 }
             }
 
@@ -566,6 +583,7 @@
      */
     var pricesApi = new pricesApi();
     var temp = new TemplateBuilder();
+
 
 
     /**
@@ -666,9 +684,9 @@
             pricesApi.send(function(resp) {
                 var id = resp.id;
 
-                temp.data.trashcanshow = true;
-                _this.closest("ul.info-list").children("li").append(temp.divComp('performance', true));
-                //temp.data.trashcanshow = false;
+                temp.data.trashcanhide = true;
+                _this.closest("ul.info-list").children("li").append(temp.divComp('performance', true, true));
+                //temp.data.trashcanhide = false;
 
                 var div = _this.closest("div.col");
                 div.find("i.fa.fa-trash").show();
@@ -756,14 +774,14 @@
             var rateId = _this.closest("dl").find("input").attr("id");
             var deletePackage = false;
 
+            var rows = _this.closest("div.col-2").closest("li").children("div[set_option]");
+
             if(!idx) {
                 _this.closest("ul").find("li").find("dt").text("Price: 1");
                 _this.closest("ul").find("li").find("input[name=\"price_2\"]").attr("name", "price_1");
             }
 
-            _this.closest("li").remove();
-
-            if(list.length - 1  < 2) {
+            if((list.length - 1) < 2) {
                 ul.find("a[add_price]").closest("li").show();
                 _this.closest("ul").find("a[add_price]").closest("li").show();
                 // list.find("i.fa.fa-trash").hide();
@@ -771,17 +789,37 @@
 
             if((list.length - 1) == 0) {
                 deletePackage = true;
+
+                var rows_length = rows.length;
+
+                var div = _this.closest("div.col-2");
+                idx = div.prev().index();
+
+                if(rows_length > 1) {
+
+                    if(idx == 1)
+                        div.next("[empty_col]").remove();
+                    else
+                        div.prev().prev("[empty_col]").remove();
+
+                    div.prev("[set_option]").remove();
+                    div.remove();
+                }
             }
 
-            pricesApi.endpoints.rate.delete(rateId);
-            pricesApi.send(function(resp) {
-                if(deletePackage) {
-                     packageElem.remove();
-                    if((packagesCount.length - 1) == 0) {
-                        article.remove();
-                    }
-                }
-            });
+            _this.closest("li").remove();
+
+            // console.log(deletePackage, packagesCount.length - 1)
+
+            // pricesApi.endpoints.rate.delete(rateId);
+            // pricesApi.send(function(resp) {
+            //     if(deletePackage) {
+            //          packageElem.remove();
+            //         if((packagesCount.length - 1) == 0) {
+            //             article.remove();
+            //         }
+            //     }
+            // });
         })
         .on("click", "[delete_set]", function(e) {
             e.preventDefault();
