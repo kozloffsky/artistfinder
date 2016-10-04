@@ -17,7 +17,7 @@ Acted\LegalDocsBundle\Entity\Artist:
     workAbroad:
       groups: [profile_settings]
     searchImage:
-      groups: [profile_settings]
+      groups: [block, profile_settings]
   virtual_properties:
     getCityProfileId:
       serialized_name: city_id
