@@ -478,7 +478,7 @@ $(function () {
             if(this.search_image){
                 var imageSearchProf = '<img class="header" src="' + this.search_image + '"/>';
             } else{
-                var imageSearchProf = '<img class="header" src="/assets/images/media-no-image.gif"/>';
+                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
             }
             if (this.video_media){
                 var artistBlockSearch = '<div class=" profile-card bordered">' +
@@ -680,7 +680,7 @@ $(function () {
             if(this.search_image){
                 var imageSearchProf = '<img class="header" src="' + this.search_image + '"/>';
             } else{
-                var imageSearchProf = '<img class="header" src="/assets/images/media-no-image.gif"/>';
+                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
             }
             if (this.video_media) {
                 var artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
