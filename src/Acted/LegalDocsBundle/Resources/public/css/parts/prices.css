@@ -192,7 +192,8 @@ main.prices{
 .prices .act .price-list li{
     display: inline-block;
     vertical-align: top;
-    width: 250px;
+    text-align: inherit !important;
+    width: 250px !important;
     padding-right: 5px;
 }
 /*.act .price-list li:last-child{*/
