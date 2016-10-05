@@ -17,8 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Acted\LegalDocsBundle\Form\ProfileSettingsType;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\Serializer\SerializationContext;
-
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ProfileController extends Controller
 {

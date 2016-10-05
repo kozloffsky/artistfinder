@@ -580,8 +580,6 @@
     var pricesApi = new pricesApi();
     var temp = new TemplateBuilder();
 
-
-
     /**
      * Package / Service container tamplate.
      * @param flag
@@ -597,7 +595,6 @@
 
         return html;
     };
-
     function editSetsValues() {
         var qty = $(this).closest("dl").find("[edit_qty]").find("option:selected").val();
         var duration = $(this).closest("dl").find("[edit_duration]").val();
@@ -1005,33 +1002,36 @@
     /**
      * Get all performances
      */
-    pricesApi.endpoints.performance.getAll();
-    pricesApi.send(function(resp) {
-        var performances = resp.performances;
 
-        for(var k in performances) {
-            temp.data = performances[k] || new Array(0);
+    if($("main.prices").length) {
+        pricesApi.endpoints.performance.getAll();
+        pricesApi.send(function(resp) {
+            var performances = resp.performances;
 
-            if(temp.data.isVisible) {
-                temp.data.visible = temp.data.isVisible;
-                $("div[perf-created-sec]").append(addTemplate('performance'));
-            } else {
-                temp.data.visible = temp.data.isVisible;
-                $("div[act-section]").append(addTemplate('performance'));
+            for(var k in performances) {
+                temp.data = performances[k] || new Array(0);
+
+                if(temp.data.isVisible) {
+                    temp.data.visible = temp.data.isVisible;
+                    $("div[perf-created-sec]").append(addTemplate('performance'));
+                } else {
+                    temp.data.visible = temp.data.isVisible;
+                    $("div[act-section]").append(addTemplate('performance'));
+                }
             }
-        }
-    });
+        });
 
-    /**
-     * Get all services
-     */
-    pricesApi.endpoints.service.getAll();
-    pricesApi.send(function(resp) {
-        var services = resp.services;
+        /**
+         * Get all services
+         */
+        pricesApi.endpoints.service.getAll();
+        pricesApi.send(function(resp) {
+            var services = resp.services;
 
-        for(var k in services) {
-            temp.data = services[k] || new Array(0);
-            $("div[services-section]").append(addTemplate('service'));
-        }
-    });
+            for(var k in services) {
+                temp.data = services[k] || new Array(0);
+                $("div[services-section]").append(addTemplate('service'));
+            }
+        });
+    }
 })();
