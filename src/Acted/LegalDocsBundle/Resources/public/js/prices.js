@@ -376,10 +376,9 @@
             var selected = 'selected="selected"';
 
             var qty = this.data.currentOption.qty;
-            var dur = this.data.currentOption.duration;
+            var dur = this.data.currentOption.duration || 0;
 
             var qtyMap = [1, 2, 3];
-            var durMap = [45, 50, 55];
 
             if(this.data.trashcanhide)
                 trashcan = this.trashCan("delete_set", true);
@@ -387,7 +386,7 @@
                 trashcan = this.trashCan("delete_set");
 
 
-            var qtyHtml, durHtml;
+            var qtyHtml;
 
             for(var i = 0; i < 3; i++) {
                 if(qtyMap[i] == qty) {

@@ -475,8 +475,8 @@ $(function () {
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString();
             //console.log(this.media.link);
-            if(this.media.link){
-                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
+            if(this.search_image){
+                var imageSearchProf = '<img class="header" src="' + this.search_image + '"/>';
             } else{
                 var imageSearchProf = '<img class="header" src="/assets/images/media-no-image.gif"/>';
             }
@@ -677,8 +677,8 @@ $(function () {
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString();
             //console.log(this.media.link);
-            if(this.media.link){
-                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
+            if(this.search_image){
+                var imageSearchProf = '<img class="header" src="' + this.search_image + '"/>';
             } else{
                 var imageSearchProf = '<img class="header" src="/assets/images/media-no-image.gif"/>';
             }

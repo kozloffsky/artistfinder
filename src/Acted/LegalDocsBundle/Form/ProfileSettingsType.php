@@ -86,10 +86,10 @@ class ProfileSettingsType extends AbstractType
                 'description' => 'City ID (for ROLE_ARTIST)',
             ])
 
-            ->add('email', EmailType::class, ['constraints' => [
+            /*->add('email', EmailType::class, ['constraints' => [
                 new NotBlank(),
                 new Email(['message' => 'Please provide a valid email address.'])], 'description' => 'Email'
-            ])
+            ])*/
 
             ->add('password', TextType::class, [
                 'constraints' => [
