@@ -70,7 +70,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             $qb->andWhere('(MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0
                 OR MATCH(p.title, p.description, p.header) AGAINST (:query BOOLEAN) > 0
                 OR MATCH(pr.title, pr.techRequirement) AGAINST (:query BOOLEAN) > 0 )')
-                ->setParameter('query', $fc->getQuery());
+                ->setParameter('query', str_replace('@', '', $fc->getQuery()));
         }
 
         $categories = $fc->getCategories();
@@ -202,7 +202,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->andWhere('(MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0
                             OR MATCH(u.firstname, u.lastname) AGAINST (:query BOOLEAN) > 0)
                 ')
-                ->setParameter('query', $query);
+                ->setParameter('query', str_replace('@', '', $query));
         }
 
         if ($start !== false && strlen($start) > 0) {
