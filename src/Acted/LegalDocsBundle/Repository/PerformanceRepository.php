@@ -12,15 +12,20 @@ use Acted\LegalDocsBundle\Entity\Performance;
  */
 class PerformanceRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findByArtistQuery(Artist $artist, $status)
+    public function findByArtistQuery(Artist $artist, $status, $visible = true)
     {
         $qb =  $this->createQueryBuilder('p')
             ->innerJoin('p.profile', 'pr')
             ->innerJoin('pr.user', 'u')
             ->innerJoin('u.artist', 'a')
-            ->where('a = :artist')
-            ->setParameter('artist', $artist)
-            ;
+            ->where('a = :artist');
+
+            if($visible) {
+                $qb->andWhere('p.isVisible = :visible')
+                    ->setParameter('visible', $visible);
+            }
+
+            $qb->setParameter('artist', $artist);
 
         if ($status) {
             $qb
