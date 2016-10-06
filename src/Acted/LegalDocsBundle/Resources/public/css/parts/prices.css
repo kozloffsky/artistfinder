@@ -193,7 +193,7 @@ main.prices{
     display: inline-block;
     vertical-align: top;
     text-align: inherit !important;
-    width: 250px !important;
+    width: 200px !important;
     padding-right: 5px;
 }
 /*.act .price-list li:last-child{*/
@@ -367,7 +367,7 @@ main.prices .note{
 }
 .prices .act-section .btn-row{margin-top: -45px;}
 .prices .act-section .btn-row .button-gradient{margin-right: 20px;}
-.prices .fa-trash { padding-left: 12px; color: rgba(121, 121, 121, 0.41); font-size: 22px;}
+.prices .fa-trash { padding-left: 8px; color: rgba(121, 121, 121, 0.41); font-size: 22px;}
 
 .prices .fa.fa-trash:hover {
     cursor: pointer;
@@ -390,6 +390,17 @@ main.prices .note{
     vertical-align: top;
     margin-top: -5px;
     line-height: 15px;
+}
+
+.prices .box dd + span {
+    padding: 0 0 0 5px;
+}
+
+.prices .price-list label {
+    margin-bottom: 0;
+    font-weight: 400;
+    font-size: 14px;
+    color: #000;
 }
 
 @media (max-width: 1199px) {
@@ -418,7 +429,7 @@ main.prices .note{
     .prices .act .select2-container--default .select2-selection--single{
         font-size: 11px;
     }
-    .prices .act .price-list li{width: 210px;}
+    .prices .act .price-list li{width: 200px;}
     /*.act .price-list li:last-child{width: 100px;}*/
     .prices .act .select2-container--default .select2-selection--single{
         height: 28px !important;
