@@ -564,12 +564,21 @@ class Artist
             /** @var Performance $performance */
             $performances = $this->getUser()->getProfile()->getPerformances();
             $performance = '';
-            foreach ($performances as $item ) {
-                if ($item->getStatus() === Performance::STATUS_PUBLISHED) {
-                    $performance = $item;
-                    continue;
+
+            $len = count($performances);
+
+            $perfCopy = $performances->getValues();
+
+            for($i = 0; $i < $len; $i++) {
+                if ($perfCopy[$i]->getStatus() === Performance::STATUS_PUBLISHED &&
+                    $perfCopy[$i]->getIsVisible() == true &&
+                    empty($perfCopy[$i]->getDeletedTime())
+                ) {
+                    $performance = $perfCopy[$i];
+                    break;
                 }
             }
+
             if ($performance) {
                 return $performance->getMedia()->first();
             }
