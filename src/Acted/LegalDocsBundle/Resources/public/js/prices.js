@@ -1,10 +1,17 @@
 ;function isNumberKey(evt) {
+
+    var value = evt.srcElement.value;
     var charCode = (evt.which) ? evt.which : event.keyCode;
     if(charCode == 46)
         return true;
 
     if (charCode > 31 && (charCode < 48 || charCode > 57))
         return false;
+
+    if(value > 100) {
+        evt.srcElement.value = 100;
+        return false;
+    }
 
     return true;
 }
@@ -361,6 +368,12 @@
                     }
                 }
 
+
+                html += '<li><div class="custom-checkbox big">\
+                            <input id="price_on_request_'+option.id+'" type="checkbox">\
+                            <label for="price_on_request_'+option.id+'">Price on Request</label>\
+                        </div></li>';
+
                 html += '</ul>';
 
             return html;
@@ -378,7 +391,7 @@
             var qty = this.data.currentOption.qty;
             var dur = this.data.currentOption.duration || 0;
 
-            var qtyMap = [1, 2, 3];
+            var qtyMap = [1, 2, 3, 4, 5, 6];
 
             if(this.data.trashcanhide)
                 trashcan = this.trashCan("delete_set", true);
@@ -388,7 +401,7 @@
 
             var qtyHtml;
 
-            for(var i = 0; i < 3; i++) {
+            for(var i = 0; i < qtyMap.length; i++) {
                 if(qtyMap[i] == qty) {
                     qtyHtml += '<option selected="selected" value="'+qtyMap[i]+'">'+qtyMap[i]+'</option>';
                 } else {
@@ -406,8 +419,9 @@
                         <span class="note-x">x</span>\
                     </dt>\
                     <dd>\
-                        <input edit_duration name="duration" class="input-num" type="text" placeholder="'+dur+'" value="'+dur+'" onkeypress="return isNumberKey(event)">\
+                        <input edit_duration name="duration" class="input-num" type="number" placeholder="'+dur+'" value="'+dur+'" onkeyup="return isNumberKey(event)" min="0" max="100">\
                     </dd>\
+                    <span>min</span>\
                     '+trashcan+'\
                 </dl>\
             </div>';
@@ -819,7 +833,6 @@
             pricesApi.endpoints.rate.delete(rateId);
             pricesApi.send(function(resp) {
                 temp.data;
-                debugger;
                 if(deletePackage) {
                      packageElem.remove();
                     if(list.length - 1 < 1) {
