@@ -217,7 +217,7 @@ class AdminController extends Controller
         $serializer = $this->get('jms_serializer');
         $paginator  = $this->get('knp_paginator');
         $userRepo = $this->getEM()->getRepository('ActedLegalDocsBundle:User');
-        $query = $request->get('query');
+        $query = str_replace('@', '', $request->get('query'));
         $role = $request->get('role');
         $fake = $request->get('fake');
         $userId = $request->get('userId');
