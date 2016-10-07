@@ -256,6 +256,7 @@ $(function() {
                 },
                 success: function (responseText) {
                     console.log(responseText);
+                    $(changePerformanceBlock).parent('.video').find('.mediaId').text(responseText.media.id);
                     $(changePerformanceBlock).parent('.video').find('iframe').remove();
                     $(changePerformanceBlock).parent('.video').find('img').remove();
                     $(changePerformanceBlock).parent('.video').find('.editingProf .mediaId').text(responseText.media.id)
@@ -358,7 +359,7 @@ $(function() {
                 "performance[techRequirement]": dataSendOfferInf};
             saveOffer(slug, perfCreateUrl, dataToSendOffer, parentPerformanceBlock)
         }
-    })
+    });
 
     $(document).on('click','.makeDraft',function(ev){
         ev.preventDefault();
@@ -423,6 +424,12 @@ $(function() {
             }
         });
 
+        $('#addImageModal').on('hidden.bs.modal', function () {
+            console.log(performanceId)
+            performanceId = false;
+            return false;
+        });
+
         setTimeout(function(){
             $('#addImageModal .changeImageContiner').croppie('bind');
         }, 500);
@@ -440,7 +447,7 @@ $(function() {
                 size: 'original',
                 format: 'jpeg'
             }).then(function (resp) {
-                if(!isActiveCropper) {
+                if(!isActiveCropper && performanceId) {
                     if ($(imgChangeBlock).hasClass('video')) {
                         if (mediaId == 'NewMedia') {
                             $.ajax({
@@ -460,7 +467,7 @@ $(function() {
                                     $("#uploadNewMedia").val('');
                                     //var placeToAddNewImage = imgChangeBlock.parent('.video');
                                     //console.log(placeToAddNewImage);
-                                    imgChangeBlock.find('.editingProf .mediaId').text(responseText.media.id);
+                                    imgChangeBlock.find('.mediaId').text(responseText.media.id);
                                     imgChangeBlock.find('iframe').remove();
                                     imgChangeBlock.find('img.preview').remove();
                                     imgChangeBlock.append('<img class="preview" src="' + resp + '" alt="Preview">');
@@ -514,16 +521,11 @@ $(function() {
                                     isActiveCropper = true;
                                     console.log(imgChangeBlock)
                                     $("#uploadNewMedia").val('');
-                                    //var placeToAddNewImage = imgChangeBlock.parent('.video');
-                                    //console.log(placeToAddNewImage);
                                     imgChangeBlock.find('.mediaId').text(responseText.media.id);
                                     imgChangeBlock.find('iframe').remove();
                                     imgChangeBlock.find('img.preview').remove();
                                     imgChangeBlock.append('<img class="preview" src="' + resp + '" alt="Preview">');
-                                    //imgChangeBlock.fadeOut();
                                     $('#addImageModal').modal('hide');
-                                    //$uploadCropMediaOffer.croppie('destroy')
-                                    //$uploadCropMediaOffer = {};
                                     parentPerformance.find('.newVideoImgAddBtns').fadeIn(800);
                                 }
                             });
@@ -540,17 +542,12 @@ $(function() {
                                 },
                                 success: function () {
                                     isActiveCropper = true;
-                                    console.log(imgChangeBlock)
+                                    console.log(imgChangeBlock);
                                     $("#uploadNewMedia").val('');
-                                    //var placeToAddNewImage = imgChangeBlock.parent('.video');
-                                    //console.log(placeToAddNewImage);
                                     imgChangeBlock.find('iframe').remove();
                                     imgChangeBlock.find('img.preview').remove();
                                     imgChangeBlock.append('<img class="preview" src="' + resp + '" alt="Preview">');
-                                    //imgChangeBlock.fadeOut();
                                     $('#addImageModal').modal('hide');
-                                    //$uploadCropMediaOffer.croppie('destroy')
-                                    //$uploadCropMediaOffer = {};
                                 }
                             });
                         }
@@ -598,7 +595,6 @@ $(function() {
                         //})
                         $('.bxVideoSlider').bxSlider(optionsSlider.videoSettings);
                     } else if (getMediaType[0].id == 'section-photo') {
-
                         var indexOfThumb = $('#photo-pager .scale-thumb').length;
                         $("#media [data-target='#section-photo'] .badge").text(indexOfThumb)
                         $('.bxslider').unwrap();
@@ -609,6 +605,11 @@ $(function() {
                          nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
                          prevText: '<i class="left fa fa-3x fa-angle-left"></i>'
                          });*/
+                        $('#photo-pager .scale-thumb').each(function (index) {
+                            console.log(index)
+                            $(this).attr('class', 'scale-thumb thumb'+ (index + 1) +'');
+                            $(this).find('a').attr('data-slide-index', index);
+                        });
                         $('.media-content .bxslider').bxSlider(optionsSlider.photoSettings);
                         $('.bxslider .bx-clone').remove();
                     } else if (getMediaType[0].id == 'section-audio') {
@@ -1001,7 +1002,7 @@ $(function() {
     });
 
     $( ".perfEditViewToggle" ).each(function( index ) {
-        if ($(this).attr('data-origin-title') === 'draft') {
+        if ($(this).attr('data-origin-title') == 'draft') {
             var parentPerformanceForm = $(this).parents('article');
             $(parentPerformanceForm).toggleClass( 'perfBlockView' );
         }
