@@ -331,7 +331,7 @@ class AdminController extends Controller
                 $photo1 = new Media();
                 $photo1->setName(uniqid());
                 $photo1->setMediaType('photo');
-                $photo1->setLink('/images/32.png');
+                $photo1->setLink('/images/31.png');
                 $photo1->setPosition(1);
                 $photo1->setActive(true);
                 $em->persist($photo1);
@@ -341,7 +341,7 @@ class AdminController extends Controller
                 $photo2 = new Media();
                 $photo2->setName(uniqid());
                 $photo2->setMediaType('photo');
-                $photo2->setLink('/images/32.png');
+                $photo2->setLink('/images/31.png');
                 $photo2->setPosition(2);
                 $photo2->setActive(true);
                 $em->persist($photo2);
