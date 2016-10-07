@@ -284,7 +284,6 @@ class AdminController extends Controller
             $validationErrors = $validator->validate($user);
             $now = new \DateTime();
             $user->setCreatedAt($now);
-            $user->setPasswordRequestedAt($now);
             $user->setActive(false);
             $em->persist($user);
 
@@ -550,7 +549,6 @@ class AdminController extends Controller
             $userManager = $this->get('app.user.manager');
             $now = new \DateTime();
             $user->setCreatedAt($now);
-            $user->setPasswordRequestedAt($now);
             $tempPass = 'Ab12'.uniqid();
             $user->setTempPassword($tempPass);
             $user->setEmail($email);
