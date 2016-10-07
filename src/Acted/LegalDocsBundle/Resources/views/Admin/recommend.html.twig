@@ -104,30 +104,30 @@
                 <ul class="pagination">
                     {% if paginations['previous'] is defined %}
                         <li>
-                            <a href="{{ path('admin_dashboard_recommend', {'page': 1  }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}" aria-label="First page">
+                            <a href="{{ path('admin_dashboard_recommend', {'page': 1  }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.main }}" aria-label="First page">
                                 <span aria-hidden="true">first</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ path('admin_dashboard_recommend', {'page': paginations['previous']  }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}" aria-label="Previous">
+                            <a href="{{ path('admin_dashboard_recommend', {'page': paginations['previous']  }) }}?query={{ filters.query }}&main={{ filters.main }}" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                     {% endif %}
                     {% for pagin in paginations['pagesInRange'] %}
                         <li>
-                            <a href="{{ path('admin_dashboard_recommend', {'page': pagin }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}">{{ pagin }}</a>
+                            <a href="{{ path('admin_dashboard_recommend', {'page': pagin }) }}?query={{ filters.query }}&main={{ filters.main }}">{{ pagin }}</a>
                         </li>
                     {% endfor %}
                     {% if paginations['next'] is defined %}
                         <li>
-                            <a href="{{ path('admin_dashboard_recommend', {'page': paginations['next']  }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}"
+                            <a href="{{ path('admin_dashboard_recommend', {'page': paginations['next']  }) }}?query={{ filters.query }}&main={{ filters.main }}"
                                aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ path('admin_dashboard_recommend', {'page': paginations['pageCount']  }) }}?query={{ filters.query }}&start={{ filters.start }}&main={{ filters.end }}">
+                            <a href="{{ path('admin_dashboard_recommend', {'page': paginations['pageCount']  }) }}?query={{ filters.query }}&main={{ filters.main }}">
                                 <span aria-hidden="true">last</span>
                             </a>
                         </li>

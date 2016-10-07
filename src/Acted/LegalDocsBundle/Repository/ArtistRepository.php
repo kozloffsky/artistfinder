@@ -33,7 +33,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             $qb->andWhere('u.fake != 1');
         }
 
-        return $qb->orderBy('rec.value', 'ASC')->groupBy('u.id')->getQuery()->getResult();
+        return $qb->orderBy('u.id', 'ASC')->groupBy('u.id')->getQuery()->getResult();
     }
 
     public function getFilteredQuery(OrderCriteria $oc, FilterCriteria $fc, $fake = 0)
@@ -165,7 +165,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('a.user', 'u')
             ->where('u.active != 0')
             ->where('a.spotlight != 0')
-            ->orderBy('a.spotlight', 'ASC');
+            ->orderBy('u.id', 'ASC');
         /** check fake user */
         if ($fake) {
             $qb->andWhere('u.fake != 1');

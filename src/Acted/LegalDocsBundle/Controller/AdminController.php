@@ -40,7 +40,7 @@ class AdminController extends Controller
             'query' => $query,
             'start' => $start,
             'end' => $end,
-            'main' => $mainCat
+            'main' => $mainCat ? $mainCat : 1
         ];
         $categories = $this->getEM()->getRepository('ActedLegalDocsBundle:Category')->getRecommended();
         if (!$mainCat) {
