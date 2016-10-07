@@ -191,7 +191,8 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('a.user', 'u')
             ->innerJoin('u.profile', 'p')
             ->leftJoin('a.recommends', 'rec')
-            ->where('u.active != 0');
+            ->orderBy('u.id', 'ASC')
+        ->where('u.active != 0');
         if ($artistId) {
             $qb
                 ->andWhere('a.id != :artistId')
@@ -244,8 +245,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
 
         if ($spotlight && ((int)$start !== 0)) {
             $qb
-                ->andWhere('a.spotlight != 0')
-                ->orderBy('a.spotlight', 'ASC');
+                ->andWhere('a.spotlight != 0');
         }
         if ($mainCat) {
             $qb
