@@ -3172,6 +3172,143 @@ a.disabled {
     white-space: pre-line;
 }
 
+/*promo view styles start*/
+.promo-view{
+    position: relative;
+    color: #3d4248;
+}
+.promo-view .holder{
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    left: 0;
+    width: 100%;
+    top: 50%;
+    -webkit-transform: translate3d(0, -50%, 0);
+    -moz-transform: translate3d(0, -50%, 0);
+    -ms-transform: translate3d(0, -50%, 0);
+    -o-transform: translate3d(0, -50%, 0);
+    transform: translate3d(0, -50%, 0);
+}
+.promo-view .logo{
+    background: url("../assets/images/logo-black.png") no-repeat;
+    overflow: hidden;
+    margin: 0 auto 70px;
+    text-indent: -9999px;
+    width: 275px;
+    height: 124px;
+}
+.promo-view h2{
+    font-size: 26px;
+    line-height: 32px;
+    margin: 0 0 15px;
+}
+.recovery-form{
+    margin: 0 auto 10px;
+    max-width: 420px;
+    padding: 0 10px;
+}
+.recovery-form .row{
+    position: relative;
+    margin: 0 0 20px;
+}
+.recovery-form .box{
+    /*padding-right: 50px;*/
+    position: relative;
+    width: 90%;
+}
+.recovery-form input[type='text'],
+.recovery-form input[type='password'],
+.recovery-form input[type='email'],
+.recovery-form input[type='tel']{
+    height: 40px;
+    border: 2px solid #eee;
+    width: 100%;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    background: white;
+    font-size: 18px;
+    padding: 0 40px 0 10px;
+    outline: none;
+    color: #eee;
+}
+.recovery-form label{
+    font-size: 14px;
+    line-height: 18px;
+    margin: 0 0 5px;
+    font-weight: normal;
+}
+.recovery-form .ico{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin: -10px 0 0;
+    font-size: 18px;
+    background: none;
+    border: none;
+    padding: 0;
+    line-height: 20px;
+    outline: none;
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+}
+.recovery-form .ico.closest{
+    margin-top: 2px;
+}
+.recovery-form .ico.active .showing{display: none;}
+.recovery-form .ico.active .hidden{
+    display: block !important;
+    margin: 2px 0 0;
+}
+.recovery-form .notify-list{
+    list-style: none;
+    margin: 0 0 10px;
+    padding: 0;
+}
+.recovery-form .notify-list li{
+    padding: 0 0 10px 30px;
+    position: relative;
+}
+.recovery-form .notify-list li.active{
+    opacity: 0.5;
+}
+.recovery-form .notify-list li:after{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    background: url('../assets/images/checkmark_recovery_password.png') no-repeat;
+    height: 14px;
+    width: 19px;
+}
+.recovery-form .controls{
+    float: none;
+    margin: 0 0 10px;
+    padding: 0;
+}
+.recovery-form .controls .button-gradient{
+    border-radius: 24px;
+    -webkit-border-radius: 24px;
+    margin: 0;
+}
+.recovery-form .controls .btn{
+    font-size: 18px !important;
+    width: auto !important;
+    height: 40px !important;
+    font-weight: bold;
+    min-width: 180px;
+}
+.recovery-form .go-back{
+    color: #3d4248;
+    font-size: 16px;
+    line-height: 20px;
+    text-decoration: underline;
+}
+.recovery-form .go-back:hover{
+    text-decoration: none;
+}
+
 /*@media (min-width: 992px) and (max-width: 1200px){
     .price-list .video iframe {
         height: 255px;
