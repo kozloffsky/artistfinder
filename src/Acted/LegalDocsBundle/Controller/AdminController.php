@@ -40,7 +40,7 @@ class AdminController extends Controller
             'query' => $query,
             'start' => $start,
             'end' => $end,
-            'main' => $mainCat
+            'main' => $mainCat ? $mainCat : 1
         ];
         $categories = $this->getEM()->getRepository('ActedLegalDocsBundle:Category')->getRecommended();
         if (!$mainCat) {
@@ -314,7 +314,7 @@ class AdminController extends Controller
             }
 
             $em->flush();
-            if (!$user->isFake() && $user->getEmail()) {
+            if ($user->getEmail()) {
                 $userManager->confirmationForCreatedUser($user);
             }
 
@@ -341,7 +341,7 @@ class AdminController extends Controller
                 $photo2 = new Media();
                 $photo2->setName(uniqid());
                 $photo2->setMediaType('photo');
-                $photo2->setLink('/images/1.jpg');
+                $photo2->setLink('/images/31.png');
                 $photo2->setPosition(2);
                 $photo2->setActive(true);
                 $em->persist($photo2);
@@ -545,10 +545,24 @@ class AdminController extends Controller
         if ($existEmail && $existEmail->getId() !== $user->getId()) {
             return new JsonResponse(['error' => 'Email already used'], 400);
         }
-
-        $user->setEmail($email);
-        $this->getEM()->persist($user);
-        $this->getEM()->flush();
+        if (!$user->getEmail()) {
+            $encoder = $this->get('security.password_encoder');
+            $userManager = $this->get('app.user.manager');
+            $now = new \DateTime();
+            $user->setCreatedAt($now);
+            $user->setPasswordRequestedAt($now);
+            $tempPass = 'Ab12'.uniqid();
+            $user->setTempPassword($tempPass);
+            $user->setEmail($email);
+            $user->setPasswordHash($encoder->encodePassword($user, $tempPass));
+            $this->getEM()->persist($user);
+            $this->getEM()->flush();
+            $userManager->confirmationForCreatedUser($user);
+        } else {
+            $user->setEmail($email);
+            $this->getEM()->persist($user);
+            $this->getEM()->flush();
+        }
 
         return new JsonResponse(['success' => 'Email change successfully!']);
     }

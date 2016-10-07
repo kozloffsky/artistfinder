@@ -747,7 +747,7 @@ $(function () {
             infiniteScrollCheckPage = pageNumberToLoad;
             //console.log(infiniteScrollCheckPage);
             if(mainCatS){
-                var datasendSearch = formsWithoutCat + '&mainCategory=' + categoryFiltering + '&' + categorySorting + '&page=' + pageNumberToLoad;
+                var datasendSearch = '&mainCategory=' + categoryFiltering + '&page=' + pageNumberToLoad;
             } else {
                 var datasendSearch = formsWithoutCat + '&categories%5B%5D=' + categoryFiltering +'&'+ categorySorting + '&page=' + pageNumberToLoad;
             }
@@ -768,7 +768,13 @@ $(function () {
     function startInfiniteScroll(categoryFiltering, mainCatS){
         $(window).scroll(function() {
             if ($('.social-icons').isVisible()) {
-                catFilteringSearchInfinite(categoryFiltering, mainCatS);
+                // //console.log(categoryFiltering);
+                var categoryIdVisible = $('#tab-'+categoryFiltering).isVisible();
+                // console.log(categoryIdVisible)
+                // //console.log(mainCatS)
+                if(categoryIdVisible){
+                    catFilteringSearchInfinite(categoryFiltering, mainCatS);
+                }
             }
             return false;
         });
@@ -792,6 +798,7 @@ $(function () {
     })
 
     function findSearchMainCat(searchCatName) {
+        var searchFormSerialize = $('#searchLoc, #artistLocationSearch').serialize();
         var searchMainCatId = $('#mainCategoryList').find('#' + searchCatName).text();
         console.log('searchMainCategory')
         $.ajax({

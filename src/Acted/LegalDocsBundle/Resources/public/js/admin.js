@@ -118,6 +118,7 @@ $(function() {
                 $(userRow).find('.userEmail, .editMailAdmin').show();
                 $(userRow).find('.userEmailChange, .saveMailAdmin').hide();
                 $(userRow).find('.userEmail').text(email);
+                window.location.reload();
             },
             error: function(res){
                 $('.error_'+userId).text();

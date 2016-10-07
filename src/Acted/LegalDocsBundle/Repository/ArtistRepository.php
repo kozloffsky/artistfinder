@@ -33,7 +33,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             $qb->andWhere('u.fake != 1');
         }
 
-        return $qb->orderBy('rec.value', 'ASC')->groupBy('u.id')->getQuery()->getResult();
+        return $qb->orderBy('u.id', 'ASC')->groupBy('u.id')->getQuery()->getResult();
     }
 
     public function getFilteredQuery(OrderCriteria $oc, FilterCriteria $fc, $fake = 0)
@@ -70,7 +70,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             $qb->andWhere('(MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0
                 OR MATCH(p.title, p.description, p.header) AGAINST (:query BOOLEAN) > 0
                 OR MATCH(pr.title, pr.techRequirement) AGAINST (:query BOOLEAN) > 0 )')
-                ->setParameter('query', $fc->getQuery());
+                ->setParameter('query', str_replace('@', '', $fc->getQuery()));
         }
 
         $categories = $fc->getCategories();
@@ -165,7 +165,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('a.user', 'u')
             ->where('u.active != 0')
             ->where('a.spotlight != 0')
-            ->orderBy('a.spotlight', 'ASC');
+            ->orderBy('u.id', 'ASC');
         /** check fake user */
         if ($fake) {
             $qb->andWhere('u.fake != 1');
@@ -202,7 +202,7 @@ class ArtistRepository extends \Doctrine\ORM\EntityRepository
                 ->andWhere('(MATCH(a.name, a.assistantName) AGAINST (:query BOOLEAN) > 0
                             OR MATCH(u.firstname, u.lastname) AGAINST (:query BOOLEAN) > 0)
                 ')
-                ->setParameter('query', $query);
+                ->setParameter('query', str_replace('@', '', $query));
         }
 
         if ($start !== false && strlen($start) > 0) {

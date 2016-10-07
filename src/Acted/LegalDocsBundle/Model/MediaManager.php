@@ -307,8 +307,9 @@ class MediaManager
     private function checkFileName($name)
     {
         $nameArr = [];
-        for ($i = 1; $i < 31; $i++) {
+        for ($i = 1; $i < 35; $i++) {
             $nameArr[] = $i . 'jpg';
+            $nameArr[] = $i . 'png';
         }
         $result = true;
         if (!in_array($name, $nameArr)) {
