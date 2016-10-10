@@ -264,6 +264,8 @@
                 /**
                  * price_option_edit[duration]
                  * price_option_edit[qty]
+                 * NEW!
+                 * price_option_create[price_on_request]
                  * @params: price id
                  *          data
                  */
@@ -340,6 +342,7 @@
         this.rateComp = function(option) {
 
             var rates = option.rates,
+                priceOnRequest = option.priceOnRequest,
                 len = rates.length,
                 html = "";
 
@@ -368,10 +371,15 @@
                     }
                 }
 
+                html += '<li><div class="custom-checkbox big">';
 
-                html += '<li><div class="custom-checkbox big">\
-                            <input id="price_on_request_'+option.id+'" type="checkbox">\
-                            <label for="price_on_request_'+option.id+'">Price on Request</label>\
+                if(priceOnRequest) {
+                    html += '<input price_on_request id="price_on_request_'+option.id+'" type="checkbox" checked="checked">';
+                } else {
+                    html += '<input price_on_request id="price_on_request_'+option.id+'" type="checkbox">';
+                }
+
+                html +='<label for="price_on_request_'+option.id+'">Price on Request</label>\
                         </div></li>';
 
                 html += '</ul>';
@@ -609,6 +617,7 @@
 
         return html;
     };
+
     function editSetsValues() {
         var qty = $(this).closest("dl").find("[edit_qty]").find("option:selected").val();
         var duration = $(this).closest("dl").find("[edit_duration]").val();
@@ -951,6 +960,27 @@
                     $(this).attr("type", "hidden");
                 });
             }
+        })
+        .on("click", "[price_on_request]", function(e) {
+
+            var div = $(this).closest("div.col-2").prev();
+
+            var checked = $(this).prop('checked');
+            var id = div.attr("id");
+
+            var qty = div.find("[edit_qty]").find("option:selected").val();
+            var duration = div.find("[edit_duration]").val();
+
+            var data = {
+                qty: qty,
+                duration: duration,
+                price_on_request: checked
+            };
+
+            pricesApi.endpoints.price.patch(id, { price_option_edit: data });
+            pricesApi.send(function(resp) {
+                console.log(resp);
+            })
         })
         .on("focusout", "[package_name]", function(e) {
 

@@ -46,7 +46,7 @@ class ProfileController extends Controller
 
         $user = $this->getUser();
 
-        $performances = $this->getPerformances($artist, $request->get('page', 1), false);
+        $performances = $this->getPerformances($artist, $request->get('page', 1), true);
         $feedbacks = $this->getFeedbacks($artist, 1);
 
         return $this->render('ActedLegalDocsBundle:Profile:profile_edit.html.twig',
@@ -56,7 +56,7 @@ class ProfileController extends Controller
 
     public function editProfilePaginationPerformanceAction(Request $request, Artist $artist)
     {
-        $performances = $this->getPerformances($artist, $request->get('page', 1), false);
+        $performances = $this->getPerformances($artist, $request->get('page', 1), true);
 
         return $this->render('@ActedLegalDocs/Profile/ordersSectionEdit.html.twig',
             compact('artist', 'performances')
