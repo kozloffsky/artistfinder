@@ -814,7 +814,7 @@ section.used-by {
 /*edit form styles start*/
 .price-list .edit-form{position: relative;}
 .price-list .edit-form .heading{
-    padding-bottom: 10px;
+    padding-bottom: 20px;
 }
 .price-list .edit-form .holder,
 .price-list .edit-form .holder.video{cursor: default;}

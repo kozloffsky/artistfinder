@@ -12,13 +12,17 @@ use Acted\LegalDocsBundle\Entity\Performance;
  */
 class PerformanceRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findByArtistQuery(Artist $artist, $status, $visible = true)
+    public function findByArtistQuery(Artist $artist, $status, $visible = true, $deleted = true)
     {
         $qb =  $this->createQueryBuilder('p')
             ->innerJoin('p.profile', 'pr')
             ->innerJoin('pr.user', 'u')
             ->innerJoin('u.artist', 'a')
             ->where('a = :artist');
+
+            if($deleted) {
+                $qb->andWhere("p.deletedTime is NULL");
+            }
 
             if($visible) {
                 $qb->andWhere('p.isVisible = :visible')
