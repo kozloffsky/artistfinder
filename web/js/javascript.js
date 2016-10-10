@@ -11150,6 +11150,9 @@ $(function() {
         var paginationRoute = pageBaseRoute + '/performance?page=' + pageRoute;
         var paginationTarget = $(".price-list");
         getPagination(paginationRoute, paginationTarget);
+        $('html,body').animate({
+            scrollTop: $('.price-list').offset().top
+        });
     });
 
     $(document).on('click','.feedbacks .pagination a', function(event){
