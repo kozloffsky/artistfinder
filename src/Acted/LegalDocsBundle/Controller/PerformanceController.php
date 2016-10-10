@@ -202,6 +202,7 @@ class PerformanceController extends Controller
             $option->setPackage($package);
             $option->setDuration($currentOption['duration']);
             $option->setQty($currentOption['qty']);
+            $option->setPriceOnRequest($currentOption['price_on_request']);
             $em->persist($option);
 
             $price = new Price();
@@ -376,6 +377,7 @@ class PerformanceController extends Controller
                 $option->setPackage($package);
                 $option->setDuration($currentOption['duration']);
                 $option->setQty($currentOption['qty']);
+                $option->setPriceOnRequest($currentOption['price_on_request']);
                 $em->persist($option);
 
                 $price = new Price();

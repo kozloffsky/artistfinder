@@ -15,6 +15,10 @@ Acted\LegalDocsBundle\Entity\Option:
       duration:
         type: integer(4)
         nullable: true
+      priceOnRequest:
+        type: boolean
+        options:
+          default: false
       deletedTime:
         type: datetime
         nullable: true

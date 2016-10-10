@@ -36,11 +36,13 @@ class PriceOptionController extends Controller
         $package = $data['package'];
         $duration = $data['duration'];
         $qty = $data['qty'];
+        $priceOnRequest = $data['price_on_request'];
 
         $option = new Option();
         $option->setPackage($package);
         $option->setDuration($duration);
         $option->setQty($qty);
+        $option->setPriceOnRequest($priceOnRequest);
         $em->persist($option);
 
         $em->flush();
@@ -70,9 +72,11 @@ class PriceOptionController extends Controller
         }
         $duration = $data['duration'];
         $qty = $data['qty'];
+        $priceOnRequest = $data['price_on_request'];
 
         $option->setDuration($duration);
         $option->setQty($qty);
+        $option->setPriceOnRequest($priceOnRequest);
         $em->persist($option);
 
         $em->flush();

@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Service;
+use Acted\LegalDocsBundle\Form\Type\BooleanType;
 
 class ServicePricePackageType extends AbstractType
 {
@@ -39,6 +40,9 @@ class ServicePricePackageType extends AbstractType
                     new NotBlank(),
                     new Length(['max' => 123456789, 'min' => 1])
                 ], 'description' => 'Price1'])
+            ->add('price_on_request', BooleanType::class, [
+                'constraints' => [
+                ], 'description' => 'Price on request'])
             ->add('artist', EntityType::class, [
                 'class' => Artist::class,
                 'constraints' => [new NotBlank(['message' => 'Artist is required field'])],
