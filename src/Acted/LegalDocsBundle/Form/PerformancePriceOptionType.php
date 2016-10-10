@@ -5,13 +5,10 @@ namespace Acted\LegalDocsBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Acted\LegalDocsBundle\Entity\Artist;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Acted\LegalDocsBundle\Entity\Performance;
+use Acted\LegalDocsBundle\Form\Type\BooleanType;
 
 class PerformancePriceOptionType extends AbstractType
 {
@@ -32,6 +29,9 @@ class PerformancePriceOptionType extends AbstractType
                     new NotBlank(),
                     new Length(['max' => 123456789, 'min' => 1])
                 ], 'description' => 'Duration'])
+            ->add('price_on_request', BooleanType::class, [
+                'constraints' => [
+                ], 'description' => 'Price on request'])
             ->add('price1', IntegerType::class, [
                 'constraints' => [
                     new NotBlank(),

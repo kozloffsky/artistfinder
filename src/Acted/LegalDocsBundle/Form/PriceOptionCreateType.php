@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Form;
 
 use Acted\LegalDocsBundle\Entity\Package;
+use Acted\LegalDocsBundle\Form\Type\BooleanType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,6 +31,9 @@ class PriceOptionCreateType extends AbstractType
                     new NotBlank(),
                     new Length(['max' => 123456789, 'min' => 1])
                 ], 'description' => 'Duration'])
+            ->add('price_on_request', BooleanType::class, [
+                'constraints' => [
+                ], 'description' => 'Price on request'])
             ->add('package',  EntityType::class, [
                 'class' => Package::class,
                 'constraints' => [new NotBlank()],

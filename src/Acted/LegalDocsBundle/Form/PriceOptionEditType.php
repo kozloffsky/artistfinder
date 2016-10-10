@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Acted\LegalDocsBundle\Form\Type\BooleanType;
 
 class PriceOptionEditType extends AbstractType
 {
@@ -29,6 +29,9 @@ class PriceOptionEditType extends AbstractType
                     new NotBlank(),
                     new Length(['max' => 123456789, 'min' => 1])
                 ], 'description' => 'Duration'])
+            ->add('price_on_request', BooleanType::class, [
+                'constraints' => [
+                ], 'description' => 'Price on request'])
         ;
     }
 

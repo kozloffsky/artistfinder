@@ -59,6 +59,7 @@ class ServiceController extends Controller
 
         $option = new Option();
         $option->setPackage($package);
+        $option->setPriceOnRequest($data['price_on_request']);
         $em->persist($option);
 
         $price = new Price();
@@ -217,6 +218,7 @@ class ServiceController extends Controller
 
             $option = new Option();
             $option->setPackage($package);
+            $option->setPriceOnRequest($data['price_on_request']);
             $em->persist($option);
 
             $price = new Price();

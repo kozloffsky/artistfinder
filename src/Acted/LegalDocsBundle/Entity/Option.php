@@ -38,6 +38,11 @@ class Option
     private $rates;
 
     /**
+     * @var boolean
+     */
+    private $priceOnRequest = false;
+
+    /**
      * Add rate
      *
      * @param \Acted\LegalDocsBundle\Entity\Rate $rate
@@ -175,5 +180,29 @@ class Option
     public function getDeletedTime()
     {
         return $this->deletedTime;
+    }
+
+    /**
+     * Set priceOnRequest
+     *
+     * @param boolean $priceOnRequest
+     *
+     * @return Option
+     */
+    public function setPriceOnRequest($priceOnRequest)
+    {
+        $this->priceOnRequest = $priceOnRequest;
+
+        return $this;
+    }
+
+    /**
+     * Get priceOnRequest
+     *
+     * @return boolean
+     */
+    public function getPriceOnRequest()
+    {
+        return $this->priceOnRequest;
     }
 }

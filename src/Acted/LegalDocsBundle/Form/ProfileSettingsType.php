@@ -107,8 +107,6 @@ class ProfileSettingsType extends AbstractType
             ])
             ->add('work_abroad', TextType::class, ['constraints' => [], 'description' => 'Work abroad'])
 
-
-
             ->add('account_name', TextType::class, [
                 'constraints' => [
                     new Length(['max' => 512])

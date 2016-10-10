@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Acted\LegalDocsBundle\Form\Type\BooleanType;
 
 class ServicePriceType extends AbstractType
 {
@@ -36,6 +37,9 @@ class ServicePriceType extends AbstractType
                 'constraints' => [new NotBlank(['message' => 'Artist is required field'])],
                 'description' => 'ArtistId'
             ])
+            ->add('price_on_request', BooleanType::class, [
+                'constraints' => [
+                ], 'description' => 'Price on request'])
             ->add('price', IntegerType::class, [
                 'constraints' => [
                     new NotBlank(),
