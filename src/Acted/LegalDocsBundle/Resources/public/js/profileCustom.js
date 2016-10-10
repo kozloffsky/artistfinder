@@ -1120,7 +1120,7 @@ $(function() {
         var paginationTarget = $(".price-list");
         getPagination(paginationRoute, paginationTarget);
         $('html,body').animate({
-            scrollTop: $('.price-list').offset().top
+            scrollTop: $('.price-list').offset().top - 72
         });
     });
 
