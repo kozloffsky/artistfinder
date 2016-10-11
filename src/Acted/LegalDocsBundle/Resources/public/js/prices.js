@@ -965,7 +965,14 @@
 
                 $(this).find("input").focusout(function(e) {
                     span.show();
-                    span.html($(this).val());
+
+                    var showTrashcan = $(this).closest("div").attr("perf-created-sec");
+
+                    if(showTrashcan == undefined) {
+                        span.html($(this).val() + '<i delete_act class="fa fa-trash" aria-hidden="true"></i>');
+                    } else {
+                        span.html($(this).val());
+                    }
 
                     var article = $(this).closest("article");
                     var id = $(this).closest("article").attr("act_id"),
