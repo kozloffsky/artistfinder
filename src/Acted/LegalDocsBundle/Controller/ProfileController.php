@@ -48,12 +48,25 @@ class ProfileController extends Controller
 
     public function editProfileAction(Request $request, Artist $artist)
     {
+        $user = $this->getUser();
+        /** Check if Admin */
+        $admin = false;
+        if ($user) {
+            $admin = $user->getRoles()[0] === 'ROLE_ADMIN' ? true: false;
+        }
+
+        if (!$admin) {
+            if ((!$user || $user->getArtist()->getSlug() !== $artist->getSlug())) {
+                return $this->redirect($this->generateUrl('acted_legal_docs_homepage'));
+            }
+        }
+
+
         $em = $this->getDoctrine()->getManager();
 
         $categoriesRepo = $em->getRepository('ActedLegalDocsBundle:Category');
         $categories = $categoriesRepo->childrenHierarchy();
 
-        $user = $this->getUser();
 
         $performances = $this->getPerformances($artist, $request->get('page', 1), false);
         $feedbacks = $this->getFeedbacks($artist, 1);
