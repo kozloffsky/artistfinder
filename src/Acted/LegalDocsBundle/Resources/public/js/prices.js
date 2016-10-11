@@ -331,11 +331,11 @@
             var html = "",
                 trash;
 
-            // if(lenobj.len < 2) {
-            //     trash = this.trashCan("delete_price", true);
-            // } else {
+            if(lenobj.len < 2) {
+                trash = this.trashCan("delete_price", true);
+            } else {
                 trash = this.trashCan("delete_price");
-            // }
+            }
 
             html += '\
                 <div class="box">\
@@ -549,7 +549,7 @@
             var html =
             '<h2 class="title">\
                 <input name="title" class="input-num huge" type="hidden" placeholder="'+this.data.title+'" value="'+this.data.title+'">\
-                <span>'+this.data.title+'<i delete_act class="fa fa-trash" aria-hidden="true"></i></span>\
+                <span>'+this.data.title+'</span>\
             </h2>';
 
             return html;
@@ -665,8 +665,7 @@
             var article = _this.closest("article"),
                 comp;
 
-            var i = lic.length;
-
+            var i = lic.length - 1;
 
             if( typeof(article.attr("performance")) != "undefined" )
                 comp = "performance";
@@ -823,7 +822,7 @@
             if((list.length - 1) < 2) {
                 ul.find("a[add_price]").closest("li").show();
                 _this.closest("ul").find("a[add_price]").closest("li").show();
-                // list.find("i.fa.fa-trash").hide();
+                list.find("i.fa.fa-trash").hide();
             }
 
             var div = _this.closest("div.col-2");
@@ -879,9 +878,17 @@
                 mainSection = article.closest("div");
             var packageElem = _this.closest("ul[package]");
 
-            _this.closest("div[set_option]").prev().prev().prev().find("div.add").show();
-
             var rows_length = rows.length;
+
+            if(idx > 1) {
+                var set_index = _this.closest("div[set_option]").index()
+                var n = (set_index + 2) / 3;
+
+                if(rows_length == n) {
+                    $(rows[n - 2]).find("div.add").show();
+                }
+            }
+
 
             if(rows_length > 1) {
                 div.find("i.fa.fa-trash").show();
@@ -899,17 +906,18 @@
 
             if(rows_length == 0) {
                 deletePackage = true;
+                packageElem.remove();
             }
 
-            pricesApi.endpoints.price.delete(id);
-            pricesApi.send(function(resp) {
-                if(deletePackage) {
-                    packageElem.remove();
-                    if(rows_length == 0) {
-                        mainSection.find("article")[articleIndex].remove();
-                    }
-                }
-            });
+            // pricesApi.endpoints.price.delete(id);
+            // pricesApi.send(function(resp) {
+            //     if(deletePackage) {
+            //         packageElem.remove();
+            //         if(rows_length == 0) {
+            //             mainSection.find("article")[articleIndex].remove();
+            //         }
+            //     }
+            // });
         })
         .on("click", "[delete_act]", function(e) {
             e.preventDefault();
@@ -947,7 +955,7 @@
 
                 $(this).find("input").focusout(function(e) {
                     span.show();
-                    span.html($(this).val() + '<i delete_act class="fa fa-trash" aria-hidden="true"></i>');
+                    span.html($(this).val());
 
                     var article = $(this).closest("article");
                     var id = $(this).closest("article").attr("act_id"),
