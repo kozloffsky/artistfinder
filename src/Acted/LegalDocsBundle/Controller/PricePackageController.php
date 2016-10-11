@@ -55,25 +55,6 @@ class PricePackageController extends Controller
             $serviceRepository = $this->getDoctrine()
                 ->getRepository('ActedLegalDocsBundle:Service');
 
-            $package = $packageRepository->getPackageById($package->getId());
-
-            if (!empty($package->getPerformance())) {
-                $performancePackagesIds = $packageRepository->getPackageIdsByPerformanceId($package->getPerformance()->getId());
-
-                //check - is this package last in performance
-                if (count($performancePackagesIds) < 2) {
-                    $performanceRepository->removePerformance($package->getPerformance()->getId());
-                }
-            }
-
-            if (!empty($package->getService())) {
-                $servicePackagesIds = $packageRepository->getPackageIdsByServiceId($package->getService()->getId());
-                //check - is this package last in service
-                if (count($servicePackagesIds) < 2) {
-                    $serviceRepository->removeService($package->getService()->getId());
-                }
-            }
-
             $optionIds = $optionRepository->getOptionIdsByPackageIds(array($package->getId()));
             $rateIds = $rateRepository->getRateIdsByOptionIds($optionIds);
 
