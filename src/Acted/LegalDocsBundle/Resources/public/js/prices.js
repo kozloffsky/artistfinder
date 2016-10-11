@@ -30,6 +30,7 @@
 
 ;(function() {
     var artist;
+    var userCurrency = "GBP";
 
     try {
         artist = JSON.parse(localStorage.getItem("user")).artistId;
@@ -299,6 +300,14 @@
                     };
                 }
 
+            },
+            profile: {
+                get: function() {
+                    options = {
+                        url: "/profile/settings/"+artist,
+                        method: "GET"
+                    };
+                }
             }
         };
 
@@ -342,7 +351,7 @@
                         <dt>Price '+lenobj.i+':</dt>\
                         <dd>\
                             <input id="'+rate.id+'" edit_rate name="price_'+rate.id+'" class="input-num" type="text" placeholder="'+rate.price.amount+'" value="'+rate.price.amount+'" onkeypress="return isNumberKey(event)">\
-                            <span class="curr">GBP</span>\
+                            <span class="curr">'+userCurrency+'</span>\
                         </dd>\
                         '+trash+'\
                     </dl>\
@@ -1085,34 +1094,40 @@
      */
 
     if($("main.prices").length) {
-        pricesApi.endpoints.performance.getAll();
+        pricesApi.endpoints.profile.get();
         pricesApi.send(function(resp) {
-            var performances = resp.performances;
+            userCurrency = resp.artist.currency.iso_code;
 
-            for(var k in performances) {
-                temp.data = performances[k] || new Array(0);
+            pricesApi.endpoints.performance.getAll();
+            pricesApi.send(function(resp) {
+                var performances = resp.performances;
 
-                if(temp.data.isVisible) {
-                    temp.data.visible = temp.data.isVisible;
-                    $("div[perf-created-sec]").append(addTemplate('performance'));
-                } else {
-                    temp.data.visible = temp.data.isVisible;
-                    $("div[act-section]").append(addTemplate('performance'));
+                for(var k in performances) {
+                    temp.data = performances[k] || new Array(0);
+
+                    if(temp.data.isVisible) {
+                        temp.data.visible = temp.data.isVisible;
+                        $("div[perf-created-sec]").append(addTemplate('performance'));
+                    } else {
+                        temp.data.visible = temp.data.isVisible;
+                        $("div[act-section]").append(addTemplate('performance'));
+                    }
                 }
-            }
-        });
+            });
 
-        /**
-         * Get all services
-         */
-        pricesApi.endpoints.service.getAll();
-        pricesApi.send(function(resp) {
-            var services = resp.services;
+            /**
+             * Get all services
+             */
+            pricesApi.endpoints.service.getAll();
+            pricesApi.send(function(resp) {
+                var services = resp.services;
 
-            for(var k in services) {
-                temp.data = services[k] || new Array(0);
-                $("div[services-section]").append(addTemplate('service'));
-            }
+                for(var k in services) {
+                    temp.data = services[k] || new Array(0);
+                    $("div[services-section]").append(addTemplate('service'));
+                }
+            });
+
         });
     }
 })();
