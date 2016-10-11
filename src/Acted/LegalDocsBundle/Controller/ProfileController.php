@@ -21,6 +21,39 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ProfileController extends Controller
 {
+    public function sortPerformancesByPrice($data) {
+        $performances = $data;
+        $priceOnRequestFlag = true;
+
+        foreach($performances->getItems() as &$performance) {
+            $packages = $performance->getPackages()->getValues();
+            $currentPerformancePrice = 3000;
+
+            foreach($packages as $package) {
+                $options = $package->getOptions()->getValues();
+
+                foreach($options as $option) {
+                    $priceOnRequest = $option->getPriceOnRequest();
+                    $priceOnRequestFlag = $priceOnRequest & $priceOnRequestFlag;
+
+                    $rates = $option->getRates()->getValues();
+                    foreach($rates as $rate) {
+                        $amount = $rate->getPrice()->getAmount();
+
+                        if($amount < $currentPerformancePrice) {
+                            $currentPerformancePrice = $amount;
+                        }
+                    }
+                }
+            }
+
+            $performance->setMinPrice($currentPerformancePrice);
+            $performance->setPriceOnRequest($priceOnRequestFlag);
+        }
+
+        return $performances;
+    }
+
     public function showAction(Request $request, Artist $artist) {
         $em = $this->getDoctrine()->getManager();
 
@@ -29,7 +62,8 @@ class ProfileController extends Controller
 
         $user = $this->getUser();
 
-        $performances = $this->getPerformances($artist, $request->get('page', 1), true);
+        $perf = $this->getPerformances($artist, $request->get('page', 1), true);
+        $performances = $this->sortPerformancesByPrice($perf);
         $feedbacks = $this->getFeedbacks($artist, 1);
 
         return $this->render('ActedLegalDocsBundle:Profile:show.html.twig',
@@ -46,7 +80,8 @@ class ProfileController extends Controller
 
         $user = $this->getUser();
 
-        $performances = $this->getPerformances($artist, $request->get('page', 1), true);
+        $perf = $this->getPerformances($artist, $request->get('page', 1), true);
+        $performances = $this->sortPerformancesByPrice($perf);
         $feedbacks = $this->getFeedbacks($artist, 1);
 
         return $this->render('ActedLegalDocsBundle:Profile:profile_edit.html.twig',
@@ -56,7 +91,8 @@ class ProfileController extends Controller
 
     public function editProfilePaginationPerformanceAction(Request $request, Artist $artist)
     {
-        $performances = $this->getPerformances($artist, $request->get('page', 1), true);
+        $perf = $this->getPerformances($artist, $request->get('page', 1), true);
+        $performances = $this->sortPerformancesByPrice($perf);
 
         return $this->render('@ActedLegalDocs/Profile/ordersSectionEdit.html.twig',
             compact('artist', 'performances')

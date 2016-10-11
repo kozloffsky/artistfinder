@@ -59,6 +59,21 @@ class Performance
      */
     public $isPricePage = 0;
 
+    /**
+     * @var integer
+     */
+    public $offerMinPrice = 0;
+
+    /**
+     * @var integer
+     */
+    public $minPrice = 0;
+
+    /**
+     * @var boolean
+     */
+    public $priceOnRequest = false;
+
     public function __construct()
     {
         $this->packages = new \Doctrine\Common\Collections\ArrayCollection();
@@ -388,5 +403,43 @@ class Performance
     public function getDeletedTime()
     {
         return $this->deletedTime;
+    }
+
+    /**
+     * Get minPrice
+     * @return integer
+     */
+    public function getMinPrice() {
+        return $this->minPrice;
+    }
+
+    /**
+     * Set minPrice
+     *
+     * @param integer $minPrice
+     *
+     * @return Performance
+     */
+    public function setMinPrice($price) {
+        $this->minPrice = $price;
+    }
+
+    /**
+     * Get priceOnRequest
+     * @return boolean
+     */
+    public function getPriceOnRequest() {
+        return $this->priceOnRequest;
+    }
+
+    /**
+     * Set priceOnRequest
+     *
+     * @param boolean $priceOnRequest
+     *
+     * @return Performance
+     */
+    public function setPriceOnRequest($flag) {
+        $this->priceOnRequest = $flag;
     }
 }

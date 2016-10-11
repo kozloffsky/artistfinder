@@ -8,6 +8,19 @@
     if (charCode > 31 && (charCode < 48 || charCode > 57))
         return false;
 
+    return true;
+}
+
+;function isNumberKeyLessHundred(evt) {
+
+    var value = evt.srcElement.value;
+    var charCode = (evt.which) ? evt.which : event.keyCode;
+    if(charCode == 46)
+        return true;
+
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+
     if(value > 100) {
         evt.srcElement.value = 100;
         return false;
@@ -427,7 +440,7 @@
                         <span class="note-x">x</span>\
                     </dt>\
                     <dd>\
-                        <input edit_duration name="duration" class="input-num" type="number" placeholder="'+dur+'" value="'+dur+'" onkeyup="return isNumberKey(event)" min="0" max="100">\
+                        <input edit_duration name="duration" class="input-num" type="number" placeholder="'+dur+'" value="'+dur+'" onkeyup="return isNumberKeyLessHundred(event)" min="0" max="100">\
                     </dd>\
                     <span>min</span>\
                     '+trashcan+'\
