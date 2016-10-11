@@ -548,9 +548,15 @@
         this.headingComp = function() {
             var html =
             '<h2 class="title">\
-                <input name="title" class="input-num huge" type="hidden" placeholder="'+this.data.title+'" value="'+this.data.title+'">\
-                <span>'+this.data.title+'</span>\
-            </h2>';
+                <input name="title" class="input-num huge" type="hidden" placeholder="'+this.data.title+'" value="'+this.data.title+'">';
+
+            if(this.data.isVisible) {
+                html += '<span>'+this.data.title+'</span>';
+            } else {
+                html += '<span>'+this.data.title+'<i delete_act class="fa fa-trash" aria-hidden="true"></i></span>';
+            }
+
+            html += '</h2>';
 
             return html;
         };
@@ -703,7 +709,7 @@
                 comp = "service";
 
             var data = {
-                duration: 45,
+                duration: 0,
                 qty: 1,
                 package: packId
             };
@@ -763,7 +769,7 @@
                 artist: artist,
                 options: [{
                     qty: 1,
-                    duration: 45,
+                    duration: 0,
                     price1: 3000
                 }],
                 performance: id
@@ -875,7 +881,8 @@
 
             var article = _this.closest("article"),
                 articleIndex = article.index(),
-                mainSection = article.closest("div");
+                mainSection = article.closest("div"),
+                totalPackages = article.find("ul[package]");
             var packageElem = _this.closest("ul[package]");
 
             var rows_length = rows.length;
@@ -888,7 +895,6 @@
                     $(rows[n - 2]).find("div.add").show();
                 }
             }
-
 
             if(rows_length > 1) {
                 div.find("i.fa.fa-trash").show();
@@ -906,18 +912,17 @@
 
             if(rows_length == 0) {
                 deletePackage = true;
-                packageElem.remove();
             }
 
-            // pricesApi.endpoints.price.delete(id);
-            // pricesApi.send(function(resp) {
-            //     if(deletePackage) {
-            //         packageElem.remove();
-            //         if(rows_length == 0) {
-            //             mainSection.find("article")[articleIndex].remove();
-            //         }
-            //     }
-            // });
+            pricesApi.endpoints.price.delete(id);
+            pricesApi.send(function(resp) {
+                if(deletePackage) {
+                    packageElem.remove();
+                    if((totalPackages.length - 1) == 0) {
+                        mainSection.find("article")[articleIndex].remove();
+                    }
+                }
+            });
         })
         .on("click", "[delete_act]", function(e) {
             e.preventDefault();
@@ -1026,7 +1031,7 @@
             options: [
                 {
                     price1: 3000,
-                    duration: 45,
+                    duration: 0,
                     qty: 1
                 }
             ]
@@ -1047,7 +1052,7 @@
             package_name: "package template",
             artist: artist,
             price: 3000,
-            duration: 45,
+            duration: 0,
             qty: 1
         };
         pricesApi.endpoints.service.post.price({ service_price: data });
