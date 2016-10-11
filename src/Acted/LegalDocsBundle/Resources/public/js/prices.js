@@ -10,7 +10,6 @@
 
     return true;
 }
-
 ;function isNumberKeyLessHundred(evt) {
 
     var value = evt.srcElement.value;
@@ -331,11 +330,11 @@
             var html = "",
                 trash;
 
-            // if(lenobj.len < 2) {
-            //     trash = this.trashCan("delete_price", true);
-            // } else {
+            if(lenobj.len < 2) {
+                trash = this.trashCan("delete_price", true);
+            } else {
                 trash = this.trashCan("delete_price");
-            // }
+            }
 
             html += '\
                 <div class="box">\
@@ -548,9 +547,15 @@
         this.headingComp = function() {
             var html =
             '<h2 class="title">\
-                <input name="title" class="input-num huge" type="hidden" placeholder="'+this.data.title+'" value="'+this.data.title+'">\
-                <span>'+this.data.title+'<i delete_act class="fa fa-trash" aria-hidden="true"></i></span>\
-            </h2>';
+                <input name="title" class="input-num huge" type="hidden" placeholder="'+this.data.title+'" value="'+this.data.title+'">';
+
+            if(this.data.isVisible) {
+                html += '<span>'+this.data.title+'</span>';
+            } else {
+                html += '<span>'+this.data.title+'<i delete_act class="fa fa-trash" aria-hidden="true"></i></span>';
+            }
+
+            html += '</h2>';
 
             return html;
         };
@@ -559,15 +564,17 @@
             var packages = this.data.packages;
             var packCompHtml = "";
 
-            for(var k in packages) {
-                this.data.currentPackage = packages[k];
+            if(packages.length) {
+                for(var k in packages) {
+                    this.data.currentPackage = packages[k];
 
-                packCompHtml += '<ul package="'+packages[k].id+'" class="info-list"><li>';
+                    packCompHtml += '<ul package="'+packages[k].id+'" class="info-list"><li>';
 
-                packCompHtml += this.packageComp(packages[k]);
-                packCompHtml += this.divComp(comp, false);
+                    packCompHtml += this.packageComp(packages[k]);
+                    packCompHtml += this.divComp(comp, false);
 
-                packCompHtml += '</li></ul>';
+                    packCompHtml += '</li></ul>';
+                }
             }
 
             return packCompHtml;
@@ -665,8 +672,7 @@
             var article = _this.closest("article"),
                 comp;
 
-            var i = lic.length;
-
+            var i = lic.length - 1;
 
             if( typeof(article.attr("performance")) != "undefined" )
                 comp = "performance";
@@ -704,7 +710,7 @@
                 comp = "service";
 
             var data = {
-                duration: 45,
+                duration: 0,
                 qty: 1,
                 package: packId
             };
@@ -764,7 +770,7 @@
                 artist: artist,
                 options: [{
                     qty: 1,
-                    duration: 45,
+                    duration: 0,
                     price1: 3000
                 }],
                 performance: id
@@ -823,7 +829,7 @@
             if((list.length - 1) < 2) {
                 ul.find("a[add_price]").closest("li").show();
                 _this.closest("ul").find("a[add_price]").closest("li").show();
-                // list.find("i.fa.fa-trash").hide();
+                list.find("i.fa.fa-trash").hide();
             }
 
             var div = _this.closest("div.col-2");
@@ -876,12 +882,20 @@
 
             var article = _this.closest("article"),
                 articleIndex = article.index(),
-                mainSection = article.closest("div");
+                mainSection = article.closest("div"),
+                totalPackages = article.find("ul[package]");
             var packageElem = _this.closest("ul[package]");
 
-            _this.closest("div[set_option]").prev().prev().prev().find("div.add").show();
-
             var rows_length = rows.length;
+
+            if(idx > 1) {
+                var set_index = _this.closest("div[set_option]").index()
+                var n = (set_index + 2) / 3;
+
+                if(rows_length == n) {
+                    $(rows[n - 2]).find("div.add").show();
+                }
+            }
 
             if(rows_length > 1) {
                 div.find("i.fa.fa-trash").show();
@@ -905,9 +919,13 @@
             pricesApi.send(function(resp) {
                 if(deletePackage) {
                     packageElem.remove();
-                    if(rows_length == 0) {
-                        mainSection.find("article")[articleIndex].remove();
-                    }
+
+                    var id = packageElem.attr("package");
+
+                    pricesApi.endpoints.package.delete(id);
+                    pricesApi.send(function(resp) {
+                        console.log(resp);
+                    });
                 }
             });
         })
@@ -947,7 +965,7 @@
 
                 $(this).find("input").focusout(function(e) {
                     span.show();
-                    span.html($(this).val() + '<i delete_act class="fa fa-trash" aria-hidden="true"></i>');
+                    span.html($(this).val());
 
                     var article = $(this).closest("article");
                     var id = $(this).closest("article").attr("act_id"),
@@ -1018,7 +1036,7 @@
             options: [
                 {
                     price1: 3000,
-                    duration: 45,
+                    duration: 0,
                     qty: 1
                 }
             ]
@@ -1039,7 +1057,7 @@
             package_name: "package template",
             artist: artist,
             price: 3000,
-            duration: 45,
+            duration: 0,
             qty: 1
         };
         pricesApi.endpoints.service.post.price({ service_price: data });
