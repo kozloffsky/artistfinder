@@ -72,12 +72,12 @@ class ServiceRepository extends \Doctrine\ORM\EntityRepository
 
     public function getFullServiceById($id)
     {
-        $whereCriteria = 's.deletedTime IS NULL AND s.id IN (:serviceId) AND pac.deletedTime IS NULL AND opt.deletedTime IS NULL AND rate.deletedTime IS NULL';
+        $whereCriteria = 's.deletedTime IS NULL AND s.id IN (:serviceId)';
         return $this->createQueryBuilder('s')
             ->select('s, pac, opt, rate, price')
-            ->leftJoin('s.packages', 'pac')
-            ->leftJoin('pac.options', 'opt')
-            ->leftJoin('opt.rates', 'rate')
+            ->leftJoin('s.packages', 'pac', 'WITH', 'pac.deletedTime IS NULL')
+            ->leftJoin('pac.options', 'opt', 'WITH', 'opt.deletedTime IS NULL')
+            ->leftJoin('opt.rates', 'rate', 'WITH', 'rate.deletedTime IS NULL')
             ->leftJoin('rate.price', 'price')
             ->where($whereCriteria)
             ->setParameter('serviceId', $id)
@@ -86,12 +86,12 @@ class ServiceRepository extends \Doctrine\ORM\EntityRepository
 
     public function getServicesByProfileId($profileId)
     {
-        $whereCriteria = 's.profile = :profileId AND s.deletedTime IS NULL AND pac.deletedTime IS NULL AND opt.deletedTime IS NULL AND rate.deletedTime IS NULL';
+        $whereCriteria = 's.profile = :profileId AND s.deletedTime IS NULL';
         return $this->createQueryBuilder('s')
             ->select('s, pac, opt, rate, price')
-            ->leftJoin('s.packages', 'pac')
-            ->leftJoin('pac.options', 'opt')
-            ->leftJoin('opt.rates', 'rate')
+            ->leftJoin('s.packages', 'pac', 'WITH', 'pac.deletedTime IS NULL')
+            ->leftJoin('pac.options', 'opt', 'WITH', 'opt.deletedTime IS NULL')
+            ->leftJoin('opt.rates', 'rate', 'WITH', 'rate.deletedTime IS NULL')
             ->leftJoin('rate.price', 'price')
             ->where($whereCriteria)
             ->setParameter('profileId', $profileId)

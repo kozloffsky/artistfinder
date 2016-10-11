@@ -101,12 +101,12 @@ class PerformanceRepository extends \Doctrine\ORM\EntityRepository
 
     public function getFullPerformanceById($id)
     {
-        $whereCriteria = 'p.deletedTime IS NULL AND p.id IN (:performanceId) AND pac.deletedTime IS NULL AND opt.deletedTime IS NULL AND rate.deletedTime IS NULL';
+        $whereCriteria = 'p.deletedTime IS NULL AND p.id IN (:performanceId)';
         return $this->createQueryBuilder('p')
             ->select('p, pac, opt, rate, price')
-            ->leftJoin('p.packages', 'pac')
-            ->leftJoin('pac.options', 'opt')
-            ->leftJoin('opt.rates', 'rate')
+            ->leftJoin('p.packages', 'pac', 'WITH', 'pac.deletedTime IS NULL')
+            ->leftJoin('pac.options', 'opt', 'WITH', 'opt.deletedTime IS NULL')
+            ->leftJoin('opt.rates', 'rate', 'WITH', 'rate.deletedTime IS NULL')
             ->leftJoin('rate.price', 'price')
             ->where($whereCriteria)
             ->setParameter('performanceId', $id)
@@ -115,12 +115,12 @@ class PerformanceRepository extends \Doctrine\ORM\EntityRepository
 
     public function getPerformancesByProfileId($profileId)
     {
-        $whereCriteria = 'p.profile = :profileId AND p.deletedTime IS NULL AND pac.deletedTime IS NULL AND opt.deletedTime IS NULL AND rate.deletedTime IS NULL';
+        $whereCriteria = 'p.profile = :profileId AND p.deletedTime IS NULL';
         return $this->createQueryBuilder('p')
             ->select('p, pac, opt, rate, price')
-            ->leftJoin('p.packages', 'pac')
-            ->leftJoin('pac.options', 'opt')
-            ->leftJoin('opt.rates', 'rate')
+            ->leftJoin('p.packages', 'pac', 'WITH', 'pac.deletedTime IS NULL')
+            ->leftJoin('pac.options', 'opt', 'WITH', 'opt.deletedTime IS NULL')
+            ->leftJoin('opt.rates', 'rate', 'WITH', 'rate.deletedTime IS NULL')
             ->leftJoin('rate.price', 'price')
             ->where($whereCriteria)
             ->setParameter('profileId', $profileId)
