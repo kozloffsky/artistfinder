@@ -10,7 +10,6 @@
 
     return true;
 }
-
 ;function isNumberKeyLessHundred(evt) {
 
     var value = evt.srcElement.value;
@@ -565,15 +564,17 @@
             var packages = this.data.packages;
             var packCompHtml = "";
 
-            for(var k in packages) {
-                this.data.currentPackage = packages[k];
+            if(packages.length) {
+                for(var k in packages) {
+                    this.data.currentPackage = packages[k];
 
-                packCompHtml += '<ul package="'+packages[k].id+'" class="info-list"><li>';
+                    packCompHtml += '<ul package="'+packages[k].id+'" class="info-list"><li>';
 
-                packCompHtml += this.packageComp(packages[k]);
-                packCompHtml += this.divComp(comp, false);
+                    packCompHtml += this.packageComp(packages[k]);
+                    packCompHtml += this.divComp(comp, false);
 
-                packCompHtml += '</li></ul>';
+                    packCompHtml += '</li></ul>';
+                }
             }
 
             return packCompHtml;
@@ -918,9 +919,13 @@
             pricesApi.send(function(resp) {
                 if(deletePackage) {
                     packageElem.remove();
-                    if((totalPackages.length - 1) == 0) {
-                        mainSection.find("article")[articleIndex].remove();
-                    }
+
+                    var id = packageElem.attr("package");
+
+                    pricesApi.endpoints.package.delete(id);
+                    pricesApi.send(function(resp) {
+                        console.log(resp);
+                    });
                 }
             });
         })
