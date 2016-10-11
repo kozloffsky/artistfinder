@@ -369,27 +369,46 @@
 
                 html += '<ul rates class="price-list">';
 
-                for(var key in rates) {
-                    var rate = rates[key];
+                if(rates.length) {
 
-                    var i = new Number(key) + 1;
+                    for(var key in rates) {
+                        var rate = rates[key];
 
-                    html += '<li price_comp>' + this.priceComp(rate, { i: i, len: len }) + '</li>';
+                        var i = new Number(key) + 1;
 
-                    if( (len == i) && (this.data.type !== 'service') ) {
-                        html += '';
+                        html += '<li price_comp>' + this.priceComp(rate, { i: i, len: len }) + '</li>';
 
-                        if(len < 2) {
-                            html += '<li>';
-                        } else {
-                            html += '<li style="display: none">';
+                        if( (len == i) && (this.data.type !== 'service') ) {
+                            html += '';
+
+                            if(len < 2) {
+                                html += '<li>';
+                            } else {
+                                html += '<li style="display: none">';
+                            }
+
+                            html +='<div class="add">\
+                                    <a add_price href="#">Add price</a><a class="ico-box" href="#"><i class="ico question">?</i></a>\
+                                </div>\
+                            </li>';
                         }
-
-                        html +='<div class="add">\
-                                <a add_price href="#">Add price</a><a class="ico-box" href="#"><i class="ico question">?</i></a>\
-                            </div>\
-                        </li>';
                     }
+
+                } else {
+
+                    var data = {
+                        option: option.id,
+                        price: 3000
+                    };
+
+                    pricesApi.endpoints.rate.post(this.data.type, { price_rate_create: data });
+                    pricesApi.send(function(resp) {
+                        html += "<li price_comp>"+this.priceComp({ id: resp.price.id, price: { amount: 3000 } }, { i: 1 });
+                        html +='<div class="add">\
+                                    <a add_price href="#">Add price</a><a class="ico-box" href="#"><i class="ico question">?</i></a>\
+                                </div>\
+                            </li>';
+                    });
                 }
 
                 html += '<li><div class="custom-checkbox big">';
