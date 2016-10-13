@@ -3,9 +3,9 @@
  */
 $(function() {
     $(document).on('click','.manageRecommended',function(){
-        console.log(this)
+        //console.log(this)
         var artistEditManageId = $(this).parents('tr').attr('id');
-        console.log(artistEditManageId)
+        //console.log(artistEditManageId)
         $('tr#'+artistEditManageId+' .recommendedIndexAdmin').hide();
         $('tr#'+artistEditManageId+' .recommendedInput').show();
         $('tr#'+artistEditManageId+' .saveRecommended').show();
@@ -13,9 +13,9 @@ $(function() {
     })
 
     $(document).on('click','.saveRecommended',function(){
-        console.log(this)
+        //console.log(this)
         var artistEditManageId = $(this).parents('tr').attr('id');
-        console.log(artistEditManageId);
+        //console.log(artistEditManageId);
         var recommendedCat = $('#catMainSel option:selected').val();
         var artistREcommendedVal = $('tr#'+artistEditManageId+' .recommendedInput').val();
         $.ajax({
@@ -35,9 +35,9 @@ $(function() {
 
 
     $(document).on('click','.manageSpotlight',function(){
-        console.log(this)
+        //console.log(this)
         var artistEditManageId = $(this).parents('tr').attr('id');
-        console.log(artistEditManageId)
+        //console.log(artistEditManageId)
         $('tr#'+artistEditManageId+' .spotlightIndexAdmin').hide();
         $('tr#'+artistEditManageId+' .spotlightInput').show();
         $('tr#'+artistEditManageId+' .saveSpotlight').show();
@@ -45,9 +45,9 @@ $(function() {
     });
 
     $(document).on('click','.saveSpotlight',function(){
-        console.log(this)
+        //console.log(this)
         var artistEditManageId = $(this).parents('tr').attr('id');
-        console.log(artistEditManageId);
+        //console.log(artistEditManageId);
         var artistREcommendedVal = $('tr#'+artistEditManageId+' .spotlightInput').val();
         $.ajax({
             type: "POST",

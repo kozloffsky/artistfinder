@@ -1,0 +1,21 @@
+Acted\LegalDocsBundle\Entity\Price:
+    type: entity
+    table: Price
+    repositoryClass: Acted\LegalDocsBundle\Repository\PriceRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+      amount:
+        type: decimal
+        precision: 16
+        scale: 2
+    oneToOne:
+      rate:
+        targetEntity: Acted\LegalDocsBundle\Entity\Rate
+        mappedBy: price
+
+    lifecycleCallbacks: {  }

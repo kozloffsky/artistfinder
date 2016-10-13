@@ -36,6 +36,13 @@ Acted\LegalDocsBundle\Entity\Artist:
         spotlight:
           type: integer
           nullable: true
+        workAbroad:
+          type: boolean
+          options:
+            default: false
+        searchImage:
+          type: string(256)
+          nullable: true
     manyToOne:
         city:
           targetEntity: Acted\LegalDocsBundle\Entity\RefCity

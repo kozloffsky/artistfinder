@@ -321,4 +321,12 @@ class SecurityController extends Controller
 
         return false;
     }
+
+    public function passwordRecoveryAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+
+        $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
+
+        return $this->render('@ActedLegalDocs/Security/passwordRecovery.html.twig', compact('categories'));
+    }
 }

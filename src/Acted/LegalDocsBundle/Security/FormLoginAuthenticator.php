@@ -40,6 +40,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse(
                 [
+                    'artistId' => $token->getUser()->getArtist()->getId(),
                     'userId' => $token->getUser()->getId(),
                     'role' => $token->getUser()->getRoles(),
                     'tempUserToken' => $token->getUser()->getConfirmationToken()?$token->getUser()

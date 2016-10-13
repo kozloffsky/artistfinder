@@ -324,4 +324,16 @@ class ChatRoomController extends Controller
         return $this->render('ActedLegalDocsBundle:ChatRoom:bookings.html.twig',
             compact('chat'));
     }
+
+    public function pricesAction() {
+        $em = $this->getDoctrine()->getManager();
+        $serializer = $this->get('jms_serializer');
+        $homespotlights = $em->getRepository('ActedLegalDocsBundle:Artist')->allSpotlightArtist();
+        $homespotlight = $serializer->toArray($homespotlights, SerializationContext::create()
+            ->setGroups(['block']));
+
+        $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
+
+        return $this->render('ActedLegalDocsBundle:ChatRoom:prices.html.twig', compact('homespotlight', 'categories'));
+    }
 }

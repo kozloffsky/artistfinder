@@ -14,7 +14,7 @@ var env = process.env.GULP_ENV;
 
 gulp.task('js', function(){
     return gulp.src([
-            'src/Acted/LegalDocsBundle/Resources/public/js/*.js', "!src/Acted/LegalDocsBundle/Resources/public/js/admin.js", "!src/Acted/LegalDocsBundle/Resources/public/js/userCreationAdmin.js"])
+        'src/Acted/LegalDocsBundle/Resources/public/js/*.js', "!src/Acted/LegalDocsBundle/Resources/public/js/admin.js", "!src/Acted/LegalDocsBundle/Resources/public/js/userCreationAdmin.js"])
         .pipe(order([
             "jquery.min.js",
             "jquery.throttle.min.js",
@@ -33,7 +33,7 @@ gulp.task('js', function(){
 
 gulp.task('css', function(){
     return gulp.src([
-            'src/Acted/LegalDocsBundle/Resources/public/css/*.css'])
+        'src/Acted/LegalDocsBundle/Resources/public/css/*.css'])
         .pipe(concat('styles.css'))
         .pipe(cssimport({}))
         .pipe(autoprefixer())
