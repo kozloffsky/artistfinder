@@ -185,8 +185,6 @@ $(function () {
                     $gradient.show();
                 }
             });
-
-
         } else {
             $toggler.hide();
             $gradient.hide();
@@ -349,7 +347,6 @@ $(function () {
         $paginationNextButton.click(nextPage);
         $paginationPrevButton.click(prevPage);
     });
-
 
     // function initialize() {
     //     var myLatlng = new google.maps.LatLng(-34.397, 150.644);

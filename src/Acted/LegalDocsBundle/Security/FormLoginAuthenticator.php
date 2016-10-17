@@ -38,15 +38,18 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         if ($request->isXmlHttpRequest()) {
-            return new JsonResponse(
-                [
-                    'artistId' => $token->getUser()->getArtist()->getId(),
-                    'userId' => $token->getUser()->getId(),
-                    'role' => $token->getUser()->getRoles(),
-                    'tempUserToken' => $token->getUser()->getConfirmationToken()?$token->getUser()
-                        ->getConfirmationToken():''
-                ]
-            );
+            $artistId = null;
+
+            if (!empty($token->getUser()->getArtist())) {
+                $artistId = $token->getUser()->getArtist()->getId();
+            }
+
+            return new JsonResponse([
+                'artistId' => $artistId,
+                'userId' => $token->getUser()->getId(),
+                'role' => $token->getUser()->getRoles(),
+                'tempUserToken' => $token->getUser()->getConfirmationToken()?$token->getUser():''
+            ]);
         }
 
         return parent::onAuthenticationSuccess($request, $token, $providerKey);

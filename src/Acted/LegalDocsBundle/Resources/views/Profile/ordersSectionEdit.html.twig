@@ -9,15 +9,12 @@
                 <header class="heading">
                     <h2 class="perfNotEditing">{{ performance.title }} </h2>
                     <input class="pull-left title offerTitlePerf" type="text" placeholder="Please enter a name for your act" value="{{ performance.title }}">
-                    {% if performance.offerMinPrice %}
-                        <div class="price pull-right">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</div> <!--<input class="set-price" type="text" placeholder="0,00">-->
+                    {% if performance.priceOnRequest %}
+                        <div class="price pull-right">Price on request</div>
                     {% else %}
-                        <span class="price">Price: on request</span>
+                        <div class="price pull-right">Price: from {{ performance.minPrice|number_format(2, '.', ',') }} EUR</div> <!--<input class="set-price" type="text" placeholder="0,00">-->
                     {% endif %}
-
                 </header>
-
-
                 <div class="row">
                     {% for mediaOf in performance.media[0:2] if mediaOf.position == 1 %}
 

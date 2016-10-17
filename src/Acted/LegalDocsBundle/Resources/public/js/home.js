@@ -3,6 +3,36 @@ $(function () {
     $(".navbar-collapse").collapse('hide');
   });
 
+  checkAvatar();
+
+  function checkAvatar() {
+      $('img.avatar').each(function(){
+        var imageSrc = $(this).attr('src');
+        if(imageSrc != undefined) {
+          //console.log(imageSrc.length);
+          if (imageSrc.length <= 1) {
+            $(this).attr('src', '/assets/images/noAvatar.png');
+          }
+        }
+      })
+  };
+
+  $('.homeSearchStart').on('click',function () {
+    var searchEntered = $(homeSearchInput).val();
+    if (searchEntered.length >= 1) {
+      localStorage.setItem("search", searchEntered);
+    }
+  })
+  checkIfUserForcedLogin();
+
+  function checkIfUserForcedLogin(){
+    var currentUrl = window.location.href ;
+    var matchesUrl = currentUrl.split('/');
+    //console.log(matchesUrl[3])
+    if (matchesUrl[3] == '?login_form'){
+      $('#loginModal').modal('show');
+    }
+  }
   // Add class hover to flip-container elements.
   $(".flip-container").hover(function () {
     $(this).addClass("hover-mouse");
@@ -83,7 +113,7 @@ $(function () {
     var $nameBlock = $($item.parent().find('.caption-block')[0]);
     $nameBlock.attr('style', style);
 
-    console.log();
+    //console.log();
   }
 
   var carousel;
