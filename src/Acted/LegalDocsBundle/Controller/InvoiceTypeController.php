@@ -3,7 +3,6 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Acted\LegalDocsBundle\Entity\InvoiceType;
 use Acted\LegalDocsBundle\Form\InvoiceTypeType;

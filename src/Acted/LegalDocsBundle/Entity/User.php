@@ -61,7 +61,6 @@ class User implements UserInterface, \Serializable
 
     private $user;
 
-
     /**
      * Get id
      *
@@ -220,16 +219,30 @@ class User implements UserInterface, \Serializable
     {
         return $this->active;
     }
-    /**
-     * @var string
-     */
-    private $avatar;
 
     /**
-     * @var string
+     * Set postcode
+     *
+     * @param string $postcode
+     *
+     * @return User
      */
-    private $background;
+    public function setPostcode($postcode)
+    {
+        $this->postcode = $postcode;
 
+        return $this;
+    }
+
+    /**
+     * Get postcode
+     *
+     * @return string
+     */
+    public function getPostcode()
+    {
+        return $this->postcode;
+    }
 
     /**
      * Set avatar
@@ -278,11 +291,6 @@ class User implements UserInterface, \Serializable
     {
         return $this->rel2abs($this->background);
     }
-    /**
-     * @var \Acted\LegalDocsBundle\Entity\Profile
-     */
-    private $profile;
-
 
     /**
      * Set profile
@@ -307,11 +315,30 @@ class User implements UserInterface, \Serializable
     {
         return $this->profile;
     }
-    /**
-     * @var \Acted\LegalDocsBundle\Entity\Artist
-     */
-    private $artist;
 
+    /**
+     * Set paymentSetting
+     *
+     * @param \Acted\LegalDocsBundle\Entity\PaymentSetting $paymentSetting
+     *
+     * @return User
+     */
+    public function setPaymentSetting(\Acted\LegalDocsBundle\Entity\PaymentSetting $paymentSetting = null)
+    {
+        $this->paymentSetting = $paymentSetting;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentSetting
+     *
+     * @return \Acted\LegalDocsBundle\Entity\PaymentSetting
+     */
+    public function getProfilePaymentSetting()
+    {
+        return $this->paymentSetting;
+    }
 
     /**
      * Set artist
@@ -417,30 +444,8 @@ class User implements UserInterface, \Serializable
     {
 
     }
-    /**
-     * @var string
-     */
-    private $confirmationToken;
 
-    /**
-     * @var string
-     */
-    private $confirmationPeriod;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $roles;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $chatRoomsArtist;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $chatRoomsClient;
 
     /**
      * Constructor
@@ -565,12 +570,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @var string
-     */
-    private $email;
-
-
-    /**
      * Set email
      *
      * @param string $email
@@ -593,12 +592,6 @@ class User implements UserInterface, \Serializable
     {
         return $this->email;
     }
-
-    /**
-     * @var \DateTime
-     */
-    private $passwordRequestedAt;
-
 
     /**
      * Set passwordRequestedAt

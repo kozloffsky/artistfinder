@@ -18,6 +18,10 @@ acted_legal_docs_homepage:
     path:     /
     defaults: { _controller: ActedLegalDocsBundle:Default:index }
 
+acted_legal_docs_howitworks:
+    path:     /how-it-works
+    defaults: { _controller: ActedLegalDocsBundle:Default:howItWorks }
+
 acted_legal_docs_profile:
   resource: "@ActedLegalDocsBundle/Resources/config/routing/profile.yml"
   prefix: /profile
@@ -61,3 +65,7 @@ acted_legal_docs_chat_room:
 acted_legal_docs_admin_dashboard:
   resource: "@ActedLegalDocsBundle/Resources/config/routing/admin.yml"
   prefix: /administration
+
+acted_legal_docs_price:
+    resource: "@ActedLegalDocsBundle/Resources/config/routing/price.yml"
+    prefix:   /price

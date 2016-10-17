@@ -5,7 +5,7 @@ Acted\LegalDocsBundle\Entity\Artist:
     id:
       groups: [recommend_artist, spotlight_artist]
     name:
-      groups: [Default, block, quote_request, recommend_artist, spotlight_artist]
+      groups: [Default, block, quote_request, recommend_artist, spotlight_artist, profile_settings]
     slug:
       groups: [Default, block, quote_request, recommend_artist, spotlight_artist, users_list]
     user:
@@ -14,13 +14,23 @@ Acted\LegalDocsBundle\Entity\Artist:
       groups: [recommend_artist]
     spotlight:
       groups: [spotlight_artist]
+    workAbroad:
+      groups: [profile_settings]
+    searchImage:
+      groups: [profile_settings, block]
   virtual_properties:
+    getCityProfileId:
+      serialized_name: city_id
+      groups: [profile_settings]
     getCityName:
       serialized_name: city
-      groups: [Default, block]
+      groups: [Default, block, profile_settings]
+    getCountryId:
+      serialized_name: country_id
+      groups: [profile_settings]
     getCountryName:
       serialized_name: country
-      groups: [Default, block]
+      groups: [Default, block, profile_settings]
     getRating:
       serialized_name: rating
       groups: [Default, block]
@@ -36,3 +46,6 @@ Acted\LegalDocsBundle\Entity\Artist:
     getAllPerformance:
       serialized_name: allPerformance
       groups: [quote_request]
+    getCurrency:
+      serialized_name: currency
+      groups: [profile_settings]

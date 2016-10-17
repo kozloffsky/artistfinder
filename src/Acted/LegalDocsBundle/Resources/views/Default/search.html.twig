@@ -202,16 +202,18 @@
 
                             <div class="slider-wrapper searchRecomendationWrapper">
                                 {% for recomendedArtist in recommendation.artists %}
-
                                 <div class="profile-card bordered">
 
                                     {% if recomendedArtist.video_media %}
                                         <div class="video-icon"></div>
                                     {% endif %}
 
-                                    <img class="header" src="{{ asset(recomendedArtist.media.link)|imagine_filter
-                                    ('small')
-                                    }}"/>
+
+                                    {% if recomendedArtist.media %}
+                                        <img class="header" src="{{ asset(recomendedArtist.media.link)|imagine_filter
+                                        ('small')
+                                        }}"/>
+                                    {% endif %}
 
                                     <p class="card-title">{{ recomendedArtist.name }}</p>
 

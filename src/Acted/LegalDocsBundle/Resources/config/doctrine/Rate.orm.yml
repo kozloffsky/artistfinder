@@ -1,0 +1,25 @@
+Acted\LegalDocsBundle\Entity\Rate:
+    type: entity
+    table: Rate
+    repositoryClass: Acted\LegalDocsBundle\Repository\RateRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+      deletedTime:
+        type: datetime
+        nullable: true
+    manyToOne:
+      option:
+        targetEntity: Acted\LegalDocsBundle\Entity\Option
+        inversedBy: rates
+        joinColumn:
+          onDelete: RESTRICT
+    oneToOne:
+      price:
+        targetEntity: Acted\LegalDocsBundle\Entity\Price
+        inversedBy: rate
+    lifecycleCallbacks: {  }

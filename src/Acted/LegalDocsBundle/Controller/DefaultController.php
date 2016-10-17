@@ -2,7 +2,6 @@
 
 namespace Acted\LegalDocsBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JMS\Serializer\SerializationContext;
 
 class DefaultController extends Controller
@@ -29,5 +28,9 @@ class DefaultController extends Controller
 
         return $this->render('ActedLegalDocsBundle:Default:index.html.twig',
             compact('homespotlight', 'categories'));
+    }
+
+    public function howItWorksAction() {
+        return $this->render('ActedLegalDocsBundle:Default:how-it-works.html.twig');
     }
 }

@@ -1,0 +1,9 @@
+Acted\LegalDocsBundle\Entity\RefCurrency:
+    exclusion_policy: NONE
+    properties:
+        id:
+            groups: [profile_settings]
+        isoCode:
+            groups: [profile_settings]
+        symbol:
+            groups: [profile_settings]

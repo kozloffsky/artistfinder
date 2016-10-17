@@ -50,6 +50,7 @@ main.prices{
     border: none;
     padding-top: 0;
 }
+
 .prices .act.empty .info-list > li{ padding-bottom: 50px; }
 .prices .act .info-list .col-2,
 .prices .act .info-list .col{
@@ -402,6 +403,11 @@ main.prices .note{
     font-size: 14px;
     color: #000;
 }
+.prices .custom-checkbox label:before,
+.prices .custom-checkbox label:after {
+    height: 20px;
+    width: 20px;
+}
 
 @media (max-width: 1199px) {
     .prices .act,
@@ -493,6 +499,16 @@ main.prices .note{
         float: none;
         display: inline-block;
         vertical-align: top;
+<<<<<<< HEAD
+    }
+    .prices .act .info-list .col:last-child{padding: 0;}
+    .prices .act .info-list .col:after,
+    .prices .act .info-list .col-2:after{border: 0;}
+    .prices .act .info-list .col-2{
+        padding-top: 0;
+        padding-left: 0;
+    }
+=======
     }
     .prices .act .info-list .col:last-child{padding: 0;}
     .prices .act .info-list .col:after,

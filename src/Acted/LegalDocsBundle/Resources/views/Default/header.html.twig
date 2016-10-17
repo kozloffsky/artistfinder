@@ -6,7 +6,8 @@
     <meta name="viewport"
           content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-<link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/styles.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/style-retina.css') }}" />
 </head>
 <body>
 
@@ -59,7 +60,7 @@
                 <div class="divider-vertical"></div>
                 <ul class="nav navbar-nav navbar-left">
                     <li class="active">
-                        <a href="#">
+                        <a href="/how-it-works">
                             How it works
                             <div class="underline">
                                 <div class="top"></div>
@@ -98,7 +99,6 @@
                         </li>
                     {% endif %}
                     {% endif %}
-
                         {% if app.user %}
                         {% set amount = render(controller('ActedLegalDocsBundle:ChatRoom:countNewMessage')) %}
                     <li class="mail">
@@ -121,12 +121,9 @@
                         </a>
                         {% if app.user.artist %}
                         <ul class="dropdown-menu">
-                            <li class="orange_dashboard">
-                                <a href="#">My Dashboard</a>
-                            </li>
-                            <li class="orange_settings">
-                                <a href="#">Settings</a>
-                            </li>
+                            <li class="orange_dashboard"><a href="/dashboard/messages/{{ app.user.id }}">My Dashboard</a></li>
+                            <li class="orange_settings"><a href="/profile/settings">Settings</a></li>
+                            <li role="separator" class="divider"></li>
                             {% if(app.user) %}
                                 <li class="orange_logout"><a id="logOut" href="{{ logout_path() }}">Logout</a></li>
                             {% endif %}
