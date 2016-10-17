@@ -69,9 +69,12 @@ $(function () {
             var count = $('.results-menu>li').length;
             $(this).css('z-index', count - index);
         });
+    };
 
     initSLiderRec();
     function initSLiderRec() {
+        var retina = window.devicePixelRatio > 1;
+
         if(retina) {
             var panelWidth = 155;
             var margin = 25;

@@ -284,9 +284,13 @@ class SecurityController extends Controller
 
             return new JsonResponse(['ok']);
         }
+
+        $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
+
         return $this->render('@ActedLegalDocs/Security/resendToken.html.twig', [
             'form' => $form->createView(),
-            'currentToken' => $token
+            'currentToken' => $token,
+            'categories' => $categories
         ]);
     }
 
@@ -320,5 +324,13 @@ class SecurityController extends Controller
         }
 
         return false;
+    }
+
+    public function passwordRecoveryAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+
+        $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
+
+        return $this->render('@ActedLegalDocs/Security/passwordRecovery.html.twig', compact('categories'));
     }
 }

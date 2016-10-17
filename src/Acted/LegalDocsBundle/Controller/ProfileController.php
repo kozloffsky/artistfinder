@@ -73,7 +73,8 @@ class ProfileController extends Controller
         }
 
 
-        $performances = $this->getPerformances($artist, $request->get('page', 1), true);
+        $perf = $this->getPerformances($artist, $request->get('page', 1), true);
+        $performances = $this->sortPerformancesByPrice($perf);
         $feedbacks = $this->getFeedbacks($artist, 1);
 
         return $this->render('ActedLegalDocsBundle:Profile:show.html.twig',

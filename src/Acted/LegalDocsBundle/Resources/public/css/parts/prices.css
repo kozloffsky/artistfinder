@@ -492,14 +492,13 @@ main.prices .note{
         margin-bottom: 20px;
     }
     .prices .act .info-list .col,
-    .prices .act .info-list .col:first-child{
+    .prices .act .info-list .col:first-child {
         width: 49%;
         min-height: 0;
         padding: 0 0 6px;
         float: none;
         display: inline-block;
         vertical-align: top;
-<<<<<<< HEAD
     }
     .prices .act .info-list .col:last-child{padding: 0;}
     .prices .act .info-list .col:after,
@@ -507,8 +506,6 @@ main.prices .note{
     .prices .act .info-list .col-2{
         padding-top: 0;
         padding-left: 0;
-    }
-=======
     }
     .prices .act .info-list .col:last-child{padding: 0;}
     .prices .act .info-list .col:after,
