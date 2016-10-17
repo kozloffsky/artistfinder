@@ -13,9 +13,9 @@ var gulp            = require('gulp'),
 
 var env = process.env.GULP_ENV;
 
-gulp.task('js', function(){
+gulp.task('js', function() {
     return gulp.src([
-            'src/Acted/LegalDocsBundle/Resources/public/js/*.js', "!src/Acted/LegalDocsBundle/Resources/public/js/admin.js", "!src/Acted/LegalDocsBundle/Resources/public/js/userCreationAdmin.js"])
+        'src/Acted/LegalDocsBundle/Resources/public/js/*.js', "!src/Acted/LegalDocsBundle/Resources/public/js/admin.js", "!src/Acted/LegalDocsBundle/Resources/public/js/userCreationAdmin.js"])
         .pipe(order([
             "jquery.min.js",
             "moment.min.js",

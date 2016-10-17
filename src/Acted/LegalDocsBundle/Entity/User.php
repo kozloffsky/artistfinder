@@ -62,6 +62,368 @@ class User implements UserInterface, \Serializable
     private $user;
 
     /**
+     * @var string
+     */
+    private $postcode = '';
+
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\Profile
+     */
+    private $profile;
+
+
+    /**
+     * @var string
+     */
+    private $avatar;
+
+    /**
+     * @var string
+     */
+    private $background;
+
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\Artist
+     */
+    private $artist;
+
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\PaymentSetting
+     */
+    private $paymentSetting;
+
+    /**
+     * @var string
+     */
+    private $confirmationToken;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $roles;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $chatRoomsArtist;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $chatRoomsClient;
+
+    /**
+     * @var string
+     */
+    private $email;
+
+    /**
+     * @var \DateTime
+     */
+    private $passwordRequestedAt;
+
+    /**
+     * @var string
+     */
+    private $confirmationPeriod;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->chatRoomsArtist = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->chatRoomsClient = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set confirmationToken
+     *
+     * @param string $confirmationToken
+     *
+     * @return User
+     */
+    public function setConfirmationToken($confirmationToken)
+    {
+        $this->confirmationToken = $confirmationToken;
+
+        return $this;
+    }
+
+    /**
+     * Get confirmationToken
+     *
+     * @return string
+     */
+    public function getConfirmationToken()
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
+     * Add role
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefRole $role
+     *
+     * @return User
+     */
+    public function addRole(\Acted\LegalDocsBundle\Entity\RefRole $role)
+    {
+        $this->roles[] = $role;
+
+        return $this;
+    }
+
+    /**
+     * Remove role
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefRole $role
+     */
+    public function removeRole(\Acted\LegalDocsBundle\Entity\RefRole $role)
+    {
+        $this->roles->removeElement($role);
+    }
+
+    /**
+     * Add chatRoom
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom
+     *
+     * @return User
+     */
+    public function addChatRoomArtist(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
+    {
+        $this->chatRoomsArtist[] = $chatRoom;
+
+        return $this;
+    }
+
+    /**
+     * Remove chatRoom
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom
+     */
+    public function removeChatRoomArtist(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
+    {
+        $this->chatRoomsArtist->removeElement($chatRoom);
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection|\Doctrine\Common\Collections\Collection
+     */
+    public function getChatRoomsArtist()
+    {
+        return $this->chatRoomsArtist;
+    }
+
+    /**
+     * Add chatRoom
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom
+     *
+     * @return User
+     */
+    public function addChatRoomClient(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
+    {
+        $this->chatRoomsClient[] = $chatRoom;
+
+        return $this;
+    }
+
+    /**
+     * Remove chatRoom
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom
+     */
+    public function removeChatRoomClient(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
+    {
+        $this->chatRoomsClient->removeElement($chatRoom);
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection|\Doctrine\Common\Collections\Collection
+     */
+    public function getChatRoomsClient()
+    {
+        return $this->chatRoomsClient;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set passwordRequestedAt
+     *
+     * @param \DateTime $passwordRequestedAt
+     *
+     * @return User
+     */
+    public function setPasswordRequestedAt($passwordRequestedAt)
+    {
+        $this->passwordRequestedAt = $passwordRequestedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get passwordRequestedAt
+     *
+     * @return \DateTime
+     */
+    public function getPasswordRequestedAt()
+    {
+        return $this->passwordRequestedAt;
+    }
+
+    public function isPasswordRequestNonExpired($ttl, $confPeriod)
+    {
+        if (!$this->getConfirmationPeriod()) {
+            $result = $this->getPasswordRequestedAt() instanceof \DateTime &&
+                $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
+        } else {
+            $result = $this->getConfirmationPeriod() instanceof \DateTime &&
+                $this->getConfirmationPeriod()->getTimestamp() + $confPeriod > time();
+        }
+
+        return $result;
+    }
+
+    public function getFullName()
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
+    /**
+     * String representation of object
+     * @link http://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
+     */
+    public function serialize()
+    {
+        return serialize([
+            $this->id,
+            $this->email,
+            $this->passwordHash,
+            $this->firstname,
+            $this->lastname,
+            $this->primaryPhone,
+        ]);
+    }
+
+    /**
+     * Constructs the object
+     * @link http://php.net/manual/en/serializable.unserialize.php
+     * @param string $serialized <p>
+     * The string representation of the object.
+     * </p>
+     * @return void
+     * @since 5.1.0
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->email,
+            $this->passwordHash,
+            $this->firstname,
+            $this->lastname,
+            $this->primaryPhone,
+        ) = unserialize($serialized);
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isFake()
+    {
+        return $this->fake;
+    }
+
+    /**
+     * @param boolean $fake
+     */
+    public function setFake($fake)
+    {
+        $this->fake = $fake;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getConfirmationPeriod()
+    {
+        return $this->confirmationPeriod;
+    }
+
+    /**
+     * @param \DateTime $confirmationPeriod
+     */
+    public function setConfirmationPeriod($confirmationPeriod)
+    {
+        $this->confirmationPeriod = $confirmationPeriod;
+    }
+
+    public function getUserEmail()
+    {
+        return $this->getEmail()?$this->getEmail():'';
+    }
+
+    /**
+     * @return string
+     */
+    public function getTempPassword()
+    {
+        return $this->tempPassword;
+    }
+
+    /**
+     * @param string $tempPassword
+     */
+    public function setTempPassword($tempPassword)
+    {
+        $this->tempPassword = $tempPassword;
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -118,7 +480,7 @@ class User implements UserInterface, \Serializable
     {
         return $this->lastname;
     }
-    
+
 
     /**
      * Set passwordHash
@@ -443,303 +805,5 @@ class User implements UserInterface, \Serializable
     public function eraseCredentials()
     {
 
-    }
-
-
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->chatRoomsArtist = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->chatRoomsClient = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Set confirmationToken
-     *
-     * @param string $confirmationToken
-     *
-     * @return User
-     */
-    public function setConfirmationToken($confirmationToken)
-    {
-        $this->confirmationToken = $confirmationToken;
-
-        return $this;
-    }
-
-    /**
-     * Get confirmationToken
-     *
-     * @return string
-     */
-    public function getConfirmationToken()
-    {
-        return $this->confirmationToken;
-    }
-
-    /**
-     * Add role
-     *
-     * @param \Acted\LegalDocsBundle\Entity\RefRole $role
-     *
-     * @return User
-     */
-    public function addRole(\Acted\LegalDocsBundle\Entity\RefRole $role)
-    {
-        $this->roles[] = $role;
-
-        return $this;
-    }
-
-    /**
-     * Remove role
-     *
-     * @param \Acted\LegalDocsBundle\Entity\RefRole $role
-     */
-    public function removeRole(\Acted\LegalDocsBundle\Entity\RefRole $role)
-    {
-        $this->roles->removeElement($role);
-    }
-
-    /**
-     * Add chatRoom
-     *
-     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom
-     *
-     * @return User
-     */
-    public function addChatRoomArtist(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
-    {
-        $this->chatRoomsArtist[] = $chatRoom;
-
-        return $this;
-    }
-
-    /**
-     * Remove chatRoom
-     *
-     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom
-     */
-    public function removeChatRoomArtist(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
-    {
-        $this->chatRoomsArtist->removeElement($chatRoom);
-    }
-
-    /**
-     * @return \Doctrine\Common\Collections\ArrayCollection|\Doctrine\Common\Collections\Collection
-     */
-    public function getChatRoomsArtist()
-    {
-        return $this->chatRoomsArtist;
-    }
-
-    /**
-     * Add chatRoom
-     *
-     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom
-     *
-     * @return User
-     */
-    public function addChatRoomClient(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
-    {
-        $this->chatRoomsClient[] = $chatRoom;
-
-        return $this;
-    }
-
-    /**
-     * Remove chatRoom
-     *
-     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom
-     */
-    public function removeChatRoomClient(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoom)
-    {
-        $this->chatRoomsClient->removeElement($chatRoom);
-    }
-
-    /**
-     * @return \Doctrine\Common\Collections\ArrayCollection|\Doctrine\Common\Collections\Collection
-     */
-    public function getChatRoomsClient()
-    {
-        return $this->chatRoomsClient;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set passwordRequestedAt
-     *
-     * @param \DateTime $passwordRequestedAt
-     *
-     * @return User
-     */
-    public function setPasswordRequestedAt($passwordRequestedAt)
-    {
-        $this->passwordRequestedAt = $passwordRequestedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get passwordRequestedAt
-     *
-     * @return \DateTime
-     */
-    public function getPasswordRequestedAt()
-    {
-        return $this->passwordRequestedAt;
-    }
-
-    public function isPasswordRequestNonExpired($ttl, $confPeriod)
-    {
-        if (!$this->getConfirmationPeriod()) {
-            $result = $this->getPasswordRequestedAt() instanceof \DateTime &&
-                $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
-        } else {
-            $result = $this->getConfirmationPeriod() instanceof \DateTime &&
-                $this->getConfirmationPeriod()->getTimestamp() + $confPeriod > time();
-        }
-
-        return $result;
-    }
-
-    public function getFullName()
-    {
-        return $this->firstname . ' ' . $this->lastname;
-    }
-
-    /**
-     * String representation of object
-     * @link http://php.net/manual/en/serializable.serialize.php
-     * @return string the string representation of the object or null
-     * @since 5.1.0
-     */
-    public function serialize()
-    {
-        return serialize([
-            $this->id,
-            $this->email,
-            $this->passwordHash,
-            $this->firstname,
-            $this->lastname,
-            $this->primaryPhone,
-        ]);
-    }
-
-    /**
-     * Constructs the object
-     * @link http://php.net/manual/en/serializable.unserialize.php
-     * @param string $serialized <p>
-     * The string representation of the object.
-     * </p>
-     * @return void
-     * @since 5.1.0
-     */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->email,
-            $this->passwordHash,
-            $this->firstname,
-            $this->lastname,
-            $this->primaryPhone,
-        ) = unserialize($serialized);
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isFake()
-    {
-        return $this->fake;
-    }
-
-    /**
-     * @param boolean $fake
-     */
-    public function setFake($fake)
-    {
-        $this->fake = $fake;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getConfirmationPeriod()
-    {
-        return $this->confirmationPeriod;
-    }
-
-    /**
-     * @param \DateTime $confirmationPeriod
-     */
-    public function setConfirmationPeriod($confirmationPeriod)
-    {
-        $this->confirmationPeriod = $confirmationPeriod;
-    }
-
-    public function getUserEmail()
-    {
-        return $this->getEmail()?$this->getEmail():'';
-    }
-
-    /**
-     * @return string
-     */
-    public function getTempPassword()
-    {
-        return $this->tempPassword;
-    }
-
-    /**
-     * @param string $tempPassword
-     */
-    public function setTempPassword($tempPassword)
-    {
-        $this->tempPassword = $tempPassword;
     }
 }

@@ -7,9 +7,9 @@ Acted\LegalDocsBundle\Entity\Artist:
     name:
       groups: [Default, block, quote_request, recommend_artist, spotlight_artist, profile_settings]
     slug:
-      groups: [Default, block, quote_request, recommend_artist, spotlight_artist, users_list]
+      groups: [Default, block, quote_request, recommend_artist, spotlight_artist, users_list, profile_settings]
     user:
-      groups: [quote_request, recommend_artist, spotlight_artist]
+      groups: [quote_request, recommend_artist, spotlight_artist, profile_settings]
     recommends:
       groups: [recommend_artist]
     spotlight:
