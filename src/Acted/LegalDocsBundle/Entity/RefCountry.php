@@ -17,6 +17,35 @@ class RefCountry
      */
     private $name;
 
+    /**
+     * @var  \Acted\LegalDocsBundle\Entity\RefCurrency
+     */
+    private $refCurrency;
+
+    /**
+     * Set refCurrency
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefCurrency $refCurrency
+     *
+     * @return RefCountry
+     */
+    public function setRefCurrency(\Acted\LegalDocsBundle\Entity\RefCurrency $refCurrency = null)
+    {
+        $this->refCurrency = $refCurrency;
+
+        return $this;
+    }
+
+    /**
+     * Get refCurrencies
+     *
+     * @return \Acted\LegalDocsBundle\Entity\RefCurrency
+     */
+    public function getRefCurrency()
+    {
+        return $this->refCurrency;
+    }
+
 
     /**
      * Get id

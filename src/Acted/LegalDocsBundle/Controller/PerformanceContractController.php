@@ -4,7 +4,6 @@ namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\Template;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Acted\LegalDocsBundle\Entity\PerformanceContract;
 use Acted\LegalDocsBundle\Form\PerformanceContractType;

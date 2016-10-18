@@ -1,0 +1,117 @@
+price_service_create:
+    path: /service/create
+    defaults: { _controller: ActedLegalDocsBundle:Service:createPriceService }
+    methods:  POST
+
+price_service_edit:
+    path: /service/{id}/edit
+    defaults: { _controller: ActedLegalDocsBundle:Service:editPriceService }
+    methods:  PATCH
+
+price_service_remove:
+    path: /service/{id}/remove
+    defaults: { _controller: ActedLegalDocsBundle:Service:removePriceService }
+    methods:  PATCH
+
+price_service_create:
+    path: /service/package/create
+    defaults: { _controller: ActedLegalDocsBundle:Service:createPackage }
+    methods:  POST
+
+price_service_package_create:
+    path: /service/package/create
+    defaults: { _controller: ActedLegalDocsBundle:Service:createPriceServicePackage }
+    methods:  POST
+
+price_service_list:
+    path: /service/list/{id}
+    defaults: { _controller: ActedLegalDocsBundle:Service:get }
+    methods:  GET
+
+price_service_profile_list:
+    path: /service/{id}/list
+    defaults: { _controller: ActedLegalDocsBundle:Service:getList }
+    methods:  GET
+
+price_service_rate_create:
+    path: /service/rate/create
+    defaults: { _controller: ActedLegalDocsBundle:Service:createPriceServiceRate }
+    methods:  POST
+
+
+
+price_performance_create:
+    path: /performance/create
+    defaults: { _controller: ActedLegalDocsBundle:Performance:createPricePerformance }
+    methods:  POST
+
+price_performance_edit:
+    path: /performance/{id}/edit
+    defaults: { _controller: ActedLegalDocsBundle:Performance:editPricePerformance }
+    methods:  PATCH
+
+price_performance_remove:
+    path: /performance/{id}/remove
+    defaults: { _controller: ActedLegalDocsBundle:Performance:removePricePerformance }
+    methods:  PATCH
+
+price_performance_list:
+    path: /performance/list/{id}
+    defaults: { _controller: ActedLegalDocsBundle:Performance:get }
+    methods:  GET
+
+price_performance_profile_list:
+    path: /performance/{id}/list
+    defaults: { _controller: ActedLegalDocsBundle:Performance:getList }
+    methods:  GET
+
+price_performance_package_create:
+    path: /performance/package/create
+    defaults: { _controller: ActedLegalDocsBundle:Performance:createPricePerformancePackage }
+    methods:  POST
+
+price_performance_rate_create:
+    path: /performance/rate/create
+    defaults: { _controller: ActedLegalDocsBundle:Performance:createPricePerformanceRate }
+    methods:  POST
+
+
+
+price_package_edit:
+    path: /package/{id}/edit
+    defaults: { _controller: ActedLegalDocsBundle:PricePackage:edit }
+    methods:  PATCH
+
+price_package_remove:
+    path: /package/{id}/remove
+    defaults: { _controller: ActedLegalDocsBundle:PricePackage:remove }
+    methods:  PATCH
+
+
+
+
+price_option_create:
+    path: /option/create
+    defaults: { _controller: ActedLegalDocsBundle:PriceOption:create }
+    methods:  POST
+
+price_option_edit:
+    path: /option/{id}/edit
+    defaults: { _controller: ActedLegalDocsBundle:PriceOption:edit }
+    methods:  PATCH
+
+price_option_remove:
+    path: /option/{id}/remove
+    defaults: { _controller: ActedLegalDocsBundle:PriceOption:remove }
+    methods:  PATCH
+
+
+price_rate_edit:
+    path: /rate/{id}/edit
+    defaults: { _controller: ActedLegalDocsBundle:PriceRate:edit }
+    methods:  PATCH
+
+price_rate_remove:
+    path: /rate/{id}/remove
+    defaults: { _controller: ActedLegalDocsBundle:PriceRate:remove }
+    methods:  PATCH

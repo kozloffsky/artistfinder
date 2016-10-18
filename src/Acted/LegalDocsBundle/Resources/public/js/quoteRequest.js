@@ -9,7 +9,7 @@ $(function () {
     );
 
     function initSelect(){
-        $('select').each(function () {
+        $('.free-quote-modal select').each(function () {
             var placeholder = $(this).attr('data-placeholder');
             var $select2    = $(this).select2({
                 placeholder            : placeholder || '',
@@ -108,7 +108,7 @@ $(function () {
         var getEventsReady = sessionStorage.getItem(selectedEvent);
         if(getEventsReady){
             var findArtistInEvent = getEventsReady.search(artistSlug);
-            console.log(findArtistInEvent)
+            //console.log(findArtistInEvent)
             if(findArtistInEvent >= 0){
                 preventEventSending()
             } else {
@@ -146,7 +146,7 @@ $(function () {
     }
 
     function createArtistDataViewInQuote(artistData){
-        console.log(artistData)
+        //console.log(artistData)
         var artistCatString = artistData.categories.toString();
         $('.quoteRequestArtistData .quote-profile-info h2').html(artistData.name);
         $('.quoteRequestArtistData .quote-profile-info p').html(artistCatString);
@@ -171,7 +171,7 @@ $(function () {
 
     function prepareEventRequestForm(){
         var checkIfUserLoggedIn = $('header #userInformation').length;
-        console.log(checkIfUserLoggedIn)
+        //console.log(checkIfUserLoggedIn)
         if(checkIfUserLoggedIn > 0){
             var userInformationStorage = JSON.parse(localStorage.getItem('user'));
             if(userInformationStorage) {
@@ -216,7 +216,7 @@ $(function () {
         $(userEvents).each(function(i){
             var eventsOptions='<option value="'+ this.event.id +'" name="event" class="'+i+'">'+this.event.title+'</option>';
             $('#event_preset').append(eventsOptions);
-            console.log('preveEventList')
+            //console.log('preveEventList')
         });
         $('.eventUnregistered').hide();
         $('#requestQuoteForm .modal-body').hide();
@@ -284,7 +284,7 @@ $(function () {
             userInformationStorage = JSON.parse(localStorage.getItem('user')),
             checkUserLoggedIn = $('#userInformation').text(),
             prevEventChosen = $('#requestQuoteForm .modal-body').hasClass('choosePrevEvent');
-        console.log(userInformationStorage)
+        //console.log(userInformationStorage)
         if(userInformationStorage && prevEventChosen == false){
             sendQuoteRequest(requestFormSerialize, userInformationStorage);
         } else if (!userInformationStorage){
@@ -294,7 +294,7 @@ $(function () {
             chooseRogLog();
         } else if(prevEventChosen == true && checkUserLoggedIn && userInformationStorage){
             var chosenEvent = $('#chosenEvent, #requestQuoteForm, #quoteRequestSecond').serialize();
-            console.log(chosenEvent)
+            //console.log(chosenEvent)
             sendQuoteRequest(chosenEvent, userInformationStorage);
         }
     });
@@ -336,7 +336,7 @@ $(function () {
                 $('#loadSpinner').fadeOut(500);
             },
             success:function(res){
-                console.log(res);
+                //console.log(res);
                 $('#freeQuoteModal').modal('hide');
                 $('#offerSuccess').modal('show');
                 $('#comment_area').hide();
@@ -352,7 +352,7 @@ $(function () {
                 $('#quoteRequestSecond .errorCat').text('').hide();
                 $('#requestQuoteForm .errorCat').text('').hide();
                 $.each(response.responseJSON, function(key, value) {
-                    console.log(key, value);
+                    //console.log(key, value);
                     $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
                     if(key == 'performance'){
                         $('#quoteRequestSecond .errorCat').text(value).show();

@@ -30,6 +30,11 @@ services:
           - "@templating.engine.twig"
           - "@router"
           - "%mailer_from_address%"
+          - "@liip_imagine.controller"
+          - "%avatar_dir%"
+          - "%search_image_dir%"
+          - %kernel.root_dir%
+
 
     app.event.manager:
         class: Acted\LegalDocsBundle\Model\EventsManager
@@ -85,3 +90,8 @@ services:
           - "@doctrine.orm.default_entity_manager"
         tags:
           - { name: jms_serializer.event_subscriber }
+
+    app.form.type.boolean:
+        class: Acted\LegalDocsBundle\Form\Type\BooleanType
+        tags:
+            - { name: form.type, alias: boolean }

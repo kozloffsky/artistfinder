@@ -144,6 +144,14 @@ liip_imagine:
             filters:
                 strip: ~
                 downscale: { max: [300, 200] }
+        search_image_thumbnail:
+            quality: 100
+            filters:
+                relative_resize: { widen: 320, mode: outbound }
+        avatar_thumbnail:
+            quality: 100
+            filters:
+                relative_resize: { widen: 320, mode: outbound }
         small:
             quality: 100
             filters:

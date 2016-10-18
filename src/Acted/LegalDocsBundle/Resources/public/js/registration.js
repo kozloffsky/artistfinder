@@ -74,6 +74,8 @@ $(function () {
     $('#modal-title').html('Sign Up');
     $('#stage-1').show();
     $('#completionTime').show();
+
+    $("#country").select2({});
   }
 
   function showSecondPage(isArtist) {
@@ -150,4 +152,257 @@ $(function () {
       chageState(currentState - 1);
     }
   });
+
+  function finishRegistration()
+  {
+    chageState(4);
+  }
+
+  $('.artistCategories').each(function(){
+    var subCatElement = $(this).find('.category-item'),
+        countSubCat = subCatElement.length;
+        //catBlockEl = this;
+    //console.log(countSubCat);
+    if (countSubCat > 6){
+        subCatElement.slice(6, countSubCat).hide();
+        $(subCatElement).next('.show-more').show();
+    }
+  });
+
+  $('.artistCategories .show-more').on('click',function(event){
+    event.preventDefault();
+    var hiddenElements = $(this).parent('div').find('div:hidden');
+    $(hiddenElements).toggle();
+  });
+
+  $('#stageThreeNext').on('click', function(event){
+    event.preventDefault();
+    artistRegister();
+  });
+
+  $('#stageThreeNextCustomer').on('click', function(event){
+    event.preventDefault();
+    customerRegister();
+  });
+
+  function artistRegister(){
+    var userInformation = $('.artistRegForm').serialize();
+    var categoriesForm = $('.artistCategoriesChoose > #categoriesForm').serialize();
+    var userRole = 'role=ROLE_ARTIST';
+    //console.log(categoriesForm)
+    registerArtist(userInformation, categoriesForm, userRole);
+  };
+
+  $('#artistForm #stageThreeNext').prop('disabled',true);
+
+  $("#artistForm").on('change',function(){
+    var countReduiredInput = $("#artistForm input").length;
+    var validInputs = [];
+    setTimeout(function(){
+      $("#artistForm input").each(function(){
+        if ($(this).hasClass('valid')){
+          validInputs.push($(this).attr('id'))
+        }
+      });
+      var countValidElements = validInputs.length + 1;
+      if(countValidElements == countReduiredInput){
+        $('#artistForm #stageThreeNext').prop('disabled',false);
+      }
+    }, 1500);
+  });
+
+  function registerArtist(userInformation, categoriesForm, userRole) {
+    $.ajax({
+      type: "POST",
+      url: '/register',
+      data: userRole + '&' + userInformation + '&' + categoriesForm,
+      success: function(){
+        finishRegistration()
+      },
+      error: function(response){
+        var regestrationResponse = response.responseJSON;
+        var fields = Object.keys(regestrationResponse);
+        $(fields).each(function(){
+          var placeToShowErr = this;
+          var errorMsg = regestrationResponse[placeToShowErr];
+          if (placeToShowErr == 'email'){
+            artistValidation.showErrors({
+              'email': errorMsg
+            });
+          }
+          if (placeToShowErr == 'phone'){
+            artistValidation.showErrors({
+              'phone': errorMsg
+            });
+          }
+          if (placeToShowErr == 'primaryPhone'){
+            artistValidation.showErrors({
+              'phone': errorMsg
+            });
+          }
+          if (placeToShowErr == 'firstname'){
+            artistValidation.showErrors({
+              'firstname': errorMsg
+            });
+          }
+          if (placeToShowErr == 'lastname'){
+            artistValidation.showErrors({
+              'lastname': errorMsg
+            });
+          }
+          if (placeToShowErr == 'name'){
+            artistValidation.showErrors({
+              'name': errorMsg
+            });
+          }
+          if (placeToShowErr == 'password' && errorMsg.first){
+            artistValidation.showErrors({
+              'password[first]': errorMsg.first
+            });
+          }
+        })
+      }
+    })
+  }
+
+  $(document).ready(function() {
+    var selectedCountruOption = $('.form-group #country').find('option:selected').val();
+    chooseCityReg(selectedCountruOption);
+  });
+
+  $('.form-group #country').on('change',function(){
+    var selectedCountruOption = $('.form-group #country').find('option:selected').val();
+    chooseCityReg(selectedCountruOption);
+  })
+
+  function chooseCityReg(selectedCountruOption) {
+    if (selectedCountruOption){
+      $.ajax({
+        type: 'GET',
+        url: '/geo/city?_format=json&country=' + selectedCountruOption,
+        success: function (response) {
+          $('#cityReg').empty();
+          $('#cityReg').append('<option value="" name="city">select a city</option>');
+          $(response).each(function () {
+            $('#cityReg').append('<option value="' + this.id + '" name="city">' + this.name + '</option>');
+          });
+          $("#cityReg").select2();
+        }
+      })
+    }
+  }
+
+  function customerRegister(){
+    var customerValues = $('.customerRegForm').serialize();
+    var customerRole = 'role=ROLE_CLIENT';
+    $.ajax({
+      type: "POST",
+      url: '/register',
+      data: customerRole +'&'+customerValues,
+      success: function(response){
+        finishRegistration();
+        sendQuoteIfExist(response);
+      },
+      error: function(response){
+        var regestrationResponse = response.responseJSON;
+        var fields = Object.keys(regestrationResponse);
+        $(fields).each(function(){
+          var placeToShowErr = this;
+          var errorMsg = regestrationResponse[placeToShowErr];
+          if (placeToShowErr == 'email'){
+            customerValidate.showErrors({
+              'email': errorMsg
+            });
+          } else if(placeToShowErr == 'password' && errorMsg.first) {
+            customerValidate.showErrors({
+              'password[first]': errorMsg.first
+            });
+          }
+          if (placeToShowErr == 'firstname'){
+            artistValidation.showErrors({
+              'firstname': errorMsg
+            });
+          }
+          if (placeToShowErr == 'lastname'){
+            artistValidation.showErrors({
+              'lastname': errorMsg
+            });
+          }
+        })
+      }
+    })
+  }
+
+  function sendQuoteIfExist(userData){
+    var quote = localStorage.getItem('quoteRequest');
+    //console.log(quote)
+    if(quote){
+      $.ajax({
+        type:'POST',
+        url:'/event/create',
+        data: quote + '&user='+ userData.id,
+        beforeSend: function () {
+          $('#loadSpinner').fadeIn(500);
+        },
+        complete: function () {
+          $('#loadSpinner').fadeOut(500);
+        },
+        success: function(){
+          localStorage.removeItem('quoteRequest');
+          setTimeout(function(){
+            $('#registrationModal').modal('hide');
+            $('#offerSuccess').modal('show');
+           }, 2500);
+        },
+        error: function(response){
+          $('#userInformation').text()
+          $('#loadSpinner').fadeOut(500);
+          $('#registrationModal').modal('hide');
+          $('#freeQuoteModal').modal('show');
+          $('#requestQuoteForm input').attr('style', '');
+          $('#quoteRequestSecond .errorCat').text('').hide();
+          $('#requestQuoteForm .errorCat').text('').hide();
+          $.each(response.responseJSON, function(key, value) {
+            //console.log(key, value);
+            $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
+            if(key == 'performance'){
+              $('#quoteRequestSecond .errorCat').text(value).show();
+            }
+            if(key == 'number_of_guests'){
+              $('#requestQuoteForm .errorCat').text(value).show();
+            }
+          });
+        }
+      })
+    }
+  }
+
+  $('#passwordRecovery').on('click', function(e)  {
+    e.preventDefault();
+    var recoveryPasswordVal = $('#recoveryForm').serialize();
+    repairPassword(recoveryPasswordVal);
+  });
+
+
+  function repairPassword(recoveryPasswordVal) {
+    $.ajax({
+      type: "POST",
+      url: '/resetting/request',
+      data: recoveryPasswordVal,
+      success: function(response){
+        //console.log(response)
+        if(response.error){
+          $('#errorLogRecovery').text(response.error).show();
+        } else {
+          $('.recovery-form').hide();
+          $('.login-form').show();
+          $('.login-modal .modal-title').html(response.success);
+          setTimeout(function(){
+            $('.login-modal .modal-title').html('Log In');
+          }, 2000);
+        }
+      }
+    })
+  }
+
 });

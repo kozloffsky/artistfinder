@@ -58,6 +58,17 @@ class Artist
      * @var \Doctrine\Common\Collections\Collection
      */
     private $recommends;
+
+    /**
+     * @var boolean
+     */
+    private $workAbroad = false;
+
+    /**
+     * @var string
+     */
+    private $searchImage;
+
     /**
      * Get id
      *
@@ -258,6 +269,13 @@ class Artist
     {
         return $this->cityId;
     }
+
+
+    public function getCityProfileId()
+    {
+        return ($this->city) ? $this->city->getId() : null;
+    }
+
     /**
      * @var string
      */
@@ -448,6 +466,11 @@ class Artist
         return $this->country;
     }
 
+    public function getCurrency()
+    {
+        return ($this->country && $this->country->getRefCurrency()) ? $this->country->getRefCurrency() : null;
+    }
+
     /**
      * @var int
      */
@@ -472,7 +495,7 @@ class Artist
      *
      * @param Recommend $recommend
      *
-     * @return User
+     * @return Artist
      */
     public function addRecommend(Recommend $recommend)
     {
@@ -519,6 +542,11 @@ class Artist
         return ($this->city && $this->city->getRegion()->getCountry()) ? $this->city->getRegion()->getCountry()->getName() : null;
     }
 
+    public function getCountryId()
+    {
+        return ($this->city && $this->city->getRegion()->getCountry()) ? $this->city->getRegion()->getCountry()->getId() : null;
+    }
+
     public function getCategoriesNames()
     {
         if ($this->getUser()->getProfile()) {
@@ -536,12 +564,21 @@ class Artist
             /** @var Performance $performance */
             $performances = $this->getUser()->getProfile()->getPerformances();
             $performance = '';
-            foreach ($performances as $item ) {
-                if ($item->getStatus() === Performance::STATUS_PUBLISHED) {
-                    $performance = $item;
-                    continue;
+
+            $len = count($performances);
+
+            $perfCopy = $performances->getValues();
+
+            for($i = 0; $i < $len; $i++) {
+                if ($perfCopy[$i]->getStatus() === Performance::STATUS_PUBLISHED &&
+                    $perfCopy[$i]->getIsVisible() == true &&
+                    empty($perfCopy[$i]->getDeletedTime())
+                ) {
+                    $performance = $perfCopy[$i];
+                    break;
                 }
             }
+
             if ($performance) {
                 return $performance->getMedia()->first();
             }
@@ -563,5 +600,60 @@ class Artist
         return null;
     }
 
+    /**
+     * Set workAbroad
+     *
+     * @param boolean $workAbroad
+     *
+     * @return Artist
+     */
+    public function setWorkAbroad($workAbroad)
+    {
+        $this->workAbroad = $workAbroad;
 
+        return $this;
+    }
+
+    /**
+     * Get workAbroad
+     *
+     * @return boolean
+     */
+    public function getWorkAbroad()
+    {
+        return $this->workAbroad;
+    }
+
+    /**
+     * Set search image
+     *
+     * @param string $searchImage
+     *
+     * @return Artist
+     */
+    public function setSearchImage($searchImage)
+    {
+        $this->searchImage =  '/' . $searchImage;
+
+        return $this;
+    }
+
+    /**
+     * Get search image
+     *
+     * @return string
+     */
+    public function getSearchImage()
+    {
+        return $this->rel2abs($this->searchImage);
+    }
+
+    protected  function rel2abs($link)
+    {
+        if (strpos($link, 'http') === 0) {
+            return $link;
+        }
+
+        return '/'.ltrim($link, '/');
+    }
 }

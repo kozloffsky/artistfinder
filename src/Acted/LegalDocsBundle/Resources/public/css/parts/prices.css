@@ -29,13 +29,15 @@ main.prices{
 .prices .act.private { margin-bottom: 22px; }
 .prices .act h2{
     margin: 0 0 16px;
+    height: 22px;
     opacity: .52;
     font: 18px LatoBold, Serif, sans-serif;
     color: #000;
 }
-.prices .act h2 span{
+.prices .act h2 span {
     font-family: inherit;
     display: block;
+    float: left;
 }
 .prices .act .info-list{
     list-style: none;
@@ -50,6 +52,7 @@ main.prices{
     border: none;
     padding-top: 0;
 }
+
 .prices .act.empty .info-list > li{ padding-bottom: 50px; }
 .prices .act .info-list .col-2,
 .prices .act .info-list .col{
@@ -402,6 +405,11 @@ main.prices .note{
     font-size: 14px;
     color: #000;
 }
+.prices .custom-checkbox label:before,
+.prices .custom-checkbox label:after {
+    height: 20px;
+    width: 20px;
+}
 
 @media (max-width: 1199px) {
     .prices .act,
@@ -435,7 +443,7 @@ main.prices .note{
         height: 28px !important;
     }
     .prices .select2-container--default .select2-selection--single .select2-selection__rendered{
-        font-size: 10px;
+        font-size: 13px;
         padding: 0 7px !important;
         line-height: 27px !important;
     }
@@ -486,13 +494,20 @@ main.prices .note{
         margin-bottom: 20px;
     }
     .prices .act .info-list .col,
-    .prices .act .info-list .col:first-child{
+    .prices .act .info-list .col:first-child {
         width: 49%;
         min-height: 0;
         padding: 0 0 6px;
         float: none;
         display: inline-block;
         vertical-align: top;
+    }
+    .prices .act .info-list .col:last-child{padding: 0;}
+    .prices .act .info-list .col:after,
+    .prices .act .info-list .col-2:after{border: 0;}
+    .prices .act .info-list .col-2{
+        padding-top: 0;
+        padding-left: 0;
     }
     .prices .act .info-list .col:last-child{padding: 0;}
     .prices .act .info-list .col:after,
