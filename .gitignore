@@ -69,3 +69,6 @@ project
 .idea
 *.idea/*
 /web/uploads/*
+
+web/js/javascript.js
+web/css/styles.min.css
