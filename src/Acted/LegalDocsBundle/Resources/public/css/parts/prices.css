@@ -29,13 +29,15 @@ main.prices{
 .prices .act.private { margin-bottom: 22px; }
 .prices .act h2{
     margin: 0 0 16px;
+    height: 22px;
     opacity: .52;
     font: 18px LatoBold, Serif, sans-serif;
     color: #000;
 }
-.prices .act h2 span{
+.prices .act h2 span {
     font-family: inherit;
     display: block;
+    float: left;
 }
 .prices .act .info-list{
     list-style: none;
@@ -441,7 +443,7 @@ main.prices .note{
         height: 28px !important;
     }
     .prices .select2-container--default .select2-selection--single .select2-selection__rendered{
-        font-size: 10px;
+        font-size: 13px;
         padding: 0 7px !important;
         line-height: 27px !important;
     }

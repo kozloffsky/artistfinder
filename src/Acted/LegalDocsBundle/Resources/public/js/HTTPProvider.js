@@ -63,12 +63,15 @@ HTTPProvider.prototype.errorsSerialize = function (errors) {
     var serializedErrors = {};
 
     try {
-        errors = JSON.parse(errors) || {};
-        errors = errors.form.children;
+        errors = JSON.parse(errors);
 
-        for(key in errors) {
-            if(!Array.isArray(errors[key]))
-                serializedErrors[key] = errors[key].errors;
+        if(errors.form) {
+            errors = errors.form.children || {};
+
+            for(key in errors) {
+                if(!Array.isArray(errors[key]))
+                    serializedErrors[key] = errors[key].errors;
+            }
         }
 
         return serializedErrors;

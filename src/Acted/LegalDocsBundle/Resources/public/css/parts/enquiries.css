@@ -42,13 +42,13 @@
 
 .act-request-data li {
     font-family: LatoRegular;
-    font-size: 11px;
+    font-size: 13px;
     color: rgba(0, 0, 0, 0.68);
     margin-bottom: 6px;
 }
 
 .act-request-data li span {
-    font-size: 11px;
+    font-size: 13px;
     font-family: LatoBold;
     color: rgba(0, 0, 0, 0.86);
 }
@@ -69,12 +69,12 @@
 }
 
 .act-request .controls>.button-gradient.filled>.btn {
-    font-size: 11px!important;
+    font-size: 13px!important;
     height: 26px!important;
 }
 
 .act-request .controls>.button-gradient .btn {
-    font-size: 11px!important;
+    font-size: 13px!important;
     height: 23px!important;
     padding: 0 23px;
     width: auto!important;
@@ -184,7 +184,7 @@
 }
 .bookings .note{
     font-family: LatoRegular;
-    font-size: 11px;
+    font-size: 13px;
     color: rgba(0, 0, 0, 0.68);
     position: absolute;
     right: 0;
@@ -196,7 +196,7 @@
 .bookings .note.orange b{color: #ff735a;}
 .act-request-list{
     margin: 0;
-    font-size: 11px;
+    font-size: 13px;
     color: #000;
     color: rgba(0, 0, 0, 0.68);
 }

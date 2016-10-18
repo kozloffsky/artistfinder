@@ -90,73 +90,6 @@ $(function(){
 
         $("#settingsPageModal").modal('hide');
     }
-
-    selectBoxEventHandler();
-
-    $('#settings_country').on('change', selectBoxEventHandler);
-    $('#setting_city').on('change', settingCityEventHandler);
-    $('.settings input[type="radio"]').on('change', radioBoxEventHandler);
-
-    function readFile(e) {
-        if (e.target.files && e.target.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-
-                console.log(e.target.result);
-
-                uploadCropMediaOffer.croppie('bind', {
-                    url: e.target.result
-                });
-            };
-            reader.readAsDataURL(e.target.files[0]);
-        }
-        else {
-            console.error("Sorry - you're browser doesn't support the FileReader API");
-        }
-    }
-
-    $('#settingsPageModal input[type="file"]').on('change', readFile);
-
-    $('#settingsPageModal button.upload-NewMedia').on('click', function(e) {
-       e.preventDefault();
-
-        uploadCropMediaOffer.croppie('result', {
-            type: 'canvas',
-            size: 'viewport'
-        })
-        .then(function (resp) {
-            base64 = resp;
-
-            $("div.img-box").removeAttr("style");
-            $("div.img-box").css("background", "url('"+base64+"') no-repeat");
-
-            var form = prepareSettingsData();
-            HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
-            HTTPProvider.send(form, settingsFormErrorHandler);
-        });
-    });
-
-    $(".settings input[name=\"photo\"]").on('click', function(e) {
-        e.preventDefault();
-
-        $('#settingsPageModal .changeImageContiner').empty().removeClass('croppie-container');
-
-        uploadCropMediaOffer = $('#settingsPageModal .changeImageContiner').croppie({
-            viewport: {
-                width: 320,
-                height: 240
-            },
-            boundary: {
-                width: 300,
-                height: 300
-            }
-        });
-
-        $("#settingsPageModal").modal();
-    });
-
-
     function editButtonHandle(e) {
         e.preventDefault();
         var cur = $(this);
@@ -176,7 +109,6 @@ $(function(){
             HTTPProvider.send(form, settingsFormErrorHandler);
         }
     }
-
     function resizeHandle() {
         if(win.width() < 768){
             setHeight('auto');
@@ -184,7 +116,69 @@ $(function(){
             setHeight();
         }
     }
+    function readFile(e) {
+        if (e.target.files && e.target.files[0]) {
+            var reader = new FileReader();
 
+            reader.onload = function (e) {
+
+                console.log(e.target.result);
+
+                uploadCropMediaOffer.croppie('bind', {
+                    url: e.target.result
+                });
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        }
+        else {
+            console.error("Sorry - you're browser doesn't support the FileReader API");
+        }
+    }
+    function photoUploadHandler(e) {
+        e.preventDefault();
+
+        uploadCropMediaOffer.croppie('result', {
+            type: 'canvas',
+            size: 'viewport'
+        })
+            .then(function (resp) {
+                base64 = resp;
+
+                $("div.img-box").removeAttr("style");
+                $("div.img-box").css("background", "url('"+base64+"') no-repeat");
+
+                var form = prepareSettingsData();
+                HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
+                HTTPProvider.send(form, settingsFormErrorHandler);
+            });
+    };
+    function photoModalHandler(e) {
+        e.preventDefault();
+
+        $('#settingsPageModal .changeImageContiner').empty().removeClass('croppie-container');
+
+        uploadCropMediaOffer = $('#settingsPageModal .changeImageContiner').croppie({
+            viewport: {
+                width: 320,
+                height: 240
+            },
+            boundary: {
+                width: 300,
+                height: 300
+            }
+        });
+
+        $("#settingsPageModal").modal();
+    };
+
+    selectBoxEventHandler();
+
+    $('#settings_country').on('change', selectBoxEventHandler);
+    $('#setting_city').on('change', settingCityEventHandler);
+    $('.settings input[type="radio"]').on('change', radioBoxEventHandler);
+    $('#settingsPageModal input[type="file"]').on('change', readFile);
+    $('#settingsPageModal button.upload-NewMedia').on('click', photoUploadHandler);
+    $(".settings input[name=\"photo\"]").on('click', photoModalHandler);
     btnEdit.on('click', editButtonHandle);
     win.on('load resize orientationchange', resizeHandle);
 });

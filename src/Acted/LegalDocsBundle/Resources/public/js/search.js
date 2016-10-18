@@ -19,7 +19,7 @@ $(function () {
         $(this).addClass('active');
     });
 
-    $('select').each(function () {
+    $('.search select').each(function () {
         var white = $(this).attr('data-class') == 'selections-white';
         var placeholder = $(this).attr('data-placeholder');
         var $select2 = $(this).select2({

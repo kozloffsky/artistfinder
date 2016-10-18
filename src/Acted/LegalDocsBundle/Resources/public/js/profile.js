@@ -41,7 +41,7 @@ $(function () {
     $('.media-content .bxslider').bxSlider(optionsSlider.photoSettings);
     $('.bxVideoSlider').bxSlider(optionsSlider.videoSettings);
 
-    $('select').each(function () {
+    $('.profile select').each(function () {
         var placeholder = $(this).attr('data-placeholder');
         var $select2    = $(this).select2({
             placeholder            : placeholder || '',

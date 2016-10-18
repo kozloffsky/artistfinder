@@ -27,7 +27,6 @@
 
     return true;
 }
-
 ;(function() {
     var artist;
     var userCurrency = "GBP";
@@ -323,7 +322,6 @@
             });
         };
     }
-
     function TemplateBuilder() {
         this.data = {};
 
@@ -437,7 +435,7 @@
             var selected = 'selected="selected"';
 
             var qty = this.data.currentOption.qty;
-            var dur = this.data.currentOption.duration || 0;
+            var dur = this.data.currentOption.duration || 1;
 
             var qtyMap = [1, 2, 3, 4, 5, 6];
 
@@ -467,7 +465,7 @@
                         <span class="note-x">x</span>\
                     </dt>\
                     <dd>\
-                        <input edit_duration name="duration" class="input-num" type="number" placeholder="'+dur+'" value="'+dur+'" onkeyup="return isNumberKeyLessHundred(event)" min="0" max="100">\
+                        <input edit_duration name="duration" class="input-num" type="number" placeholder="'+dur+'" value="'+dur+'" onkeyup="return isNumberKeyLessHundred(event)" min="1" max="100">\
                     </dd>\
                     <span>min</span>\
                     '+trashcan+'\
@@ -518,7 +516,7 @@
             var options = this.data.currentPackage.options;
 
             if(comp == 'service') {
-                html += '<div class="col-2">'+this.rateComp(options[0]) + '</div>';
+                html += '<div option_id="'+options[0].id+'" class="col-2">'+this.rateComp(options[0]) + '</div>';
             }
 
             if(comp == 'performance') {
@@ -575,7 +573,7 @@
         this.headingComp = function() {
             var html =
             '<h2 class="title">\
-                <input name="title" class="input-num huge" type="hidden" placeholder="'+this.data.title+'" value="'+this.data.title+'">';
+                <input name="title" edit_title class="input-num huge" type="hidden" placeholder="'+this.data.title+'" value="'+this.data.title+'">';
 
             if(this.data.isVisible) {
                 html += '<span>'+this.data.title+'</span>';
@@ -669,13 +667,14 @@
     function editSetsValues() {
         var qty = $(this).closest("dl").find("[edit_qty]").find("option:selected").val();
         var duration = $(this).closest("dl").find("[edit_duration]").val();
+        var preq = $(this).closest("div[set_option]").next("div").find("[price_on_request]").prop("checked");
         var id = $(this).closest("div[set_option]").attr("id");
 
         var data = {
             qty: qty,
-            duration: duration
+            duration: duration,
+            price_on_request: preq
         };
-
         pricesApi.endpoints.price.patch(id, { price_option_edit:data });
         pricesApi.send(function(resp) {
             console.log(resp)
@@ -743,37 +742,35 @@
                 package: packId
             };
 
-            pricesApi.endpoints.price.post({ price_option_create: data });
-            pricesApi.send(function(resp) {
-                var id = resp.id;
 
+            function rateCallback(resp) {
+                temp.data.trashcanhide = true;
+                temp.data.currentPackage.options = [{
+                    id: resp.id,
+                    rates: [
+                        { id: resp.price.id, price: { amount: 3000 } }
+                    ]
+                }];
+
+                _this.closest("ul.info-list").children("li").append(temp.divComp('performance', true, true));
+
+                var div = _this.closest("div.col");
+                div.find("i.fa.fa-trash").show();
+                _this.closest("div.add").hide();
+            }
+
+            function postCallback(resp) {
                 var pricedata = {
-                    option: id,
+                    option: resp.id,
                     price: 3000
                 };
 
-                pricesApi.endpoints.rate.post(comp, { price_rate_create: pricedata });
-                pricesApi.send(function(resp) {
+                pricesApi.endpoints.rate.post(comp, {price_rate_create: pricedata});
+                pricesApi.send(rateCallback);
+            }
 
-                    temp.data.trashcanhide = true;
-                    temp.data.currentPackage.options = [{
-                        id: id,
-                        rates: [
-                            { id: resp.price.id, price: { amount: 3000 } }
-                        ]
-                    }];
-
-                    _this.closest("ul.info-list").children("li").append(temp.divComp('performance', true, true));
-                    //temp.data.trashcanhide = false;
-
-                    var div = _this.closest("div.col");
-                    div.find("i.fa.fa-trash").show();
-                    _this.closest("div.add").hide();
-
-                    console.log(resp);
-                });
-
-            });
+            pricesApi.endpoints.price.post({ price_option_create: data });
+            pricesApi.send(postCallback);
 
         })
         .on("click", "[add_package]", function() {
@@ -982,49 +979,16 @@
                 });
             }
         })
-        .on("click", ".prices h2.title", function(e) {
+        .on("click", ".prices h2.title span", function(e) {
             e.preventDefault();
 
-            if($(this).find("span").is(":visible")) {
-                $(this).find("input").attr("type", "text");
-                $(this).find("span").hide();
-            } else {
-                var span = $(this).find("span");
+            var span = $(this);
+            var input = $(this).prev("input");
 
-                $(this).find("input").focusout(function(e) {
-                    span.show();
-
-                    var showTrashcan = $(this).closest("div").attr("perf-created-sec");
-
-                    if(showTrashcan == undefined) {
-                        span.html($(this).val() + '<i delete_act class="fa fa-trash" aria-hidden="true"></i>');
-                    } else {
-                        span.html($(this).val());
-                    }
-
-                    var article = $(this).closest("article");
-                    var id = $(this).closest("article").attr("act_id"),
-                        comp;
-
-                    var data = { title: $(this).val() };
-
-                    if( typeof(article.attr("performance")) != "undefined" )
-                        comp = "performance";
-
-                    if( typeof(article.attr("service")) != "undefined" )
-                        comp = "service";
-
-                    var obj = {};
-
-                        obj[comp] = data;
-
-                    pricesApi.endpoints[comp].patch(id, obj);
-                    pricesApi.send(function(resp) {
-                        console.log(resp)
-                    });
-
-                    $(this).attr("type", "hidden");
-                });
+            if(span.is(":visible")) {
+                input.attr("type", "text");
+                input.focus();
+                span.hide();
             }
         })
         .on("click", "[price_on_request]", function(e) {
@@ -1034,8 +998,8 @@
             var checked = $(this).prop('checked');
             var id = div.attr("id");
 
-            var qty = div.find("[edit_qty]").find("option:selected").val();
-            var duration = div.find("[edit_duration]").val();
+            var qty = div.find("[edit_qty]").find("option:selected").val() || 1;
+            var duration = div.find("[edit_duration]").val() || 1;
 
             var data = {
                 qty: qty,
@@ -1058,6 +1022,43 @@
                 console.log(resp);
             });
 
+        })
+        .on("focusout", "[edit_title]", function(e) {
+
+            var span = $(this).next("span");
+
+            span.show();
+
+            var showTrashcan = $(this).closest("div").attr("perf-created-sec");
+
+            if(showTrashcan == undefined) {
+                span.html($(this).val() + '<i delete_act class="fa fa-trash" aria-hidden="true"></i>');
+            } else {
+                span.html($(this).val());
+            }
+
+            var article = $(this).closest("article");
+            var id = $(this).closest("article").attr("act_id"),
+                comp;
+
+            var data = { title: $(this).val() };
+
+            if( typeof(article.attr("performance")) != "undefined" )
+                comp = "performance";
+
+            if( typeof(article.attr("service")) != "undefined" )
+                comp = "service";
+
+            var obj = {};
+
+                obj[comp] = data;
+
+            pricesApi.endpoints[comp].patch(id, obj);
+            pricesApi.send(function(resp) {
+                console.log(resp)
+            });
+
+            $(this).attr("type", "hidden");
         });
     /* -------------------------------------------------------------------------------------------------------------- */
     /**
