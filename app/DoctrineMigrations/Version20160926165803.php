@@ -40,7 +40,7 @@ class Version20160926165803 extends AbstractMigration implements ContainerAwareI
 
     public function postUp(Schema $schema)
     {
-        $em = $this->container->get('doctrine.orm.entity_manager');
+      /*  $em = $this->container->get('doctrine.orm.entity_manager');
         $performances = $em->getRepository('ActedLegalDocsBundle:Performance')->findAll();
         foreach ($performances as $performance) {
             $photo2 = new Media();
@@ -52,6 +52,6 @@ class Version20160926165803 extends AbstractMigration implements ContainerAwareI
             $em->persist($photo2);
             $performance->addMedia($photo2);
         }
-        $em->flush();
+        $em->flush();*/
     }
 }
