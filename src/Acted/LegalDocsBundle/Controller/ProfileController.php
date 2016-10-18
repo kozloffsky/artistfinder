@@ -376,6 +376,7 @@ class ProfileController extends Controller
         $artist->setName($data['name']);
         $artist->setCountry($data['country']);
         $artist->setCity($data['city']);
+        $artist->setWorkAbroad($data['work_abroad']);
 
         $paymentSettingRepo = $em->getRepository('ActedLegalDocsBundle:PaymentSetting');
 

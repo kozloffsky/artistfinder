@@ -6,25 +6,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Acted\LegalDocsBundle\Entity\Profile;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 
 use Acted\LegalDocsBundle\Entity\RefCountry;
 use Acted\LegalDocsBundle\Entity\RefCity;
-use Acted\LegalDocsBundle\Entity\PaymentSetting;
-use Acted\LegalDocsBundle\Form\DataTransformer\PhoneTransformer;
 
-use Symfony\Component\Validator\Constraints\Image;
 use Acted\LegalDocsBundle\Form\DataTransformer\Base64ToFileTransformer;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Acted\LegalDocsBundle\Form\Type\BooleanType;
 
 class ProfileSettingsType extends AbstractType
 {
@@ -105,7 +98,10 @@ class ProfileSettingsType extends AbstractType
             ->add('file', TextType::class, [
                 'required' => false
             ])
-            ->add('work_abroad', TextType::class, ['constraints' => [], 'description' => 'Work abroad'])
+            
+            ->add('work_abroad', BooleanType::class, [
+                'constraints' => [
+                ], 'description' => 'Work abroad'])
 
             ->add('account_name', TextType::class, [
                 'constraints' => [
