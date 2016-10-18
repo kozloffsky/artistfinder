@@ -13,6 +13,7 @@
 @import "parts/artist-selection.css";
 @import "parts/settings-page.css";
 @import "parts/how-it-works.css";
+@import "custom.css";
 
 @font-face {
     font-family: LatoBlack;

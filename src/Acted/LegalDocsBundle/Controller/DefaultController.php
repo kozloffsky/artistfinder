@@ -31,6 +31,10 @@ class DefaultController extends Controller
     }
 
     public function howItWorksAction() {
-        return $this->render('ActedLegalDocsBundle:Default:how-it-works.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
+
+        return $this->render('ActedLegalDocsBundle:Default:how-it-works.html.twig',
+            compact('categories'));
     }
 }
