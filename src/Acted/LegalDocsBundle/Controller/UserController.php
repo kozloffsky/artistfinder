@@ -22,6 +22,13 @@ class UserController extends Controller
         $userForm->handleRequest($request);
 
         if($userForm->isSubmitted() && $userForm->isValid()) {
+            $data = $userForm->getData();
+
+            if (!empty($data->getAvatar())) {
+                $userManager = $this->get('app.user.manager');
+                $user = $userManager->updateAvatar($data->getAvatar(), $user, $request);
+            }
+
             $em->flush();
             return new JsonResponse(['status' => 'success']);
         }

@@ -188,52 +188,32 @@ class UserManager
     }
 
     /**
-     * @param File $file
+     * @param $filePath
      * @param User $user
      * @param $request
      * @return User
      */
-    public function updateAvatar(File $file, User $user, $request)
+    public function updateAvatar($filePath, User $user, $request)
     {
-        $fileName = uniqid(). '.' . $file->getExtension();
-
         if (!file_exists($this->avatarDir) && !is_dir($this->avatarDir)) {
             mkdir($this->avatarDir, 0777, true);
         }
 
-        $this->lip->filterAction($request, '/'.$file->move($this->avatarDir, $fileName), 'avatar_thumbnail');
+        $fileName = explode('.', basename($filePath));
+        $fileExtension = $fileName[1];
 
-        $fileTemporal = new File('media/cache/avatar_thumbnail/images/avatars/' . $fileName);
+        $fileName = uniqid(). '.' . $fileExtension;
 
-        if (!file_exists($this->avatarDir . '/thumbnail') && !is_dir($this->avatarDir . '/thumbnail')) {
-            mkdir($this->avatarDir . '/thumbnail', 0777, true);
-        }
-
-        $fileTemporal->move($this->avatarDir . '/thumbnail', $fileName);
-
-        $path = $this->rootDir . '/../web/images/UploadedFile*.*';
+        //remove old avatar images
+        $path = $this->rootDir . '/../web/images/avatars/*.*';
         array_map('unlink', glob($path));
 
-        $avatar = $user->getAvatar();
-        if (!empty($avatar) && $avatar != '/') {
-            $avatar = explode('/', $avatar);
-            $fileNameOld = array_pop($avatar);
-            $basePath = implode('/', $avatar);
+        //move temp file to avatars
+        rename($this->rootDir . '/../web' . $filePath, $this->rootDir . '/../web/images/avatars/' . $fileName);
 
-            $fileNameOldThumbnail = implode('/', array($basePath, 'thumbnail', $fileNameOld));
-            $fileNameOldBase = implode('/', array($basePath, $fileNameOld));
-
-            $path = $this->rootDir . '/../web' . $fileNameOldThumbnail;
-            if(file_exists($path)){
-                unlink($path);
-            }
-
-            $path = $this->rootDir . '/../web' . $fileNameOldBase;
-            if(file_exists($path)) {
-                unlink($path);
-            }
-        }
-
+        //remove temp images
+        $path = $this->rootDir . '/../web/images/UploadedFile*.*';
+        array_map('unlink', glob($path));
 
         $user->setAvatar($this->avatarDir . '/' . $fileName);
 
