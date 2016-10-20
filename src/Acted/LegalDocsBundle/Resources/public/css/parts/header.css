@@ -324,8 +324,8 @@ header.small .navbar {
 .navbar-default .navbar-nav>li>a,
 .navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:focus {
-    font-family: LatoBold;
-    font-size: 12px;
+    font-family: LatoRegular;
+    font-size: 14px;
     color: #fff;
     outline: none!important;
 }
@@ -383,13 +383,14 @@ header.small .navbar {
 .navbar-default .navbar-right>li.profile-dropdown .dropdown-menu li,
 .navbar-header .profile-dropdown .dropdown-menu li{
     position: relative;
+    margin: 0 0 0 5px;
 }
 .navbar-default .navbar-right .profile .dropdown-menu a,
 .navbar-default .navbar-right .profile-dropdown .dropdown-menu a,
 .navbar-header .profile-dropdown .dropdown-menu a{
     position: relative;
     z-index: 1;
-    padding-left: 26px;
+    padding-left: 33px;
 }
 .navbar-default .navbar-right .profile .dropdown-menu li:after,
 .navbar-default .navbar-right .profile-dropdown .dropdown-menu li:after,

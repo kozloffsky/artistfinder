@@ -442,6 +442,22 @@ a.disabled {
 {
     right: 0 !important;
 }
+
+
+
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    font-size: 14px !important;
+}
+
+.fa.fa-trash:before {
+    content: url("/assets/images/delete.png");
+}
+
+/**
+ *  Prices page and Profile page fixes
+ */
+
 /*@media (min-width: 992px) and (max-width: 1200px){
     .price-list .video iframe {
         height: 255px;

@@ -670,7 +670,7 @@ section.used-by {
     display: block;
     float: left;
     margin-top: 8px;
-    font-size: 17px;
+    font-size: 15px;
     font-family: LatoBold;
     color: #464646;
     width: 100%;
@@ -714,7 +714,7 @@ section.used-by {
 .info .user-rating .rating {
     display: inline-block;
     font-size: 14px;
-    font-family: LatoBold;
+    font-family: LatoRegular;
     color: #464646;
 }
 .controls {
@@ -1209,8 +1209,9 @@ section.used-by {
     padding: 0;
     height: auto;
     position: absolute;
-    right: 140px;
+    right: 0;
     float: none;
+    width: 250px;
 }
 
 .price-list .controls .button-gradient .btn {

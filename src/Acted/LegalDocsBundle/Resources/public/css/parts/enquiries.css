@@ -9,15 +9,15 @@
     position: relative;
 }
 
-.enquiries .categories-menu:after{
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 1px;
-    background-color: #a5a5a5;
-}
+/*.enquiries .categories-menu:after{*/
+    /*content: "";*/
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*bottom: 0;*/
+    /*height: 1px;*/
+    /*background-color: #a5a5a5;*/
+/*}*/
 
 .enq-icon {
     width: 14px;
@@ -42,7 +42,7 @@
 
 .act-request-data li {
     font-family: LatoRegular;
-    font-size: 13px;
+    font-size: 14px;
     color: rgba(0, 0, 0, 0.68);
     margin-bottom: 6px;
 }

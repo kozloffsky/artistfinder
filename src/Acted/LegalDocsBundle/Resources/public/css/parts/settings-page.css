@@ -60,7 +60,7 @@
 }
 .settings .box:first-child{width: 250px;}
 .settings .box h2{
-    font-size: 12px;
+    font-size: 14px;
     margin: 0;
     width: 70%;
     line-height: 34px;
@@ -71,6 +71,7 @@
 }
 .settings .box.active h2{display: block;}
 .settings .info-label{
+    font-size: 14px;
     display: inline-block;
     vertical-align: top;
     color: #756f6f;
@@ -95,6 +96,7 @@
     border-radius: 4px;
     outline: none;
     width: 70%;
+    font-size: 14px;
 }
 .settings  input[type="text"]:focus,
 .settings  input[type="password"]:focus,
@@ -208,6 +210,7 @@
     border-radius: 4px;
     outline: 0;
     width: 70%;
+    font-size: 14px;
 }
 
 .settings .box.active #setting_city, .settings .box.active #setting_city + span {
