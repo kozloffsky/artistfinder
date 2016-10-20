@@ -335,6 +335,8 @@
     box-shadow: none;
     max-width: 293px;
     display: inline-block;
+    line-height: 12px;
+    padding: 3px 6px;
 }
 
 #customerBlock .contact-details .form-group input {

@@ -68,6 +68,9 @@
     font-weight: 600;
     display: none;
     float: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden !important;
 }
 .settings .box.active h2{display: block;}
 .settings .info-label{

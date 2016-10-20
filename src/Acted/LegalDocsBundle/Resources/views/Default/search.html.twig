@@ -208,11 +208,16 @@
                                         <div class="video-icon"></div>
                                     {% endif %}
 
-
-                                    {% if recomendedArtist.media %}
-                                        <img class="header" src="{{ asset(recomendedArtist.media.link)|imagine_filter
+                                    {% if recomendedArtist.search_image is defined %}
+                                        <img class="header" src="{{ asset(recomendedArtist.search_image)|imagine_filter
                                         ('small')
                                         }}"/>
+                                    {% else %}
+                                        {% if recomendedArtist.media %}
+                                            <img class="header" src="{{ asset(recomendedArtist.media.link)|imagine_filter
+                                            ('small')
+                                            }}"/>
+                                        {% endif %}
                                     {% endif %}
 
                                     <p class="card-title">{{ recomendedArtist.name }}</p>
