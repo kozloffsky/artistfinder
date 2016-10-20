@@ -31,11 +31,11 @@ class PerformanceRepository extends \Doctrine\ORM\EntityRepository
 
             $qb->setParameter('artist', $artist);
 
-        if ($status) {
-            $qb
-                ->andWhere('p.status != :status')
-                ->setParameter('status', Performance::STATUS_DRAFT);
-        }
+//        if ($status) {
+//            $qb
+//                ->andWhere('p.status != :status')
+//                ->setParameter('status', Performance::STATUS_DRAFT);
+//        }
 
         return $qb->orderBy('p.id', 'DESC')->getQuery();
     }
