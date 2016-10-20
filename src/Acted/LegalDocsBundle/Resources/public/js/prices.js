@@ -444,7 +444,6 @@
             else
                 trashcan = this.trashCan("delete_set");
 
-
             var qtyHtml;
 
             for(var i = 0; i < qtyMap.length; i++) {
@@ -742,11 +741,15 @@
                 package: packId
             };
 
+            var pricedata = {
+                option: 0,
+                price: 3000
+            };
 
             function rateCallback(resp) {
                 temp.data.trashcanhide = true;
                 temp.data.currentPackage.options = [{
-                    id: resp.id,
+                    id: pricedata.option,
                     rates: [
                         { id: resp.price.id, price: { amount: 3000 } }
                     ]
@@ -760,10 +763,8 @@
             }
 
             function postCallback(resp) {
-                var pricedata = {
-                    option: resp.id,
-                    price: 3000
-                };
+
+                pricedata['option'] = resp.id;
 
                 pricesApi.endpoints.rate.post(comp, {price_rate_create: pricedata});
                 pricesApi.send(rateCallback);

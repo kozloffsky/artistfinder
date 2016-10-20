@@ -160,17 +160,18 @@
                                 <label class="info-label">Your URL:</label>
                             </div>
                             <div class="box">
-                                <h2 class="show">http://www.acted.co/{{ artist.name }}</h2>
+                                <h2 class="show">{{ domain }}/{{ artist.name }}</h2>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="box text-right">
-                                <label class="info-label">Your tiny URL:</label>
-                            </div>
-                            <div class="box">
-                                <h2 class="show">http://www.acted.co/{{ artist.name }}</h2>
-                            </div>
-                        </div>
+                        {# TODO: Add tinyurl service #}
+                        {#<div class="row">#}
+                            {#<div class="box text-right">#}
+                                {#<label class="info-label">Your tiny URL:</label>#}
+                            {#</div>#}
+                            {#<div class="box">#}
+                                {#<h2 class="show">{{ domain }}/{{ artist.name }}</h2>#}
+                            {#</div>#}
+                        {#</div>#}
                         <div class="row">
                             <div class="box text-right">
                                 <label class="info-label">Are you ready to work abroad?</label>

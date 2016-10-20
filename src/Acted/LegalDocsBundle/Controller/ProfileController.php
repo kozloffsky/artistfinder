@@ -412,6 +412,8 @@ class ProfileController extends Controller
 
         $artist = $serializer->toArray($artist, SerializationContext::create()->setGroups(['profile_settings']));
 
-        return $this->render('ActedLegalDocsBundle:Profile:settings.html.twig', compact('artist', 'artist_id'));
+        $domain = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'];
+
+        return $this->render('ActedLegalDocsBundle:Profile:settings.html.twig', compact('artist', 'artist_id', 'domain'));
     }
 }

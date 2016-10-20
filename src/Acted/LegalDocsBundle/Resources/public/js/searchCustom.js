@@ -14,8 +14,6 @@ $(function () {
         }
     }
     getNumOfBlocksToShow();
-    console.log(blocksToShow);
-
 
     $('.header-background').appendTo('header.search');
 
@@ -388,10 +386,11 @@ $(function () {
         $(artists).each(function () {
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString();
-            if(this.media.link){
-                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
+            //console.log(this.media.link);
+            if(this.search_image){
+                var imageSearchProf = '<img class="header" src="' + this.search_image + '"/>';
             } else{
-                var imageSearchProf = '<img class="header" src="/assets/images/media-no-image.gif"/>';
+                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
             }
             if (this.video_media){
                 var artistBlockSearch = '<div class=" profile-card bordered">' +
@@ -589,11 +588,11 @@ $(function () {
         $(artists).each(function () {
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString();
-            console.log(this.media.link);
-            if(this.media.link){
-                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
+            //console.log(this.media.link);
+            if(this.search_image){
+                var imageSearchProf = '<img class="header" src="' + this.search_image + '"/>';
             } else{
-                var imageSearchProf = '<img class="header" src="/assets/images/media-no-image.gif"/>';
+                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
             }
             if (this.video_media) {
                 var artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
