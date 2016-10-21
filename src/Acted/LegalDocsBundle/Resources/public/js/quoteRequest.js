@@ -24,6 +24,7 @@ $(function () {
 
     $('#comment_toggle').click(function (e) {
         e.preventDefault();
+
         $('#comment_area').toggle();
     });
 
