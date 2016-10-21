@@ -27,6 +27,7 @@ class ProfileController extends Controller
 
         foreach($performances->getItems() as &$performance) {
             $packages = $performance->getPackages()->getValues();
+            $amountArray = [];
             $currentPerformancePrice = 3000;
 
             foreach($packages as $package) {
@@ -34,15 +35,20 @@ class ProfileController extends Controller
 
                 foreach($options as $option) {
                     $priceOnRequest = $option->getPriceOnRequest();
-                    $priceOnRequestFlag = $priceOnRequest & $priceOnRequestFlag;
+
+                    if (empty($option->getDeletedTime())) {
+                        $priceOnRequestFlag = $priceOnRequest & $priceOnRequestFlag;
+                    }
 
                     $rates = $option->getRates()->getValues();
                     foreach($rates as $rate) {
-                        $amount = $rate->getPrice()->getAmount();
-
-                        if($amount < $currentPerformancePrice) {
-                            $currentPerformancePrice = $amount;
+                        if (!empty($rate->getDeletedTime())) {
+                            continue;
                         }
+
+                        $amount = $rate->getPrice()->getAmount();
+                        $amountArray[] = $amount;
+                        $currentPerformancePrice = min($amountArray);
                     }
                 }
             }
