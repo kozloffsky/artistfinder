@@ -65,8 +65,8 @@
 }
 
 .free-quote-modal .modal-title {
-    font-family: LatoBold;
-    font-size: 18px;
+    font-family: LatoRegular;
+    font-size: 15px;
 }
 .free-quote-modal .modal-title select + .select2 .select2-selection--single{border: none !important;}
 
@@ -134,16 +134,16 @@
     box-shadow: none!important;
     padding: 8px 12px 9px 12px;
     outline: none!important;
-    font-size: 16px;
+    font-size: 14px;
     font-family: LatoRegular;
     color: #3d4248;
-    height: 36px;
+    height: 32px;
 }
 
 .free-quote-modal .select2  {
     width: 100%!important;
     outline: none!important;
-    height: 36px;
+    height: 32px;
 }
 
 .free-quote-modal .select2-container .select2-selection--single {
@@ -156,7 +156,7 @@
 
 .free-quote-modal .select2-container--default .select2-selection--single,
 .quote-section .select2-container--default .select2-selection--single{
-    height: 36px;
+    height: 32px;
     border: 2px solid #EEEEEE!important;
     border-radius: 6px;
 }
@@ -247,7 +247,7 @@
     padding: 8px;
     border-radius: 8px;
     border: 2px solid #EEEEEE!important;
-    font-size: 11px;
+    font-size: 14px;
 }
 
 .free-quote-modal .quote-profile-desc::-webkit-input-placeholder,
@@ -278,7 +278,7 @@
 }
 
 .free-quote-modal .form-group label {
-    font-size: 16px;
+    font-size: 14px;
     font-family: LatoBold;
     color: #3d4248;
 }
@@ -299,14 +299,23 @@
 }
 
 .free-quote-modal.modal-registered .modal-footer {
-    background: #EEE;
+    background: #FFF;
     border-top: none;
 }
 
 .free-quote-modal .add-comment-btn {
-    text-decoration: underline;
     margin-bottom: 8px;
     margin-top: 4px;
+}
+.free-quote-modal .add-comment-btn a {
+    text-decoration: underline;
+}
+.free-quote-modal .add-comment-btn p {
+    font-family: LatoRegular;
+    margin: 30px 0 0 0;
+    font-size: 14px;
+    color: #000;
+    opacity: .21;
 }
 
 /*free-quote-modal request styles start*/

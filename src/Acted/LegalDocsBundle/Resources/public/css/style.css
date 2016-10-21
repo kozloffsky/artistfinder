@@ -2228,8 +2228,8 @@ section.used-by {
 .modal-dialog .select2-container--default .select2-selection--single .select2-selection__rendered{
     background: #fff;
     font-size: 10px;
-    height: 36px;
-    line-height: 36px;
+    height: 32px;
+    line-height: 32px;
     border-radius: 6px;
     -webkit-border-radius: 6px;
 }
@@ -2237,17 +2237,9 @@ section.used-by {
     border-radius: 6px 6px 0 0;
     -webkit-border-radius: 6px 6px 0 0;
 }
-.free-quote-modal .select2-container--default .select2-selection--single{
-    height: 24px;
-}
 
 .free-quote-modal.modal-registered .select2-container--default .select2-selection--single .select2-selection__rendered{
     font-size: 13px;
-}
-
-.free-quote-modal .select2{
-    overflow: hidden;
-    height: 26px;
 }
 
 .free-quote-modal .quote-profile-desc {
