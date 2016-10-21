@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
+                            aria-hidden="true"></span></button>
                 <h4 class="modal-title eventUnregistered">
                     <div class="warn">!</div>
                     Tip: Enter your event details below and it will automatically apply to your next quote requests
@@ -73,8 +73,8 @@
                             </select>
                         </div>
 
-                        <div class="row col-lg-12 guests-num">
-                            <label class="col-xs-12 no-pad">Number of guests</label>
+                        <div class="row col-lg-12 guests-num form-group">
+                            <label class="col-xs-12 no-pad ">Number of guests</label>
 
                             <div class="custom-checkbox">
                                 <input id="count_1" name="number_of_guests" type="radio" value="less_then_50">
@@ -97,7 +97,7 @@
 
                         <div class="map-holder pull-right">
                             <div class="map" id="map"></div>
-                            <em class="note">Pin your location on the map</em>
+                            {#<em class="note">Pin your location on the map</em>#}
                         </div>
                     </div>
                 </div>
@@ -122,7 +122,7 @@
                             <a href="#" id="comment_toggle">Add a comment</a>
                         </div>
 
-                        <div class="col-lg-12 no-pad" id="comment_area" style="display: none">
+                        <div class="col-lg-12 no-pad" id="comment_area" style="display: none;">
                             <textarea name="comment" class="quote-profile-desc" placeholder="Write a message to the Artist if you have any question about his performance or if you want to provide with more details about your event"></textarea>
                         </div>
 

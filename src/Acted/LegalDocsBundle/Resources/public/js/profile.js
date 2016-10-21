@@ -133,11 +133,6 @@ $(function () {
         $('#freeQuoteModalRegisterd .modal-body').toggle();
     });
 
-    $('#comment_toggle').click(function (e) {
-        e.preventDefault();
-        $('#comment_area').toggle();
-    });
-
     $('#r_comment_toggle').click(function (e) {
         e.preventDefault();
         $('#r_comment_area').toggle();

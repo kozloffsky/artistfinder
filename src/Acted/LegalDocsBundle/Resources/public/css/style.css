@@ -152,11 +152,10 @@ section.used-by {
     width: 17px;
     background: transparent;
     border-radius: 5px;
-    border: 2px solid #c6c6c6;
     font-size: 15px;
     text-align: center;
     vertical-align: middle;
-    background: #fff;
+    background: #fff !important;
 }
 
 .custom-checkbox label:after {
@@ -2229,8 +2228,8 @@ section.used-by {
 .modal-dialog .select2-container--default .select2-selection--single .select2-selection__rendered{
     background: #fff;
     font-size: 10px;
-    height: 24px;
-    line-height: 23px;
+    height: 36px;
+    line-height: 36px;
     border-radius: 6px;
     -webkit-border-radius: 6px;
 }
@@ -2251,8 +2250,13 @@ section.used-by {
     height: 26px;
 }
 
-.free-quote-modal .quote-profile-desc{
+.free-quote-modal .quote-profile-desc {
     border: none !important;
+}
+
+.free-quote-modal .custom-checkbox label {
+    color: #000;
+    font-weight: 400;
 }
 
 /*promo view styles start*/
