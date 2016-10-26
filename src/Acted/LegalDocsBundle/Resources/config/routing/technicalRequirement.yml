@@ -1,0 +1,14 @@
+technical_requirement_create:
+    path: /create
+    defaults: { _controller: ActedLegalDocsBundle:TechnicalRequirement:create }
+    methods:  POST
+
+technical_requirement_edit:
+    path: /{id}/edit
+    defaults: { _controller: ActedLegalDocsBundle:TechnicalRequirement:edit }
+    methods:  PUT
+
+technical_requirement_remove:
+    path: /{id}/remove
+    defaults: { _controller: ActedLegalDocsBundle:TechnicalRequirement:remove }
+    methods:  DELETE

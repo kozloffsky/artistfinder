@@ -64,5 +64,8 @@ Acted\LegalDocsBundle\Entity\Artist:
             targetEntity: Acted\LegalDocsBundle\Entity\Recommend
             mappedBy: artist
             cascade: ["remove", "persist"]
+        technicalRequirements:
+            targetEntity: Acted\LegalDocsBundle\Entity\TechnicalRequirement
+            mappedBy: artist
 
     lifecycleCallbacks: {  }

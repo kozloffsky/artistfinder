@@ -1,0 +1,28 @@
+Acted\LegalDocsBundle\Entity\DocumentTechnicalRequirement:
+    type: entity
+    table: DocumentTechnicalRequirement
+    repositoryClass: Acted\LegalDocsBundle\Repository\DocumentTechnicalRequirementRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string(128)
+        size:
+            type: integer
+            nullable: true
+        file:
+            type: string(255)
+        url:
+            type: string(255)
+    manyToOne:
+        technicalRequirement:
+            targetEntity: Acted\LegalDocsBundle\Entity\TechnicalRequirement
+            inversedBy: documentTechnicalRequirements
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }
