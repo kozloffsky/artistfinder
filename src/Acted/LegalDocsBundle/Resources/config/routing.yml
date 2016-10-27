@@ -69,3 +69,7 @@ acted_legal_docs_admin_dashboard:
 acted_legal_docs_price:
     resource: "@ActedLegalDocsBundle/Resources/config/routing/price.yml"
     prefix:   /price
+
+acted_legal_docs_technical_requirement:
+  resource: "@ActedLegalDocsBundle/Resources/config/routing/technicalRequirement.yml"
+  prefix: /technical_requirement

@@ -70,6 +70,11 @@ class Artist
     private $searchImage;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $technicalRequirements;
+
+    /**
      * Get id
      *
      * @return integer
@@ -375,6 +380,7 @@ class Artist
     {
         $this->ratings = new \Doctrine\Common\Collections\ArrayCollection();
         $this->recommends = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->technicalRequirements = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -655,5 +661,37 @@ class Artist
         }
 
         return '/'.ltrim($link, '/');
+    }
+
+    /**
+     * Add technical requirement
+     *
+     * @param TechnicalRequirement $technicalRequirement
+     *
+     * @return Artist
+     */
+    public function addTechnicalRequirement(TechnicalRequirement $technicalRequirement)
+    {
+        $this->technicalRequirements[] = $technicalRequirement;
+
+        return $this;
+    }
+
+    /**
+     * Remove technical requirements
+     *
+     * @param TechnicalRequirement $technicalRequirement
+     */
+    public function removeTechnicalRequirement(TechnicalRequirement $technicalRequirement)
+    {
+        $this->technicalRequirements->removeElement($technicalRequirement);
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection|\Doctrine\Common\Collections\Collection
+     */
+    public function getTechnicalRequirements()
+    {
+        return $this->technicalRequirements;
     }
 }
