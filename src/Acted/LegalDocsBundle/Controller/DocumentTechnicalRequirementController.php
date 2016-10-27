@@ -14,7 +14,6 @@ class DocumentTechnicalRequirementController extends Controller
 {
     public function uploadAction(Request $request)
     {
-        //var_dump($this->get('kernel')->getRootDir());exit;
         $serializer = $this->get('jms_serializer');
         $em = $this->getDoctrine()->getManager();
 

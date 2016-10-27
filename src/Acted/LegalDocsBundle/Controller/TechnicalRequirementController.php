@@ -119,7 +119,7 @@ class TechnicalRequirementController extends Controller
 
         $repository = $this->getDoctrine()
             ->getRepository('ActedLegalDocsBundle:TechnicalRequirement');
-        
+
         $technicalRequirementIds = $repository->getTechnicalRequirementIdsByArtistId($artist->getId());
         $technicalRequirements = $repository->getFullTechnicalRequirementsByIds($technicalRequirementIds);
 
