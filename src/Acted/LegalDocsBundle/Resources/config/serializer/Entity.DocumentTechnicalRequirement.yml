@@ -2,10 +2,10 @@ Acted\LegalDocsBundle\Entity\DocumentTechnicalRequirement:
     exclusion_policy: NONE
     properties:
         name:
-            groups: []
+            groups: [files]
         size:
-            groups: []
+            groups: [files]
         file:
-            groups: []
+            groups: [files]
         url:
-            groups: []
+            groups: [files]

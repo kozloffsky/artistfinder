@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Acted\LegalDocsBundle\Entity\TechnicalRequirement;
+use Acted\LegalDocsBundle\Entity\Artist;
 use JMS\Serializer\SerializationContext;
 
 class TechnicalRequirementController extends Controller
@@ -24,7 +25,6 @@ class TechnicalRequirementController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        //$userManager = $this->get('app.user.manager');
 
         $technicalRequirement = new TechnicalRequirement();
 
@@ -76,18 +76,53 @@ class TechnicalRequirementController extends Controller
         return new JsonResponse(['status' => 'success']);
     }
 
-    public function removeAction(Request $request, TechnicalRequirement $technicalRequirement)
+    public function removeAction(Request $request, TechnicalRequirement $technicalRequirement = null)
     {
+        if (empty($technicalRequirement)) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Technical requirement is not found'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
+
         $em = $this->getDoctrine()->getManager();
 
-        //$technicalRequirementRepo = $em->getRepository('ActedLegalDocsBundle:TechnicalRequirement');
+        $documentTechnicalRequirement = $this->getDoctrine()
+            ->getRepository('ActedLegalDocsBundle:DocumentTechnicalRequirement');
+
+        $documents = $documentTechnicalRequirement->getDocumentsByTRId($technicalRequirement->getId());
+
+        foreach ($documents as $document) {
+            $filePath = $this->get('kernel')->getRootDir() . '/../web/' . $document['file'];
+
+            if(file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
+
         $em->remove($technicalRequirement);
         $em->flush();
 
         return new JsonResponse(['status' => 'success']);
     }
 
-    //add removing TR
-    //add uploading documents
-    //add removing uploaded document
+    public function getByArtistAction(Request $request, Artist $artist = null)
+    {
+        if (empty($artist)) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Artist is not found'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
+
+        $serializer = $this->get('jms_serializer');
+
+        $repository = $this->getDoctrine()
+            ->getRepository('ActedLegalDocsBundle:TechnicalRequirement');
+        
+        $technicalRequirementIds = $repository->getTechnicalRequirementIdsByArtistId($artist->getId());
+        $technicalRequirements = $repository->getFullTechnicalRequirementsByIds($technicalRequirementIds);
+
+       return new JsonResponse(array('technicalRequirements' => $technicalRequirements), Response::HTTP_OK);
+    }
 }

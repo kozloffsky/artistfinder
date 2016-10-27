@@ -12,3 +12,18 @@ technical_requirement_remove:
     path: /{id}/remove
     defaults: { _controller: ActedLegalDocsBundle:TechnicalRequirement:remove }
     methods:  DELETE
+
+document_technical_requirement_upload:
+    path: /document/upload
+    defaults: { _controller: ActedLegalDocsBundle:DocumentTechnicalRequirement:upload }
+    methods:  POST
+
+document_technical_requirement_remove:
+    path: /document/{id}/remove
+    defaults: { _controller: ActedLegalDocsBundle:DocumentTechnicalRequirement:remove }
+    methods:  DELETE
+
+technical_requirement_artist_get:
+    path: /artist/{id}
+    defaults: { _controller: ActedLegalDocsBundle:TechnicalRequirement:getByArtist }
+    methods:  GET
