@@ -1,0 +1,54 @@
+{% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
+
+<main class="requirements">
+    <div class="container">
+
+        {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
+
+        <div class="row">
+
+            {% for technicalReq in TechData %}
+                {% if technicalReq is defined %}
+
+                    <div class="col">
+                        <form class="requirement-form" action="#">
+                            <h2>{{ technicalReq.name }}</h2>
+                            <input type="text" placeholder="{{ technicalReq.name }}">
+                            <textarea class="textarea" placeholder="{{ technicalReq.description }}"></textarea>
+                            <div class="row">
+                                <input type="file" name="files[]" multiple="multiple" req_files>
+                            </div>
+                            <button type="button" class="btn-close" remove-box>Close</button>
+                        </form>
+                        <div class="add-box">
+                            <span class="text">Add requirement</span>
+                            <button class="btn" add-box>Add</button>
+                        </div>
+                    </div>
+
+                {% endif %}
+            {% endfor %}
+
+
+
+            <div class="col">
+                <div class="add-box">
+                    <span class="text">Add requirement</span>
+                    <button class="btn" add-box>Add</button>
+                </div>
+                <form class="requirement-form hide" action="#">
+                    <h2>Technical requirement {{ TechData|length+1 }}</h2>
+                    <input type="text" placeholder="Name">
+                    <textarea class="textarea" placeholder="Write your description here"></textarea>
+                    <div class="row">
+                        <input type="file" name="files[]" multiple="multiple" req_files>
+                    </div>
+                    <button type="button" class="btn-close" remove-box>Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+{% include 'ActedLegalDocsBundle:Default:footer.html.twig' %}
