@@ -466,6 +466,13 @@ a.disabled {
         height: auto;
     }
 }*/
+/** HIDE 'Powered by Google' in autocomplete menu **/
+.pac-container:after {
+    background-image: none !important;
+    height: 0px;
+}
+
+
 @media (max-width: 720px) {
     .price-list .holder {
         width: 100%;

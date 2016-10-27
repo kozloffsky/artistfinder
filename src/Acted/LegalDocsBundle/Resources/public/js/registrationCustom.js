@@ -3,19 +3,20 @@
  */
 $(function () {
     //$('#phone_number').cleanVal(); to get phone number.
-
     //Enabling form validation.
-
-
     var customerValidate =  $("#customerRegForm").validate();
-
     var artistValidation =  $("#artistForm").validate();
 
     $("#recoveryForm").validate();
 
+    $("#password").on("focusout", function() {
+        $("#customerRegForm").valid();
+        $("#artistForm").valid();
+        $("#recoveryForm").valid();
+    });
+
     //Initializing phone mask.
     /*$('#phone_number').mask('+44 (000) 000-0000', {placeholder: "+44 (___) ___-____"});
-
 
      var $select2 = $("#country").select2({
      placeholder: "Select Country",
@@ -145,7 +146,6 @@ $(function () {
         chageState(2, false);
     });
 
-
     $('#stageTwoNext').click(function () {
         checkCategories();
     });
@@ -176,7 +176,6 @@ $(function () {
         }
     }
 
-
     $('.back-button').click(function () {
         if (currentState - 1 == 2) {
             chageState(currentState - 1, userIsArtist);
@@ -184,7 +183,6 @@ $(function () {
             chageState(currentState - 1);
         }
     });
-
 
     function finishRegistration()
     {

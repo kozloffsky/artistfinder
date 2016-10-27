@@ -336,4 +336,32 @@ class ChatRoomController extends Controller
 
         return $this->render('ActedLegalDocsBundle:ChatRoom:prices.html.twig', compact('homespotlight', 'categories'));
     }
+
+    public function techreqAction() {
+
+        $TechData = [
+            [
+                'name' => 'Technical requirement 1',
+                'title' => 'Title',
+                'description' => 'Description',
+                'files' => []
+            ],
+            [
+                'name' => 'Technical requirement 2',
+                'title' => 'Title',
+                'description' => 'Description',
+                'files' => []
+            ],
+            [
+                'name' => 'Technical requirement 3',
+                'title' => 'Title',
+                'description' => 'Description',
+                'files' => []
+            ]
+        ];
+
+
+
+        return $this->render('ActedLegalDocsBundle:ChatRoom:techreq.html.twig', compact('TechData'));
+    }
 }

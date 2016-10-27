@@ -90,7 +90,8 @@
                                 <label class="info-label">Location (city)</label>
                             </div>
                             <div class="box">
-                                <select name="city" id="setting_city" value="{{ artist.city }}"></select>
+                                <input type="text" name="city" id="settings_city" value=" {{ artist.city }}"/>
+                                {#<select name="city" id="setting_city" value="{{ artist.city }}"></select>#}
                                 <h2>{{ artist.city }}</h2>
                                 <button type="button" class="btn-edit"></button>
                             </div>
