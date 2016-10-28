@@ -125,7 +125,7 @@
                 var html = TechReqObj.createDynamicForm(tech);
                 $('.requirements .container > .row').append(html);
                 var input = $('.requirements form[tech-id='+tech.id+'] input[req_files]');
-                TechReqObj.applyFiler(input);
+                TechReqObj.applyFiler(input, tech.id);
                 TechReqObj.newTechReqTemplate();
             });
         },
@@ -208,7 +208,14 @@
 
             TechReqObj.removeTechBoxReq(techId, cur.remove());
         },
-        applyFiler: function(obj) {
+        applyFiler: function(obj, techreqId, files) {
+
+            var newFiles = [];
+
+            if(Array.isArray(files))
+              if(files.length)
+                newFiles = files;
+
             var Filer = $(obj).filer({
                 maxSize: 4,
                 changeInput: '<button type="button" class="btn-upload">Upload file</button>',
@@ -239,10 +246,10 @@
                     }
                 },
                 addMore: true,
-                files: [],
+                files: newFiles,
                 uploadFile: {
                     url: '/technical_requirement/document/upload',
-                    data: { 'document_technical_requirement[technical_requirement]': 39 },
+                    data: { 'document_technical_requirement[technical_requirement]': techreqId },
                     type: 'POST',
                     enctype: 'multipart/form-data',
                     beforeSend: function(data){},
@@ -273,7 +280,8 @@
 
     function appendFiles(obj, files) {
         var len = files.length,
-            newFiles = new Array(0);
+            newFiles = new Array(0),
+            techreqId = $(obj).closest("form[tech-id]").attr("tech-id");
 
         var types = {
             jpeg: 'image/jpeg',
@@ -299,7 +307,7 @@
             file = null;
         }
 
-        TechReqObj.applyFiler(obj);
+        TechReqObj.applyFiler(obj, techreqId, newFiles);
     }
 
     if(artist && $(".requirements"))
