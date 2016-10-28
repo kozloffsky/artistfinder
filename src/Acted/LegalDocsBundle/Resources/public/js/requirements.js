@@ -1,8 +1,16 @@
 ;(function(window){
     'use strict';
+    var artist = null;
+
+    try {
+        artist = JSON.parse(localStorage.getItem("user")).artistId;
+    } catch (e) {
+
+    }
+
     window.TechReqObj = {
         count: 0,
-        artistID: JSON.parse(localStorage.getItem("user")).artistId,
+        artistID: artist,
         endpoints: {
             techreq: {
                 get: function(artistID) {
@@ -319,38 +327,39 @@
         });
     }
 
-    $.ajax({
-        url:  techListRequest.url,
-        type: techListRequest.method,
-        data: {},
-        success: function(req) {
-            if(req && Array.isArray(req.technicalRequirements)){
-                var techReqList = req.technicalRequirements,
-                    len = techReqList.length;
+    if(artist && $(".requirements"))
+      $.ajax({
+          url:  techListRequest.url,
+          type: techListRequest.method,
+          data: {},
+          success: function(req) {
+              if(req && Array.isArray(req.technicalRequirements)){
+                  var techReqList = req.technicalRequirements,
+                      len = techReqList.length;
 
-                for(var i = 0; i < len; i++) {
+                  for(var i = 0; i < len; i++) {
 
-                    var curObj = techReqList[i],
-                        files  = techReqList[i].documentTechnicalRequirements;
+                      var curObj = techReqList[i],
+                          files  = techReqList[i].documentTechnicalRequirements;
 
-                    curObj.number = i + 1;
+                      curObj.number = i + 1;
 
-                    $('.requirements .container > .row').append(TechReqObj.createDynamicForm(curObj));
+                      $('.requirements .container > .row').append(TechReqObj.createDynamicForm(curObj));
 
-                    var input = $('.requirements form[tech-id='+curObj.id+'] input[req_files]');
+                      var input = $('.requirements form[tech-id='+curObj.id+'] input[req_files]');
 
-                    appendFiles(input, files);
+                      appendFiles(input, files);
 
-                    curObj = null;
-                }
+                      curObj = null;
+                  }
 
-                TechReqObj.newTechReqTemplate();
-            }
-        },
-        error: function(req) {
+                  TechReqObj.newTechReqTemplate();
+              }
+          },
+          error: function(req) {
 
-        }
-    });
+          }
+      });
 
     $(document)
         .on("click",    ".requirements [add-box]",    TechReqObj.addBox)
