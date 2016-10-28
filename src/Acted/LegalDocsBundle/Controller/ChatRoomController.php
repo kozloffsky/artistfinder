@@ -225,7 +225,7 @@ class ChatRoomController extends Controller
                     return new JsonResponse(['error' => $uploadResult['message']], 400);
                 }
             }
-            
+
             $message = $this->get('app.chat.manager')->newMessage($chat, $sender, $receiver, $messageText, $filePaths);
             $this->getEM()->persist($message);
             $this->getEM()->flush();
@@ -314,7 +314,7 @@ class ChatRoomController extends Controller
     {
         $offerId = $request->get('id');
 
-        
+
     }
 
     public function bookingsAction(Request $request)
@@ -337,31 +337,7 @@ class ChatRoomController extends Controller
         return $this->render('ActedLegalDocsBundle:ChatRoom:prices.html.twig', compact('homespotlight', 'categories'));
     }
 
-    public function techreqAction() {
-
-        $TechData = [
-            [
-                'name' => 'Technical requirement 1',
-                'title' => 'Title',
-                'description' => 'Description',
-                'files' => []
-            ],
-            [
-                'name' => 'Technical requirement 2',
-                'title' => 'Title',
-                'description' => 'Description',
-                'files' => []
-            ],
-            [
-                'name' => 'Technical requirement 3',
-                'title' => 'Title',
-                'description' => 'Description',
-                'files' => []
-            ]
-        ];
-
-
-
-        return $this->render('ActedLegalDocsBundle:ChatRoom:techreq.html.twig', compact('TechData'));
+    public function technicalRequirementAction() {
+        return $this->render('ActedLegalDocsBundle:ChatRoom:techreq.html.twig');
     }
 }

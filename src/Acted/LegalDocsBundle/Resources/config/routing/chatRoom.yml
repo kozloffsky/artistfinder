@@ -64,7 +64,7 @@ prices:
     methods:  GET
 
 technical_requirements:
-    path:     /techreq
-    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:techreq }
+    path:     /technicalreq
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:technicalRequirement }
     methods:  GET
 

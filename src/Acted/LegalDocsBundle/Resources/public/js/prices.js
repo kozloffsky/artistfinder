@@ -348,7 +348,7 @@
                     <dl>\
                         <dt>Price '+lenobj.i+':</dt>\
                         <dd>\
-                            <input id="'+rate.id+'" edit_rate name="price_'+rate.id+'" class="input-num" type="text" placeholder="'+rate.price.amount+'" value="'+rate.price.amount+'" onkeypress="return isNumberKey(event)">\
+                            <input id="'+rate.id+'" edit_rate name="price_'+rate.id+'" class="input-num" type="text" placeholder="'+parseInt(rate.price.amount)+'" value="'+parseInt(rate.price.amount)+'" onkeypress="return isNumberKey(event)">\
                             <span class="curr">'+userCurrency+'</span>\
                         </dd>\
                         '+trash+'\
