@@ -66,20 +66,11 @@
             TechReqObj.count = $(".requirements .row .col").length + 1;
 
             var html = '<div class="col">\
-                        <div class="add-box">\
-                            <span class="text">Add requirement</span>\
-                            <button class="btn" add-box>Add</button>\
-                        </div>\
-                        <form class="requirement-form hide" action="#">\
-                            <h2>Technical requirement '+ TechReqObj.count +'</h2>\
-                            <input type="text" placeholder="Name">\
-                            <textarea class="textarea" placeholder="Write your description here"></textarea>\
-                            <div class="row">\
-                                <input type="file" name="files[]" multiple="multiple" req_files>\
+                            <div class="add-box">\
+                                <span class="text">Add requirement</span>\
+                                <button class="btn" add-box>Add</button>\
                             </div>\
-                            <button type="button" class="btn-close">Close</button>\
-                        </form>\
-                    </div>';
+                        </div>';
 
             $('.requirements .container > .row').append(html);
         },
@@ -94,10 +85,6 @@
                             </div>\
                             <button type="button" class="btn-close" remove-box>Close</button>\
                         </form>\
-                        <div class="add-box">\
-                            <span class="text">Add requirement</span>\
-                            <button class="btn" add-box>Add</button>\
-                        </div>\
                     </div>';
         },
         /**
@@ -107,7 +94,7 @@
             TechReqObj.count = $(".requirements .row .col").length;
 
             var
-                req = TechReqObj.endpoints.techreq.create,
+                req = TechReqObj.endpoints.techreq.create(),
                 techrequestObj = {
                     technical_requirement: {
                         title: "Technical requirement " + TechReqObj.count,
@@ -125,37 +112,22 @@
             });
         },
         /**
-         * Handler for adding a new Technical Requirement
-         */
-        addTechReqTemplate: function() {
-            var html = '\
-            <div class="col">\
-                <div class="add-box">\
-                    <span class="text">Add requirement</span>\
-                    <button class="btn" add-box>Add</button>\
-                </div>\
-                <form class="requirement-form hide" action="#">\
-                    <h2>Technical requirement '+(TechReqObj.count+1)+'</h2>\
-                    <input type="text" placeholder="Name" onkeydown="TechReqObj.handleTextInput()">\
-                    <textarea class="textarea" placeholder="Write your description here" onkeydown="TechReqObj.handleTextInput()"></textarea>\
-                    <div class="row">\
-                        <input type="file" name="files[]" multiple="multiple" req_files>\
-                    </div>\
-                    <button type="button" class="btn-close" remove-box>Close</button>\
-                </form>\
-            </div>\
-            ';
-
-            $(".requirements .row .col").last().after(html);
-        },
-        /**
          * Adds a dynamic form for new Technical Requirement
          */
         addBox: function() {
-            var cur = $(this);
-            cur.closest('.col').find('.requirement-form').removeClass('hide');
 
-            TechReqObj.createNewTechReq(TechReqObj.addTechReqTemplate);
+            TechReqObj.createNewTechReq(function(res) {
+                var tech = res.technicalRequirement;
+                $(".requirements .row .col").last().remove();
+
+                tech.number = $(".requirements .row .col").length + 1;
+
+                var html = TechReqObj.createDynamicForm(tech);
+                $('.requirements .container > .row').append(html);
+                var input = $('.requirements form[tech-id='+tech.id+'] input[req_files]');
+                TechReqObj.applyFiler(input);
+                TechReqObj.newTechReqTemplate();
+            });
         },
         /**
          * Edit a existing Technical Request
@@ -235,6 +207,64 @@
             var techId = $(this).closest("form").attr("tech-id");
 
             TechReqObj.removeTechBoxReq(techId, cur.remove());
+        },
+        applyFiler: function(obj) {
+            var Filer = $(obj).filer({
+                maxSize: 4,
+                changeInput: '<button type="button" class="btn-upload">Upload file</button>',
+                showThumbs: true,
+                templates: {
+                    box: '<ul class="items-list"></ul>',
+                    item: '<li class="item">\
+                                <div class="jFiler-item-thumb">\
+                                    <div class="jFiler-item-status"></div>\
+                                </div>\
+                                <span class="jFiler-item-title"><a href="/uploads/tr_documents/{{fi-name}}" title="{{fi-name}}">{{fi-name | limitTo: 12}}</a></span>\
+                                <a class="item-trash" item-id="{{fi-file_id}}"></a>\
+                            </li>',
+                    itemAppend: '<li class="item">\
+                                      <div class="jFiler-item-thumb">\
+                                          <div class="jFiler-item-status"></div>\
+                                          {{fi-image}}\
+                                      </div>\
+                                      <span class="jFiler-item-title"><a href="/uploads/tr_documents/{{fi-name}}" title="{{fi-name}}">{{fi-name | limitTo: 12}}</a></span>\
+                                      <a class="item-trash" item-id="{{fi-file_id}}"></a>\
+                                  </li>',
+                    itemAppendToEnd: true,
+                    removeConfirmation: true,
+                    _selectors: {
+                        list: '.items-list',
+                        item: '.item',
+                        remove: '.item-trash'
+                    }
+                },
+                addMore: true,
+                files: [],
+                uploadFile: {
+                    url: '/technical_requirement/document/upload',
+                    data: { 'document_technical_requirement[technical_requirement]': 39 },
+                    type: 'POST',
+                    enctype: 'multipart/form-data',
+                    beforeSend: function(data){},
+                    success: function(data){},
+                    error: function(err){},
+                    statusCode: null,
+                    onProgress: null,
+                    onComplete: null
+                },
+                onRemove: function(data) {
+                  var id = $(data.context).attr("item-id");
+                  var req = TechReqObj.endpoints.files.delete(id);
+
+                  $.ajax({
+                      url:  req.url,
+                      type: req.method,
+                      data: {},
+                      success: function() {},
+                      error:   function() {}
+                  });
+                }
+            });
         }
     };
 
@@ -269,62 +299,7 @@
             file = null;
         }
 
-        var Filer = $(obj).filer({
-            maxSize: 4,
-            changeInput: '<button type="button" class="btn-upload">Upload file</button>',
-            showThumbs: true,
-            templates: {
-                box: '<ul class="items-list"></ul>',
-                item: '<li class="item">\
-                            <div class="jFiler-item-thumb">\
-                                <div class="jFiler-item-status"></div>\
-                            </div>\
-                            <span class="jFiler-item-title"><a href="/uploads/tr_documents/{{fi-name}}" title="{{fi-name}}">{{fi-name | limitTo: 12}}</a></span>\
-                            <a class="item-trash" item-id="{{fi-file_id}}"></a>\
-                        </li>',
-                itemAppend: '<li class="item">\
-                                  <div class="jFiler-item-thumb">\
-                                      <div class="jFiler-item-status"></div>\
-                                      {{fi-image}}\
-                                  </div>\
-                                  <span class="jFiler-item-title"><a href="/uploads/tr_documents/{{fi-name}}" title="{{fi-name}}">{{fi-name | limitTo: 12}}</a></span>\
-                                  <a class="item-trash" item-id="{{fi-file_id}}"></a>\
-                              </li>',
-                itemAppendToEnd: true,
-                removeConfirmation: true,
-                _selectors: {
-                    list: '.items-list',
-                    item: '.item',
-                    remove: '.item-trash'
-                }
-            },
-            addMore: true,
-            files: newFiles,
-            uploadFile: {
-                url: '/technical_requirement/document/upload',
-                data: { 'document_technical_requirement[technical_requirement]': 39 },
-                type: 'POST',
-                enctype: 'multipart/form-data',
-                beforeSend: function(data){},
-                success: function(data){},
-                error: function(err){},
-                statusCode: null,
-                onProgress: null,
-                onComplete: null
-            },
-            onRemove: function(data) {
-              var id = $(data.context).attr("item-id");
-              var req = TechReqObj.endpoints.files.delete(id);
-
-              $.ajax({
-                  url:  req.url,
-                  type: req.method,
-                  data: {},
-                  success: function() {},
-                  error:   function() {}
-              });
-            }
-        });
+        TechReqObj.applyFiler(obj);
     }
 
     if(artist && $(".requirements"))
