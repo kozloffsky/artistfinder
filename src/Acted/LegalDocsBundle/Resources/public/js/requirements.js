@@ -54,6 +54,27 @@
             }
         },
 
+        newTechReqTemplate: function() {
+            TechReqObj.count = $(".requirements .row .col").length + 1;
+
+            var html = '<div class="col">\
+                        <div class="add-box">\
+                            <span class="text">Add requirement</span>\
+                            <button class="btn" add-box>Add</button>\
+                        </div>\
+                        <form class="requirement-form hide" action="#">\
+                            <h2>Technical requirement '+ TechReqObj.count +'</h2>\
+                            <input type="text" placeholder="Name">\
+                            <textarea class="textarea" placeholder="Write your description here"></textarea>\
+                            <div class="row">\
+                                <input type="file" name="files[]" multiple="multiple" req_files>\
+                            </div>\
+                            <button type="button" class="btn-close">Close</button>\
+                        </form>\
+                    </div>';
+
+            $('.requirements .container > .row').append(html);
+        },
         createDynamicForm: function(obj) {
             return '<div class="col">\
                         <form class="requirement-form" action="#" tech-id="'+ obj.id +'" type="multipart/form-data">\
@@ -75,12 +96,13 @@
          * Creates a new Technical Request
          */
         createNewTechReq: function(cb) {
+            TechReqObj.count = $(".requirements .row .col").length;
+
             var
-                req = TechReqObj.endpoints.techreq.create(),
-                count = $(".requirements .row .col").length,
+                req = TechReqObj.endpoints.techreq.create,
                 techrequestObj = {
                     technical_requirement: {
-                        title: "Technical requirement " + count,
+                        title: "Technical requirement " + TechReqObj.count,
                         description: "Description",
                         artist: TechReqObj.artistID
                     }
@@ -321,6 +343,8 @@
 
                     curObj = null;
                 }
+
+                TechReqObj.newTechReqTemplate();
             }
         },
         error: function(req) {
