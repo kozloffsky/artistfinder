@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
@@ -56,13 +57,6 @@ class ProfileSettingsType extends AbstractType
                     new Length(['max' => 32])
                 ], 'description' => 'Post code'])
 
-            ->add('country', EntityType::class, [
-                'class' => RefCountry::class,
-                'constraints' => [new NotBlank()],
-                'required' => true,
-                'description' => 'Country ID (for ROLE_ARTIST)',
-            ])
-
             ->add('phone', TextType::class, [
                 'constraints' => [
                     new NotBlank(),
@@ -73,11 +67,14 @@ class ProfileSettingsType extends AbstractType
                 ],
                 'description' => 'Phone number (available chars: digits,+,(,)) (for ROLE_ARTIST)',
             ])
-            ->add('city',  EntityType::class, [
-                'class' => RefCity::class,
-                'constraints' => [new NotBlank()],
-                'description' => 'City ID (for ROLE_ARTIST)',
-            ])
+
+            ->add('country', TextType::class, ['constraints' => [new NotBlank()], 'description' => 'Country'])
+            ->add('city', TextType::class, ['constraints' => [new NotBlank()], 'description' => 'City'])
+            ->add('city_lat', NumberType::class, ['constraints' => [new NotBlank()], 'description' => 'City latitude'])
+            ->add('city_lng', NumberType::class, ['constraints' => [new NotBlank()], 'description' => 'City longitude'])
+            ->add('region_name', TextType::class, ['constraints' => [new NotBlank()], 'description' => 'Name of region'])
+            ->add('region_lat', NumberType::class, ['constraints' => [new NotBlank()], 'description' => 'Region latitude'])
+            ->add('region_lng', NumberType::class, ['constraints' => [new NotBlank()], 'description' => 'Region longitude'])
 
             /*->add('email', EmailType::class, ['constraints' => [
                 new NotBlank(),

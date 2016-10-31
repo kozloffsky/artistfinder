@@ -379,9 +379,31 @@ class ProfileController extends Controller
 
         $em->persist($user);
 
+
+        $refCountryRepo = $em->getRepository('ActedLegalDocsBundle:RefCountry');
+        $countryId = $refCountryRepo->createCountry($data['country']);
+
+        $country = $em->getRepository('ActedLegalDocsBundle:RefCountry')->findOneBy(array(
+            'id' => $countryId
+        ));
+
+        $refRegionRepo = $em->getRepository('ActedLegalDocsBundle:RefRegion');
+        $regionId = $refRegionRepo->createRegion($data['region_name'], $country, $data['region_lat'], $data['region_lng']);
+
+        $region = $em->getRepository('ActedLegalDocsBundle:RefRegion')->findOneBy(array(
+            'id' => $regionId
+        ));
+
+        $refCityRepo = $em->getRepository('ActedLegalDocsBundle:RefCity');
+        $cityId = $refCityRepo->createCity($data['city'], $region, $data['city_lat'], $data['city_lng']);
+
+        $city = $em->getRepository('ActedLegalDocsBundle:RefCity')->findOneBy(array(
+            'id' => $cityId
+        ));
+
         $artist->setName($data['name']);
-        $artist->setCountry($data['country']);
-        $artist->setCity($data['city']);
+        $artist->setCountry($country);
+        $artist->setCity($city);
         $artist->setWorkAbroad($data['work_abroad']);
 
         $paymentSettingRepo = $em->getRepository('ActedLegalDocsBundle:PaymentSetting');
@@ -404,6 +426,7 @@ class ProfileController extends Controller
         $paymentSettingObj->setUser($user);
 
         $em->persist($paymentSettingObj);
+
         $em->flush();
 
         return new JsonResponse(['status' => 'success', 'artist' => $serializer->toArray($artist, SerializationContext::create()

@@ -2,6 +2,9 @@
 
 namespace Acted\LegalDocsBundle\Repository;
 
+use Acted\LegalDocsBundle\Entity\RefRegion;
+use Acted\LegalDocsBundle\Entity\RefCountry;
+
 /**
  * RefRegionRepository
  *
@@ -10,4 +13,33 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class RefRegionRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function createRegion($regionName, RefCountry $country, $lat, $lng)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $params = array('regionName' => $regionName);
+
+        $qb->from('ActedLegalDocsBundle:RefRegion', 'region');
+        $qb->select('region');
+        $qb->where($qb->expr()->eq('region.name', ':regionName'));
+
+        $qb->setParameters($params);
+
+        $region = $qb->getQuery()->getOneOrNullResult();
+        if (!empty($region) && !empty($region->getName())) {
+            return $region->getId();
+        }
+
+        $regionObj = new RefRegion();
+        $regionObj->setCountry($country);
+        $regionObj->setName($regionName);
+        $regionObj->setLatitude($lat);
+        $regionObj->setLongitude($lng);
+        $em->persist($regionObj);
+
+        $em->flush();
+
+        return $regionObj->getId();
+    }
 }
