@@ -223,12 +223,13 @@
                 templates: {
                     box: '<ul class="items-list"></ul>',
                     item: '<li class="item">\
-                                <div class="jFiler-item-thumb">\
-                                    <div class="jFiler-item-status"></div>\
-                                </div>\
-                                <span class="jFiler-item-title"><a href="/uploads/tr_documents/{{fi-name}}" title="{{fi-name}}">{{fi-name | limitTo: 12}}</a></span>\
-                                <a class="item-trash" item-id="{{fi-file_id}}"></a>\
-                            </li>',
+                                      <div class="jFiler-item-thumb">\
+                                          <div class="jFiler-item-status"></div>\
+                                          {{fi-image}}\
+                                      </div>\
+                                      <span class="jFiler-item-title"><a href="/uploads/tr_documents/{{fi-name}}" title="{{fi-name}}">{{fi-name | limitTo: 12}}</a></span>\
+                                      <a class="item-trash" item-id="{{fi-file_id}}"></a>\
+                                  </li>',
                     itemAppend: '<li class="item">\
                                       <div class="jFiler-item-thumb">\
                                           <div class="jFiler-item-status"></div>\
@@ -300,7 +301,7 @@
             newFile['file'] = '/' + file.file;
             newFile['opts'] = {
               file_id: file.id
-            }
+            };
 
             newFiles.push(newFile);
 
