@@ -1,6 +1,7 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Repository;
+use Acted\LegalDocsBundle\Entity\RefCountry;
 
 /**
  * RefCountryRepository
@@ -10,4 +11,44 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class RefCountryRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function createCountry($countryName)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $params = array('countryName' => $countryName);
+
+        $qb->from('ActedLegalDocsBundle:RefCountry', 'country');
+        $qb->select('country');
+        $qb->where($qb->expr()->eq('country.name', ':countryName'));
+
+        $qb->setParameters($params);
+
+        $country = $qb->getQuery()->getOneOrNullResult();
+        if (!empty($country) && !empty($country->getName())) {
+            return $country->getId();
+        }
+
+        $qb = $em->createQueryBuilder();
+
+        $params = array('currencyIsoCode' => 'USD');
+
+        $qb->from('ActedLegalDocsBundle:RefCurrency', 'currency');
+        $qb->select('currency');
+        $qb->where($qb->expr()->eq('currency.isoCode', ':currencyIsoCode'));
+
+        $qb->setParameters($params);
+
+        $currency = $qb->getQuery()->getSingleResult();
+
+
+        $countryObj = new RefCountry();
+        $countryObj->setRefCurrency($currency);
+        $countryObj->setName($countryName);
+        $em->persist($countryObj);
+
+        $em->flush();
+
+        return $countryObj->getId();
+    }
 }
