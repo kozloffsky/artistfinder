@@ -8,61 +8,65 @@
                 <div class="modal-body">
 
                     <div class="row clearfix">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                             <label for="quot_event_name">Name event</label>
                             <input type="text" class="form-control" id="quot_event_name" placeholder="Name your event" name="event_name">
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                             <label for="quot_address">Address</label>
                             <input type="text" class="form-control" id="quot_address" placeholder="St Regis" name="address">
                         </div>
                     </div>
 
                     <div class="row clearfix">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                             <label for="quot_date">Date</label>
                             <input type="text" class="form-control" id="quot_date" placeholder="17/12/2016" name="date">
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                             <label for="quot_city">City</label>
                             <input type="text" class="form-control" id="quot_city" placeholder="London" name="city">
                         </div>
                     </div>
 
                     <div class="row clearfix">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                             <label for="quot_performance_time">Performance time</label>
                             <input type="text" class="form-control" id="quot_performance_time" placeholder="10 p.m." name="performance_time">
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                             <label for="quot_country">Country</label>
                             <input type="text" class="form-control" id="quot_country" placeholder="United Kingdom" name="country">
                         </div>
                     </div>
 
                     <div class="row clearfix">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                             <label for="quot_arrival_time">Arrival time</label>
                             <input type="text" class="form-control" id="quot_arrival_time" placeholder="6 p.m." name="arrival_time">
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                             <label for="quot_post_code">Post code</label>
                             <input type="text" class="form-control" id="quot_post_code" placeholder="St Regis" name="post_code">
                         </div>
                     </div>
 
                     <div class="row clearfix">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                             <label for="quot_guests_number">Number of guests</label>
                             <input type="text" class="form-control" id="quot_guests_number" placeholder="Less than 50" name="guests_number">
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                             <div id="quotation_place_map">Map</div>
+                            <div class="map-holder">
+                                <div id="map" style="position: relative; overflow: hidden;"><div style="height: 100%; width: 100%; position: absolute; background-color: rgb(229, 227, 223);"><div class="gm-err-container"><div class="gm-err-content"><div class="gm-err-icon"><img src="http://maps.gstatic.com/mapfiles/api-3/images/icon_error.png" draggable="false" style="-webkit-user-select: none;"></div><div class="gm-err-title">Ошибка</div><div class="gm-err-message">При загрузке Google Карт на этой странице возникла проблема. Подробности вы найдете в консоли JavaScript.</div></div></div></div></div>
+                                <em class="note">Pin your location on the map</em>
+                            </div>
                         </div>
                     </div>
 
                     <div class="row clearfix">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                             <label for="quot_venue_type">Venue type</label>
                             <input type="text" class="form-control" id="quot_venue_type" placeholder="Hotel Ballrom" name="venue_type">
                         </div>
@@ -72,13 +76,14 @@
             </form>
             <form name="quotation_act_info" class="act-info">
                 <div class="row">
-                    <div class="act-title"><input type="checkbox"> Act 1 -Jazz Band</div>
+                    <div class="act-title"><input type="checkbox"> Act 1 -Jazz Band <i delete_price="" class="fa fa-trash" aria-hidden="true"></i></div>
                 </div>
                 <div>
                     <div class="row package">
                         <label>3-piece Jazz Band</label>
                         <input type="checkbox">
                         <a href="#">Add sets</a>
+                        <i delete_price="" class="fa fa-trash" aria-hidden="true"></i>
                     </div>
                     <div class="col-md-6 ">
                         <input type="checkbox">

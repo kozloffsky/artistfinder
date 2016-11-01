@@ -93,3 +93,21 @@
     color: #3d4248;
     margin-bottom: 9px;
 }
+
+
+@media screen and (max-width: 960px) {
+    .quotation-modal .act-info,
+    .quotation-modal .place-info {
+        width: 100%;
+        height: auto;
+    }
+    .quotation-modal .modal-dialog {
+        width: 560px;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .quotation-modal .modal-dialog {
+        width: auto;
+    }
+}

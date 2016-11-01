@@ -217,7 +217,7 @@
                 newFiles = files;
 
             var Filer = $(obj).filer({
-                maxSize: 4,
+                maxSize: 10,
                 changeInput: '<button type="button" class="btn-upload">Upload file</button>',
                 showThumbs: true,
                 templates: {

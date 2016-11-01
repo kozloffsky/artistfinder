@@ -1,11 +1,9 @@
-
-
 {% if app.request.get('_route') == 'acted_legal_docs_homepage' %}
-    <footer>
-    {% elseif app.request.get('_route') == 'acted_legal_docs_search' %}
-    <footer>
-    {% else %}
-    <footer class="footer-dark">
+<footer>
+{% elseif app.request.get('_route') == 'acted_legal_docs_search' %}
+<footer>
+{% else %}
+<footer class="footer-dark">
 {% endif %}
 
     <div class="social-icons">
@@ -91,5 +89,9 @@
         min: jQuery.validator.format("Please enter a value greater than or equal to {0}.")
     });
 </script>
+
+<div class="loader-mask">
+    <div class="loader">Loading...</div>
+</div>
 </body>
 </html>
