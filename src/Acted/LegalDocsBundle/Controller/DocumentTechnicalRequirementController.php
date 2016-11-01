@@ -39,9 +39,10 @@ class DocumentTechnicalRequirementController extends Controller
             )], Response::HTTP_BAD_REQUEST);
         }
 
+        $maxFileSize = $this->container->getParameter('max_file_size');
         $documents = $request->files->get('document_technical_requirement')['files'];
         $fileFormats = $this->container->getParameter('file_formats');
-        $constraints = array('maxSize'=>'10M', 'mimeTypes' => $fileFormats);
+        $constraints = array('maxSize'=> $maxFileSize, 'mimeTypes' => $fileFormats);
         $uploadFiles = $this->get('file_uploader')->create($documents, $constraints);
         $response = [];
 
@@ -51,6 +52,7 @@ class DocumentTechnicalRequirementController extends Controller
                 $documentTechnicalRequirement->setTechnicalRequirement($data->getTechnicalRequirement());
                 $documentTechnicalRequirement->setName($fileData['name']);
                 $documentTechnicalRequirement->setSize($fileData['size']);
+                $documentTechnicalRequirement->setOriginalName($fileData['original_name']);
                 $documentTechnicalRequirement->setFile($fileData['relativeDirectory'] . '/' . $fileData['name']);
                 $response[] = $documentTechnicalRequirement;
                 $documentTechnicalRequirement->setUrl('//' . $_SERVER['HTTP_HOST'] . '/' . $fileData['relativeDirectory'] . '/' . $fileData['name']);

@@ -100,7 +100,8 @@ class FileUploader
                     'size' => $file->getSize(),
                     'mimeType' => $file->getMimeType(),
                     'relativeDirectory' => $this->relativeDirectory,
-                    'name' => $fileName
+                    'name' => $fileName,
+                    'original_name' => $file->getClientOriginalName()
                 );
 
                 if(!$this->hasErrors()) {

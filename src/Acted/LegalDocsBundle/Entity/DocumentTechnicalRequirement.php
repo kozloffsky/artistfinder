@@ -33,6 +33,11 @@ class DocumentTechnicalRequirement
     private $url;
 
     /**
+     * @var string
+     */
+    private $originalName;
+
+    /**
      * @var TechnicalRequirement
      */
     private $technicalRequirement;
@@ -165,6 +170,30 @@ class DocumentTechnicalRequirement
     public function getTechnicalRequirement()
     {
         return $this->technicalRequirement;
+    }
+
+    /**
+     * Set original name
+     *
+     * @param string $originalName
+     *
+     * @return DocumentTechnicalRequirement
+     */
+    public function setOriginalName($originalName)
+    {
+        $this->originalName = $originalName;
+
+        return $this;
+    }
+
+    /**
+     * Get original name
+     *
+     * @return string
+     */
+    public function getOriginalName()
+    {
+        return $this->originalName;
     }
 }
 

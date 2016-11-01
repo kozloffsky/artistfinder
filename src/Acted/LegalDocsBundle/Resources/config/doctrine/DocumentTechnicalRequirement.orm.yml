@@ -16,6 +16,8 @@ Acted\LegalDocsBundle\Entity\DocumentTechnicalRequirement:
             nullable: true
         file:
             type: string(255)
+        originalName:
+            type: text
     manyToOne:
         technicalRequirement:
             targetEntity: Acted\LegalDocsBundle\Entity\TechnicalRequirement

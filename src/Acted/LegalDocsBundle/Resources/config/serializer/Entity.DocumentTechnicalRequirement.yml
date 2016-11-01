@@ -7,5 +7,7 @@ Acted\LegalDocsBundle\Entity\DocumentTechnicalRequirement:
             groups: [files]
         file:
             groups: [files]
+        originalName:
+            groups: [files]
         url:
             groups: [files]
