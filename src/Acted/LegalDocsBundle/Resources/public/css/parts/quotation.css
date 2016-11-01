@@ -1,0 +1,95 @@
+.quotation-modal .modal-dialog {
+    width: 960px;
+}
+
+.quotation-modal .modal-body {
+    padding: 0;
+}
+
+/* --- FORMS STYLE --- */
+.quotation-modal .place-info {
+    background: #eeeeee;
+    padding: 16px 0 0 8px;
+    width: 410px;
+    height: 502px;
+    float: left;
+}
+.quotation-modal .act-info {
+    width: 548px;
+    height: 502px;
+    float: left;
+}
+.quotation-modal .payment-info {
+    padding: 20px;
+}
+/* ------------------- */
+.quotation-modal hr {
+    border-top: 2px solid #dbdbdb;
+    margin: 0;
+    clear: both;
+}
+.quotation-modal .form-control{
+    border: none;
+}
+.quotation-modal .form-group {
+    margin-bottom: 13px;
+    padding: 0 13px;
+}
+.quotation-modal .form-group input {
+    background-color: #FFF;
+    padding: 4px 0 5px 10px;
+    border-radius: 4px;
+    height: 26px;
+    width: 160px;
+}
+.quotation-modal .title {
+    font-family: LatoBold;
+    font-size: 21px;
+    color: #3d4248;
+}
+.quotation-modal .payment-deposit {
+    margin: 7px 0 10px 0;
+}
+.quotation-modal .payment-deposit > span {
+    padding: 5px 0;
+}
+.quotation-modal .payment-deposit-info > span {
+    margin: 0 0 23px 0;
+}
+.quotation-modal .act-title {
+    padding: 12px 20px 12px 12px;
+    font-family: LatoBold;
+    font-size: 18px;
+    color: #FFF;
+    background: rgba(255,171,106,1);
+    background: -moz-linear-gradient(left, rgba(255,171,106,1) 0%, rgba(255,119,60,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,171,106,1)), color-stop(100%, rgba(255,119,60,1)));
+    background: -webkit-linear-gradient(left, rgba(255,171,106,1) 0%, rgba(255,119,60,1) 100%);
+    background: -o-linear-gradient(left, rgba(255,171,106,1) 0%, rgba(255,119,60,1) 100%);
+    background: -ms-linear-gradient(left, rgba(255,171,106,1) 0%, rgba(255,119,60,1) 100%);
+    background: linear-gradient(to right, rgba(255,171,106,1) 0%, rgba(255,119,60,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffab6a', endColorstr='#ff773c', GradientType=1 );
+}
+
+
+/* TODO Remove!!! */
+.quotation-modal .btn-container {
+    height: 26px;
+    width: 126px;
+    border-radius: 13px;
+    background-image: linear-gradient(rgba(255, 171, 106, 1) 0%, rgba(255, 119, 60, 1) 100%);
+}
+.quotation-modal .btn .btn-mango-grad {
+    font-family: LatoRegular;
+    font-size: 14px;
+    color: #FFF;
+    text-align: left;
+    line-height: 20px;
+}
+/* --- FONT STYLES --- */
+.quotation-modal label {
+    font-family: LatoBold;
+    font-size: 15px;
+    color: #3d4248;
+    margin-bottom: 9px;
+}
