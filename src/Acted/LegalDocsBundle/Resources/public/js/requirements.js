@@ -11,6 +11,7 @@
     window.TechReqObj = {
         count: 0,
         artistID: artist,
+        FILES: [],
         endpoints: {
             techreq: {
                 get: function(artistID) {
@@ -61,7 +62,6 @@
                 }
             }
         },
-
         newTechReqTemplate: function() {
             TechReqObj.count = $(".requirements .row .col").length + 1;
 
@@ -209,6 +209,7 @@
             TechReqObj.removeTechBoxReq(techId, cur.remove());
         },
         applyFiler: function(obj, techreqId, files) {
+            var _this = this;
 
             var newFiles = [];
 
@@ -223,23 +224,25 @@
                 templates: {
                     box: '<ul class="items-list"></ul>',
                     item: '<li class="item">\
+                                {{fi-progressBar}}\
                                       <div class="jFiler-item-thumb">\
                                           <div class="jFiler-item-status"></div>\
                                           {{fi-image}}\
                                       </div>\
-                                      <span class="jFiler-item-title"><a href="/uploads/tr_documents/{{fi-name}}" title="{{fi-name}}">{{fi-name | limitTo: 12}}</a></span>\
-                                      <a class="item-trash" item-id="{{fi-file_id}}"></a>\
+                                      <span class="jFiler-item-title"><a href="/uploads/tr_documents/{{fi-name}}" title="{{fi-name}}">{{fi-orname | limitTo: 12}}</a></span>\
                                   </li>',
                     itemAppend: '<li class="item">\
+                                      {{fi-progressBar}}\
                                       <div class="jFiler-item-thumb">\
                                           <div class="jFiler-item-status"></div>\
                                           {{fi-image}}\
                                       </div>\
-                                      <span class="jFiler-item-title"><a href="/uploads/tr_documents/{{fi-name}}" title="{{fi-name}}">{{fi-name | limitTo: 12}}</a></span>\
+                                      <span class="jFiler-item-title"><a href="/uploads/tr_documents/{{fi-name}}" title="{{fi-name}}">{{fi-orname | limitTo: 12}}</a></span>\
                                       <a class="item-trash" item-id="{{fi-file_id}}"></a>\
                                   </li>',
                     itemAppendToEnd: true,
                     removeConfirmation: true,
+                    progressBar: "<div></div>",
                     _selectors: {
                         list: '.items-list',
                         item: '.item',
@@ -248,17 +251,29 @@
                 },
                 addMore: true,
                 files: newFiles,
-                uploadFile: {
-                    url: '/technical_requirement/document/upload',
-                    data: { 'document_technical_requirement[technical_requirement]': techreqId },
-                    type: 'POST',
-                    enctype: 'multipart/form-data',
-                    beforeSend: function(data){},
-                    success: function(data){},
-                    error: function(err){},
-                    statusCode: null,
-                    onProgress: null,
-                    onComplete: null
+                onSelect: function(data) {
+                    _this.FILES.push(data);
+                },
+                afterShow: function() {
+
+                    var data = {
+                        document_technical_requirement: {
+                            technical_requirement: techreqId
+                        }
+                    };
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/technical_requirement/document/upload',
+                        data: data,
+                        success: function(data){},
+                        error: function(err){},
+                        statusCode: null,
+                        onProgress: function(event) {
+                            console.log(event);
+                        },
+                        onComplete: null
+                    })
                 },
                 onRemove: function(data) {
                   var id = $(data.context).attr("item-id");
@@ -288,7 +303,8 @@
             jpeg: 'image/jpeg',
             png: 'image/png',
             gif: 'image/gif',
-            pdf: 'application/jpeg'
+            pdf: 'application/jpeg',
+            json: 'application/json'
         };
 
         for(var k = 0; k < len; k++) {
@@ -300,7 +316,8 @@
             newFile['type'] = types[file.name.split('.')[1]] || 'pdf';
             newFile['file'] = '/' + file.file;
             newFile['opts'] = {
-              file_id: file.id
+                file_id: file.id,
+                orname: file.originalName
             };
 
             newFiles.push(newFile);

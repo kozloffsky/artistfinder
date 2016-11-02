@@ -24,7 +24,15 @@ class DocumentTechnicalRequirementController extends Controller
             return new JsonResponse($serializer->toArray($documentTechnicalRequirementForm->getErrors()), Response::HTTP_BAD_REQUEST);
         }
 
+
         $data = $documentTechnicalRequirementForm->getData();
+
+        $lastId = 0;
+        if (!empty($data->getTechnicalRequirement()->getDocumentTechnicalRequirements())) {
+            $existingDocuments = $data->getTechnicalRequirement()->getDocumentTechnicalRequirements();
+            $lastId = count($existingDocuments);
+        }
+
 
         if (empty($data)) {
             return new JsonResponse([
@@ -44,7 +52,7 @@ class DocumentTechnicalRequirementController extends Controller
         $fileFormats = $this->container->getParameter('file_formats');
         $constraints = array('maxSize'=> $maxFileSize, 'mimeTypes' => $fileFormats);
         $uploadFiles = $this->get('file_uploader')->create($documents, $constraints);
-        $response = [];
+        //$response = [];
 
         if ($uploadFiles->upload()) {
             foreach ($uploadFiles->getDataFiles() as $fileData) {
@@ -54,7 +62,7 @@ class DocumentTechnicalRequirementController extends Controller
                 $documentTechnicalRequirement->setSize($fileData['size']);
                 $documentTechnicalRequirement->setOriginalName($fileData['original_name']);
                 $documentTechnicalRequirement->setFile($fileData['relativeDirectory'] . '/' . $fileData['name']);
-                $response[] = $documentTechnicalRequirement;
+                //$response[] = $documentTechnicalRequirement;
                 $documentTechnicalRequirement->setUrl('//' . $_SERVER['HTTP_HOST'] . '/' . $fileData['relativeDirectory'] . '/' . $fileData['name']);
 
                 $em->persist($documentTechnicalRequirement);
@@ -62,7 +70,10 @@ class DocumentTechnicalRequirementController extends Controller
 
             $em->flush();
 
-            return new JsonResponse($serializer->toArray($response, SerializationContext::create()
+            $documentTRRepo = $em->getRepository('ActedLegalDocsBundle:DocumentTechnicalRequirement');
+            $uploadedDocuments = $documentTRRepo->getDocumentsAfterId($lastId);
+
+            return new JsonResponse($serializer->toArray($uploadedDocuments, SerializationContext::create()
                 ->setGroups(['files'])), Response::HTTP_OK);
         }
 
