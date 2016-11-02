@@ -58,5 +58,9 @@ Acted\LegalDocsBundle\Entity\Event:
         chatRooms:
           targetEntity: Acted\LegalDocsBundle\Entity\ChatRoom
           mappedBy: event
+    oneToOne:
+        requestQuotation:
+          targetEntity: Acted\LegalDocsBundle\Entity\RequestQuotation
+          mappedBy: event
 
     lifecycleCallbacks: {  }

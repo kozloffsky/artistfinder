@@ -603,4 +603,33 @@ class Event
         return ($this->city && $this->city->getRegion()->getCountry()) ? $this->city->getRegion()->getCountry()->getName
         () : null;
     }
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\RequestQuotation
+     */
+    private $requestQuotation;
+
+
+    /**
+     * Set requestQuotation
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation
+     *
+     * @return Event
+     */
+    public function setRequestQuotation(\Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation = null)
+    {
+        $this->requestQuotation = $requestQuotation;
+
+        return $this;
+    }
+
+    /**
+     * Get requestQuotation
+     *
+     * @return \Acted\LegalDocsBundle\Entity\RequestQuotation
+     */
+    public function getRequestQuotation()
+    {
+        return $this->requestQuotation;
+    }
 }

@@ -47,4 +47,7 @@ Acted\LegalDocsBundle\Entity\Performance:
         packages:
           targetEntity: Acted\LegalDocsBundle\Entity\Package
           mappedBy: performance
+        performanceRequestQuotations:
+          targetEntity: Acted\LegalDocsBundle\Entity\PerformanceRequestQuotation
+          mappedBy: performance
     lifecycleCallbacks: {  }

@@ -22,6 +22,9 @@ Acted\LegalDocsBundle\Entity\Service:
       packages:
         targetEntity: Acted\LegalDocsBundle\Entity\Package
         mappedBy: service
+      serviceRequestQuotations:
+        targetEntity: Acted\LegalDocsBundle\Entity\ServiceRequestQuotation
+        mappedBy: service
     manyToOne:
       profile:
         targetEntity: Acted\LegalDocsBundle\Entity\Profile
