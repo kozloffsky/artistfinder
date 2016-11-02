@@ -469,7 +469,14 @@
                 city     = form.find('input[name="city"]'),
                 postcode = form.find('input[name="post_code"]') || 0;
 
-            this.addArray([country, city, postcode]);
+            if(country.length && city.length) {
+                this.addArray([country, city, postcode]);
+
+            } else {
+                return false;
+            }
+
+            return true;
         }
     }
 })(this);

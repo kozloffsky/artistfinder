@@ -193,7 +193,9 @@ $(function(){
         btnEdit.on('click', editButtonHandle);
         win.on('load resize orientationchange', resizeHandle);
 
-        GoogleAutocompleteService.getFormElements('.settings form[name="contactForm"]');
-        GoogleAutocompleteService.initAutoComplete();
+        var isAvailable = GoogleAutocompleteService.getFormElements('.settings form[name="contactForm"]');
+
+        if(isAvailable)
+            GoogleAutocompleteService.initAutoComplete();
     }
 });
