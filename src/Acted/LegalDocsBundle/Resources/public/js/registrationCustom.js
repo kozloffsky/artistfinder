@@ -395,6 +395,9 @@ $(function () {
         })
     }
 
-    GoogleAutocompleteService.getFormElements('.registration-modal form[id="artistForm"]');
-    GoogleAutocompleteService.initAutoComplete();
+
+    if($("main.home").length) {
+        GoogleAutocompleteService.getFormElements('.registration-modal form[id="artistForm"]');
+        GoogleAutocompleteService.initAutoComplete();
+    }
 });
