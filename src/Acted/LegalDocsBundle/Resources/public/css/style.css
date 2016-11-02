@@ -2389,6 +2389,10 @@ section.used-by {
 }
 /*promo view styles end*/
 
+input[disabled] {
+    background: #eee !important;
+    cursor: not-allowed !important;
+}
 .loader-mask {
     background: rgba(0, 0, 0, 0.75);
     position: absolute;
@@ -2468,7 +2472,9 @@ section.used-by {
         box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
     }
 }
-
+.pac-container {
+    z-index: 5000;
+}
 
 /*Medium screens*/
 @media (max-width: 1199px) {

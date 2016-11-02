@@ -15,37 +15,6 @@ $(function () {
         $("#recoveryForm").valid();
     });
 
-    //Initializing phone mask.
-    /*$('#phone_number').mask('+44 (000) 000-0000', {placeholder: "+44 (___) ___-____"});
-
-     var $select2 = $("#country").select2({
-     placeholder: "Select Country",
-     minimumResultsForSearch: -1
-     }).on("change", function (e) {
-     //Change mask here... Example:
-     var selectedCountry = $('#country').find('option:selected').text();
-     $('#phone_number').val('');
-
-     switch (selectedCountry) {
-     case 'France':
-     $('#phone_number').mask('+33 (00) 0000-0000', {placeholder: "+33 (0_) ____-____"});
-     break;
-     case  'Germany':
-     $('#phone_number').mask('+49 (0000) 0000-0000', {placeholder: "+49 (0___) ____-____"});
-     break;
-     //Default country Uk
-     case 'United Kingdom':
-     default:
-     $('#phone_number').mask('+44 (000) 000-0000', {placeholder: "+44 (___) ___-____"});
-     break;
-     }
-
-
-     });*/
-
-    //$select2.data('select2').$results.addClass($select2.attr('data-class'));
-
-
     var currentState = 1;
     var userIsArtist = true;
 
@@ -243,10 +212,22 @@ $(function () {
     });
 
     function registerArtist(userInformation, categoriesForm, userRole) {
+        var data = userRole + '&' + userInformation + '&' + categoriesForm;
+
+        var lat = GoogleAutocompleteService.coords.lat,
+            lng = GoogleAutocompleteService.coords.lng,
+            region = GoogleAutocompleteService.currentStore.region;
+
+            data += "&city_lat=" + lat;
+            data += "&city_lng=" + lng;
+            data += "&region_name=" + region;
+            data += "&region_lat=" + lat;
+            data += "&region_lng=" + lng;
+
         $.ajax({
             type: "POST",
             url: '/register',
-            data: userRole + '&' + userInformation + '&' + categoriesForm,
+            data: data,
             success: function(){
                 console.log('successReg');
                 finishRegistration()
@@ -303,33 +284,6 @@ $(function () {
         })
     }
 
-    $(document).ready(function() {
-        var selectedCountruOption = $('.form-group #country').find('option:selected').val();
-        chooseCityReg(selectedCountruOption);
-    });
-
-    $('.form-group #country').on('change',function(){
-        var selectedCountruOption = $('.form-group #country').find('option:selected').val();
-        chooseCityReg(selectedCountruOption);
-    })
-
-    function chooseCityReg(selectedCountruOption) {
-        if (selectedCountruOption){
-            $.ajax({
-                type: 'GET',
-                url: '/geo/city?_format=json&country=' + selectedCountruOption,
-                success: function (response) {
-                    $('#cityReg').empty();
-                    $('#cityReg').append('<option value="" name="city">select a city</option>');
-                    $(response).each(function () {
-                        $('#cityReg').append('<option value="' + this.id + '" name="city">' + this.name + '</option>');
-                    });
-                    $("#cityReg").select2();
-                }
-            })
-        }
-    }
-
     function customerRegister(){
         var customerValues = $('.customerRegForm').serialize();
         var customerRole = 'role=ROLE_CLIENT';
@@ -373,7 +327,6 @@ $(function () {
 
     function sendQuoteIfExist(userData){
         var quote = localStorage.getItem('quoteRequest');
-        console.log(quote)
         if(quote){
             $.ajax({
                 type:'POST',
@@ -442,4 +395,6 @@ $(function () {
         })
     }
 
+    GoogleAutocompleteService.getFormElements('.registration-modal form[id="artistForm"]');
+    GoogleAutocompleteService.initAutoComplete();
 });

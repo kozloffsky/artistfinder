@@ -1,5 +1,5 @@
 
-<div class="modal registration-modal fade" id="registrationModal" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+<div class="modal registration-modal registration-admin-modal fade" id="registrationModal" tabindex="-1" role="dialog" aria-labelledby="modal-title">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -117,21 +117,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="country">Country</label>
-                                <select name="country" id="country">
-                                    {% for country in countries() %}
-                                        {% if country.name == 'United Kingdom' %}
-                                            <option value="{{ country.id }}" name="country" selected="selected">{{ country.name }}</option>
-                                        {% else %}
-                                            <option value="{{ country.id }}" name="country">{{ country.name }}</option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
+                                <input type="text" name="country" id="country" class="form-control">
                             </div>
 
                             <div class="form-group">
                                 <label for="cityReg">City</label>
-                                <select name="city" id="cityReg">
-                                </select>
+                                <input disabled type="text" name="city" id="cityReg" class="form-control">
                             </div>
 
                             <div class="form-group emailAdminDash">

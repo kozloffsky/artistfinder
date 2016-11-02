@@ -175,4 +175,7 @@ $(function() {
             }
         });
     }
+
+    GoogleAutocompleteService.getFormElements('.registration-admin-modal form[id="artistForm"]');
+    GoogleAutocompleteService.initAutoComplete();
 });

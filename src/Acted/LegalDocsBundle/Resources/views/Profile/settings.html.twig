@@ -73,15 +73,7 @@
                                 <label class="info-label">Country</label>
                             </div>
                             <div class="box">
-                                <select name="country" id="settings_country" value="{{ artist.country }}">
-                                    {% for country in countries() %}
-                                        {% if country.name == artist.country %}
-                                            <option value="{{ country.id }}" name="country" selected="selected">{{ country.name }}</option>
-                                        {% else %}
-                                            <option value="{{ country.id }}" name="country">{{ country.name }}</option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
+                                <input id="settings_country" type="text" placeholder="{{ artist.country }}" name="country" value="{{ artist.country }}">
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -90,9 +82,13 @@
                                 <label class="info-label">Location (city)</label>
                             </div>
                             <div class="box">
-                                <input type="text" name="city" id="settings_city" value=" {{ artist.city }}"/>
-                                {#<select name="city" id="setting_city" value="{{ artist.city }}"></select>#}
-                                <h2>{{ artist.city }}</h2>
+                                {% if artist.city is defined %}
+                                    <input type="text" name="city" id="settings_city" value=" {{ artist.city }}"/>
+                                    <h2>{{ artist.city }}</h2>
+                                {% else %}
+                                    <input disabled type="text" name="city" id="settings_city" value=" {{ artist.city }}"/>
+                                    <h2>{{ artist.city }}</h2>
+                                {% endif %}
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -102,11 +98,11 @@
                             </div>
                             <div class="box">
                                 <label error class="error">Error!</label>
-                                {% if artist.user is defined %}
-                                    <input type="text" placeholder="{{ artist.user.postcode }}" name="post_code" value="{{ artist.user.postcode }}">
+                                {% if artist.user.postcode is defined %}
+                                    <input disabled type="text" placeholder="{{ artist.user.postcode }}" name="post_code" value="{{ artist.user.postcode }}">
                                     <h2>{{ artist.user.postcode }}</h2>
                                 {% else %}
-                                    <input type="text" placeholder="" name="post_code" value="">
+                                    <input disabled type="text" placeholder="Post code" name="post_code" value="">
                                     <h2></h2>
                                 {% endif %}
 
