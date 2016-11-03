@@ -175,7 +175,6 @@ $(function () {
             }
         });
     }
-
     function chooseCity(selectedCountruOption){
         if(selectedCountruOption) {
             $.ajax({

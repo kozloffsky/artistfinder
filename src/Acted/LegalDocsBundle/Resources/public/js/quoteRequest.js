@@ -364,4 +364,9 @@ $(function () {
             }
         })
     };
+
+    var isAvailable = GoogleAutocompleteService.getFormElements('.free-quote-modal form[id="requestQuoteForm"]');
+
+    if(isAvailable)
+        GoogleAutocompleteService.initAutoComplete();
 });

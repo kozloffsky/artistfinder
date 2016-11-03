@@ -120,6 +120,7 @@
     font-family: LatoRegular;
     font-size: 12px;
     color: rgba(0, 0, 0, 0.68);
+    display: inline;
 }
 
 .act-request-title .bold-title {
@@ -140,6 +141,17 @@
 
 .act-request-title .see-more a:hover{
     text-decoration: none;
+}
+
+.act-request-quotation-label {
+    font-family: LatoRegular;
+    font-size: 12px;
+    color: #FFF;
+    background: #A5DE8C;
+    display: inline-block;
+    margin: 0 0 0 10px;
+    padding: 0 4px 0 4px;
+    border-radius: 4px;
 }
 
 .act-request-message span.text {
@@ -229,6 +241,20 @@
 .bookings .act-request .button-gradient{margin: 0 40px 0 0 !important;}
 .bookings .select2{margin: 0 0 30px;}
 /*booking styles end*/
+
+.enquiries .quote-btn.grayed {
+    background: #DFE0E0;
+}
+.enquiries .quote-sended {
+    background: #A5DE8C;
+}
+
+.quotation-send-success-modal .modal-content {
+    background-color: #FFF;
+    border-radius: 11px;
+    height: 183px;
+    width: 297px;
+}
 
 @media (max-width: 767px) {
     .act-request .controls .button-gradient:not(:last-of-type) {

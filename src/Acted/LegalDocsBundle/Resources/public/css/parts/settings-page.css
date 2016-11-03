@@ -214,6 +214,7 @@
     outline: 0;
     width: 70%;
     font-size: 14px;
+    display: inline-block;
 }
 
 .settings .box.active #setting_city, .settings .box.active #setting_city + span {

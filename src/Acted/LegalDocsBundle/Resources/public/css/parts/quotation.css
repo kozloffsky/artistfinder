@@ -7,6 +7,10 @@
 }
 
 /* --- FORMS STYLE --- */
+.quotation-modal .map-holder {
+    position: absolute;
+    right: 17px;
+}
 .quotation-modal .place-info {
     background: #eeeeee;
     padding: 16px 0 0 8px;
@@ -42,6 +46,14 @@
     height: 26px;
     width: 160px;
 }
+
+.quotation-modal .form-group select {
+    padding: 4px 0 5px 10px;
+    border-radius: 4px;
+    height: 26px;
+    width: 160px;
+}
+
 .quotation-modal .title {
     font-family: LatoBold;
     font-size: 21px;

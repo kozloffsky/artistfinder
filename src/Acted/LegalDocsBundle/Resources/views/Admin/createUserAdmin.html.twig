@@ -86,7 +86,7 @@
 
                                 <div class="controls">
                                     <div class="button-gradient filled">
-                                        <button id="stageThreeNextCustomer" type="submit" class="btn register submit">Register Now</button>
+                                        <button id="stageThreeNextCustomerAdmin" type="submit" class="btn register submit">Register Now</button>
                                     </div>
 
                                     <button type="button" style="width: 100%; margin-top: 10px;" class="btn-back back-button">Back</button>
@@ -117,7 +117,14 @@
                             </div>
                             <div class="form-group">
                                 <label for="country">Country</label>
-                                <input type="text" name="country" id="country" class="form-control">
+
+                                <select class="form-control" id="country" name="country">
+                                    <option value="0" selected>United Kingdom</option>
+                                    <option value="1">Germany</option>
+                                    <option value="2">France</option>
+                                </select>
+
+                                {#<input type="text" name="country" id="country" class="form-control">#}
                             </div>
 
                             <div class="form-group">
@@ -148,7 +155,7 @@
 
                             <div class="controls">
                                 <div class="button-gradient filled">
-                                    <button  id="stageThreeNext" type="submit" class="btn register submit">Register Now</button>
+                                    <button  id="stageThreeNextAdmin" type="submit" class="btn register submit">Register Now</button>
                                 </div>
 
                                 <p class="hint">After registration you can start editing your profile</p>

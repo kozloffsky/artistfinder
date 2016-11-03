@@ -13,6 +13,7 @@
         /**
          * Constants
          */
+        key: "AIzaSyDLK8SupBcU-H0H0SF0PIar5UP-y-DCrTI",
         isoCodes: [
             {'ccode' : 'AF', 'cname' : 'Afghanistan'},
             {'ccode' : 'AX', 'cname' : 'Aland Islands'},
@@ -265,11 +266,18 @@
                 return element.cname == name;
             }).ccode || 0;
         },
+        findCountryByCode: function(code) {
+            return this.isoCodes.find(function(element) {
+                return element.ccode == code;
+            }).cname || 0;
+        },
         /**
          * Some variables
          */
         inputs: new Array(0),
         coords: {},
+        availableCountries: ['GB', 'DE', 'FR'],
+        address: '',
         autocomplete: {
             country:   null,
             city:      null,
@@ -280,6 +288,15 @@
             city:      '',
             region:    '',
             post_code: ''
+        },
+        staticMap: {
+            url: "https://maps.googleapis.com/maps/api/staticmap",
+            zoom: 14,
+            size: "mid",
+            marker: {
+                label: "S",
+                color: "blue"
+            }
         },
         /**
          * Helper methods
@@ -300,82 +317,16 @@
         /**
          * Init method
          */
-        initAutoComplete: function(args) {
-            this.addAutocomplete(this.inputs[0]);
-            this.addAutocomplete(this.inputs[1]);
-        },
-        // function initMap() {
-        //
-        //
-        //     var input = document.getElementById('searchInput');
-        //     //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-        //
-        //     var autocomplete = new google.maps.places.Autocomplete(input);
-        //     //autocomplete.bindTo('bounds', map);
-        //
-        //     var infowindow = new google.maps.InfoWindow();
-        //     var marker = new google.maps.Marker({
-        //         map: map,
-        //         anchorPoint: new google.maps.Point(0, -29)
-        //     });
-        //
-        //     autocomplete.addListener('place_changed', function() {
-        //         infowindow.close();
-        //         marker.setVisible(false);
-        //         var place = autocomplete.getPlace();
-        //         if (!place.geometry) {
-        //             window.alert("Autocomplete's returned place contains no geometry");
-        //             return;
-        //         }
-        //
-        //         // If the place has a geometry, then present it on a map.
-        //         if (place.geometry.viewport) {
-        //             map.fitBounds(place.geometry.viewport);
-        //         } else {
-        //             map.setCenter(place.geometry.location);
-        //             map.setZoom(17);
-        //         }
-        //         marker.setIcon(({
-        //             url: place.icon,
-        //             size: new google.maps.Size(71, 71),
-        //             origin: new google.maps.Point(0, 0),
-        //             anchor: new google.maps.Point(17, 34),
-        //             scaledSize: new google.maps.Size(35, 35)
-        //         }));
-        //         marker.setPosition(place.geometry.location);
-        //         marker.setVisible(true);
-        //
-        //         var address = '';
-        //         if (place.address_components) {
-        //             address = [
-        //                 (place.address_components[0] && place.address_components[0].short_name || ''),
-        //                 (place.address_components[1] && place.address_components[1].short_name || ''),
-        //                 (place.address_components[2] && place.address_components[2].short_name || '')
-        //             ].join(' ');
-        //         }
-        //
-        //         infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-        //         infowindow.open(map, marker);
-        //
-        //         //Location details
-        //         for (var i = 0; i < place.address_components.length; i++) {
-        //             if(place.address_components[i].types[0] == 'postal_code'){
-        //                 document.getElementById('postal_code').innerHTML = place.address_components[i].long_name;
-        //             }
-        //             if(place.address_components[i].types[0] == 'country'){
-        //                 document.getElementById('country').innerHTML = place.address_components[i].long_name;
-        //             }
-        //         }
-        //         document.getElementById('location').innerHTML = place.formatted_address;
-        //         document.getElementById('lat').innerHTML = place.geometry.location.lat();
-        //         document.getElementById('lon').innerHTML = place.geometry.location.lng();
-        //     });
-        // }
+        initAutoComplete: function() {
+            var _this = this;
 
-        /**
-         * Form manipulation functional
-         * @param form
-         */
+            this.inputs[COUNTRY].on("change", this.countryChangeEvent.bind(_this));
+            this.addAutocomplete(this.inputs[CITY]);
+            this.setAutocompleteCountry(null, this.availableCountries[0]);
+            this.currentStore.country = this.findCountryByCode(this.availableCountries[0]);
+            _this.unlock(_this.inputs[CITY]);
+        },
+
         /**
          * lock/unlock inputs when some of parameters not exist
          * @param elem (input)
@@ -385,6 +336,18 @@
         },
         unlock: function(elem) {
             $(elem).prop( "disabled", false );
+        },
+        countryChangeEvent: function(context) {
+            var idx  = this.inputs[COUNTRY].find("option:selected").val(),
+                code = this.availableCountries[idx];
+
+            this.setAutocompleteCountry(context, code);
+
+            // Clear inputs after change country
+            this.currentStore.country = this.findCountryByCode(code);
+            this.inputs[CITY].val("");
+            this.inputs[REGION].val("");
+            this.inputs[ADDRESS].val("");
         },
         /**
          * Add autocomplete service to input
@@ -408,43 +371,45 @@
             //Location details
             for (var i = 0; i < place.address_components.length; i++) {
 
-                if(place.address_components[i].types[0] == 'country') {
-                    var country = place.address_components[i].long_name.trim();
+                var type             = place.address_components[i].types[0];
+                var postal_type      = place.address_components[i].types[1];
+                var place_name       = place.address_components[i].long_name.trim();
 
-                    console.log("COUNTRY: ", country);
+                // if(type == 'country') {
+                //
+                //     console.log("COUNTRY: ", country);
+                //
+                //     if(country) {
+                //         // $(_this.inputs[COUNTRY]).val(country);
+                //
+                //         _this.currentStore.country = //country;
+                //         _this.unlock(_this.inputs[CITY]);
+                //     }
+                // }
 
-                    if(country) {
-                        $(_this.inputs[COUNTRY]).val(country);
-                        _this.currentStore.country = country;
-                        _this.unlock(_this.inputs[CITY]);
-                    }
+                switch(type) {
+                    case 'locality':
+                        var city = place_name; console.log("CITY: ", city);
+
+                        if(city) {
+                            _this.currentStore.city = city;
+                            $(_this.inputs[CITY]).val(city);
+                        }
+                    case 'administrative_area_level_1':
+                        var region = place_name; console.log("REGION: ", region);
+
+                        if(region) {
+                            _this.currentStore.region = region;
+                        }
+                    case 'administrative_area_level_2':
+                        console.log("administrative_area_level_2: ", place_name);
+                    case 'administrative_area_level_3':
+                        console.log("administrative_area_level_3: ", place_name);
+
                 }
 
-                if(place.address_components[i].types[0] == 'locality') {
-                    var city = place.address_components[i].long_name.trim();
-
-                    console.log("CITY: ", city);
-
-                    if(city) {
-                        _this.currentStore.city = city;
-                        $(_this.inputs[CITY]).val(city);
-                    }
-                }
-
-                if(place.address_components[i].types[0] == 'administrative_area_level_1'){
-                    var region = place.address_components[i].long_name.trim();
-
-                    console.log("REGION: ", city);
-
-                    if(region) {
-                        _this.currentStore.region = region;
-                    }
-                }
-
-                if(place.address_components[i].types[0] == 'postal_code') {
-                    var post_code = place.address_components[i].long_name.trim();
-
-                    console.log("POST CODE: ", post_code);
+                if(type == 'postal_code' || postal_type == 'postal_code') {
+                    var post_code = place_name; console.log("POST CODE: ", post_code);
 
                     _this.unlock(_this.inputs[REGION]);
                     $(_this.inputs[REGION]).val('');
@@ -454,11 +419,12 @@
             }
 
             console.log("FULL ADDRESS: ", place.formatted_address);
-            _this.inputs[ADDRESS].val(place.formatted_address);
 
-            if(name == 'country') {
-                var country = _this.findCountryByName(_this.currentStore.country);
-                _this.setAutocompleteCountry(_this, country);
+            _this.inputs[ADDRESS].val(place.formatted_address);
+            _this.address = place.formatted_address;
+
+            if($(".quotation-modal .map-holder").length) {
+                _this.addMarker();
             }
         },
         addAutocomplete: function(elem) {
@@ -470,22 +436,42 @@
             _this.currentStore[name] = elem.val().trim();
             _this.autocomplete[name] = new google.maps.places.Autocomplete(elem[0], options);
             _this.autocomplete[name].addListener('place_changed', _this.placeChangeEvent.bind(_this, name));
-
         },
+        addMarker: function() {
+            var url = this.staticMap.url;
+
+                url += "?center=" + this.coords.lat + ", " + this.coords.lng;
+                url += "&zoom="   + this.staticMap.zoom;
+                url += "&key="    + this.key;
+                url += "&size=196x106";
+                url += "&markers=";
+                url += "size:"   + this.staticMap.size +
+                       "|color:" + this.staticMap.color +
+                       "|label:" + this.staticMap.marker.label +
+                       "|"       + this.coords.lat +
+                       ", "      + this.coords.lng;
+
+            $(".quotation-modal .map-holder img").attr("src", url);
+        },
+        /**
+         * Form manipulation functional
+         * @param form
+         */
         getFormElements: function(form) {
             var form     = $(form),
-                country  = form.find('input[name="country"]'),
+                country  = form.find('select[name="country"]'),
                 city     = form.find('input[name="city"]'),
                 postcode = form.find('input[name="post_code"]') || 0,
-                address  = form.find('input[name="address"]') || 0;
+                address  = form.find('input[name="address"]') || form.find('input[name="location"]') || 0;
+
+            console.log(address)
 
             if(country.length && city.length) {
                 this.addArray([country, city, postcode, address]);
-            } else {
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
     }
 })(this);

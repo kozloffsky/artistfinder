@@ -3,21 +3,6 @@
 <main class="settings">
     <div class="container">
 
-        <div class="dropdown categories-dropdown hidden-lg hidden-md hidden-sm visible-xs">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Artist selection
-                <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-                <li class="menu-block"><a href="/messages">Messages</a></li>
-                <li class="menu-block"><a href="/enquiries">Enquiries</a></li>
-                <li class="menu-block"><a href="/agenda">Agenda</a></li>
-                <li class="menu-block"><a href="/bookings">Feedbacks</a></li>
-                <li class="menu-block"><a href="/prices">Prices</a></li>
-                <li class="menu-block"><a href="/payment">Payment & Accounts</a></li>
-                <li class="menu-block"><a href="/reports">Reports</a></li>
-                <li class="menu-block"><a href="/feedbacks">Feedbacks</a></li>
-            </ul>
-        </div>
-
         <div class="clearfix">
             <div class="sidebar no-pad col-lg-2 col-sm-2 col-md-2">
                 <ul class="tabs-list">
@@ -73,7 +58,13 @@
                                 <label class="info-label">Country</label>
                             </div>
                             <div class="box">
-                                <input id="settings_country" type="text" placeholder="{{ artist.country }}" name="country" value="{{ artist.country }}">
+                                <select class="form-control" id="settings_country" name="country">
+                                    <option value="0" selected>United Kingdom</option>
+                                    <option value="1">Germany</option>
+                                    <option value="2">France</option>
+                                </select>
+
+                                {#<input id="settings_country" type="text" placeholder="{{ artist.country }}" name="country" value="{{ artist.country }}">#}
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
@@ -99,7 +90,7 @@
                             <div class="box">
                                 <label error class="error">Error!</label>
                                 {% if artist.user.postcode is defined %}
-                                    <input disabled type="text" placeholder="{{ artist.user.postcode }}" name="post_code" value="{{ artist.user.postcode }}">
+                                    <input type="text" placeholder="{{ artist.user.postcode }}" name="post_code" value="{{ artist.user.postcode }}">
                                     <h2>{{ artist.user.postcode }}</h2>
                                 {% else %}
                                     <input disabled type="text" placeholder="Post code" name="post_code" value="">

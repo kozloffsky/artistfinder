@@ -14,7 +14,12 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                             <label for="quot_country">Country</label>
-                            <input type="text" class="form-control" id="quot_country" placeholder="United Kingdom" name="country">
+                            <select class="form-control" id="quot_country" name="country">
+                                <option value="0" selected>United Kingdom</option>
+                                <option value="1">Germany</option>
+                                <option value="2">France</option>
+                            </select>
+                            {#<input type="text" class="form-control" id="quot_country" placeholder="United Kingdom" name="country">#}
                         </div>
                     </div>
 
@@ -56,12 +61,9 @@
                             <label for="quot_guests_number">Number of guests</label>
                             <input type="text" class="form-control" id="quot_guests_number" placeholder="Less than 50" name="guests_number">
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                            <div id="quotation_place_map">Map</div>
-                            <div class="map-holder">
-                                <div id="map" style="position: relative; overflow: hidden;"><div style="height: 100%; width: 100%; position: absolute; background-color: rgb(229, 227, 223);"><div class="gm-err-container"><div class="gm-err-content"><div class="gm-err-icon"><img src="http://maps.gstatic.com/mapfiles/api-3/images/icon_error.png" draggable="false" style="-webkit-user-select: none;"></div><div class="gm-err-title">Ошибка</div><div class="gm-err-message">При загрузке Google Карт на этой странице возникла проблема. Подробности вы найдете в консоли JavaScript.</div></div></div></div></div>
-                                <em class="note">Pin your location on the map</em>
-                            </div>
+
+                        <div class="map-holder">
+                            <img src="https://maps.googleapis.com/maps/api/staticmap?size=196x106&key=AIzaSyATENIG0m2xaOqvzz7M9CbOHRFVexb4LWw">
                         </div>
                     </div>
 
@@ -235,6 +237,38 @@
     </div>
 </div>
 <div class="modal registration-modal fade" id="offerErrorModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-body">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="final-stage">
+                    <div class="row">
+                        <h2>Artist cannot create offer</h2>
+
+                        <p class="description">
+
+                        </p>
+                        <p class="description">
+                            And if you need any help, please do not hesitate to use the FAQ
+                        </p>
+
+                        <div class="controls">
+                            <div class="button-gradient filled">
+                                <button data-dismiss="modal" class="btn">Have a nice journey on ACTED</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- QUOTATION SEND SUCCESS -->
+<div class="modal quotation-send-success-modal fade" id="quotationSuccessModal">
     <div class="modal-dialog" role="document">
         <div class="modal-body">
             <div class="modal-content">

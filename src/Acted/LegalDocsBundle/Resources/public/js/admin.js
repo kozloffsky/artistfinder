@@ -176,7 +176,7 @@ $(function() {
         });
     }
 
-    var isAvailable = GoogleAutocompleteService.getFormElements('.registration-admin-modal form[id="artistForm"]');
+    var isAvailable = GoogleAutocompleteService.getFormElements('.registration-admin-modal form.artistRegForm');
 
     if(isAvailable)
         GoogleAutocompleteService.initAutoComplete();

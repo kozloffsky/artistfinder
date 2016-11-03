@@ -36,7 +36,15 @@ gulp.task('js', function() {
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('web/js'));
 });
-gulp.task('css', function(){
+gulp.task('admin', function() {
+    return gulp.src([
+        "src/Acted/LegalDocsBundle/Resources/public/js/admin.js",
+        "src/Acted/LegalDocsBundle/Resources/public/js/userCreationAdmin.js"
+    ])
+    .pipe(gulp.dest('web/bundles/actedlegaldocs/js'));
+});
+
+gulp.task('css', function() {
     return gulp.src('src/Acted/LegalDocsBundle/Resources/public/css/**/*.css')
         .pipe(minifyCss())
         .pipe(concat('styles.min.css'))
@@ -49,7 +57,11 @@ gulp.task('css', function(){
 
 gulp.task('watch-all', function() {
   gulp.watch('src/Acted/LegalDocsBundle/Resources/public/js/**/*.js', ['js']);
+  gulp.watch([
+    'src/Acted/LegalDocsBundle/Resources/public/js/admin.js', 
+    'src/Acted/LegalDocsBundle/Resources/public/js/userCreationAdmin.js'
+  ], ['admin']);
   gulp.watch('src/Acted/LegalDocsBundle/Resources/public/css/**/*.css', ['css']);
 });
 
-gulp.task('default', ['js', 'css']);
+gulp.task('default', ['js', 'admin', 'css']);

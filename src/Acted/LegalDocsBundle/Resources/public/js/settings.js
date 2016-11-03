@@ -1,33 +1,6 @@
 $(function(){
     'use strict';
 
-    function chooseCityQuote(selectedCountryOption) {
-        if(selectedCountryOption){
-            $.ajax({
-                type:'GET',
-                url: '/geo/city?_format=json&country=' + selectedCountryOption,
-                success:function(response){
-                    defaultCity = $("#setting_city").attr("value");
-                    $('#setting_city').empty();
-                    $(response).each(function() {
-                        if(defaultCity == this.name) {
-                            $('#setting_city').append('<option selected value="' + this.id + '" name="city">' + this.name + '</option>');
-                        } else {
-                            $('#setting_city').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
-                        }
-                    });
-                }
-            })
-        }
-    }
-    function selectBoxEventHandler() {
-        var selectedCountryOption = $('#settings_country').find('option:selected').val();
-        chooseCityQuote(selectedCountryOption);
-    }
-    function settingCityEventHandler() {
-        var cur = $(this);
-        cur.closest('.box').find('h2').text(cur.closest('.box').find('option:selected').text());
-    }
     function radioBoxEventHandler(e) {
         $(this).attr("value", $(this).attr("id") === "ready_1" ? true : false);
     }
@@ -41,9 +14,9 @@ $(function(){
             sendForm = "";
 
         for(var key in allForms) {
-            sendForm += "profile_settings["+allForms[key].name+"]="+allForms[key].value+"&";
+            if(allForms[key].name != 'city' && allForms[key].name != 'country')
+                sendForm += "profile_settings["+allForms[key].name+"]="+allForms[key].value+"&";
         }
-
 
         var lat = GoogleAutocompleteService.coords.lat,
             lng = GoogleAutocompleteService.coords.lng,
@@ -52,6 +25,10 @@ $(function(){
             region = GoogleAutocompleteService.currentStore.region;
 
         sendForm += "profile_settings[file]=" + base64;
+
+        sendForm += "&profile_settings[country]=" + country;
+        sendForm += "&profile_settings[city]=" + city;
+
         sendForm += "&profile_settings[city_lat]=" + lat;
         sendForm += "&profile_settings[city_lng]=" + lng;
         sendForm += "&profile_settings[region_name]=" + region;
@@ -95,11 +72,7 @@ $(function(){
             cur.closest('.'+box).removeClass(activeClass);
         } else {
             cur.closest('.'+box).addClass(activeClass);
-
-            var form = prepareSettingsData();
-
             cur.closest('.box').find('h2').text(cur.closest('.box').find('input').val());
-
 
             var form = prepareSettingsData();
             HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
@@ -171,7 +144,6 @@ $(function(){
     if($(".settings").length) {
         var win = $(window),
             userId = "",
-            defaultCity = "",
             activeClass = 'active',
             box = 'box',
             setingsSection = $('.settings'),
@@ -183,10 +155,6 @@ $(function(){
 
         var uploadCropMediaOffer;
 
-        selectBoxEventHandler();
-
-        $('#settings_country').on('change', selectBoxEventHandler);
-        $('#setting_city').on('change', settingCityEventHandler);
         $('.settings input[type="radio"]').on('change', radioBoxEventHandler);
         $('#settingsPageModal input[type="file"]').on('change', readFile);
         $('#settingsPageModal button.upload-NewMedia').on('click', photoUploadHandler);

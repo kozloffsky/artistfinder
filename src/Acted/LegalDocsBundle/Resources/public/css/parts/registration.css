@@ -339,6 +339,17 @@
     padding: 3px 6px;
 }
 
+.contact-details .form-group select {
+    height: 26px;
+    border-radius: 6px;
+    border: 2px solid #e5e5e5;
+    box-shadow: none;
+    max-width: 293px;
+    display: inline-block;
+    line-height: 12px;
+    padding: 3px 6px;
+}
+
 #customerBlock .contact-details .form-group input {
     height: 26px;
 }

@@ -2,18 +2,18 @@ $(function(){
     'use strict';
 
     function initializeMap(eventLocationMap) {
-        var myLatlng = new google.maps.LatLng(eventLocationMap.latitude, eventLocationMap.longitude);
-        var myOptions = {
-            zoom: 8,
-            center: myLatlng,
-            disableDefaultUI: true,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById("map"), myOptions);
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(eventLocationMap.latitude, eventLocationMap.longitude)
-        });
-        marker.setMap(map);
+        // var myLatlng = new google.maps.LatLng(eventLocationMap.latitude, eventLocationMap.longitude);
+        // var myOptions = {
+        //     zoom: 8,
+        //     center: myLatlng,
+        //     disableDefaultUI: true,
+        //     mapTypeId: google.maps.MapTypeId.ROADMAP
+        // };
+        // var map = new google.maps.Map(document.getElementById("map"), myOptions);
+        // var marker = new google.maps.Marker({
+        //     position: new google.maps.LatLng(eventLocationMap.latitude, eventLocationMap.longitude)
+        // });
+        // marker.setMap(map);
     }
 
     initUploadFilesFiller();
@@ -44,20 +44,6 @@ $(function(){
                 }
             },
             addMore: true
-        });
-    }
-
-    function initSelect(){
-        $('.chat-room select').each(function () {
-            var placeholder = $(this).attr('data-placeholder');
-            var $select2    = $(this).select2({
-                placeholder            : placeholder || '',
-                minimumResultsForSearch: -1
-            });
-
-            var className = $(this).attr('data-class');
-            $select2.data('select2').$selection.addClass(className);
-            $select2.data('select2').$results.addClass(className);
         });
     }
 
@@ -112,64 +98,8 @@ $(function(){
         }
     }
 
-    $(document).ready(function() {
-        var selectedCountryOption = $('#country-select').find('option:selected').val();
-        var savedCity = $('#eventLocationCoordinates .eventCityId').text();
-        chooseCityQuote(selectedCountryOption, savedCity);
-    });
+    getFileExtension();
 
-    $('#country-select').on('change',function(){
-        var selectedCountryOption = $('#country-select').find('option:selected').val();
-        chooseCityQuote(selectedCountryOption);
-    });
-
-    $('#cityEvent').on('change',function(){
-        changeCityOnMapSelect();
-    });
-
-    function changeCityOnMapSelect(){
-        var selectedCityOption = $('#cityEvent').find('option:selected').val(),
-            selectedCityCoordinates = $('#eventLocationCoordinates .eventCityId'+selectedCityOption);
-        //console.log(selectedCityCoordinates);
-        var eventLocationMap= {};
-        eventLocationMap.latitude = $(selectedCityCoordinates).find('.latitude').text();
-        eventLocationMap.longitude = $(selectedCityCoordinates).find('.longitude').text();
-        initializeMap(eventLocationMap);
-    }
-
-    function chooseCityQuote(selectedCountryOption, savedCity){
-        if(selectedCountryOption){
-            $.ajax({
-                type:'GET',
-                url: '/geo/city?_format=json&country=' + selectedCountryOption,
-                success:function(response){
-                    $('#cityEvent').empty();
-                    if(savedCity){
-                        $(response).each(function(){
-                            if(savedCity == this.id){
-                                $('#cityEvent').append('<option value="'+ this.id +'" name="city" selected="selected">'+this.name+'</option>');
-                            } else {
-                                $('#cityEvent').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
-                            }
-                        });
-                    } else {
-                        $(response).each(function(){
-                            $('#cityEvent').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
-                        });
-                    }
-                    $(response).each(function(){
-                        var cityCoordinatesBlock = '<div class="eventCityId'+ this.id +'">'+
-                            '<span class="latitude">'+this.latitude+'</span>'+
-                            '<span class="longitude">'+this.longitude+'</span></div>';
-                        $('#eventLocationCoordinates').append(cityCoordinatesBlock);
-                    })
-                    initSelect();
-                    changeCityOnMapSelect();
-                }
-            })
-        }
-    }
-    getFileExtension()
     function getFileExtension(){
         $('.comments-list li .holder').each(function(){
             findFilesInChat(this);

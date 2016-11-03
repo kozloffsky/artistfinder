@@ -34,15 +34,21 @@
 
                         <div class="col-lg-offset-1 col-lg-4 form-group">
                             <label for="event_country">Country</label>
-                            <select data-class="selections-white" name="country" id="event_country">
-                                {% for country in countries() %}
-                                    {% if country.name == 'United Kingdom' %}
-                                        <option value="{{ country.id }}" name="country" selected="selected">{{ country.name }}</option>
-                                    {% else %}
-                                        <option value="{{ country.id }}" name="country">{{ country.name }}</option>
-                                    {% endif %}
-                                {% endfor %}
+                            <select class="form-control" id="event_country" name="country">
+                                <option value="0" selected>United Kingdom</option>
+                                <option value="1">Germany</option>
+                                <option value="2">France</option>
                             </select>
+
+                            {#<select data-class="selections-white" name="country" id="event_country">#}
+                                {#{% for country in countries() %}#}
+                                    {#{% if country.name == 'United Kingdom' %}#}
+                                        {#<option value="{{ country.id }}" name="country" selected="selected">{{ country.name }}</option>#}
+                                    {#{% else %}#}
+                                        {#<option value="{{ country.id }}" name="country">{{ country.name }}</option>#}
+                                    {#{% endif %}#}
+                                {#{% endfor %}#}
+                            {#</select>#}
                         </div>
                     </div>
 
@@ -54,8 +60,10 @@
 
                         <div class="col-lg-offset-1 col-lg-4 form-group">
                             <label for="event_city">City</label>
-                            <select name="city" id="event_city">
-                            </select>
+                            <input class="form-control" type="text" name="city" id="event_city"/>
+
+                            {#<select name="city" id="event_city">#}
+                            {#</select>#}
                         </div>
                     </div>
 
