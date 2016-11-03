@@ -47,10 +47,11 @@ $(function(){
 
         var lat = GoogleAutocompleteService.coords.lat,
             lng = GoogleAutocompleteService.coords.lng,
+            country = GoogleAutocompleteService.currentStore.country,
+            city = GoogleAutocompleteService.currentStore.city,
             region = GoogleAutocompleteService.currentStore.region;
 
         sendForm += "profile_settings[file]=" + base64;
-
         sendForm += "&profile_settings[city_lat]=" + lat;
         sendForm += "&profile_settings[city_lng]=" + lng;
         sendForm += "&profile_settings[region_name]=" + region;

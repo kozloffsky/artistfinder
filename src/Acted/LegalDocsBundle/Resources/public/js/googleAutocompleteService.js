@@ -6,7 +6,8 @@
      */
     var COUNTRY = 0,
         CITY    = 1,
-        REGION  = 2;
+        REGION  = 2,
+        ADDRESS = 3;
 
     window.GoogleAutocompleteService = {
         /**
@@ -402,20 +403,27 @@
                 lng: place.geometry.location.lng()
             };
 
+            console.log("PLACE: ", place);
+
             //Location details
             for (var i = 0; i < place.address_components.length; i++) {
 
                 if(place.address_components[i].types[0] == 'country') {
                     var country = place.address_components[i].long_name.trim();
 
+                    console.log("COUNTRY: ", country);
+
                     if(country) {
                         $(_this.inputs[COUNTRY]).val(country);
-                        _this.currentStore[name] = country;
+                        _this.currentStore.country = country;
+                        _this.unlock(_this.inputs[CITY]);
                     }
                 }
 
                 if(place.address_components[i].types[0] == 'locality') {
                     var city = place.address_components[i].long_name.trim();
+
+                    console.log("CITY: ", city);
 
                     if(city) {
                         _this.currentStore.city = city;
@@ -426,6 +434,8 @@
                 if(place.address_components[i].types[0] == 'administrative_area_level_1'){
                     var region = place.address_components[i].long_name.trim();
 
+                    console.log("REGION: ", city);
+
                     if(region) {
                         _this.currentStore.region = region;
                     }
@@ -434,20 +444,19 @@
                 if(place.address_components[i].types[0] == 'postal_code') {
                     var post_code = place.address_components[i].long_name.trim();
 
+                    console.log("POST CODE: ", post_code);
+
                     _this.unlock(_this.inputs[REGION]);
+                    $(_this.inputs[REGION]).val('');
                     $(_this.inputs[REGION]).val(post_code);
                     _this.currentStore.post_code = post_code;
-                } else {
-                    _this.lock(_this.inputs[REGION]);
-                    $(_this.inputs[REGION]).val('');
-                    _this.currentStore.post_code = '';
                 }
             }
 
-            if(name == 'country') {
-                _this.unlock(_this.inputs[CITY]);
-                _this.inputs[CITY].val("");
+            console.log("FULL ADDRESS: ", place.formatted_address);
+            _this.inputs[ADDRESS].val(place.formatted_address);
 
+            if(name == 'country') {
                 var country = _this.findCountryByName(_this.currentStore.country);
                 _this.setAutocompleteCountry(_this, country);
             }
@@ -467,11 +476,11 @@
             var form     = $(form),
                 country  = form.find('input[name="country"]'),
                 city     = form.find('input[name="city"]'),
-                postcode = form.find('input[name="post_code"]') || 0;
+                postcode = form.find('input[name="post_code"]') || 0,
+                address  = form.find('input[name="address"]') || 0;
 
             if(country.length && city.length) {
-                this.addArray([country, city, postcode]);
-
+                this.addArray([country, city, postcode, address]);
             } else {
                 return false;
             }

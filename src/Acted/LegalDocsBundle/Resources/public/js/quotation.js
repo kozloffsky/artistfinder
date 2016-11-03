@@ -1,4 +1,4 @@
-;(function(window) {
+;$(function() {
 
     function openQuotationModal() {
         $("#quotationModal").modal('show');;
@@ -15,6 +15,9 @@
     // });
 
 
+    var isAvailable = GoogleAutocompleteService.getFormElements('.quotation-modal form[name="quotation_place_info"]');
 
+    if(isAvailable)
+        GoogleAutocompleteService.initAutoComplete();
 
-})(this);
+});
