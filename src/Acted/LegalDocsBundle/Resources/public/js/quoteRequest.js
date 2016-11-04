@@ -159,14 +159,7 @@ $(function () {
     }
 
     $(document).ready(function() {
-        var selectedCountruOption = $('#event_country').find('option:selected').val();
-        chooseCityQuote(selectedCountruOption);
         prepareEventRequestForm()
-    });
-
-    $('#requestQuoteForm #event_country').on('change',function(){
-        var selectedCountruOption = $('#event_country').find('option:selected').val();
-        chooseCityQuote(selectedCountruOption);
     });
 
     function prepareEventRequestForm(){
@@ -260,22 +253,6 @@ $(function () {
         $('#requestQuoteForm input').attr('style', '');
         $('#quoteRequestSecond .errorCat').text('').hide();
         $('#requestQuoteForm .errorCat').text('').hide();
-    }
-
-    function chooseCityQuote(selectedCountruOption){
-        if(selectedCountruOption){
-            $.ajax({
-                type:'GET',
-                url: '/geo/city?_format=json&country=' + selectedCountruOption,
-                success:function(response){
-                    $('#event_city').empty();
-                    $(response).each(function(){
-                        $('#event_city').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
-                    });
-                    initSelect();
-                }
-            })
-        }
     }
 
     $('#quoteRequsetSend').on('click',function(e){

@@ -267,6 +267,22 @@
 .requirement-form .icon-jfi-file-audio:before{
     content: '\f1c7';
 }
+
+.requirement-form .progress-bar-line {
+    margin: 60px 0 0 0;
+    background-color: #FFF;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    -webkit-transition: width .6s ease;
+    transition: width .6s ease;
+}
+
+.requirement-form progress::-webkit-progress-bar {
+    color: #FFF;
+    background: #FFF;
+}
+
 @media (max-width: 991px){
     .requirement-form h2{
         font-size: 14px;

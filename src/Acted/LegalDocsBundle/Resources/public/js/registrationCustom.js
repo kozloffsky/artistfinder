@@ -4,10 +4,39 @@
 $(function () {
     //$('#phone_number').cleanVal(); to get phone number.
     //Enabling form validation.
-    var customerValidate =  $("#customerRegForm").validate();
-    var artistValidation =  $("#artistForm").validate();
+
+    var passwordRules = {
+        rules: {
+            'password[first]': {
+                required: true,
+                pwcheck: true,
+                minlength: 8
+            },
+            'password[second]': {
+                required: true,
+                equalTo: '#password',
+            }
+        },
+        messages: {
+            'password[first]': {
+                pwcheck: "Password must contain uppercase, lowercase letters and digit!",
+                minlength: "Password must contain 8 letters!"
+            },
+            'password[second]': {
+                required: "You need to provide password confirmation!",
+                equalTo: "Confirmation password need to be equal password!"
+            }
+        }
+    };
+
+    var customerValidate =  $("#customerRegForm").validate(passwordRules);
+    var artistValidation =  $("#artistForm").validate(passwordRules);
 
     $("#recoveryForm").validate();
+
+    $.validator.addMethod("pwcheck", function(value) {
+        return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/.test(value);
+    });
 
     $("#password").on("focusout", function() {
         $("#customerRegForm").valid();

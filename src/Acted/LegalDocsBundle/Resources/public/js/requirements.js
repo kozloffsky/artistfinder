@@ -84,6 +84,10 @@
                                 <input type="file" name="document_technical_requirement[files]" multiple="multiple" req_files>\
                             </div>\
                             <button type="button" class="btn-close" remove-box>Close</button>\
+                            <progress value="0" max="100" class="progress-bar-line" id="progBar">\
+                                <span id="downloadProgress">\
+                                </span>\
+                            </progress>\
                         </form>\
                     </div>';
         },
@@ -229,7 +233,7 @@
                                           <div class="jFiler-item-status"></div>\
                                           {{fi-image}}\
                                       </div>\
-                                      <span class="jFiler-item-title"><a href="/uploads/tr_documents/{{fi-name}}" title="{{fi-name}}">{{fi-orname | limitTo: 12}}</a></span>\
+                                      <span class="jFiler-item-title"><a href="/uploads/tr_documents/{{fi-name}}" title="{{fi-name}}" class="title">{{fi-name | limitTo: 12}}</a></span>\
                                   </li>',
                     itemAppend: '<li class="item">\
                                       {{fi-progressBar}}\
@@ -237,7 +241,7 @@
                                           <div class="jFiler-item-status"></div>\
                                           {{fi-image}}\
                                       </div>\
-                                      <span class="jFiler-item-title"><a href="/uploads/tr_documents/{{fi-name}}" title="{{fi-name}}">{{fi-orname | limitTo: 12}}</a></span>\
+                                      <span class="jFiler-item-title"><a href="/uploads/tr_documents/{{fi-name}}" title="{{fi-name}}" class="title">{{fi-orname | limitTo: 12}}</a></span>\
                                       <a class="item-trash" item-id="{{fi-file_id}}"></a>\
                                   </li>',
                     itemAppendToEnd: true,
@@ -255,10 +259,12 @@
                     _this.FILES.push(data);
                 },
                 afterShow: function() {
+                    console.log(_this.FILES);
 
                     var data = {
                         document_technical_requirement: {
-                            technical_requirement: techreqId
+                            technical_requirement: techreqId,
+                            files: _this.FILES
                         }
                     };
 
@@ -266,10 +272,36 @@
                         type: 'POST',
                         url: '/technical_requirement/document/upload',
                         data: data,
+                        processData: false,
                         success: function(data){},
                         error: function(err){},
                         statusCode: null,
                         onProgress: function(event) {
+
+                            var bar = document.getElementById('progBar'),
+                                fallback = document.getElementById('downloadProgress'),
+                                loaded = 0;
+
+                            var load = function() {
+                                loaded += 1;
+                                bar.value = loaded;
+
+                                /* The below will be visible if the progress tag is not supported */
+                                $(fallback).empty().append("HTML5 progress tag not supported: ");
+                                $('#progUpdate').empty().append(loaded + "% loaded");
+
+                                if (loaded == 100) {
+                                    clearInterval(beginLoad);
+                                    $('#progUpdate').empty().append("Upload Complete");
+                                    console.log('Load was performed.');
+                                }
+                            };
+
+                            var beginLoad = setInterval(function() {
+                                load();
+                            }, 50);
+
+
                             console.log(event);
                         },
                         onComplete: null

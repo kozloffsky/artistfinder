@@ -17,23 +17,6 @@ $(function () {
 
     $('.header-background').appendTo('header.search');
 
-    function selectBoxStyle() {
-        $('.search select').each(function () {
-            var white = $(this).attr('data-class') == 'selections-white';
-            var placeholder = $(this).attr('data-placeholder');
-            var $select2 = $(this).select2({
-                placeholder: placeholder,
-                minimumResultsForSearch: -1
-            });
-
-            if (white) {
-                $select2.data('select2').$results.addClass('selections-white');
-            }
-        });
-    }
-
-    selectBoxStyle();
-
     function setTabsCorenersZ() {
         $('.results-menu>li').each(function (index) {
             var count = $('.results-menu>li').length;
@@ -131,7 +114,7 @@ $(function () {
         });
     }
 
-    $('#search-country').on('change',getSearchRegions);
+    // $('#search-country').on('change',getSearchRegions);
 
     $('.search input, .search select').on('change', function(){
         checkUserPosition()
@@ -150,48 +133,38 @@ $(function () {
         }
     }
 
-    $('#country').on('change', function(){
-        var selectedCountruOption = $(this).find('option:selected').val();
-        chooseCity(selectedCountruOption);
-    });
-
-    $(document).ready(function() {
-        var selectedCountruOption = $('#country').find('option:selected').val();
-        chooseCity(selectedCountruOption);
-    });
-
-    function getSearchRegions(){
-        var selectedCountruOption = $(this).find('option:selected').val();
-        $.ajax({
-            type:'GET',
-            url: '/geo/region?_format=json&country=' + selectedCountruOption,
-            success:function(response){
-                $('#search-region').empty();
-                $('#search-region').append('<option value="" name="region">select a region</option>');
-                $(response).each(function(){
-                    $('#search-region').append('<option value="'+ this.id +'" name="region">'+this.name+'</option>');
-                    selectBoxStyle();
-                });
-            }
-        });
-    }
-    function chooseCity(selectedCountruOption){
-        if(selectedCountruOption) {
-            $.ajax({
-                type: 'GET',
-                url: '/geo/city?_format=json&country=' + selectedCountruOption,
-                success: function (response) {
-                    $('#region').empty();
-                    $('#region').append('<option value="" name="user_city">select a city</option>');
-                    $(response).each(function () {
-                        $('#region').append('<option value="' + this.id + '" name="user_city">' + this.name + '</option>');
-                        selectBoxStyle();
-                    });
-                    checkUserPosition();
-                }
-            })
-        }
-    }
+    // function getSearchRegions(){
+    //     var selectedCountruOption = $(this).find('option:selected').val();
+    //     $.ajax({
+    //         type:'GET',
+    //         url: '/geo/region?_format=json&country=' + selectedCountruOption,
+    //         success:function(response){
+    //             $('#search-region').empty();
+    //             $('#search-region').append('<option value="" name="region">select a region</option>');
+    //             $(response).each(function(){
+    //                 $('#search-region').append('<option value="'+ this.id +'" name="region">'+this.name+'</option>');
+    //                 selectBoxStyle();
+    //             });
+    //         }
+    //     });
+    // }
+    // function chooseCity(selectedCountruOption){
+    //     if(selectedCountruOption) {
+    //         $.ajax({
+    //             type: 'GET',
+    //             url: '/geo/city?_format=json&country=' + selectedCountruOption,
+    //             success: function (response) {
+    //                 $('#region').empty();
+    //                 $('#region').append('<option value="" name="user_city">select a city</option>');
+    //                 $(response).each(function () {
+    //                     $('#region').append('<option value="' + this.id + '" name="user_city">' + this.name + '</option>');
+    //                     selectBoxStyle();
+    //                 });
+    //                 checkUserPosition();
+    //             }
+    //         })
+    //     }
+    // }
 
     $('.searchFormStart').on('click',function (e) {
         e.preventDefault();

@@ -464,8 +464,6 @@
                 postcode = form.find('input[name="post_code"]') || 0,
                 address  = form.find('input[name="address"]') || form.find('input[name="location"]') || 0;
 
-            console.log(address)
-
             if(country.length && city.length) {
                 this.addArray([country, city, postcode, address]);
                 return true;
