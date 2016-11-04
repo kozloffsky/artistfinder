@@ -279,4 +279,33 @@ class Service
     {
         return $this->serviceRequestQuotations;
     }
+    /**
+     * @var boolean
+     */
+    private $isQuotation = false;
+
+
+    /**
+     * Set isQuotation
+     *
+     * @param boolean $isQuotation
+     *
+     * @return Service
+     */
+    public function setIsQuotation($isQuotation)
+    {
+        $this->isQuotation = $isQuotation;
+
+        return $this;
+    }
+
+    /**
+     * Get isQuotation
+     *
+     * @return boolean
+     */
+    public function getIsQuotation()
+    {
+        return $this->isQuotation;
+    }
 }

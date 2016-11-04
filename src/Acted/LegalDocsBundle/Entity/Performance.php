@@ -482,4 +482,33 @@ class Performance
     {
         return $this->performanceRequestQuotations;
     }
+    /**
+     * @var boolean
+     */
+    private $isQuotation = false;
+
+
+    /**
+     * Set isQuotation
+     *
+     * @param boolean $isQuotation
+     *
+     * @return Performance
+     */
+    public function setIsQuotation($isQuotation)
+    {
+        $this->isQuotation = $isQuotation;
+
+        return $this;
+    }
+
+    /**
+     * Get isQuotation
+     *
+     * @return boolean
+     */
+    public function getIsQuotation()
+    {
+        return $this->isQuotation;
+    }
 }

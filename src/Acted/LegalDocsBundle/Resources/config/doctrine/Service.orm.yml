@@ -15,6 +15,10 @@ Acted\LegalDocsBundle\Entity\Service:
           type: boolean
           options:
             default: true
+        isQuotation:
+          type: boolean
+          options:
+            default: false
         deletedTime:
           type: datetime
           nullable: true

@@ -1,0 +1,4 @@
+quotation_prepare:
+    path:     /prepare
+    defaults: { _controller: ActedLegalDocsBundle:RequestQuotation:prepare }
+    methods:  [POST]

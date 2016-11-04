@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\EventOffer;
+use Acted\LegalDocsBundle\Entity\RequestQuotation;
 use Acted\LegalDocsBundle\Form\EventOfferType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,6 +89,12 @@ class EventsController extends Controller
             /** Notify Artist */
             $eventManager->createEventNotify($data, $artist, $offer);
             $eventManager->newMessageNotify($data, $artist);
+
+            /*Create request*/
+            $requestQuotation = new RequestQuotation();
+            $requestQuotation->setEvent($event);
+            $em->persist($requestQuotation);
+            $em->flush();
 
             return new JsonResponse(['success'=>'Event successfully created!']);
         }
