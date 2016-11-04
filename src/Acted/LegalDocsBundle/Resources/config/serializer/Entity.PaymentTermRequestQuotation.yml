@@ -1,0 +1,11 @@
+Acted\LegalDocsBundle\Entity\PaymentTermRequestQuotation:
+    exclusion_policy: NONE
+    properties:
+        guaranteedDepositPercent:
+            groups: []
+        balancePercent:
+            groups: []
+    virtual_properties:
+        getRequestQuotation:
+            serialized_name: requestQuotation
+            groups: []
