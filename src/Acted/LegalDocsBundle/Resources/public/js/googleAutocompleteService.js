@@ -262,14 +262,28 @@
             {'ccode' : 'ZW', 'cname' : 'Zimbabwe'}
         ],
         findCountryByName: function(name) {
-            return this.isoCodes.find(function(element) {
-                return element.cname == name;
-            }).ccode || 0;
+            var len = this.isoCodes.length;
+
+            for(var i = 0; i < len; i++) {
+                if(this.isoCodes[i].cname == name) {
+                    return this.isoCodes[i].ccode;
+                    break;
+                }
+            }
+
+            return 0;
         },
         findCountryByCode: function(code) {
-            return this.isoCodes.find(function(element) {
-                return element.ccode == code;
-            }).cname || 0;
+            var len = this.isoCodes.length;
+
+            for(var i = 0; i < len; i++) {
+                if(this.isoCodes[i].ccode == code) {
+                    return this.isoCodes[i].cname;
+                    break;
+                }
+            }
+
+            return 0;
         },
         /**
          * Some variables
