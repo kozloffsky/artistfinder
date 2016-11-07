@@ -302,6 +302,22 @@ $(function () {
     }
 
     function sendQuoteRequest(data, userInformationStorage){
+        var reg = /(country|city)[=].\w*./;
+        var data = data.replace(reg, "");
+
+        var lat = GoogleAutocompleteService.coords.lat,
+            lng = GoogleAutocompleteService.coords.lng,
+            region = GoogleAutocompleteService.currentStore.region;
+
+        // TODO: FIX THIS!!!
+        data += "&country=" + 1;
+        data += "&city=" + 1;
+        data += "&city_lat=" + lat;
+        data += "&city_lng=" + lng;
+        data += "&region_name=" + region;
+        data += "&region_lat=" + lat;
+        data += "&region_lng=" + lng;
+
         $.ajax({
             type:'POST',
             url:'/event/create',
@@ -313,7 +329,6 @@ $(function () {
                 $('#loadSpinner').fadeOut(500);
             },
             success:function(res){
-                //console.log(res);
                 $('#freeQuoteModal').modal('hide');
                 $('#offerSuccess').modal('show');
                 $('#comment_area').hide();

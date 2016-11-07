@@ -216,6 +216,7 @@
             var _this = this;
 
             var newFiles = [];
+            var formData = new FormData();
 
             if(Array.isArray(files))
               if(files.length)
@@ -258,49 +259,51 @@
                 onSelect: function(data) {
                     _this.FILES.push(data);
                 },
-                afterShow: function() {
-                    console.log(_this.FILES);
+                afterShow: function(e) {
+                    formData.append('document_technical_requirement[technical_requirement]', techreqId);
 
-                    var data = {
-                        document_technical_requirement: {
-                            technical_requirement: techreqId,
-                            files: _this.FILES
-                        }
-                    };
+                    var filesLen = _this.FILES.length;
+
+                    for(var i = 0; i < filesLen; i++) {
+                        formData.append("document_technical_requirement[files]["+ i +"]", _this.FILES[i]);
+                    }
 
                     $.ajax({
                         type: 'POST',
                         url: '/technical_requirement/document/upload',
-                        data: data,
+                        data: formData,
                         processData: false,
+                        contentType: false,
                         success: function(data){},
                         error: function(err){},
-                        statusCode: null,
                         onProgress: function(event) {
 
-                            var bar = document.getElementById('progBar'),
-                                fallback = document.getElementById('downloadProgress'),
-                                loaded = 0;
+                            /*
+                            TODO: Add progress bar!
+                             */
 
-                            var load = function() {
-                                loaded += 1;
-                                bar.value = loaded;
-
-                                /* The below will be visible if the progress tag is not supported */
-                                $(fallback).empty().append("HTML5 progress tag not supported: ");
-                                $('#progUpdate').empty().append(loaded + "% loaded");
-
-                                if (loaded == 100) {
-                                    clearInterval(beginLoad);
-                                    $('#progUpdate').empty().append("Upload Complete");
-                                    console.log('Load was performed.');
-                                }
-                            };
-
-                            var beginLoad = setInterval(function() {
-                                load();
-                            }, 50);
-
+                            // var bar = document.getElementById('progBar'),
+                            //     fallback = document.getElementById('downloadProgress'),
+                            //     loaded = 0;
+                            //
+                            // var load = function() {
+                            //     loaded += 1;
+                            //     bar.value = loaded;
+                            //
+                            //     /* The below will be visible if the progress tag is not supported */
+                            //     $(fallback).empty().append("HTML5 progress tag not supported: ");
+                            //     $('#progUpdate').empty().append(loaded + "% loaded");
+                            //
+                            //     if (loaded == 100) {
+                            //         clearInterval(beginLoad);
+                            //         $('#progUpdate').empty().append("Upload Complete");
+                            //         console.log('Load was performed.');
+                            //     }
+                            // };
+                            //
+                            // var beginLoad = setInterval(function() {
+                            //     load();
+                            // }, 50);
 
                             console.log(event);
                         },

@@ -29,8 +29,11 @@ $(function () {
         }
     };
 
-    var customerValidate =  $("#customerRegForm").validate(passwordRules);
     var artistValidation =  $("#artistForm").validate(passwordRules);
+
+    passwordRules.rules['password[second]'].equalTo = '#customerPasswordConfirm';
+
+    var customerValidate =  $("#customerRegForm").validate(passwordRules);
 
     $("#recoveryForm").validate();
 
