@@ -8,7 +8,11 @@ $(function(){
         $(this).attr("value", $(this).attr("id") === "ready_1" ? true : false);
     }
     function prepareSettingsData() {
-        userId = $("#artist_id").val();
+        try {
+            userId = JSON.parse(localStorage.getItem("user")).artistId;
+        } catch (e) {
+            userId = 0;
+        }
 
         var settingsCityLat = $('form[name="paymentForm"]').find('input[name="city_lat"]'),
             settingsCityLng = $('form[name="paymentForm"]').find('input[name="city_lng"]');
@@ -31,9 +35,10 @@ $(function(){
 
             switch (k) {
                 case 'region_name':
-                    console.log('g: ', value, region)
-                    if(value != region)
+                    console.log('val: '+value+ ' reg: ', region);
+                    if(value != '' && region != '') {
                         value = region;
+                    }
 
                     break;
                 case 'city':
