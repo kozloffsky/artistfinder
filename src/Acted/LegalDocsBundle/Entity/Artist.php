@@ -694,4 +694,52 @@ class Artist
     {
         return $this->technicalRequirements;
     }
+
+    /**
+     * Get city lat
+     *
+     * @return double
+     */
+    public function getCityLat()
+    {
+        return $this->city->getLatitude();
+    }
+
+    /**
+     * Get city lng
+     *
+     * @return double
+     */
+    public function getCityLng()
+    {
+        return $this->city->getLongitude();
+    }
+
+    /**
+     * Get region lat
+     *
+     * @return double
+     */
+    public function getRegLat()
+    {
+        return $this->city->getRegion()->getLatitude();
+    }
+    /**
+     * Get region lng
+     *
+     * @return double
+     */
+    public function getRegLng()
+    {
+        return $this->city->getRegion()->getLongitude();
+    }
+    /**
+     * Get region name
+     *
+     * @return string
+     */
+    public function getRegName()
+    {
+        return $this->city->getRegion()->getName();
+    }
 }

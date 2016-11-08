@@ -359,6 +359,9 @@
 
             // Clear inputs after change country
             this.currentStore.country = this.findCountryByCode(code);
+            this.currentStore.city = "";
+            this.currentStore.region = "";
+            this.currentStore.post_code = "";
             this.inputs[CITY].val("");
             this.inputs[REGION].val("");
             this.inputs[ADDRESS].val("");
@@ -432,7 +435,7 @@
                 }
             }
 
-            console.log("FULL ADDRESS: ", place.formatted_address);
+            console.log("FULL ADDRESS: ", place.formatted_address, place);
 
             _this.inputs[ADDRESS].val(place.formatted_address);
             _this.address = place.formatted_address;

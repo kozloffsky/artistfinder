@@ -20,12 +20,11 @@
             <div class="content col-lg-10 col-sm-10 col-md-10">
                 <article role="tabpanel-category" class="tab active" id="contact_details">
                     <form action="#" class="main-form" name="contactForm" novalidate>
-                        <input hidden type="text" id="artist_id" value="{{ artist_id }}"\>
                         <div class="row">
                             <div class="box text-right">
                                 <label class="info-label">First name</label>
                             </div>
-                            <div class="box">
+                            <div class="box form-group">
                                 <label error class="error">Error!</label>
                                 <input type="text" placeholder="{{ artist.user.firstname }}" name="first_name" value="{{ artist.user.firstname }}">
                                 <h2>{{ artist.user.firstname }}</h2>
@@ -36,7 +35,7 @@
                             <div class="box text-right">
                                 <label class="info-label">Last name</label>
                             </div>
-                            <div class="box">
+                            <div class="box form-group">
                                 <label error class="error">Error!</label>
                                 <input type="text" placeholder="{{ artist.user.lastname }}" name="last_name" value="{{ artist.user.lastname }}">
                                 <h2>{{ artist.user.lastname }}</h2>
@@ -47,7 +46,7 @@
                             <div class="box text-right">
                                 <label class="info-label">Artist name</label>
                             </div>
-                            <div class="box active">
+                            <div class="box active form-group">
                                 <label error class="error">Error!</label>
                                 <input hidden type="text" placeholder="{{ artist.name }}" name="name" value="{{ artist.name }}">
                                 <h2>{{ artist.name }}</h2>
@@ -57,11 +56,11 @@
                             <div class="box text-right">
                                 <label class="info-label">Country</label>
                             </div>
-                            <div class="box">
+                            <div class="box form-group">
                                 <select class="form-control" id="settings_country" name="country">
-                                    <option value="0" selected>United Kingdom</option>
-                                    <option value="1">Germany</option>
-                                    <option value="2">France</option>
+                                    <option value="0" {% if artist.country_id == 1 %} selected {% endif %}>United Kingdom</option>
+                                    <option value="1" {% if artist.country_id == 2 %} selected {% endif %}>Germany</option>
+                                    <option value="2" {% if artist.country_id == 3 %} selected {% endif %}>France</option>
                                 </select>
 
                                 {#<input id="settings_country" type="text" placeholder="{{ artist.country }}" name="country" value="{{ artist.country }}">#}
@@ -72,19 +71,19 @@
                             <div class="box text-right">
                                 <label class="info-label">Location (city)</label>
                             </div>
-                            <div class="box">
+                            <div class="box form-group">
                                 {% if artist.city is defined %}
-                                    <input type="text" name="city" id="settings_city" value=" {{ artist.city }}"/>
+                                    <input type="text" name="city" id="settings_city" class="form-control" value=" {{ artist.city }}"/>
                                     <h2>{{ artist.city }}</h2>
                                 {% else %}
-                                    <input disabled type="text" name="city" id="settings_city" value=" {{ artist.city }}"/>
+                                    <input disabled type="text" name="city" id="settings_city" class="form-control" value=" {{ artist.city }}"/>
                                     <h2>{{ artist.city }}</h2>
                                 {% endif %}
                                 <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="box text-right">
+                            <div class="box text-right form-group">
                                 <label class="info-label">Post code</label>
                             </div>
                             <div class="box">
@@ -104,7 +103,7 @@
                             <div class="box text-right">
                                 <label class="info-label">Email</label>
                             </div>
-                            <div class="box">
+                            <div class="form-group box">
                                 <h2 class="email-title">{{ artist.user.email }}</h2>
                             </div>
                         </div>
@@ -112,7 +111,7 @@
                             <div class="box text-right">
                                 <label class="info-label">Mobile phone number</label>
                             </div>
-                            <div class="box">
+                            <div class="form-group box">
                                 <label error class="error">Error!</label>
                                 {% if artist.user is defined %}
                                     <input type="tel" placeholder="{{ artist.user.primary_phone }}" name="phone" value="{{ artist.user.primary_phone }}">
@@ -306,6 +305,14 @@
                                 <input type="text" placeholder="{{ artist.currency.iso_code }}" name="currency" value="{{ artist.currency.iso_code }}">
                                 <h2>{{ artist.currency.iso_code }}</h2>
                             </div>
+                        </div>
+
+                        <div>
+                            <input name="city_lat" hidden type="text" value="{{ artist.city_lat }}">
+                            <input name="city_lng" hidden type="text" value="{{ artist.city_lng }}">
+                            <input name="region_lat" hidden type="text" value="{{ artist.reg_lat }}">
+                            <input name="region_lng" hidden type="text" value="{{ artist.reg_lng }}">
+                            <input name="region_name" hidden type="text" value="{{ artist.reg_name }}">
                         </div>
                     </form>
                 </article>

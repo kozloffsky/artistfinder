@@ -49,3 +49,18 @@ Acted\LegalDocsBundle\Entity\Artist:
     getCurrency:
       serialized_name: currency
       groups: [profile_settings]
+    getCityLat:
+      serialized_name: city_lat
+      groups: [profile_settings]
+    getCityLng:
+      serialized_name: city_lng
+      groups: [profile_settings]
+    getRegLat:
+      serialized_name: reg_lat
+      groups: [profile_settings]
+    getRegLng:
+      serialized_name: reg_lng
+      groups: [profile_settings]
+    getRegName:
+      serialized_name: reg_name
+      groups: [profile_settings]

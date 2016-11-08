@@ -1,22 +1,23 @@
 $(function(){
     'use strict';
 
+    // TODO: Add validation for rest forms.
+    var settingsFormValid;
+
     function radioBoxEventHandler(e) {
         $(this).attr("value", $(this).attr("id") === "ready_1" ? true : false);
     }
     function prepareSettingsData() {
         userId = $("#artist_id").val();
 
-        var contactForm = $("form[name=\"contactForm\"]").serializeArray(),
-            profileForm = $("form[name=\"profileForm\"]").serializeArray(),
-            paymentForm = $("form[name=\"paymentForm\"]").serializeArray(),
+        var settingsCityLat = $('form[name="paymentForm"]').find('input[name="city_lat"]'),
+            settingsCityLng = $('form[name="paymentForm"]').find('input[name="city_lng"]');
+
+        var contactForm = $('form[name="contactForm"]').serializeArray(),
+            profileForm = $('form[name="profileForm"]').serializeArray(),
+            paymentForm = $('form[name="paymentForm"]').serializeArray(),
             allForms = contactForm.concat(profileForm, paymentForm),
             sendForm = "";
-
-        for(var key in allForms) {
-            if(allForms[key].name != 'city' && allForms[key].name != 'country')
-                sendForm += "profile_settings["+allForms[key].name+"]="+allForms[key].value+"&";
-        }
 
         var lat = GoogleAutocompleteService.coords.lat,
             lng = GoogleAutocompleteService.coords.lng,
@@ -24,16 +25,40 @@ $(function(){
             city = GoogleAutocompleteService.currentStore.city,
             region = GoogleAutocompleteService.currentStore.region;
 
+        for(var key in allForms) {
+            var k = allForms[key].name,
+                value = allForms[key].value.trim();
+
+            switch (k) {
+                case 'region_name':
+                    console.log('g: ', value, region)
+                    if(value != region)
+                        value = region;
+
+                    break;
+                case 'city':
+                    console.log('gg: ', value, city)
+                    if(value !== city)
+                        value = '';
+
+                    break;
+                case 'country':
+                    console.log('ggg: ', value, country)
+                    if(value != country)
+                        value = GoogleAutocompleteService.findCountryByCode(GoogleAutocompleteService.availableCountries[value]);
+
+                    break;
+            }
+
+            sendForm += "profile_settings["+k+"]="+value+"&";
+        }
+
         sendForm += "profile_settings[file]=" + base64;
 
-        sendForm += "&profile_settings[country]=" + country;
-        sendForm += "&profile_settings[city]=" + city;
-
-        sendForm += "&profile_settings[city_lat]=" + lat;
-        sendForm += "&profile_settings[city_lng]=" + lng;
-        sendForm += "&profile_settings[region_name]=" + region;
-        sendForm += "&profile_settings[region_lat]=" + lat;
-        sendForm += "&profile_settings[region_lng]=" + lng;
+        if(lat && lng) {
+            settingsCityLat.val(lat);
+            settingsCityLat.val(lng);
+        }
 
         return sendForm;
     }
@@ -74,9 +99,13 @@ $(function(){
             cur.closest('.'+box).addClass(activeClass);
             cur.closest('.box').find('h2').text(cur.closest('.box').find('input').val());
 
-            var form = prepareSettingsData();
-            HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
-            HTTPProvider.send(form, settingsFormErrorHandler);
+            settingsFormValid = $('form[name="contactForm"]').valid();
+
+            if(settingsFormValid) {
+                var form = prepareSettingsData();
+                HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
+                HTTPProvider.send(form, settingsFormErrorHandler);
+            }
         }
     }
     function resizeHandle() {
@@ -91,9 +120,6 @@ $(function(){
             var reader = new FileReader();
 
             reader.onload = function (e) {
-
-                console.log(e.target.result);
-
                 uploadCropMediaOffer.croppie('bind', {
                     url: e.target.result
                 });
@@ -110,17 +136,20 @@ $(function(){
         uploadCropMediaOffer.croppie('result', {
             type: 'canvas',
             size: 'viewport'
-        })
-            .then(function (resp) {
-                base64 = resp;
+        }).then(function (resp) {
+            base64 = resp;
 
-                $("div.img-box").removeAttr("style");
-                $("div.img-box").css("background", "url('"+base64+"') no-repeat");
+            $("div.img-box").removeAttr("style");
+            $("div.img-box").css("background", "url('"+base64+"') no-repeat");
 
+            settingsFormValid = $('form[name="contactForm"]').valid();
+
+            if(settingsFormValid) {
                 var form = prepareSettingsData();
                 HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
                 HTTPProvider.send(form, settingsFormErrorHandler);
-            });
+            }
+        });
     };
     function photoModalHandler(e) {
         e.preventDefault();
@@ -161,6 +190,20 @@ $(function(){
         $(".settings input[name=\"photo\"]").on('click', photoModalHandler);
         btnEdit.on('click', editButtonHandle);
         win.on('load resize orientationchange', resizeHandle);
+
+        $('form[name="contactForm"]').validate({
+            rules: {
+                first_name: {
+                    required: true
+                },
+                last_name: {
+                    required: true
+                },
+                city: {
+                    required: true
+                }
+            }
+        });
 
         var isAvailable = GoogleAutocompleteService.getFormElements('.settings form[name="contactForm"]');
 
