@@ -1,5 +1,15 @@
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
 
+{% set country = artist.country_id %}
+
+{% if country == 1 %}
+    {% set country = "United Kingdom" %}
+{% elseif country == 2 %}
+    {% set country = "Germany" %}
+{% elseif country == 3 %}
+    {% set country = "France" %}
+{% endif %}
+
 <main class="settings">
     <div class="container">
 
@@ -28,7 +38,6 @@
                                 <label error class="error">Error!</label>
                                 <input type="text" placeholder="{{ artist.user.firstname }}" name="first_name" value="{{ artist.user.firstname }}">
                                 <h2>{{ artist.user.firstname }}</h2>
-                                <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
                         <div class="row">
@@ -39,7 +48,6 @@
                                 <label error class="error">Error!</label>
                                 <input type="text" placeholder="{{ artist.user.lastname }}" name="last_name" value="{{ artist.user.lastname }}">
                                 <h2>{{ artist.user.lastname }}</h2>
-                                <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
                         <div class="row">
@@ -56,15 +64,10 @@
                             <div class="box text-right">
                                 <label class="info-label">Country</label>
                             </div>
-                            <div class="box form-group">
-                                <select class="form-control" id="settings_country" name="country">
-                                    <option value="0" {% if artist.country_id == 1 %} selected {% endif %}>United Kingdom</option>
-                                    <option value="1" {% if artist.country_id == 2 %} selected {% endif %}>Germany</option>
-                                    <option value="2" {% if artist.country_id == 3 %} selected {% endif %}>France</option>
-                                </select>
-
+                            <div class="box active form-group">
+                                <input hidden type="text" placeholder="{{ country }}" name="country" value="{{ country }}">
+                                <h2>{{ country }}</h2>
                                 {#<input id="settings_country" type="text" placeholder="{{ artist.country }}" name="country" value="{{ artist.country }}">#}
-                                <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
                         <div class="row">
@@ -79,7 +82,6 @@
                                     <input disabled type="text" name="city" id="settings_city" class="form-control" value=" {{ artist.city }}"/>
                                     <h2>{{ artist.city }}</h2>
                                 {% endif %}
-                                <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
                         <div class="row">
@@ -95,8 +97,6 @@
                                     <input disabled type="text" placeholder="Post code" name="post_code" value="">
                                     <h2></h2>
                                 {% endif %}
-
-                                <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
                         <div class="row">
@@ -120,8 +120,6 @@
                                     <input type="text" placeholder="" name="phone" value="">
                                     <h2></h2>
                                 {% endif %}
-
-                                <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
                     </form>
@@ -191,7 +189,6 @@
                                     <input type="text" placeholder="" name="billing_address" value="">
                                     <h2></h2>
                                 {% endif %}
-                                <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
                         <div class="row">
@@ -207,8 +204,6 @@
                                     <input type="text" placeholder="" name="account_name" value="">
                                     <h2></h2>
                                 {% endif %}
-
-                                <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
                         <div class="row">
@@ -224,8 +219,6 @@
                                     <input type="text" placeholder="" name="account_number" value="">
                                     <h2></h2>
                                 {% endif %}
-
-                                <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
                         <div class="row">
@@ -241,8 +234,6 @@
                                     <input type="text" placeholder="" name="iban" value="">
                                     <h2></h2>
                                 {% endif %}
-
-                                <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
                         <div class="row">
@@ -258,8 +249,6 @@
                                     <input type="text" placeholder="" name="bank_name" value="">
                                     <h2></h2>
                                 {% endif %}
-
-                                <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
                         <div class="row">
@@ -275,8 +264,6 @@
                                     <input type="text" placeholder="" name="swift_code" value="">
                                     <h2></h2>
                                 {% endif %}
-
-                                <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
                         <div class="row">
@@ -292,8 +279,6 @@
                                     <input type="text" placeholder="" name="vat_number" value="">
                                     <h2></h2>
                                 {% endif %}
-
-                                <button type="button" class="btn-edit"></button>
                             </div>
                         </div>
                         <div class="row">
@@ -316,6 +301,9 @@
                         </div>
                     </form>
                 </article>
+                <div class="save-button">
+                    <button class="btn btn-default btn-edit register pull-right">Save</button>
+                </div>
             </div>
         </div>
     </div>

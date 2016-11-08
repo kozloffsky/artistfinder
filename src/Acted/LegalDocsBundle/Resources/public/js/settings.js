@@ -42,9 +42,10 @@ $(function(){
 
                     break;
                 case 'city':
-                    console.log('gg: ', value, city)
-                    if(value !== city)
-                        value = '';
+                    console.log('CITY: val: ' + value +' city: ' + city)
+                    if(value != '' && city != '') {
+                        value = city;
+                    }
 
                     break;
                 case 'country':
@@ -69,7 +70,7 @@ $(function(){
     }
     function setHeight(param) {
         sideBar.css({
-            height: param || setingsSection.height()
+            height: param || settingsSection.height()
         });
     }
     function settingsFormErrorHandler(data) {
@@ -98,15 +99,15 @@ $(function(){
         e.preventDefault();
         var cur = $(this);
 
-        if(cur.closest('.'+box).hasClass(activeClass)){
-            cur.closest('.'+box).removeClass(activeClass);
-        } else {
-            cur.closest('.'+box).addClass(activeClass);
-            cur.closest('.box').find('h2').text(cur.closest('.box').find('input').val());
+        settingsFormValid = $('form[name="contactForm"]').valid();
 
-            settingsFormValid = $('form[name="contactForm"]').valid();
+        if(settingsFormValid) {
+            if(cur.closest('.'+box).hasClass(activeClass)){
+                cur.closest('.'+box).removeClass(activeClass);
+            } else {
+                cur.closest('.'+box).addClass(activeClass);
+                cur.closest('.box').find('h2').text(cur.closest('.box').find('input').val());
 
-            if(settingsFormValid) {
                 var form = prepareSettingsData();
                 HTTPProvider.prepareSend({ method: "PUT", url: "/profile/settings/edit/"+userId });
                 HTTPProvider.send(form, settingsFormErrorHandler);
@@ -180,9 +181,9 @@ $(function(){
             userId = "",
             activeClass = 'active',
             box = 'box',
-            setingsSection = $('.settings'),
-            sideBar = setingsSection.find('.sidebar'),
-            btnEdit = setingsSection.find('.btn-edit'),
+            settingsSection = $('.settings'),
+            sideBar = settingsSection.find('.sidebar'),
+            btnEdit = settingsSection.find('.btn-edit'),
             img,
             file,
             base64;

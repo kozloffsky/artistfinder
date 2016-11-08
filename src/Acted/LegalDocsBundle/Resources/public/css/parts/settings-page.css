@@ -101,7 +101,6 @@
     outline: none;
     width: 70%;
     font-size: 14px;
-    display: inline-block;
 }
 .settings  input[type="text"]:focus,
 .settings  input[type="password"]:focus,
@@ -221,6 +220,29 @@
 
 .settings .box.active #setting_city, .settings .box.active #setting_city + span {
     display: none;
+}
+
+.settings .save-button {
+    display: inline-block;
+    margin: 0 0 0 38px;
+    width: 600px;
+}
+.settings .save-button button:focus {
+    outline: none;
+}
+.settings .save-button button {
+    margin: 0 109px 0 0;
+    border-radius: 16px;
+    display: inline-block;
+    background: #ffad6c;
+    background: -webkit-linear-gradient(left,rgba(255,173,108,1) 0,rgba(255,117,58,1) 100%);
+    background: linear-gradient(to right,rgba(255,173,108,1) 0,rgba(255,117,58,1) 100%);
+    font-size: 13px!important;
+    height: 23px!important;
+    padding: 0 23px;
+    width: auto!important;
+    color: #FFF;
+    border: none;
 }
 
 @media (max-width: 991px) {
