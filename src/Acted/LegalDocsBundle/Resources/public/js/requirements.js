@@ -132,7 +132,24 @@
                 var input = $('.requirements form[tech-id='+tech.id+'] input[req_files]');
 
                 applyUploader(input, { id: tech.id });
-
+                $('.requirements form[tech-id="'+tech.id+'"]').validate({
+                    rules: {
+                        title: {
+                            required: true
+                        },
+                        description: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        title: {
+                            required: 'You need to provide title for technical requirement!'
+                        },
+                        description: {
+                            required: 'You need to provide description for technical requirement!'
+                        }
+                    }
+                });
                 TechReqObj.newTechReqTemplate();
             });
         },
