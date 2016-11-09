@@ -78,8 +78,8 @@
             return '<div class="col">\
                         <form class="requirement-form" action="#" tech-id="'+ obj.id +'" type="multipart/form-data">\
                             <h2>Technical Request '+ obj.number +'</h2>\
-                            <input type="text" placeholder="'+ obj.title +'" value="'+ obj.title +'" onkeydown="TechReqObj.handleTextInput()" edit-title>\
-                            <textarea class="textarea" placeholder="'+ obj.description +'" onkeydown="TechReqObj.handleTextInput()" edit-descr>'+ obj.description +'</textarea>\
+                            <input name="title" type="text" placeholder="'+ obj.title +'" value="'+ obj.title +'" onkeydown="TechReqObj.handleTextInput()" edit-title>\
+                            <textarea name="description" class="textarea" placeholder="'+ obj.description +'" onkeydown="TechReqObj.handleTextInput()" edit-descr>'+ obj.description +'</textarea>\
                             <div class="row">\
                                 <label for="tech_file_'+ obj.id+ '" class="btn-upload">Upload file</label>\
                                 <input id="tech_file_'+ obj.id+ '" class="btn-upload" type="file" name="document_technical_requirement[files][]" multiple req_files>\
@@ -130,7 +130,9 @@
                 var html = TechReqObj.createDynamicForm(tech);
                 $('.requirements .container > .row').append(html);
                 var input = $('.requirements form[tech-id='+tech.id+'] input[req_files]');
-                //TechReqObj.applyFiler(input, tech.id);
+
+                applyUploader(input, { id: tech.id });
+
                 TechReqObj.newTechReqTemplate();
             });
         },
@@ -154,16 +156,20 @@
                 title = $(this).val(),
                 descr = $(this).next().val();
 
-            var req = {
-                id: id,
-                technical_requirement: {
-                    artist: TechReqObj.artistID,
-                    title: title,
-                    description: descr
-                }
-            };
+            $('.requirements form[tech-id='+id+']').valid();
 
-            TechReqObj.confirmEditTechReq(req);
+            if(title != '' && descr != '') {
+                var req = {
+                    id: id,
+                    technical_requirement: {
+                        artist: TechReqObj.artistID,
+                        title: title,
+                        description: descr
+                    }
+                };
+
+                TechReqObj.confirmEditTechReq(req);
+            }
         },
         editTechnicalReqDescr: function() {
             var
@@ -171,16 +177,20 @@
                 title = $(this).prev().val(),
                 descr = $(this).val();
 
-            var req = {
-                id: id,
-                technical_requirement: {
-                    artist: TechReqObj.artistID,
-                    title: title,
-                    description: descr
-                }
-            };
+            $('.requirements form[tech-id='+id+']').valid();
 
-            TechReqObj.confirmEditTechReq(req);
+            if(title != '' && descr != '') {
+                var req = {
+                    id: id,
+                    technical_requirement: {
+                        artist: TechReqObj.artistID,
+                        title: title,
+                        description: descr
+                    }
+                };
+
+                TechReqObj.confirmEditTechReq(req);
+            }
         },
         /**
          * Handle input symbols length restrict
@@ -212,6 +222,24 @@
             var techId = $(this).closest("form").attr("tech-id");
 
             TechReqObj.removeTechBoxReq(techId, cur.remove());
+        },
+        /**
+         * Delete a file from form and from server
+         */
+        removeFile: function() {
+            var $this = $(this);
+            var id = $this.attr("item-id");
+            var req = TechReqObj.endpoints.files.delete(id);
+
+            $.ajax({
+                url:  req.url,
+                type: req.method,
+                data: {},
+                success: function() {
+                    $this.closest("li").remove();
+                },
+                error:   function() {}
+            });
         }
     };
 
@@ -280,7 +308,6 @@
             alert(e, data.response().responseJSON.errors[0])
         });
     }
-
     function thumbGenerator(files) {
         var html = '',
             count = files.length;
@@ -349,12 +376,31 @@
 
                       $('.requirements .container > .row').append(TechReqObj.createDynamicForm(curObj));
 
-                      var input = $('.requirements form[tech-id='+curObj.id+'] input[req_files]');
+                      var input = $('.requirements form[tech-id="'+curObj.id+'"] input[req_files]');
 
                       applyUploader(input, curObj);
 
                       var html = thumbGenerator(files);
                       input.closest(".row").find('.items-list').append(html);
+
+                      $('.requirements form[tech-id="'+curObj.id+'"]').validate({
+                          rules: {
+                              title: {
+                                  required: true
+                              },
+                              description: {
+                                  required: true
+                              }
+                          },
+                          messages: {
+                              title: {
+                                  required: 'You need to provide title for technical requirement!'
+                              },
+                              description: {
+                                  required: 'You need to provide description for technical requirement!'
+                              }
+                          }
+                      });
 
                       curObj = null;
                   }
@@ -372,20 +418,6 @@
         .on("click",    ".requirements [remove-box]", TechReqObj.removeBox)
         .on("focusout", ".requirements [edit-title]", TechReqObj.editTechnicalReqTitle)
         .on("focusout", ".requirements [edit-descr]", TechReqObj.editTechnicalReqDescr)
-        .on("click",    ".requirements [delete-file]", function() {
-            var $this = $(this);
-            var id = $this.attr("item-id");
-            var req = TechReqObj.endpoints.files.delete(id);
-
-            $.ajax({
-                url:  req.url,
-                type: req.method,
-                data: {},
-                success: function() {
-                    $this.closest("li").remove();
-                },
-                error:   function() {}
-            });
-        })
+        .on("click",    ".requirements [delete-file]",TechReqObj.removeFile)
 
 })(this);

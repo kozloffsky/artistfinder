@@ -33,6 +33,12 @@
 .requirement-form input[type="text"].error,
 .requirement-form input[type="password"].error,
 .requirement-form input[type="email"].error,
+.requirement-form .textarea.error {
+    margin: 0;
+}
+.requirement-form input[type="text"].error,
+.requirement-form input[type="password"].error,
+.requirement-form input[type="email"].error,
 .requirement-form .textarea.error{border-color: #f00;}
 .requirement-form .textarea{
     height: 283px;
@@ -288,6 +294,13 @@
     text-align: center;
     -webkit-transition: width .6s ease;
     transition: width .6s ease;
+}
+
+.requirement-form input + label.error,
+.requirement-form textarea + label.error {
+    color: #EF5350;
+    font-weight: 400;
+    font-family: LatoRegular,Serif,sans-serif;
 }
 
 @media (max-width: 991px){
