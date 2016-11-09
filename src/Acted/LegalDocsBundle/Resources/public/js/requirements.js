@@ -272,10 +272,13 @@
                 var acceptFileTypes = /^image\/(gif|jpe?g|png)$|^application\/(pdf|msword|zip|vnd.openxmlformats-officedocument.wordprocessingml.document|vnd.ms-excel|vnd.openxmlformats-officedocument.spreadsheetml.sheet)$|^text\/plain$/i;
 
                 var id = input.attr("id");
-
                 var li = $('#'+id).closest("form").find("div.row .items-list").find('li');
 
-                if(data.files.length > 3 || li.length >= 3) {
+                var selectedFilesCount = data.files.length,
+                    currentFilesCount = li.length,
+                    checkSum = selectedFilesCount + currentFilesCount;
+
+                if(checkSum > 3) {
                     uploadErrors.push('Max number of files exceeded!');
                 }
 
