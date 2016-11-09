@@ -375,7 +375,10 @@
             this.currentStore.post_code = "";
             this.inputs[CITY].val("");
             this.inputs[REGION].val("");
-            this.inputs[ADDRESS].val("");
+
+            if(this.inputs[ADDRESS] != 0) {
+                this.inputs[ADDRESS].val("");
+            }
         },
         /**
          * Add autocomplete service to input
@@ -441,20 +444,20 @@
 
             console.log("FULL ADDRESS: ", place.formatted_address, place);
 
-            console.log("----------------------------", _this.inputs[ADDRESS])
 
-            console.log("-----------------------------------------------------", _this.currentStore.city);
+            // var geocoder = new google.maps.Geocoder();
+            // geocoder.geocode({
+            //     'address': 'Folkestone'
+            // }, function(results, status) {
+            //     console.log(results, status);
+            //     console.log(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+            // });
 
-            var geocoder = new google.maps.Geocoder();
-            geocoder.geocode({
-                'address': 'Folkestone'
-            }, function(results, status) {
-                console.log(results, status);
-                console.log(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-            });
 
-            _this.inputs[ADDRESS].val(place.formatted_address);
-            _this.address = place.formatted_address;
+            if(_this.inputs[ADDRESS] != 0) {
+                _this.inputs[ADDRESS].val(place.formatted_address);
+                _this.address = place.formatted_address;
+            }
 
             if($(".quotation-modal .map-holder").length) {
                 _this.addMarker();
