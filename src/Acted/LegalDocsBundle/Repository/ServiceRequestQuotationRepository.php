@@ -217,7 +217,7 @@ class ServiceRequestQuotationRepository extends EntityRepository
         }
 
 
-        //$em->flush();
+        $em->flush();
 
         return array(
             'serviceIds' => $serviceIds,

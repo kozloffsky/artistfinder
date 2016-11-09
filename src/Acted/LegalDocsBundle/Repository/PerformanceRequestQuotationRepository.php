@@ -221,7 +221,7 @@ class PerformanceRequestQuotationRepository extends EntityRepository
         }
 
 
-        //$em->flush();
+        $em->flush();
 
         return array(
             'performanceIds' => $performanceIds,

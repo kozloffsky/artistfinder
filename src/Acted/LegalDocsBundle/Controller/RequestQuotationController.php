@@ -17,6 +17,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Acted\LegalDocsBundle\Form\RequestQuotationPrepareType;
+use Acted\LegalDocsBundle\Form\RequestQuotationSendType;
 
 class RequestQuotationController extends Controller
 {
@@ -97,10 +98,9 @@ class RequestQuotationController extends Controller
         }
 
 
-        //\Doctrine\Common\Util\Debug::dump($event->getId());exit;
-//exit;
         try {
             //if request is draft
+
             if ($isExistsDraftedRequestQuotation) {
 
                 $draftServiceRequestQuotations = $performanceRequestQuotationRepo->getDraftPerformanceRequestQuotations($draftedRequestQuotationId);
@@ -109,8 +109,7 @@ class RequestQuotationController extends Controller
                 $draftServiceRequestQuotationRelatedListIds = $serviceRequestQuotationRepo->getRelatedServiceIds($draftServiceRequestQuotations);
                 $draftPerformanceRequestQuotationRelatedListIds = $performanceRequestQuotationRepo->getRelatedPerformanceIds($draftPerformanceRequestQuotations);
 
-
-                $requestQuotationRepo->removeDraftedRequestQuotation(
+                $isRemoved = $requestQuotationRepo->removeDraftedRequestQuotation(
                     $draftPerformanceRequestQuotationRelatedListIds,
                     $draftServiceRequestQuotationRelatedListIds,
                     $draftedRequestQuotationId,
@@ -129,7 +128,7 @@ class RequestQuotationController extends Controller
             if ($isExistsPublishedRequestQuotation) {
                 //copy performances from published requestQuotation
                 $performanceRequestQuotations = $performanceRequestQuotationRepo->getPerformanceRequestQuotations($publishedRequestQuotationId);
-                $performanceRequests = $performanceRequestQuotationRepo->copyPerformanceRequestQuotation($performanceRequestQuotations, $profile, $newRequestQuotation);
+                $performanceRequests = $performanceRequestQuotationRepo->copyPerformanceRequestQuotation($performanceRequestQuotations, $profile, $newRequestQuotation, $preSelectedPerformanceIds);
 
                 //copy services from published requestQuotation
                 $serviceRequestQuotations = $serviceRequestQuotationRepo->getServiceRequestQuotations($publishedRequestQuotationId);
@@ -161,24 +160,35 @@ class RequestQuotationController extends Controller
                 $serviceRequests = $serviceRequestQuotationRepo->copyServiceRequestQuotation($serviceRequestQuotations, $profile, $newRequestQuotation);
             }
 
+//            \Doctrine\Common\Util\Debug::dump($newRequestQuotation);
+//            $connection->rollback();
 
-            $connection->rollback();
+            $paymentTerms = array();
+            if (!empty($newRequestQuotation->getPaymentTermRequestQuotation())) {
+                $paymentTerms = array(
+                    'balance_percent' => $newRequestQuotation->getPaymentTermRequestQuotation()->getBalancePercent()
+                );
+            }
 
-            //$connection->commit();
+            $connection->commit();
         } catch (\Exception $e) {
             $connection->rollback();
+            //\Doctrine\Common\Util\Debug::dump($e->getMessage());exit;
         }
-
 
         $serviceRequestQuotations = $serviceRequestQuotationRepo->getServiceRequestQuotations($newRequestQuotation->getId());
         $performanceRequestQuotations = $performanceRequestQuotationRepo->getPerformanceRequestQuotations($newRequestQuotation->getId());
-
 
         return new JsonResponse([
             'status' => 'success',
             'services' => $serviceRequestQuotations,
             'performances' => $performanceRequestQuotations,
-            'request_quotation' => $newRequestQuotation
+            'request_quotation' => array(
+                'id' => $newRequestQuotation->getId(),
+                'status' => $newRequestQuotation->getStatus(),
+                'isOutdated' => $newRequestQuotation->getIsOutdated()
+            ),
+            'payment_terms' => $paymentTerms
         ]);
     }
 
@@ -202,7 +212,7 @@ class RequestQuotationController extends Controller
     {
         $serializer = $this->get('jms_serializer');
 
-        $requestQuotationPrepareForm = $this->createForm(RequestQuotationPrepareType::class, null, ['method' => 'POST']);
+        $requestQuotationPrepareForm = $this->createForm(RequestQuotationSendType::class, null, ['method' => 'POST']);
         $requestQuotationPrepareForm->handleRequest($request);
 
         if ($requestQuotationPrepareForm->isSubmitted() && (!$requestQuotationPrepareForm->isValid())) {

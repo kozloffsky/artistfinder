@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
-class RequestQuotationPrepareType extends AbstractType
+class RequestQuotationSendType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -26,6 +26,16 @@ class RequestQuotationPrepareType extends AbstractType
                 'constraints' => [new NotBlank(['message' => 'Event is required field'])],
                 'description' => 'Event id'
             ])
+            ->add('request_quotation', EntityType::class, [
+                'class' => RequestQuotation::class,
+                'constraints' => [new NotBlank(['message' => 'Request quotation is required field'])],
+                'description' => 'RequestQuotationId'
+            ])
+            ->add('balance_percent', IntegerType::class, [
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(['max' => 100, 'min' => 0])
+                ], 'description' => 'balance_percent'])
         ;
     }
 

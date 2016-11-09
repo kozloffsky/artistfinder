@@ -54,7 +54,7 @@ class RequestQuotationRepository extends EntityRepository
         $connection
     ) {
         $connection->query('SET FOREIGN_KEY_CHECKS=0');
-
+        $em = $this->getEntityManager();
         $requestQuotationTableName = $em->getClassMetadata('ActedLegalDocsBundle:RequestQuotation')->getTableName();
         $performanceRequestQuotationTableName = $em->getClassMetadata('ActedLegalDocsBundle:PerformanceRequestQuotation')->getTableName();
         $serviceRequestQuotationTableName = $em->getClassMetadata('ActedLegalDocsBundle:ServiceRequestQuotation')->getTableName();
@@ -66,40 +66,60 @@ class RequestQuotationRepository extends EntityRepository
         $rateTableName = $em->getClassMetadata('ActedLegalDocsBundle:Rate')->getTableName();
         $priceTableName = $em->getClassMetadata('ActedLegalDocsBundle:Price')->getTableName();
 
-        $ids = implode($draftPerformanceRequestQuotationRelatedListIds['priceIds'], ',');
-        $connection->query('DELETE FROM ' . $draftPerformanceRequestQuotationRelatedListIds . ' WHERE id IN(' . $ids . ')');
 
-        $ids = implode($draftPerformanceRequestQuotationRelatedListIds['rateIds'], ',');
-        $connection->query('DELETE FROM ' . $rateTableName . ' WHERE id IN(' . $ids . ')');
+        if (!empty($draftPerformanceRequestQuotationRelatedListIds['priceIds'])) {
+            $ids = implode($draftPerformanceRequestQuotationRelatedListIds['priceIds'], ',');
+            $connection->query('DELETE FROM ' . $priceTableName . ' WHERE id IN(' . $ids . ')');
+        }
 
-        $ids = implode($draftPerformanceRequestQuotationRelatedListIds['optionIds'], ',');
-        $connection->query('DELETE FROM ' . $optionTableName . ' WHERE id IN(' . $ids . ')');
+        if (!empty($draftPerformanceRequestQuotationRelatedListIds['rateIds'])) {
+            $ids = implode($draftPerformanceRequestQuotationRelatedListIds['rateIds'], ',');
+            $connection->query('DELETE FROM ' . $rateTableName . ' WHERE id IN(' . $ids . ')');
+        }
 
-        $ids = implode($draftPerformanceRequestQuotationRelatedListIds['packageIds'], ',');
-        $connection->query('DELETE FROM ' . $packageTableName . ' WHERE id IN(' . $ids . ')');
+        if (!empty($draftPerformanceRequestQuotationRelatedListIds['optionIds'])) {
+            $ids = implode($draftPerformanceRequestQuotationRelatedListIds['optionIds'], ',');
+            $connection->query('DELETE FROM ' . $optionTableName . ' WHERE id IN(' . $ids . ')');
+        }
 
-        $ids = implode($draftPerformanceRequestQuotationRelatedListIds['performanceIds'], ',');
-        $connection->query('DELETE FROM ' . $performanceTableName . ' WHERE id IN(' . $ids . ')');
+        if (!empty($draftPerformanceRequestQuotationRelatedListIds['packageIds'])) {
+            $ids = implode($draftPerformanceRequestQuotationRelatedListIds['packageIds'], ',');
+            $connection->query('DELETE FROM ' . $packageTableName . ' WHERE id IN(' . $ids . ')');
+        }
 
+        if (!empty($draftPerformanceRequestQuotationRelatedListIds['performanceIds'])) {
+            $ids = implode($draftPerformanceRequestQuotationRelatedListIds['performanceIds'], ',');
+            $connection->query('DELETE FROM ' . $performanceTableName . ' WHERE id IN(' . $ids . ')');
+        }
 
-        $ids = implode($draftServiceRequestQuotationRelatedListIds['priceIds'], ',');
-        $connection->query('DELETE FROM ' . $draftPerformanceRequestQuotationRelatedListIds . ' WHERE id IN(' . $ids . ')');
+        if (!empty($draftServiceRequestQuotationRelatedListIds['priceIds'])) {
+            $ids = implode($draftServiceRequestQuotationRelatedListIds['priceIds'], ',');
+            $connection->query('DELETE FROM ' . $priceTableName . ' WHERE id IN(' . $ids . ')');
+        }
 
-        $ids = implode($draftServiceRequestQuotationRelatedListIds['rateIds'], ',');
-        $connection->query('DELETE FROM ' . $rateTableName . ' WHERE id IN(' . $ids . ')');
+        if (!empty($draftServiceRequestQuotationRelatedListIds['rateIds'])) {
+            $ids = implode($draftServiceRequestQuotationRelatedListIds['rateIds'], ',');
+            $connection->query('DELETE FROM ' . $rateTableName . ' WHERE id IN(' . $ids . ')');
+        }
 
-        $ids = implode($draftServiceRequestQuotationRelatedListIds['optionIds'], ',');
-        $connection->query('DELETE FROM ' . $optionTableName . ' WHERE id IN(' . $ids . ')');
+        if (!empty($draftServiceRequestQuotationRelatedListIds['optionIds'])) {
+            $ids = implode($draftServiceRequestQuotationRelatedListIds['optionIds'], ',');
+            $connection->query('DELETE FROM ' . $optionTableName . ' WHERE id IN(' . $ids . ')');
+        }
 
-        $ids = implode($draftServiceRequestQuotationRelatedListIds['packageIds'], ',');
-        $connection->query('DELETE FROM ' . $packageTableName . ' WHERE id IN(' . $ids . ')');
+        if (!empty($draftServiceRequestQuotationRelatedListIds['packageIds'])) {
+            $ids = implode($draftServiceRequestQuotationRelatedListIds['packageIds'], ',');
+            $connection->query('DELETE FROM ' . $packageTableName . ' WHERE id IN(' . $ids . ')');
+        }
 
-        $ids = implode($draftServiceRequestQuotationRelatedListIds['serviceIds'], ',');
-        $connection->query('DELETE FROM ' . $serviceTableName . ' WHERE id IN(' . $ids . ')');
+        if (!empty($draftServiceRequestQuotationRelatedListIds['serviceIds'])) {
+            $ids = implode($draftServiceRequestQuotationRelatedListIds['serviceIds'], ',');
+            $connection->query('DELETE FROM ' . $serviceTableName . ' WHERE id IN(' . $ids . ')');
+        }
 
-        $connection->query('DELETE FROM ' . $paymentTermRequestQuotationTableName . ' WHERE request_id = ' . $draftedRequestQuotationId);
-        $connection->query('DELETE FROM ' . $serviceRequestQuotationTableName . ' WHERE request_id = ' . $draftedRequestQuotationId);
-        $connection->query('DELETE FROM ' . $performanceRequestQuotationTableName . ' WHERE request_id = ' . $draftedRequestQuotationId);
+        $connection->query('DELETE FROM ' . $paymentTermRequestQuotationTableName . ' WHERE request_quotation_id = ' . $draftedRequestQuotationId);
+        $connection->query('DELETE FROM ' . $serviceRequestQuotationTableName . ' WHERE request_quotation_id = ' . $draftedRequestQuotationId);
+        $connection->query('DELETE FROM ' . $performanceRequestQuotationTableName . ' WHERE request_quotation_id = ' . $draftedRequestQuotationId);
         $connection->query('DELETE FROM ' . $requestQuotationTableName . ' WHERE id = ' . $draftedRequestQuotationId);
 
         $connection->query('SET FOREIGN_KEY_CHECKS=1');
