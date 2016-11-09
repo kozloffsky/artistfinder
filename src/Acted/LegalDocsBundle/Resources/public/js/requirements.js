@@ -81,13 +81,14 @@
                             <input type="text" placeholder="'+ obj.title +'" value="'+ obj.title +'" onkeydown="TechReqObj.handleTextInput()" edit-title>\
                             <textarea class="textarea" placeholder="'+ obj.description +'" onkeydown="TechReqObj.handleTextInput()" edit-descr>'+ obj.description +'</textarea>\
                             <div class="row">\
-                                <input type="file" name="document_technical_requirement[files]" multiple="multiple" req_files>\
+                                <label for="tech_file_'+ obj.id+ '" class="btn-upload">Upload file</label>\
+                                <input id="tech_file_'+ obj.id+ '" class="btn-upload" type="file" name="document_technical_requirement[files][]" multiple req_files>\
+                                <ul class="items-list">\
+                                </ul>\
                             </div>\
                             <button type="button" class="btn-close" remove-box>Close</button>\
-                            <progress value="0" max="100" class="progress-bar-line" id="progBar">\
-                                <span id="downloadProgress">\
-                                </span>\
-                            </progress>\
+                            <div class="progress-bar-line">\
+                            </div>\
                         </form>\
                     </div>';
         },
@@ -129,7 +130,7 @@
                 var html = TechReqObj.createDynamicForm(tech);
                 $('.requirements .container > .row').append(html);
                 var input = $('.requirements form[tech-id='+tech.id+'] input[req_files]');
-                TechReqObj.applyFiler(input, tech.id);
+                //TechReqObj.applyFiler(input, tech.id);
                 TechReqObj.newTechReqTemplate();
             });
         },
@@ -211,157 +212,123 @@
             var techId = $(this).closest("form").attr("tech-id");
 
             TechReqObj.removeTechBoxReq(techId, cur.remove());
-        },
-        applyFiler: function(obj, techreqId, files) {
-            var _this = this;
-
-            var newFiles = [];
-            var formData = new FormData();
-
-            if(Array.isArray(files))
-              if(files.length)
-                newFiles = files;
-
-            var Filer = $(obj).filer({
-                maxSize: 10,
-                changeInput: '<button type="button" class="btn-upload">Upload file</button>',
-                showThumbs: true,
-                templates: {
-                    box: '<ul class="items-list"></ul>',
-                    item: '<li class="item">\
-                                {{fi-progressBar}}\
-                                      <div class="jFiler-item-thumb">\
-                                          <div class="jFiler-item-status"></div>\
-                                          {{fi-image}}\
-                                      </div>\
-                                      <span class="jFiler-item-title"><a href="/uploads/tr_documents/{{fi-name}}" title="{{fi-name}}" class="title">{{fi-name | limitTo: 12}}</a></span>\
-                                  </li>',
-                    itemAppend: '<li class="item">\
-                                      {{fi-progressBar}}\
-                                      <div class="jFiler-item-thumb">\
-                                          <div class="jFiler-item-status"></div>\
-                                          {{fi-image}}\
-                                      </div>\
-                                      <span class="jFiler-item-title"><a href="/uploads/tr_documents/{{fi-name}}" title="{{fi-name}}" class="title">{{fi-orname | limitTo: 12}}</a></span>\
-                                      <a class="item-trash" item-id="{{fi-file_id}}"></a>\
-                                  </li>',
-                    itemAppendToEnd: true,
-                    removeConfirmation: true,
-                    progressBar: "<div></div>",
-                    _selectors: {
-                        list: '.items-list',
-                        item: '.item',
-                        remove: '.item-trash'
-                    }
-                },
-                addMore: true,
-                files: newFiles,
-                onSelect: function(data) {
-                    _this.FILES.push(data);
-                },
-                afterShow: function(e) {
-                    formData.append('document_technical_requirement[technical_requirement]', techreqId);
-
-                    var filesLen = _this.FILES.length;
-
-                    for(var i = 0; i < filesLen; i++) {
-                        formData.append("document_technical_requirement[files]["+ i +"]", _this.FILES[i]);
-                    }
-
-                    $.ajax({
-                        type: 'POST',
-                        url: '/technical_requirement/document/upload',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function(data){},
-                        error: function(err){},
-                        onProgress: function(event) {
-
-                            /*
-                            TODO: Add progress bar!
-                             */
-
-                            // var bar = document.getElementById('progBar'),
-                            //     fallback = document.getElementById('downloadProgress'),
-                            //     loaded = 0;
-                            //
-                            // var load = function() {
-                            //     loaded += 1;
-                            //     bar.value = loaded;
-                            //
-                            //     /* The below will be visible if the progress tag is not supported */
-                            //     $(fallback).empty().append("HTML5 progress tag not supported: ");
-                            //     $('#progUpdate').empty().append(loaded + "% loaded");
-                            //
-                            //     if (loaded == 100) {
-                            //         clearInterval(beginLoad);
-                            //         $('#progUpdate').empty().append("Upload Complete");
-                            //         console.log('Load was performed.');
-                            //     }
-                            // };
-                            //
-                            // var beginLoad = setInterval(function() {
-                            //     load();
-                            // }, 50);
-
-                            console.log(event);
-                        },
-                        onComplete: null
-                    })
-                },
-                onRemove: function(data) {
-                  var id = $(data.context).attr("item-id");
-                  var req = TechReqObj.endpoints.files.delete(id);
-
-                  $.ajax({
-                      url:  req.url,
-                      type: req.method,
-                      data: {},
-                      success: function() {},
-                      error:   function() {}
-                  });
-                }
-            });
         }
     };
 
-    var techListRequest = TechReqObj.endpoints.techreq.get(TechReqObj.artistID),
-        techReqList = new Array(0);
+    function applyUploader(input, obj) {
+        input.fileupload({
+            url: '/technical_requirement/document/upload',
+            formData: {
+                'document_technical_requirement[technical_requirement]': obj.id
+            },
+            singleFileUploads: false,
+            add: function(e, data) {
+                var uploadErrors = [];
+                var acceptFileTypes = /^image\/(gif|jpe?g|png)$|^application\/(pdf|msword|zip|vnd.openxmlformats-officedocument.wordprocessingml.document|vnd.ms-excel|vnd.openxmlformats-officedocument.spreadsheetml.sheet)$|^text\/plain$/i;
 
-    function appendFiles(obj, files) {
-        var len = files.length,
-            newFiles = new Array(0),
-            techreqId = $(obj).closest("form[tech-id]").attr("tech-id");
+                var id = input.attr("id");
 
-        var types = {
-            jpeg: 'image/jpeg',
-            png: 'image/png',
-            gif: 'image/gif',
-            pdf: 'application/jpeg',
-            json: 'application/json'
-        };
+                var li = $('#'+id).closest("form").find("div.row .items-list").find('li');
 
-        for(var k = 0; k < len; k++) {
-            var file = files[k],
-                newFile = {};
+                if(data.files.length > 3 || li.length >= 3) {
+                    uploadErrors.push('Max number of files exceeded!');
+                }
 
-            newFile['name'] = file.name;
-            newFile['size'] = file.size;
-            newFile['type'] = types[file.name.split('.')[1]] || 'pdf';
-            newFile['file'] = '/' + file.file;
-            newFile['opts'] = {
-                file_id: file.id,
-                orname: file.originalName
-            };
+                if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
+                    uploadErrors.push('Not an accepted file type');
+                }
 
-            newFiles.push(newFile);
+                if(data.originalFiles[0]['size'].length && data.originalFiles[0]['size'] > 10000) {
+                    uploadErrors.push('Filesize is too big');
+                }
 
-            file = null;
+                if(uploadErrors.length > 0) {
+                    alert(uploadErrors.join("\n"));
+                } else {
+                    data.submit();
+                }
+            },
+            done: function (e, data) {
+                var files = data.result,
+                    input = data.fileInput.attr("id");
+
+                if(files.length) {
+                    $('#'+input).closest("form").find("div.row .items-list").append(thumbGenerator(files));
+                }
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+
+                var input = $(this).attr("id");
+
+                var progressBar = $('#'+input).closest("form").find('.progress-bar-line');
+
+                progressBar.fadeIn( "fast" );
+                progressBar.css('width',progress + '%');
+                progressBar.text(progress + ' %')
+
+                setTimeout(function() {
+                    progressBar.fadeOut( "slow" );
+                }, 1200);
+            }
+        });
+
+        input.bind('fileuploadstart', function (e, data) {
+
+        });
+        input.bind('fileuploadfail', function (e, data) {
+            alert(e, data.response().responseJSON.errors[0])
+        });
+    }
+
+    function thumbGenerator(files) {
+        var html = '',
+            count = files.length;
+
+        for(var i = 0; i < count; i++) {
+            var f = files[i];
+
+            var regex = /\.(txt|pdf|zip|json|doc|docx)$/i,
+                name = regex.exec(f.name),
+                fileExt = name ? name[0] : null,
+                thumb = '';
+
+            if(regex.test(fileExt)) {
+
+                var types = {
+                    '.zip': 'f-file-ext-zip',
+                    '.doc': 'f-file-ext-zip',
+                    '.docx': 'f-file-ext-zip',
+                    '.xls': 'f-file-ext-zip',
+                    '.xlsx': 'f-file-ext-zip',
+                    '.pdf': 'f-file-ext-pdf',
+                    '.txt': 'f-file-ext-txt',
+                    '.json': 'f-file-ext-json',
+                },
+                fileClass = types[fileExt];
+
+                thumb = '<span class="jFiler-icon-file f-file '+ fileClass +'">' + fileExt + '</span>';
+            } else {
+                thumb = '<img class="" src="/'+f.file+'">';
+            }
+
+            html += '<li class="item">\
+                        <div class="jFiler-item-thumb">\
+                            <div class="jFiler-item-status"></div>\
+                            <div class="jFiler-item-thumb-image">\
+                                '+thumb+'\
+                            </div>\
+                        </div>\
+                        <span class="jFiler-item-title"><a href="/'+f.file+'" title="'+f.originalName+'" class="title">'+f.originalName+'</a></span>\
+                        <a delete-file class="item-trash" item-id="'+f.id+'"></a>\
+                    </li>';
         }
 
-        TechReqObj.applyFiler(obj, techreqId, newFiles);
+        return html;
     }
+
+    var techListRequest = TechReqObj.endpoints.techreq.get(TechReqObj.artistID),
+        techReqList = new Array(0);
 
     if(artist && $(".requirements"))
       $.ajax({
@@ -384,7 +351,10 @@
 
                       var input = $('.requirements form[tech-id='+curObj.id+'] input[req_files]');
 
-                      appendFiles(input, files);
+                      applyUploader(input, curObj);
+
+                      var html = thumbGenerator(files);
+                      input.closest(".row").find('.items-list').append(html);
 
                       curObj = null;
                   }
@@ -402,5 +372,20 @@
         .on("click",    ".requirements [remove-box]", TechReqObj.removeBox)
         .on("focusout", ".requirements [edit-title]", TechReqObj.editTechnicalReqTitle)
         .on("focusout", ".requirements [edit-descr]", TechReqObj.editTechnicalReqDescr)
+        .on("click",    ".requirements [delete-file]", function() {
+            var $this = $(this);
+            var id = $this.attr("item-id");
+            var req = TechReqObj.endpoints.files.delete(id);
+
+            $.ajax({
+                url:  req.url,
+                type: req.method,
+                data: {},
+                success: function() {
+                    $this.closest("li").remove();
+                },
+                error:   function() {}
+            });
+        })
 
 })(this);

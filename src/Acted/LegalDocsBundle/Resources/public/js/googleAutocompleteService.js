@@ -334,7 +334,18 @@
         initAutoComplete: function() {
             var _this = this;
 
-            this.inputs[COUNTRY].on("change", this.countryChangeEvent.bind(_this));
+            var countryTag = this.inputs[COUNTRY].prop("tagName");
+
+            if(countryTag == 'INPUT')
+                console.log("DEFAULT VALUE: ", this.inputs[COUNTRY].val().trim());
+
+            if(countryTag == 'SELECT')
+                this.inputs[COUNTRY].on("change", this.countryChangeEvent.bind(_this));
+
+
+            console.log("=================", this.availableCountries[0])
+
+
             this.addAutocomplete(this.inputs[CITY]);
             this.setAutocompleteCountry(null, this.availableCountries[0]);
             this.currentStore.country = this.findCountryByCode(this.availableCountries[0]);
@@ -476,10 +487,25 @@
          */
         getFormElements: function(form) {
             var form     = $(form),
-                country  = form.find('select[name="country"]'),
+                country  = '',
                 city     = form.find('input[name="city"]'),
                 postcode = form.find('input[name="post_code"]') || 0,
-                address  = form.find('input[name="address"]') || form.find('input[name="location"]') || 0;
+                address  = '';
+
+            if(form.find('select[name="country"]').length) {
+                country = form.find('select[name="country"]');
+            } else {
+                country = form.find('input[name="country"]');
+            }
+
+            if(form.find('input[name="address"]').length)
+                address = form.find('input[name="address"]');
+
+            if( form.find('input[name="location"]').length )
+                address = form.find('input[name="location"]');
+
+            if(!form.find('input[name="address"]').length && !form.find('input[name="location"]').length)
+                address = 0;
 
             if(country.length && city.length) {
                 this.addArray([country, city, postcode, address]);

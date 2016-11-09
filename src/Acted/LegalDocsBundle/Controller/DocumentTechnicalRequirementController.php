@@ -24,13 +24,22 @@ class DocumentTechnicalRequirementController extends Controller
             return new JsonResponse($serializer->toArray($documentTechnicalRequirementForm->getErrors()), Response::HTTP_BAD_REQUEST);
         }
 
-
         $data = $documentTechnicalRequirementForm->getData();
 
         $lastId = 0;
+        $_SEARCH_ALL_DOCS = 0;
+        $technicalRequirementId = $data->getTechnicalRequirement()->getId();
+
         if (!empty($data->getTechnicalRequirement()->getDocumentTechnicalRequirements())) {
             $existingDocuments = $data->getTechnicalRequirement()->getDocumentTechnicalRequirements();
-            $lastId = count($existingDocuments);
+
+            $index = count($existingDocuments) - 1;
+
+            if(abs($index) != $index) {
+                $_SEARCH_ALL_DOCS = 1;
+            } else {
+                $lastId = $existingDocuments->toArray()[$index]->getId();
+            }
         }
 
 
@@ -71,7 +80,14 @@ class DocumentTechnicalRequirementController extends Controller
             $em->flush();
 
             $documentTRRepo = $em->getRepository('ActedLegalDocsBundle:DocumentTechnicalRequirement');
-            $uploadedDocuments = $documentTRRepo->getDocumentsAfterId($lastId);
+
+            $uploadedDocuments = null;
+
+            if(!$_SEARCH_ALL_DOCS) {
+                $uploadedDocuments = $documentTRRepo->getDocumentsAfterId($lastId);
+            } else {
+                $uploadedDocuments = $documentTRRepo->getDocumentsByTRId($technicalRequirementId);
+            }
 
             return new JsonResponse($serializer->toArray($uploadedDocuments, SerializationContext::create()
                 ->setGroups(['files'])), Response::HTTP_OK);

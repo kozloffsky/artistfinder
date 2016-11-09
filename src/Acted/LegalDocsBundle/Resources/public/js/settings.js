@@ -49,7 +49,7 @@ $(function(){
 
                     break;
                 case 'country':
-                    console.log('ggg: ', value, country)
+                    console.log('ggg: ', value, "|||", country)
                     if(value != country)
                         value = GoogleAutocompleteService.findCountryByCode(GoogleAutocompleteService.availableCountries[value]);
 
