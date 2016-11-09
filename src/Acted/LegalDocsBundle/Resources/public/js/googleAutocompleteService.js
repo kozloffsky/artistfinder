@@ -389,6 +389,11 @@
 
             var place = _this.autocomplete[name].getPlace();
 
+            if (!place.geometry) {
+                alert("No details available for input: '" + place.name + "'");
+                return;
+            }
+
             _this.coords = {
                 lat: place.geometry.location.lat(),
                 lng: place.geometry.location.lng()
@@ -402,18 +407,6 @@
                 var type             = place.address_components[i].types[0];
                 var postal_type      = place.address_components[i].types[1];
                 var place_name       = place.address_components[i].long_name.trim();
-
-                // if(type == 'country') {
-                //
-                //     console.log("COUNTRY: ", country);
-                //
-                //     if(country) {
-                //         // $(_this.inputs[COUNTRY]).val(country);
-                //
-                //         _this.currentStore.country = //country;
-                //         _this.unlock(_this.inputs[CITY]);
-                //     }
-                // }
 
                 switch(type) {
                     case 'locality':
@@ -448,6 +441,18 @@
 
             console.log("FULL ADDRESS: ", place.formatted_address, place);
 
+            console.log("----------------------------", _this.inputs[ADDRESS])
+
+            console.log("-----------------------------------------------------", _this.currentStore.city);
+
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({
+                'address': 'Folkestone'
+            }, function(results, status) {
+                console.log(results, status);
+                console.log(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+            });
+
             _this.inputs[ADDRESS].val(place.formatted_address);
             _this.address = place.formatted_address;
 
@@ -459,7 +464,10 @@
             var _this = this;
 
             var name = elem.attr('name'),
-                options = {};
+                options = {
+                    language: 'en-GB',
+                    types: ['(cities)']
+                };
 
             _this.currentStore[name] = elem.val().trim();
             _this.autocomplete[name] = new google.maps.places.Autocomplete(elem[0], options);
