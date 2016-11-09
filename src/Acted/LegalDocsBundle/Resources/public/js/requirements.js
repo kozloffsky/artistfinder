@@ -170,8 +170,8 @@
         editTechnicalReqTitle: function () {
             var
                 id    = $(this).closest("form").attr("tech-id"),
-                title = $(this).val(),
-                descr = $(this).next().val();
+                title = $(this).val().trim(),
+                descr = $(this).next().val().trim();
 
             $('.requirements form[tech-id='+id+']').valid();
 
@@ -191,8 +191,8 @@
         editTechnicalReqDescr: function() {
             var
                 id    = $(this).closest("form").attr("tech-id"),
-                title = $(this).prev().val(),
-                descr = $(this).val();
+                title = $(this).prev().val().trim(),
+                descr = $(this).val().trim();
 
             $('.requirements form[tech-id='+id+']').valid();
 
