@@ -12,6 +12,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Acted\LegalDocsBundle\Entity\Performance;
+use Acted\LegalDocsBundle\Form\Type\BooleanType;
+use Acted\LegalDocsBundle\Entity\RequestQuotation;
 
 class PerformancePriceType extends AbstractType
 {
@@ -47,6 +49,14 @@ class PerformancePriceType extends AbstractType
                 'class' => Artist::class,
                 'constraints' => [new NotBlank(['message' => 'Artist is required field'])],
                 'description' => 'ArtistId'
+            ])
+            ->add('is_quotation', BooleanType::class, [
+                'constraints' => [
+                ], 'description' => 'Is quotation this service'])
+            ->add('request_quotation', EntityType::class, [
+                'class' => RequestQuotation::class,
+                'constraints' => [],
+                'description' => 'RequestQuotationId'
             ])
         ;
     }

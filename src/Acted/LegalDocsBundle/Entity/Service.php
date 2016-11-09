@@ -52,6 +52,11 @@ class Service
      */
     private $serviceRequestQuotations;
 
+    /**
+     * @var boolean
+     */
+    private $isQuotation = false;
+
     public function __construct() {
         $this->packages = new \Doctrine\Common\Collections\ArrayCollection();
         $this->serviceRequestQuotations = new \Doctrine\Common\Collections\ArrayCollection();
@@ -279,11 +284,6 @@ class Service
     {
         return $this->serviceRequestQuotations;
     }
-    /**
-     * @var boolean
-     */
-    private $isQuotation = false;
-
 
     /**
      * Set isQuotation

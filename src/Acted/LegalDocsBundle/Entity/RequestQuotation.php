@@ -9,7 +9,7 @@ class RequestQuotation
 {
     const STATUS_DRAFT = 0;
     const STATUS_PUBLISHED = 1;
-    
+
     /**
      * @var integer
      */
@@ -21,9 +21,9 @@ class RequestQuotation
     private $status = false;
 
     /**
-     * @var \Acted\LegalDocsBundle\Entity\Event
+     * @var boolean
      */
-    private $event;
+    private $is_outdated = false;
 
     /**
      * @var \Acted\LegalDocsBundle\Entity\PaymentTermRequestQuotation
@@ -44,6 +44,11 @@ class RequestQuotation
      * @var \Doctrine\Common\Collections\Collection
      */
     private $documentRequestQuotations;
+
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\Event
+     */
+    private $event;
 
     /**
      * Constructor
@@ -90,27 +95,27 @@ class RequestQuotation
     }
 
     /**
-     * Set event
+     * Set isOutdated
      *
-     * @param \Acted\LegalDocsBundle\Entity\Event $event
+     * @param boolean $isOutdated
      *
      * @return RequestQuotation
      */
-    public function setEvent(\Acted\LegalDocsBundle\Entity\Event $event = null)
+    public function setIsOutdated($isOutdated)
     {
-        $this->event = $event;
+        $this->is_outdated = $isOutdated;
 
         return $this;
     }
 
     /**
-     * Get event
+     * Get isOutdated
      *
-     * @return \Acted\LegalDocsBundle\Entity\Event
+     * @return boolean
      */
-    public function getEvent()
+    public function getIsOutdated()
     {
-        return $this->event;
+        return $this->is_outdated;
     }
 
     /**
@@ -237,5 +242,29 @@ class RequestQuotation
     public function getDocumentRequestQuotations()
     {
         return $this->documentRequestQuotations;
+    }
+
+    /**
+     * Set event
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Event $event
+     *
+     * @return RequestQuotation
+     */
+    public function setEvent(\Acted\LegalDocsBundle\Entity\Event $event = null)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \Acted\LegalDocsBundle\Entity\Event
+     */
+    public function getEvent()
+    {
+        return $this->event;
     }
 }

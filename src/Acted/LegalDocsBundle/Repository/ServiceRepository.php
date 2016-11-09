@@ -86,7 +86,8 @@ class ServiceRepository extends \Doctrine\ORM\EntityRepository
 
     public function getServicesByProfileId($profileId)
     {
-        $whereCriteria = 's.profile = :profileId AND s.deletedTime IS NULL';
+        $whereCriteria = 's.profile = :profileId AND s.deletedTime IS NULL AND s.isQuotation = :isQuotation';
+        $params = array('profileId' => $profileId, 'isQuotation' => false);
         return $this->createQueryBuilder('s')
             ->select('s, pac, opt, rate, price')
             ->leftJoin('s.packages', 'pac', 'WITH', 'pac.deletedTime IS NULL')
@@ -94,7 +95,7 @@ class ServiceRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('opt.rates', 'rate', 'WITH', 'rate.deletedTime IS NULL')
             ->leftJoin('rate.price', 'price')
             ->where($whereCriteria)
-            ->setParameter('profileId', $profileId)
+            ->setParameters($params)
             ->getQuery()->getArrayResult();
     }
 }

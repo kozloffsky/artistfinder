@@ -115,7 +115,8 @@ class PerformanceRepository extends \Doctrine\ORM\EntityRepository
 
     public function getPerformancesByProfileId($profileId)
     {
-        $whereCriteria = 'p.profile = :profileId AND p.deletedTime IS NULL';
+        $whereCriteria = 'p.profile = :profileId AND p.deletedTime IS NULL AND p.isQuotation = :isQuotation';
+        $params = array('profileId' => $profileId, 'isQuotation' => false);
         return $this->createQueryBuilder('p')
             ->select('p, pac, opt, rate, price')
             ->leftJoin('p.packages', 'pac', 'WITH', 'pac.deletedTime IS NULL')
@@ -123,7 +124,7 @@ class PerformanceRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('opt.rates', 'rate', 'WITH', 'rate.deletedTime IS NULL')
             ->leftJoin('rate.price', 'price')
             ->where($whereCriteria)
-            ->setParameter('profileId', $profileId)
+            ->setParameters($params)
             ->getQuery()->getArrayResult();
     }
 }

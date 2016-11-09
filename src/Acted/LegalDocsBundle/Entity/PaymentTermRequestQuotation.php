@@ -8,6 +8,8 @@ namespace Acted\LegalDocsBundle\Entity;
 class PaymentTermRequestQuotation
 {
 
+    const GUARANTEED_DEPOSIT_PERCENT = 50;
+
     /**
      * @var integer
      */

@@ -540,6 +540,7 @@ class Event
     public function __construct()
     {
         $this->chatRooms = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->requestQuotations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -604,32 +605,42 @@ class Event
         () : null;
     }
     /**
-     * @var \Acted\LegalDocsBundle\Entity\RequestQuotation
+     * @var \Doctrine\Common\Collections\Collection
      */
-    private $requestQuotation;
+    private $requestQuotations;
 
 
     /**
-     * Set requestQuotation
+     * Add requestQuotation
      *
      * @param \Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation
      *
      * @return Event
      */
-    public function setRequestQuotation(\Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation = null)
+    public function addRequestQuotation(\Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation)
     {
-        $this->requestQuotation = $requestQuotation;
+        $this->requestQuotations[] = $requestQuotation;
 
         return $this;
     }
 
     /**
-     * Get requestQuotation
+     * Remove requestQuotation
      *
-     * @return \Acted\LegalDocsBundle\Entity\RequestQuotation
+     * @param \Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation
      */
-    public function getRequestQuotation()
+    public function removeRequestQuotation(\Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation)
     {
-        return $this->requestQuotation;
+        $this->requestQuotations->removeElement($requestQuotation);
+    }
+
+    /**
+     * Get requestQuotations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRequestQuotations()
+    {
+        return $this->requestQuotations;
     }
 }

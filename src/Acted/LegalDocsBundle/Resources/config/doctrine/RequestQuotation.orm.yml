@@ -13,6 +13,10 @@ Acted\LegalDocsBundle\Entity\RequestQuotation:
             type: boolean
             options:
               default: false
+        is_outdated:
+            type: boolean
+            options:
+              default: false
     oneToMany:
       performanceRequestQuotations:
           targetEntity: Acted\LegalDocsBundle\Entity\PerformanceRequestQuotation
@@ -24,13 +28,14 @@ Acted\LegalDocsBundle\Entity\RequestQuotation:
           targetEntity: Acted\LegalDocsBundle\Entity\DocumentRequestQuotation
           mappedBy: requestQuotation
     oneToOne:
+        paymentTermRequestQuotation:
+          targetEntity: Acted\LegalDocsBundle\Entity\PaymentTermRequestQuotation
+          mappedBy: requestQuotation
+    manyToOne:
         event:
           targetEntity: Acted\LegalDocsBundle\Entity\Event
           joinColumn:
             referencedColumnName: id
             onDelete: RESTRICT
-          inversedBy: requestQuotation
-        paymentTermRequestQuotation:
-          targetEntity: Acted\LegalDocsBundle\Entity\PaymentTermRequestQuotation
-          mappedBy: requestQuotation
+          inversedBy: requestQuotations
     lifecycleCallbacks: {  }

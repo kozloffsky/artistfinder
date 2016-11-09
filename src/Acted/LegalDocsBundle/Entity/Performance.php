@@ -75,6 +75,11 @@ class Performance
     public $priceOnRequest = false;
 
     /**
+     * @var boolean
+     */
+    private $isQuotation = false;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $performanceRequestQuotations;
@@ -482,11 +487,6 @@ class Performance
     {
         return $this->performanceRequestQuotations;
     }
-    /**
-     * @var boolean
-     */
-    private $isQuotation = false;
-
 
     /**
      * Set isQuotation

@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Acted\LegalDocsBundle\Entity\RequestQuotation;
 
 /**
  * RequestQuotationRepository
@@ -12,4 +13,97 @@ use Doctrine\ORM\EntityRepository;
  */
 class RequestQuotationRepository extends EntityRepository
 {
+    public function setOutdatedStatus($event) {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $params = array('event' => $event, 'outdatedStatus' => true, 'publishedStatus' => RequestQuotation::STATUS_PUBLISHED);
+
+        $whereCriteria = 'rq.event = :event AND rq.status = :publishedStatus';
+
+        $qb->update('ActedLegalDocsBundle:RequestQuotation', 'rq')
+            ->set('rq.isOutdated', ':outdatedStatus')
+            ->where($whereCriteria)
+            ->setParameters($params);
+
+        $qb->setParameters($params);
+
+        $qb->getQuery()->execute();
+    }
+
+    public function setPublishedStatus($requestQuotationId) {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $params = array('requestId' => $requestQuotationId, 'publishedStatus' => RequestQuotation::STATUS_PUBLISHED);
+
+        $whereCriteria = 'rq.id = :requestId';
+
+        $qb->update('ActedLegalDocsBundle:RequestQuotation', 'rq')
+            ->set('rq.status', ':publishedStatus')
+            ->where($whereCriteria)
+            ->setParameters($params);
+
+        $qb->setParameters($params);
+
+        $qb->getQuery()->execute();
+    }
+
+    public function removeDraftedRequestQuotation(
+        $draftPerformanceRequestQuotationRelatedListIds,
+        $draftServiceRequestQuotationRelatedListIds,
+        $draftedRequestQuotationId,
+        $connection
+    ) {
+        $connection->query('SET FOREIGN_KEY_CHECKS=0');
+
+        $requestQuotationTableName = $em->getClassMetadata('ActedLegalDocsBundle:RequestQuotation')->getTableName();
+        $performanceRequestQuotationTableName = $em->getClassMetadata('ActedLegalDocsBundle:PerformanceRequestQuotation')->getTableName();
+        $serviceRequestQuotationTableName = $em->getClassMetadata('ActedLegalDocsBundle:ServiceRequestQuotation')->getTableName();
+        $paymentTermRequestQuotationTableName = $em->getClassMetadata('ActedLegalDocsBundle:PaymentTermRequestQuotation')->getTableName();
+        $performanceTableName = $em->getClassMetadata('ActedLegalDocsBundle:Performance')->getTableName();
+        $serviceTableName = $em->getClassMetadata('ActedLegalDocsBundle:Service')->getTableName();
+        $packageTableName = $em->getClassMetadata('ActedLegalDocsBundle:Package')->getTableName();
+        $optionTableName = $em->getClassMetadata('ActedLegalDocsBundle:Option')->getTableName();
+        $rateTableName = $em->getClassMetadata('ActedLegalDocsBundle:Rate')->getTableName();
+        $priceTableName = $em->getClassMetadata('ActedLegalDocsBundle:Price')->getTableName();
+
+        $ids = implode($draftPerformanceRequestQuotationRelatedListIds['priceIds'], ',');
+        $connection->query('DELETE FROM ' . $draftPerformanceRequestQuotationRelatedListIds . ' WHERE id IN(' . $ids . ')');
+
+        $ids = implode($draftPerformanceRequestQuotationRelatedListIds['rateIds'], ',');
+        $connection->query('DELETE FROM ' . $rateTableName . ' WHERE id IN(' . $ids . ')');
+
+        $ids = implode($draftPerformanceRequestQuotationRelatedListIds['optionIds'], ',');
+        $connection->query('DELETE FROM ' . $optionTableName . ' WHERE id IN(' . $ids . ')');
+
+        $ids = implode($draftPerformanceRequestQuotationRelatedListIds['packageIds'], ',');
+        $connection->query('DELETE FROM ' . $packageTableName . ' WHERE id IN(' . $ids . ')');
+
+        $ids = implode($draftPerformanceRequestQuotationRelatedListIds['performanceIds'], ',');
+        $connection->query('DELETE FROM ' . $performanceTableName . ' WHERE id IN(' . $ids . ')');
+
+
+        $ids = implode($draftServiceRequestQuotationRelatedListIds['priceIds'], ',');
+        $connection->query('DELETE FROM ' . $draftPerformanceRequestQuotationRelatedListIds . ' WHERE id IN(' . $ids . ')');
+
+        $ids = implode($draftServiceRequestQuotationRelatedListIds['rateIds'], ',');
+        $connection->query('DELETE FROM ' . $rateTableName . ' WHERE id IN(' . $ids . ')');
+
+        $ids = implode($draftServiceRequestQuotationRelatedListIds['optionIds'], ',');
+        $connection->query('DELETE FROM ' . $optionTableName . ' WHERE id IN(' . $ids . ')');
+
+        $ids = implode($draftServiceRequestQuotationRelatedListIds['packageIds'], ',');
+        $connection->query('DELETE FROM ' . $packageTableName . ' WHERE id IN(' . $ids . ')');
+
+        $ids = implode($draftServiceRequestQuotationRelatedListIds['serviceIds'], ',');
+        $connection->query('DELETE FROM ' . $serviceTableName . ' WHERE id IN(' . $ids . ')');
+
+        $connection->query('DELETE FROM ' . $paymentTermRequestQuotationTableName . ' WHERE request_id = ' . $draftedRequestQuotationId);
+        $connection->query('DELETE FROM ' . $serviceRequestQuotationTableName . ' WHERE request_id = ' . $draftedRequestQuotationId);
+        $connection->query('DELETE FROM ' . $performanceRequestQuotationTableName . ' WHERE request_id = ' . $draftedRequestQuotationId);
+        $connection->query('DELETE FROM ' . $requestQuotationTableName . ' WHERE id = ' . $draftedRequestQuotationId);
+
+        $connection->query('SET FOREIGN_KEY_CHECKS=1');
+
+        return true;
+    }
 }
