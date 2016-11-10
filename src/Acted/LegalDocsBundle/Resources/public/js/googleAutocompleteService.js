@@ -9,12 +9,12 @@
         REGION  = 2,
         ADDRESS = 3;
 
-    window.GoogleAutocompleteService = {
+    window.GoogleAutocompleteService = function() {
         /**
          * Constants
          */
-        key: "AIzaSyDLK8SupBcU-H0H0SF0PIar5UP-y-DCrTI",
-        isoCodes: [
+        this.key = "AIzaSyDLK8SupBcU-H0H0SF0PIar5UP-y-DCrTI";
+        this.isoCodes = [
             {'ccode' : 'AF', 'cname' : 'Afghanistan'},
             {'ccode' : 'AX', 'cname' : 'Aland Islands'},
             {'ccode' : 'AL', 'cname' : 'Albania'},
@@ -260,8 +260,8 @@
             {'ccode' : 'YE', 'cname' : 'Yemen'},
             {'ccode' : 'ZM', 'cname' : 'Zambia'},
             {'ccode' : 'ZW', 'cname' : 'Zimbabwe'}
-        ],
-        findCountryByName: function(name) {
+        ];
+        this.findCountryByName = function(name) {
             var len = this.isoCodes.length;
 
             for(var i = 0; i < len; i++) {
@@ -272,8 +272,8 @@
             }
 
             return 0;
-        },
-        findCountryByCode: function(code) {
+        };
+        this.findCountryByCode = function(code) {
             var len = this.isoCodes.length;
 
             for(var i = 0; i < len; i++) {
@@ -284,29 +284,29 @@
             }
 
             return 0;
-        },
+        };
         /**
          * Some variables
          */
-        inputs: new Array(0),
-        coords: {
+        this.inputs = new Array(0);
+        this.coords =  {
             region: {},
             city  : {}
-        },
-        availableCountries: ['GB', 'DE', 'FR'],
-        address: '',
-        autocomplete: {
+        };
+        this.availableCountries = ['GB', 'DE', 'FR'];
+        this.address = '';
+        this.autocomplete = {
             country:   null,
             city:      null,
             post_code: null
-        },
-        currentStore: {
+        };
+        this.currentStore = {
             country:   '',
             city:      '',
             region:    '',
             post_code: ''
-        },
-        staticMap: {
+        };
+        this.staticMap = {
             url: "https://maps.googleapis.com/maps/api/staticmap",
             zoom: 14,
             size: "mid",
@@ -314,27 +314,27 @@
                 label: "S",
                 color: "blue"
             }
-        },
+        };
         /**
          * Helper methods
          */
-        addInput: function(element) {
+        this.addInput = function(element) {
             this.inputs.push(element);
-        },
-        addArray: function(arrOfElements) {
+        };
+        this.addArray = function(arrOfElements) {
             if(Array.isArray(arrOfElements))
                 this.inputs = arrOfElements;
             else
                 console.error("You need to provide array of elements!");
-        },
-        clearData: function() {
+        };
+        this.clearData = function() {
             this.autocomplete = { country: null, city: null, post_code: null },
             this.currentStore = { country: '',   city: '',   region: '', post_code: '' }
-        },
+        };
         /**
          * Init method
          */
-        initAutoComplete: function() {
+        this.initAutoComplete = function() {
             var _this = this;
 
             var countryTag = this.inputs[COUNTRY].prop("tagName");
@@ -353,18 +353,18 @@
             this.setAutocompleteCountry(null, this.availableCountries[0]);
             this.currentStore.country = this.findCountryByCode(this.availableCountries[0]);
             _this.unlock(_this.inputs[CITY]);
-        },
+        };
         /**
          * lock/unlock inputs when some of parameters not exist
          * @param elem (input)
          */
-        lock: function(elem) {
+        this.lock = function(elem) {
             $(elem).prop( "disabled", true );
-        },
-        unlock: function(elem) {
+        };
+        this.unlock = function(elem) {
             $(elem).prop( "disabled", false );
-        },
-        findCityCoods: function(city, cb) {
+        };
+        this.findCityCoods = function(city, cb) {
             var geocoder = new google.maps.Geocoder();
             return geocoder.geocode({
                 'address': city
@@ -378,8 +378,8 @@
                     cb(null);
                 }
             });
-        },
-        countryChangeEvent: function(context) {
+        };
+        this.countryChangeEvent = function(context) {
             var name  = this.inputs[COUNTRY].find("option:selected").val(),
                 code = this.findCountryByName(name);
 
@@ -396,15 +396,15 @@
             if(this.inputs[ADDRESS] != 0) {
                 this.inputs[ADDRESS].val("");
             }
-        },
+        };
         /**
          * Add autocomplete service to input
          * @param element (input)
          */
-        setAutocompleteCountry: function(context, country) {
+        this.setAutocompleteCountry = function(context, country) {
             this.autocomplete.city.setComponentRestrictions({ country: country });
-        },
-        placeChangeEvent: function(name) {
+        };
+        this.placeChangeEvent = function(name) {
             var _this = this;
 
             var place = _this.autocomplete[name].getPlace();
@@ -465,19 +465,17 @@
                 _this.address = place.formatted_address;
             }
 
-
             _this.findCityCoods(_this.currentStore.city, function(res) {
                 if(res !== null) {
                     _this.coords.city = res;
                 }
             });
 
-
             if($(".quotation-modal .map-holder").length) {
                 _this.addMarker();
             }
-        },
-        addAutocomplete: function(elem) {
+        };
+        this.addAutocomplete = function(elem) {
             var _this = this;
 
             var name = elem.attr('name'),
@@ -489,8 +487,8 @@
             _this.currentStore[name] = elem.val().trim();
             _this.autocomplete[name] = new google.maps.places.Autocomplete(elem[0], options);
             _this.autocomplete[name].addListener('place_changed', _this.placeChangeEvent.bind(_this, name));
-        },
-        addMarker: function() {
+        };
+        this.addMarker = function() {
             var url = this.staticMap.url;
 
                 url += "?center=" + this.coords.region.lat + ", " + this.coords.region.lng;
@@ -505,12 +503,12 @@
                        ", "      + this.coords.region.lng;
 
             $(".quotation-modal .map-holder img").attr("src", url);
-        },
+        };
         /**
          * Form manipulation functional
          * @param form
          */
-        getFormElements: function(form) {
+        this.getFormElements = function(form) {
             var form     = $(form),
                 country  = '',
                 city     = form.find('input[name="city"]'),
@@ -538,7 +536,7 @@
             }
 
             return false;
-        }
+        };
     }
 })(this);
 

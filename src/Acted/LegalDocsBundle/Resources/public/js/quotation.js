@@ -14,10 +14,9 @@
     //     }
     // });
 
-
-    var isAvailable = GoogleAutocompleteService.getFormElements('.quotation-modal form[name="quotation_place_info"]');
+    var autocompService = new GoogleAutocompleteService(),
+        isAvailable = autocompService.getFormElements('.quotation-modal form[name="quotation_place_info"]');
 
     if(isAvailable)
-        GoogleAutocompleteService.initAutoComplete();
-
+        autocompService.initAutoComplete();
 });

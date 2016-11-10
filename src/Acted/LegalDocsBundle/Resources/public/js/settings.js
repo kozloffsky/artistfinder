@@ -39,24 +39,19 @@ $(function(){
 
             switch (k) {
                 case 'region_name':
-                    console.log('val: '+value+ ' reg: ', region);
                     if(value != '' && region != '') {
                         value = region;
                     }
-
                     break;
                 case 'city':
-                    console.log('CITY: val: ' + value +' city: ' + city)
                     if(value != '' && city != '') {
                         value = city;
                     }
-
                     break;
                 case 'country':
-                    console.log('ggg: ', value, "|||", country)
-                    if(value != country)
+                    if(value != country) {
                         value = GoogleAutocompleteService.findCountryByCode(GoogleAutocompleteService.availableCountries[value]);
-
+                    }
                     break;
             }
 
@@ -223,9 +218,10 @@ $(function(){
             }
         });
 
-        var isAvailable = GoogleAutocompleteService.getFormElements('.settings form[name="contactForm"]');
+        var autocompService = new GoogleAutocompleteService(),
+            isAvailable = autocompService.getFormElements('.settings form[name="contactForm"]');
 
         if(isAvailable)
-            GoogleAutocompleteService.initAutoComplete();
+            autocompService.initAutoComplete();
     }
 });

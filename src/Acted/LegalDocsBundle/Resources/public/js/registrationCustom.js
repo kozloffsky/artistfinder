@@ -429,12 +429,9 @@ $(function () {
         })
     }
 
+    var autocompService = new GoogleAutocompleteService(),
+        isAvailable = autocompService.getFormElements('.registration-modal form[id="artistForm"]');
 
-    if($("main.home").length) {
-
-        var isAvailable = GoogleAutocompleteService.getFormElements('.registration-modal form[id="artistForm"]');
-
-        if(isAvailable)
-            GoogleAutocompleteService.initAutoComplete();
-    }
+    if(isAvailable)
+        autocompService.initAutoComplete();
 });
