@@ -480,8 +480,7 @@
 
             var name = elem.attr('name'),
                 options = {
-                    language: 'en-GB',
-                    types: ['(cities)']
+                    language: 'en-GB'
                 };
 
             _this.currentStore[name] = elem.val().trim();
