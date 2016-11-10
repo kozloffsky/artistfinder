@@ -34,10 +34,13 @@ class Version20161106192829 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE Performance DROP is_quotation');
-        $this->addSql('ALTER TABLE Service DROP is_quotation');
+        $this->addSql('ALTER TABLE RequestQuotation DROP is_outdated');
 
         $this->addSql("DROP INDEX IDX_961D12271F7E88B ON RequestQuotation");
         $this->addSql('CREATE UNIQUE INDEX UNIQ_961D12271F7E88B ON RequestQuotation (event_id)');
+
+        $this->addSql('ALTER TABLE Service DROP is_quotation');
+        $this->addSql('ALTER TABLE Performance DROP is_quotation');
+
     }
 }
