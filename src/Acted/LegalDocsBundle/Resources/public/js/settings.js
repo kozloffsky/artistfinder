@@ -1,6 +1,12 @@
 $(function(){
     'use strict';
 
+    var settingsAutocompService = new GoogleAutocompleteService(),
+        isAvailable = settingsAutocompService.getFormElements('.settings form[name="contactForm"]');
+
+    if(isAvailable)
+        settingsAutocompService.initAutoComplete();
+
     // TODO: Add validation for rest forms.
     var settingsFormValid;
 
@@ -25,13 +31,13 @@ $(function(){
             allForms = contactForm.concat(profileForm, paymentForm),
             sendForm = "";
 
-        var regionLat = GoogleAutocompleteService.coords.region.lat,
-            regionLng = GoogleAutocompleteService.coords.region.lng,
-            cityLat = GoogleAutocompleteService.coords.city.lat,
-            cityLng = GoogleAutocompleteService.coords.city.lng,
-            country = GoogleAutocompleteService.currentStore.country,
-            city = GoogleAutocompleteService.currentStore.city,
-            region = GoogleAutocompleteService.currentStore.region;
+        var regionLat = settingsAutocompService.coords.region.lat,
+            regionLng = settingsAutocompService.coords.region.lng,
+            cityLat = settingsAutocompService.coords.city.lat,
+            cityLng = settingsAutocompService.coords.city.lng,
+            country = settingsAutocompService.currentStore.country,
+            city = settingsAutocompService.currentStore.city,
+            region = settingsAutocompService.currentStore.region;
 
         for(var key in allForms) {
             var k = allForms[key].name,
@@ -50,7 +56,7 @@ $(function(){
                     break;
                 case 'country':
                     if(value != country) {
-                        value = GoogleAutocompleteService.findCountryByCode(GoogleAutocompleteService.availableCountries[value]);
+                        value = settingsAutocompService.findCountryByCode(settingsAutocompService.availableCountries[value]);
                     }
                     break;
             }
@@ -60,8 +66,8 @@ $(function(){
 
         sendForm += "profile_settings[file]=" + base64;
 
-        console.log("REGION COORDS: ", GoogleAutocompleteService.coords.region)
-        console.log("CITY COORDS: ", GoogleAutocompleteService.coords.city)
+        console.log("REGION COORDS: ", settingsAutocompService.coords.region)
+        console.log("CITY COORDS: ", settingsAutocompService.coords.city)
 
         if(cityLat && cityLng) {
             cityLatInput.val(cityLat);
@@ -217,11 +223,5 @@ $(function(){
                 }
             }
         });
-
-        var autocompService = new GoogleAutocompleteService(),
-            isAvailable = autocompService.getFormElements('.settings form[name="contactForm"]');
-
-        if(isAvailable)
-            autocompService.initAutoComplete();
     }
 });

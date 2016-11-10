@@ -455,6 +455,8 @@
                     $(_this.inputs[REGION]).val('');
                     $(_this.inputs[REGION]).val(post_code);
                     _this.currentStore.post_code = post_code;
+                } else {
+                    $(_this.inputs[REGION]).val('');
                 }
             }
 

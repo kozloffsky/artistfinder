@@ -359,9 +359,9 @@ $(function () {
         })
     };
 
-    var autocompService = new GoogleAutocompleteService(),
-        isAvailable = autocompService.getFormElements('.free-quote-modal form[id="requestQuoteForm"]');
+    var quoteRequestAutocompService = new GoogleAutocompleteService(),
+        isAvailable = quoteRequestAutocompService.getFormElements('.free-quote-modal form[id="requestQuoteForm"]');
 
     if(isAvailable)
-        autocompService.initAutoComplete();
+        quoteRequestAutocompService.initAutoComplete();
 });

@@ -4,6 +4,11 @@
 $(function () {
     //$('#phone_number').cleanVal(); to get phone number.
     //Enabling form validation.
+    var registrationAutocompService = new GoogleAutocompleteService(),
+        isAvailable = registrationAutocompService.getFormElements('.registration-modal form[id="artistForm"]');
+
+    if(isAvailable)
+        registrationAutocompService.initAutoComplete();
 
     var passwordRules = {
         rules: {
@@ -246,11 +251,11 @@ $(function () {
     function registerArtist(userInformation, categoriesForm, userRole) {
         var data = userRole + '&' + userInformation + '&' + categoriesForm;
 
-        var regionLat = GoogleAutocompleteService.coords.region.lat,
-            regionLng = GoogleAutocompleteService.coords.region.lng,
-            cityLat = GoogleAutocompleteService.coords.city.lat,
-            cityLng = GoogleAutocompleteService.coords.city.lng,
-            region = GoogleAutocompleteService.currentStore.region;
+        var regionLat = registrationAutocompService.coords.region.lat,
+            regionLng = registrationAutocompService.coords.region.lng,
+            cityLat = registrationAutocompService.coords.city.lat,
+            cityLng = registrationAutocompService.coords.city.lng,
+            region = registrationAutocompService.currentStore.region;
 
             data += "&city_lat=" + cityLat;
             data += "&city_lng=" + cityLng;
@@ -428,10 +433,4 @@ $(function () {
             }
         })
     }
-
-    var autocompService = new GoogleAutocompleteService(),
-        isAvailable = autocompService.getFormElements('.registration-modal form[id="artistForm"]');
-
-    if(isAvailable)
-        autocompService.initAutoComplete();
 });
