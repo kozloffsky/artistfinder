@@ -4,4 +4,4 @@ Acted\LegalDocsBundle\Entity\RefEventType:
         id:
             groups: [getEvent]
         eventType:
-            groups: [chat_room]
+            groups: [chat_room, getEvent]

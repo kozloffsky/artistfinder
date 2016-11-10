@@ -345,13 +345,11 @@
             if(countryTag == 'SELECT')
                 this.inputs[COUNTRY].on("change", this.countryChangeEvent.bind(_this));
 
-
-            console.log("=================", this.availableCountries[0])
-
+            var userCountry = this.findCountryByName(this.inputs[COUNTRY].val());
 
             this.addAutocomplete(this.inputs[CITY]);
-            this.setAutocompleteCountry(null, this.availableCountries[0]);
-            this.currentStore.country = this.findCountryByCode(this.availableCountries[0]);
+            this.setAutocompleteCountry(null, userCountry);
+            this.currentStore.country = this.findCountryByCode(userCountry);
             _this.unlock(_this.inputs[CITY]);
         };
         /**

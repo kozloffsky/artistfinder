@@ -324,6 +324,7 @@ class ChatRoomController extends Controller
         return $this->render('ActedLegalDocsBundle:ChatRoom:bookings.html.twig',
             compact('chat'));
     }
+    
 
     public function pricesAction() {
         $em = $this->getDoctrine()->getManager();

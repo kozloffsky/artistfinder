@@ -2,6 +2,11 @@
  * Created by pavel on 12.05.16.
  */
 $(function () {
+    var quoteRequestAutocompService = new GoogleAutocompleteService(),
+        isAvailable = quoteRequestAutocompService.getFormElements('.free-quote-modal form[id="requestQuoteForm"]');
+
+    if(isAvailable)
+        quoteRequestAutocompService.initAutoComplete();
 
     $( "#event_date" ).datepicker({
         dateFormat: 'dd/mm/yy',
@@ -305,11 +310,11 @@ $(function () {
         var reg = /(country|city)[=].\w*./;
         var data = data.replace(reg, "");
 
-        var regionLat = GoogleAutocompleteService.coords.region.lat,
-            regionLng = GoogleAutocompleteService.coords.region.lng,
-            cityLat = GoogleAutocompleteService.coords.city.lat,
-            cityLng = GoogleAutocompleteService.coords.city.lng,
-            region = GoogleAutocompleteService.currentStore.region;
+        var regionLat = quoteRequestAutocompService.coords.region.lat,
+            regionLng = quoteRequestAutocompService.coords.region.lng,
+            cityLat = quoteRequestAutocompService.coords.city.lat,
+            cityLng = quoteRequestAutocompService.coords.city.lng,
+            region = quoteRequestAutocompService.currentStore.region;
 
         // TODO: FIX THIS!!!
         data += "&country=" + 1;
@@ -358,10 +363,4 @@ $(function () {
             }
         })
     };
-
-    var quoteRequestAutocompService = new GoogleAutocompleteService(),
-        isAvailable = quoteRequestAutocompService.getFormElements('.free-quote-modal form[id="requestQuoteForm"]');
-
-    if(isAvailable)
-        quoteRequestAutocompService.initAutoComplete();
 });

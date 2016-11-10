@@ -15,20 +15,20 @@ var env = process.env.GULP_ENV;
 
 gulp.task('js', function() {
     return gulp.src([
-        'src/Acted/LegalDocsBundle/Resources/public/js/*.js', "!src/Acted/LegalDocsBundle/Resources/public/js/admin.js", "!src/Acted/LegalDocsBundle/Resources/public/js/userCreationAdmin.js"])
+        'src/Acted/LegalDocsBundle/Resources/public/js/**/*.js', "!src/Acted/LegalDocsBundle/Resources/public/js/admin.js", "!src/Acted/LegalDocsBundle/Resources/public/js/userCreationAdmin.js"])
         .pipe(order([
-            "jquery.min.js",
-            "moment.min.js",
-            "jquery.throttle.min.js",
-            "bootstrap.min.js",
-            "jquery.bxslider.min.js",
-            "jquery.wwCarousel.min.js",
-            "bootstrap-editable.min.js",
-            "bootstrap-datetimepicker.min.js",
+            "vendor/jquery.min.js",
+            "vendor/moment.min.js",
+            "vendor/jquery.throttle.min.js",
+            "vendor/bootstrap.min.js",
+            "vendor/jquery.bxslider.min.js",
+            "vendor/jquery.wwCarousel.min.js",
+            "vendor/bootstrap-editable.min.js",
+            "vendor/bootstrap-datetimepicker.min.js",
             "HTTPProvider.js",
-            "fabric.min.js",
-            "cropper.min.js",
-            "select2.min.js",
+            "vendor/fabric.min.js",
+            "vendor/cropper.min.js",
+            "vendor/select2.min.js",
             "*.js"
         ]))
         .pipe(concat('javascript.js'))
@@ -43,7 +43,6 @@ gulp.task('admin', function() {
     ])
     .pipe(gulp.dest('web/bundles/actedlegaldocs/js'));
 });
-
 gulp.task('css', function() {
     return gulp.src('src/Acted/LegalDocsBundle/Resources/public/css/**/*.css')
         .pipe(minifyCss())
@@ -54,7 +53,6 @@ gulp.task('css', function() {
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('web/css'));
 });
-
 gulp.task('watch-all', function() {
   gulp.watch('src/Acted/LegalDocsBundle/Resources/public/js/**/*.js', ['js']);
   gulp.watch([
@@ -63,5 +61,4 @@ gulp.task('watch-all', function() {
   ], ['admin']);
   gulp.watch('src/Acted/LegalDocsBundle/Resources/public/css/**/*.css', ['css']);
 });
-
 gulp.task('default', ['js', 'admin', 'css']);
