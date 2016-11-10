@@ -305,18 +305,20 @@ $(function () {
         var reg = /(country|city)[=].\w*./;
         var data = data.replace(reg, "");
 
-        var lat = GoogleAutocompleteService.coords.lat,
-            lng = GoogleAutocompleteService.coords.lng,
+        var regionLat = GoogleAutocompleteService.coords.region.lat,
+            regionLng = GoogleAutocompleteService.coords.region.lng,
+            cityLat = GoogleAutocompleteService.coords.city.lat,
+            cityLng = GoogleAutocompleteService.coords.city.lng,
             region = GoogleAutocompleteService.currentStore.region;
 
         // TODO: FIX THIS!!!
         data += "&country=" + 1;
         data += "&city=" + 1;
-        data += "&city_lat=" + lat;
-        data += "&city_lng=" + lng;
+        data += "&city_lat=" + cityLat;
+        data += "&city_lng=" + cityLng;
         data += "&region_name=" + region;
-        data += "&region_lat=" + lat;
-        data += "&region_lng=" + lng;
+        data += "&region_lat=" + regionLat;
+        data += "&region_lng=" + regionLng;
 
         $.ajax({
             type:'POST',

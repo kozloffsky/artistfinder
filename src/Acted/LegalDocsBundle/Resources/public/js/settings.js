@@ -14,8 +14,10 @@ $(function(){
             userId = 0;
         }
 
-        var settingsCityLat = $('form[name="paymentForm"]').find('input[name="city_lat"]'),
-            settingsCityLng = $('form[name="paymentForm"]').find('input[name="city_lng"]');
+        var cityLatInput = $('form[name="paymentForm"]').find('input[name="city_lat"]'),
+            cityLngInput = $('form[name="paymentForm"]').find('input[name="city_lng"]'),
+            regnLatInput = $('form[name="paymentForm"]').find('input[name="region_lat"]'),
+            regnLngInput = $('form[name="paymentForm"]').find('input[name="region_lng"]');
 
         var contactForm = $('form[name="contactForm"]').serializeArray(),
             profileForm = $('form[name="profileForm"]').serializeArray(),
@@ -23,8 +25,10 @@ $(function(){
             allForms = contactForm.concat(profileForm, paymentForm),
             sendForm = "";
 
-        var lat = GoogleAutocompleteService.coords.lat,
-            lng = GoogleAutocompleteService.coords.lng,
+        var regionLat = GoogleAutocompleteService.coords.region.lat,
+            regionLng = GoogleAutocompleteService.coords.region.lng,
+            cityLat = GoogleAutocompleteService.coords.city.lat,
+            cityLng = GoogleAutocompleteService.coords.city.lng,
             country = GoogleAutocompleteService.currentStore.country,
             city = GoogleAutocompleteService.currentStore.city,
             region = GoogleAutocompleteService.currentStore.region;
@@ -61,9 +65,17 @@ $(function(){
 
         sendForm += "profile_settings[file]=" + base64;
 
-        if(lat && lng) {
-            settingsCityLat.val(lat);
-            settingsCityLat.val(lng);
+        console.log("REGION COORDS: ", GoogleAutocompleteService.coords.region)
+        console.log("CITY COORDS: ", GoogleAutocompleteService.coords.city)
+
+        if(cityLat && cityLng) {
+            cityLatInput.val(cityLat);
+            cityLngInput.val(cityLng);
+        }
+
+        if(regionLat && regionLng) {
+            regnLatInput.val(regionLat);
+            regnLngInput.val(regionLng);
         }
 
         return sendForm;

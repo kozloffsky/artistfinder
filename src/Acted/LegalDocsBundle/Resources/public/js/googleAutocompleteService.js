@@ -289,7 +289,10 @@
          * Some variables
          */
         inputs: new Array(0),
-        coords: {},
+        coords: {
+            region: {},
+            city  : {}
+        },
         availableCountries: ['GB', 'DE', 'FR'],
         address: '',
         autocomplete: {
@@ -351,7 +354,6 @@
             this.currentStore.country = this.findCountryByCode(this.availableCountries[0]);
             _this.unlock(_this.inputs[CITY]);
         },
-
         /**
          * lock/unlock inputs when some of parameters not exist
          * @param elem (input)
@@ -362,14 +364,29 @@
         unlock: function(elem) {
             $(elem).prop( "disabled", false );
         },
+        findCityCoods: function(city, cb) {
+            var geocoder = new google.maps.Geocoder();
+            return geocoder.geocode({
+                'address': city
+            }, function(results, status) {
+                if(status == google.maps.GeocoderStatus.OK) {
+                    cb({
+                        lat: results[0].geometry.location.lat(),
+                        lng: results[0].geometry.location.lng()
+                    });
+                } else {
+                    cb(null);
+                }
+            });
+        },
         countryChangeEvent: function(context) {
-            var idx  = this.inputs[COUNTRY].find("option:selected").val(),
-                code = this.availableCountries[idx];
+            var name  = this.inputs[COUNTRY].find("option:selected").val(),
+                code = this.findCountryByName(name);
 
             this.setAutocompleteCountry(context, code);
 
             // Clear inputs after change country
-            this.currentStore.country = this.findCountryByCode(code);
+            this.currentStore.country =
             this.currentStore.city = "";
             this.currentStore.region = "";
             this.currentStore.post_code = "";
@@ -397,7 +414,7 @@
                 return;
             }
 
-            _this.coords = {
+            _this.coords.region = {
                 lat: place.geometry.location.lat(),
                 lng: place.geometry.location.lng()
             };
@@ -406,7 +423,6 @@
 
             //Location details
             for (var i = 0; i < place.address_components.length; i++) {
-
                 var type             = place.address_components[i].types[0];
                 var postal_type      = place.address_components[i].types[1];
                 var place_name       = place.address_components[i].long_name.trim();
@@ -444,20 +460,18 @@
 
             console.log("FULL ADDRESS: ", place.formatted_address, place);
 
-
-            // var geocoder = new google.maps.Geocoder();
-            // geocoder.geocode({
-            //     'address': 'Folkestone'
-            // }, function(results, status) {
-            //     console.log(results, status);
-            //     console.log(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-            // });
-
-
             if(_this.inputs[ADDRESS] != 0) {
                 _this.inputs[ADDRESS].val(place.formatted_address);
                 _this.address = place.formatted_address;
             }
+
+
+            _this.findCityCoods(_this.currentStore.city, function(res) {
+                if(res !== null) {
+                    _this.coords.city = res;
+                }
+            });
+
 
             if($(".quotation-modal .map-holder").length) {
                 _this.addMarker();
@@ -479,7 +493,7 @@
         addMarker: function() {
             var url = this.staticMap.url;
 
-                url += "?center=" + this.coords.lat + ", " + this.coords.lng;
+                url += "?center=" + this.coords.region.lat + ", " + this.coords.region.lng;
                 url += "&zoom="   + this.staticMap.zoom;
                 url += "&key="    + this.key;
                 url += "&size=196x106";
@@ -487,8 +501,8 @@
                 url += "size:"   + this.staticMap.size +
                        "|color:" + this.staticMap.color +
                        "|label:" + this.staticMap.marker.label +
-                       "|"       + this.coords.lat +
-                       ", "      + this.coords.lng;
+                       "|"       + this.coords.region.lat +
+                       ", "      + this.coords.region.lng;
 
             $(".quotation-modal .map-holder img").attr("src", url);
         },
