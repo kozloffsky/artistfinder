@@ -39,6 +39,16 @@ $(function(){
             city = settingsAutocompService.currentStore.city,
             region = settingsAutocompService.currentStore.region;
 
+        if(cityLat && cityLng) {
+            cityLatInput.val(cityLat);
+            cityLngInput.val(cityLng);
+        }
+
+        if(regionLat && regionLng) {
+            regnLatInput.val(regionLat);
+            regnLngInput.val(regionLng);
+        }
+
         for(var key in allForms) {
             var k = allForms[key].name,
                 value = allForms[key].value.trim();
@@ -68,16 +78,6 @@ $(function(){
 
         console.log("REGION COORDS: ", settingsAutocompService.coords.region)
         console.log("CITY COORDS: ", settingsAutocompService.coords.city)
-
-        if(cityLat && cityLng) {
-            cityLatInput.val(cityLat);
-            cityLngInput.val(cityLng);
-        }
-
-        if(regionLat && regionLng) {
-            regnLatInput.val(regionLat);
-            regnLngInput.val(regionLng);
-        }
 
         return sendForm;
     }
