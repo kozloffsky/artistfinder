@@ -13,7 +13,7 @@ Acted\LegalDocsBundle\Entity\RequestQuotation:
             type: boolean
             options:
               default: false
-        is_outdated:
+        isOutdated:
             type: boolean
             options:
               default: false

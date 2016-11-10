@@ -13,10 +13,10 @@ use Acted\LegalDocsBundle\Entity\RequestQuotation;
  */
 class RequestQuotationRepository extends EntityRepository
 {
-    public function setOutdatedStatus($event) {
+    public function setOutdatedStatus($eventId) {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
-        $params = array('event' => $event, 'outdatedStatus' => true, 'publishedStatus' => RequestQuotation::STATUS_PUBLISHED);
+        $params = array('event' => $eventId, 'outdatedStatus' => true, 'publishedStatus' => RequestQuotation::STATUS_PUBLISHED);
 
         $whereCriteria = 'rq.event = :event AND rq.status = :publishedStatus';
 

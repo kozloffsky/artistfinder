@@ -3,6 +3,11 @@ quotation_prepare:
     defaults: { _controller: ActedLegalDocsBundle:RequestQuotation:prepare }
     methods:  [POST]
 
+quotation_send:
+    path:     /send
+    defaults: { _controller: ActedLegalDocsBundle:RequestQuotation:send }
+    methods:  [POST]
+
 quotation_select_performance:
     path:     /select/{requestId}/performance/{performanceId}
     defaults: { _controller: ActedLegalDocsBundle:RequestQuotation:selectPerformance }

@@ -173,6 +173,10 @@ class RequestQuotationController extends Controller
             $connection->commit();
         } catch (\Exception $e) {
             $connection->rollback();
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Preparing error'
+            ],  Response::HTTP_BAD_REQUEST);
             //\Doctrine\Common\Util\Debug::dump($e->getMessage());exit;
         }
 
@@ -232,7 +236,7 @@ class RequestQuotationController extends Controller
         try {
             $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
 
-            $requestQuotationRepo->setOutdatedStatus($event);
+            $requestQuotationRepo->setOutdatedStatus($event->getId());
             $requestQuotationRepo->setPublishedStatus($requestQuotation->getId());
 
             $paymentTermRequestQuotation = new PaymentTermRequestQuotation();
@@ -245,6 +249,10 @@ class RequestQuotationController extends Controller
             $connection->commit();
         } catch (\Exception $e) {
             $connection->rollback();
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Sending error'
+            ],  Response::HTTP_BAD_REQUEST);
         }
         //generate pdf file
         //send mail

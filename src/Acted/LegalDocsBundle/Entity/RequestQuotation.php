@@ -23,7 +23,7 @@ class RequestQuotation
     /**
      * @var boolean
      */
-    private $is_outdated = false;
+    private $isOutdated = false;
 
     /**
      * @var \Acted\LegalDocsBundle\Entity\PaymentTermRequestQuotation
@@ -103,7 +103,7 @@ class RequestQuotation
      */
     public function setIsOutdated($isOutdated)
     {
-        $this->is_outdated = $isOutdated;
+        $this->isOutdated = $isOutdated;
 
         return $this;
     }
@@ -115,7 +115,7 @@ class RequestQuotation
      */
     public function getIsOutdated()
     {
-        return $this->is_outdated;
+        return $this->isOutdated;
     }
 
     /**
