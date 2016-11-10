@@ -362,10 +362,10 @@
         this.unlock = function(elem) {
             $(elem).prop( "disabled", false );
         };
-        this.findCityCoods = function(city, cb) {
+        this.findCityCoods = function(country, city, cb) {
             var geocoder = new google.maps.Geocoder();
             return geocoder.geocode({
-                'address': city
+                'address': country + "," + city
             }, function(results, status) {
                 if(status == google.maps.GeocoderStatus.OK) {
                     cb({
@@ -384,9 +384,8 @@
             this.setAutocompleteCountry(context, code);
 
             // Clear inputs after change country
-            this.currentStore.country =
-            this.currentStore.city = "";
-            this.currentStore.region = "";
+            this.currentStore.city = 
+            this.currentStore.region = 
             this.currentStore.post_code = "";
             this.inputs[CITY].val("");
             this.inputs[REGION].val("");
@@ -417,7 +416,7 @@
                 lng: place.geometry.location.lng()
             };
 
-            console.log("PLACE: ", place);
+            console.log("PLACE: ", place, _this.coords.region);
 
             //Location details
             for (var i = 0; i < place.address_components.length; i++) {
@@ -465,8 +464,9 @@
                 _this.address = place.formatted_address;
             }
 
-            _this.findCityCoods(_this.currentStore.city, function(res) {
+            _this.findCityCoods(_this.currentStore.country, _this.currentStore.city, function(res) {
                 if(res !== null) {
+                    console.log("CITY COORDS: ", _this.currentStore.city, res);
                     _this.coords.city = res;
                 }
             });
