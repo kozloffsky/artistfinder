@@ -14,11 +14,14 @@ class PerformanceRepository extends \Doctrine\ORM\EntityRepository
 {
     public function findByArtistQuery(Artist $artist, $status, $visible = true, $deleted = true)
     {
+        $isQuotation = false;
         $qb =  $this->createQueryBuilder('p')
             ->innerJoin('p.profile', 'pr')
             ->innerJoin('pr.user', 'u')
             ->innerJoin('u.artist', 'a')
-            ->where('a = :artist');
+            ->where('a = :artist')
+            ->andWhere('p.isQuotation = :isQuotation')
+            ->setParameter('isQuotation', $isQuotation);
 
             if($deleted) {
                 $qb->andWhere("p.deletedTime is NULL");
