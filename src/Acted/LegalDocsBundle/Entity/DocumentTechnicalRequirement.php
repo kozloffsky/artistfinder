@@ -2,6 +2,8 @@
 
 namespace Acted\LegalDocsBundle\Entity;
 
+use Acted\LegalDocsBundle\Entity\TechnicalRequirement;
+
 /**
  * DocumentTechnicalRequirement
  */

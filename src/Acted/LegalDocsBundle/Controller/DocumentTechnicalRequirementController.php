@@ -42,7 +42,6 @@ class DocumentTechnicalRequirementController extends Controller
             }
         }
 
-
         if (empty($data)) {
             return new JsonResponse([
                 'status' => 'error',
@@ -62,6 +61,8 @@ class DocumentTechnicalRequirementController extends Controller
         $constraints = array('maxSize'=> $maxFileSize, 'mimeTypes' => $fileFormats);
         $uploadFiles = $this->get('file_uploader')->create($documents, $constraints);
         //$response = [];
+
+        //todo: task AC-171
 
         if ($uploadFiles->upload()) {
             foreach ($uploadFiles->getDataFiles() as $fileData) {
@@ -84,7 +85,7 @@ class DocumentTechnicalRequirementController extends Controller
             $uploadedDocuments = null;
 
             if(!$_SEARCH_ALL_DOCS) {
-                $uploadedDocuments = $documentTRRepo->getDocumentsAfterId($lastId);
+                $uploadedDocuments = $documentTRRepo->getDocumentsAfterId($lastId, $technicalRequirementId);
             } else {
                 $uploadedDocuments = $documentTRRepo->getDocumentsByTRId($technicalRequirementId);
             }

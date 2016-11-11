@@ -36,16 +36,16 @@ class DocumentTechnicalRequirementRepository extends \Doctrine\ORM\EntityReposit
      * @param $id
      * @return DocumentTechnicalRequirement
      */
-    public function getDocumentsAfterId($id)
+    public function getDocumentsAfterId($id, $technicalRequirementId)
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
 
-        $params = array('documentTechnicalRequirement' => $id);
+        $params = array('documentTechnicalRequirement' => $id, 'technicalRequirement' => $technicalRequirementId);
 
         $qb->from('ActedLegalDocsBundle:DocumentTechnicalRequirement', 'dtr');
         $qb->select('dtr');
-        $qb->where('dtr.id > :documentTechnicalRequirement');
+        $qb->where('dtr.id > :documentTechnicalRequirement AND dtr.technicalRequirement = :technicalRequirement');
 
         $qb->setParameters($params);
 
