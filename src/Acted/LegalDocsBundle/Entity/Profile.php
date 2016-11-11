@@ -498,14 +498,11 @@ class Profile
      */
     public function getPerformances()
     {
-        $performances = [];
-
-        foreach ($this->performances as $performance) {
-            if (!$performance->getIsQuotation())
-                $performances[] = $performance;
-        }
-
-        return $performances;
+        return $this->performances->filter(
+            function($entry) {
+                return !$entry->getIsQuotation();
+            }
+        );
     }
 
     /**
@@ -544,14 +541,11 @@ class Profile
      */
     public function getServices()
     {
-        $services = [];
-
-        foreach ($this->services as $service) {
-            if (!$service->getIsQuotation())
-                $services[] = $service;
-        }
-
-        return $services;
+        return $this->services->filter(
+            function($entry) {
+                return !$entry->getIsQuotation();
+            }
+        );
     }
 
 
