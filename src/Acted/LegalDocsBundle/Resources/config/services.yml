@@ -17,6 +17,12 @@ services:
         calls:
             - [setSavePath, ['%quotation_dir%']]
         folder: %kernel.root_dir%
+    request_quotation_type:
+        class: Acted\LegalDocsBundle\Services\RequestQuotationTypeService
+        arguments: ["@service_container", "@tfox.mpdfport", "request_quotation"]
+        calls:
+            - [setSavePath, ['%request_quotation_dir%']]
+        folder: %kernel.root_dir%
 
     ####### RPC #############
     socket_chat.rpc_server:

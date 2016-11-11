@@ -28,6 +28,7 @@ parameters:
     performancecontract_dir: docs/performance_contract
     invoice_dir: docs/invoice
     quotation_dir: docs/quotation
+    request_quotation_dir: docs/request_quotation
     jms_serializer.constraint_violation_handler.class: Acted\LegalDocsBundle\Serializer\ConstraintViolationHandler
     max_file_size: 10485760 # 1MB = 1048576 B
     file_formats:

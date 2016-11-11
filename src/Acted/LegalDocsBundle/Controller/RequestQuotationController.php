@@ -5,6 +5,7 @@ namespace Acted\LegalDocsBundle\Controller;
 use Acted\LegalDocsBundle\Entity\Event;
 use Acted\LegalDocsBundle\Entity\RequestQuotation;
 use Acted\LegalDocsBundle\Entity\PaymentTermRequestQuotation;
+use Acted\LegalDocsBundle\Entity\DocumentRequestQuotation;
 use Acted\LegalDocsBundle\Entity\Performance;
 use Acted\LegalDocsBundle\Entity\Package;
 use Acted\LegalDocsBundle\Entity\Price;
@@ -235,29 +236,47 @@ class RequestQuotationController extends Controller
         $connection = $em->getConnection();
         $connection->beginTransaction();
 
-        try {
-            $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
+          try {
+              $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
 
-            $requestQuotationRepo->setOutdatedStatus($event->getId());
-            $requestQuotationRepo->setPublishedStatus($requestQuotation->getId());
+              $requestQuotationRepo->setOutdatedStatus($event->getId());
+              $requestQuotationRepo->setPublishedStatus($requestQuotation->getId());
 
-            $paymentTermRequestQuotation = new PaymentTermRequestQuotation();
-            $paymentTermRequestQuotation->setBalancePercent($balancePercent);
-            $paymentTermRequestQuotation->setGuaranteedDepositPercent(PaymentTermRequestQuotation::GUARANTEED_DEPOSIT_PERCENT);
-            $em->persist($paymentTermRequestQuotation);
+              $paymentTermRequestQuotation = new PaymentTermRequestQuotation();
+              $paymentTermRequestQuotation->setBalancePercent($balancePercent);
+              $paymentTermRequestQuotation->setGuaranteedDepositPercent(PaymentTermRequestQuotation::GUARANTEED_DEPOSIT_PERCENT);
+              $em->persist($paymentTermRequestQuotation);
 
-            $em->flush();
+              /*Generate pdf file*/
+              //todo: we need to decide which id get from chatRoom in the future
+              $chatRoomId = $event->getChatRooms()->first()->getId();
 
-            $connection->commit();
-        } catch (\Exception $e) {
-            $connection->rollback();
-            return new JsonResponse([
-                'status' => 'error',
-                'message' => 'Sending error'
-            ],  Response::HTTP_BAD_REQUEST);
-        }
-        //generate pdf file
-        //send mail
+              $path = $this->get('request_quotation_type')
+                  ->setData(array(
+                      'artist_name' => 'someName'
+                  ))
+                  ->getParsedTemplate()
+                  ->generateDocumentPdf($chatRoomId, $requestQuotation->getId());
+
+
+              $documentRequestQuotation = new DocumentRequestQuotation();
+              $documentRequestQuotation->setRequestQuotation($requestQuotation);
+              $documentRequestQuotation->setPath($path);
+              $em->persist($documentRequestQuotation);
+
+              //send mail
+
+              $em->flush();
+
+              $connection->commit();
+          } catch (\Exception $e) {
+              $connection->rollback();
+
+              return new JsonResponse([
+                  'status' => 'error',
+                  'message' => 'Sending error'
+              ],  Response::HTTP_BAD_REQUEST);
+          }
 
         return new JsonResponse(['status' => 'success']);
     }
