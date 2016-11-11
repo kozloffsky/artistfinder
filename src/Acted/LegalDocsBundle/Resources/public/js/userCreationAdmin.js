@@ -1,4 +1,11 @@
 $(function () {
+
+    var adminAutocompService = new GoogleAutocompleteService(),
+        isAvailable = adminAutocompService.getFormElements('.registration-admin-modal form.artistRegForm');
+
+    if(isAvailable)
+        adminAutocompService.initAutoComplete();
+
     //Enabling form validation.
 
     var customerValidate =  $("#customerRegForm").validate();
@@ -201,19 +208,21 @@ $(function () {
         var reg = /(country|city)[=].\w*./;
         userInformation = userInformation.replace(reg, "");
 
-        var lat = GoogleAutocompleteService.coords.lat,
-            lng = GoogleAutocompleteService.coords.lng,
-            country = GoogleAutocompleteService.currentStore.country,
-            city = GoogleAutocompleteService.currentStore.city,
-            region = GoogleAutocompleteService.currentStore.region;
+        var regionLat = adminAutocompService.coords.region.lat,
+            regionLng = adminAutocompService.coords.region.lng,
+            cityLat = adminAutocompService.coords.city.lat,
+            cityLng = adminAutocompService.coords.city.lng,
+            country = adminAutocompService.currentStore.country,
+            city = adminAutocompService.currentStore.city,
+            region = adminAutocompService.currentStore.region;
 
         userInformation += "&country=" + country;
         userInformation += "&city=" + city;
-        userInformation += "&city_lat=" + lat;
-        userInformation += "&city_lng=" + lng;
+        userInformation += "&city_lat=" + cityLat;
+        userInformation += "&city_lng=" + cityLng;
         userInformation += "&region_name=" + region;
-        userInformation += "&region_lat=" + lat;
-        userInformation += "&region_lng=" + lng;
+        userInformation += "&region_lat=" + regionLat;
+        userInformation += "&region_lng=" + regionLng;
 
         registerArtist(userInformation, categoriesForm, userRole, userStatusFake, tempPass);
     };

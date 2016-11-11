@@ -1,229 +1,8 @@
 <div class="modal quotation-modal modal-registered fade" id="quotationModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <span class="title">Request from: Thomas Castagnet</span>
-            </div>
-            <form name="quotation_place_info" class="place-info">
-                <div class="modal-body">
-
-                    <div class="row clearfix">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                            <label for="quot_event_name">Name event</label>
-                            <input type="text" class="form-control" id="quot_event_name" placeholder="Name your event" name="event_name">
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                            <label for="quot_country">Country</label>
-                            <select class="form-control" id="quot_country" name="country">
-                                <option value="United Kingdom" selected>United Kingdom</option>
-                                <option value="Germany">Germany</option>
-                                <option value="France">France</option>
-                            </select>
-                            {#<input type="text" class="form-control" id="quot_country" placeholder="United Kingdom" name="country">#}
-                        </div>
-                    </div>
-
-                    <div class="row clearfix">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                            <label for="quot_date">Date</label>
-                            <input type="text" class="form-control" id="quot_date" placeholder="17/12/2016" name="date">
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                            <label for="quot_city">City</label>
-                            <input type="text" class="form-control" id="quot_city" placeholder="London" name="city">
-                        </div>
-                    </div>
-
-                    <div class="row clearfix">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                            <label for="quot_performance_time">Performance time</label>
-                            <input type="text" class="form-control" id="quot_performance_time" placeholder="10 p.m." name="performance_time">
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                            <label for="quot_address">Address</label>
-                            <input type="text" class="form-control" id="quot_address" placeholder="St Regis" name="address">
-                        </div>
-                    </div>
-
-                    <div class="row clearfix">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                            <label for="quot_arrival_time">Arrival time</label>
-                            <input type="text" class="form-control" id="quot_arrival_time" placeholder="6 p.m." name="arrival_time">
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                            <label for="quot_post_code">Post code</label>
-                            <input type="text" class="form-control" id="quot_post_code" placeholder="St Regis" name="post_code">
-                        </div>
-                    </div>
-
-                    <div class="row clearfix">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                            <label for="quot_guests_number">Number of guests</label>
-                            <input type="text" class="form-control" id="quot_guests_number" placeholder="Less than 50" name="guests_number">
-                        </div>
-
-                        <div class="map-holder">
-                            <img src="https://maps.googleapis.com/maps/api/staticmap?size=196x106&key=AIzaSyATENIG0m2xaOqvzz7M9CbOHRFVexb4LWw">
-                        </div>
-                    </div>
-
-                    <div class="row clearfix">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                            <label for="quot_venue_type">Venue type</label>
-                            <input type="text" class="form-control" id="quot_venue_type" placeholder="Hotel Ballrom" name="venue_type">
-                        </div>
-                    </div>
-
-                </div>
-            </form>
-            <form name="quotation_act_info" class="act-info">
-                <div class="row">
-                    <div class="act-title">
-                        <div class="custom-checkbox">
-                            <input id="count_1" name="title-check" value="" type="checkbox">
-                            <label for="count_1"></label>
-                        </div>
-                        Act 1 -Jazz Band
-                        <i delete_price="" class="fa fa-trash" aria-hidden="true"></i>
-                    </div>
-                </div>
-                <div>
-                    <div class="row package">
-                        <label>3-piece Jazz Band</label>
-                        <div class="custom-checkbox">
-                            <input id="package_1" name="package-check" value="" type="checkbox">
-                            <label for="package_1"></label>
-                        </div>
-                        <a href="#">Add sets</a>
-                        <i delete_price="" class="fa fa-trash" aria-hidden="true"></i>
-                    </div>
-                    <div class="col-md-6 ">
-                        <div class="custom-checkbox">
-                            <input id="package_2" name="package-check" value="" type="checkbox">
-                            <label for="package_2"></label>
-                        </div>
-                        <select>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                        <span>x</span>
-                        <select>
-                            <option>45 min</option>
-                            <option>50 min</option>
-                            <option>55 min</option>
-                        </select>
-                        <select>
-                            <option>Price 1</option>
-                            <option>Price 2</option>
-                            <option>Custom</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="custom-checkbox">
-                            <input id="package_3" name="package-check" value="" type="checkbox">
-                            <label for="package_3"></label>
-                        </div>
-                        <select>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                        <span>x</span>
-                        <select>
-                            <option>45 min</option>
-                            <option>50 min</option>
-                            <option>55 min</option>
-                        </select>
-                        <select>
-                            <option>Price 1</option>
-                            <option>Price 2</option>
-                            <option>Custom</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="custom-checkbox">
-                            <input id="package_4" name="package-check" value="" type="checkbox">
-                            <label for="package_4"></label>
-                        </div>
-                        <select>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                        <span>x</span>
-                        <select>
-                            <option>45 min</option>
-                            <option>50 min</option>
-                            <option>55 min</option>
-                        </select>
-                        <select>
-                            <option>Price 1</option>
-                            <option>Price 2</option>
-                            <option>Custom</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="custom-checkbox">
-                            <input id="package_5" name="package-check" value="" type="checkbox">
-                            <label for="package_5"></label>
-                        </div>
-                        <select>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                        <span>x</span>
-                        <select>
-                            <option>45 min</option>
-                            <option>50 min</option>
-                            <option>55 min</option>
-                        </select>
-                        <select>
-                            <option>Price 1</option>
-                            <option>Price 2</option>
-                            <option>Custom</option>
-                        </select>
-                    </div>
-                </div>
-            </form>
-            <hr>
-            <form name="quotation_payment_info" class="payment-info">
-                <div class="row">
-                    <label>Payment terms</label>
-                </div>
-
-                <div class="row payment-deposit">
-                    <select>
-                        <option value="0">30%</option>
-                        <option value="1">50%</option>
-                        <option value="2">100%</option>
-                    </select>
-
-                    <span>Guaranteed deposit to be paid with <b>Acted Escrow Account</b> now to confirm the booking</span>
-                </div>
-
-                <div class="row payment-deposit-info">
-                    <span>50% Balance Payment to be held on <b>Acted Escrow Account</b> no later than 1 day before event</span>
-                </div>
-
-                <div class="row add-comment-btn">
-                    <a href="#" id="comment_toggle">Add a comment</a>
-                </div>
-
-                <div class="col-lg-12 no-pad" id="comment_area" style="display: none;">
-                    <textarea name="comment" class="quote-profile-desc" placeholder="Write a message to the Artist if you have any question about his performance or if you want to provide with more details about your event"></textarea>
-                </div>
-
-                <div style="text-align: center;">
-                    <button class="btn btn-mango-grad">Send quotation</button>
-                </div>
-
-            </form>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
 </div>
 
 <div class="modal registration-modal fade" id="offerSuccess">
@@ -319,3 +98,246 @@
         </div>
     </div>
 </div>
+
+
+<!-- QUOTATION MODAL TEMPLATE -->
+<script type="text/template" id="quot-modal-tmp">
+    <div class="modal-header">
+        <span class="title">Request from: <%= title %></span>
+    </div>
+    <form name="quotation_event_info" class="place-info">
+        <%= event %>
+    </form>
+    <form name="quotation_act_info" class="act-info">
+        <%= performance %>
+    </form>
+    <hr>
+    <form name="quotation_payment_info" class="payment-info">
+        <%= payment %>
+    </form>
+</script>
+
+
+<!-- Quotation event section -->
+<script type="text/template" id="quot-event-tmp">
+    <div class="modal-body">
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_event_name">Name event</label>
+                <input type="text" class="form-control" id="quot_event_name" placeholder="Name your event" name="event_name" value="<%=data.model.title%>">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_country">Country</label>
+                <select class="form-control" id="quot_country" name="country">
+                    <option value="United Kingdom" <% if(data.model.countryId == 1) { %> selected <% } %>>United Kingdom</option>
+                    <option value="Germany" <% if(data.model.countryId == 2) { %> selected <% } %> >Germany</option>
+                    <option value="France" <% if(data.model.countryId == 3) { %> selected <% } %> >France</option>
+                </select>
+                {#<input type="text" class="form-control" id="quot_country" placeholder="United Kingdom" name="country">#}
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_date">Date</label>
+                <input type="text" class="form-control" id="quot_date" placeholder="17/12/2016" name="date" value="<%=data.model.starting_date%>">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_city">City</label>
+                <input type="text" class="form-control" id="quot_city" placeholder="London" name="city" value="<%=data.model.city.name%>">
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_performance_time">Performance time</label>
+                <input type="text" class="form-control" id="quot_performance_time" placeholder="10 p.m." name="performance_time">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_address">Address</label>
+                <input type="text" class="form-control" id="quot_address" placeholder="St Regis" name="address" value="<%=data.model.city.name%>">
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_arrival_time">Arrival time</label>
+                <input type="text" class="form-control" id="quot_arrival_time" placeholder="6 p.m." name="arrival_time">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_post_code">Post code</label>
+                <input type="text" class="form-control" id="quot_post_code" placeholder="St Regis" name="post_code">
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_guests_number">Number of guests</label>
+                <input type="text" class="form-control" id="quot_guests_number" placeholder="Less than 50" name="guests_number" value="<%=data.model.number_of_guests%>">
+            </div>
+
+            <div class="map-holder">
+                <img src="https://maps.googleapis.com/maps/api/staticmap?size=196x106&key=AIzaSyATENIG0m2xaOqvzz7M9CbOHRFVexb4LWw">
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_venue_type">Venue type</label>
+                <input type="text" class="form-control" id="quot_venue_type" placeholder="Hotel Ballrom" name="venue_type" value="<%=data.model.venue_type.venue_type%>">
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- Quotation performance section -->
+<script type="text/template" id="quot-performance-tmp">
+    <div class="row">
+        <div class="act-title">
+            <div class="custom-checkbox">
+                <input id="count_1" name="title-check" value="" type="checkbox">
+                <label for="count_1"></label>
+            </div>
+            Act 1 -Jazz Band
+            <i delete_price="" class="fa fa-trash" aria-hidden="true"></i>
+        </div>
+    </div>
+    <div>
+        <div class="row package">
+            <label>3-piece Jazz Band</label>
+            <div class="custom-checkbox">
+                <input id="package_1" name="package-check" value="" type="checkbox">
+                <label for="package_1"></label>
+            </div>
+            <a href="#">Add sets</a>
+            <i delete_price="" class="fa fa-trash" aria-hidden="true"></i>
+        </div>
+        <div class="col-md-6 ">
+            <div class="custom-checkbox">
+                <input id="package_2" name="package-check" value="" type="checkbox">
+                <label for="package_2"></label>
+            </div>
+            <select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+            <span>x</span>
+            <select>
+                <option>45 min</option>
+                <option>50 min</option>
+                <option>55 min</option>
+            </select>
+            <select>
+                <option>Price 1</option>
+                <option>Price 2</option>
+                <option>Custom</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <div class="custom-checkbox">
+                <input id="package_3" name="package-check" value="" type="checkbox">
+                <label for="package_3"></label>
+            </div>
+            <select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+            <span>x</span>
+            <select>
+                <option>45 min</option>
+                <option>50 min</option>
+                <option>55 min</option>
+            </select>
+            <select>
+                <option>Price 1</option>
+                <option>Price 2</option>
+                <option>Custom</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <div class="custom-checkbox">
+                <input id="package_4" name="package-check" value="" type="checkbox">
+                <label for="package_4"></label>
+            </div>
+            <select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+            <span>x</span>
+            <select>
+                <option>45 min</option>
+                <option>50 min</option>
+                <option>55 min</option>
+            </select>
+            <select>
+                <option>Price 1</option>
+                <option>Price 2</option>
+                <option>Custom</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <div class="custom-checkbox">
+                <input id="package_5" name="package-check" value="" type="checkbox">
+                <label for="package_5"></label>
+            </div>
+            <select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+            <span>x</span>
+            <select>
+                <option>45 min</option>
+                <option>50 min</option>
+                <option>55 min</option>
+            </select>
+            <select>
+                <option>Price 1</option>
+                <option>Price 2</option>
+                <option>Custom</option>
+            </select>
+        </div>
+    </div>
+
+    <div>
+        <% items.forEach(function(item) { %>
+            <p> <%-item%> </p>
+        <% }); %>
+    </div>
+</script>
+
+<!-- Quotation payment section -->
+<script type="text/template" id="quot-payment-tmp">
+    <div class="row">
+        <label>Payment terms</label>
+    </div>
+
+    <div class="row payment-deposit">
+        <select>
+            <option value="0">30%</option>
+            <option value="1">50%</option>
+            <option value="2">100%</option>
+        </select>
+
+        <span>Guaranteed deposit to be paid with <b>Acted Escrow Account</b> now to confirm the booking</span>
+    </div>
+
+    <div class="row payment-deposit-info">
+        <span>50% Balance Payment to be held on <b>Acted Escrow Account</b> no later than 1 day before event</span>
+    </div>
+
+    <div class="row add-comment-btn">
+        <a href="#" id="comment_toggle">Add a comment</a>
+    </div>
+
+    <div class="col-lg-12 no-pad" id="comment_area" style="display: none;">
+        <textarea name="comment" class="quote-profile-desc" placeholder="Write a message to the Artist if you have any question about his performance or if you want to provide with more details about your event"></textarea>
+    </div>
+
+    <div style="text-align: center;">
+        <button class="btn btn-mango-grad">Send quotation</button>
+    </div>
+</script>

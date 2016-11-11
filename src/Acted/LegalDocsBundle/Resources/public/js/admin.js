@@ -2,6 +2,7 @@
  * Created by pavel on 03.07.16.
  */
 $(function() {
+
     $(document).on('click','.manageRecommended',function(){
         //console.log(this)
         var artistEditManageId = $(this).parents('tr').attr('id');
@@ -175,9 +176,4 @@ $(function() {
             }
         });
     }
-
-    var isAvailable = GoogleAutocompleteService.getFormElements('.registration-admin-modal form.artistRegForm');
-
-    if(isAvailable)
-        GoogleAutocompleteService.initAutoComplete();
 });
