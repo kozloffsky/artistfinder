@@ -126,4 +126,16 @@ class RequestQuotationRepository extends EntityRepository
 
         return true;
     }
+
+    public function createDraftRequestQuotation($event)
+    {
+        $em = $this->getEntityManager();
+        $newRequestQuotation = new RequestQuotation();
+        $newRequestQuotation->setEvent($event);
+        $newRequestQuotation->setStatus(RequestQuotation::STATUS_DRAFT);
+        $em->persist($newRequestQuotation);
+        $em->flush();
+
+        return $newRequestQuotation;
+    }
 }
