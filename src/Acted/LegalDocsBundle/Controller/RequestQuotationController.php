@@ -116,11 +116,10 @@ class RequestQuotationController extends Controller
                     $draftedRequestQuotationId,
                     $connection
                 );
-
-                /*Create new request with draft status*/
-                $newRequestQuotation = $requestQuotationRepo->createDraftRequestQuotation($event);
-
             }
+
+            /*Create new request with draft status*/
+            $newRequestQuotation = $requestQuotationRepo->createDraftRequestQuotation($event);
 
             if ($isExistsPublishedRequestQuotation) {
                 //copy performances from published requestQuotation
@@ -148,12 +147,6 @@ class RequestQuotationController extends Controller
 
                 $newRequestQuotation->setPaymentTermRequestQuotation($newPaymentTermRequestQuotation);
             } else {
-
-                if (!$isExistsDraftedRequestQuotation) {
-                    /*Create new request with draft status*/
-                    $newRequestQuotation = $requestQuotationRepo->createDraftRequestQuotation($event);
-                }
-
                 //copy performances from base data(performance)
                 $performanceRequestQuotations = $performanceRepo->getPerformancesByProfileId($profile->getId());
                 $performanceRequests = $performanceRequestQuotationRepo->copyPerformanceRequestQuotation($performanceRequestQuotations, $profile, $newRequestQuotation, $preSelectedPerformanceIds);

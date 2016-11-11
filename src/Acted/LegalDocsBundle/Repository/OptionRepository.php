@@ -51,4 +51,20 @@ class OptionRepository extends \Doctrine\ORM\EntityRepository
 
         return $optionIds;
     }
+
+    public function changeOptionSelected($optionId)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $params = array('id' => $optionId);
+
+        $whereCriteria = 'o.id = :id';
+
+        $qb->update('ActedLegalDocsBundle:Option', 'o')
+            ->set('o.isSelected', '1-o.isSelected')
+            ->where($whereCriteria)
+            ->setParameters($params);
+
+        return $qb->getQuery()->execute();
+    }
 }

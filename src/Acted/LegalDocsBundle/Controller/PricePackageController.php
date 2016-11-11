@@ -8,6 +8,8 @@ use Acted\LegalDocsBundle\Form\PricePackageType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class PricePackageController extends Controller
 {
@@ -74,5 +76,30 @@ class PricePackageController extends Controller
         }
 
         return new JsonResponse(array('status' => 'success'));
+    }
+
+    /**
+     * Change selecting package
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="change selecting package",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @param integer $id
+     * @return JsonResponse
+     */
+    public function selectAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $packageRepo = $em->getRepository('ActedLegalDocsBundle:Package');
+        $resultUpdating = $packageRepo->changePackageSelected($id);
+
+        return new JsonResponse(['status' => 'success']);
     }
 }

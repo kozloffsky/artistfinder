@@ -8,6 +8,8 @@ use Acted\LegalDocsBundle\Form\PriceOptionEditType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 
 class PriceOptionController extends Controller
@@ -114,5 +116,30 @@ class PriceOptionController extends Controller
         }
 
         return new JsonResponse(array('status' => 'success'));
+    }
+
+    /**
+     * Change selecting option
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="change selecting option",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @param integer $id
+     * @return JsonResponse
+     */
+    public function selectAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $optionRepo = $em->getRepository('ActedLegalDocsBundle:Option');
+        $resultUpdating = $optionRepo->changeOptionSelected($id);
+
+        return new JsonResponse(['status' => 'success']);
     }
 }

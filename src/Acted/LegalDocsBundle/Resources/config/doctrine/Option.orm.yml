@@ -19,6 +19,10 @@ Acted\LegalDocsBundle\Entity\Option:
         type: boolean
         options:
           default: false
+      isSelected:
+        type: boolean
+        options:
+          default: false
       deletedTime:
         type: datetime
         nullable: true

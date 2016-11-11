@@ -43,6 +43,11 @@ class Option
     private $priceOnRequest = false;
 
     /**
+     * @var boolean
+     */
+    private $isSelected = false;
+
+    /**
      * Add rate
      *
      * @param \Acted\LegalDocsBundle\Entity\Rate $rate
@@ -204,5 +209,29 @@ class Option
     public function getPriceOnRequest()
     {
         return $this->priceOnRequest;
+    }
+
+    /**
+     * Set isSelected
+     *
+     * @param boolean $isSelected
+     *
+     * @return Option
+     */
+    public function setIsSelected($isSelected)
+    {
+        $this->isSelected = $isSelected;
+
+        return $this;
+    }
+
+    /**
+     * Get isSelected
+     *
+     * @return boolean
+     */
+    public function getIsSelected()
+    {
+        return $this->isSelected;
     }
 }

@@ -57,6 +57,11 @@ class Package
      */
     private $options;
 
+    /**
+     * @var boolean
+     */
+    private $isSelected = false;
+
     public function __construct()
     {
         $this->options = new \Doctrine\Common\Collections\ArrayCollection();
@@ -290,6 +295,30 @@ class Package
     public function getPerformanceId()
     {
         return $this->performanceId;
+    }
+
+    /**
+     * Set isSelected
+     *
+     * @param boolean $isSelected
+     *
+     * @return Package
+     */
+    public function setIsSelected($isSelected)
+    {
+        $this->isSelected = $isSelected;
+
+        return $this;
+    }
+
+    /**
+     * Get isSelected
+     *
+     * @return boolean
+     */
+    public function getIsSelected()
+    {
+        return $this->isSelected;
     }
 
 }
