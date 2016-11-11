@@ -15,12 +15,19 @@ Acted\LegalDocsBundle\Entity\Service:
           type: boolean
           options:
             default: true
+        isQuotation:
+          type: boolean
+          options:
+            default: false
         deletedTime:
           type: datetime
           nullable: true
     oneToMany:
       packages:
         targetEntity: Acted\LegalDocsBundle\Entity\Package
+        mappedBy: service
+      serviceRequestQuotations:
+        targetEntity: Acted\LegalDocsBundle\Entity\ServiceRequestQuotation
         mappedBy: service
     manyToOne:
       profile:

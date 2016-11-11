@@ -73,3 +73,7 @@ acted_legal_docs_price:
 acted_legal_docs_technical_requirement:
   resource: "@ActedLegalDocsBundle/Resources/config/routing/technicalRequirement.yml"
   prefix: /technical_requirement
+
+acted_legal_docs_quotation:
+  resource: "@ActedLegalDocsBundle/Resources/config/routing/quotation.yml"
+  prefix: /quotation

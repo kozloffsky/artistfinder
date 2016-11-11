@@ -1,0 +1,41 @@
+Acted\LegalDocsBundle\Entity\RequestQuotation:
+    type: entity
+    table: RequestQuotation
+    repositoryClass: Acted\LegalDocsBundle\Repository\RequestQuotationRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        status:
+            type: boolean
+            options:
+              default: false
+        isOutdated:
+            type: boolean
+            options:
+              default: false
+    oneToMany:
+      performanceRequestQuotations:
+          targetEntity: Acted\LegalDocsBundle\Entity\PerformanceRequestQuotation
+          mappedBy: requestQuotation
+      serviceRequestQuotations:
+          targetEntity: Acted\LegalDocsBundle\Entity\ServiceRequestQuotation
+          mappedBy: requestQuotation
+      documentRequestQuotations:
+          targetEntity: Acted\LegalDocsBundle\Entity\DocumentRequestQuotation
+          mappedBy: requestQuotation
+    oneToOne:
+        paymentTermRequestQuotation:
+          targetEntity: Acted\LegalDocsBundle\Entity\PaymentTermRequestQuotation
+          mappedBy: requestQuotation
+    manyToOne:
+        event:
+          targetEntity: Acted\LegalDocsBundle\Entity\Event
+          joinColumn:
+            referencedColumnName: id
+            onDelete: RESTRICT
+          inversedBy: requestQuotations
+    lifecycleCallbacks: {  }

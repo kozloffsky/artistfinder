@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Acted\LegalDocsBundle\Entity\Artist;
+use Acted\LegalDocsBundle\Entity\RequestQuotation;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
@@ -45,6 +46,14 @@ class ServicePriceType extends AbstractType
                     new NotBlank(),
                     new Length(['max' => 123456789, 'min' => 1])
                 ], 'description' => 'Price1'])
+            ->add('is_quotation', BooleanType::class, [
+                'constraints' => [
+                ], 'description' => 'Is quotation this service'])
+            ->add('request_quotation', EntityType::class, [
+                'class' => RequestQuotation::class,
+                'constraints' => [],
+                'description' => 'RequestQuotationId'
+            ])
         ;
     }
 

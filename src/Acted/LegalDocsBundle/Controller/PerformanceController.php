@@ -10,6 +10,7 @@ use Acted\LegalDocsBundle\Entity\Package;
 use Acted\LegalDocsBundle\Entity\Option;
 use Acted\LegalDocsBundle\Entity\Price;
 use Acted\LegalDocsBundle\Entity\Rate;
+use Acted\LegalDocsBundle\Entity\PerformanceRequestQuotation;
 use Acted\LegalDocsBundle\Form\MediaUploadType;
 use Acted\LegalDocsBundle\Form\PerformanceType;
 use Acted\LegalDocsBundle\Form\PerformancePriceType;
@@ -189,6 +190,7 @@ class PerformanceController extends Controller
         $performance->setProfile($profile);
         $performance->setStatus(Performance::STATUS_PUBLISHED);
         $performance->setIsVisible(false);
+        $performance->setIsQuotation($data['is_quotation']);
         $em->persist($performance);
 
         $package = new Package();
@@ -233,6 +235,14 @@ class PerformanceController extends Controller
         $createdPerformance = $performanceRepo->getFullPerformanceById($performance->getId());
         if (!empty($createdPerformance)) {
             $createdPerformance = $createdPerformance[0];
+        }
+
+        if ($data['is_quotation']) {
+            $performanceRequestQuotation = new PerformanceRequestQuotation();
+            $performanceRequestQuotation->setPerformance($performance);
+            $performanceRequestQuotation->setRequestQuotation($data['request_quotation']);
+            $em->persist($performanceRequestQuotation);
+            $em->flush();
         }
 
         return new JsonResponse(['status' => 'success', 'performance' => $createdPerformance]);

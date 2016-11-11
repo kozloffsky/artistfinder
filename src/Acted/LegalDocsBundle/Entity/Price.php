@@ -44,7 +44,7 @@ class Price
     }
 
     /**
-     * Get amount
+     * Set amount
      *
      * @return Price
      */

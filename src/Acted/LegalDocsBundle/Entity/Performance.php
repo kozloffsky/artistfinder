@@ -74,11 +74,22 @@ class Performance
      */
     public $priceOnRequest = false;
 
+    /**
+     * @var boolean
+     */
+    private $isQuotation = false;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $performanceRequestQuotations;
+
     public function __construct()
     {
         $this->packages = new \Doctrine\Common\Collections\ArrayCollection();
         $this->offers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->media = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->performanceRequestQuotations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -441,5 +452,63 @@ class Performance
      */
     public function setPriceOnRequest($flag) {
         $this->priceOnRequest = $flag;
+    }
+
+    /**
+     * Add performanceRequestQuotation
+     *
+     * @param \Acted\LegalDocsBundle\Entity\PerformanceRequestQuotation $performanceRequestQuotation
+     *
+     * @return Performance
+     */
+    public function addPerformanceRequestQuotation(\Acted\LegalDocsBundle\Entity\PerformanceRequestQuotation $performanceRequestQuotation)
+    {
+        $this->performanceRequestQuotations[] = $performanceRequestQuotation;
+
+        return $this;
+    }
+
+    /**
+     * Remove performanceRequestQuotation
+     *
+     * @param \Acted\LegalDocsBundle\Entity\PerformanceRequestQuotation $performanceRequestQuotation
+     */
+    public function removePerformanceRequestQuotation(\Acted\LegalDocsBundle\Entity\PerformanceRequestQuotation $performanceRequestQuotation)
+    {
+        $this->performanceRequestQuotations->removeElement($performanceRequestQuotation);
+    }
+
+    /**
+     * Get performanceRequestQuotations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPerformanceRequestQuotations()
+    {
+        return $this->performanceRequestQuotations;
+    }
+
+    /**
+     * Set isQuotation
+     *
+     * @param boolean $isQuotation
+     *
+     * @return Performance
+     */
+    public function setIsQuotation($isQuotation)
+    {
+        $this->isQuotation = $isQuotation;
+
+        return $this;
+    }
+
+    /**
+     * Get isQuotation
+     *
+     * @return boolean
+     */
+    public function getIsQuotation()
+    {
+        return $this->isQuotation;
     }
 }

@@ -14,11 +14,14 @@ class PerformanceRepository extends \Doctrine\ORM\EntityRepository
 {
     public function findByArtistQuery(Artist $artist, $status, $visible = true, $deleted = true)
     {
+        $isQuotation = false;
         $qb =  $this->createQueryBuilder('p')
             ->innerJoin('p.profile', 'pr')
             ->innerJoin('pr.user', 'u')
             ->innerJoin('u.artist', 'a')
-            ->where('a = :artist');
+            ->where('a = :artist')
+            ->andWhere('p.isQuotation = :isQuotation')
+            ->setParameter('isQuotation', $isQuotation);
 
             if($deleted) {
                 $qb->andWhere("p.deletedTime is NULL");
@@ -115,7 +118,8 @@ class PerformanceRepository extends \Doctrine\ORM\EntityRepository
 
     public function getPerformancesByProfileId($profileId)
     {
-        $whereCriteria = 'p.profile = :profileId AND p.deletedTime IS NULL';
+        $whereCriteria = 'p.profile = :profileId AND p.deletedTime IS NULL AND p.isQuotation = :isQuotation';
+        $params = array('profileId' => $profileId, 'isQuotation' => false);
         return $this->createQueryBuilder('p')
             ->select('p, pac, opt, rate, price')
             ->leftJoin('p.packages', 'pac', 'WITH', 'pac.deletedTime IS NULL')
@@ -123,7 +127,7 @@ class PerformanceRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('opt.rates', 'rate', 'WITH', 'rate.deletedTime IS NULL')
             ->leftJoin('rate.price', 'price')
             ->where($whereCriteria)
-            ->setParameter('profileId', $profileId)
+            ->setParameters($params)
             ->getQuery()->getArrayResult();
     }
 }

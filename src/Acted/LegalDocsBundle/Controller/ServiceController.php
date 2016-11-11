@@ -8,6 +8,7 @@ use Acted\LegalDocsBundle\Entity\Option;
 use Acted\LegalDocsBundle\Entity\Package;
 use Acted\LegalDocsBundle\Entity\Service;
 use Acted\LegalDocsBundle\Entity\Price;
+use Acted\LegalDocsBundle\Entity\ServiceRequestQuotation;
 use Acted\LegalDocsBundle\Form\ServicePriceType;
 use Acted\LegalDocsBundle\Form\ServicePricePackageType;
 use Acted\LegalDocsBundle\Form\ServiceType;
@@ -49,6 +50,7 @@ class ServiceController extends Controller
         $service->setTitle($data['title']);
         $service->setProfile($profile);
         $service->setIsVisible(false);
+        $service->setIsQuotation($data['is_quotation']);
         $em->persist($service);
 
         $package = new Package();
@@ -77,6 +79,14 @@ class ServiceController extends Controller
         $createdService = $serviceRepo->getFullServiceById($service->getId());
         if (!empty($createdService)) {
             $createdService = $createdService[0];
+        }
+
+        if ($data['is_quotation']) {
+            $serviceRequestQuotation = new ServiceRequestQuotation();
+            $serviceRequestQuotation->setService($service);
+            $serviceRequestQuotation->setRequestQuotation($data['request_quotation']);
+            $em->persist($serviceRequestQuotation);
+            $em->flush();
         }
 
         return new JsonResponse(['status' => 'success', 'service' => $createdService]);

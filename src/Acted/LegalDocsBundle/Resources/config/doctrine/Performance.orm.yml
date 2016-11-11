@@ -26,6 +26,10 @@ Acted\LegalDocsBundle\Entity\Performance:
           type: boolean
           options:
             default: true
+        isQuotation:
+          type: boolean
+          options:
+            default: false
         deletedTime:
           type: datetime
           nullable: true
@@ -46,5 +50,8 @@ Acted\LegalDocsBundle\Entity\Performance:
     oneToMany:
         packages:
           targetEntity: Acted\LegalDocsBundle\Entity\Package
+          mappedBy: performance
+        performanceRequestQuotations:
+          targetEntity: Acted\LegalDocsBundle\Entity\PerformanceRequestQuotation
           mappedBy: performance
     lifecycleCallbacks: {  }

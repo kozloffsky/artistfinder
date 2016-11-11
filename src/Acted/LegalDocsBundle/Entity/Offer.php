@@ -304,7 +304,14 @@ class Offer
      */
     public function getPerformances()
     {
-        return $this->performances;
+        $performances = [];
+
+        foreach ($this->performances as $performance) {
+            if (!$performance->getIsQuotation())
+                $performances[] = $performance;
+        }
+
+        return $performances;
     }
 
     /**

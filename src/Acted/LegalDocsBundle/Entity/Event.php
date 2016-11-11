@@ -540,6 +540,7 @@ class Event
     public function __construct()
     {
         $this->chatRooms = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->requestQuotations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -602,5 +603,44 @@ class Event
     {
         return ($this->city && $this->city->getRegion()->getCountry()) ? $this->city->getRegion()->getCountry()->getName
         () : null;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $requestQuotations;
+
+
+    /**
+     * Add requestQuotation
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation
+     *
+     * @return Event
+     */
+    public function addRequestQuotation(\Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation)
+    {
+        $this->requestQuotations[] = $requestQuotation;
+
+        return $this;
+    }
+
+    /**
+     * Remove requestQuotation
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation
+     */
+    public function removeRequestQuotation(\Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation)
+    {
+        $this->requestQuotations->removeElement($requestQuotation);
+    }
+
+    /**
+     * Get requestQuotations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRequestQuotations()
+    {
+        return $this->requestQuotations;
     }
 }

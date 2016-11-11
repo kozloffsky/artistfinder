@@ -47,8 +47,19 @@ class Service
      */
     private $packages;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $serviceRequestQuotations;
+
+    /**
+     * @var boolean
+     */
+    private $isQuotation = false;
+
     public function __construct() {
         $this->packages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->serviceRequestQuotations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -238,5 +249,63 @@ class Service
     public function getDeletedTime()
     {
         return $this->deletedTime;
+    }
+
+    /**
+     * Add serviceRequestQuotation
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ServiceRequestQuotation $serviceRequestQuotation
+     *
+     * @return Service
+     */
+    public function addServiceRequestQuotation(\Acted\LegalDocsBundle\Entity\ServiceRequestQuotation $serviceRequestQuotation)
+    {
+        $this->serviceRequestQuotations[] = $serviceRequestQuotation;
+
+        return $this;
+    }
+
+    /**
+     * Remove serviceRequestQuotation
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ServiceRequestQuotation $serviceRequestQuotation
+     */
+    public function removeServiceRequestQuotation(\Acted\LegalDocsBundle\Entity\ServiceRequestQuotation $serviceRequestQuotation)
+    {
+        $this->serviceRequestQuotations->removeElement($serviceRequestQuotation);
+    }
+
+    /**
+     * Get serviceRequestQuotations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getServiceRequestQuotations()
+    {
+        return $this->serviceRequestQuotations;
+    }
+
+    /**
+     * Set isQuotation
+     *
+     * @param boolean $isQuotation
+     *
+     * @return Service
+     */
+    public function setIsQuotation($isQuotation)
+    {
+        $this->isQuotation = $isQuotation;
+
+        return $this;
+    }
+
+    /**
+     * Get isQuotation
+     *
+     * @return boolean
+     */
+    public function getIsQuotation()
+    {
+        return $this->isQuotation;
     }
 }
