@@ -120,15 +120,22 @@
 
 <!-- Quotation event section -->
 <script type="text/template" id="quot-event-tmp">
+
+    <% var disabled = '';
+
+    if(data.model.user.type == 'ARTIST') { 
+        disabled = 'disabled';
+    } %>
+
     <div class="modal-body">
         <div class="row clearfix">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                 <label for="quot_event_name">Name event</label>
-                <input type="text" class="form-control" id="quot_event_name" placeholder="Name your event" name="event_name" value="<%=data.model.title%>">
+                <input type="text" class="form-control" id="quot_event_name" placeholder="Name your event" name="event_name" value="<%=data.model.title%>" <%=disabled%> >
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                 <label for="quot_country">Country</label>
-                <select class="form-control" id="quot_country" name="country">
+                <select class="form-control" id="quot_country" name="country" <%=disabled%> >
                     <option value="United Kingdom" <% if(data.model.countryId == 1) { %> selected <% } %>>United Kingdom</option>
                     <option value="Germany" <% if(data.model.countryId == 2) { %> selected <% } %> >Germany</option>
                     <option value="France" <% if(data.model.countryId == 3) { %> selected <% } %> >France</option>
@@ -140,40 +147,40 @@
         <div class="row clearfix">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                 <label for="quot_date">Date</label>
-                <input type="text" class="form-control" id="quot_date" placeholder="17/12/2016" name="date" value="<%=data.model.starting_date%>">
+                <input type="text" class="form-control" id="quot_date" placeholder="17/12/2016" name="date" value="<%=data.model.starting_date%>" <%=disabled%>>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                 <label for="quot_city">City</label>
-                <input type="text" class="form-control" id="quot_city" placeholder="London" name="city" value="<%=data.model.city.name%>">
+                <input type="text" class="form-control" id="quot_city" placeholder="London" name="city" value="<%=data.model.city.name%>" <%=disabled%>>
             </div>
         </div>
 
         <div class="row clearfix">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                 <label for="quot_performance_time">Performance time</label>
-                <input type="text" class="form-control" id="quot_performance_time" placeholder="10 p.m." name="performance_time">
+                <input type="text" class="form-control" id="quot_performance_time" placeholder="10 p.m." name="performance_time" <%=disabled%>>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                 <label for="quot_address">Address</label>
-                <input type="text" class="form-control" id="quot_address" placeholder="St Regis" name="address" value="<%=data.model.city.name%>">
+                <input type="text" class="form-control" id="quot_address" placeholder="St Regis" name="address" value="<%=data.model.city.name%>" <%=disabled%>>
             </div>
         </div>
 
         <div class="row clearfix">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                 <label for="quot_arrival_time">Arrival time</label>
-                <input type="text" class="form-control" id="quot_arrival_time" placeholder="6 p.m." name="arrival_time">
+                <input type="text" class="form-control" id="quot_arrival_time" placeholder="6 p.m." name="arrival_time" <%=disabled%>>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                 <label for="quot_post_code">Post code</label>
-                <input type="text" class="form-control" id="quot_post_code" placeholder="St Regis" name="post_code">
+                <input type="text" class="form-control" id="quot_post_code" placeholder="St Regis" name="post_code" <%=disabled%>>
             </div>
         </div>
 
         <div class="row clearfix">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                 <label for="quot_guests_number">Number of guests</label>
-                <input type="text" class="form-control" id="quot_guests_number" placeholder="Less than 50" name="guests_number" value="<%=data.model.number_of_guests%>">
+                <input type="text" class="form-control" id="quot_guests_number" placeholder="Less than 50" name="guests_number" value="<%=data.model.number_of_guests%>" <%=disabled%>>
             </div>
 
             <div class="map-holder">
@@ -184,7 +191,7 @@
         <div class="row clearfix">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                 <label for="quot_venue_type">Venue type</label>
-                <input type="text" class="form-control" id="quot_venue_type" placeholder="Hotel Ballrom" name="venue_type" value="<%=data.model.venue_type.venue_type%>">
+                <input type="text" class="form-control" id="quot_venue_type" placeholder="Hotel Ballrom" name="venue_type" value="<%=data.model.venue_type.venue_type%>" <%=disabled%>>
             </div>
         </div>
     </div>
@@ -192,121 +199,95 @@
 
 <!-- Quotation performance section -->
 <script type="text/template" id="quot-performance-tmp">
-    <div class="row">
-        <div class="act-title">
-            <div class="custom-checkbox">
-                <input id="count_1" name="title-check" value="" type="checkbox">
-                <label for="count_1"></label>
+
+    <% for(var i = 0; i < data.model.perf.length; i++) {
+    
+        var perfId = data.model.perf[i].id;
+        var isSelected = data.model.perf[i].isSelected;
+        var curPerf = data.model.perf[i].performance;
+        
+        console.log(curPerf);
+
+        %>
+        <div act-id="<%=perfId%>">
+            <div class="row">
+                <div class="act-title">
+                    <div class="custom-checkbox">
+                        <input id="performance_title_<%=perfId%>" name="title-check" value="" type="checkbox">
+                        <label for="performance_title_<%=perfId%>"></label>
+                    </div>
+                    <%=curPerf.title%>
+                    <i act-delete="<%=perfId%>" class="fa fa-trash" aria-hidden="true"></i>
+                </div>
             </div>
-            Act 1 -Jazz Band
-            <i delete_price="" class="fa fa-trash" aria-hidden="true"></i>
+
+            <% for(var j = 0; j < curPerf.packages.length; j++) { 
+                var package = curPerf.packages[j];%>
+
+                <div package-id="<%=package.id%>">
+                    <div class="row package">
+                        <label><%=package.name%></label>
+                        <div class="custom-checkbox">
+                            <input id="package_<%=package.id%>" name="package-check" value="" type="checkbox">
+                            <label for="package_<%=package.id%>"></label>
+                        </div>
+                        <a href="#">Add sets</a>
+                        <i delete-package="<%=package.id%>" class="fa fa-trash" aria-hidden="true"></i>
+                    </div>
+
+                    <% for(var k = 0; k < package.options.length; k++) { 
+                        var option = package.options[k];
+                    %>
+                    <!-- Set options -->
+                    <div package-id="" class="col-md-6">
+                        <div class="custom-checkbox">
+                            <input id="package_2" name="package-check" value="" type="checkbox">
+                            <label for="package_2"></label>
+                        </div>
+                        <select name="qty">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                        <span>x</span>
+                        <select name="duration">
+                            <option>45 min</option>
+                            <option>50 min</option>
+                            <option>55 min</option>
+                        </select>
+                        <select name="price">
+                            <% for(var r = 0; r < option.rates.length; r++) { 
+                                var rate = option.rates[r]; %>
+
+                            <option><%=rate.price.amount%></option>
+
+                            <% } %>
+
+                            <option>Custom</option>
+                        </select>
+                    </div>
+
+                    <% } %>
+                </div>
+
+            <% } %>
         </div>
-    </div>
+    <% } %>
+
+    <hr>
     <div>
-        <div class="row package">
-            <label>3-piece Jazz Band</label>
-            <div class="custom-checkbox">
-                <input id="package_1" name="package-check" value="" type="checkbox">
-                <label for="package_1"></label>
-            </div>
-            <a href="#">Add sets</a>
-            <i delete_price="" class="fa fa-trash" aria-hidden="true"></i>
+        <div>
+            <button>Add extra Act</button>
+            <button>Add a service</button>
         </div>
-        <div class="col-md-6 ">
-            <div class="custom-checkbox">
-                <input id="package_2" name="package-check" value="" type="checkbox">
-                <label for="package_2"></label>
-            </div>
-            <select>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-            </select>
-            <span>x</span>
-            <select>
-                <option>45 min</option>
-                <option>50 min</option>
-                <option>55 min</option>
-            </select>
-            <select>
-                <option>Price 1</option>
-                <option>Price 2</option>
-                <option>Custom</option>
-            </select>
-        </div>
-        <div class="col-md-6">
-            <div class="custom-checkbox">
-                <input id="package_3" name="package-check" value="" type="checkbox">
-                <label for="package_3"></label>
-            </div>
-            <select>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-            </select>
-            <span>x</span>
-            <select>
-                <option>45 min</option>
-                <option>50 min</option>
-                <option>55 min</option>
-            </select>
-            <select>
-                <option>Price 1</option>
-                <option>Price 2</option>
-                <option>Custom</option>
-            </select>
-        </div>
-        <div class="col-md-6">
-            <div class="custom-checkbox">
-                <input id="package_4" name="package-check" value="" type="checkbox">
-                <label for="package_4"></label>
-            </div>
-            <select>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-            </select>
-            <span>x</span>
-            <select>
-                <option>45 min</option>
-                <option>50 min</option>
-                <option>55 min</option>
-            </select>
-            <select>
-                <option>Price 1</option>
-                <option>Price 2</option>
-                <option>Custom</option>
-            </select>
-        </div>
-        <div class="col-md-6">
-            <div class="custom-checkbox">
-                <input id="package_5" name="package-check" value="" type="checkbox">
-                <label for="package_5"></label>
-            </div>
-            <select>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-            </select>
-            <span>x</span>
-            <select>
-                <option>45 min</option>
-                <option>50 min</option>
-                <option>55 min</option>
-            </select>
-            <select>
-                <option>Price 1</option>
-                <option>Price 2</option>
-                <option>Custom</option>
-            </select>
+        <div>
+            Includes travel expenses:
+            <input name="expenses" type="radio">Yes
+            <input name="expenses" type="radio">No
+            <input name="expenses" type="radio">Quoted above
         </div>
     </div>
 
-    <div>
-        <% items.forEach(function(item) { %>
-            <p> <%-item%> </p>
-        <% }); %>
-    </div>
 </script>
 
 <!-- Quotation payment section -->

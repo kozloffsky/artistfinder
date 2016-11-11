@@ -64,41 +64,29 @@ $(function() {
     function QuotationEventView(QuotationEventModel) {
         this.template = document.getElementById('quot-event-tmp').innerHTML;
         this.render = function() {
-
             var tempData = {
                 data: QuotationEventModel
             };
-
             return _.template(this.template)(tempData);
         }
     }
     // Performance section view
-    function QuotationActView() {
+    function QuotationActView(QuotationPerformanceModel) {
         this.template = document.getElementById('quot-performance-tmp').innerHTML;
-
         this.render = function() {
             var data = {
-                items: [
-                    'da',
-                    'net',
-                    'vot tak'
-                ]
+                data: QuotationPerformanceModel
             };
-
             return _.template(this.template)(data);
         }
     }
     // Payment section view
     function QuotationPaymentView(QuotationPaymentModel) {
         this.template = document.getElementById('quot-payment-tmp').innerHTML;
-
-        this.model = QuotationPaymentModel;
         this.render = function() {
-
             var tempData = {
-                data: this.model
+                data: QuotationPaymentModel
             };
-
             return _.template(this.template)(tempData);
         }
     }
@@ -106,44 +94,91 @@ $(function() {
 
 
     /** ------------------------------------------------------- **/
+
+    function prepareQuotationReply(eventId) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: "/quotation/prepare",
+                method: "POST",
+                data: {
+                    'request_quotation_prepare[event]': eventId 
+                },
+                beforeSend: function(){
+                    $('#loadSpinner').fadeIn(500);
+                },
+                complete: function(){
+                    $('#loadSpinner').fadeOut(500);
+                },
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
+
     function getEventData(eventId, cb) {
-        $.ajax({
-            url: "/event/user_events/" + eventId,
-            method: "POST",
-            success: function(resp) {
-                cb(null, resp.event);
-            },
-            error: function(err) {
-                cb(err, null);
-            }
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: "/event/user_events/" + eventId,
+                method: "POST",
+                success: function(resp) {
+                    resolve(resp.event);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
         });
     }
 
     function openQuotationModal() {
         var eventId = $(this).attr("event-id");
 
-        getEventData(eventId, function(err, res) {
+        Promise.props({
+            event: getEventData(eventId),
+            user: userDataProvider.currentUser(),
+            quot: prepareQuotationReply(eventId)
+        }).then(function(result) {
+            var event = result.event,
+                user  = result.user,
+                quot  = result.quot;
 
-            console.log(res)
+            _.assign(event.user, user);
+
+            var performances = quot.performances,
+                services     = quot.services,
+                request      = quot.request_quotation,
+                payment      = quot.payment_terms;
+
+            var actObj = {
+                perf: performances,
+                serv: services
+            };
 
             // Event template generation
-            var QEM = new QuotationEventModel(res),
+            var QEM = new QuotationEventModel(event),
                 QEV = new QuotationEventView(QEM);
                 QEV = QEV.render();
 
             // Performance template generation
-            var QAM = new QuotationActModel(""),
+            var QAM = new QuotationActModel(actObj),
                 QAV = new QuotationActView(QAM);
                 QAV = QAV.render();
 
             // Performance template generation
-            var QPM = new QuotationPaymentModel(""),
+            var QPM = new QuotationPaymentModel(payment),
                 QPV = new QuotationPaymentView(QPM);
                 QPV = QPV.render();
 
             // Generate and render modal view
+            var fromUser = event.user.firstname.concat("", event.user.lastname);
+
             var allData = {
-                title: res.user.firstname + " " + res.user.lastname,
+                quotation: request,
+                title: fromUser,
                 eventTemplate: QEV,
                 paymentTemplate: QPV,
                 performanceTemplate: QAV
@@ -153,12 +188,18 @@ $(function() {
                 QMVRendered = QMV.render();
 
             $("#quotationModal").find(".modal-content").html(QMVRendered);
-            $("#quotationModal").modal('show');
-        });
 
-        // $('form[name="quotation_act_info"]')
-        // $('form[name="quotation_event_info"]')
-        // $('form[name="quotation_payment_info"]')
+            var quotationAutocompService = new GoogleAutocompleteService(),
+                isAvailable = quotationAutocompService.getFormElements('.quotation-modal form[name="quotation_event_info"]');
+
+            if(isAvailable)
+                quotationAutocompService.initAutoComplete();
+
+            $("#quotationModal").modal('show');
+            // $('form[name="quotation_act_info"]')
+            // $('form[name="quotation_event_info"]')
+            // $('form[name="quotation_payment_info"]')
+        });
     }
 
     $('.modal').on('show.bs.modal', function (event) {
@@ -167,10 +208,5 @@ $(function() {
 
     $(".enquiries .quotationSendbtn").on("click", openQuotationModal);
 
-    var quotationAutocompService = new GoogleAutocompleteService(),
-        isAvailable = quotationAutocompService.getFormElements('.quotation-modal form[name="quotation_place_info"]');
-
-    if(isAvailable)
-        quotationAutocompService.initAutoComplete();
 });
 
