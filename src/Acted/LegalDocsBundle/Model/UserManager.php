@@ -188,32 +188,28 @@ class UserManager
     }
 
     /**
-     * @param $filePath
+     * @param $uploadedAvatar
+     * @param $existingAvatar
      * @param User $user
      * @param $request
      * @return User
      */
-    public function updateAvatar($filePath, User $user, $request)
+    public function updateAvatar($uploadedAvatar, $existingAvatar, User $user, $request)
     {
         if (!file_exists($this->avatarDir) && !is_dir($this->avatarDir)) {
             mkdir($this->avatarDir, 0777, true);
         }
 
-        $fileName = explode('.', basename($filePath));
+        $fileName = explode('.', basename($uploadedAvatar));
         $fileExtension = $fileName[1];
 
         $fileName = uniqid(). '.' . $fileExtension;
 
-        //remove old avatar images
-        $path = $this->rootDir . '/../web/images/avatars/*.*';
-        array_map('unlink', glob($path));
+        //  remove old avatar file
+        unlink($this->avatarDir . '/' . basename($existingAvatar));
 
-        //move temp file to avatars
-        rename($this->rootDir . '/../web' . $filePath, $this->rootDir . '/../web/images/avatars/' . $fileName);
-
-        //remove temp images
-        $path = $this->rootDir . '/../web/images/UploadedFile*.*';
-        array_map('unlink', glob($path));
+        // move temp file to avatars
+        rename($this->rootDir . '/../web' . $uploadedAvatar, $this->rootDir . '/../web/images/avatars/' . $fileName);
 
         $user->setAvatar($this->avatarDir . '/' . $fileName);
 

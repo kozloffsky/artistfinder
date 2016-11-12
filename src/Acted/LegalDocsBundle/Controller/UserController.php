@@ -17,6 +17,7 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('ActedLegalDocsBundle:Artist')->findOneBySlug($slug)->getUser();
+        $existingAvatar = $user->getAvatar();
 
         $userForm = $this->createForm(UserType::class, $user);
         $userForm->handleRequest($request);
@@ -24,9 +25,11 @@ class UserController extends Controller
         if($userForm->isSubmitted() && $userForm->isValid()) {
             $data = $userForm->getData();
 
-            if (!empty($data->getAvatar())) {
+            $uploadedAvatar = $data->getAvatar();
+
+            if (!empty($data->getAvatar()) && $existingAvatar != $uploadedAvatar) {
                 $userManager = $this->get('app.user.manager');
-                $user = $userManager->updateAvatar($data->getAvatar(), $user, $request);
+                $user = $userManager->updateAvatar($uploadedAvatar, $existingAvatar, $user, $request);
             }
 
             $em->flush();
