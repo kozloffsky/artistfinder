@@ -206,7 +206,9 @@ class UserManager
         $fileName = uniqid(). '.' . $fileExtension;
 
         //  remove old avatar file
-        unlink($this->avatarDir . '/' . basename($existingAvatar));
+        if (!empty($existingAvatar) && $existingAvatar != '/') {
+            unlink($this->avatarDir . '/' . basename($existingAvatar));
+        }
 
         // move temp file to avatars
         rename($this->rootDir . '/../web' . $uploadedAvatar, $this->rootDir . '/../web/images/avatars/' . $fileName);
