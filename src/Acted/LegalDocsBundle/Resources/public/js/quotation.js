@@ -46,13 +46,11 @@ $(function() {
         this.model = model;
     }
 
-
     /** ----------------------------------------------------- **/
     inheritFrom(QuotationEventModel,     QuotationModel);
     inheritFrom(QuotationActModel,       QuotationModel);
     inheritFrom(QuotationPaymentModel,   QuotationModel);
     inheritFrom(QuotationRequestModel,   QuotationModel);
-
 
     /** ----------------------------------------------------- **/
     // Modal view
@@ -71,7 +69,6 @@ $(function() {
             return _.template(modalTemplate)(templateData);
         }
     }
-
     // Event section view
     function QuotationEventView(QuotationEventModel) {
         this.template = document.getElementById('quot-event-tmp').innerHTML;
@@ -114,6 +111,7 @@ $(function() {
 
 
     /** ------------------------------------------------------- **/
+
     /** --- APIS --- **/
     function prepareQuotationReply(eventId) {
         return new Promise(function(resolve, reject) {
@@ -228,10 +226,24 @@ $(function() {
             });
         });
     }
+    function removePackageSend(package) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/price/package/'+package.id+'/remove',
+                method: 'PATCH',
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
+
 
 
     /** ------------------------------------------------------- **/
-
     function openQuotationModal() {
         var eventId = $(this).attr("event-id");
 
@@ -303,7 +315,6 @@ $(function() {
             // $('form[name="quotation_payment_info"]')
         });
     }
-
     /** ------------------------------------------------------- **/
     function quotationSend(e) {
         e.preventDefault();
@@ -370,7 +381,6 @@ $(function() {
             console.error(err);
         })
     }
-
     
     function selectPackageSend() {
         var packId = $(this).attr("package-id");
@@ -401,6 +411,33 @@ $(function() {
         })
     }
     
+    function createPerformance(e) {
+        e.preventDefault();
+
+    }
+
+    function createService(e) {
+        e.preventDefault();
+
+    }
+
+
+    function removePackage(e) {
+        e.preventDefault();
+
+        var packageId = $(this).attr("remove-package");
+
+        removePackageSend({
+            id: packageId
+        })
+        .then(function(res) {
+            console.log(res)
+        })
+        .catch(function(err) {
+            console.error(err)
+        })
+    }
+
 
     $('.modal').on('show.bs.modal', function (event) { console.log(this.id); });
     $("body")
@@ -410,5 +447,8 @@ $(function() {
         .on("click", ".quotation-modal input[select-service]", selectServiceSend)
         .on("click", ".quotation-modal input[select-package]", selectPackageSend)
         .on("click", ".quotation-modal input[select-option]", selectOptionSend)
+        .on("click", ".quotation-modal button[create-performance]", createPerformance)
+        .on("click", ".quotation-modal button[create-service]", createService)
+        .on("click", ".quotation-modal [remove-package]", removePackage)
 });
 

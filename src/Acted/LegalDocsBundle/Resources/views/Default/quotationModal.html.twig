@@ -113,8 +113,8 @@
         <hr>
         <div>
             <div>
-                <button>Add extra Act</button>
-                <button>Add a service</button>
+                <button create-performance>Add extra Act</button>
+                <button create-service>Add a service</button>
             </div>
             <div>
                 Includes travel expenses:
@@ -258,7 +258,7 @@
                             <label for="package_<%=package.id%>"></label>
                         </div>
                         <a href="#">Add sets</a>
-                        <i delete-package="<%=package.id%>" class="fa fa-trash" aria-hidden="true"></i>
+                        <i remove-package="<%=package.id%>" class="fa fa-trash" aria-hidden="true"></i>
                     </div>
 
                     <% for(var k = 0; k < package.options.length; k++) { 
