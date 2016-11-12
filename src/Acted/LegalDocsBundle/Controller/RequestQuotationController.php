@@ -238,13 +238,49 @@ class RequestQuotationController extends Controller
               $paymentTermRequestQuotation->setGuaranteedDepositPercent(PaymentTermRequestQuotation::GUARANTEED_DEPOSIT_PERCENT);
               $em->persist($paymentTermRequestQuotation);
 
+              $performanceRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:PerformanceRequestQuotation');
+              $serviceRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:ServiceRequestQuotation');
+
+              $serviceRequestQuotations = $serviceRequestQuotationRepo->getServiceRequestQuotations($requestQuotation->getId());
+              $performanceRequestQuotations = $performanceRequestQuotationRepo->getPerformanceRequestQuotations($requestQuotation->getId());
+
+              $services = [];
+              $performances = [];
+
+              foreach ($serviceRequestQuotations as $serviceRequestQuotation) {
+                  $services[] = $serviceRequestQuotation['service'];
+              }
+
+              foreach ($performanceRequestQuotations as $performanceRequestQuotation) {
+                  $performances[] = $performanceRequestQuotation['performance'];
+              }
+
+              //\Doctrine\Common\Util\Debug::dump($event);exit;
+
               /*Generate pdf file*/
               //todo: we need to decide which id get from chatRoom in the future
               $chatRoomId = $event->getChatRooms()->first()->getId();
 
               $path = $this->get('request_quotation_type')
                   ->setData(array(
-                      'artist_name' => 'someName'
+                      'services' => $services,
+                      'performances' => $performances,
+                      'event' => array(
+                          'title' => $event->getTitle(),
+                          'location' => $event->getAddress(),
+                          'startingDate' => $event->getStartingDate(),
+                          "endingDate" => $event->getEndingDate(),
+                          "timing" => $event->getTiming(),
+                          "numberOfGuests" => $event->getNumberOfGuests(),
+                          "city" => $event->getCity(),
+                          "clientFirstname" => $event->getUser()->getFirstname(),
+                          "clientLastname" => $event->getUser()->getLastname(),
+                          "venueType" => $event->getVenueType()->getVenueType()
+                      ),
+
+                      'payment_term' => array(
+                          'balance_percent' => $balancePercent
+                      )
                   ))
                   ->getParsedTemplate()
                   ->generateDocumentPdf($chatRoomId, $requestQuotation->getId());
@@ -262,7 +298,7 @@ class RequestQuotationController extends Controller
               $connection->commit();
           } catch (\Exception $e) {
               $connection->rollback();
-              
+
               return new JsonResponse([
                   'status' => 'error',
                   'message' => 'Sending error'
@@ -367,7 +403,6 @@ class RequestQuotationController extends Controller
             $connection->commit();
         } catch (\Exception $e) {
             $connection->rollback();
-
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Sending error'
