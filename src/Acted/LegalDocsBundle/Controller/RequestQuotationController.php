@@ -132,7 +132,7 @@ class RequestQuotationController extends Controller
 
                 /*copy payment terms*/
                 $newPaymentTermRequestQuotation = new PaymentTermRequestQuotation();
-
+                //\Doctrine\Common\Util\Debug::dump($e->getMessage());exit;
                 $newPaymentTermRequestQuotation->setGuaranteedDepositPercent(
                     $publishedRequestQuotationObj->getPaymentTermRequestQuotation()->getGuaranteedDepositPercent()
                 );
@@ -234,6 +234,7 @@ class RequestQuotationController extends Controller
               $requestQuotationRepo->setPublishedStatus($requestQuotation->getId());
 
               $paymentTermRequestQuotation = new PaymentTermRequestQuotation();
+              $paymentTermRequestQuotation->setRequestQuotation($requestQuotation);
               $paymentTermRequestQuotation->setBalancePercent($balancePercent);
               $paymentTermRequestQuotation->setGuaranteedDepositPercent(PaymentTermRequestQuotation::GUARANTEED_DEPOSIT_PERCENT);
               $em->persist($paymentTermRequestQuotation);
@@ -286,11 +287,12 @@ class RequestQuotationController extends Controller
                   ->generateDocumentPdf($chatRoomId, $requestQuotation->getId());
 
 
+              
+
               $documentRequestQuotation = new DocumentRequestQuotation();
               $documentRequestQuotation->setRequestQuotation($requestQuotation);
               $documentRequestQuotation->setPath($path);
               $em->persist($documentRequestQuotation);
-
               //send mail
 
               $em->flush();
