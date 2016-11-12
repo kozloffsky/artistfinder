@@ -219,8 +219,6 @@
         var services     = data.model.serv;
         var allData      = performances.concat(services);
 
-        
-
     for(var i = 0; i < allData.length; i++) {
         var isSelected = allData[i].isSelected;
         var perfId = allData[i].id;
@@ -238,6 +236,8 @@
             curPerf = allData[i].service;
         }
 
+        console.log(curPerf)
+
         %>
         <div act-id="<%=perfId%>" act-type="<%=type%>">
             <div class="row">
@@ -252,12 +252,14 @@
             </div>
 
             <% for(var j = 0; j < curPerf.packages.length; j++) { 
-                var package = curPerf.packages[j];%>
+                var package = curPerf.packages[j];
+                var packageChecked = package.isSelected ? 'checked' : '';
+            %>
 
-                <div package-id="<%=package.id%>">
+                <div package-id="<%=package.id%>" class="row">
                     <div class="row package">
                         <div class="custom-checkbox">
-                            <input select-package package-id="<%=package.id%>" id="package_<%=package.id%>" name="package-check" value="" type="checkbox">
+                            <input select-package package-id="<%=package.id%>" id="package_<%=package.id%>" name="package-check" value="" type="checkbox" <%=packageChecked%> >
                             <label for="package_<%=package.id%>"></label>
                         </div>
                         <label><%=package.name%></label>
@@ -267,26 +269,35 @@
 
                     <% for(var k = 0; k < package.options.length; k++) { 
                         var option = package.options[k];
+                        var optionChecked = option.isSelected ? 'checked' : '';
                     %>
                     <!-- Set options -->
                     <div option-id="<%=option.id%>" class="col-md-6">
                         <div class="custom-checkbox">
-                            <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
+                            <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox" optionChecked>
                             <label for="option_<%=option.id%>"></label>
                         </div>
+
+                        <%
+
+                        var selectedQuantity = option.qty ? 'selected' : '';
+                        var selectedDuration = option.duration ? 'selected' : '';
+
+                        %>
+
                         <select quot-edit-qty name="qty">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
+                            <option <%=selectedQuantity%> value="1">1</option>
+                            <option <%=selectedQuantity%> value="2">2</option>
+                            <option <%=selectedQuantity%> value="3">3</option>
+                            <option <%=selectedQuantity%> value="4">4</option>
+                            <option <%=selectedQuantity%> value="5">5</option>
+                            <option <%=selectedQuantity%> value="6">6</option>
                         </select>
                         <span>x</span>
                         <select quot-edit-duration name="duration">
-                            <option value="45">45 min</option>
-                            <option value="50">50 min</option>
-                            <option value="55">55 min</option>
+                            <option <%=selectedDuration%> value="45">45 min</option>
+                            <option <%=selectedDuration%> value="50">50 min</option>
+                            <option <%=selectedDuration%> value="55">55 min</option>
                         </select>
                         <select quot-edit-price name="price">
                             <% for(var r = 0; r < option.rates.length; r++) { 
@@ -301,11 +312,13 @@
                     </div>
 
                     <% } %>
-
-                    <a quot-create-package href="#">Add Package</a>
                 </div>
 
             <% } %>
+
+            <div class="package-create">
+                <a quot-create-package href="#">Add Package</a>
+            </div>
         </div>
     <% } %>
 
@@ -428,4 +441,56 @@
         </select>
     </div>
 
+</script>
+
+
+<script type="text/template" id="quot-package-template">
+            <div package-id="<%=package.id%>" class="row">
+                <div class="row package">
+                    <div class="custom-checkbox">
+                        <input select-package package-id="<%=package.id%>" id="package_<%=package.id%>" name="package-check" value="" type="checkbox">
+                        <label for="package_<%=package.id%>"></label>
+                    </div>
+                    <label><%=package.name%></label>
+                    <a create-set href="#">Add sets</a>
+                    <i remove-package="<%=package.id%>" class="fa fa-trash" aria-hidden="true"></i>
+                </div>
+
+                <% for(var k = 0; k < package.options.length; k++) { 
+                    var option = package.options[k];
+                %>
+                <!-- Set options -->
+                <div option-id="<%=option.id%>" class="col-md-6">
+                    <div class="custom-checkbox">
+                        <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
+                        <label for="option_<%=option.id%>"></label>
+                    </div>
+                    <select quot-edit-qty name="qty">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                    <span>x</span>
+                    <select quot-edit-duration name="duration">
+                        <option value="45">45 min</option>
+                        <option value="50">50 min</option>
+                        <option value="55">55 min</option>
+                    </select>
+                    <select quot-edit-price name="price">
+                        <% for(var r = 0; r < option.rates.length; r++) { 
+                            var rate = option.rates[r]; %>
+
+                        <option><%=rate.price.amount%></option>
+
+                        <% } %>
+
+                        <option>Custom</option>
+                    </select>
+                </div>
+
+                <% } %>
+            </div>
 </script>

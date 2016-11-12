@@ -690,6 +690,7 @@ $(function() {
 
         var actType = $(this).closest('div[act-type]').attr('act-type');
         var actId   = $(this).closest('div[act-id]').attr('act-id');
+        var packageContainer = $(this).closest('div[act-id]').find('div[package-id]').last();
 
         var service = {
             type: 'service',
@@ -746,7 +747,14 @@ $(function() {
             return createPackageSend(sendData)
         })
         .then(function(res) {
-            console.log(res);
+            var packageTemplate = document.getElementById('quot-package-template').innerHTML;
+            var data = {
+                package: res.package
+            }
+
+            var html = _.template(packageTemplate)(data);
+
+            packageContainer.after(html);
         })
         .catch(function(err) {
             console.error(err);
@@ -770,7 +778,6 @@ $(function() {
                 'price_option_edit[duration]': duration,
                 'price_option_edit[price_on_request]': false
             }
-            
         };
 
         updateOptionSend(option)

@@ -71,9 +71,12 @@
 }
 .quotation-modal .act-title {
     padding: 12px 20px 12px 12px;
+    display: inline-block;
+    position: relative;
+    height: 40px;
+    width: 100%;
     font-family: LatoBold;
     font-size: 18px;
-    height: 40px;
     color: #FFF;
     background: rgba(255,171,106,1);
     background: -moz-linear-gradient(left, rgba(255,171,106,1) 0%, rgba(255,119,60,1) 100%);
@@ -119,6 +122,21 @@
     position: relative;
 }
 
+.quotation-modal .row.package .custom-checkbox {
+    margin: 0;
+}
+
+.quotation-modal i.fa.fa-trash {
+    right: 35px;
+    position: absolute;
+}
+
+.quotation-modal .package-create {
+    margin: 0 0 6px 35px;
+    font-size: 12px;
+    text-align: left;
+    clear: both;
+}
 
 @media screen and (max-width: 960px) {
     .quotation-modal .act-info,
