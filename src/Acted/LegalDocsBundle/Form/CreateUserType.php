@@ -78,13 +78,13 @@ class CreateUserType extends AbstractType
                 'description' => 'Phone number (available chars: digits,+,(,)) (for ROLE_ARTIST)',
             ])
 
-            ->add('country', TextType::class, ['constraints' => [new NotBlank()], 'description' => 'Country'])
-            ->add('city', TextType::class, ['constraints' => [new NotBlank()], 'description' => 'City'])
-            ->add('city_lat', NumberType::class, ['constraints' => [new NotBlank()], 'description' => 'City latitude'])
-            ->add('city_lng', NumberType::class, ['constraints' => [new NotBlank()], 'description' => 'City longitude'])
-            ->add('region_name', TextType::class, ['constraints' => [new NotBlank()], 'description' => 'Name of region'])
-            ->add('region_lat', NumberType::class, ['constraints' => [new NotBlank()], 'description' => 'Region latitude'])
-            ->add('region_lng', NumberType::class, ['constraints' => [new NotBlank()], 'description' => 'Region longitude'])
+            ->add('country', TextType::class, ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'Country'])
+            ->add('city', TextType::class, ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'City'])
+            ->add('city_lat', NumberType::class, ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'City latitude'])
+            ->add('city_lng', NumberType::class, ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'City longitude'])
+            ->add('region_name', TextType::class, ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'Name of region'])
+            ->add('region_lat', NumberType::class, ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'Region latitude'])
+            ->add('region_lng', NumberType::class, ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'Region longitude'])
 
 
             ->add('fake', TextType::class, [
