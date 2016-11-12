@@ -285,7 +285,7 @@
 
                         %>
 
-                        <select quot-edit-qty name="qty">
+                        <select quot-edit-qty name="qty" class="quantity-select">
                             <option <%=selectedQuantity%> value="1">1</option>
                             <option <%=selectedQuantity%> value="2">2</option>
                             <option <%=selectedQuantity%> value="3">3</option>
@@ -294,12 +294,12 @@
                             <option <%=selectedQuantity%> value="6">6</option>
                         </select>
                         <span>x</span>
-                        <select quot-edit-duration name="duration">
+                        <select quot-edit-duration name="duration" class="duration-select">
                             <option <%=selectedDuration%> value="45">45 min</option>
                             <option <%=selectedDuration%> value="50">50 min</option>
                             <option <%=selectedDuration%> value="55">55 min</option>
                         </select>
-                        <select quot-edit-price name="price">
+                        <select quot-edit-price name="price" class="price-select">
                             <% for(var r = 0; r < option.rates.length; r++) { 
                                 var rate = option.rates[r]; %>
 

@@ -138,6 +138,15 @@
     clear: both;
 }
 
+.quotation-modal .quantity-select {
+    width: 42px;
+}
+
+.quotation-modal .duration-select,
+.quotation-modal .price-select {
+    width: 70px;
+}
+
 @media screen and (max-width: 960px) {
     .quotation-modal .act-info,
     .quotation-modal .place-info {
