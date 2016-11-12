@@ -307,8 +307,6 @@ $(function () {
     }
 
     function sendQuoteRequest(data, userInformationStorage){
-        var reg = /(country|city)[=].\w*./;
-        var data = data.replace(reg, "");
 
         var regionLat = quoteRequestAutocompService.coords.region.lat,
             regionLng = quoteRequestAutocompService.coords.region.lng,
@@ -316,9 +314,6 @@ $(function () {
             cityLng = quoteRequestAutocompService.coords.city.lng,
             region = quoteRequestAutocompService.currentStore.region;
 
-        // TODO: FIX THIS!!!
-        data += "&country=" + 1;
-        data += "&city=" + 1;
         data += "&city_lat=" + cityLat;
         data += "&city_lng=" + cityLng;
         data += "&region_name=" + region;
