@@ -342,7 +342,14 @@ class RequestQuotationController extends Controller
             $performance = $performanceRepo->getFullPerformanceById($performanceId);
             $performance = $performance[0];
 
-            $performanceRQ = $performanceRequestQuotationRepo->findOneBy(array('requestQuotation' => $requestId, 'service' => $performanceId));
+            $performanceRQ = $performanceRequestQuotationRepo->findOneBy(array('requestQuotation' => $requestId, 'performance' => $performanceId));
+
+            if (empty($performanceRQ)) {
+              return new JsonResponse([
+                  'status' => 'error',
+                  'message' => 'current performance is not exists'
+              ],  Response::HTTP_BAD_REQUEST);    
+            }
 
             $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
             $requestQuotationRepo->selectObjectsOfPerformanceService($performance, $performanceRQ->getIsSelected());
@@ -396,6 +403,13 @@ class RequestQuotationController extends Controller
 
             $serviceRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:ServiceRequestQuotation');
             $serviceRQ = $serviceRequestQuotationRepo->findOneBy(array('requestQuotation' => $requestId, 'service' => $serviceId));
+
+            if (empty($serviceRQ)) {
+              return new JsonResponse([
+                  'status' => 'error',
+                  'message' => 'current service is not exists'
+              ],  Response::HTTP_BAD_REQUEST);    
+            }
 
             $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
             $requestQuotationRepo->selectObjectsOfPerformanceService($service, $serviceRQ->getIsSelected());
