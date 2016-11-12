@@ -49,9 +49,9 @@ class RequestQuotationController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        // $user = $em->getRepository('ActedLegalDocsBundle:User')->find(351);
+        $user = $em->getRepository('ActedLegalDocsBundle:User')->find(351);
 
-        $user = $this->getUser();
+        //$user = $this->getUser();
 
         if (empty($user)) {
             return new JsonResponse([
