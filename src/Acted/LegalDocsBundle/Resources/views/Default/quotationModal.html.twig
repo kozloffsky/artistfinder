@@ -110,6 +110,19 @@
     </form>
     <form name="quotation_act_info" class="act-info">
         <%= performance %>
+        <hr>
+        <div>
+            <div>
+                <button>Add extra Act</button>
+                <button>Add a service</button>
+            </div>
+            <div>
+                Includes travel expenses:
+                <input name="expenses" type="radio">Yes
+                <input name="expenses" type="radio">No
+                <input name="expenses" type="radio">Quoted above
+            </div>
+        </div>
     </form>
     <hr>
     <form name="quotation_payment_info" class="payment-info">
@@ -199,21 +212,34 @@
 
 <!-- Quotation performance section -->
 <script type="text/template" id="quot-performance-tmp">
+    <%
+        var performances = data.model.perf;
+        var services     = data.model.serv;
+        var allData      = performances.concat(services);
 
-    <% for(var i = 0; i < data.model.perf.length; i++) {
-    
-        var perfId = data.model.perf[i].id;
-        var isSelected = data.model.perf[i].isSelected;
-        var curPerf = data.model.perf[i].performance;
-        
-        console.log(curPerf);
+    for(var i = 0; i < allData.length; i++) {
+        var isSelected = allData[i].isSelected;
+        var perfId = allData[i].id;
+
+        var curPerf = null;
+        var type = '';
+
+        if(allData[i].performance) {
+            type = 'performance';
+            curPerf = allData[i].performance;
+        }
+
+        if(allData[i].service) {
+            type = 'service';
+            curPerf = allData[i].service;
+        }
 
         %>
         <div act-id="<%=perfId%>">
             <div class="row">
                 <div class="act-title">
                     <div class="custom-checkbox">
-                        <input id="performance_title_<%=perfId%>" name="title-check" value="" type="checkbox">
+                        <input select-<%=type%> id="performance_title_<%=perfId%>" name="title-check" value="" type="checkbox">
                         <label for="performance_title_<%=perfId%>"></label>
                     </div>
                     <%=curPerf.title%>
@@ -228,7 +254,7 @@
                     <div class="row package">
                         <label><%=package.name%></label>
                         <div class="custom-checkbox">
-                            <input id="package_<%=package.id%>" name="package-check" value="" type="checkbox">
+                            <input select-package package-id="<%=package.id%>" id="package_<%=package.id%>" name="package-check" value="" type="checkbox">
                             <label for="package_<%=package.id%>"></label>
                         </div>
                         <a href="#">Add sets</a>
@@ -239,10 +265,10 @@
                         var option = package.options[k];
                     %>
                     <!-- Set options -->
-                    <div package-id="" class="col-md-6">
+                    <div option-id="<%=option.id%>" class="col-md-6">
                         <div class="custom-checkbox">
-                            <input id="package_2" name="package-check" value="" type="checkbox">
-                            <label for="package_2"></label>
+                            <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
+                            <label for="option_<%=option.id%>"></label>
                         </div>
                         <select name="qty">
                             <option>1</option>
@@ -274,20 +300,6 @@
         </div>
     <% } %>
 
-    <hr>
-    <div>
-        <div>
-            <button>Add extra Act</button>
-            <button>Add a service</button>
-        </div>
-        <div>
-            Includes travel expenses:
-            <input name="expenses" type="radio">Yes
-            <input name="expenses" type="radio">No
-            <input name="expenses" type="radio">Quoted above
-        </div>
-    </div>
-
 </script>
 
 <!-- Quotation payment section -->
@@ -297,10 +309,10 @@
     </div>
 
     <div class="row payment-deposit">
-        <select>
-            <option value="0">30%</option>
-            <option value="1">50%</option>
-            <option value="2">100%</option>
+        <select name="quotation-payment-percent">
+            <option value="30">30%</option>
+            <option value="50">50%</option>
+            <option value="100">100%</option>
         </select>
 
         <span>Guaranteed deposit to be paid with <b>Acted Escrow Account</b> now to confirm the booking</span>
@@ -319,6 +331,6 @@
     </div>
 
     <div style="text-align: center;">
-        <button class="btn btn-mango-grad">Send quotation</button>
+        <button quotation-send class="btn btn-mango-grad">Send quotation</button>
     </div>
 </script>

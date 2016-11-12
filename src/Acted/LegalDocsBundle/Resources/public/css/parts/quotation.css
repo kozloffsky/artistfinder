@@ -22,6 +22,7 @@
     width: 548px;
     height: 502px;
     float: left;
+    overflow: overlay;
 }
 .quotation-modal .payment-info {
     padding: 20px;

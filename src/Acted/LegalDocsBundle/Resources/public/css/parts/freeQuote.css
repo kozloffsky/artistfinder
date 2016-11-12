@@ -190,7 +190,7 @@
 }
 
 .free-quote-modal .profile-categories li{
-    float: left;
+/*    float: left;*/
     min-width: 137px;
     text-align: left;
 }
