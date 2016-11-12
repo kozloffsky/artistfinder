@@ -156,9 +156,6 @@ class RequestQuotationController extends Controller
                 $serviceRequests = $serviceRequestQuotationRepo->copyServiceRequestQuotation($serviceRequestQuotations, $profile, $newRequestQuotation);
             }
 
-//            \Doctrine\Common\Util\Debug::dump($newRequestQuotation);
-//            $connection->rollback();
-
             $paymentTerms = array();
             if (!empty($newRequestQuotation->getPaymentTermRequestQuotation())) {
                 $paymentTerms = array(
@@ -293,8 +290,35 @@ class RequestQuotationController extends Controller
     public function selectPerformanceAction(Request $request, $requestId, $performanceId)
     {
         $em = $this->getDoctrine()->getManager();
-        $performanceRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:PerformanceRequestQuotation');
-        $resultUpdating = $performanceRequestQuotationRepo->changePerformanceSelected($requestId, $performanceId);
+
+        $connection = $em->getConnection();
+        $connection->beginTransaction();
+
+        try {
+
+            $performanceRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:PerformanceRequestQuotation');
+            $resultUpdating = $performanceRequestQuotationRepo->changePerformanceSelected($requestId, $performanceId);
+
+            $performanceRepo = $em->getRepository('ActedLegalDocsBundle:Performance');
+            //$performance = $performanceRepo->findOneBy(array('id' => $performanceId, 'deletedTime' => null));
+
+            $performance = $performanceRepo->getFullPerformanceById($performanceId);
+            $performance = $performance[0];
+
+            $performanceRQ = $performanceRequestQuotationRepo->findOneBy(array('requestQuotation' => $requestId, 'service' => $performanceId));
+
+            $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
+            $requestQuotationRepo->selectObjectsOfPerformanceService($performance, $performanceRQ->getIsSelected());
+
+            $connection->commit();
+        } catch (\Exception $e) {
+            $connection->rollback();
+
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Sending error'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
 
         return new JsonResponse(['status' => 'success']);
     }
@@ -319,8 +343,35 @@ class RequestQuotationController extends Controller
     public function selectServiceAction(Request $request, $requestId, $serviceId)
     {
         $em = $this->getDoctrine()->getManager();
-        $serviceRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:ServiceRequestQuotation');
-        $resultUpdating = $serviceRequestQuotationRepo->changeServiceSelected($requestId, $serviceId);
+
+        $connection = $em->getConnection();
+        $connection->beginTransaction();
+
+        try {
+            $serviceRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:ServiceRequestQuotation');
+            $resultUpdating = $serviceRequestQuotationRepo->changeServiceSelected($requestId, $serviceId);
+
+            $serviceRepo = $em->getRepository('ActedLegalDocsBundle:Service');
+            //$service = $serviceRepo->findOneBy(array('id' => $serviceId, 'deletedTime' => null));
+
+            $service = $serviceRepo->getFullServiceById($serviceId);
+            $service = $service[0];
+
+            $serviceRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:ServiceRequestQuotation');
+            $serviceRQ = $serviceRequestQuotationRepo->findOneBy(array('requestQuotation' => $requestId, 'service' => $serviceId));
+
+            $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
+            $requestQuotationRepo->selectObjectsOfPerformanceService($service, $serviceRQ->getIsSelected());
+
+            $connection->commit();
+        } catch (\Exception $e) {
+            $connection->rollback();
+
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Sending error'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
 
         return new JsonResponse(['status' => 'success']);
     }

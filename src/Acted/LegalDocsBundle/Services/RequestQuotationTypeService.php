@@ -43,6 +43,15 @@ class RequestQuotationTypeService extends base\TemplatesService
         return $this->_data->getTodayDate()->format('Y-m-d');
     }*/
 
+    public function setSubTemplate()
+    {
+        if (empty($this->_data['sub_template'])) {
+            throw new TemplateDataMissingException(__FUNCTION__);
+        }
+
+        return $this->_data['sub_template'];
+    }
+
 
     public function generateDocumentPdf($chatRoomId, $requestQuotationId)
     {

@@ -138,4 +138,27 @@ class RequestQuotationRepository extends EntityRepository
 
         return $newRequestQuotation;
     }
+
+    public function selectObjectsOfPerformanceService($performanceService, $isSelected)
+    {
+        $em = $this->getEntityManager();
+
+        $packageIds = array();
+        $optionIds = array();
+
+        foreach ($performanceService['packages'] as $package) {
+            $packageRepo = $em->getRepository('ActedLegalDocsBundle:Package');
+            $packageIds[] = $package['id'];
+
+            foreach ($package['options'] as $option) {
+                $optionRepo = $em->getRepository('ActedLegalDocsBundle:Option');
+                $optionIds[] = $option['id'];
+            }
+        }
+
+        $packageRepo->setPackagesSelected($packageIds, $isSelected);
+        $optionRepo->setOptionsSelected($optionIds, $isSelected);
+
+        return true;
+    }
 }

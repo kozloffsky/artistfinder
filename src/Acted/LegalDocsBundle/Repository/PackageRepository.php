@@ -143,4 +143,20 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->execute();
     }
+
+    public function setPackagesSelected($packageIds, $isSelected)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $params = array('ids' => $packageIds, 'isSelected' => $isSelected);
+
+        $whereCriteria = 'p.id IN (:ids)';
+
+        $qb->update('ActedLegalDocsBundle:Package', 'p')
+            ->set('p.isSelected', ':isSelected')
+            ->where($whereCriteria)
+            ->setParameters($params);
+
+        return $qb->getQuery()->execute();
+    }
 }
