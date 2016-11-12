@@ -291,6 +291,22 @@ $(function() {
         });
     }
 
+    function createPackageSend(package) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/price/' + package.type + '/package/create',
+                method: 'POST',
+                data: package.data,
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
+
     function updateOptionSend(option) {
         return new Promise(function(resolve, reject) {
             $.ajax({
@@ -669,6 +685,73 @@ $(function() {
             console.error(err);
         })
     }
+    function createPackage(e) {
+        e.preventDefault();
+
+        var actType = $(this).closest('div[act-type]').attr('act-type');
+        var actId   = $(this).closest('div[act-id]').attr('act-id');
+
+        var service = {
+            type: 'service',
+            data: {
+                service_price_package: {
+                    price: 3000,
+                    artist: null,
+                    service: null,
+                    package_name: 'Package',
+                    price_on_request: false
+                }
+            }
+        };
+
+        var performance = {
+            type: 'performance',
+            data: {
+                performance_price_package: {
+                    package_name: 'Package',
+                    performance: null,
+                    artist: null,
+                    options: [
+                        {
+                            qty: 1,
+                            duration: 45,
+                            price1: 3000,
+                            price_on_request: false
+                        }
+                    ]
+                }
+            }
+        }
+        
+        var obj = {
+            'service':     service,
+            'performance': performance
+        };
+
+        userDataProvider.currentUser()
+        .then(function(res) {
+            return res.user.artistId;
+        })
+        .then(function(artistId) {
+            var sendData = obj[actType];
+
+            if(actType == 'service') {
+                sendData.data.service_price_package.artist = artistId;
+                sendData.data.service_price_package.service = actId;
+            } else {
+                sendData.data.performance_price_package.artist = artistId;
+                sendData.data.performance_price_package.performance = actId;
+            }
+            
+            return createPackageSend(sendData)
+        })
+        .then(function(res) {
+            console.log(res);
+        })
+        .catch(function(err) {
+            console.error(err);
+        })
+    }
 
     /** --- EDITING FUNCTIONAL --- **/
     function editOption(e) {
@@ -780,10 +863,12 @@ $(function() {
         .on("click",    ".quotation-modal button[create-performance]", createPerformance)
         .on("click",    ".quotation-modal button[create-service]", createService)
         .on("click",    ".quotation-modal [remove-package]", removePackage)
+        .on("click",    ".quotation-modal [quot-create-package]", createPackage)
         .on("click",    ".quotation-modal [create-set]", createSet)
         .on("click",    ".quotation-modal [quot-edit-qty]", editOption)
         .on("click",    ".quotation-modal [quot-edit-duration]", editOption)
         .on("focusout", ".quotation-modal [quot-edit-title]", editActTitle)
         .on("focusout", ".quotation-modal [quot-edit-package-name]", editPackageName)
+
 });
 

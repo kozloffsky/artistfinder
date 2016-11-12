@@ -219,6 +219,8 @@
         var services     = data.model.serv;
         var allData      = performances.concat(services);
 
+        
+
     for(var i = 0; i < allData.length; i++) {
         var isSelected = allData[i].isSelected;
         var perfId = allData[i].id;
@@ -237,14 +239,14 @@
         }
 
         %>
-        <div act-id="<%=perfId%>">
+        <div act-id="<%=perfId%>" act-type="<%=type%>">
             <div class="row">
                 <div class="act-title">
                     <div class="custom-checkbox">
                         <input select-<%=type%> id="performance_title_<%=perfId%>" name="title-check" value="" type="checkbox">
                         <label for="performance_title_<%=perfId%>"></label>
                     </div>
-                    <%=curPerf.title%>
+                    <i><%=curPerf.title%></i>
                     <i act-delete="<%=perfId%>" class="fa fa-trash" aria-hidden="true"></i>
                 </div>
             </div>
@@ -299,6 +301,8 @@
                     </div>
 
                     <% } %>
+
+                    <a quot-create-package href="#">Add Package</a>
                 </div>
 
             <% } %>

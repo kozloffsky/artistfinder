@@ -143,7 +143,6 @@ $(function () {
     //             $('#search-region').append('<option value="" name="region">select a region</option>');
     //             $(response).each(function(){
     //                 $('#search-region').append('<option value="'+ this.id +'" name="region">'+this.name+'</option>');
-    //                 selectBoxStyle();
     //             });
     //         }
     //     });
@@ -158,7 +157,6 @@ $(function () {
     //                 $('#region').append('<option value="" name="user_city">select a city</option>');
     //                 $(response).each(function () {
     //                     $('#region').append('<option value="' + this.id + '" name="user_city">' + this.name + '</option>');
-    //                     selectBoxStyle();
     //                 });
     //                 checkUserPosition();
     //             }
@@ -317,7 +315,6 @@ $(function () {
         //console.log('finish');
         initTabs();
         //$('.recomendedFilter select').prop('disabled',false);
-        selectBoxStyle();
 
         $('.tab').removeClass('active');
         $('.SearchResultTab').addClass('active');
@@ -508,7 +505,6 @@ $(function () {
         };
         //setArtistStarsCat();
         setTabsCorenersZ();
-        selectBoxStyle();
         //console.log('finish');
         initTabs();
         preventAskQuoteFromArtist()
@@ -805,7 +801,6 @@ $(function () {
         });
 
         setTabsCorenersZ();
-        selectBoxStyle();
         //console.log('finish');
         initTabs();
 
