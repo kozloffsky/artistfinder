@@ -599,7 +599,7 @@ class Artist
             $performances = $this->getUser()->getProfile()->getPerformances();
             $result = [];
             foreach ($performances as $performance) {
-                if (!$performance->getIsQuotation())
+                if (!$performance->getIsQuotation() && $performance->getIsVisible() && is_null($performance->getDeletedTime()))
                     $result[] = ['id' => $performance->getId(), 'name' => $performance->getTitle()];
             }
             return $result;
