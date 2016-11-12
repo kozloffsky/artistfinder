@@ -110,6 +110,8 @@
     </form>
     <form name="quotation_act_info" class="act-info">
         <%= performance %>
+        <div new-act-section>
+        </div>
         <hr>
         <div>
             <div>
@@ -257,7 +259,7 @@
                             <input select-package package-id="<%=package.id%>" id="package_<%=package.id%>" name="package-check" value="" type="checkbox">
                             <label for="package_<%=package.id%>"></label>
                         </div>
-                        <a href="#">Add sets</a>
+                        <a create-set href="#">Add sets</a>
                         <i remove-package="<%=package.id%>" class="fa fa-trash" aria-hidden="true"></i>
                     </div>
 
@@ -270,18 +272,21 @@
                             <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
                             <label for="option_<%=option.id%>"></label>
                         </div>
-                        <select name="qty">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
+                        <select quot-edit-qty name="qty">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
                         </select>
                         <span>x</span>
-                        <select name="duration">
-                            <option>45 min</option>
-                            <option>50 min</option>
-                            <option>55 min</option>
+                        <select quot-edit-duration name="duration">
+                            <option value="45">45 min</option>
+                            <option value="50">50 min</option>
+                            <option value="55">55 min</option>
                         </select>
-                        <select name="price">
+                        <select quot-edit-price name="price">
                             <% for(var r = 0; r < option.rates.length; r++) { 
                                 var rate = option.rates[r]; %>
 
@@ -333,4 +338,90 @@
     <div style="text-align: center;">
         <button quotation-send class="btn btn-mango-grad">Send quotation</button>
     </div>
+</script>
+
+<script type="text/template" id="quot-new-performance">
+    <% 
+        var actType = data.performance ? 'performance' : 'service';
+        var obj = data.performance || data.service; 
+        var package = obj.packages[0];
+        var option = package.options[0];
+    %>
+
+    <div act-id="<%=obj.id%>" new-act-section>
+        <hr>
+        
+        <input quot-edit-title act-type="<%=actType%>" type="text" name="quot-new-act-title" value="<%=obj.title%>">
+        <input quot-edit-package-name type="text" name="quot-new-package-name" value="<%=package.name%>">
+
+        <div option-id="<%=option.id%>" class="col-md-6">
+            <div class="custom-checkbox">
+                <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
+                <label for="option_<%=option.id%>"></label>
+            </div>
+
+            <% if(actType == 'performance') { %>
+
+            <select quot-edit-qty name="qty">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+            <span>x</span>
+            <select quot-edit-duration name="duration">
+                <option value="45">45 min</option>
+                <option value="50">50 min</option>
+                <option value="55">55 min</option>
+            </select>
+
+            <% } %>
+
+            <select quot-edit-price name="price">
+                <% for(var r = 0; r < option.rates.length; r++) { 
+                    var rate = option.rates[r]; %>
+
+                <option><%=rate.price.amount%></option>
+
+                <% } %>
+
+                <option>Custom</option>
+            </select>
+        </div>
+    </div>
+
+</script>
+
+
+<script type="text/template" id="quot-set-template">
+
+
+    <!-- Set options -->
+    <div option-id="<%=option.id%>" class="col-md-6">
+        <div class="custom-checkbox">
+            <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
+            <label for="option_<%=option.id%>"></label>
+        </div>
+        <select quot-edit-qty name="qty">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+        <span>x</span>
+        <select quot-edit-duration name="duration">
+            <option value="45">45 min</option>
+            <option value="50">50 min</option>
+            <option value="55">55 min</option>
+        </select>
+        <select quot-edit-price name="price">
+            <option>3000</option>
+            <option>Custom</option>
+        </select>
+    </div>
+
 </script>

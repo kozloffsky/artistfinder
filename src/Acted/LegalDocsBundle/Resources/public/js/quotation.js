@@ -226,6 +226,7 @@ $(function() {
             });
         });
     }
+
     function removePackageSend(package) {
         return new Promise(function(resolve, reject) {
             $.ajax({
@@ -241,8 +242,137 @@ $(function() {
         });
     }
 
+    // Send a performance create request
+    function createPerformanceSend(performance) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/price/performance/create',
+                method: 'POST',
+                data: performance,
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
 
+    function createServiceSend(service) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/price/service/create',
+                method: 'POST',
+                data: service,
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
 
+    function createSetSend(setOption) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/price/option/create',
+                method: 'POST',
+                data: setOption,
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
+
+    function updateOptionSend(option) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/price/option/' + option.id + '/edit',
+                method: 'PATCH',
+                data: option.data,
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
+
+    function updateOptionSend(option) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/price/option/' + option.id + '/edit',
+                method: 'PATCH',
+                data: option.data,
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
+
+    //performance[title]
+    function updatePerformanceSend(performance) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/price/performance/' + performance.id + '/edit',
+                method: 'PATCH',
+                data: performance.data,
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
+    //service[title]
+    function updateServiceSend(service) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/price/service/' + service.id + '/edit',
+                method: 'PATCH',
+                data: service.data,
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
+    //price_package[name]
+    function updatePackageSend(package) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/price/package/' + package.id + '/edit',
+                method: 'PATCH',
+                data: package.data,
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
+
+    ///
     /** ------------------------------------------------------- **/
     function openQuotationModal() {
         var eventId = $(this).attr("event-id");
@@ -381,7 +511,6 @@ $(function() {
             console.error(err);
         })
     }
-    
     function selectPackageSend() {
         var packId = $(this).attr("package-id");
         console.log(packId)
@@ -410,18 +539,220 @@ $(function() {
             console.error(err)
         })
     }
-    
+
+    /** --- CREATING FUNCTIONAL --- **/
     function createPerformance(e) {
         e.preventDefault();
 
-    }
+        var button = $(this);
+        var dataContainer = $(this).closest('form[name="quotation_act_info"]').find("div[new-act-section]");
+            dataContainer.html('');
 
+        var newPerf = document.getElementById("quot-new-performance").innerHTML;
+  
+        var performance = {
+            performance_price: {
+                title: 'Act title',
+                package_name: 'Package',
+                artist: null,
+                options: [
+                    {
+                        qty: 1,
+                        duration: 45,
+                        price1: 3000,
+                        price_on_request: false
+                    }
+                ],
+                request_quotation: null,
+                is_quotation: true
+            }
+        };
+
+        userDataProvider.currentUser()
+        .then(function(res) {
+            return res.user.artistId;
+        })
+        .then(function(artistId) {
+            performance.performance_price.artist = artistId;
+            performance.performance_price.request_quotation = QRM.model.id;
+
+            return createPerformanceSend(performance);
+        })        
+        .then(function(res) {
+            var html = _.template(newPerf)({
+                data: res
+            });
+
+            dataContainer.html(html);
+
+            //TODO: FIX!
+            button.attr("disabled", "disabled");
+        })
+        .catch(function(err) {
+            console.error(err)
+        })
+    }
     function createService(e) {
         e.preventDefault();
 
+        var button = $(this);
+        var dataContainer = $(this).closest('form[name="quotation_act_info"]').find("div[new-act-section]");
+            dataContainer.html('');
+
+        var newPerf = document.getElementById("quot-new-performance").innerHTML;
+  
+        var service = {
+            service_price: {
+                title: 'Act title',
+                package_name: 'Package',
+                artist: null,
+                price: 3000,
+                price_on_request: false,
+                request_quotation: null,
+                is_quotation: true
+            }
+        };
+
+        userDataProvider.currentUser()
+        .then(function(res) {
+            return res.user.artistId;
+        })
+        .then(function(artistId) {
+            service.service_price.artist = artistId;
+            service.service_price.request_quotation = QRM.model.id;
+
+            return createServiceSend(service);
+        })        
+        .then(function(res) {
+            var html = _.template(newPerf)({
+                data: res
+            });
+
+            dataContainer.html(html);
+
+            //TODO: FIX!
+            button.attr("disabled", "disabled");
+        })
+        .catch(function(err) {
+            console.error(err)
+        })
+    }
+    function createSet(e) {
+        e.preventDefault();
+
+        var packageId = $(this).closest('div[package-id]').attr('package-id');
+        var lastSet   = $(this).closest('div[package-id]').find('div[option-id]').last();
+
+        var option = {
+            'price_option_create[qty]': 1,
+            'price_option_create[package]': packageId,
+            'price_option_create[duration]': 45,
+            'price_option_create[price_on_request]': false
+        };
+
+        createSetSend(option)
+        .then(function(res) {
+            var data = {
+                option: {
+                    id: res.id
+                }
+            };
+
+            var template = document.getElementById('quot-set-template').innerHTML;
+
+            var html = _.template(template)(data);
+
+            lastSet.after(html)
+
+        })
+        .catch(function(err) {
+            console.error(err);
+        })
     }
 
+    /** --- EDITING FUNCTIONAL --- **/
+    function editOption(e) {
+        e.preventDefault();
+        
+        var mainSelector = $(this).closest("div[option-id]");
 
+        var duration = mainSelector.find("[quot-edit-duration]").find("option:selected").val();
+        var qty      = mainSelector.find("[quot-edit-qty]").find("option:selected").val();
+        var id       = mainSelector.attr("option-id");
+
+        var option = {
+            id: id,
+            data: {
+                'price_option_edit[qty]': qty,
+                'price_option_edit[duration]': duration,
+                'price_option_edit[price_on_request]': false
+            }
+            
+        };
+
+        updateOptionSend(option)
+        .then(function(res) {
+            console.log(res);
+        })
+        .catch(function(err) {
+            console.error(err);
+        })
+    }
+    function editActTitle(e) {
+        var id    = $(this).closest("div[act-id]").attr("act-id");
+        var title = $(this).val();
+        var type  = $(this).attr('act-type');
+
+        var performance = {
+            id: id,
+            data: {}
+        };
+
+        if(type == 'performance') {
+            performance.data = { 'performance[title]': title };
+
+            updatePerformanceSend(performance)
+            .then(function(res) {
+                console.log(res);
+            })
+            .catch(function(err) {
+                console.error(err);
+            })
+        } else {
+            performance.data = { 'service[title]': title };
+
+            updateServiceSend(performance)
+            .then(function(res) {
+                console.log(res);
+            })
+            .catch(function(err) {
+                console.error(err);
+            })
+        }
+    }
+    function editPackageName(e) {
+        e.preventDefault();
+
+        var id    = $(this).closest("div[act-id]").attr("act-id");
+        var name = $(this).val();
+
+        var package = {
+            id: id,
+            data: {
+                'price_package[name]': name
+            }
+        }
+
+        updatePackageSend(package)
+        .then(function(res) {
+            console.log(res);
+        })
+        .catch(function(err) {
+            console.error(err);
+        })
+    }
+
+    /** --- REMOVING FUNCTIONAL --- **/
     function removePackage(e) {
         e.preventDefault();
 
@@ -438,17 +769,21 @@ $(function() {
         })
     }
 
-
     $('.modal').on('show.bs.modal', function (event) { console.log(this.id); });
     $("body")
-        .on("click", ".enquiries .quotationSendbtn", openQuotationModal)
-        .on("click", ".quotation-modal button[quotation-send]", quotationSend)
-        .on("click", ".quotation-modal input[select-performance]", selectPerformanceSend)
-        .on("click", ".quotation-modal input[select-service]", selectServiceSend)
-        .on("click", ".quotation-modal input[select-package]", selectPackageSend)
-        .on("click", ".quotation-modal input[select-option]", selectOptionSend)
-        .on("click", ".quotation-modal button[create-performance]", createPerformance)
-        .on("click", ".quotation-modal button[create-service]", createService)
-        .on("click", ".quotation-modal [remove-package]", removePackage)
+        .on("click",    ".enquiries .quotationSendbtn", openQuotationModal)
+        .on("click",    ".quotation-modal button[quotation-send]", quotationSend)
+        .on("click",    ".quotation-modal input[select-performance]", selectPerformanceSend)
+        .on("click",    ".quotation-modal input[select-service]", selectServiceSend)
+        .on("click",    ".quotation-modal input[select-package]", selectPackageSend)
+        .on("click",    ".quotation-modal input[select-option]", selectOptionSend)
+        .on("click",    ".quotation-modal button[create-performance]", createPerformance)
+        .on("click",    ".quotation-modal button[create-service]", createService)
+        .on("click",    ".quotation-modal [remove-package]", removePackage)
+        .on("click",    ".quotation-modal [create-set]", createSet)
+        .on("click",    ".quotation-modal [quot-edit-qty]", editOption)
+        .on("click",    ".quotation-modal [quot-edit-duration]", editOption)
+        .on("focusout", ".quotation-modal [quot-edit-title]", editActTitle)
+        .on("focusout", ".quotation-modal [quot-edit-package-name]", editPackageName)
 });
 
