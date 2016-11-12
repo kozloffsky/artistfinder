@@ -96,9 +96,39 @@ class PricePackageController extends Controller
     public function selectAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
+        $em->getConnection()->beginTransaction();
 
-        $packageRepo = $em->getRepository('ActedLegalDocsBundle:Package');
-        $resultUpdating = $packageRepo->changePackageSelected($id);
+        try {
+            $packageRepo = $em->getRepository('ActedLegalDocsBundle:Package');
+            $resultUpdating = $packageRepo->changePackageSelected($id);
+
+            $package = $packageRepo->find($id);
+            if (empty($package)) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'Package does not exist'
+                ],  Response::HTTP_BAD_REQUEST);
+            }
+
+            $isSelected = $package->getIsSelected();
+
+            $optionIds = array();
+            foreach ($package->getOptions() as $option) {
+
+                $optionIds[] = $option->getId();
+            }
+
+            $optionRepo = $em->getRepository('ActedLegalDocsBundle:Option');
+            $optionRepo->setOptionsSelected($optionIds, $isSelected);
+
+            $em->getConnection()->commit();
+        } catch (\Exception $e) {
+            $em->getConnection()->rollback();
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Error changing selecting of package'
+            ],  Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
         return new JsonResponse(['status' => 'success']);
     }
