@@ -114,6 +114,11 @@
     text-decoration: underline;
 }
 
+.quotation-modal .row.package {
+    padding: 12px 20px 12px 12px;
+    position: relative;
+}
+
 
 @media screen and (max-width: 960px) {
     .quotation-modal .act-info,

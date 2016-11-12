@@ -256,11 +256,11 @@
 
                 <div package-id="<%=package.id%>">
                     <div class="row package">
-                        <label><%=package.name%></label>
                         <div class="custom-checkbox">
                             <input select-package package-id="<%=package.id%>" id="package_<%=package.id%>" name="package-check" value="" type="checkbox">
                             <label for="package_<%=package.id%>"></label>
                         </div>
+                        <label><%=package.name%></label>
                         <a create-set href="#">Add sets</a>
                         <i remove-package="<%=package.id%>" class="fa fa-trash" aria-hidden="true"></i>
                     </div>
