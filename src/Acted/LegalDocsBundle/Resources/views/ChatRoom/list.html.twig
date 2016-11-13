@@ -68,15 +68,12 @@
                     </p>
 
                     <div class="controls">
-
-                        {% if chat.event.published_request is defined %}
-                            {% if chat.event.published_request %}
-                                <div class="button-gradient filled">
-                                    <button type="button" class="btn register quotationSendbtn" event-id="{{ chat.event.id }}">Quotation sent</button>
-                                </div>
-                            {% endif %}
+                        {% if chat.event.published_request is defined and chat.event.published_request %}
+                            <div class="button-gradient filled">
+                                <button type="button" class="btn register quotationSendbtn" event-id="{{ chat.event.id }}">Quotation sent</button>
+                            </div>  
                         {% else %}
-                           <div class="button-gradient filled">
+                            <div class="button-gradient filled">
                                 <button type="button" class="btn register quotationSendbtn" event-id="{{ chat.event.id }}">Send Quotation</button>
                             </div>
                         {% endif %}
