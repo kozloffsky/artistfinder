@@ -45,28 +45,41 @@
                         <!--<span class="see-more">(<a href="#">See more</a>)</span>-->
                     </p>
 
-                    <p class="act-request-quotation-label" style="display: none;">
-                        Quote sent
-                    </p>
+                    {% if chat.event.published_request is defined %}
+                            {% if chat.event.published_request %}
+                                <p class="act-request-quotation-label">
+                                    Quote sent
+                                </p>
+                            {% endif %}
+                    {% endif %}
+
 
                     <p class="act-request-message" data-max-chars-desktop="150" data-max-chars-mobile="70">
                         <span class="title">Message from client:</span>
 
                         <span class="text">
                             {%  if chat.offer.comments is defined %}
-                            {{ chat.offer.comments }}
+                                {{ chat.offer.comments }}
                             {% else %}
-                            There's no message from client.
+                                There's no message from client.
                             {% endif %}
                         </span>
                         <a class="show-more-btn" href="#">+more</a>
                     </p>
 
                     <div class="controls">
-                        <div class="button-gradient filled">
-                            <button type="button" class="btn register quotationSendbtn" event-id="{{ chat.event.id }}">Send Quotation</button>
-                        </div>
 
+                        {% if chat.event.published_request is defined %}
+                            {% if chat.event.published_request %}
+                                <div class="button-gradient filled">
+                                    <button type="button" class="btn register quotationSendbtn" event-id="{{ chat.event.id }}">Quotation sent</button>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                           <div class="button-gradient filled">
+                                <button type="button" class="btn register quotationSendbtn" event-id="{{ chat.event.id }}">Send Quotation</button>
+                            </div>
+                        {% endif %}
 
                         <div class="button-gradient filled blue">
                             <button type="button" class="btn register"><a href="/dashboard/chat/{{ chat.chat_id }}">Send Message</a></button>
