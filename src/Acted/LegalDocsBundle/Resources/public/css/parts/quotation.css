@@ -229,22 +229,44 @@
 }
 
 .success-quotation-modal {
-    width: 180px;
-    height: 300px;
-    position: absolute;
+    overflow: hidden;
+    height: 183px !important;
+    width: 297px !important;
     top: 50%;
     left: 50%;
     margin-top: -150px;
     margin-left: -90px;
-    padding: 20px;
+    padding: 0;
     background: #FFF;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgba(255,255,255,1);
     border-radius: 11px;
+}
+.success-quotation-modal .modal-dialog {
+    width: 100%;
+    margin: 0 !important;
 }
 
 .success-quotation-modal .modal-content {
     box-shadow: none;
     border: none;
+}
+
+.success-quotation-modal h4 {
+    font-family: LatoBold;
+    font-size: 18px;
+    color: #000;
+    text-align: center;
+    margin-bottom: 28px;
+}
+.success-quotation-modal p {
+    font-family: LatoRegular;
+    font-size: 15px;
+    color: #000;
+    margin: 0 0 29px 0;
+}
+.success-quotation-modal i.fa.fa-check {
+    color: #59ca71;
+    font-size: 36px;
 }
 
 .quotation-modal .form-control[disabled] {

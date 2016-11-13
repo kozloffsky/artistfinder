@@ -109,6 +109,7 @@ $(function() {
     var QMV = {};
     var QRM = {};
 
+    var newAct = {};
 
     /** ------------------------------------------------------- **/
 
@@ -490,15 +491,19 @@ $(function() {
             'request_quotation_send[balance_percent]': percent
         };
 
-        $("#success-quotation-modal").modal("show");
+        sendQuotationConfirmation(data)
+        .then(function(res) {
+            $("#quotationModal").modal("hide");
 
-        // sendQuotationConfirmation(data)
-        // .then(function(res) {
-        //     console.log(res);
-        // })
-        // .catch(function(err) {
-        //     console.error(err);
-        // });
+            setTimeout(function() {
+                $("#success-quotation-modal").modal("show");
+            }, 500);
+
+            console.log(res);
+        })
+        .catch(function(err) {
+            console.error(err);
+        });
     }
     function selectPerformanceSend() {
         var quotId  = QRM.model.id;
@@ -604,7 +609,9 @@ $(function() {
             dataContainer.html('');
 
         var newPerf = document.getElementById("quot-new-performance").innerHTML;
-  
+        var status = $(this).attr('status');
+
+
         var performance = {
             performance_price: {
                 title: 'Act title',
@@ -623,29 +630,44 @@ $(function() {
             }
         };
 
-        userDataProvider.currentUser()
-        .then(function(res) {
-            return res.user.artistId;
-        })
-        .then(function(artistId) {
-            performance.performance_price.artist = artistId;
-            performance.performance_price.request_quotation = QRM.model.id;
+        if(status == 'adding') {
 
-            return createPerformanceSend(performance);
-        })        
-        .then(function(res) {
-            var html = _.template(newPerf)({
-                data: res
-            });
+            userDataProvider.currentUser()
+            .then(function(res) {
+                return res.user.artistId;
+            })
+            .then(function(artistId) {
+                performance.performance_price.artist = artistId;
+                performance.performance_price.request_quotation = QRM.model.id;
 
-            dataContainer.html(html);
+                return createPerformanceSend(performance);
+            })        
+            .then(function(res) {
 
-            //TODO: FIX!
-            button.attr("disabled", "disabled");
-        })
-        .catch(function(err) {
-            console.error(err)
-        })
+                newAct = res;
+
+                var html = _.template(newPerf)({
+                    data: res
+                });
+
+                dataContainer.html(html);
+
+                button.attr("status", "editing");
+            })
+            .catch(function(err) {
+                console.error(err)
+            })
+        }
+
+        if(status == 'editing') {
+            // var newActTemplate = document.getElementById('quot-performance-tmp').innerHTML;
+            // var html = _.template(newActTemplate)({ data: newAct });
+
+
+            console.log(newAct);
+
+            button.attr("status", "adding");
+        }
     }
     function createService(e) {
         e.preventDefault();
@@ -884,7 +906,14 @@ $(function() {
     function editPrice(e) {
         e.preventDefault();
 
-        console.log("-adasd");
+        var value = $(this).find('option:selected').val();
+
+        console.log(value);
+
+        if(value == 'custom') {
+
+        }
+
 
     }
 
