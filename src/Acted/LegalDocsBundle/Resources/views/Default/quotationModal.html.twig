@@ -303,26 +303,26 @@
                             <label for="option_<%=option.id%>"></label>
                         </div>
 
-                        <%
-
-                        var selectedQuantity = option.qty ? 'selected' : '';
-                        var selectedDuration = option.duration ? 'selected' : '';
-
-                        %>
-
                         <select quot-edit-qty name="qty" class="quantity-select">
-                            <option <%=selectedQuantity%> value="1">1</option>
-                            <option <%=selectedQuantity%> value="2">2</option>
-                            <option <%=selectedQuantity%> value="3">3</option>
-                            <option <%=selectedQuantity%> value="4">4</option>
-                            <option <%=selectedQuantity%> value="5">5</option>
-                            <option <%=selectedQuantity%> value="6">6</option>
+                            <%
+                                for(var opt = 1; opt < 7; opt++) {
+                                    if(option.qty == opt) {
+                                    %>
+                                        <option selected value="<%=opt%>"><%=opt%></option>
+                                    <%
+                                    } else {
+                                    %>
+                                        <option value="<%=opt%>"><%=opt%></option>
+                                    <%
+                                    }
+                                }
+                            %>
                         </select>
                         <span>x</span>
                         <select quot-edit-duration name="duration" class="duration-select">
-                            <option <%=selectedDuration%> value="45">45 min</option>
-                            <option <%=selectedDuration%> value="50">50 min</option>
-                            <option <%=selectedDuration%> value="55">55 min</option>
+                            <option <% if(option.duration == 45) { %> selected <% } %> value="45">45 min</option>
+                            <option <% if(option.duration == 50) { %> selected <% } %> value="50">50 min</option>
+                            <option <% if(option.duration == 55) { %> selected <% } %> value="55">55 min</option>
                         </select>
                         <select quot-edit-price name="price">
                             <% for(var r = 0; r < option.rates.length; r++) { 
