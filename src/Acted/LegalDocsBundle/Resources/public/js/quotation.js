@@ -564,30 +564,17 @@ $(function() {
 
         var selected = $(this).is(':checked');
 
-        if(selected) {
-            $.each(options, function() {
-                $(this).removeAttr('checked');
-            })
-
-            $(this).removeAttr('checked');
-        } else {
-            $.each(options, function() {
-                $(this).attr('checked', 'checked');
-            })
-
-            $(this).attr('checked', 'checked');
-        }
-
-
-
-
-
-
         selectQuotaionPackage({
             id: packId
         })
         .then(function(res) {
-            console.log(res)
+            if(selected) {
+                $.each(options, function() { $(this).removeAttr('checked'); })
+                $(this).removeAttr('checked');
+            } else {
+                $.each(options, function() { $(this).attr('checked', 'checked'); })
+                $(this).attr('checked', 'checked');
+            }
         })
         .catch(function(err) {
             console.error(err)
@@ -894,6 +881,13 @@ $(function() {
         })
     }
 
+    function editPrice(e) {
+        e.preventDefault();
+
+        console.log("-adasd");
+
+    }
+
     /** --- REMOVING FUNCTIONAL --- **/
     function removePackage(e) {
         e.preventDefault();
@@ -949,6 +943,7 @@ $(function() {
         .on("click",    ".quotation-modal [create-set]", createSet)
         .on("click",    ".quotation-modal [quot-edit-qty]", editOption)
         .on("click",    ".quotation-modal [quot-edit-duration]", editOption)
+        .on("click",    ".quotation-modal [quot-edit-price]", editPrice)
         .on("focusout", ".quotation-modal [quot-edit-title]", editActTitle)
         .on("focusout", ".quotation-modal [quot-edit-package-name]", editPackageName)
 

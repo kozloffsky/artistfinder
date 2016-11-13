@@ -350,7 +350,8 @@
             this.addAutocomplete(this.inputs[CITY]);
             this.setAutocompleteCountry(null, userCountry);
             this.currentStore.country = this.findCountryByCode(userCountry);
-            _this.unlock(_this.inputs[CITY]);
+            // TODO: Warning, HACK! 
+            // _this.unlock(_this.inputs[CITY]);
         };
         /**
          * lock/unlock inputs when some of parameters not exist

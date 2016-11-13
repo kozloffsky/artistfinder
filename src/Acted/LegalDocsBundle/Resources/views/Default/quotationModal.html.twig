@@ -155,11 +155,11 @@
 
 <!-- Quotation event section -->
 <script type="text/template" id="quot-event-tmp">
-
     <% var disabled = '';
 
     if(data.model.user.type == 'ARTIST') { 
         disabled = 'disabled';
+
     } %>
 
     <div class="modal-body">
@@ -293,7 +293,7 @@
                         var optionChecked = option.isSelected ? 'checked' : '';
                     %>
                     <!-- Set options -->
-                    <div option-id="<%=option.id%>" class="col-md-6">
+                    <div option-id="<%=option.id%>" class="col-md-6 act-option">
                         <div class="custom-checkbox">
                             <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox" optionChecked>
                             <label for="option_<%=option.id%>"></label>
@@ -320,15 +320,15 @@
                             <option <%=selectedDuration%> value="50">50 min</option>
                             <option <%=selectedDuration%> value="55">55 min</option>
                         </select>
-                        <select quot-edit-price name="price" class="price-select">
+                        <select quot-edit-price name="price">
                             <% for(var r = 0; r < option.rates.length; r++) { 
                                 var rate = option.rates[r]; %>
 
-                            <option><%=rate.price.amount%></option>
+                            <option value="<%=rate.price.amount%>"><%=rate.price.amount%></option>
 
                             <% } %>
 
-                            <option>Custom</option>
+                            <option value="custom">Custom</option>
                         </select>
                     </div>
 
@@ -386,13 +386,24 @@
         var option = package.options[0];
     %>
 
-    <div act-id="<%=obj.id%>" new-act-section>
+    <div act-id="<%=obj.id%>" new-act-section class="new-act-section">
         <hr>
-        
-        <input quot-edit-title act-type="<%=actType%>" type="text" name="quot-new-act-title" value="<%=obj.title%>">
-        <input quot-edit-package-name type="text" name="quot-new-package-name" value="<%=package.name%>">
+        <div>
+            <div class="custom-checkbox">
+                <input id="new-act-<%=obj.id%>" name="new-act-check" value="" type="checkbox">
+                <label for="new-act-<%=obj.id%>"></label>
+            </div>
+            <input quot-edit-title act-type="<%=actType%>" type="text" name="quot-new-act-title" placeholder="<%=obj.title%>">
+        </div>
+        <div>
+            <div class="custom-checkbox">
+                <input id="new-act-package-<%=package.id%>" name="new-act-package-check" value="" type="checkbox">
+                <label for="new-act-package-<%=package.id%>"></label>
+            </div>
+            <input quot-edit-package-name type="text" name="quot-new-package-name" placeholder="<%=package.name%>">
+        </div>
 
-        <div option-id="<%=option.id%>" class="col-md-6">
+        <div option-id="<%=option.id%>" class="col-md-12 act-option">
             <div class="custom-checkbox">
                 <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
                 <label for="option_<%=option.id%>"></label>
@@ -421,11 +432,11 @@
                 <% for(var r = 0; r < option.rates.length; r++) { 
                     var rate = option.rates[r]; %>
 
-                <option><%=rate.price.amount%></option>
+                <option value="<%=rate.price.amount%>"><%=rate.price.amount%></option>
 
                 <% } %>
 
-                <option>Custom</option>
+                <option value="custom">Custom</option>
             </select>
         </div>
     </div>
@@ -435,9 +446,8 @@
 
 <script type="text/template" id="quot-set-template">
 
-
     <!-- Set options -->
-    <div option-id="<%=option.id%>" class="col-md-6">
+    <div option-id="<%=option.id%>" class="col-md-6 act-option">
         <div class="custom-checkbox">
             <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
             <label for="option_<%=option.id%>"></label>
@@ -481,7 +491,7 @@
             var option = package.options[k];
         %>
         <!-- Set options -->
-        <div option-id="<%=option.id%>" class="col-md-6">
+        <div option-id="<%=option.id%>" class="col-md-6 act-option">
             <div class="custom-checkbox">
                 <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
                 <label for="option_<%=option.id%>"></label>
@@ -504,11 +514,11 @@
                 <% for(var r = 0; r < option.rates.length; r++) { 
                     var rate = option.rates[r]; %>
 
-                <option><%=rate.price.amount%></option>
+                <option value="<%=rate.price.amount%>"><%=rate.price.amount%></option>
 
                 <% } %>
 
-                <option>Custom</option>
+                <option value="custom">Custom</option>
             </select>
         </div>
 

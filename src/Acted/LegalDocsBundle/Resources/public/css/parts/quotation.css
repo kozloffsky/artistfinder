@@ -247,10 +247,45 @@
     border: none;
 }
 
-.quotation-modal .form-control[disabled], 
-.quotation-modal .form-control[readonly], 
-.quotation-modal fieldset[disabled] .form-control {
-    background: #d8d8d8;
+.quotation-modal .form-control[disabled] {
+    background: #d8d8d8 !important;
+}
+
+.quotation-modal .new-act-section {
+    margin: 0 0 0 10px;
+}
+
+.quotation-modal .new-act-section .act-option {
+    padding: 0;
+}
+.quotation-modal .act-option {
+    padding: 0 0 0 12px !important;
+}
+
+.quotation-modal .new-act-section input[quot-edit-title],
+.quotation-modal .new-act-section input[quot-edit-package-name]
+ {
+    height: 28px;
+    width: 164px;
+    border: 2px solid rgba(229, 229, 229, 1);
+    border-radius: 4px;
+}
+
+.quotation-modal .new-act-section input[quot-edit-title],
+.quotation-modal .new-act-section input[quot-edit-package-name],
+.quotation-modal .new-act-section .act-option {
+    display: inline;
+}
+
+.quotation-modal select[quot-edit-price],
+.quotation-modal select[quot-edit-duration] {
+    height: 26px;
+    width: 69px
+}
+
+.quotation-modal select[quot-edit-qty] {
+    height: 26px;
+    width: 42px;
 }
 
 @media screen and (max-width: 960px) {
