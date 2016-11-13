@@ -37,6 +37,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal registration-modal fade" id="offerErrorModal">
     <div class="modal-dialog" role="document">
         <div class="modal-body">
@@ -99,6 +100,16 @@
     </div>
 </div>
 
+<div class="modal success-quotation-modal fade" id="success-quotation-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-body">
+            <div class="modal-content">
+                <p>epepwepw</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- QUOTATION MODAL TEMPLATE -->
 <script type="text/template" id="quot-modal-tmp">
@@ -114,15 +125,24 @@
         </div>
         <hr>
         <div>
-            <div>
-                <button create-performance>Add extra Act</button>
-                <button create-service>Add a service</button>
+            <div class="add-new-performance-container">
+                <button create-performance class="add-new-performance-btn">Add extra Act</button>
+                <button create-service class="add-new-performance-btn">Add a service</button>
             </div>
-            <div>
-                Includes travel expenses:
-                <input name="expenses" type="radio">Yes
-                <input name="expenses" type="radio">No
-                <input name="expenses" type="radio">Quoted above
+            <div class="travel-exp-container">
+                <i>Includes travel expenses:</i>
+                <div class="custom-checkbox">
+                    <input id="expenses_yes" name="expenses" type="radio">
+                    <label for="expenses_yes">Yes</label>
+                </div>
+                <div class="custom-checkbox">
+                    <input id="expenses_no" name="expenses" type="radio">
+                    <label for="expenses_no">No</label>
+                </div>
+                <div class="custom-checkbox">
+                    <input id="expenses_quoted_above" name="expenses" type="radio">
+                    <label for="expenses_quoted_above>">Quoted above</label>
+                </div>
             </div>
         </div>
     </form>
@@ -221,7 +241,7 @@
 
     for(var i = 0; i < allData.length; i++) {
         var isSelected = allData[i].isSelected;
-        var perfId = allData[i].id;
+        //var perfId = allData[i].id;
 
         var curPerf = null;
         var type = '';
@@ -236,6 +256,7 @@
             curPerf = allData[i].service;
         }
 
+        var perfId = curPerf.id;
         console.log(curPerf)
 
         %>
@@ -243,10 +264,10 @@
             <div class="row">
                 <div class="act-title">
                     <div class="custom-checkbox">
-                        <input select-<%=type%> id="performance_title_<%=perfId%>" name="title-check" value="" type="checkbox">
-                        <label for="performance_title_<%=perfId%>"></label>
+                        <input select-performance id="performance_quot_<%=perfId%>" value="" name="quot-title-check" type="checkbox">
+                        <label for="performance_quot_<%=perfId%>"></label>
                     </div>
-                    <i><%=curPerf.title%></i>
+                    <i class="act-name"><%=curPerf.title%></i>
                     <i act-delete="<%=perfId%>" class="fa fa-trash" aria-hidden="true"></i>
                 </div>
             </div>
@@ -353,7 +374,7 @@
     </div>
 
     <div style="text-align: center;">
-        <button quotation-send class="btn btn-mango-grad">Send quotation</button>
+        <button quotation-send class="btn btn-quotation-send">Send quotation</button>
     </div>
 </script>
 
@@ -445,52 +466,52 @@
 
 
 <script type="text/template" id="quot-package-template">
-            <div package-id="<%=package.id%>" class="row">
-                <div class="row package">
-                    <div class="custom-checkbox">
-                        <input select-package package-id="<%=package.id%>" id="package_<%=package.id%>" name="package-check" value="" type="checkbox">
-                        <label for="package_<%=package.id%>"></label>
-                    </div>
-                    <label><%=package.name%></label>
-                    <a create-set href="#">Add sets</a>
-                    <i remove-package="<%=package.id%>" class="fa fa-trash" aria-hidden="true"></i>
-                </div>
+    <div package-id="<%=package.id%>" class="row">
+        <div class="row package">
+            <div class="custom-checkbox">
+                <input select-package package-id="<%=package.id%>" id="package_<%=package.id%>" name="package-check" value="" type="checkbox">
+                <label for="package_<%=package.id%>"></label>
+            </div>
+            <label><%=package.name%></label>
+            <a create-set href="#">Add sets</a>
+            <i remove-package="<%=package.id%>" class="fa fa-trash" aria-hidden="true"></i>
+        </div>
 
-                <% for(var k = 0; k < package.options.length; k++) { 
-                    var option = package.options[k];
-                %>
-                <!-- Set options -->
-                <div option-id="<%=option.id%>" class="col-md-6">
-                    <div class="custom-checkbox">
-                        <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
-                        <label for="option_<%=option.id%>"></label>
-                    </div>
-                    <select quot-edit-qty name="qty">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                    </select>
-                    <span>x</span>
-                    <select quot-edit-duration name="duration">
-                        <option value="45">45 min</option>
-                        <option value="50">50 min</option>
-                        <option value="55">55 min</option>
-                    </select>
-                    <select quot-edit-price name="price">
-                        <% for(var r = 0; r < option.rates.length; r++) { 
-                            var rate = option.rates[r]; %>
+        <% for(var k = 0; k < package.options.length; k++) { 
+            var option = package.options[k];
+        %>
+        <!-- Set options -->
+        <div option-id="<%=option.id%>" class="col-md-6">
+            <div class="custom-checkbox">
+                <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
+                <label for="option_<%=option.id%>"></label>
+            </div>
+            <select quot-edit-qty name="qty">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+            <span>x</span>
+            <select quot-edit-duration name="duration">
+                <option value="45">45 min</option>
+                <option value="50">50 min</option>
+                <option value="55">55 min</option>
+            </select>
+            <select quot-edit-price name="price">
+                <% for(var r = 0; r < option.rates.length; r++) { 
+                    var rate = option.rates[r]; %>
 
-                        <option><%=rate.price.amount%></option>
-
-                        <% } %>
-
-                        <option>Custom</option>
-                    </select>
-                </div>
+                <option><%=rate.price.amount%></option>
 
                 <% } %>
-            </div>
+
+                <option>Custom</option>
+            </select>
+        </div>
+
+        <% } %>
+    </div>
 </script>

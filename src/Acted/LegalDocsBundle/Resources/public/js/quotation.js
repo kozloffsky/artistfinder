@@ -242,6 +242,21 @@ $(function() {
         });
     }
 
+    function removeActSend(act) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/price/'+ act.type +'/'+ act.id +'/remove',
+                method: 'PATCH',
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
+
     // Send a performance create request
     function createPerformanceSend(performance) {
         return new Promise(function(resolve, reject) {
@@ -475,38 +490,54 @@ $(function() {
             'request_quotation_send[balance_percent]': percent
         };
 
-        /** TODO: returns: 
-        * {
-        *   message: "Sending error"
-        *   status: "error"
-        * }
-        */
-        sendQuotationConfirmation(data)
-        .then(function(res) {
-            console.log(res);
-        })
-        .catch(function(err) {
-            console.error(err);
-        });
-    }
-    function selectPerformanceSend(e) {
-        e.preventDefault();
+        $("#success-quotation-modal").modal("show");
 
+        // sendQuotationConfirmation(data)
+        // .then(function(res) {
+        //     console.log(res);
+        // })
+        // .catch(function(err) {
+        //     console.error(err);
+        // });
+    }
+    function selectPerformanceSend() {
         var quotId  = QRM.model.id;
         var perfId  = $(this).closest('div[act-id]').attr('act-id');
+        var perfType  = $(this).closest('div[act-type]').attr('act-type');
+        var allCheckboxes = $(this).closest('div[act-id]').find('input[type="checkbox"]');
+
+        var selected = $(this).prop('checked');
 
         var data = {
             perf: perfId,
             quot: quotId,
         };
         
-        selectQuotaionPerformance(data)
-        .then(function(res) {
-            console.log(res);
-        })
-        .catch(function(err) {
-            console.error(err);
-        })
+        console.log(perfType, selected)
+
+        if(selected) {
+            $.each(allCheckboxes, function() {
+                $(this).removeAttr('checked');
+            })
+
+            $(this).removeAttr('checked');
+        } else {
+            $.each(allCheckboxes, function() {
+                console.log($(this))
+                $(this).attr('checked', 'checked');
+            })
+
+            $(this).attr('checked', 'checked');
+        }
+
+        // selectQuotaionPerformance(data)
+        // .then(function(res) {
+            
+        //     console.log(res);
+        // })
+        // .catch(function(err) {
+        //     console.error(err);
+        // })
     }
     function selectServiceSend(e) {
         e.preventDefault();
@@ -529,7 +560,28 @@ $(function() {
     }
     function selectPackageSend() {
         var packId = $(this).attr("package-id");
-        console.log(packId)
+        var options = $(this).closest('div[package-id]').find('option-id');
+
+        var selected = $(this).is(':checked');
+
+        if(selected) {
+            $.each(options, function() {
+                $(this).removeAttr('checked');
+            })
+
+            $(this).removeAttr('checked');
+        } else {
+            $.each(options, function() {
+                $(this).attr('checked', 'checked');
+            })
+
+            $(this).attr('checked', 'checked');
+        }
+
+
+
+
+
 
         selectQuotaionPackage({
             id: packId
@@ -846,12 +898,35 @@ $(function() {
     function removePackage(e) {
         e.preventDefault();
 
+        var packageContainer = $(this).closest("div[package-id]");
         var packageId = $(this).attr("remove-package");
 
         removePackageSend({
             id: packageId
         })
         .then(function(res) {
+            packageContainer.remove();
+            console.log(res)
+        })
+        .catch(function(err) {
+            console.error(err)
+        })
+    }
+    function removeAct(e) {
+        e.preventDefault();
+
+        var actContainer = $(this).closest('div[act-id]');
+        var actId = $(this).attr('act-delete');
+        var actType = $(this).closest('div[act-type]').attr('act-type');
+
+        var act = {
+            id: actId,
+            type: actType
+        };
+
+        removeActSend(act)
+        .then(function(res) {
+            actContainer.remove();
             console.log(res)
         })
         .catch(function(err) {
@@ -864,12 +939,12 @@ $(function() {
         .on("click",    ".enquiries .quotationSendbtn", openQuotationModal)
         .on("click",    ".quotation-modal button[quotation-send]", quotationSend)
         .on("click",    ".quotation-modal input[select-performance]", selectPerformanceSend)
-        .on("click",    ".quotation-modal input[select-service]", selectServiceSend)
         .on("click",    ".quotation-modal input[select-package]", selectPackageSend)
         .on("click",    ".quotation-modal input[select-option]", selectOptionSend)
         .on("click",    ".quotation-modal button[create-performance]", createPerformance)
         .on("click",    ".quotation-modal button[create-service]", createService)
         .on("click",    ".quotation-modal [remove-package]", removePackage)
+        .on("click",    ".quotation-modal [act-delete]", removeAct)
         .on("click",    ".quotation-modal [quot-create-package]", createPackage)
         .on("click",    ".quotation-modal [create-set]", createSet)
         .on("click",    ".quotation-modal [quot-edit-qty]", editOption)

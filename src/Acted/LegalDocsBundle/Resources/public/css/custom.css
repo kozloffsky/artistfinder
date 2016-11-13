@@ -450,9 +450,12 @@ a.disabled {
     font-size: 14px !important;
 }
 
-.fa.fa-trash:before {
-    content: url("/assets/images/delete.png");
+i.fa.fa-trash:hover {
+    cursor: pointer;
 }
+/*.fa.fa-trash:before {
+    content: url("/assets/images/delete.png");
+}*/
 
 /**
  *  Prices page and Profile page fixes

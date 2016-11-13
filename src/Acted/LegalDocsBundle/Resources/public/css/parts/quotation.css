@@ -30,7 +30,7 @@
 /* ------------------- */
 .quotation-modal hr {
     border-top: 2px solid #dbdbdb;
-    margin: 0;
+    margin: 20px 0 20px 10px;
     clear: both;
 }
 .quotation-modal .form-control{
@@ -88,6 +88,72 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffab6a', endColorstr='#ff773c', GradientType=1 );
 }
 
+.quotation-modal .act-title i.act-name {
+    font-size: 18px;
+    font-family: LatoBold;
+    font-style: normal;
+}
+
+.quotation-modal .btn-quotation-send {
+    height: 26px;
+    border: none;
+    font-family: LatoRegular;
+    font-size: 14px;
+    color: #FFF;
+    line-height: 13px;
+    width: 126px;
+    border-radius: 13px;
+    background-image: linear-gradient(rgba(255, 171, 106, 1) 0%, rgba(255, 119, 60, 1) 100%);
+    background: -webkit-gradient(left top,right top,color-stop(0,rgba(255,171,106,1)),color-stop(100%,rgba(255,119,60,1)));
+    background: -webkit-linear-gradient(left,rgba(255,171,106,1) 0,rgba(255,119,60,1) 100%);
+    background: linear-gradient(to right,rgba(255,171,106,1) 0,rgba(255,119,60,1) 100%);
+}
+
+.quotation-modal .add-new-performance-btn {
+    height: 26px;
+    width: 118px;
+    border-radius: 13px;
+    background: #FFF;
+    border: none;
+    font-family: LatoRegular;
+    font-size: 14px;
+    border: -webkit-linear-gradient(left,rgba(255,171,106,1) 0,rgba(255,119,60,1) 100%);
+    border: 2px solid rgba(255, 119, 60, 1)
+}
+.quotation-modal .add-new-performance-btn:nth-of-type(1) {
+    margin: 0 62px 0 105px;
+}
+
+.quotation-modal .add-new-performance-container {
+    margin: 16px 0 0 10px;
+}
+
+.quotation-modal .travel-exp-container {
+    margin: 23px 0 0 33px;
+}
+.quotation-modal .travel-exp-container i {
+    font-family: LatoBold;
+    font-size: 15px;
+    font-style: normal;
+    display: block;
+    color: rgba(61, 66, 72, 1);
+    text-align: left;
+}
+.quotation-modal .travel-exp-container .custom-checkbox {
+    margin: 13px 72px 15px 0;
+}
+.quotation-modal .travel-exp-container .custom-checkbox label {
+    font-family: LatoRegular;
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(61, 66, 72, 1);
+    vertical-align: super;
+}
+.quotation-modal .travel-exp-container .custom-checkbox label:after, 
+.quotation-modal .travel-exp-container .custom-checkbox label:before {
+    width: 18px;
+    height: 18px;
+}
 
 /* TODO Remove!!! */
 .quotation-modal .btn-container {
@@ -110,6 +176,7 @@
     color: #3d4248;
     margin-bottom: 9px;
     display: inline;
+    vertical-align: sub;
 }
 
 .quotation-modal a {
@@ -121,18 +188,32 @@
     padding: 12px 20px 12px 12px;
     position: relative;
 }
+.quotation-modal .row.package a {
+    margin: 0 0 0 19px;
+    vertical-align: sub;
+    font-family: LatoRegular;
+    font-size: 12px;
+    color: rgba(255, 122, 62, 1);
+    /* text-align: center; */
+    line-height: 22px;
+}
 
 .quotation-modal .row.package .custom-checkbox {
     margin: 0;
 }
 
+.quotation-modal .row.package .custom-checkbox label:before {
+    top: 0;
+}
+
 .quotation-modal i.fa.fa-trash {
     right: 35px;
     position: absolute;
+    font-size: 16px;
 }
 
 .quotation-modal .package-create {
-    margin: 0 0 6px 35px;
+    margin: 6px 0 6px 35px;
     font-size: 12px;
     text-align: left;
     clear: both;
@@ -145,6 +226,31 @@
 .quotation-modal .duration-select,
 .quotation-modal .price-select {
     width: 70px;
+}
+
+.success-quotation-modal {
+    width: 180px;
+    height: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: -90px;
+    padding: 20px;
+    background: #FFF;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 11px;
+}
+
+.success-quotation-modal .modal-content {
+    box-shadow: none;
+    border: none;
+}
+
+.quotation-modal .form-control[disabled], 
+.quotation-modal .form-control[readonly], 
+.quotation-modal fieldset[disabled] .form-control {
+    background: #d8d8d8;
 }
 
 @media screen and (max-width: 960px) {

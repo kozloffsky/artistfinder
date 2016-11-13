@@ -58,7 +58,7 @@
                         <div class="collapse navbar-collapse" id="navbar-collapse">
                             <div class="divider-vertical"></div>
                             <ul class="nav navbar-nav navbar-left">
-                                <li class="active">
+                                <li class="">
                                     <a href="/how-it-works">
                                         How it works
                                         <div class="underline">
@@ -73,15 +73,14 @@
 
                             <ul class="nav navbar-nav navbar-right">
                                 {% if app.user %}
-                                    <li class="bookings"><a href="/dashboard/bookings/{{ app.user.id }}">My bookings
-                                            <div class="underline">
-                                                <div class="top"></div>
-                                                <div class="bottom"></div>
-                                            </div>
-                                        </a>
-                                    </li>
-
                                     {% if app.user.artist %}
+                                        <li class="bookings"><a href="/dashboard/bookings/{{ app.user.id }}">My bookings
+                                                <div class="underline">
+                                                    <div class="top"></div>
+                                                    <div class="bottom"></div>
+                                                </div>
+                                            </a>
+                                        </li>
                                         <li class="profile">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                                 Profile
@@ -95,6 +94,14 @@
                                                 <li class="orange_profile"><a href="/profile/{{ app.user.artist.slug }}">View my profile</a></li>
                                                 <li class="orange_edit"><a href="/profile/edit_profile/{{ app.user.artist.slug }}">Edit my profile</a></li>
                                             </ul>
+                                        </li>
+                                    {% else %}
+                                        <li class="bookings"><a href="/dashboard/bookings/{{ app.user.id }}">My events
+                                            <div class="underline">
+                                                <div class="top"></div>
+                                                <div class="bottom"></div>
+                                            </div>
+                                        </a>
                                         </li>
                                     {% endif %}
                                 {% endif %}
