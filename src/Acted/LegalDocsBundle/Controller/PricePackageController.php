@@ -79,11 +79,11 @@ class PricePackageController extends Controller
     }
 
     /**
-     * Change selecting package
+     * Change selecting package with options
      *
      * @ApiDoc(
      *  resource=true,
-     *  description="change selecting package",
+     *  description="change selecting package with options",
      *  statusCodes={
      *         200="Returned when successful",
      *         400="Returned when the form has validation errors",
@@ -93,7 +93,7 @@ class PricePackageController extends Controller
      * @param integer $id
      * @return JsonResponse
      */
-    public function selectAction(Request $request, $id)
+    public function selectWithOptionsAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $em->getConnection()->beginTransaction();
@@ -120,6 +120,42 @@ class PricePackageController extends Controller
 
             $optionRepo = $em->getRepository('ActedLegalDocsBundle:Option');
             $optionRepo->setOptionsSelected($optionIds, $isSelected);
+
+            $em->getConnection()->commit();
+        } catch (\Exception $e) {
+            $em->getConnection()->rollback();
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Error changing selecting of package'
+            ],  Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return new JsonResponse(['status' => 'success']);
+    }
+
+    /**
+     * Change selecting package
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="change selecting package",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @param integer $id
+     * @return JsonResponse
+     */
+    public function selectAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->getConnection()->beginTransaction();
+
+        try {
+            $packageRepo = $em->getRepository('ActedLegalDocsBundle:Package');
+            $resultUpdating = $packageRepo->changePackageSelected($id);
 
             $em->getConnection()->commit();
         } catch (\Exception $e) {
