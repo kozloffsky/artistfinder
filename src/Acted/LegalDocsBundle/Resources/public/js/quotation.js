@@ -404,6 +404,13 @@ $(function() {
         });
     }
 
+    // TODO
+
+    // function sendChatMessage(message) {
+    //     name="message"
+
+    // }
+
     ///
     /** ------------------------------------------------------- **/
     function openQuotationModal() {
@@ -513,47 +520,65 @@ $(function() {
 
         var selected = $(this).prop('checked');
 
-        var data = {
-            perf: perfId,
-            quot: quotId,
-        };
+        if(perfType == 'performance') {
 
-        selectQuotaionPerformance(data)
-        .then(function(res) {
-            if(selected) {
-                 $.each(allCheckboxes, function() {
-                    if(!$(this).prop('checked')) {
-                        $(this).trigger('click');
-                    }
-                })
-            } else {
-               $.each(allCheckboxes, function() {
-                    $(this).removeAttr('checked');
-                })
-            }
-            console.log(res);
-        })
-        .catch(function(err) {
-            console.error(err);
-        })
-    }
-    function selectServiceSend(e) {
-        var quotId  = QRM.model.id;
-        var servId  = $(this).closest('div[act-id]').attr('act-id');
+            var data = {
+                perf: perfId,
+                quot: quotId,
+            };
 
-        var data = {
-            serv: servId,
-            quot: quotId,
-        };
+            selectQuotaionPerformance(data)
+            .then(function(res) {
+                if(selected) {
+                     $.each(allCheckboxes, function() {
+                        if(!$(this).prop('checked')) {
+                            $(this).trigger('click');
+                        }
+                    })
+                } else {
+                   $.each(allCheckboxes, function() {
+                        $(this).removeAttr('checked');
+                    })
+                }
+                console.log(res);
+            })
+            .catch(function(err) {
+                console.error(err);
+            })
+
+        } 
+
+        if(perfType == 'service') {
+
+            var data = {
+                serv: perfId,
+                quot: quotId,
+            };
+
+            selectQuotaionService(data)
+            .then(function(res) {
+                if(selected) {
+                     $.each(allCheckboxes, function() {
+                        if(!$(this).prop('checked')) {
+                            $(this).trigger('click');
+                        }
+                    })
+                } else {
+                   $.each(allCheckboxes, function() {
+                        $(this).removeAttr('checked');
+                    })
+                }
+                console.log(res);
+            })
+            .catch(function(err) {
+                console.error(err);
+            })
+
+
+        }
         
-        selectQuotaionService(data)
-        .then(function(res) {
-            console.log(res);
-        })
-        .catch(function(err) {
-            console.error(err);
-        })
     }
+
     function selectPackageSend() {
         var packId = $(this).attr("package-id");
         var options = $(this).closest('div[package-id]').find('option-id');
