@@ -509,7 +509,7 @@ $(function() {
         var quotId  = QRM.model.id;
         var perfId  = $(this).closest('div[act-id]').attr('act-id');
         var perfType  = $(this).closest('div[act-type]').attr('act-type');
-        var allCheckboxes = $(this).closest('div[act-id]').find('input[type="checkbox"]');
+        var allCheckboxes = $(this).closest('div[act-id]').find('input[name="package-check"]');
 
         var selected = $(this).prop('checked');
 
@@ -517,36 +517,27 @@ $(function() {
             perf: perfId,
             quot: quotId,
         };
-        
-        console.log(perfType, selected)
 
-        if(selected) {
-            $.each(allCheckboxes, function() {
-                $(this).removeAttr('checked');
-            })
-
-            $(this).removeAttr('checked');
-        } else {
-            $.each(allCheckboxes, function() {
-                console.log($(this))
-                $(this).attr('checked', 'checked');
-            })
-
-            $(this).attr('checked', 'checked');
-        }
-
-        // selectQuotaionPerformance(data)
-        // .then(function(res) {
-            
-        //     console.log(res);
-        // })
-        // .catch(function(err) {
-        //     console.error(err);
-        // })
+        selectQuotaionPerformance(data)
+        .then(function(res) {
+            if(selected) {
+                 $.each(allCheckboxes, function() {
+                    if(!$(this).prop('checked')) {
+                        $(this).trigger('click');
+                    }
+                })
+            } else {
+               $.each(allCheckboxes, function() {
+                    $(this).removeAttr('checked');
+                })
+            }
+            console.log(res);
+        })
+        .catch(function(err) {
+            console.error(err);
+        })
     }
     function selectServiceSend(e) {
-        e.preventDefault();
-
         var quotId  = QRM.model.id;
         var servId  = $(this).closest('div[act-id]').attr('act-id');
 
@@ -660,11 +651,17 @@ $(function() {
         }
 
         if(status == 'editing') {
-            // var newActTemplate = document.getElementById('quot-performance-tmp').innerHTML;
-            // var html = _.template(newActTemplate)({ data: newAct });
+            var newActTemplate = document.getElementById('quot-performance-tmp').innerHTML;
 
+            var data = {
+                data: {
+                    model: {
+                        perf: [newAct.performance]
+                    }
+                }
+            }
 
-            console.log(newAct);
+            var html = _.template(newActTemplate)(data);
 
             button.attr("status", "adding");
         }
@@ -823,8 +820,7 @@ $(function() {
     }
 
     /** --- EDITING FUNCTIONAL --- **/
-    function editOption(e) {
-        e.preventDefault();
+    function editOption() {
         
         var mainSelector = $(this).closest("div[option-id]");
 
@@ -882,8 +878,6 @@ $(function() {
         }
     }
     function editPackageName(e) {
-        e.preventDefault();
-
         var id    = $(this).closest("div[act-id]").attr("act-id");
         var name = $(this).val();
 
@@ -904,8 +898,6 @@ $(function() {
     }
 
     function editPrice(e) {
-        e.preventDefault();
-
         var value = $(this).find('option:selected').val();
 
         console.log(value);
@@ -919,8 +911,6 @@ $(function() {
 
     /** --- REMOVING FUNCTIONAL --- **/
     function removePackage(e) {
-        e.preventDefault();
-
         var packageContainer = $(this).closest("div[package-id]");
         var packageId = $(this).attr("remove-package");
 
@@ -936,8 +926,6 @@ $(function() {
         })
     }
     function removeAct(e) {
-        e.preventDefault();
-
         var actContainer = $(this).closest('div[act-id]');
         var actId = $(this).attr('act-delete');
         var actType = $(this).closest('div[act-type]').attr('act-type');
@@ -958,6 +946,12 @@ $(function() {
     }
 
     $('.modal').on('show.bs.modal', function (event) { console.log(this.id); });
+
+    function quotation_comment_area(e) {
+        e.preventDefault();
+        $('#quotation_comment_area').toggle();
+    }
+    
     $("body")
         .on("click",    ".enquiries .quotationSendbtn", openQuotationModal)
         .on("click",    ".quotation-modal button[quotation-send]", quotationSend)
@@ -975,6 +969,7 @@ $(function() {
         .on("click",    ".quotation-modal [quot-edit-price]", editPrice)
         .on("focusout", ".quotation-modal [quot-edit-title]", editActTitle)
         .on("focusout", ".quotation-modal [quot-edit-package-name]", editPackageName)
+        .on("click",    ".quotation-modal #quotation_comment_toggle", quotation_comment_area)
 
 });
 

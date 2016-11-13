@@ -30,9 +30,13 @@
 /* ------------------- */
 .quotation-modal hr {
     border-top: 2px solid #dbdbdb;
-    margin: 20px 0 20px 10px;
+    margin: 20px 0 20px 0;
     clear: both;
 }
+.quotation-modal .act-info hr {
+    margin-left: 10px;
+}
+
 .quotation-modal .form-control{
     border: none;
 }
@@ -308,6 +312,18 @@
 .quotation-modal select[quot-edit-qty] {
     height: 26px;
     width: 42px;
+}
+
+.quotation-modal .quote-profile-desc {
+    margin: 20px 0 20px 0;
+    width: 100%;
+    height: 68px;
+    resize: none;
+    outline: 0;
+    padding: 8px;
+    border-radius: 8px;
+    border: 2px solid #EEE !important;
+    font-size: 14px;
 }
 
 @media screen and (max-width: 960px) {
