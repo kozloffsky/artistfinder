@@ -332,7 +332,7 @@
                             <% for(var r = 0; r < option.rates.length; r++) { 
                                 var rate = option.rates[r]; %>
 
-                            <option value="<%=rate.price.amount%>"><%=rate.price.amount%></option>
+                            <option price-id="<%=rate.id%>" value="<%=rate.price.amount%>"><%=rate.price.amount%></option>
 
                             <% } %>
 
@@ -440,7 +440,7 @@
                 <% for(var r = 0; r < option.rates.length; r++) { 
                     var rate = option.rates[r]; %>
 
-                <option value="<%=rate.price.amount%>"><%=rate.price.amount%></option>
+                <option price-id="<%=rate.id%>" value="<%=rate.price.amount%>"><%=rate.price.amount%></option>
 
                 <% } %>
 
@@ -522,7 +522,7 @@
                 <% for(var r = 0; r < option.rates.length; r++) { 
                     var rate = option.rates[r]; %>
 
-                <option value="<%=rate.price.amount%>"><%=rate.price.amount%></option>
+                <option price-id="<%=rate.id%>" value="<%=rate.price.amount%>"><%=rate.price.amount%></option>
 
                 <% } %>
 
