@@ -26,8 +26,29 @@ class ChatRoomController extends Controller
         $serializer = $this->get('jms_serializer');
         $chatRoomList = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->getChatRoomByParams($userId);
 
+        $eventIds = array();
+        foreach ($chatRoomList as $chatRoom) {
+            $eventIds[] = $chatRoom->getEvent()->getId();
+        }
+
+        $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
+        $requestQuotationEnquiries = $requestQuotationRepo->findBy(array('event' => $eventIds));
+
         $chats = $serializer->toArray($chatRoomList, SerializationContext::create()
             ->setGroups(['chat_list']));
+
+        $enquiries = $serializer->toArray($requestQuotationEnquiries, SerializationContext::create()
+            ->setGroups(['enquiries']));
+
+        foreach ($chats as &$chat) {
+            foreach ($enquiries as $enquire) {
+                if ($chat['event']['id'] == $enquire['event']['id']) {
+                    $chat['event']['published_request'] = $enquire['status'];
+                    break;
+                }
+
+            }
+        }
 
         $uk = $em->getRepository('ActedLegalDocsBundle:RefCountry')->findOneByName('United Kingdom');
         $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();

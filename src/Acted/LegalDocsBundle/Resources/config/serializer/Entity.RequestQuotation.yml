@@ -2,7 +2,11 @@ Acted\LegalDocsBundle\Entity\RequestQuotation:
     exclusion_policy: NONE
     properties:
         status:
+            groups: [enquiries]
+        isOutdated:
             groups: []
+        event:
+            groups: [enquiries]
     virtual_properties:
         getEvent:
             serialized_name: event
