@@ -232,12 +232,16 @@ class RequestQuotationController extends Controller
 
               $requestQuotationRepo->setOutdatedStatus($event->getId());
               $requestQuotationRepo->setPublishedStatus($requestQuotation->getId());
+              $paymentTermRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:PaymentTermRequestQuotation');
 
-              $paymentTermRequestQuotation = new PaymentTermRequestQuotation();
-              $paymentTermRequestQuotation->setRequestQuotation($requestQuotation);
-              $paymentTermRequestQuotation->setBalancePercent($balancePercent);
-              $paymentTermRequestQuotation->setGuaranteedDepositPercent(PaymentTermRequestQuotation::GUARANTEED_DEPOSIT_PERCENT);
-              $em->persist($paymentTermRequestQuotation);
+              $paymentTermRQ = $paymentTermRequestQuotationRepo->findOneBy(array('requestQuotation' => $requestQuotation->getId()));
+              if (empty($paymentTermRQ)) {
+                  $paymentTermRequestQuotation = new PaymentTermRequestQuotation();
+                  $paymentTermRequestQuotation->setRequestQuotation($requestQuotation);
+                  $paymentTermRequestQuotation->setBalancePercent($balancePercent);
+                  $paymentTermRequestQuotation->setGuaranteedDepositPercent(PaymentTermRequestQuotation::GUARANTEED_DEPOSIT_PERCENT);
+                  $em->persist($paymentTermRequestQuotation);
+              }
 
               $performanceRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:PerformanceRequestQuotation');
               $serviceRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:ServiceRequestQuotation');

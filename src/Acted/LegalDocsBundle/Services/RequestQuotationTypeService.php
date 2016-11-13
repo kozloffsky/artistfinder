@@ -48,7 +48,7 @@ class RequestQuotationTypeService extends base\TemplatesService
         $serviceTemplate = '';
 
         if (empty($this->_data['services'])) {
-            throw new TemplateDataMissingException(__FUNCTION__);
+            return $serviceTemplate;
         }
 
         $tableStyle = "style='border-collapse: collapse;font-size: 1em;width:100%'";
@@ -108,7 +108,7 @@ class RequestQuotationTypeService extends base\TemplatesService
         $performanceTemplate = '';
 
         if (empty($this->_data['performances'])) {
-            throw new TemplateDataMissingException(__FUNCTION__);
+            return $performanceTemplate;
         }
 
         $tableStyle = "style='border-collapse: collapse;font-size: 1em;width:100%'";
