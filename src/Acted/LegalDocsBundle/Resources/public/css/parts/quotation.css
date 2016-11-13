@@ -151,7 +151,6 @@
     font-size: 14px;
     font-weight: 300;
     color: rgba(61, 66, 72, 1);
-    vertical-align: super;
 }
 .quotation-modal .travel-exp-container .custom-checkbox label:after, 
 .quotation-modal .travel-exp-container .custom-checkbox label:before {
@@ -179,8 +178,8 @@
     font-size: 15px;
     color: #3d4248;
     margin-bottom: 9px;
-    display: inline;
-    vertical-align: sub;
+    vertical-align: super !important;
+    display: inline-block !important;
 }
 
 .quotation-modal a {
@@ -194,7 +193,7 @@
 }
 .quotation-modal .row.package a {
     margin: 0 0 0 19px;
-    vertical-align: sub;
+    vertical-align: super;
     font-family: LatoRegular;
     font-size: 12px;
     color: rgba(255, 122, 62, 1);
