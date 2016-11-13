@@ -233,21 +233,22 @@
 }
 
 .success-quotation-modal {
+    
+}
+
+.success-quotation-modal .modal-dialog {
     overflow: hidden;
+    position: absolute !important;
     height: 183px !important;
     width: 297px !important;
     top: 50%;
     left: 50%;
-    margin-top: -150px;
-    margin-left: -90px;
+    margin-top: -150px !important;
+    margin-left: -90px !important;
     padding: 0;
     background: #FFF;
     background-color: rgba(255,255,255,1);
     border-radius: 11px;
-}
-.success-quotation-modal .modal-dialog {
-    width: 100%;
-    margin: 0 !important;
 }
 
 .success-quotation-modal .modal-content {
