@@ -4,6 +4,8 @@
 DBUSER=root
 DBPASSWD=root
 DOMAIN=acted.local
+DBHOST="127.0.0.1"
+DBPORT="3306"
 
 echo "deb http://packages.dotdeb.org jessie all" | sudo tee -a /etc/apt/sources.list
 echo "deb-src http://packages.dotdeb.org jessie all" | sudo tee -a /etc/apt/sources.list
@@ -54,13 +56,27 @@ echo -e "Setting up Symfony2...\n"
 sudo curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
 sudo chmod a+x /usr/local/bin/symfony
 
+echo -e "Setting up a composer + vendor dependencies...\n"
+curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+cd /vagrant
+sudo composer install --no-interaction --ignore-platform-reqs
+
 echo -e "Setting up app/cache and app/logs permissions...\n"
 mkdir /vagrant/app/{cache,logs}
 chmod 777 -R /vagrant/app/cache/
 chmod 777 -R /vagrant/app/logs/
 chmod 777 -R /vagrant/app/web/images
 
-echo -e "Setting up a composer + vendor dependencies...\n"
-curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
-cd /vagrant
-composer install --ignore-platform-reqs
+echo -e "Setting up parameters.yml file"
+cp /vagrant/app/config/parameters.yml.dist /vagrant/app/config/parameters.yml
+
+sed -i "s/\(database_host:\)\s.*/\1 $DBHOST/g" /vagrant/app/config/parameters.yml
+sed -i "s/\(database_port:\)\s.*/\1 $DBPORT/g" /vagrant/app/config/parameters.yml
+sed -i "s/\(database_name:\)\s.*/\1 $DOMAIN/g" /vagrant/app/config/parameters.yml
+sed -i "s/\(database_user:\)\s.*/\1 $DBUSER/g" /vagrant/app/config/parameters.yml
+sed -i "s/\(database_password:\)\s.*/\1 $DBPASSWD/g" /vagrant/app/config/parameters.yml
+
+php app/console doctrine:database:create
+php app/console --no-interaction doctrine:migrations:migrate
+
+sudo composer install --no-interaction --ignore-platform-reqs --verbose --prefer-dist
