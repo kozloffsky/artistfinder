@@ -71,3 +71,4 @@ project
 /web/uploads/*
 /web/css
 /web/js
+/.vagrant/
