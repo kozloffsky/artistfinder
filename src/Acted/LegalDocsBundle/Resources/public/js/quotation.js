@@ -404,6 +404,36 @@ $(function() {
         });
     }
 
+    function removePriceSend(id) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/price/rate/'+ id +'/remove',
+                method: 'PATCH',
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
+    function createPriceSend(price) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/price/performance/rate/create',
+                method: 'POST',
+                data: price,
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
+
     // TODO
 
     // function sendChatMessage(message) {
@@ -573,8 +603,6 @@ $(function() {
             .catch(function(err) {
                 console.error(err);
             })
-
-
         }
         
     }
@@ -924,15 +952,64 @@ $(function() {
 
     function editPrice(e) {
         var value = $(this).find('option:selected').val();
-
-        console.log(value);
+        var options = $(this).find('option[price-id]');
 
         if(value == 'custom') {
+            $(this).hide();
+            $(this).after('<input edit-custom-price type="text" class="custom-price" onkeypress="return isNumberKey(event);">');
 
+            var optionsToDelete = [];
+
+            $.each(options, function() {
+                var price = $(this);
+                var priceId = $(this).attr('price-id');
+
+                optionsToDelete.push(removePriceSend(priceId));
+            });
+
+            Promise.all(optionsToDelete)
+            .then(function() {
+                options.remove();
+            });
+
+            return;
         }
 
-
     }
+
+    function editCustomPrice() {
+        var priceValue = $(this).val();
+        var select = $(this).prev('select');
+        var optionId = $(this).closest('div[option-id]').attr('option-id');
+        var tempInput = $(this);
+
+        var price = {
+            price_rate_create: {
+                option: optionId,
+                price: priceValue
+            }
+        };
+
+        createPriceSend(price)
+        .then(function(res) {
+            select.find('option').before('<option selected price-id="'+res.price.id+'">'+priceValue+'</option>');
+
+            select.show();
+            tempInput.remove();
+
+            console.log(res)
+        })
+        .catch(function(err) {
+            console.error(err)
+        })
+    }
+
+
+
+    // function createPrice
+
+    
+
 
     /** --- REMOVING FUNCTIONAL --- **/
     function removePackage(e) {
@@ -991,10 +1068,10 @@ $(function() {
         .on("click",    ".quotation-modal [create-set]", createSet)
         .on("click",    ".quotation-modal [quot-edit-qty]", editOption)
         .on("click",    ".quotation-modal [quot-edit-duration]", editOption)
-        .on("click",    ".quotation-modal [quot-edit-price]", editPrice)
+        .on("click",    ".quotation-modal #quotation_comment_toggle", quotation_comment_area)
+        .on("change",   ".quotation-modal [quot-edit-price]", editPrice)
         .on("focusout", ".quotation-modal [quot-edit-title]", editActTitle)
         .on("focusout", ".quotation-modal [quot-edit-package-name]", editPackageName)
-        .on("click",    ".quotation-modal #quotation_comment_toggle", quotation_comment_area)
-
+        .on("focusout", ".quotation-modal [edit-custom-price]", editCustomPrice)
 });
 
