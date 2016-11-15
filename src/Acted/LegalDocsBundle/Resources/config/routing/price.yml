@@ -127,8 +127,3 @@ price_package_select:
     defaults: { _controller: ActedLegalDocsBundle:PricePackage:select }
     methods:  [PATCH]
 
-price_package_options/select:
-    path:     /package/options/select/{id}
-    defaults: { _controller: ActedLegalDocsBundle:PricePackage:selectWithOptions }
-    methods:  [PATCH]
-

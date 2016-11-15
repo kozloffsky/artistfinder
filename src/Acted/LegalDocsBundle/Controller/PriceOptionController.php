@@ -136,10 +136,74 @@ class PriceOptionController extends Controller
     public function selectAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
+        $em->getConnection()->beginTransaction();
 
-        $optionRepo = $em->getRepository('ActedLegalDocsBundle:Option');
-        $resultUpdating = $optionRepo->changeOptionSelected($id);
+        try {
+            $packageRepo = $em->getRepository('ActedLegalDocsBundle:Package');
+            $optionRepo = $em->getRepository('ActedLegalDocsBundle:Option');
+            $resultUpdating = $optionRepo->changeOptionSelected($id);
 
+            $option = $optionRepo->find($id);
+            if (empty($option)) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'Option does not exist'
+                ],  Response::HTTP_BAD_REQUEST);
+            }
+
+            $isSelected = $option->getIsSelected();
+
+            $package = $option->getPackage();
+            $package->setIsSelected($isSelected);
+            $em->persist($package);
+
+
+            $service = $package->getService();
+            $performance = $package->getPerformance();
+
+            if (!empty($service)) {
+                $serviceRequestQuotations = $service->getServiceRequestQuotations();
+                $serviceRequestQuotation = $serviceRequestQuotations[0];
+
+                if (empty($serviceRequestQuotation)) {
+                    $em->getConnection()->rollback();
+
+                    return new JsonResponse([
+                        'status' => 'error',
+                        'message' => 'Service request quotation does not exist'
+                    ],  Response::HTTP_BAD_REQUEST);
+                }
+
+                $serviceRequestQuotation->setIsSelected($isSelected);
+                $em->persist($serviceRequestQuotation);
+            }
+
+            if (!empty($performance)) {
+                $performanceRequestQuotations = $performance->getPerformanceRequestQuotations();
+                $performanceRequestQuotation = $performanceRequestQuotations[0];
+
+                if (empty($performanceRequestQuotation)) {
+                    $em->getConnection()->rollback();
+
+                    return new JsonResponse([
+                        'status' => 'error',
+                        'message' => 'Performance request quotation does not exist'
+                    ],  Response::HTTP_BAD_REQUEST);
+                }
+
+                $performanceRequestQuotation->setIsSelected($isSelected);
+                $em->persist($performanceRequestQuotation);
+            }
+
+            $em->flush();
+            $em->getConnection()->commit();
+        } catch (\Exception $e) {
+            $em->getConnection()->rollback();
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Error changing selecting of package'
+            ],  Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
         return new JsonResponse(['status' => 'success']);
     }
 }

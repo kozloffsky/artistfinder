@@ -79,66 +79,11 @@ class PricePackageController extends Controller
     }
 
     /**
-     * Change selecting package with options
+     * Change selecting package with options and service/performance
      *
      * @ApiDoc(
      *  resource=true,
-     *  description="change selecting package with options",
-     *  statusCodes={
-     *         200="Returned when successful",
-     *         400="Returned when the form has validation errors",
-     *     }
-     * )
-     * @param Request $request
-     * @param integer $id
-     * @return JsonResponse
-     */
-    public function selectWithOptionsAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em->getConnection()->beginTransaction();
-
-        try {
-            $packageRepo = $em->getRepository('ActedLegalDocsBundle:Package');
-            $resultUpdating = $packageRepo->changePackageSelected($id);
-
-            $package = $packageRepo->find($id);
-            if (empty($package)) {
-                return new JsonResponse([
-                    'status' => 'error',
-                    'message' => 'Package does not exist'
-                ],  Response::HTTP_BAD_REQUEST);
-            }
-
-            $isSelected = $package->getIsSelected();
-
-            $optionIds = array();
-            foreach ($package->getOptions() as $option) {
-
-                $optionIds[] = $option->getId();
-            }
-
-            $optionRepo = $em->getRepository('ActedLegalDocsBundle:Option');
-            $optionRepo->setOptionsSelected($optionIds, $isSelected);
-
-            $em->getConnection()->commit();
-        } catch (\Exception $e) {
-            $em->getConnection()->rollback();
-            return new JsonResponse([
-                'status' => 'error',
-                'message' => 'Error changing selecting of package'
-            ],  Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
-        return new JsonResponse(['status' => 'success']);
-    }
-
-    /**
-     * Change selecting package
-     *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="change selecting package",
+     *  description="change selecting package with options and service/performance",
      *  statusCodes={
      *         200="Returned when successful",
      *         400="Returned when the form has validation errors",
@@ -154,8 +99,70 @@ class PricePackageController extends Controller
         $em->getConnection()->beginTransaction();
 
         try {
+            $performanceRepo = $em->getRepository('ActedLegalDocsBundle:Performance');
+            $serviceRepo = $em->getRepository('ActedLegalDocsBundle:Service');
             $packageRepo = $em->getRepository('ActedLegalDocsBundle:Package');
             $resultUpdating = $packageRepo->changePackageSelected($id);
+
+            $package = $packageRepo->find($id);
+            if (empty($package)) {
+                $em->getConnection()->rollback();
+
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'Package does not exist'
+                ],  Response::HTTP_BAD_REQUEST);
+            }
+
+            $isSelected = $package->getIsSelected();
+
+            $service = $package->getService();
+            $performance = $package->getPerformance();
+
+            if (!empty($service)) {
+                $serviceRequestQuotations = $service->getServiceRequestQuotations();
+                $serviceRequestQuotation = $serviceRequestQuotations[0];
+
+                if (empty($serviceRequestQuotation)) {
+                    $em->getConnection()->rollback();
+
+                    return new JsonResponse([
+                        'status' => 'error',
+                        'message' => 'Service request quotation does not exist'
+                    ],  Response::HTTP_BAD_REQUEST);
+                }
+
+                $serviceRequestQuotation->setIsSelected($isSelected);
+                $em->persist($serviceRequestQuotation);
+            }
+
+            if (!empty($performance)) {
+                $performanceRequestQuotations = $performance->getPerformanceRequestQuotations();
+                $performanceRequestQuotation = $performanceRequestQuotations[0];
+
+                if (empty($performanceRequestQuotation)) {
+                    $em->getConnection()->rollback();
+
+                    return new JsonResponse([
+                        'status' => 'error',
+                        'message' => 'Performance request quotation does not exist'
+                    ],  Response::HTTP_BAD_REQUEST);
+                }
+
+                $performanceRequestQuotation->setIsSelected($isSelected);
+                $em->persist($performanceRequestQuotation);
+            }
+
+            $optionIds = array();
+            foreach ($package->getOptions() as $option) {
+
+                $optionIds[] = $option->getId();
+            }
+
+            $optionRepo = $em->getRepository('ActedLegalDocsBundle:Option');
+            $optionRepo->setOptionsSelected($optionIds, $isSelected);
+
+            $em->flush();
 
             $em->getConnection()->commit();
         } catch (\Exception $e) {
