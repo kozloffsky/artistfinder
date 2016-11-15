@@ -139,12 +139,20 @@ $(function () {
     });
 
     $(document).ready(function() {
-        var selectedCountruOption = $('#country').find('option:selected').val();
-        chooseCity(selectedCountruOption);
+        //var selectedCountruOption = $('#country').find('option:selected').val();
+        //chooseCity(selectedCountruOption);
+        /**
+         * FIX:
+         * AC-189
+         **/
+        getSearchRegions();
     });
 
     function getSearchRegions(){
         var selectedCountruOption = $(this).find('option:selected').val();
+        if(!selectedCountruOption){
+            selectedCountruOption = 1;
+        }
         $.ajax({
             type:'GET',
             url: '/geo/region?_format=json&country=' + selectedCountruOption,
