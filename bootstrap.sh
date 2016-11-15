@@ -66,6 +66,7 @@ mkdir /vagrant/app/{cache,logs}
 chmod 777 -R /vagrant/app/cache/
 chmod 777 -R /vagrant/app/logs/
 chmod 777 -R /vagrant/app/web/images
+chmod 777 -R /vagrant/app/web/media/cache/
 
 echo -e "Setting up parameters.yml file"
 cp /vagrant/app/config/parameters.yml.dist /vagrant/app/config/parameters.yml
