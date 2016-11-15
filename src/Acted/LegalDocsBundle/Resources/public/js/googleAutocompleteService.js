@@ -493,29 +493,28 @@
                     language: 'en-GB'
                 };
 
+            _this.currentStore[name] = elem.val().trim();
+            _this.autocomplete[name] = new google.maps.places.Autocomplete(elem[0], options);
+            _this.autocomplete[name].addListener('place_changed', _this.placeChangeEvent.bind(_this, name));
+
             if(name == 'city') {
-                elem.on('keydown', function(e) {
+                elem.bind('keydown', function(e) {
                     if (e.keyCode == 9) { 
                         e.preventDefault();
                     }
                 })
 
-                elem.on('focusout', function(e) {
+                elem.bind('focusout', function(e) {
                     var selectedFlag = elem.attr('city-selected');
-                    console.log("woeoweowoe", selectedFlag);
 
-                    if(!selectedFlag) {
-                        $(this).val('');
-                        $(this).valid();
+                    if(!Boolean(selectedFlag)) {
+                        _this.inputs[CITY].val('');
+                        _this.inputs[CITY].valid();
                     }
 
                     elem.attr('city-selected', 'false');
                 })
             }
-
-            _this.currentStore[name] = elem.val().trim();
-            _this.autocomplete[name] = new google.maps.places.Autocomplete(elem[0], options);
-            _this.autocomplete[name].addListener('place_changed', _this.placeChangeEvent.bind(_this, name));
         };
         this.addMarker = function() {
             var url = this.staticMap.url;
