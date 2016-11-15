@@ -411,6 +411,11 @@
 
             var place = _this.autocomplete[name].getPlace();
 
+            if(name == 'city') {
+                this.inputs[CITY].attr('city-selected', true);
+                this.inputs[CITY].valid();
+            }
+
             if (!place.geometry) {
                 alert("No details available for input: '" + place.name + "'");
                 return;
@@ -487,6 +492,26 @@
                 options = {
                     language: 'en-GB'
                 };
+
+            if(name == 'city') {
+                elem.on('keydown', function(e) {
+                    if (e.keyCode == 9) { 
+                        e.preventDefault();
+                    }
+                })
+
+                elem.on('focusout', function(e) {
+                    var selectedFlag = elem.attr('city-selected');
+                    console.log("woeoweowoe", selectedFlag);
+
+                    if(!selectedFlag) {
+                        $(this).val('');
+                        $(this).valid();
+                    }
+
+                    elem.attr('city-selected', 'false');
+                })
+            }
 
             _this.currentStore[name] = elem.val().trim();
             _this.autocomplete[name] = new google.maps.places.Autocomplete(elem[0], options);

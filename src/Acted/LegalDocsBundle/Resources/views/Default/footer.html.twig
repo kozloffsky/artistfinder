@@ -67,7 +67,7 @@
     {% include 'ActedLegalDocsBundle:Default:registration.html.twig' %}
 {% endif %}
 <script src="{{ asset('js/javascript.js') }}"></script>
-<script src="http://maps.google.com/maps/api/js?language=en&libraries=places&key=AIzaSyDLK8SupBcU-H0H0SF0PIar5UP-y-DCrTI"></script>
+<script src="http://maps.google.com/maps/api/js?language=en&libraries=places&key={{googlemaps.key}}"></script>
 <script>
     jQuery.extend(jQuery.validator.messages, {
         required: "This field is required.",

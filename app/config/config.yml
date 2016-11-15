@@ -43,6 +43,8 @@ twig:
       performancecontract_dir: "%performancecontract_dir%"
       quotation_dir: "%quotation_dir%"
       invoice_dir: "%invoice_dir%"
+      googlemaps:
+        key: AIzaSyDLK8SupBcU-H0H0SF0PIar5UP-y-DCrTI
 
 # Doctrine Configuration
 doctrine:
