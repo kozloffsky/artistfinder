@@ -73,51 +73,51 @@
                     <h2 class="title">Event details</h2>
                     <div class="frame">
                         <label for="name_event">Name event</label>
-                        <div class="eventArtist">{{ chat.event.title }}</div>
+                        <input type="text" placeholder="{{ chat.event.title }}" value="{{ chat.event.title }}" disabled>
                     </div>
                     <div class="frame">
                         <label for="country-select">Country</label>
-                        <div class="eventArtist">{{ chat.event.countryName }}</div>
+                        <input type="text" placeholder="{{ chat.event.countryName }}" value="{{ chat.event.countryName }}" disabled>
                     </div>
                     <div class="row holder border-b clearfix">
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="frame">
                                 <label for="datetimepicker">Date</label>
-                                <div class="eventArtist">{{ chat.event.starting_date }}</div>
+                                <input type="text" placeholder="{{ chat.event.starting_date }}" value="{{ chat.event.starting_date }}" disabled>
                             </div>
                             <div class="frame">
                                 <label for="performance">Performance time</label>
-                                <input type="text" id="performance" placeholder="10 p.m.">
+                                <input type="text" placeholder="{{ chat.event.timing }}" value="{{ chat.event.timing }}" disabled>
                             </div>
                             <div class="frame">
                                 <label for="arrival">Arrival time</label>
-                                <input type="text" id="arrival" placeholder="6 p.m.">
+                                <input type="text" placeholder="" value="" disabled>
                             </div>
                             <div class="frame">
                                 <label for="guests">Number of guests</label>
-                                <div class="eventArtist">{{ chat.event.number_of_guests }}</div>
+                                <input type="text" placeholder="{{ chat.event.number_of_guests }}" value="{{ chat.event.number_of_guests }}" disabled>
                             </div>
                             <div class="frame">
                                 <label for="vanue">Vanue type</label>
-                                <div class="eventArtist">{{ chat.event.venue_type.venue_type }}</div>
+                                <input type="text" placeholder="{{ chat.event.venue_type.venue_type }}" value="{{ chat.event.venue_type.venue_type }}" disabled>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 pull-right">
                             <div class="frame">
                                 <label for="adress">Adress</label>
-                                <input type="text" id="adress" placeholder="Sr Regis">
+                                <input type="text" placeholder="{{ chat.event.location }}" value="{{ chat.event.location }}" disabled>
                             </div>
                             <div class="frame">
                                 <label for="city">City</label>
-                                <div class="eventArtist">{{ chat.event.city.name }}</div>
+                                <input type="text" placeholder="{{ chat.event.city.name }}" value="{{ chat.event.city.name }}" disabled>
                             </div>
                             <div class="frame">
                                 <label for="p-code">Post code</label>
-                                <input type="text" id="p-code" placeholder="Sr Regis">
+                                <input type="text" placeholder="" value="" disabled>
                             </div>
                             <div class="map-holder">
-                                <div id="map"></div>
-                                <em class="note">Pin your location on the map</em>
+                                <img src="https://maps.googleapis.com/maps/api/staticmap?center={{ chat.event.location|url_encode }}&zoom=14&key={{googlemaps.key}}&size=196x106&markers=size:mid|color:blue|label:E%7C{{ chat.event.location|url_encode }}
+">
                             </div>
                             <div class="hidden" id="eventLocationCoordinates">
                                 <span class="eventCityId">{{ chat.event.city.id }}</span>
