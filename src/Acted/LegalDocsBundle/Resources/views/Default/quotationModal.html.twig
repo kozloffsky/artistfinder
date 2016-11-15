@@ -117,8 +117,11 @@
 
 <!-- QUOTATION MODAL TEMPLATE -->
 <script type="text/template" id="quot-modal-tmp">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
     <div class="modal-header">
-        <span class="title">Request from: <%= title %></span>
+        <h4 class="modal-title">Request from: <%= title %></h4>
     </div>
     <form name="quotation_event_info" class="place-info">
         <%= event %>
