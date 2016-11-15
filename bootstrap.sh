@@ -59,7 +59,8 @@ sudo chmod a+x /usr/local/bin/symfony
 echo -e "Setting up a composer + vendor dependencies...\n"
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 cd /vagrant
-sudo composer install --no-interaction --ignore-platform-reqs
+
+sudo composer install --no-interaction --ignore-platform-reqs --verbose --prefer-dist
 
 echo -e "Setting up app/cache and app/logs permissions...\n"
 mkdir /vagrant/app/{cache,logs}
@@ -79,5 +80,4 @@ sed -i "s/\(database_password:\)\s.*/\1 $DBPASSWD/g" /vagrant/app/config/paramet
 
 php app/console doctrine:database:create
 php app/console --no-interaction doctrine:migrations:migrate
-
-sudo composer install --no-interaction --ignore-platform-reqs --verbose --prefer-dist
+php app/console create:admin example@acted.com create Xs123456
