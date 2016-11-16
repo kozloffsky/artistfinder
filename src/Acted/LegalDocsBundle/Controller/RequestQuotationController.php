@@ -190,7 +190,6 @@ class RequestQuotationController extends Controller
         ]);
     }
 
-
     /**
      * Send quotations
      *
@@ -222,7 +221,6 @@ class RequestQuotationController extends Controller
         $data = $requestQuotationPrepareForm->getData();
         $artist = $this->getUser();
 
-
         $event = $data['event'];
         $requestQuotation = $data['request_quotation'];
         $balancePercent = $data['balance_percent'];
@@ -230,10 +228,9 @@ class RequestQuotationController extends Controller
         $connection = $em->getConnection();
         $connection->beginTransaction();
         $requestQuotationManager = $this->get('app.request_quotation.manager');
-        $quotation_edited = false;
+        $quotationEdited = false;
         try {
             $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
-
 
             $quotation = $requestQuotationRepo->findOneBy(array('event' => $event->getId()));
             $event = $quotation->getEvent();
@@ -245,7 +242,7 @@ class RequestQuotationController extends Controller
           if no for creation
         */
             if ($quotation->getStatus() == $quotation::STATUS_PUBLISHED) {
-                $quotation_edited = true;
+                $quotationEdited = true;
             }
 
             $requestQuotationRepo->setOutdatedStatus($event->getId());
@@ -318,7 +315,7 @@ class RequestQuotationController extends Controller
             //send mail
 
             $requestQuotationManager = $this->get('app.request_quotation.manager');
-            $requestQuotationManager->sendNotify($event, $artist, $client, $quotation_edited);
+            $requestQuotationManager->sendNotify($event, $artist, $client, $quotationEdited);
 
             $em->flush();
 

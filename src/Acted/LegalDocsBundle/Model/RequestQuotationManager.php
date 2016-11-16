@@ -25,13 +25,14 @@ class RequestQuotationManager
 
     protected $userManager;
 
+
     /**
-     * EventManager constructor.
+     * RequestQuotationManager constructor.
      * @param EntityManagerInterface $entityManagerInterface
      * @param $mailer
      * @param $mailFrom
      * @param EngineInterface $templating
-     * @param UserManager $userManager
+     * @param \Acted\LegalDocsBundle\Model\UserManager $userManager
      */
     public function __construct(EntityManagerInterface $entityManagerInterface, $mailer, $mailFrom, EngineInterface $templating, UserManager $userManager)
     {
@@ -43,10 +44,10 @@ class RequestQuotationManager
     }
 
     /**
-     * Send notify to Customer about new Event
+     * Send notify to Customer about Quotation reply
      * @param $eventData
      * @param $artist
-     * @param $offer
+     * @param bool $edited
      */
     public function sendNotify($eventData, $artist, $client, $edited = false)
     {
