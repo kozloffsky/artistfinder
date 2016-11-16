@@ -11,6 +11,7 @@ use Acted\LegalDocsBundle\Entity\Package;
 use Acted\LegalDocsBundle\Entity\Price;
 use Acted\LegalDocsBundle\Entity\Option;
 use Acted\LegalDocsBundle\Entity\Rate;
+use Doctrine\Common\Util\Debug;
 use JMS\Serializer\SerializationContext;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,7 +58,7 @@ class RequestQuotationController extends Controller
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'User is not authorized'
-            ],  Response::HTTP_UNAUTHORIZED);
+            ], Response::HTTP_UNAUTHORIZED);
         }
 
         $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
@@ -169,7 +170,7 @@ class RequestQuotationController extends Controller
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Preparing error'
-            ],  Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_BAD_REQUEST);
             //\Doctrine\Common\Util\Debug::dump($e->getMessage());exit;
         }
 
@@ -219,96 +220,118 @@ class RequestQuotationController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $data = $requestQuotationPrepareForm->getData();
+        $artist = $this->getUser();
+
+
         $event = $data['event'];
         $requestQuotation = $data['request_quotation'];
         $balancePercent = $data['balance_percent'];
 
         $connection = $em->getConnection();
         $connection->beginTransaction();
-
-          try {
-              $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
-
-              $requestQuotationRepo->setOutdatedStatus($event->getId());
-              $requestQuotationRepo->setPublishedStatus($requestQuotation->getId());
-              $paymentTermRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:PaymentTermRequestQuotation');
-
-              $paymentTermRQ = $paymentTermRequestQuotationRepo->findOneBy(array('requestQuotation' => $requestQuotation->getId()));
-              if (empty($paymentTermRQ)) {
-                  $paymentTermRequestQuotation = new PaymentTermRequestQuotation();
-                  $paymentTermRequestQuotation->setRequestQuotation($requestQuotation);
-                  $paymentTermRequestQuotation->setBalancePercent($balancePercent);
-                  $paymentTermRequestQuotation->setGuaranteedDepositPercent(PaymentTermRequestQuotation::GUARANTEED_DEPOSIT_PERCENT);
-                  $em->persist($paymentTermRequestQuotation);
-              }
-
-              $performanceRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:PerformanceRequestQuotation');
-              $serviceRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:ServiceRequestQuotation');
-
-              $serviceRequestQuotations = $serviceRequestQuotationRepo->getServiceRequestQuotations($requestQuotation->getId());
-              $performanceRequestQuotations = $performanceRequestQuotationRepo->getPerformanceRequestQuotations($requestQuotation->getId());
-
-              $services = [];
-              $performances = [];
-
-              foreach ($serviceRequestQuotations as $serviceRequestQuotation) {
-                  $services[] = $serviceRequestQuotation['service'];
-              }
-
-              foreach ($performanceRequestQuotations as $performanceRequestQuotation) {
-                  $performances[] = $performanceRequestQuotation['performance'];
-              }
-
-              //\Doctrine\Common\Util\Debug::dump($event);exit;
-
-              /*Generate pdf file*/
-              //todo: we need to decide which id get from chatRoom in the future
-              $chatRoomId = $event->getChatRooms()->first()->getId();
-
-              $path = $this->get('request_quotation_type')
-                  ->setData(array(
-                      'services' => $services,
-                      'performances' => $performances,
-                      'event' => array(
-                          'title' => $event->getTitle(),
-                          'location' => $event->getAddress(),
-                          'startingDate' => $event->getStartingDate(),
-                          "endingDate" => $event->getEndingDate(),
-                          "timing" => $event->getTiming(),
-                          "numberOfGuests" => $event->getNumberOfGuests(),
-                          "city" => $event->getCity(),
-                          "clientFirstname" => $event->getUser()->getFirstname(),
-                          "clientLastname" => $event->getUser()->getLastname(),
-                          "venueType" => $event->getVenueType()->getVenueType()
-                      ),
-
-                      'payment_term' => array(
-                          'balance_percent' => $balancePercent
-                      )
-                  ))
-                  ->getParsedTemplate()
-                  ->generateDocumentPdf($chatRoomId, $requestQuotation->getId());
+        $requestQuotationManager = $this->get('app.request_quotation.manager');
+        $quotation_edited = false;
+        try {
+            $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
 
 
-              
+            $quotation = $requestQuotationRepo->findOneBy(array('event' => $event->getId()));
+            $event = $quotation->getEvent();
+            $client = $event->getUser();
 
-              $documentRequestQuotation = new DocumentRequestQuotation();
-              $documentRequestQuotation->setRequestQuotation($requestQuotation);
-              $documentRequestQuotation->setPath($path);
-              $em->persist($documentRequestQuotation);
-              //send mail
+            $chatRepository = $em->getRepository('ActedLegalDocsBundle:ChatRoom');
+            /*check is published quotation was or not
+         if yes set type sending notify for edit
+          if no for creation
+        */
+            if ($quotation->getStatus() == $quotation::STATUS_PUBLISHED) {
+                $quotation_edited = true;
+            }
 
-              $em->flush();
+            $requestQuotationRepo->setOutdatedStatus($event->getId());
+            $requestQuotationRepo->setPublishedStatus($requestQuotation->getId());
+            $paymentTermRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:PaymentTermRequestQuotation');
 
-              $connection->commit();
-          } catch (\Exception $e) {
-              $connection->rollback();
+            $paymentTermRQ = $paymentTermRequestQuotationRepo->findOneBy(array('requestQuotation' => $requestQuotation->getId()));
+            if (empty($paymentTermRQ)) {
+                $paymentTermRequestQuotation = new PaymentTermRequestQuotation();
+                $paymentTermRequestQuotation->setRequestQuotation($requestQuotation);
+                $paymentTermRequestQuotation->setBalancePercent($balancePercent);
+                $paymentTermRequestQuotation->setGuaranteedDepositPercent(PaymentTermRequestQuotation::GUARANTEED_DEPOSIT_PERCENT);
+                $em->persist($paymentTermRequestQuotation);
+            }
 
-              return new JsonResponse([
-                  'status' => 'error',
-                  'message' => 'Sending error'
-              ],  Response::HTTP_BAD_REQUEST);
-          }
+            $performanceRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:PerformanceRequestQuotation');
+            $serviceRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:ServiceRequestQuotation');
+
+            $serviceRequestQuotations = $serviceRequestQuotationRepo->getServiceRequestQuotations($requestQuotation->getId());
+            $performanceRequestQuotations = $performanceRequestQuotationRepo->getPerformanceRequestQuotations($requestQuotation->getId());
+
+            $services = [];
+            $performances = [];
+
+            foreach ($serviceRequestQuotations as $serviceRequestQuotation) {
+                $services[] = $serviceRequestQuotation['service'];
+            }
+
+            foreach ($performanceRequestQuotations as $performanceRequestQuotation) {
+                $performances[] = $performanceRequestQuotation['performance'];
+            }
+
+            //\Doctrine\Common\Util\Debug::dump($event);exit;
+
+            /*Generate pdf file*/
+            //todo: we need to decide which id get from chatRoom in the future
+            $chatRoomId = $event->getChatRooms()->first()->getId();
+
+            $path = $this->get('request_quotation_type')
+                ->setData(array(
+                    'services' => $services,
+                    'performances' => $performances,
+                    'event' => array(
+                        'title' => $event->getTitle(),
+                        'location' => $event->getAddress(),
+                        'startingDate' => $event->getStartingDate(),
+                        "endingDate" => $event->getEndingDate(),
+                        "timing" => $event->getTiming(),
+                        "numberOfGuests" => $event->getNumberOfGuests(),
+                        "city" => $event->getCity(),
+                        "clientFirstname" => $event->getUser()->getFirstname(),
+                        "clientLastname" => $event->getUser()->getLastname(),
+                        "venueType" => $event->getVenueType()->getVenueType()
+                    ),
+
+                    'payment_term' => array(
+                        'balance_percent' => $balancePercent
+                    )
+                ))
+                ->getParsedTemplate()
+                ->generateDocumentPdf($chatRoomId, $requestQuotation->getId());
+
+
+            $documentRequestQuotation = new DocumentRequestQuotation();
+            $documentRequestQuotation->setRequestQuotation($requestQuotation);
+            $documentRequestQuotation->setPath($path);
+            $em->persist($documentRequestQuotation);
+
+
+            //send mail
+
+            $requestQuotationManager = $this->get('app.request_quotation.manager');
+            $requestQuotationManager->sendNotify($event, $artist, $client, $quotation_edited);
+
+            $em->flush();
+
+            $connection->commit();
+        } catch (\Exception $e) {
+            Debug::dump($e->getMessage());
+            $connection->rollback();
+
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Sending error'
+            ], Response::HTTP_BAD_REQUEST);
+        }
 
         return new JsonResponse(['status' => 'success']);
     }
@@ -350,10 +373,10 @@ class RequestQuotationController extends Controller
             $performanceRQ = $performanceRequestQuotationRepo->findOneBy(array('requestQuotation' => $requestId, 'performance' => $performanceId));
 
             if (empty($performanceRQ)) {
-              return new JsonResponse([
-                  'status' => 'error',
-                  'message' => 'current performance is not exists'
-              ],  Response::HTTP_BAD_REQUEST);    
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'current performance is not exists'
+                ], Response::HTTP_BAD_REQUEST);
             }
 
             $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
@@ -366,7 +389,7 @@ class RequestQuotationController extends Controller
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Sending error'
-            ],  Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         return new JsonResponse(['status' => 'success']);
@@ -410,10 +433,10 @@ class RequestQuotationController extends Controller
             $serviceRQ = $serviceRequestQuotationRepo->findOneBy(array('requestQuotation' => $requestId, 'service' => $serviceId));
 
             if (empty($serviceRQ)) {
-              return new JsonResponse([
-                  'status' => 'error',
-                  'message' => 'current service is not exists'
-              ],  Response::HTTP_BAD_REQUEST);    
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'current service is not exists'
+                ], Response::HTTP_BAD_REQUEST);
             }
 
             $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
@@ -425,7 +448,7 @@ class RequestQuotationController extends Controller
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Sending error'
-            ],  Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         return new JsonResponse(['status' => 'success']);
