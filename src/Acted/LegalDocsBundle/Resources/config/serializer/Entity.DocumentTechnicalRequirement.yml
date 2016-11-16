@@ -1,6 +1,8 @@
 Acted\LegalDocsBundle\Entity\DocumentTechnicalRequirement:
     exclusion_policy: NONE
     properties:
+        id:
+            groups: [files]
         name:
             groups: [files]
         size:
@@ -8,6 +10,7 @@ Acted\LegalDocsBundle\Entity\DocumentTechnicalRequirement:
         file:
             groups: [files]
         originalName:
+            serialized_name: originalName
             groups: [files]
         url:
             groups: [files]
