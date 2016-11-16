@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Controller;
 
+use Acted\LegalDocsBundle\Entity\ChatRoom;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -200,11 +201,12 @@ class ChatRoomController extends Controller
         $serializer = $this->get('jms_serializer');
 
         $chatRoom = $this->getEM()->getRepository('ActedLegalDocsBundle:ChatRoom')->find($chatRoomId);
+        $quotationLink = $this->getQuotationLink($chatRoom);
         $chat = $serializer->toArray($chatRoom, SerializationContext::create()
             ->setGroups(['chat_room']));
 
         return $this->render('ActedLegalDocsBundle:ChatRoom:chat_room.html.twig',
-            compact('chat'));
+            compact('chat', 'quotationLink'));
     }
 
     /**
@@ -345,7 +347,7 @@ class ChatRoomController extends Controller
         return $this->render('ActedLegalDocsBundle:ChatRoom:bookings.html.twig',
             compact('chat'));
     }
-    
+
 
     public function pricesAction() {
         $em = $this->getDoctrine()->getManager();
@@ -361,5 +363,22 @@ class ChatRoomController extends Controller
 
     public function technicalRequirementAction() {
         return $this->render('ActedLegalDocsBundle:ChatRoom:techreq.html.twig');
+    }
+
+    /**
+     * Get link for Quotation pdf view\download.
+     *
+     * @param ChatRoom $chatRoom
+     *
+     * @return string
+     */
+    public function getQuotationLink(ChatRoom $chatRoom)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $quotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
+        $event = $chatRoom->getEvent();
+        $quotation = $quotationRepo->findOneBy(['event'=> $event, 'status'=>true]);
+
+        return "/".$quotation->getDocumentRequestQuotations()->first()->getPath();
     }
 }
