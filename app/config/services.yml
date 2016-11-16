@@ -55,6 +55,15 @@ services:
             - "%max_file_size%"
             - "%chat_upload_dir%"
 
+    app.request_quotation.manager:
+        class: Acted\LegalDocsBundle\Model\RequestQuotationManager
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@mailer"
+            - "%mailer_from_address%"
+            - "@templating.engine.twig"
+            - "@app.user.manager"
+
     app.form_errors_serializer:
         class: Acted\LegalDocsBundle\FormErrors\FormErrorsSerializer
 
