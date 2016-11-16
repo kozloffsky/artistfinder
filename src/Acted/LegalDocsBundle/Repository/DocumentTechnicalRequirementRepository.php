@@ -29,26 +29,4 @@ class DocumentTechnicalRequirementRepository extends \Doctrine\ORM\EntityReposit
 
         return $qb->getQuery()->getArrayResult();
     }
-
-
-    /**
-     * Get document technical requirements by lastId
-     * @param $id
-     * @return DocumentTechnicalRequirement
-     */
-    public function getDocumentsAfterId($id, $technicalRequirementId)
-    {
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder();
-
-        $params = array('documentTechnicalRequirement' => $id, 'technicalRequirement' => $technicalRequirementId);
-
-        $qb->from('ActedLegalDocsBundle:DocumentTechnicalRequirement', 'dtr');
-        $qb->select('dtr');
-        $qb->where('dtr.id > :documentTechnicalRequirement AND dtr.technicalRequirement = :technicalRequirement');
-
-        $qb->setParameters($params);
-
-        return $qb->getQuery()->getArrayResult();
-    }
 }

@@ -26,22 +26,6 @@ class DocumentTechnicalRequirementController extends Controller
 
         $data = $documentTechnicalRequirementForm->getData();
 
-        $lastId = 0;
-        $_SEARCH_ALL_DOCS = 0;
-        $technicalRequirementId = $data->getTechnicalRequirement()->getId();
-
-        if (!empty($data->getTechnicalRequirement()->getDocumentTechnicalRequirements())) {
-            $existingDocuments = $data->getTechnicalRequirement()->getDocumentTechnicalRequirements();
-
-            $index = count($existingDocuments) - 1;
-
-            if(abs($index) != $index) {
-                $_SEARCH_ALL_DOCS = 1;
-            } else {
-                $lastId = $existingDocuments->toArray()[$index]->getId();
-            }
-        }
-
         if (empty($data)) {
             return new JsonResponse([
                 'status' => 'error',
@@ -64,6 +48,7 @@ class DocumentTechnicalRequirementController extends Controller
 
         //todo: task AC-171
 
+        $uploadFilesIds = array();
         if ($uploadFiles->upload()) {
             foreach ($uploadFiles->getDataFiles() as $fileData) {
                 $documentTechnicalRequirement = new DocumentTechnicalRequirement();
@@ -76,19 +61,12 @@ class DocumentTechnicalRequirementController extends Controller
                 $documentTechnicalRequirement->setUrl('//' . $_SERVER['HTTP_HOST'] . '/' . $fileData['relativeDirectory'] . '/' . $fileData['name']);
 
                 $em->persist($documentTechnicalRequirement);
+                $em->flush();
+                $uploadFilesIds[] = $documentTechnicalRequirement->getId();
             }
-
-            $em->flush();
 
             $documentTRRepo = $em->getRepository('ActedLegalDocsBundle:DocumentTechnicalRequirement');
-
-            $uploadedDocuments = null;
-
-            if(!$_SEARCH_ALL_DOCS) {
-                $uploadedDocuments = $documentTRRepo->getDocumentsAfterId($lastId, $technicalRequirementId);
-            } else {
-                $uploadedDocuments = $documentTRRepo->getDocumentsByTRId($technicalRequirementId);
-            }
+            $uploadedDocuments = $documentTRRepo->findBy(array('id' => $uploadFilesIds));
 
             return new JsonResponse($serializer->toArray($uploadedDocuments, SerializationContext::create()
                 ->setGroups(['files'])), Response::HTTP_OK);
