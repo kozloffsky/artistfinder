@@ -58,6 +58,22 @@ class Artist
      * @var \Doctrine\Common\Collections\Collection
      */
     private $recommends;
+
+    /**
+     * @var boolean
+     */
+    private $workAbroad = false;
+
+    /**
+     * @var string
+     */
+    private $searchImage;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $technicalRequirements;
+
     /**
      * Get id
      *
@@ -258,6 +274,13 @@ class Artist
     {
         return $this->cityId;
     }
+
+
+    public function getCityProfileId()
+    {
+        return ($this->city) ? $this->city->getId() : null;
+    }
+
     /**
      * @var string
      */
@@ -357,6 +380,7 @@ class Artist
     {
         $this->ratings = new \Doctrine\Common\Collections\ArrayCollection();
         $this->recommends = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->technicalRequirements = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -448,6 +472,11 @@ class Artist
         return $this->country;
     }
 
+    public function getCurrency()
+    {
+        return ($this->country && $this->country->getRefCurrency()) ? $this->country->getRefCurrency() : null;
+    }
+
     /**
      * @var int
      */
@@ -472,7 +501,7 @@ class Artist
      *
      * @param Recommend $recommend
      *
-     * @return User
+     * @return Artist
      */
     public function addRecommend(Recommend $recommend)
     {
@@ -519,6 +548,11 @@ class Artist
         return ($this->city && $this->city->getRegion()->getCountry()) ? $this->city->getRegion()->getCountry()->getName() : null;
     }
 
+    public function getCountryId()
+    {
+        return ($this->city && $this->city->getRegion()->getCountry()) ? $this->city->getRegion()->getCountry()->getId() : null;
+    }
+
     public function getCategoriesNames()
     {
         if ($this->getUser()->getProfile()) {
@@ -536,12 +570,21 @@ class Artist
             /** @var Performance $performance */
             $performances = $this->getUser()->getProfile()->getPerformances();
             $performance = '';
-            foreach ($performances as $item ) {
-                if ($item->getStatus() === Performance::STATUS_PUBLISHED) {
-                    $performance = $item;
-                    continue;
+
+            $len = count($performances);
+
+            $perfCopy = $performances->getValues();
+
+            for($i = 0; $i < $len; $i++) {
+                if ($perfCopy[$i]->getStatus() === Performance::STATUS_PUBLISHED &&
+                    $perfCopy[$i]->getIsVisible() == true &&
+                    empty($perfCopy[$i]->getDeletedTime())
+                ) {
+                    $performance = $perfCopy[$i];
+                    break;
                 }
             }
+
             if ($performance) {
                 return $performance->getMedia()->first();
             }
@@ -556,12 +599,148 @@ class Artist
             $performances = $this->getUser()->getProfile()->getPerformances();
             $result = [];
             foreach ($performances as $performance) {
-                $result[] = ['id' => $performance->getId(), 'name' => $performance->getTitle()];
+                if (!$performance->getIsQuotation() && $performance->getIsVisible() && is_null($performance->getDeletedTime()))
+                    $result[] = ['id' => $performance->getId(), 'name' => $performance->getTitle()];
             }
             return $result;
         }
         return null;
     }
 
+    /**
+     * Set workAbroad
+     *
+     * @param boolean $workAbroad
+     *
+     * @return Artist
+     */
+    public function setWorkAbroad($workAbroad)
+    {
+        $this->workAbroad = $workAbroad;
 
+        return $this;
+    }
+
+    /**
+     * Get workAbroad
+     *
+     * @return boolean
+     */
+    public function getWorkAbroad()
+    {
+        return $this->workAbroad;
+    }
+
+    /**
+     * Set search image
+     *
+     * @param string $searchImage
+     *
+     * @return Artist
+     */
+    public function setSearchImage($searchImage)
+    {
+        $this->searchImage =  '/' . $searchImage;
+
+        return $this;
+    }
+
+    /**
+     * Get search image
+     *
+     * @return string
+     */
+    public function getSearchImage()
+    {
+        return $this->rel2abs($this->searchImage);
+    }
+
+    protected  function rel2abs($link)
+    {
+        if (strpos($link, 'http') === 0) {
+            return $link;
+        }
+
+        return '/'.ltrim($link, '/');
+    }
+
+    /**
+     * Add technical requirement
+     *
+     * @param TechnicalRequirement $technicalRequirement
+     *
+     * @return Artist
+     */
+    public function addTechnicalRequirement(TechnicalRequirement $technicalRequirement)
+    {
+        $this->technicalRequirements[] = $technicalRequirement;
+
+        return $this;
+    }
+
+    /**
+     * Remove technical requirements
+     *
+     * @param TechnicalRequirement $technicalRequirement
+     */
+    public function removeTechnicalRequirement(TechnicalRequirement $technicalRequirement)
+    {
+        $this->technicalRequirements->removeElement($technicalRequirement);
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection|\Doctrine\Common\Collections\Collection
+     */
+    public function getTechnicalRequirements()
+    {
+        return $this->technicalRequirements;
+    }
+
+    /**
+     * Get city lat
+     *
+     * @return double
+     */
+    public function getCityLat()
+    {
+        return $this->city->getLatitude();
+    }
+
+    /**
+     * Get city lng
+     *
+     * @return double
+     */
+    public function getCityLng()
+    {
+        return $this->city->getLongitude();
+    }
+
+    /**
+     * Get region lat
+     *
+     * @return double
+     */
+    public function getRegLat()
+    {
+        return $this->city->getRegion()->getLatitude();
+    }
+    /**
+     * Get region lng
+     *
+     * @return double
+     */
+    public function getRegLng()
+    {
+        return $this->city->getRegion()->getLongitude();
+    }
+    /**
+     * Get region name
+     *
+     * @return string
+     */
+    public function getRegName()
+    {
+        return $this->city->getRegion()->getName();
+    }
 }

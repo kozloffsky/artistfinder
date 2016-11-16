@@ -9,27 +9,28 @@ Acted\LegalDocsBundle\Entity\Service:
             generator:
                 strategy: AUTO
     fields:
-        performanceId:
-          type: integer(20)
-          notnull: true
         title:
           type: string(128)
-          notnull: true
-          unique: true
-        price:
-          type: float
-          notnull: true
-        currencyId:
-          type: integer(11)
-          notnull: true
-        depositValue:
-          type: float
-          notnull: true
-        depositType:
-          type: string(32)
-          notnull: true
-        paymentTerms:
-          type: string(256)
-        comments:
-          type: string(256)
+        isVisible:
+          type: boolean
+          options:
+            default: true
+        isQuotation:
+          type: boolean
+          options:
+            default: false
+        deletedTime:
+          type: datetime
+          nullable: true
+    oneToMany:
+      packages:
+        targetEntity: Acted\LegalDocsBundle\Entity\Package
+        mappedBy: service
+      serviceRequestQuotations:
+        targetEntity: Acted\LegalDocsBundle\Entity\ServiceRequestQuotation
+        mappedBy: service
+    manyToOne:
+      profile:
+        targetEntity: Acted\LegalDocsBundle\Entity\Profile
+        inversedBy: services
     lifecycleCallbacks: {  }

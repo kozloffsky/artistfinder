@@ -1,0 +1,16 @@
+.modal-content .close {
+    position: absolute;
+    height: 29px;
+    width: 29px;
+    top: -14px;
+    right: -14px;
+    border-radius: 50%;
+    background: #F2F2F2;
+    opacity: 1;
+    font-size: 21px;
+    outline: none!important;
+}
+
+.modal-content .close > span {
+    color: #959595;
+}

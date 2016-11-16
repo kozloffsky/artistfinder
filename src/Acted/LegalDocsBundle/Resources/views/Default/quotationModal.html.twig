@@ -1,0 +1,535 @@
+<div class="modal quotation-modal modal-registered fade" id="quotationModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<div class="modal registration-modal fade" id="offerSuccess">
+    <div class="modal-dialog" role="document">
+        <div class="modal-body">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="final-stage">
+                    <div class="col-xs-12">
+                        <img class="final-image" src="{{ asset('assets/images/congratulations.png') }}" alt="">
+                    </div>
+                    <div class="row">
+                        <h2>Your offer created</h2>
+
+                        <p class="description">
+
+                        </p>
+                        <p class="description">
+                            And if you need any help, please do not hesitate to use the FAQ
+                        </p>
+
+                        <div class="controls">
+                            <div class="button-gradient filled">
+                                <button data-dismiss="modal" class="btn">Have a nice journey on ACTED</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal registration-modal fade" id="offerErrorModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-body">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="final-stage">
+                    <div class="row">
+                        <h2>Artist cannot create offer</h2>
+
+                        <p class="description">
+
+                        </p>
+                        <p class="description">
+                            And if you need any help, please do not hesitate to use the FAQ
+                        </p>
+
+                        <div class="controls">
+                            <div class="button-gradient filled">
+                                <button data-dismiss="modal" class="btn">Have a nice journey on ACTED</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- QUOTATION SEND SUCCESS -->
+<div class="modal quotation-send-success-modal fade" id="quotationSuccessModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-body">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="final-stage">
+                    <div class="row">
+                        <h2>Artist cannot create offer</h2>
+
+                        <p class="description">
+
+                        </p>
+                        <p class="description">
+                            And if you need any help, please do not hesitate to use the FAQ
+                        </p>
+
+                        <div class="controls">
+                            <div class="button-gradient filled">
+                                <button data-dismiss="modal" class="btn">Have a nice journey on ACTED</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal success-quotation-modal fade" id="success-quotation-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-body">
+            <div class="modal-content text-center">
+                <h4>Thank you!</h4>
+                <p>Your quotation has been sent!</p>
+                <div>
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- QUOTATION MODAL TEMPLATE -->
+<script type="text/template" id="quot-modal-tmp">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+    <div class="modal-header">
+        <h4 class="modal-title">Request from: <%= title %></h4>
+    </div>
+    <form name="quotation_event_info" class="place-info">
+        <%= event %>
+    </form>
+    <form name="quotation_act_info" class="act-info">
+        <%= performance %>
+        <div new-act-section>
+        </div>
+        <hr>
+        <div>
+            <div class="add-new-performance-container">
+                <button create-performance class="add-new-performance-btn" status="adding">Add extra Act</button>
+                <button create-service class="add-new-performance-btn" status="adding">Add a service</button>
+            </div>
+            <div class="travel-exp-container">
+                <i>Includes travel expenses:</i>
+                <div class="custom-checkbox">
+                    <input id="expenses_yes" name="expenses" type="radio">
+                    <label for="expenses_yes">Yes</label>
+                </div>
+                <div class="custom-checkbox">
+                    <input id="expenses_no" name="expenses" type="radio">
+                    <label for="expenses_no">No</label>
+                </div>
+                <div class="custom-checkbox">
+                    <input id="expenses_quoted_above" name="expenses" type="radio">
+                    <label for="expenses_quoted_above">Quoted above</label>
+                </div>
+            </div>
+        </div>
+    </form>
+    <hr>
+    <form name="quotation_payment_info" class="payment-info">
+        <%= payment %>
+    </form>
+</script>
+
+
+<!-- Quotation event section -->
+<script type="text/template" id="quot-event-tmp">
+    <% var disabled = '';
+
+    if(data.model.user.type == 'ARTIST') { 
+        disabled = 'disabled';
+
+    } %>
+
+    <div class="modal-body">
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_event_name">Name event</label>
+                <input type="text" class="form-control" id="quot_event_name" placeholder="Name your event" name="event_name" value="<%=data.model.title%>" <%=disabled%> >
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_country">Country</label>
+                <select class="form-control" id="quot_country" name="country" <%=disabled%> >
+                    <option value="United Kingdom" <% if(data.model.countryId == 1) { %> selected <% } %>>United Kingdom</option>
+                    <option value="Germany" <% if(data.model.countryId == 2) { %> selected <% } %> >Germany</option>
+                    <option value="France" <% if(data.model.countryId == 3) { %> selected <% } %> >France</option>
+                </select>
+                {#<input type="text" class="form-control" id="quot_country" placeholder="United Kingdom" name="country">#}
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_date">Date</label>
+                <input type="text" class="form-control" id="quot_date" placeholder="17/12/2016" name="date" value="<%=data.model.starting_date%>" <%=disabled%>>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_city">City</label>
+                <input type="text" class="form-control" id="quot_city" placeholder="London" name="city" value="<%=data.model.city.name%>" <%=disabled%>>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_performance_time">Performance time</label>
+                <input type="text" class="form-control" id="quot_performance_time" placeholder="10 p.m." name="performance_time" <%=disabled%>>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_address">Address</label>
+                <input type="text" class="form-control" id="quot_address" placeholder="St Regis" name="address" value="<%=data.model.location%>" <%=disabled%>>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_arrival_time">Arrival time</label>
+                <input type="text" class="form-control" id="quot_arrival_time" placeholder="6 p.m." name="arrival_time" <%=disabled%>>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_post_code">Post code</label>
+                <input type="text" class="form-control" id="quot_post_code" placeholder="St Regis" name="post_code" <%=disabled%>>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_guests_number">Number of guests</label>
+                <input type="text" class="form-control" id="quot_guests_number" placeholder="Less than 50" name="guests_number" value="<%=data.model.number_of_guests%>" <%=disabled%>>
+            </div>
+
+            <div class="map-holder">
+                <img src="https://maps.googleapis.com/maps/api/staticmap?center=<%=data.model.location%>&zoom=14&key={{googlemaps.key}}&size=196x106&markers=size:mid|color:blue|label:E%7C<%=data.model.location%>
+">
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                <label for="quot_venue_type">Venue type</label>
+                <input type="text" class="form-control" id="quot_venue_type" placeholder="Hotel Ballrom" name="venue_type" value="<%=data.model.venue_type.venue_type%>" <%=disabled%>>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- Quotation performance section -->
+<script type="text/template" id="quot-performance-tmp">
+    <%
+        var performances = data.model.perf;
+        var services     = data.model.serv;
+        var allData      = performances.concat(services);
+
+    for(var i = 0; i < allData.length; i++) {
+        var actSelected = allData[i].isSelected ? 'checked' : '';
+        //var perfId = allData[i].id;
+
+        var curPerf = null;
+        var type = '';
+
+        if(allData[i].performance) {
+            type = 'performance';
+            curPerf = allData[i].performance;
+        }
+
+        if(allData[i].service) {
+            type = 'service';
+            curPerf = allData[i].service;
+        }
+
+        var perfId = curPerf.id;
+        console.log(curPerf)
+
+        %>
+        <div act-id="<%=perfId%>" act-type="<%=type%>">
+            <div class="row">
+                <div class="act-title">
+                    <div class="custom-checkbox">
+                        <input select-performance id="performance_quot_<%=perfId%>" value="" name="quot-title-check" type="checkbox" <%=actSelected%> >
+                        <label for="performance_quot_<%=perfId%>"></label>
+                    </div>
+                    <i class="act-name"><%=curPerf.title%></i>
+                    <i act-delete="<%=perfId%>" class="fa fa-trash" aria-hidden="true"></i>
+                </div>
+            </div>
+
+            <% for(var j = 0; j < curPerf.packages.length; j++) { 
+                var package = curPerf.packages[j];
+                var packageChecked = package.isSelected ? 'checked' : '';
+            %>
+
+                <div package-id="<%=package.id%>" class="row">
+                    <div class="row package">
+                        <div class="custom-checkbox">
+                            <input select-package package-id="<%=package.id%>" id="package_<%=package.id%>" name="package-check" value="" type="checkbox" <%=packageChecked%> >
+                            <label for="package_<%=package.id%>"></label>
+                        </div>
+                        <label><%=package.name%></label>
+                        <a create-set href="#">Add sets</a>
+                        <i remove-package="<%=package.id%>" class="fa fa-trash" aria-hidden="true"></i>
+                    </div>
+
+                    <% for(var k = 0; k < package.options.length; k++) { 
+                        var option = package.options[k];
+                        var optionChecked = option.isSelected ? 'checked' : '';
+                    %>
+                    <!-- Set options -->
+                    <div option-id="<%=option.id%>" class="col-md-6 act-option">
+                        <div class="custom-checkbox">
+                            <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox" <%=optionChecked%> >
+                            <label for="option_<%=option.id%>"></label>
+                        </div>
+
+                        <select quot-edit-qty name="qty" class="quantity-select">
+                            <%
+                                for(var opt = 1; opt < 7; opt++) {
+                                    if(option.qty == opt) {
+                                    %>
+                                        <option selected value="<%=opt%>"><%=opt%></option>
+                                    <%
+                                    } else {
+                                    %>
+                                        <option value="<%=opt%>"><%=opt%></option>
+                                    <%
+                                    }
+                                }
+                            %>
+                        </select>
+                        <span>x</span>
+                        <select quot-edit-duration name="duration" class="duration-select">
+                            <option <% if(option.duration == 45) { %> selected <% } %> value="45">45 min</option>
+                            <option <% if(option.duration == 50) { %> selected <% } %> value="50">50 min</option>
+                            <option <% if(option.duration == 55) { %> selected <% } %> value="55">55 min</option>
+                        </select>
+                        <select quot-edit-price name="price">
+                            <% for(var r = 0; r < option.rates.length; r++) { 
+                                var rate = option.rates[r]; %>
+
+                            <option price-id="<%=rate.id%>" value="<%=rate.price.amount%>"><%=rate.price.amount%></option>
+
+                            <% } %>
+
+                            <option value="custom">Custom</option>
+                        </select>
+                    </div>
+
+                    <% } %>
+                </div>
+
+            <% } %>
+
+            <div class="package-create">
+                <a quot-create-package href="#">Add Package</a>
+            </div>
+        </div>
+    <% } %>
+
+</script>
+
+<!-- Quotation payment section -->
+<script type="text/template" id="quot-payment-tmp">
+    <div class="row">
+        <label>Payment terms</label>
+    </div>
+
+    <div class="row payment-deposit">
+        <select name="quotation-payment-percent">
+            <option value="30">30%</option>
+            <option value="50">50%</option>
+            <option value="100">100%</option>
+        </select>
+
+        <span>Guaranteed deposit to be paid with <b>Acted Escrow Account</b> now to confirm the booking</span>
+    </div>
+
+    <div class="row payment-deposit-info">
+        <span>50% Balance Payment to be held on <b>Acted Escrow Account</b> no later than 1 day before event</span>
+    </div>
+
+    <div class="row add-comment-btn">
+        <a href="#" id="quotation_comment_toggle">Add a comment</a>
+    </div>
+
+    <div class="col-lg-12 no-pad" id="quotation_comment_area" style="display: none;">
+        <textarea name="comment" class="quote-profile-desc" placeholder="Write a message to the Artist if you have any question about his performance or if you want to provide with more details about your event"></textarea>
+    </div>
+
+    <div style="text-align: center;">
+        <button quotation-send class="btn btn-quotation-send">Send quotation</button>
+    </div>
+</script>
+
+<script type="text/template" id="quot-new-performance">
+    <% 
+        var actType = data.performance ? 'performance' : 'service';
+        var obj = data.performance || data.service; 
+        var package = obj.packages[0];
+        var option = package.options[0];
+    %>
+
+    <div act-id="<%=obj.id%>" new-act-section class="new-act-section">
+        <hr>
+        <div>
+            <div class="custom-checkbox">
+                <input id="new-act-<%=obj.id%>" name="new-act-check" value="" type="checkbox">
+                <label for="new-act-<%=obj.id%>"></label>
+            </div>
+            <input quot-edit-title act-type="<%=actType%>" type="text" name="quot-new-act-title" placeholder="<%=obj.title%>">
+        </div>
+        <div>
+            <div class="custom-checkbox">
+                <input id="new-act-package-<%=package.id%>" name="new-act-package-check" value="" type="checkbox">
+                <label for="new-act-package-<%=package.id%>"></label>
+            </div>
+            <input quot-edit-package-name type="text" name="quot-new-package-name" placeholder="<%=package.name%>">
+        </div>
+
+        <div option-id="<%=option.id%>" class="col-md-12 act-option">
+            <div class="custom-checkbox">
+                <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
+                <label for="option_<%=option.id%>"></label>
+            </div>
+
+            <% if(actType == 'performance') { %>
+
+            <select quot-edit-qty name="qty">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+            <span>x</span>
+            <select quot-edit-duration name="duration">
+                <option value="45">45 min</option>
+                <option value="50">50 min</option>
+                <option value="55">55 min</option>
+            </select>
+
+            <% } %>
+
+            <select quot-edit-price name="price">
+                <% for(var r = 0; r < option.rates.length; r++) { 
+                    var rate = option.rates[r]; %>
+
+                <option price-id="<%=rate.id%>" value="<%=rate.price.amount%>"><%=rate.price.amount%></option>
+
+                <% } %>
+
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+    </div>
+
+</script>
+
+
+<script type="text/template" id="quot-set-template">
+
+    <!-- Set options -->
+    <div option-id="<%=option.id%>" class="col-md-6 act-option">
+        <div class="custom-checkbox">
+            <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
+            <label for="option_<%=option.id%>"></label>
+        </div>
+        <select quot-edit-qty name="qty">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+        <span>x</span>
+        <select quot-edit-duration name="duration">
+            <option value="45">45 min</option>
+            <option value="50">50 min</option>
+            <option value="55">55 min</option>
+        </select>
+        <select quot-edit-price name="price">
+            <option>3000</option>
+            <option>Custom</option>
+        </select>
+    </div>
+
+</script>
+
+
+<script type="text/template" id="quot-package-template">
+    <div package-id="<%=package.id%>" class="row">
+        <div class="row package">
+            <div class="custom-checkbox">
+                <input select-package package-id="<%=package.id%>" id="package_<%=package.id%>" name="package-check" value="" type="checkbox">
+                <label for="package_<%=package.id%>"></label>
+            </div>
+            <label><%=package.name%></label>
+            <a create-set href="#">Add sets</a>
+            <i remove-package="<%=package.id%>" class="fa fa-trash" aria-hidden="true"></i>
+        </div>
+
+        <% for(var k = 0; k < package.options.length; k++) { 
+            var option = package.options[k];
+        %>
+        <!-- Set options -->
+        <div option-id="<%=option.id%>" class="col-md-6 act-option">
+            <div class="custom-checkbox">
+                <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
+                <label for="option_<%=option.id%>"></label>
+            </div>
+            <select quot-edit-qty name="qty">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+            <span>x</span>
+            <select quot-edit-duration name="duration">
+                <option value="45">45 min</option>
+                <option value="50">50 min</option>
+                <option value="55">55 min</option>
+            </select>
+            <select quot-edit-price name="price">
+                <% for(var r = 0; r < option.rates.length; r++) { 
+                    var rate = option.rates[r]; %>
+
+                <option price-id="<%=rate.id%>" value="<%=rate.price.amount%>"><%=rate.price.amount%></option>
+
+                <% } %>
+
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+
+        <% } %>
+    </div>
+</script>

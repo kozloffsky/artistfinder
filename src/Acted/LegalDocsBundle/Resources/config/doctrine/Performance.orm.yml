@@ -22,6 +22,17 @@ Acted\LegalDocsBundle\Entity\Performance:
           type: string(128)
           options:
             default: 'draft'
+        isVisible:
+          type: boolean
+          options:
+            default: true
+        isQuotation:
+          type: boolean
+          options:
+            default: false
+        deletedTime:
+          type: datetime
+          nullable: true
     manyToOne:
         profile:
           targetEntity: Acted\LegalDocsBundle\Entity\Profile
@@ -36,4 +47,11 @@ Acted\LegalDocsBundle\Entity\Performance:
         offers:
           targetEntity: Acted\LegalDocsBundle\Entity\Offer
           mappedBy: performances
+    oneToMany:
+        packages:
+          targetEntity: Acted\LegalDocsBundle\Entity\Package
+          mappedBy: performance
+        performanceRequestQuotations:
+          targetEntity: Acted\LegalDocsBundle\Entity\PerformanceRequestQuotation
+          mappedBy: performance
     lifecycleCallbacks: {  }

@@ -1,0 +1,12 @@
+Acted\LegalDocsBundle\Entity\PerformanceRequestQuotation:
+    exclusion_policy: NONE
+    properties:
+        isSelected:
+            groups: []
+    virtual_properties:
+        getRequestQuotation:
+            serialized_name: requestQuotation
+            groups: []
+        getPerformance:
+            serialized_name: performance
+            groups: []

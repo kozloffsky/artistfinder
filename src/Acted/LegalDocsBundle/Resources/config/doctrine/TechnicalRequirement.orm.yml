@@ -1,0 +1,28 @@
+Acted\LegalDocsBundle\Entity\TechnicalRequirement:
+    type: entity
+    table: TechnicalRequirement
+    repositoryClass: Acted\LegalDocsBundle\Repository\TechnicalRequirementRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string(128)
+        description:
+            type: text
+            nullable: true
+    manyToOne:
+        artist:
+            targetEntity: Acted\LegalDocsBundle\Entity\Artist
+            inversedBy: technicalRequirements
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+    oneToMany:
+        documentTechnicalRequirements:
+            targetEntity: Acted\LegalDocsBundle\Entity\DocumentTechnicalRequirement
+            mappedBy: technicalRequirement
+    lifecycleCallbacks: {  }

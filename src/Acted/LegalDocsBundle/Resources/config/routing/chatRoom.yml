@@ -58,3 +58,13 @@ bookings:
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:bookings }
     methods:  GET
 
+prices:
+    path:     /prices
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:prices }
+    methods:  GET
+
+technical_requirements:
+    path:     /technicalreq
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:technicalRequirement }
+    methods:  GET
+

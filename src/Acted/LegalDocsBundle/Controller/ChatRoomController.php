@@ -26,8 +26,29 @@ class ChatRoomController extends Controller
         $serializer = $this->get('jms_serializer');
         $chatRoomList = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->getChatRoomByParams($userId);
 
+        $eventIds = array();
+        foreach ($chatRoomList as $chatRoom) {
+            $eventIds[] = $chatRoom->getEvent()->getId();
+        }
+
+        $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
+        $requestQuotationEnquiries = $requestQuotationRepo->findBy(array('event' => $eventIds));
+
         $chats = $serializer->toArray($chatRoomList, SerializationContext::create()
             ->setGroups(['chat_list']));
+
+        $enquiries = $serializer->toArray($requestQuotationEnquiries, SerializationContext::create()
+            ->setGroups(['enquiries']));
+
+        foreach ($chats as &$chat) {
+            foreach ($enquiries as $enquire) {
+                if ($chat['event']['id'] == $enquire['event']['id']) {
+                    $chat['event']['published_request'] = $enquire['status'];
+                    break;
+                }
+
+            }
+        }
 
         $uk = $em->getRepository('ActedLegalDocsBundle:RefCountry')->findOneByName('United Kingdom');
         $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
@@ -225,7 +246,7 @@ class ChatRoomController extends Controller
                     return new JsonResponse(['error' => $uploadResult['message']], 400);
                 }
             }
-            
+
             $message = $this->get('app.chat.manager')->newMessage($chat, $sender, $receiver, $messageText, $filePaths);
             $this->getEM()->persist($message);
             $this->getEM()->flush();
@@ -314,7 +335,7 @@ class ChatRoomController extends Controller
     {
         $offerId = $request->get('id');
 
-        
+
     }
 
     public function bookingsAction(Request $request)
@@ -323,5 +344,22 @@ class ChatRoomController extends Controller
         $chat = [];
         return $this->render('ActedLegalDocsBundle:ChatRoom:bookings.html.twig',
             compact('chat'));
+    }
+    
+
+    public function pricesAction() {
+        $em = $this->getDoctrine()->getManager();
+        $serializer = $this->get('jms_serializer');
+        $homespotlights = $em->getRepository('ActedLegalDocsBundle:Artist')->allSpotlightArtist();
+        $homespotlight = $serializer->toArray($homespotlights, SerializationContext::create()
+            ->setGroups(['block']));
+
+        $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
+
+        return $this->render('ActedLegalDocsBundle:ChatRoom:prices.html.twig', compact('homespotlight', 'categories'));
+    }
+
+    public function technicalRequirementAction() {
+        return $this->render('ActedLegalDocsBundle:ChatRoom:techreq.html.twig');
     }
 }

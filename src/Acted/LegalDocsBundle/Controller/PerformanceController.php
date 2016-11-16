@@ -6,8 +6,17 @@ namespace Acted\LegalDocsBundle\Controller;
 use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Media;
 use Acted\LegalDocsBundle\Entity\Performance;
+use Acted\LegalDocsBundle\Entity\Package;
+use Acted\LegalDocsBundle\Entity\Option;
+use Acted\LegalDocsBundle\Entity\Price;
+use Acted\LegalDocsBundle\Entity\Rate;
+use Acted\LegalDocsBundle\Entity\PerformanceRequestQuotation;
 use Acted\LegalDocsBundle\Form\MediaUploadType;
 use Acted\LegalDocsBundle\Form\PerformanceType;
+use Acted\LegalDocsBundle\Form\PerformancePriceType;
+use Acted\LegalDocsBundle\Form\PriceRateCreateType;
+use Acted\LegalDocsBundle\Form\PerformancePricePackageType;
+use Symfony\Component\HttpFoundation\Response;
 use Acted\LegalDocsBundle\Model\MediaManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,6 +32,7 @@ class PerformanceController extends Controller
         $performanceForm->handleRequest($request);
 
         if($performanceForm->isSubmitted() && $performanceForm->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
             $performance->setProfile($artist->getUser()->getProfile());
             if ($performance->getStatus() === Performance::STATUS_PUBLISHED) {
@@ -31,6 +41,29 @@ class PerformanceController extends Controller
                 }
             }
             $em->persist($performance);
+
+            $profile = $artist->getUser()->getProfile();
+            $package = new Package();
+            $package->setProfile($profile);
+            $package->setPerformance($performance);
+            $package->setName('default package');
+            $em->persist($package);
+
+            $option = new Option();
+            $option->setPackage($package);
+            $em->persist($option);
+
+            $price = new Price();
+            $price->setAmount(3000);
+            $em->persist($price);
+
+            $rate = new Rate();
+            $rate->setOption($option);
+            $rate->setPrice($price);
+            $em->persist($rate);
+
+            $performance->setIsVisible(true);
+
             $em->flush();
             $serializer = $this->get('jms_serializer');
             return new JsonResponse(['status' => 'success', 'performance' => $serializer->toArray($performance, SerializationContext::create()
@@ -55,6 +88,7 @@ class PerformanceController extends Controller
             }
             $em->persist($performance);
 
+            $performance->setIsVisible(true);
 
             $em->flush();
             return new JsonResponse(['status' => 'success']);
@@ -122,5 +156,343 @@ class PerformanceController extends Controller
         }
 
         return new JsonResponse($serializer->toArray($form->getErrors()));
+    }
+
+    public function createPricePerformanceAction(Request $request)
+    {
+        $serializer = $this->get('jms_serializer');
+
+        $performancePriceForm = $this->createForm(PerformancePriceType::class, null, ['method' => 'POST']);
+        $performancePriceForm->handleRequest($request);
+
+        if ($performancePriceForm->isSubmitted() && (!$performancePriceForm->isValid())) {
+            return new JsonResponse($serializer->toArray($performancePriceForm->getErrors()), Response::HTTP_BAD_REQUEST);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $userManager = $this->get('app.user.manager');
+
+        $performance = new Performance();
+
+        $data = $performancePriceForm->getData();
+
+        if (empty($data)) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'There are not any data'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
+
+        $artist = $data['artist'];
+        $profile = $artist->getUser()->getProfile();
+
+        $performance->setTitle($data['title']);
+        $performance->setProfile($profile);
+        $performance->setStatus(Performance::STATUS_PUBLISHED);
+        $performance->setIsVisible(false);
+        $performance->setIsQuotation($data['is_quotation']);
+        $em->persist($performance);
+
+        $package = new Package();
+        $package->setProfile($profile);
+        $package->setPerformance($performance);
+        $package->setName($data['package_name']);
+        $em->persist($package);
+
+        foreach ($data['options'] as $currentOption) {
+            $option = new Option();
+            $option->setPackage($package);
+            $option->setDuration($currentOption['duration']);
+            $option->setQty($currentOption['qty']);
+            $option->setPriceOnRequest($currentOption['price_on_request']);
+            $em->persist($option);
+
+            $price = new Price();
+            $price->setAmount($currentOption['price1']);
+            $em->persist($price);
+
+            $rate = new Rate();
+            $rate->setOption($option);
+            $rate->setPrice($price);
+            $em->persist($rate);
+
+            if (!empty($currentOption['price2'])) {
+                $price = new Price();
+                $price->setAmount($currentOption['price2']);
+                $em->persist($price);
+
+                $rate = new Rate();
+                $rate->setOption($option);
+                $rate->setPrice($price);
+                $em->persist($rate);
+            }
+        }
+
+        $em->flush();
+
+        $performanceRepo = $em->getRepository('ActedLegalDocsBundle:Performance');
+
+        $createdPerformance = $performanceRepo->getFullPerformanceById($performance->getId());
+        if (!empty($createdPerformance)) {
+            $createdPerformance = $createdPerformance[0];
+        }
+
+        if ($data['is_quotation']) {
+            $performanceRequestQuotation = new PerformanceRequestQuotation();
+            $performanceRequestQuotation->setPerformance($performance);
+            $performanceRequestQuotation->setRequestQuotation($data['request_quotation']);
+            $em->persist($performanceRequestQuotation);
+            $em->flush();
+        }
+
+        return new JsonResponse(['status' => 'success', 'performance' => $createdPerformance]);
+    }
+
+    public function editPricePerformanceAction(Request $request, Performance $performance)
+    {
+        $serializer = $this->get('jms_serializer');
+        $performanceFrom = $this->createForm(PerformanceType::class, $performance, ['method' => 'PATCH']);
+        $performanceFrom->handleRequest($request);
+
+        if ($performanceFrom->isSubmitted() && (!$performanceFrom->isValid())) {
+            return new JsonResponse($serializer->toArray($performanceFrom->getErrors()), Response::HTTP_BAD_REQUEST);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $performanceData = $performanceFrom->getData();
+        $performance->setTitle($performanceData->getTitle());
+
+        $em->persist($performance);
+        $em->flush();
+
+        return new JsonResponse(array('status' => 'success'));
+    }
+
+    public function removePricePerformanceAction(Request $request, Performance $performance)
+    {
+        $serializer = $this->get('jms_serializer');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->getConnection()->beginTransaction();
+
+        try {
+            $performanceRepository = $this->getDoctrine()
+                ->getRepository('ActedLegalDocsBundle:Performance');
+
+            $packageRepository = $this->getDoctrine()
+                ->getRepository('ActedLegalDocsBundle:Package');
+
+            $optionRepository = $this->getDoctrine()
+                ->getRepository('ActedLegalDocsBundle:Option');
+
+            $rateRepository = $this->getDoctrine()
+                ->getRepository('ActedLegalDocsBundle:Rate');
+            $packageIds = $packageRepository->getPackageIdsByPerformanceId($performance->getId());
+            $optionIds = $optionRepository->getOptionIdsByPackageIds($packageIds);
+            $rateIds = $rateRepository->getRateIdsByOptionIds($optionIds);
+
+            $performanceRepository->removePerformances($performance->getId());
+
+            $packageRepository->removePackages($packageIds);
+
+            $optionRepository->removeOptions($optionIds);
+            $rateRepository->removeRates($rateIds);
+            $em->flush();
+
+            $em->getConnection()->commit();
+        } catch (\Exception $e) {
+            $em->getConnection()->rollback();
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Edit error'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
+
+        return new JsonResponse(array('status' => 'success'));
+    }
+
+    public function getListAction(Request $request, Artist $artist)
+    {
+        $serializer = $this->get('jms_serializer');
+
+        $repository = $this->getDoctrine()
+            ->getRepository('ActedLegalDocsBundle:Performance');
+
+        $performances = $repository->getPerformancesByProfileId($artist->getUser()->getProfile());
+
+        return new JsonResponse(array('performances' => $performances), Response::HTTP_OK);
+    }
+
+    public function getAction(Request $request, Performance $performance = null)
+    {
+        if (empty($performance)) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Performance is not found'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
+
+        $serializer = $this->get('jms_serializer');
+
+        $repository = $this->getDoctrine()
+            ->getRepository('ActedLegalDocsBundle:Performance');
+
+        $performance = $repository->getFullPerformanceById($performance->getId());
+
+        if (!empty($performance)) {
+            $performance = $performance[0];
+        }
+
+        return new JsonResponse(array('performance' => $performance), Response::HTTP_OK);
+    }
+
+    public function createPricePerformancePackageAction(Request $request)
+    {
+        $serializer = $this->get('jms_serializer');
+
+        $performancePricePackageForm = $this->createForm(PerformancePricePackageType::class, null, ['method' => 'POST']);
+        $performancePricePackageForm->handleRequest($request);
+
+        if ($performancePricePackageForm->isSubmitted() && (!$performancePricePackageForm->isValid())) {
+            return new JsonResponse($serializer->toArray($performancePricePackageForm->getErrors()), Response::HTTP_BAD_REQUEST);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->getConnection()->beginTransaction();
+
+        try {
+            $data = $performancePricePackageForm->getData();
+
+            if (empty($data)) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'There are not any data'
+                ],  Response::HTTP_BAD_REQUEST);
+            }
+
+            $artist = $data['artist'];
+            $performance = $data['performance'];
+            $profile = $artist->getUser()->getProfile();
+
+            $package = new Package();
+            $package->setProfile($profile);
+            $package->setPerformance($performance);
+            $package->setName($data['package_name']);
+            $em->persist($package);
+
+            foreach ($data['options'] as $currentOption) {
+                $option = new Option();
+                $option->setPackage($package);
+                $option->setDuration($currentOption['duration']);
+                $option->setQty($currentOption['qty']);
+                $option->setPriceOnRequest($currentOption['price_on_request']);
+                $em->persist($option);
+
+                $price = new Price();
+                $price->setAmount($currentOption['price1']);
+                $em->persist($price);
+
+                $rate = new Rate();
+                $rate->setOption($option);
+                $rate->setPrice($price);
+                $em->persist($rate);
+
+                if (!empty($currentOption['price2'])) {
+                    $price = new Price();
+                    $price->setAmount($currentOption['price2']);
+                    $em->persist($price);
+
+                    $rate = new Rate();
+                    $rate->setOption($option);
+                    $rate->setPrice($price);
+                    $em->persist($rate);
+                }
+            }
+
+            $em->flush();
+
+            $em->getConnection()->commit();
+        } catch (\Exception $e) {
+            $em->getConnection()->rollback();
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Creating error'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
+
+        $packageRepo = $em->getRepository('ActedLegalDocsBundle:Package');
+
+        $createdPackage = $packageRepo->getFullPackageById($package->getId());
+        if (!empty($createdPackage)) {
+            $createdPackage = $createdPackage[0];
+        }
+
+        return new JsonResponse(['status' => 'success', 'package' => $createdPackage]);
+    }
+
+    public function createPricePerformanceRateAction(Request $request)
+    {
+        $serializer = $this->get('jms_serializer');
+
+        $performancePriceRateCreateForm = $this->createForm(PriceRateCreateType::class, null, ['method' => 'POST']);
+        $performancePriceRateCreateForm->handleRequest($request);
+
+        if ($performancePriceRateCreateForm->isSubmitted() && (!$performancePriceRateCreateForm->isValid())) {
+            return new JsonResponse($serializer->toArray($performancePriceRateCreateForm->getErrors()), Response::HTTP_BAD_REQUEST);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->getConnection()->beginTransaction();
+
+        try {
+            $data = $performancePriceRateCreateForm->getData();
+
+            if (empty($data)) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'There are not any data'
+                ],  Response::HTTP_BAD_REQUEST);
+            }
+
+            $priceAmount = $data['price'];
+            $option = $data['option'];
+            $optionId = $option->getId();
+
+            $rateRepository = $this->getDoctrine()
+                ->getRepository('ActedLegalDocsBundle:Rate');
+
+            //check what count prices in option and if more than 1 than show error
+            $rateIds = $rateRepository->getRateIdsByOptionIds($optionId);
+            if (count($rateIds) > 1) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'Options already consists price'
+                ],  Response::HTTP_BAD_REQUEST);
+            }
+
+            $price = new Price();
+            $price->setAmount($priceAmount);
+            $em->persist($price);
+
+            $rate = new Rate();
+            $rate->setOption($option);
+            $rate->setPrice($price);
+            $em->persist($rate);
+
+            $em->flush();
+
+            $em->getConnection()->commit();
+        } catch (\Exception $e) {
+            $em->getConnection()->rollback();
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Creating error'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
+
+        return new JsonResponse(array('status' => 'success', 'price' => ['id' => $price->getId()]));
     }
 }

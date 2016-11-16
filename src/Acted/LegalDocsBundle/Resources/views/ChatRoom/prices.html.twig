@@ -1,0 +1,42 @@
+{% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
+
+<main class="prices">
+
+    <div class="container">
+        <!-- THIS MENU VISIBLE ONLY ON DESCTIOP SCREEN-->
+        {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
+
+        <div class="note">
+            Swipe left to editor or delete item
+            <button type="button" class="btn-close">Close</button>
+        </div>
+
+
+        <section class="act-section green">
+            <header class="heading">
+                <em class="notify">These acts are visible on your profile</em>
+            </header>
+
+            <div perf-created-sec></div>
+        </section>
+
+        <section class="act-section blue">
+            <header class="heading">
+                <em class="notify">These acts will be private and invisible on your profile</em>
+            </header>
+
+            <div act-section></div>
+            <div services-section></div>
+
+            <div class="button-gradient orange add-btn">
+                <button act-add type="button" class="btn register">Add extra Act</button>
+            </div>
+            <div class="button-gradient orange add-btn">
+                <button service-add type="button" class="btn register">Add a service</button>
+            </div>
+        </section>
+    </div>
+
+</main>
+
+{% include 'ActedLegalDocsBundle:Default:footer.html.twig' %}

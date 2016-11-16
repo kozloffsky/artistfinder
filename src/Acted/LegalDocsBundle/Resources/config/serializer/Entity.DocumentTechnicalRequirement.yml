@@ -1,0 +1,13 @@
+Acted\LegalDocsBundle\Entity\DocumentTechnicalRequirement:
+    exclusion_policy: NONE
+    properties:
+        name:
+            groups: [files]
+        size:
+            groups: [files]
+        file:
+            groups: [files]
+        originalName:
+            groups: [files]
+        url:
+            groups: [files]

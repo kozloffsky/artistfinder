@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-<link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/styles.min.css') }}" />
 </head>
 <body>
 
@@ -14,176 +14,179 @@
 <header class="home">
     {% elseif app.request.get('_route') == 'acted_legal_docs_search' %}
     <header class="search">
-    {% elseif app.request.get('_route') == 'profile_show' or app.request.get('_route') == 'profile_edit' or app.request.get('_route') == 'profile_edit_page' %}
-    <header class="headerProfile">
-    {% else %}
-    <header class="small">
-{% endif %}
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#navbar-collapse" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{ app.request.getSchemeAndHttpHost() }}"><img src="{{ asset('assets/images/logo.png') }}" alt=""></a>
-
-                {% if app.user %}
-                <div class="profile-dropdown dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">
-                        <img class="avatar" src="{{ app.user.avatar }}" alt="Avatar">
-                        {{ app.user.firstname}} {{ app.user.lastname }} <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="orange_dashboard"><a href="#">My Dashboard</a></li>
-                        <li class="orange_settings"><a href="#">Settings</a></li>
-                        <li class="orange_logout"><a href="#">logout</a></li>
-
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
-                </div>
+        {% elseif app.request.get('_route') == 'profile_show' or app.request.get('_route') == 'profile_edit' or app.request.get('_route') == 'profile_edit_page' %}
+        <header class="headerProfile">
+            {% else %}
+            <header class="small">
                 {% endif %}
-            </div>
+                <nav class="navbar navbar-default navbar-fixed-top">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                    data-target="#navbar-collapse" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="{{ app.request.getSchemeAndHttpHost() }}"><img src="{{ asset('assets/images/logo.png') }}" alt=""></a>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="navbar-collapse">
-                <div class="divider-vertical"></div>
-                <ul class="nav navbar-nav navbar-left">
-                    <li class="active">
-                        <a href="#">
-                            How it works
-                            <div class="underline">
-                                <div class="top"></div>
-                                <div class="bottom"></div>
-                            </div>
-                        </a>
+                            {% if app.user %}
+                                <div class="profile-dropdown dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                       aria-expanded="false">
+                                        <img class="avatar" src="{{ app.user.avatar }}" alt="Avatar">
+                                        {{ app.user.firstname}} {{ app.user.lastname }} <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="orange_dashboard"><a href="#">My Dashboard</a></li>
+                                        <li class="orange_settings"><a href="#">Settings</a></li>
+                                        <li class="orange_logout"><a href="#">logout</a></li>
 
-                    </li>
-
-                </ul>
-
-                <ul class="nav navbar-nav navbar-right">
-                    {% if app.user %}
-                    <li class="bookings"><a href="/dashboard/bookings/{{ app.user.id }}">My bookings
-                            <div class="underline">
-                                <div class="top"></div>
-                                <div class="bottom"></div>
-                            </div>
-                        </a>
-                    </li>
-
-                    {% if app.user.artist %}
-                        <li class="profile">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            Profile
-                                <span class="caret"></span>
-                            <div class="underline">
-                                <div class="top"></div>
-                                <div class="bottom"></div>
-                            </div>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="orange_profile"><a href="/profile/{{ app.user.artist.slug }}">View my profile</a></li>
-                                <li class="orange_edit"><a href="/profile/edit_profile/{{ app.user.artist.slug }}">edit my profile</a></li>
-                            </ul>
-                        </li>
-                    {% endif %}
-                    {% endif %}
-
-                        {% if app.user %}
-                        {% set amount = render(controller('ActedLegalDocsBundle:ChatRoom:countNewMessage')) %}
-                    <li class="mail">
-                        <!--For screens > 991px-->
-                        <div class="hidden-sm hidden-xs badge">{{ amount|default(0) }}</div>
-                        <a class="hidden-sm hidden-xs" href="/dashboard/messages/{{ app.user.id }}"><img src="{{ asset('assets/images/messages.png') }}" alt=""></a>
-                        <!--For screens < 991px-->
-
-                        {% if app.user %}
-                            <a class="hidden-md hidden-lg" href="/dashboard/messages/{{ app.user.id }}">Messages<span class="badge">{{ amount|default(0) }}</span></a>
-                        {% else %}
-                            <a class="hidden-md hidden-lg" href="/dashboard/messages/{{ app.user.id }}">Messages<span class="badge">{{ amount|default(0) }}</span></a>
-                        {% endif %}
-                    </li>
-                    <li class="profile-dropdown dropdown hidden-sm">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">
-                            <img class="avatar" src="{{ app.user.avatar }}" alt="Avatar">
-                            {{ app.user.firstname}} {{ app.user.lastname }} <span class="caret"></span>
-                        </a>
-                        {% if app.user.artist %}
-                        <ul class="dropdown-menu">
-                            <li class="orange_dashboard">
-                                <a href="#">My Dashboard</a>
-                            </li>
-                            <li class="orange_settings">
-                                <a href="#">Settings</a>
-                            </li>
-                            {% if(app.user) %}
-                                <li class="orange_logout"><a id="logOut" href="{{ logout_path() }}">Logout</a></li>
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
                             {% endif %}
-                        </ul>
-                        {% else %}
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li role="separator" class="divider"></li>
-                                {% if(app.user) %}
-                                    <li><a id="logOut" href="{{ logout_path() }}">Logout</a></li>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="navbar-collapse">
+                            <div class="divider-vertical"></div>
+                            <ul class="nav navbar-nav navbar-left">
+                                <li class="">
+                                    <a href="/how-it-works">
+                                        How it works
+                                        <div class="underline">
+                                            <div class="top"></div>
+                                            <div class="bottom"></div>
+                                        </div>
+                                    </a>
+
+                                </li>
+
+                            </ul>
+
+                            <ul class="nav navbar-nav navbar-right">
+                                {% if app.user %}
+                                    {% if app.user.artist %}
+                                        <li class="bookings"><a href="/dashboard/bookings/{{ app.user.id }}">My bookings
+                                                <div class="underline">
+                                                    <div class="top"></div>
+                                                    <div class="bottom"></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="profile">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                Profile
+                                                <span class="caret"></span>
+                                                <div class="underline">
+                                                    <div class="top"></div>
+                                                    <div class="bottom"></div>
+                                                </div>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li class="orange_profile"><a href="/profile/{{ app.user.artist.slug }}">View my profile</a></li>
+                                                <li class="orange_edit"><a href="/profile/edit_profile/{{ app.user.artist.slug }}">Edit my profile</a></li>
+                                            </ul>
+                                        </li>
+                                    {% else %}
+                                        <li class="bookings"><a href="/dashboard/bookings/{{ app.user.id }}">My events
+                                            <div class="underline">
+                                                <div class="top"></div>
+                                                <div class="bottom"></div>
+                                            </div>
+                                        </a>
+                                        </li>
+                                    {% endif %}
+                                {% endif %}
+                                {% if app.user %}
+                                    {% set amount = render(controller('ActedLegalDocsBundle:ChatRoom:countNewMessage')) %}
+                                    <li class="mail">
+                                        <!--For screens > 991px-->
+                                        <div class="hidden-sm hidden-xs badge">{{ amount|default(0) }}</div>
+                                        <a class="hidden-sm hidden-xs" href="/dashboard/messages/{{ app.user.id }}"><img src="{{ asset('assets/images/messages.png') }}" alt=""></a>
+                                        <!--For screens < 991px-->
+
+                                        {% if app.user %}
+                                            <a class="hidden-md hidden-lg" href="/dashboard/messages/{{ app.user.id }}">Messages<span class="badge">{{ amount|default(0) }}</span></a>
+                                        {% else %}
+                                            <a class="hidden-md hidden-lg" href="/dashboard/messages/{{ app.user.id }}">Messages<span class="badge">{{ amount|default(0) }}</span></a>
+                                        {% endif %}
+                                    </li>
+                                    <li class="profile-dropdown dropdown hidden-sm">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            <img class="avatar" src="{{ app.user.avatar }}" alt="Avatar">
+                                            {{ app.user.firstname}} {{ app.user.lastname }} <span class="caret"></span>
+                                        </a>
+                                        {% if app.user.artist %}
+                                            <ul class="dropdown-menu">
+                                                <li class="orange_dashboard"><a href="/dashboard/messages/{{ app.user.id }}">My Dashboard</a></li>
+                                                <li class="orange_settings"><a href="/profile/settings">Settings</a></li>
+                                                <li role="separator" class="divider"></li>
+                                                {% if(app.user) %}
+                                                    <li class="orange_logout"><a id="logOut" href="{{ logout_path() }}">Logout</a></li>
+                                                {% endif %}
+                                            </ul>
+                                        {% else %}
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">Action</a></li>
+                                                <li><a href="#">Another action</a></li>
+                                                <li><a href="#">Something else here</a></li>
+                                                <li role="separator" class="divider"></li>
+                                                {% if(app.user) %}
+                                                    <li><a id="logOut" href="{{ logout_path() }}">Logout</a></li>
+                                                {% endif %}
+                                            </ul>
+                                        {% endif %}
+
+                                        <span id="userInformation" class="hidden">{{ app.user.id }}</span>
+                                    </li>
+                                {% else %}
+                                    <li class="bookings"><a href="#">Become a talent
+                                            <div class="underline">
+                                                <div class="top"></div>
+                                                <div class="bottom"></div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="profile"><a href="#">
+                                            Find talents
+                                            <div class="underline">
+                                                <div class="top"></div>
+                                                <div class="bottom"></div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="profile"><a href="#" data-toggle="modal" data-target="#registrationModal">
+                                            Sign Up
+                                            <div class="underline">
+                                                <div class="top"></div>
+                                                <div class="bottom"></div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="divider-vertical"></div>
+                                    </li>
+                                    <li class="profile"><a href="#" data-toggle="modal" data-target="#loginModal">
+                                            Log In
+                                            <div class="underline">
+                                                <div class="top"></div>
+                                                <div class="bottom"></div>
+                                            </div>
+                                        </a>
+                                    </li>
                                 {% endif %}
                             </ul>
-                        {% endif %}
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
 
-                        <span id="userInformation" class="hidden">{{ app.user.id }}</span>
-                    </li>
-                    {% else %}
-                        <li class="bookings"><a href="#">Become a talent
-                                <div class="underline">
-                                    <div class="top"></div>
-                                    <div class="bottom"></div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="profile"><a href="#">
-                                Find talents
-                                <div class="underline">
-                                    <div class="top"></div>
-                                    <div class="bottom"></div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="profile"><a href="#" data-toggle="modal" data-target="#registrationModal">
-                                Sign Up
-                                <div class="underline">
-                                    <div class="top"></div>
-                                    <div class="bottom"></div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="divider-vertical"></div>
-                        </li>
-                        <li class="profile"><a href="#" data-toggle="modal" data-target="#loginModal">
-                                Log In
-                                <div class="underline">
-                                    <div class="top"></div>
-                                    <div class="bottom"></div>
-                                </div>
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-
-</header>
+            </header>

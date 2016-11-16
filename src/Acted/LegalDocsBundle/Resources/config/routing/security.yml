@@ -35,3 +35,8 @@ security_check_email:
     path: /is_email_exists/{email}
     defaults: { _controller: ActedLegalDocsBundle:Security:isEmailExists }
     methods: GET
+
+security_password_recovery:
+    path: /password-recovery
+    defaults: { _controller: ActedLegalDocsBundle:Security:passwordRecovery }
+    methods: GET

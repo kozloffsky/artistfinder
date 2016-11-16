@@ -16,6 +16,11 @@ final class RegisterUser
     private $city;
     private $fake;
     private $tempPassword;
+    private $cityLat;
+    private $cityLng;
+    private $regionLat;
+    private $regionLng;
+    private $regionName;
 
     /**
      * @return mixed
@@ -130,7 +135,7 @@ final class RegisterUser
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCountry()
     {
@@ -138,7 +143,7 @@ final class RegisterUser
     }
 
     /**
-     * @param mixed $country
+     * @param string $country
      */
     public function setCountry($country)
     {
@@ -146,7 +151,7 @@ final class RegisterUser
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCity()
     {
@@ -154,7 +159,7 @@ final class RegisterUser
     }
 
     /**
-     * @param mixed $city
+     * @param string $city
      */
     public function setCity($city)
     {
@@ -207,5 +212,85 @@ final class RegisterUser
     public function setTempPassword($tempPassword)
     {
         $this->tempPassword = $tempPassword;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCityLat()
+    {
+        return $this->cityLat;
+    }
+
+    /**
+     * @param string $cityLat
+     */
+    public function setCityLat($cityLat)
+    {
+        $this->cityLat = $cityLat;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCityLng()
+    {
+        return $this->cityLng;
+    }
+
+    /**
+     * @param string $cityLng
+     */
+    public function setCityLng($cityLng)
+    {
+        $this->cityLng = $cityLng;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRegionLat()
+    {
+        return $this->regionLat;
+    }
+
+    /**
+     * @param string $regionLat
+     */
+    public function setRegionLat($regionLat)
+    {
+        $this->regionLat = $regionLat;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRegionLng()
+    {
+        return $this->regionLng;
+    }
+
+    /**
+     * @param string $regionLng
+     */
+    public function setRegionLng($regionLng)
+    {
+        $this->regionLng = $regionLng;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRegionName()
+    {
+        return $this->regionName;
+    }
+
+    /**
+     * @param string $regionName
+     */
+    public function setRegionName($regionName)
+    {
+        $this->regionName = $regionName;
     }
 }

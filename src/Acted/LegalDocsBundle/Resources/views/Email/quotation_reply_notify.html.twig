@@ -1,0 +1,14 @@
+{% block subject %}
+    {% autoescape false %}
+        ACTED Quotation received from {{ artist.firstname }}
+    {% endautoescape %}
+{% endblock %}
+{% block body_html %}
+    {% autoescape false %}
+        <p>Hello {{ client.firstname }},</p>
+        <p>This is, {{ artist.firstname }}. I have just sent you a quotation with regard to your event “{{ event.title }}”. You can open this quotation here or access it for your chatroom.</p>
+        <p>Please do not hesitate to contact me if you have any question.</p>
+        <p>Kind regards,</p>
+        <p>{{ artist.firstname }}</p>
+    {% endautoescape %}
+{% endblock %}

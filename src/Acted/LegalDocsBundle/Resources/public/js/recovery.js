@@ -80,27 +80,6 @@ $(function(){
                     borderColor: '#eee'
                 });
             }
-            // cur.addClass(activeClass);
-            // btnHidePass.removeClass(activeClass);
-            // inputPass.attr('type', 'text');
-            // inputPass.css({
-            //     color: '#3d4248',
-            //     borderColor: '#3d4248'
-            // });
         }
     });
-
-    // btnHidePass.on({
-    //     'click': function (e) {
-    //         e.preventDefault();
-    //         $(this).addClass(activeClass);
-    //         btnShowPass.removeClass(activeClass);
-    //         inputPass.attr('type', 'password');
-    //         inputPass.css({
-    //             color: '#eee',
-    //             borderColor: '#eee'
-    //         });
-    //     }
-    // });
-
 });

@@ -1,0 +1,7 @@
+Acted\LegalDocsBundle\Entity\TechnicalRequirement:
+    exclusion_policy: NONE
+    properties:
+        title:
+            groups: []
+        description:
+            groups: []

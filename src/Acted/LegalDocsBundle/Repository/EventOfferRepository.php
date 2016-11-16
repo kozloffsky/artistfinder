@@ -59,4 +59,46 @@ class EventOfferRepository extends EntityRepository
             ])
             ->getQuery()->getResult();
     }
+
+    /**
+     *  Returns event by it id
+     *  @param int eventId
+     *  @return object|null
+     */
+    public function getEventOfferByEventId($eventId) {
+        return $this->createQueryBuilder('eo')
+            ->leftJoin('eo.event', 'e')
+            ->leftJoin('eo.offer', 'o')
+            ->leftJoin('e.user', 'u')
+            ->where('e.id = :eventId')
+            ->setParameter('eventId', $eventId)
+            ->getQuery()->getResult();
+    }
+
+	/**
+     * @param Event $event
+     * @return object|null
+     */
+    public function getPerformanceIds($event)
+    {
+        $eventOffer = $this->createQueryBuilder('eo')
+            ->select('eo, o')
+            ->leftJoin('eo.offer', 'o')
+            ->where('eo.event = :event')
+            ->setParameters([
+                'event' => $event
+            ])
+            ->getQuery()->getOneOrNullResult();
+
+        $performanceIds = array();
+
+        if (empty($eventOffer) || empty($eventOffer->getOffer()) || empty($eventOffer->getOffer()->getPerformances()))
+            return $performanceIds;
+
+        foreach ($eventOffer->getOffer()->getPerformances() as $performance) {
+            $performanceIds[] = $performance->getId();
+        }
+
+        return $performanceIds;
+    }
 }

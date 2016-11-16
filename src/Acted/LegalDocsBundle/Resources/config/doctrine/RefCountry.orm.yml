@@ -17,4 +17,10 @@ Acted\LegalDocsBundle\Entity\RefCountry:
         regions:
           targetEntity: Acted\LegalDocsBundle\Entity\RefRegion
           mappedBy: country
+    manyToOne:
+        refCurrency:
+          targetEntity: Acted\LegalDocsBundle\Entity\RefCurrency
+          inversedBy: refCountry
+          joinColumn:
+            onDelete: "SET NULL"
     lifecycleCallbacks: {  }

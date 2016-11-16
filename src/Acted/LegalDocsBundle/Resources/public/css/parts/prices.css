@@ -21,7 +21,7 @@ main.prices{
 }
 .prices .act{
     position: relative;
-    font-size: 14px;
+    font-size: 13px;
     color: #000;
     color: rgba(0, 0, 0, .87);
     margin-bottom: 32px;
@@ -29,13 +29,15 @@ main.prices{
 .prices .act.private { margin-bottom: 22px; }
 .prices .act h2{
     margin: 0 0 16px;
+    height: 22px;
     opacity: .52;
     font: 18px LatoBold, Serif, sans-serif;
     color: #000;
 }
-.prices .act h2 span{
+.prices .act h2 span {
     font-family: inherit;
     display: block;
+    float: left;
 }
 .prices .act .info-list{
     list-style: none;
@@ -50,6 +52,7 @@ main.prices{
     border: none;
     padding-top: 0;
 }
+
 .prices .act.empty .info-list > li{ padding-bottom: 50px; }
 .prices .act .info-list .col-2,
 .prices .act .info-list .col{
@@ -72,7 +75,8 @@ main.prices{
 .prices .act .info-list .col:first-child:after{
     border: none;
 }
-.prices .act .info-list .col:after,
+
+.prices .act .info-list div[set_option]:after,
 .prices .act .info-list .col-2:after{
     position: absolute;
     border-left: 2px solid rgba(0, 0, 0, .04);
@@ -91,6 +95,7 @@ main.prices{
     -webkit-border-radius: 21px;
     position: relative;
     z-index: 10;
+    margin: 0 20px 0 0;
 }
 .prices .button-gradient.add-btn{
     background: rgb(88,149,243);
@@ -110,7 +115,7 @@ main.prices{
     -webkit-border-radius: 21px;
     padding: 0 19px;
     height: 25px;
-    font-size: 12px;
+    font-size: 13px;
     color: #000;
     color: rgba(0, 0, 0, .87);
     outline: none;
@@ -244,6 +249,7 @@ main.prices{
     vertical-align: top;
     color: #ff793e;
     text-decoration: underline;
+    font-size: 13px;
 }
 .prices .act .add a:hover{text-decoration: none;}
 .prices .act .number{margin-right: 3px;}
@@ -252,7 +258,7 @@ main.prices{
     border: 1px solid #e5e5e5;
     border-radius: 8px;
     -webkit-border-radius: 8px;
-    font-size: 15px;
+    font-size: 13px;
     padding: 0 5px;
     color: #000;
     height: 32px;
@@ -342,13 +348,31 @@ main.prices .note{
     border: none;
 }
 .prices .act .select2{margin-left: 0;}
-.prices .act select.short + .select2{width: 47px !important;}
+.prices .act select.short + .select2{
+    width: 47px !important;
+}
+.prices .act select.short {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, #ff793e 50%),
+                        linear-gradient(135deg, #ff793e 50%, transparent 50%),
+                        linear-gradient(to right, #ff793e, #ff793e);
+    background-position:
+            calc(100% - 10px) 14px,
+            calc(100% - 5px) 14px,
+            100% 0;
+    background-size: 5px 5px, 5px 5px, 0 0;
+    background-repeat: no-repeat;
+}
 /*.act.empty .button-gradient.add-btn{margin-top: -82px;}*/
 .prices .act-section{
     margin: 0 0 40px;
 }
 .prices .act-section .heading{
-    font-size: 14px;
+    font-size: 13px;
     height: auto;
     margin-bottom: 40px;
     padding-bottom: 6px;
@@ -377,7 +401,7 @@ main.prices .note{
     border: 1px solid #e5e5e5;
     border-radius: 8px;
     -webkit-border-radius: 8px;
-    font-size: 15px;
+    font-size: 13px;
     padding: 5px;
     color: #000;
     background: #FFF;
@@ -399,14 +423,19 @@ main.prices .note{
 .prices .price-list label {
     margin-bottom: 0;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 13px;
     color: #000;
+}
+.prices .custom-checkbox label:before,
+.prices .custom-checkbox label:after {
+    height: 20px;
+    width: 20px;
 }
 
 @media (max-width: 1199px) {
     .prices .act,
     .prices .act .quantity{
-        font-size: 14px;
+        font-size: 13px;
     }
     .prices .act .row{margin-bottom: 15px;}
     .prices .act .price-list dl{margin-bottom: 16px;}
@@ -435,7 +464,7 @@ main.prices .note{
         height: 28px !important;
     }
     .prices .select2-container--default .select2-selection--single .select2-selection__rendered{
-        font-size: 10px;
+        font-size: 13px;
         padding: 0 7px !important;
         line-height: 27px !important;
     }
@@ -486,13 +515,20 @@ main.prices .note{
         margin-bottom: 20px;
     }
     .prices .act .info-list .col,
-    .prices .act .info-list .col:first-child{
+    .prices .act .info-list .col:first-child {
         width: 49%;
         min-height: 0;
         padding: 0 0 6px;
         float: none;
         display: inline-block;
         vertical-align: top;
+    }
+    .prices .act .info-list .col:last-child{padding: 0;}
+    .prices .act .info-list .col:after,
+    .prices .act .info-list .col-2:after{border: 0;}
+    .prices .act .info-list .col-2{
+        padding-top: 0;
+        padding-left: 0;
     }
     .prices .act .info-list .col:last-child{padding: 0;}
     .prices .act .info-list .col:after,

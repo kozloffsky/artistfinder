@@ -15,6 +15,7 @@ class Template
     const TYPE_PERFORMANCE_CONTRACT = '1';
     const TYPE_QUOTATION = '2';
     const TYPE_INVOICE = '3';
+    const TYPE_REQUEST_QUOTATION = '4';
     /**
      * @var int
      *
@@ -51,6 +52,7 @@ class Template
             self::TYPE_PERFORMANCE_CONTRACT => 'Performance Contract',
             self::TYPE_QUOTATION => 'Quotation',
             self::TYPE_INVOICE => 'Invoice',
+            self::TYPE_REQUEST_QUOTATION => 'Request Quotation',
         ];
     }
 

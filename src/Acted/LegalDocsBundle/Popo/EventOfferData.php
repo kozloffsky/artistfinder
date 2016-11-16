@@ -18,6 +18,11 @@ final class EventOfferData
     private $offer;
     private $event;
     private $user;
+    private $cityLat;
+    private $cityLng;
+    private $regionLat;
+    private $regionLng;
+    private $regionName;
 
     const NUMBER_OF_GUEST_MAX_50 = 'less_then_50';
     const NUMBER_OF_GUEST_MIN_50_MAX_100 = '50-100';
@@ -89,7 +94,7 @@ final class EventOfferData
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCountry()
     {
@@ -97,7 +102,7 @@ final class EventOfferData
     }
 
     /**
-     * @param mixed $country
+     * @param string $country
      */
     public function setCountry($country)
     {
@@ -105,7 +110,7 @@ final class EventOfferData
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCity()
     {
@@ -113,7 +118,7 @@ final class EventOfferData
     }
 
     /**
-     * @param mixed $city
+     * @param string $city
      */
     public function setCity($city)
     {
@@ -263,6 +268,86 @@ final class EventOfferData
     public function setUser($user)
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCityLat()
+    {
+        return $this->cityLat;
+    }
+
+    /**
+     * @param string $cityLat
+     */
+    public function setCityLat($cityLat)
+    {
+        $this->cityLat = $cityLat;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCityLng()
+    {
+        return $this->cityLng;
+    }
+
+    /**
+     * @param string $cityLng
+     */
+    public function setCityLng($cityLng)
+    {
+        $this->cityLng = $cityLng;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRegionLat()
+    {
+        return $this->regionLat;
+    }
+
+    /**
+     * @param string $regionLat
+     */
+    public function setRegionLat($regionLat)
+    {
+        $this->regionLat = $regionLat;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRegionLng()
+    {
+        return $this->regionLng;
+    }
+
+    /**
+     * @param string $regionLng
+     */
+    public function setRegionLng($regionLng)
+    {
+        $this->regionLng = $regionLng;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRegionName()
+    {
+        return $this->regionName;
+    }
+
+    /**
+     * @param string $regionName
+     */
+    public function setRegionName($regionName)
+    {
+        $this->regionName = $regionName;
     }
     
 }

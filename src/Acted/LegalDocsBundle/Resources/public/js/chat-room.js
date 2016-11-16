@@ -2,18 +2,18 @@ $(function(){
     'use strict';
 
     function initializeMap(eventLocationMap) {
-        var myLatlng = new google.maps.LatLng(eventLocationMap.latitude, eventLocationMap.longitude);
-        var myOptions = {
-            zoom: 8,
-            center: myLatlng,
-            disableDefaultUI: true,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById("map"), myOptions);
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(eventLocationMap.latitude, eventLocationMap.longitude)
-        });
-        marker.setMap(map);
+        // var myLatlng = new google.maps.LatLng(eventLocationMap.latitude, eventLocationMap.longitude);
+        // var myOptions = {
+        //     zoom: 8,
+        //     center: myLatlng,
+        //     disableDefaultUI: true,
+        //     mapTypeId: google.maps.MapTypeId.ROADMAP
+        // };
+        // var map = new google.maps.Map(document.getElementById("map"), myOptions);
+        // var marker = new google.maps.Marker({
+        //     position: new google.maps.LatLng(eventLocationMap.latitude, eventLocationMap.longitude)
+        // });
+        // marker.setMap(map);
     }
 
     initUploadFilesFiller();
@@ -44,20 +44,6 @@ $(function(){
                 }
             },
             addMore: true
-        });
-    }
-
-    function initSelect(){
-        $('select').each(function () {
-            var placeholder = $(this).attr('data-placeholder');
-            var $select2    = $(this).select2({
-                placeholder            : placeholder || '',
-                minimumResultsForSearch: -1
-            });
-
-            var className = $(this).attr('data-class');
-            $select2.data('select2').$selection.addClass(className);
-            $select2.data('select2').$results.addClass(className);
         });
     }
 
@@ -97,7 +83,7 @@ $(function(){
 
     function markMessageAsRead(chatId){
         if (messageReaded == false){
-            console.log(messageReaded)
+            //console.log(messageReaded)
             messageReaded = true;
             $.ajax({
                 type:'POST',
@@ -112,64 +98,8 @@ $(function(){
         }
     }
 
-    $(document).ready(function() {
-        var selectedCountryOption = $('#country-select').find('option:selected').val();
-        var savedCity = $('#eventLocationCoordinates .eventCityId').text();
-        chooseCityQuote(selectedCountryOption, savedCity);
-    });
+    getFileExtension();
 
-    $('#country-select').on('change',function(){
-        var selectedCountryOption = $('#country-select').find('option:selected').val();
-        chooseCityQuote(selectedCountryOption);
-    });
-
-    $('#cityEvent').on('change',function(){
-        changeCityOnMapSelect();
-    });
-
-    function changeCityOnMapSelect(){
-        var selectedCityOption = $('#cityEvent').find('option:selected').val(),
-            selectedCityCoordinates = $('#eventLocationCoordinates .eventCityId'+selectedCityOption);
-        console.log(selectedCityCoordinates);
-        var eventLocationMap= {};
-        eventLocationMap.latitude = $(selectedCityCoordinates).find('.latitude').text();
-        eventLocationMap.longitude = $(selectedCityCoordinates).find('.longitude').text();
-        initializeMap(eventLocationMap);
-    }
-
-    function chooseCityQuote(selectedCountryOption, savedCity){
-        if(selectedCountryOption){
-            $.ajax({
-                type:'GET',
-                url: '/geo/city?_format=json&country=' + selectedCountryOption,
-                success:function(response){
-                    $('#cityEvent').empty();
-                    if(savedCity){
-                        $(response).each(function(){
-                            if(savedCity == this.id){
-                                $('#cityEvent').append('<option value="'+ this.id +'" name="city" selected="selected">'+this.name+'</option>');
-                            } else {
-                                $('#cityEvent').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
-                            }
-                        });
-                    } else {
-                        $(response).each(function(){
-                            $('#cityEvent').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
-                        });
-                    }
-                    $(response).each(function(){
-                        var cityCoordinatesBlock = '<div class="eventCityId'+ this.id +'">'+
-                            '<span class="latitude">'+this.latitude+'</span>'+
-                            '<span class="longitude">'+this.longitude+'</span></div>';
-                        $('#eventLocationCoordinates').append(cityCoordinatesBlock);
-                    })
-                    initSelect();
-                    changeCityOnMapSelect();
-                }
-            })
-        }
-    }
-    getFileExtension()
     function getFileExtension(){
         $('.comments-list li .holder').each(function(){
             findFilesInChat(this);
@@ -180,7 +110,7 @@ $(function(){
                 var fileName = $(this).attr('href'),
                     fileExtension = fileName.split('.').pop();
                 if(fileExtension == 'pdf'){
-                    console.log('pdf');
+                    //console.log('pdf');
                     $(this).find('img').attr('src', '/assets/images/pdf.png');
                 } else if (fileExtension == 'zip'){
                     $(this).find('img').attr('src', '/assets/images/zip.png');
@@ -196,14 +126,14 @@ $(function(){
          * connect
          */
         webSocket.on("socket/connect", function(session){
-            console.log("Successfully Connected!");
+            //console.log("Successfully Connected!");
         })
 
         /**
          * disconnect
          */
         webSocket.on("socket/disconnect", function(error){
-            console.log("Disconnected for " + error.reason + " with code " + error.code);
+            //console.log("Disconnected for " + error.reason + " with code " + error.code);
         });
 
         webSocket.on("socket/connect", function(session){
@@ -228,7 +158,7 @@ $(function(){
                             dataFiles.append('files[]', file);
                         })
                     });
-                    console.log(formDataContent.length);
+                    //console.log(formDataContent.length);
                     dataFiles.append('message', text);
                     if (text.length > 0 || formDataContent.length > 0) {
                         $.ajax({
@@ -273,7 +203,7 @@ $(function(){
 
 
             function postMessage(messageChat){
-                console.log(messageChat)
+                //console.log(messageChat)
                 if(messageChat.role){
                     var chatMessageFiles = '';
                     if(messageChat.file){
@@ -282,7 +212,7 @@ $(function(){
                             chatMessageFiles += '<a href="'+this.path+'"><img class="chatImage" src="'+this.path+'"></a>';
                         })
                         chatMessageFiles += '</p>';
-                        console.log(chatMessageFiles)
+                        //console.log(chatMessageFiles)
                     }
                     if (messageChat.msg){
                         var chatMessageText = '<pre>'+messageChat.msg+'</pre>';

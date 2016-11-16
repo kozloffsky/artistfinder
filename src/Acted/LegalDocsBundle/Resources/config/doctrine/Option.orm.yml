@@ -1,0 +1,43 @@
+Acted\LegalDocsBundle\Entity\Option:
+    type: entity
+    table: `Option`
+    repositoryClass: Acted\LegalDocsBundle\Repository\OptionRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+      qty:
+        type: integer(4)
+        nullable: true
+      duration:
+        type: integer(4)
+        nullable: true
+      priceOnRequest:
+        type: boolean
+        options:
+          default: false
+      isSelected:
+        type: boolean
+        options:
+          default: false
+      deletedTime:
+        type: datetime
+        nullable: true
+    manyToOne:
+      package:
+        targetEntity: Acted\LegalDocsBundle\Entity\Package
+        inversedBy: options
+        joinColumn:
+          name: package_id
+          referencedColumnName: id
+          onDelete: RESTRICT
+    oneToMany:
+      rates:
+        targetEntity: Acted\LegalDocsBundle\Entity\Rate
+        mappedBy: option
+        joinColumn:
+          onDelete: RESTRICT
+    lifecycleCallbacks: {  }

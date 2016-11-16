@@ -1,0 +1,29 @@
+Acted\LegalDocsBundle\Entity\PaymentTermRequestQuotation:
+    type: entity
+    table: PaymentTermRequestQuotation
+    repositoryClass: Acted\LegalDocsBundle\Repository\PaymentTermRequestQuotationRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        guaranteedDepositPercent:
+          type: smallint
+          notnull: true
+          options:
+            default: 0
+        balancePercent:
+          type: smallint
+          notnull: true
+          options:
+            default: 0
+    oneToOne:
+        requestQuotation:
+            targetEntity: Acted\LegalDocsBundle\Entity\RequestQuotation
+            inversedBy: paymentTermRequestQuotation
+            joinColumn:
+                referencedColumnName: id
+                onDelete: RESTRICT
+    lifecycleCallbacks: {  }

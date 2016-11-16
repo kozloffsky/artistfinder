@@ -1,0 +1,350 @@
+.quotation-modal .modal-dialog {
+    width: 960px;
+}
+
+.quotation-modal .modal-body {
+    padding: 0;
+}
+
+/* --- FORMS STYLE --- */
+.quotation-modal .map-holder {
+    position: absolute;
+    right: 17px;
+}
+.quotation-modal .place-info {
+    background: #eeeeee;
+    padding: 16px 0 0 8px;
+    width: 410px;
+    height: 502px;
+    float: left;
+}
+.quotation-modal .act-info {
+    width: 548px;
+    height: 502px;
+    float: left;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.quotation-modal .payment-info {
+    padding: 20px;
+}
+/* ------------------- */
+.quotation-modal hr {
+    border-top: 2px solid #dbdbdb;
+    margin: 20px 0 20px 0;
+    clear: both;
+}
+.quotation-modal .act-info hr {
+    margin-left: 10px;
+}
+
+.quotation-modal .form-control{
+    border: none;
+}
+.quotation-modal .form-group {
+    margin-bottom: 13px;
+    padding: 0 13px;
+}
+.quotation-modal .form-group input {
+    background-color: #FFF;
+    padding: 4px 0 5px 10px;
+    border-radius: 4px;
+    height: 26px;
+    width: 160px;
+}
+
+.quotation-modal .form-group select {
+    padding: 4px 0 5px 10px;
+    border-radius: 4px;
+    height: 26px;
+    width: 160px;
+}
+
+.quotation-modal .title {
+    font-family: LatoBold;
+    font-size: 21px;
+    color: #3d4248;
+}
+.quotation-modal .payment-deposit {
+    margin: 7px 0 10px 0;
+}
+.quotation-modal .payment-deposit > span {
+    padding: 5px 0;
+}
+.quotation-modal .payment-deposit-info > span {
+    margin: 0 0 23px 0;
+}
+.quotation-modal .act-title {
+    padding: 12px 20px 12px 12px;
+    display: inline-block;
+    position: relative;
+    height: 40px;
+    width: 100%;
+    font-family: LatoBold;
+    font-size: 18px;
+    color: #FFF;
+    background: rgba(255,171,106,1);
+    background: -moz-linear-gradient(left, rgba(255,171,106,1) 0%, rgba(255,119,60,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,171,106,1)), color-stop(100%, rgba(255,119,60,1)));
+    background: -webkit-linear-gradient(left, rgba(255,171,106,1) 0%, rgba(255,119,60,1) 100%);
+    background: -o-linear-gradient(left, rgba(255,171,106,1) 0%, rgba(255,119,60,1) 100%);
+    background: -ms-linear-gradient(left, rgba(255,171,106,1) 0%, rgba(255,119,60,1) 100%);
+    background: linear-gradient(to right, rgba(255,171,106,1) 0%, rgba(255,119,60,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffab6a', endColorstr='#ff773c', GradientType=1 );
+}
+
+.quotation-modal .act-title i.act-name {
+    font-size: 18px;
+    font-family: LatoBold;
+    font-style: normal;
+}
+
+.quotation-modal .btn-quotation-send {
+    height: 26px;
+    border: none;
+    font-family: LatoRegular;
+    font-size: 14px;
+    color: #FFF;
+    line-height: 13px;
+    width: 126px;
+    border-radius: 13px;
+    background-image: linear-gradient(rgba(255, 171, 106, 1) 0%, rgba(255, 119, 60, 1) 100%);
+    background: -webkit-gradient(left top,right top,color-stop(0,rgba(255,171,106,1)),color-stop(100%,rgba(255,119,60,1)));
+    background: -webkit-linear-gradient(left,rgba(255,171,106,1) 0,rgba(255,119,60,1) 100%);
+    background: linear-gradient(to right,rgba(255,171,106,1) 0,rgba(255,119,60,1) 100%);
+}
+
+.quotation-modal .add-new-performance-btn {
+    height: 26px;
+    width: 118px;
+    border-radius: 13px;
+    background: #FFF;
+    border: none;
+    font-family: LatoRegular;
+    font-size: 14px;
+    border: -webkit-linear-gradient(left,rgba(255,171,106,1) 0,rgba(255,119,60,1) 100%);
+    border: 2px solid rgba(255, 119, 60, 1)
+}
+.quotation-modal .add-new-performance-btn:nth-of-type(1) {
+    margin: 0 62px 0 105px;
+}
+
+.quotation-modal .add-new-performance-container {
+    margin: 16px 0 0 10px;
+}
+
+.quotation-modal .travel-exp-container {
+    margin: 23px 0 0 33px;
+}
+.quotation-modal .travel-exp-container i {
+    font-family: LatoBold;
+    font-size: 15px;
+    font-style: normal;
+    display: block;
+    color: rgba(61, 66, 72, 1);
+    text-align: left;
+}
+.quotation-modal .travel-exp-container .custom-checkbox {
+    margin: 13px 72px 15px 0;
+}
+.quotation-modal .travel-exp-container .custom-checkbox label {
+    font-family: LatoRegular;
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(61, 66, 72, 1);
+}
+.quotation-modal .travel-exp-container .custom-checkbox label:after, 
+.quotation-modal .travel-exp-container .custom-checkbox label:before {
+    width: 18px;
+    height: 18px;
+}
+
+/* TODO Remove!!! */
+.quotation-modal .btn-container {
+    height: 26px;
+    width: 126px;
+    border-radius: 13px;
+    background-image: linear-gradient(rgba(255, 171, 106, 1) 0%, rgba(255, 119, 60, 1) 100%);
+}
+.quotation-modal .btn .btn-mango-grad {
+    font-family: LatoRegular;
+    font-size: 14px;
+    color: #FFF;
+    text-align: left;
+    line-height: 20px;
+}
+/* --- FONT STYLES --- */
+.quotation-modal label {
+    font-family: LatoBold;
+    font-size: 15px;
+    color: #3d4248;
+    margin-bottom: 9px;
+    vertical-align: super !important;
+    display: inline-block !important;
+}
+
+.quotation-modal a {
+    color: #ff7a3e;
+    text-decoration: underline;
+}
+
+.quotation-modal .row.package {
+    padding: 12px 20px 12px 12px;
+    position: relative;
+}
+.quotation-modal .row.package a {
+    margin: 0 0 0 19px;
+    vertical-align: super;
+    font-family: LatoRegular;
+    font-size: 12px;
+    color: rgba(255, 122, 62, 1);
+    /* text-align: center; */
+    line-height: 22px;
+}
+
+.quotation-modal .row.package .custom-checkbox {
+    margin: 0;
+}
+
+.quotation-modal .row.package .custom-checkbox label:before {
+    top: 0;
+}
+
+.quotation-modal i.fa.fa-trash {
+    right: 35px;
+    position: absolute;
+    font-size: 16px;
+}
+
+.quotation-modal .package-create {
+    margin: 6px 0 6px 35px;
+    font-size: 12px;
+    text-align: left;
+    clear: both;
+}
+
+.quotation-modal .quantity-select {
+    width: 42px;
+}
+
+.quotation-modal .duration-select,
+.quotation-modal .price-select {
+    width: 70px;
+}
+
+.success-quotation-modal .modal-dialog {
+    overflow: hidden;
+    position: absolute !important;
+    height: 183px !important;
+    width: 297px !important;
+    top: 50%;
+    left: 50%;
+    margin-top: -150px !important;
+    margin-left: -90px !important;
+    padding: 0;
+    background: #FFF;
+    background-color: rgba(255,255,255,1);
+    border-radius: 11px;
+}
+
+.success-quotation-modal .modal-content {
+    box-shadow: none;
+    border: none;
+}
+
+.success-quotation-modal h4 {
+    font-family: LatoBold;
+    font-size: 18px;
+    color: #000;
+    text-align: center;
+    margin-bottom: 28px;
+}
+.success-quotation-modal p {
+    font-family: LatoRegular;
+    font-size: 15px;
+    color: #000;
+    margin: 0 0 29px 0;
+}
+.success-quotation-modal i.fa.fa-check {
+    color: #59ca71;
+    font-size: 36px;
+}
+
+.quotation-modal .form-control[disabled] {
+    background: #d8d8d8 !important;
+}
+
+.quotation-modal .new-act-section {
+    margin: 0 0 0 10px;
+}
+
+.quotation-modal .new-act-section .act-option {
+    padding: 0;
+}
+.quotation-modal .act-option {
+    padding: 0 0 0 12px !important;
+}
+
+.quotation-modal .new-act-section input[quot-edit-title],
+.quotation-modal .new-act-section input[quot-edit-package-name]
+ {
+    height: 28px;
+    width: 164px;
+    border: 2px solid rgba(229, 229, 229, 1);
+    border-radius: 4px;
+}
+
+.quotation-modal .new-act-section input[quot-edit-title],
+.quotation-modal .new-act-section input[quot-edit-package-name],
+.quotation-modal .new-act-section .act-option {
+    display: inline;
+}
+
+.quotation-modal select[quot-edit-price],
+.quotation-modal select[quot-edit-duration] {
+    height: 26px;
+    width: 69px
+}
+
+.quotation-modal select[quot-edit-qty] {
+    height: 26px;
+    width: 42px;
+}
+
+.quotation-modal .quote-profile-desc {
+    margin: 20px 0 20px 0;
+    width: 100%;
+    height: 68px;
+    resize: none;
+    outline: 0;
+    padding: 8px;
+    border-radius: 8px;
+    border: 2px solid #EEE !important;
+    font-size: 14px;
+}
+
+.quotation-modal .custom-price {
+    height: 26px;
+    width: 69px;
+    border: 2px solid rgba(229, 229, 229, 1);
+    border-radius: 4px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+@media screen and (max-width: 960px) {
+    .quotation-modal .act-info,
+    .quotation-modal .place-info {
+        width: 100%;
+        height: auto;
+    }
+    .quotation-modal .modal-dialog {
+        width: 560px;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .quotation-modal .modal-dialog {
+        width: auto;
+    }
+}

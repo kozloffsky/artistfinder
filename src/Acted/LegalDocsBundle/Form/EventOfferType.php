@@ -20,6 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class EventOfferType extends AbstractType
 {
@@ -42,16 +43,6 @@ class EventOfferType extends AbstractType
                 'class' => RefEventType::class,
                 'constraints' => [new NotBlank()],
                 'description' => 'Type of event'
-            ])
-            ->add('country', EntityType::class, [
-                'class' => RefCountry::class,
-                'constraints' => [new NotBlank()],
-                'description' => 'Country ID',
-            ])
-            ->add('city', EntityType::class, [
-                'class' => RefCity::class,
-                'constraints' => [new NotBlank()],
-                'description' => 'City ID',
             ])
             ->add('location', TextType::class, [
                 'constraints' => [new NotBlank()],
@@ -91,6 +82,14 @@ class EventOfferType extends AbstractType
                         new Length(['max' => 500])
                 ]
             ])
+
+            ->add('country', TextType::class,      ['constraints' => [new NotBlank()], 'description' => 'Country'])
+            ->add('city', TextType::class,         ['constraints' => [new NotBlank()], 'description' => 'City'])
+            ->add('city_lat', NumberType::class,   ['constraints' => [new NotBlank()], 'description' => 'City latitude'])
+            ->add('city_lng', NumberType::class,   ['constraints' => [new NotBlank()], 'description' => 'City longitude'])
+            ->add('region_name', TextType::class,  ['constraints' => [new NotBlank()], 'description' => 'Name of region'])
+            ->add('region_lat', NumberType::class, ['constraints' => [new NotBlank()], 'description' => 'Region latitude'])
+            ->add('region_lng', NumberType::class, ['constraints' => [new NotBlank()], 'description' => 'Region longitude'])
         ;
     }
 

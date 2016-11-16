@@ -70,3 +70,6 @@ project
 .idea
 *.idea/*
 /web/uploads/*
+/web/css
+/web/js
+/.vagrant/

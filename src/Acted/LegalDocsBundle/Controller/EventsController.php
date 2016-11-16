@@ -3,12 +3,15 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\EventOffer;
+use Acted\LegalDocsBundle\Entity\RequestQuotation;
 use Acted\LegalDocsBundle\Form\EventOfferType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
+
+use JMS\Serializer\SerializationContext;
 
 class EventsController extends Controller
 {
@@ -88,6 +91,12 @@ class EventsController extends Controller
             /** Notify Artist */
             $eventManager->createEventNotify($data, $artist, $offer);
             $eventManager->newMessageNotify($data, $artist);
+
+            /*Create request*/
+            $requestQuotation = new RequestQuotation();
+            $requestQuotation->setEvent($event);
+            $em->persist($requestQuotation);
+            $em->flush();
 
             return new JsonResponse(['success'=>'Event successfully created!']);
         }
@@ -215,6 +224,31 @@ class EventsController extends Controller
 
         if ($offers) {
             return new JsonResponse($serializer->toArray($offers));
+        } else {
+            return new JsonResponse(['empty']);
+        }
+    }
+
+    /**
+     * @ApiDoc(
+     *  description="Gets event by id",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getEventByIdAction(Request $request) {
+        $eventId = $request->get('id');
+
+        $serializer = $this->get('jms_serializer');
+
+        $eventOffer = $this->getEM()->getRepository('ActedLegalDocsBundle:EventOffer')->getEventOfferByEventId($eventId);
+
+        if ($eventOffer) {
+            return new JsonResponse( $serializer->toArray($eventOffer[0], SerializationContext::create()->setGroups(['getEvent'])) );
         } else {
             return new JsonResponse(['empty']);
         }

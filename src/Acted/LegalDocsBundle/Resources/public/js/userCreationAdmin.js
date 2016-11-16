@@ -1,46 +1,17 @@
 $(function () {
-    //$('#phone_number').cleanVal(); to get phone number.
+
+    var adminAutocompService = new GoogleAutocompleteService(),
+        isAvailable = adminAutocompService.getFormElements('.registration-admin-modal form.artistRegForm');
+
+    if(isAvailable)
+        adminAutocompService.initAutoComplete();
 
     //Enabling form validation.
 
-
     var customerValidate =  $("#customerRegForm").validate();
-
     var artistValidation =  $("#artistForm").validate();
 
     $("#recoveryForm").validate();
-
-    //Initializing phone mask.
-    /*$('#phone_number').mask('+44 (000) 000-0000', {placeholder: "+44 (___) ___-____"});
-
-
-     var $select2 = $("#country").select2({
-     placeholder: "Select Country",
-     minimumResultsForSearch: -1
-     }).on("change", function (e) {
-     //Change mask here... Example:
-     var selectedCountry = $('#country').find('option:selected').text();
-     $('#phone_number').val('');
-
-     switch (selectedCountry) {
-     case 'France':
-     $('#phone_number').mask('+33 (00) 0000-0000', {placeholder: "+33 (0_) ____-____"});
-     break;
-     case  'Germany':
-     $('#phone_number').mask('+49 (0000) 0000-0000', {placeholder: "+49 (0___) ____-____"});
-     break;
-     //Default country Uk
-     case 'United Kingdom':
-     default:
-     $('#phone_number').mask('+44 (000) 000-0000', {placeholder: "+44 (___) ___-____"});
-     break;
-     }
-
-
-     });*/
-
-    //$select2.data('select2').$results.addClass($select2.attr('data-class'));
-
 
     var currentState = 1;
     var userIsArtist = true;
@@ -216,12 +187,12 @@ $(function () {
         $(hiddenElements).toggle();
     });
 
-    $('#stageThreeNext').on('click', function(event){
+    $('#stageThreeNextAdmin').on('click', function(event){
         event.preventDefault();
         artistRegister();
     });
 
-    $('#stageThreeNextCustomer').on('click', function(event){
+    $('#stageThreeNextCustomerAdmin').on('click', function(event){
         event.preventDefault();
         customerRegister();
     });
@@ -233,6 +204,26 @@ $(function () {
         var userStatusFake = $('.fakeSelection').serialize();
         console.log(userStatusFake)
         var tempPass = 'A' + Math.random().toString(36) + '123';
+        
+        var reg = /(country|city)[=].\w*./;
+        userInformation = userInformation.replace(reg, "");
+
+        var regionLat = adminAutocompService.coords.region.lat,
+            regionLng = adminAutocompService.coords.region.lng,
+            cityLat = adminAutocompService.coords.city.lat,
+            cityLng = adminAutocompService.coords.city.lng,
+            country = adminAutocompService.currentStore.country,
+            city = adminAutocompService.currentStore.city,
+            region = adminAutocompService.currentStore.region;
+
+        userInformation += "&country=" + country;
+        userInformation += "&city=" + city;
+        userInformation += "&city_lat=" + cityLat;
+        userInformation += "&city_lng=" + cityLng;
+        userInformation += "&region_name=" + region;
+        userInformation += "&region_lat=" + regionLat;
+        userInformation += "&region_lng=" + regionLng;
+
         registerArtist(userInformation, categoriesForm, userRole, userStatusFake, tempPass);
     };
 
@@ -294,33 +285,6 @@ $(function () {
                 })
             }
         })
-    }
-
-    $(document).ready(function() {
-        var selectedCountruOption = $('.form-group #country').find('option:selected').val();
-        chooseCityReg(selectedCountruOption);
-    });
-
-    $('.form-group #country').on('change',function(){
-        var selectedCountruOption = $('.form-group #country').find('option:selected').val();
-        chooseCityReg(selectedCountruOption);
-    })
-
-    function chooseCityReg(selectedCountruOption) {
-        if (selectedCountruOption){
-            $.ajax({
-                type: 'GET',
-                url: '/geo/city?_format=json&country=' + selectedCountruOption,
-                success: function (response) {
-                    $('#cityReg').empty();
-                    $('#cityReg').append('<option value="" name="city">select a city</option>');
-                    $(response).each(function () {
-                        $('#cityReg').append('<option value="' + this.id + '" name="city">' + this.name + '</option>');
-                    });
-                    $("#cityReg").select2();
-                }
-            })
-        }
     }
 
     function customerRegister(){

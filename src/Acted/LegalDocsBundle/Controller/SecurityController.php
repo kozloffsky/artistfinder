@@ -76,9 +76,45 @@ class SecurityController extends Controller
                 $profile->setUser($user);
                 $validationErrors->addAll($validator->validate($profile));
 
+
+                $refCountryRepo = $em->getRepository('ActedLegalDocsBundle:RefCountry');
+                $countryId = $refCountryRepo->createCountry($data->getCountry());
+
+                $country = $em->getRepository('ActedLegalDocsBundle:RefCountry')->findOneBy(array(
+                    'id' => $countryId
+                ));
+
+                $refRegionRepo = $em->getRepository('ActedLegalDocsBundle:RefRegion');
+                $regionId = $refRegionRepo->createRegion(
+                    $data->getRegionName(),
+                    $country,
+                    $data->getRegionLat(),
+                    $data->getRegionLng()
+                );
+
+                $region = $em->getRepository('ActedLegalDocsBundle:RefRegion')->findOneBy(array(
+                    'id' => $regionId
+                ));
+
+                $refCityRepo = $em->getRepository('ActedLegalDocsBundle:RefCity');
+                $cityId = $refCityRepo->createCity(
+                    $data->getCity(),
+                    $region,
+                    $data->getCityLat(),
+                    $data->getCityLng()
+                );
+
+                $city = $em->getRepository('ActedLegalDocsBundle:RefCity')->findOneBy(array(
+                    'id' => $cityId
+                ));
+
+                $data->setCity($city);
+                $data->setCountry($country);
+
                 $artist = $userManager->newArtist($data);
                 $artist->setUser($user);
                 $validationErrors->addAll($validator->validate($artist));
+
 
                 $em->persist($profile);
                 $em->persist($artist);
@@ -284,9 +320,13 @@ class SecurityController extends Controller
 
             return new JsonResponse(['ok']);
         }
+
+        $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
+
         return $this->render('@ActedLegalDocs/Security/resendToken.html.twig', [
             'form' => $form->createView(),
-            'currentToken' => $token
+            'currentToken' => $token,
+            'categories' => $categories
         ]);
     }
 
@@ -320,5 +360,13 @@ class SecurityController extends Controller
         }
 
         return false;
+    }
+
+    public function passwordRecoveryAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+
+        $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
+
+        return $this->render('@ActedLegalDocs/Security/passwordRecovery.html.twig', compact('categories'));
     }
 }

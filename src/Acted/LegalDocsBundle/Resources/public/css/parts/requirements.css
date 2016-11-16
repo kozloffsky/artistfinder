@@ -33,6 +33,12 @@
 .requirement-form input[type="text"].error,
 .requirement-form input[type="password"].error,
 .requirement-form input[type="email"].error,
+.requirement-form .textarea.error {
+    margin: 0;
+}
+.requirement-form input[type="text"].error,
+.requirement-form input[type="password"].error,
+.requirement-form input[type="email"].error,
 .requirement-form .textarea.error{border-color: #f00;}
 .requirement-form .textarea{
     height: 283px;
@@ -132,7 +138,7 @@
     /*-webkit-box-shadow: none;*/
     /*box-shadow: none;*/
 /*}*/
-.requirement-form .btn-upload{
+.requirement-form .btn-upload {
     background: #fff;
     border: none;
     border-radius: 6px;
@@ -145,10 +151,20 @@
     outline: none;
     float: left;
     margin-right: 10px;
+    line-height: 28px;
 }
 .requirement-form .btn-upload:active{
     background: #eee;
     background: rgba(238, 238, 238, 1);
+}
+.requirement-form .btn-upload + input {
+    display: none;
+}
+.requirement-form label.btn-upload {
+    font-family: LatoRegular;
+    font-style: normal;
+    font-weight: 400;
+    margin-bottom: 0;
 }
 .requirement-form  .jFiler-items{overflow: hidden;}
 .requirement-form .items-list{
@@ -267,6 +283,26 @@
 .requirement-form .icon-jfi-file-audio:before{
     content: '\f1c7';
 }
+
+.requirement-form .progress-bar-line {
+    margin: 18px 0 0 0;
+    width: 0%;
+    height: 20px;
+    background-color: #FFF;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    -webkit-transition: width .6s ease;
+    transition: width .6s ease;
+}
+
+.requirement-form input + label.error,
+.requirement-form textarea + label.error {
+    color: #EF5350;
+    font-weight: 400;
+    font-family: LatoRegular,Serif,sans-serif;
+}
+
 @media (max-width: 991px){
     .requirement-form h2{
         font-size: 14px;

@@ -2,7 +2,7 @@ Acted\LegalDocsBundle\Entity\Event:
     exclusion_policy: NONE
     properties:
         id:
-            groups: [chat_list, getEvent]
+            groups: [chat_list, getEvent, enquiries]
         city:
             groups: [Default, getEvent, chat_list, chat_room, all_messages]
         eventRef:
@@ -31,7 +31,7 @@ Acted\LegalDocsBundle\Entity\Event:
             groups: [Default, getEvent, chat_list, chat_room]
             serialized_name: location
         user:
-            groups: [chat_list]
+            groups: [chat_list, getEvent]
     virtual_properties:
         getCountryId:
             serialized_name: countryId

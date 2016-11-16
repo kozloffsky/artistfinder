@@ -14,27 +14,8 @@ $(function () {
         }
     }
     getNumOfBlocksToShow();
-    console.log(blocksToShow);
-
 
     $('.header-background').appendTo('header.search');
-
-    function selectBoxStyle() {
-        $('select').each(function () {
-            var white = $(this).attr('data-class') == 'selections-white';
-            var placeholder = $(this).attr('data-placeholder');
-            var $select2 = $(this).select2({
-                placeholder: placeholder,
-                minimumResultsForSearch: -1
-            });
-
-            if (white) {
-                $select2.data('select2').$results.addClass('selections-white');
-            }
-        });
-    }
-
-    selectBoxStyle();
 
     function setTabsCorenersZ() {
         $('.results-menu>li').each(function (index) {
@@ -133,7 +114,7 @@ $(function () {
         });
     }
 
-    $('#search-country').on('change',getSearchRegions);
+    $('#search-country').on('change', getSearchRegions);
 
     $('.search input, .search select').on('change', function(){
         checkUserPosition()
@@ -158,12 +139,20 @@ $(function () {
     });
 
     $(document).ready(function() {
-        var selectedCountruOption = $('#country').find('option:selected').val();
-        chooseCity(selectedCountruOption);
+        //var selectedCountruOption = $('#country').find('option:selected').val();
+        //chooseCity(selectedCountruOption);
+        /**
+         * FIX:
+         * AC-189
+         **/
+        getSearchRegions();
     });
 
     function getSearchRegions(){
         var selectedCountruOption = $(this).find('option:selected').val();
+        if(!selectedCountruOption){
+            selectedCountruOption = 1;
+        }
         $.ajax({
             type:'GET',
             url: '/geo/region?_format=json&country=' + selectedCountruOption,
@@ -172,12 +161,10 @@ $(function () {
                 $('#search-region').append('<option value="" name="region">select a region</option>');
                 $(response).each(function(){
                     $('#search-region').append('<option value="'+ this.id +'" name="region">'+this.name+'</option>');
-                    selectBoxStyle();
                 });
             }
         });
     }
-
     function chooseCity(selectedCountruOption){
         if(selectedCountruOption) {
             $.ajax({
@@ -188,7 +175,6 @@ $(function () {
                     $('#region').append('<option value="" name="user_city">select a city</option>');
                     $(response).each(function () {
                         $('#region').append('<option value="' + this.id + '" name="user_city">' + this.name + '</option>');
-                        selectBoxStyle();
                     });
                     checkUserPosition();
                 }
@@ -347,7 +333,6 @@ $(function () {
         //console.log('finish');
         initTabs();
         //$('.recomendedFilter select').prop('disabled',false);
-        selectBoxStyle();
 
         $('.tab').removeClass('active');
         $('.SearchResultTab').addClass('active');
@@ -388,10 +373,11 @@ $(function () {
         $(artists).each(function () {
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString();
-            if(this.media.link){
-                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
+            //console.log(this.media.link);
+            if(this.search_image){
+                var imageSearchProf = '<img class="header" src="' + this.search_image + '"/>';
             } else{
-                var imageSearchProf = '<img class="header" src="/assets/images/media-no-image.gif"/>';
+                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
             }
             if (this.video_media){
                 var artistBlockSearch = '<div class=" profile-card bordered">' +
@@ -537,7 +523,6 @@ $(function () {
         };
         //setArtistStarsCat();
         setTabsCorenersZ();
-        selectBoxStyle();
         //console.log('finish');
         initTabs();
         preventAskQuoteFromArtist()
@@ -589,11 +574,11 @@ $(function () {
         $(artists).each(function () {
             var artistCategories = this.categories,
                 artistCatString = artistCategories.toString();
-            console.log(this.media.link);
-            if(this.media.link){
-                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
+            //console.log(this.media.link);
+            if(this.search_image){
+                var imageSearchProf = '<img class="header" src="' + this.search_image + '"/>';
             } else{
-                var imageSearchProf = '<img class="header" src="/assets/images/media-no-image.gif"/>';
+                var imageSearchProf = '<img class="header" src="/media/cache/small' + this.media.link + '"/>';
             }
             if (this.video_media) {
                 var artistBlockSearch = '<div class="profile-card categoriesCardsSearch mobile-horizontal">' +
@@ -834,7 +819,6 @@ $(function () {
         });
 
         setTabsCorenersZ();
-        selectBoxStyle();
         //console.log('finish');
         initTabs();
 

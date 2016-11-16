@@ -36,6 +36,13 @@ Acted\LegalDocsBundle\Entity\Artist:
         spotlight:
           type: integer
           nullable: true
+        workAbroad:
+          type: boolean
+          options:
+            default: false
+        searchImage:
+          type: string(256)
+          nullable: true
     manyToOne:
         city:
           targetEntity: Acted\LegalDocsBundle\Entity\RefCity
@@ -57,5 +64,8 @@ Acted\LegalDocsBundle\Entity\Artist:
             targetEntity: Acted\LegalDocsBundle\Entity\Recommend
             mappedBy: artist
             cascade: ["remove", "persist"]
+        technicalRequirements:
+            targetEntity: Acted\LegalDocsBundle\Entity\TechnicalRequirement
+            mappedBy: artist
 
     lifecycleCallbacks: {  }

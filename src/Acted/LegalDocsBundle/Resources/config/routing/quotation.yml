@@ -1,0 +1,20 @@
+quotation_prepare:
+    path:     /prepare
+    defaults: { _controller: ActedLegalDocsBundle:RequestQuotation:prepare }
+    methods:  [POST]
+
+quotation_send:
+    path:     /send
+    defaults: { _controller: ActedLegalDocsBundle:RequestQuotation:send }
+    methods:  [POST]
+
+quotation_select_performance:
+    path:     /select/{requestId}/performance/{performanceId}
+    defaults: { _controller: ActedLegalDocsBundle:RequestQuotation:selectPerformance }
+    methods:  [PATCH]
+
+quotation_select_service:
+    path:     /select/{requestId}/service/{serviceId}
+    defaults: { _controller: ActedLegalDocsBundle:RequestQuotation:selectService }
+    methods:  [PATCH]
+

@@ -23,11 +23,14 @@ parameters:
     per_page: 3
     resetting.token_ttl: 86400
     image_upload_dir: images
+    avatar_dir: images/avatars
+    search_image_dir: images/search_images
     performancecontract_dir: docs/performance_contract
     invoice_dir: docs/invoice
     quotation_dir: docs/quotation
+    request_quotation_dir: docs/request_quotation
     jms_serializer.constraint_violation_handler.class: Acted\LegalDocsBundle\Serializer\ConstraintViolationHandler
-    max_file_size: 15728640 # 1MB = 1048576 B
+    max_file_size: 10485760 # 1MB = 1048576 B
     file_formats:
         - application/x-compressed
         - image/jpg
@@ -35,7 +38,9 @@ parameters:
         - image/jpeg
         - application/pdf
         - application/vnd.ms-excel
+        - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
         - application/msword
+        - application/vnd.openxmlformats-officedocument.wordprocessingml.document
         - text/plain
         - application/zip
     chat_upload_dir: uploads

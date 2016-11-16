@@ -335,18 +335,37 @@
     box-shadow: none;
     max-width: 293px;
     display: inline-block;
+    line-height: 12px;
+    padding: 3px 6px;
+}
+
+.contact-details .form-group select {
+    height: 26px;
+    border-radius: 6px;
+    border: 2px solid #e5e5e5;
+    box-shadow: none;
+    max-width: 293px;
+    display: inline-block;
+    line-height: 12px;
+    padding: 3px 6px;
 }
 
 #customerBlock .contact-details .form-group input {
     height: 26px;
 }
 
-.contact-details .form-group input.error {
-    border: 2px solid #f97c7d;
+.form-group input.error {
+    border: 2px solid #f97c7d !important;
+    outline: 0!important;
+    box-shadow: 0px 0px 8px 0px #f97c7d;
 }
 
-.contact-details .form-group input.valid {
-    border: 2px solid #809eff;
+.form-group input.error + label.error {
+    opacity: 1;
+}
+
+.form-group input.valid {
+    border: 2px solid #809eff !important;
 }
 
 .contact-details .form-group input.valid + label.error + label.icon:after,

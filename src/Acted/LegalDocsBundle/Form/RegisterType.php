@@ -23,6 +23,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class RegisterType extends AbstractType
 {
@@ -68,12 +69,6 @@ class RegisterType extends AbstractType
                 'description' => 'Artist name (also is uses for "slug" generation) (for ROLE_ARTIST)'
             ])
 
-            ->add('country', EntityType::class, [
-                'class' => RefCountry::class,
-                'constraints' => [new NotBlank(['groups' => 'artist'])],
-                'description' => 'Country ID (for ROLE_ARTIST)',
-            ])
-
             ->add('phone', TextType::class, [
                 'constraints' => [
                     new NotBlank(['groups' => 'artist']),
@@ -84,15 +79,17 @@ class RegisterType extends AbstractType
                 ],
                 'description' => 'Phone number (available chars: digits,+,(,)) (for ROLE_ARTIST)',
             ])
-            ->add('city',  EntityType::class, [
-                'class' => RefCity::class,
-                'constraints' => [new NotBlank(['groups' => 'artist'])],
-                'description' => 'City ID (for ROLE_ARTIST)',
-                'required' => false
-            ])
             ->add('fake', CheckboxType::class, [
                 'required' => false,
             ])
+
+            ->add('country', TextType::class,      ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'Country'])
+            ->add('city', TextType::class,         ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'City'])
+            ->add('city_lat', NumberType::class,   ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'City latitude'])
+            ->add('city_lng', NumberType::class,   ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'City longitude'])
+            ->add('region_name', TextType::class,  ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'Name of region'])
+            ->add('region_lat', NumberType::class, ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'Region latitude'])
+            ->add('region_lng', NumberType::class, ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'Region longitude'])
         ;
 
         $builder->get('phone')->addModelTransformer(new PhoneTransformer());

@@ -1,0 +1,29 @@
+Acted\LegalDocsBundle\Entity\ServiceRequestQuotation:
+    type: entity
+    table: ServiceRequestQuotation
+    repositoryClass: Acted\LegalDocsBundle\Repository\ServiceRequestQuotationRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        isSelected:
+            type: boolean
+            options:
+              default: false
+    manyToOne:
+        requestQuotation:
+            targetEntity: Acted\LegalDocsBundle\Entity\RequestQuotation
+            inversedBy: serviceRequestQuotations
+            joinColumn:
+                referencedColumnName: id
+                onDelete: RESTRICT
+        service:
+            targetEntity: Acted\LegalDocsBundle\Entity\Service
+            inversedBy: serviceRequestQuotations
+            joinColumn:
+                referencedColumnName: id
+                onDelete: RESTRICT
+    lifecycleCallbacks: {  }

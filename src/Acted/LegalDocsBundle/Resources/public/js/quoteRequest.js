@@ -2,6 +2,11 @@
  * Created by pavel on 12.05.16.
  */
 $(function () {
+    var quoteRequestAutocompService = new GoogleAutocompleteService(),
+        isAvailable = quoteRequestAutocompService.getFormElements('.free-quote-modal form[id="requestQuoteForm"]');
+
+    if(isAvailable)
+        quoteRequestAutocompService.initAutoComplete();
 
     $( "#event_date" ).datepicker({
         dateFormat: 'dd/mm/yy',
@@ -9,7 +14,7 @@ $(function () {
     );
 
     function initSelect(){
-        $('select').each(function () {
+        $('.free-quote-modal select').each(function () {
             var placeholder = $(this).attr('data-placeholder');
             var $select2    = $(this).select2({
                 placeholder            : placeholder || '',
@@ -108,7 +113,7 @@ $(function () {
         var getEventsReady = sessionStorage.getItem(selectedEvent);
         if(getEventsReady){
             var findArtistInEvent = getEventsReady.search(artistSlug);
-            console.log(findArtistInEvent)
+            //console.log(findArtistInEvent)
             if(findArtistInEvent >= 0){
                 preventEventSending()
             } else {
@@ -146,7 +151,7 @@ $(function () {
     }
 
     function createArtistDataViewInQuote(artistData){
-        console.log(artistData)
+        //console.log(artistData)
         var artistCatString = artistData.categories.toString();
         $('.quoteRequestArtistData .quote-profile-info h2').html(artistData.name);
         $('.quoteRequestArtistData .quote-profile-info p').html(artistCatString);
@@ -159,19 +164,12 @@ $(function () {
     }
 
     $(document).ready(function() {
-        var selectedCountruOption = $('#event_country').find('option:selected').val();
-        chooseCityQuote(selectedCountruOption);
         prepareEventRequestForm()
-    });
-
-    $('#requestQuoteForm #event_country').on('change',function(){
-        var selectedCountruOption = $('#event_country').find('option:selected').val();
-        chooseCityQuote(selectedCountruOption);
     });
 
     function prepareEventRequestForm(){
         var checkIfUserLoggedIn = $('header #userInformation').length;
-        console.log(checkIfUserLoggedIn)
+        //console.log(checkIfUserLoggedIn)
         if(checkIfUserLoggedIn > 0){
             var userInformationStorage = JSON.parse(localStorage.getItem('user'));
             if(userInformationStorage) {
@@ -216,7 +214,7 @@ $(function () {
         $(userEvents).each(function(i){
             var eventsOptions='<option value="'+ this.event.id +'" name="event" class="'+i+'">'+this.event.title+'</option>';
             $('#event_preset').append(eventsOptions);
-            console.log('preveEventList')
+            //console.log('preveEventList')
         });
         $('.eventUnregistered').hide();
         $('#requestQuoteForm .modal-body').hide();
@@ -262,29 +260,13 @@ $(function () {
         $('#requestQuoteForm .errorCat').text('').hide();
     }
 
-    function chooseCityQuote(selectedCountruOption){
-        if(selectedCountruOption){
-            $.ajax({
-                type:'GET',
-                url: '/geo/city?_format=json&country=' + selectedCountruOption,
-                success:function(response){
-                    $('#event_city').empty();
-                    $(response).each(function(){
-                        $('#event_city').append('<option value="'+ this.id +'" name="city">'+this.name+'</option>');
-                    });
-                    initSelect();
-                }
-            })
-        }
-    }
-
     $('#quoteRequsetSend').on('click',function(e){
         e.preventDefault();
         var requestFormSerialize = $('#requestQuoteForm, #quoteRequestSecond').serialize(),
             userInformationStorage = JSON.parse(localStorage.getItem('user')),
             checkUserLoggedIn = $('#userInformation').text(),
             prevEventChosen = $('#requestQuoteForm .modal-body').hasClass('choosePrevEvent');
-        console.log(userInformationStorage)
+        //console.log(userInformationStorage)
         if(userInformationStorage && prevEventChosen == false){
             sendQuoteRequest(requestFormSerialize, userInformationStorage);
         } else if (!userInformationStorage){
@@ -294,7 +276,7 @@ $(function () {
             chooseRogLog();
         } else if(prevEventChosen == true && checkUserLoggedIn && userInformationStorage){
             var chosenEvent = $('#chosenEvent, #requestQuoteForm, #quoteRequestSecond').serialize();
-            console.log(chosenEvent)
+            //console.log(chosenEvent)
             sendQuoteRequest(chosenEvent, userInformationStorage);
         }
     });
@@ -325,6 +307,19 @@ $(function () {
     }
 
     function sendQuoteRequest(data, userInformationStorage){
+
+        var regionLat = quoteRequestAutocompService.coords.region.lat,
+            regionLng = quoteRequestAutocompService.coords.region.lng,
+            cityLat = quoteRequestAutocompService.coords.city.lat,
+            cityLng = quoteRequestAutocompService.coords.city.lng,
+            region = quoteRequestAutocompService.currentStore.region;
+
+        data += "&city_lat=" + cityLat;
+        data += "&city_lng=" + cityLng;
+        data += "&region_name=" + region;
+        data += "&region_lat=" + regionLat;
+        data += "&region_lng=" + regionLng;
+
         $.ajax({
             type:'POST',
             url:'/event/create',
@@ -336,7 +331,6 @@ $(function () {
                 $('#loadSpinner').fadeOut(500);
             },
             success:function(res){
-                console.log(res);
                 $('#freeQuoteModal').modal('hide');
                 $('#offerSuccess').modal('show');
                 $('#comment_area').hide();
@@ -352,7 +346,7 @@ $(function () {
                 $('#quoteRequestSecond .errorCat').text('').hide();
                 $('#requestQuoteForm .errorCat').text('').hide();
                 $.each(response.responseJSON, function(key, value) {
-                    console.log(key, value);
+                    //console.log(key, value);
                     $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
                     if(key == 'performance'){
                         $('#quoteRequestSecond .errorCat').text(value).show();

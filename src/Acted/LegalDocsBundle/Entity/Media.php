@@ -251,7 +251,11 @@ class Media
      */
     public function getPerformances()
     {
-        return $this->performances;
+        return $this->performances->filter(
+            function($entry) {
+                return !$entry->getIsQuotation();
+            }
+        );
     }
     /**
      * @var integer
