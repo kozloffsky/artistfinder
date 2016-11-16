@@ -49,9 +49,9 @@ class RequestQuotationController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        //$user = $em->getRepository('ActedLegalDocsBundle:User')->find(351);
+        $user = $em->getRepository('ActedLegalDocsBundle:User')->find(351);
 
-        $user = $this->getUser();
+        //$user = $this->getUser();
 
         if (empty($user)) {
             return new JsonResponse([
@@ -104,8 +104,8 @@ class RequestQuotationController extends Controller
 
             if ($isExistsDraftedRequestQuotation) {
 
-                $draftServiceRequestQuotations = $performanceRequestQuotationRepo->getDraftPerformanceRequestQuotations($draftedRequestQuotationId);
-                $draftPerformanceRequestQuotations = $serviceRequestQuotationRepo->getDraftServiceRequestQuotations($draftedRequestQuotationId);
+                $draftServiceRequestQuotations = $serviceRequestQuotationRepo->getDraftServiceRequestQuotations($draftedRequestQuotationId);
+                $draftPerformanceRequestQuotations = $performanceRequestQuotationRepo->getDraftPerformanceRequestQuotations($draftedRequestQuotationId);
 
                 $draftServiceRequestQuotationRelatedListIds = $serviceRequestQuotationRepo->getRelatedServiceIds($draftServiceRequestQuotations);
                 $draftPerformanceRequestQuotationRelatedListIds = $performanceRequestQuotationRepo->getRelatedPerformanceIds($draftPerformanceRequestQuotations);
@@ -166,7 +166,6 @@ class RequestQuotationController extends Controller
             $connection->commit();
         } catch (\Exception $e) {
             $connection->rollback();
-
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Preparing error'

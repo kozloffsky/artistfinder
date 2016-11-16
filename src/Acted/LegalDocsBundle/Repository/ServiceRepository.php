@@ -52,14 +52,14 @@ class ServiceRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function removeService($id)
+    public function removeServices($ids)
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
         $date = date("Y-m-d H:i:s");
-        $params = array('deletedTime' => $date, 'serviceId' => $id);
+        $params = array('deletedTime' => $date, 'serviceIds' => $ids);
 
-        $whereCriteria = 's.deletedTime IS NULL AND s.id IN (:serviceId)';
+        $whereCriteria = 's.deletedTime IS NULL AND s.id IN (:serviceIds)';
 
 
         $qb->update('ActedLegalDocsBundle:Service', 's')

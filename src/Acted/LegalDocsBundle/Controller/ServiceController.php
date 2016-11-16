@@ -135,7 +135,7 @@ class ServiceController extends Controller
             $optionIds = $optionRepository->getOptionIdsByPackageIds($packageIds);
             $rateIds = $rateRepository->getRateIdsByOptionIds($optionIds);
 
-            $serviceRepository->removeService($service->getId());
+            $serviceRepository->removeServices($service->getId());
 
             $packageRepository->removePackages($packageIds);
 

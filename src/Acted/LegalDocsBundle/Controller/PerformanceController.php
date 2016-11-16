@@ -292,7 +292,7 @@ class PerformanceController extends Controller
             $optionIds = $optionRepository->getOptionIdsByPackageIds($packageIds);
             $rateIds = $rateRepository->getRateIdsByOptionIds($optionIds);
 
-            $performanceRepository->removePerformance($performance->getId());
+            $performanceRepository->removePerformances($performance->getId());
 
             $packageRepository->removePackages($packageIds);
 

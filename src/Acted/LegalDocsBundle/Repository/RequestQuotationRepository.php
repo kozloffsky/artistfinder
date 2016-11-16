@@ -79,7 +79,7 @@ class RequestQuotationRepository extends EntityRepository
 
         if (!empty($draftPerformanceRequestQuotationRelatedListIds['optionIds'])) {
             $ids = implode($draftPerformanceRequestQuotationRelatedListIds['optionIds'], ',');
-            $connection->query('DELETE FROM ' . $optionTableName . ' WHERE id IN(' . $ids . ')');
+            $connection->query('DELETE FROM `' . $optionTableName . '` WHERE id IN(' . $ids . ')');
         }
 
         if (!empty($draftPerformanceRequestQuotationRelatedListIds['packageIds'])) {
@@ -104,7 +104,7 @@ class RequestQuotationRepository extends EntityRepository
 
         if (!empty($draftServiceRequestQuotationRelatedListIds['optionIds'])) {
             $ids = implode($draftServiceRequestQuotationRelatedListIds['optionIds'], ',');
-            $connection->query('DELETE FROM ' . $optionTableName . ' WHERE id IN(' . $ids . ')');
+            $connection->query('DELETE FROM `' . $optionTableName . '` WHERE id IN(' . $ids . ')');
         }
 
         if (!empty($draftServiceRequestQuotationRelatedListIds['packageIds'])) {

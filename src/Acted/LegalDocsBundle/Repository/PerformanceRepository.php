@@ -84,14 +84,14 @@ class PerformanceRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function removePerformance($id)
+    public function removePerformances($ids)
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
         $date = date("Y-m-d H:i:s");
-        $params = array('deletedTime' => $date, 'performanceId' => $id);
+        $params = array('deletedTime' => $date, 'performanceIds' => $ids);
 
-        $whereCriteria = 'per.deletedTime IS NULL AND per.id IN (:performanceId)';
+        $whereCriteria = 'per.deletedTime IS NULL AND per.id IN (:performanceIds)';
 
 
         $qb->update('ActedLegalDocsBundle:Performance', 'per')
