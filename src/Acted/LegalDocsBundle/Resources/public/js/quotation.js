@@ -534,6 +534,11 @@ $(function() {
 
             setTimeout(function() {
                 $("#success-quotation-modal").modal("show");
+                //TODO: Better reload data not page
+                $("#success-quotation-modal").on('hidden.bs.modal',function(){
+                    window.location.reload();
+                })
+
             }, 500);
 
             console.log(res);
@@ -541,6 +546,8 @@ $(function() {
         .catch(function(err) {
             console.error(err);
         });
+        $("button[quotation-send]").html('Quotation Sent');
+        console.log($("button[quotation-send]").val());
     }
     function selectPerformanceSend() {
         var quotId  = QRM.model.id;
