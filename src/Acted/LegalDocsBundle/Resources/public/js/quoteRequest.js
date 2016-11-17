@@ -135,7 +135,6 @@ $(function () {
 
 
     function createRequestQuotePerformances(artistData, performanceRequestId){
-        console.log(artistData);
         $('.requestQuotePerformances').empty();
         $(artistData.allPerformance).each(function(){
             if(this.status != 'draft'){
