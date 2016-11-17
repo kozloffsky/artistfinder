@@ -6,9 +6,9 @@
 {% block body_html %}
     {% autoescape false %}
         <p>Hi again {{ client.firstname }},</p>
-        <p>This is, {{ artist.firstname }}. I have just updated my quotation with regard to your event “{{ event.title }}”. You can open this quotation here or access it for your Chat-room.</p>
+        <p>This is, {{ artist.firstname }}. I have just updated my quotation with regard to your event “{{ event.title }}”. You can open this quotation <a href="{{ quotationLink }}">here</a> or access it for your Chat-room.</p>
         <p>Please do not hesitate to contact me if you have any question.</p>
         <p>Kind regards,</p>
         <p>{{ artist.firstname }}</p>
     {% endautoescape %}
-{% endblock %}
+{% endblock %}  

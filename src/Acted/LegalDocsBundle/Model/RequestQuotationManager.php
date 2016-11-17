@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Model;
 
+use Doctrine\Common\Util\Debug;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Acted\LegalDocsBundle\Entity\Event;
@@ -49,7 +50,7 @@ class RequestQuotationManager
      * @param $artist
      * @param bool $edited
      */
-    public function sendNotify($eventData, $artist, $client, $edited = false)
+    public function sendNotify($eventData, $artist, $client, $quotationLink, $edited = false)
     {
         $template = '@ActedLegalDocs/Email/quotation_reply_notify.html.twig';
         if ($edited) {
@@ -58,7 +59,8 @@ class RequestQuotationManager
         $rendered = $this->templating->render($template, [
             'event' => $eventData,
             'artist' => $artist,
-            'client' => $client
+            'client' => $client,
+            'quotationLink' => $quotationLink
         ]);
 
         $this->userManager->sendEmailMessage($rendered, $client->getEmail(), $artist->getEmail());
