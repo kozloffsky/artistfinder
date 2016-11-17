@@ -600,7 +600,11 @@ class Artist
             $result = [];
             foreach ($performances as $performance) {
                 if (!$performance->getIsQuotation() && $performance->getIsVisible() && is_null($performance->getDeletedTime()))
-                    $result[] = ['id' => $performance->getId(), 'name' => $performance->getTitle()];
+                    $result[] = [
+                        'id' => $performance->getId(),
+                        'status'=>$performance->getStatus(),
+                        'name' => $performance->getTitle()
+                    ];
             }
             return $result;
         }
