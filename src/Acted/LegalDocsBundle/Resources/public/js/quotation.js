@@ -1011,13 +1011,6 @@ $(function() {
         })
     }
 
-
-
-    // function createPrice
-
-    
-
-
     /** --- REMOVING FUNCTIONAL --- **/
     function removePackage(e) {
         var packageContainer = $(this).closest("div[package-id]");

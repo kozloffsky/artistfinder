@@ -265,7 +265,6 @@
         }
 
         var perfId = curPerf.id;
-        console.log(curPerf)
 
         %>
         <div act-id="<%=perfId%>" act-type="<%=type%>">
@@ -330,9 +329,11 @@
                         </select>
                         <select quot-edit-price name="price">
                             <% for(var r = 0; r < option.rates.length; r++) { 
-                                var rate = option.rates[r]; %>
+                                var rate = option.rates[r]; 
+                                var amount = new Number(rate.price.amount).toFixed();
+                                %>
 
-                            <option price-id="<%=rate.id%>" value="<%=rate.price.amount%>"><%=rate.price.amount%></option>
+                            <option price-id="<%=rate.id%>" value="<%=amount%>"><%=amount%></option>
 
                             <% } %>
 
@@ -438,9 +439,11 @@
 
             <select quot-edit-price name="price">
                 <% for(var r = 0; r < option.rates.length; r++) { 
-                    var rate = option.rates[r]; %>
+                    var rate = option.rates[r]; 
+                    var amount = new Number(rate.price.amount).toFixed();
+                    %>
 
-                <option price-id="<%=rate.id%>" value="<%=rate.price.amount%>"><%=rate.price.amount%></option>
+                <option price-id="<%=rate.id%>" value="<%=amount%>"><%=amount%></option>
 
                 <% } %>
 
@@ -520,9 +523,11 @@
             </select>
             <select quot-edit-price name="price">
                 <% for(var r = 0; r < option.rates.length; r++) { 
-                    var rate = option.rates[r]; %>
+                    var rate = option.rates[r]; 
+                    var amount = new Number(rate.price.amount).toFixed();
+                    %>
 
-                <option price-id="<%=rate.id%>" value="<%=rate.price.amount%>"><%=rate.price.amount%></option>
+                <option price-id="<%=rate.id%>" value="<%=amount%>"><%=amount%></option>
 
                 <% } %>
 
