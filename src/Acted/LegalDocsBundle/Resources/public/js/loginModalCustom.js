@@ -40,7 +40,6 @@ $(function () {
                             }, 2000);
                         },
                         error: function(response){
-                            console.log(response.responseJSON)
                             $('#userInformation').text()
                             $('#loadSpinner').fadeOut(500);
                             $('#loginModal').modal('hide');
@@ -67,7 +66,6 @@ $(function () {
                         window.location.replace(window.location.href);
                     }, 2500);
                 } else {
-                    console.log(response);
                     if (typeof response.tempUserToken !== 'undefined'){
                         var redirectUrl = window.location.protocol + "//" + window.location.host + '/resend_token/reset/' + tempUserToken;
                         window.location.replace(redirectUrl);
@@ -78,7 +76,6 @@ $(function () {
             },
             error: function(response){
                 var responseTextLogIn = response.responseJSON;
-                console.log(responseTextLogIn.error);
                 $('#errorLogIn').text(responseTextLogIn.error);
                 $('#errorLogIn').css('display', 'block');
             }
