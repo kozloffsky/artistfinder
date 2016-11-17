@@ -218,7 +218,7 @@ class RequestQuotationController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $data = $requestQuotationPrepareForm->getData();
-        $artist = $this->getUser();
+        $user = $this->getUser();
 
         $event = $data['event'];
         $requestQuotation = $data['request_quotation'];
@@ -315,7 +315,8 @@ class RequestQuotationController extends Controller
             //send mail
 
             $requestQuotationManager = $this->get('app.request_quotation.manager');
-            $requestQuotationManager->sendNotify($event, $artist, $client, $quotationLink, $quotationEdited);
+            //Notify Client about Quotation change from Artist's email
+            $requestQuotationManager->sendNotify($event, $user, $client, $quotationLink, $quotationEdited);
 
             $em->flush();
 
