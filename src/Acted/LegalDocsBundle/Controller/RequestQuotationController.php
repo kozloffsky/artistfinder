@@ -309,18 +309,18 @@ class RequestQuotationController extends Controller
             $documentRequestQuotation->setRequestQuotation($requestQuotation);
             $documentRequestQuotation->setPath($path);
             $em->persist($documentRequestQuotation);
-
+            $quotationLink = '/' . $documentRequestQuotation->getPath();
+            $quotationLink = $request->getUriForPath($quotationLink);
 
             //send mail
 
             $requestQuotationManager = $this->get('app.request_quotation.manager');
-            $requestQuotationManager->sendNotify($event, $artist, $client, $quotationEdited);
+            $requestQuotationManager->sendNotify($event, $artist, $client, $quotationLink, $quotationEdited);
 
             $em->flush();
 
             $connection->commit();
         } catch (\Exception $e) {
-            Debug::dump($e->getMessage());
             $connection->rollback();
 
             return new JsonResponse([
