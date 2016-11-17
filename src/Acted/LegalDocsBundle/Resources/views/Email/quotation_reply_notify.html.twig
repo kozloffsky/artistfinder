@@ -1,14 +1,14 @@
 {% block subject %}
     {% autoescape false %}
-        ACTED Quotation received from {{ artist.firstname }}
+        ACTED Quotation received from {{ artist.name }}
     {% endautoescape %}
 {% endblock %}
 {% block body_html %}
     {% autoescape false %}
         <p>Hello {{ client.firstname }},</p>
-        <p>This is, {{ artist.firstname }}. I have just sent you a quotation with regard to your event “{{ event.title }}”. You can open this quotation <a href="{{ quotationLink }}">here</a> or access it for your chatroom.</p>
+        <p>This is, {{ artist.name }}. I have just sent you a quotation with regard to your event “{{ event.title }}”. You can open this quotation <a href="{{ quotationLink }}">here</a> or access it for your chatroom.</p>
         <p>Please do not hesitate to contact me if you have any question.</p>
         <p>Kind regards,</p>
-        <p>{{ artist.firstname }}</p>
+        <p>{{ artist.name }}</p>
     {% endautoescape %}
 {% endblock %}

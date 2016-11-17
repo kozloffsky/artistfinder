@@ -218,7 +218,7 @@ class RequestQuotationController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $data = $requestQuotationPrepareForm->getData();
-        $artist = $this->getUser();
+        $artist = $this->getUser()->getArtist();
 
         $event = $data['event'];
         $requestQuotation = $data['request_quotation'];
