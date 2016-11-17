@@ -58,7 +58,7 @@ class RequestQuotationManager
         }
         $rendered = $this->templating->render($template, [
             'event' => $eventData,
-            'artist' => $artist,
+            'user' => $artist,
             'client' => $client,
             'quotationLink' => $quotationLink
         ]);
