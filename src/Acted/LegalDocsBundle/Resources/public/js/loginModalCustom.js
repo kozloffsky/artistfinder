@@ -67,8 +67,8 @@ $(function () {
                         window.location.replace(window.location.href);
                     }, 2500);
                 } else {
-                    console.log(response)
-                    if (response.tempUserToken.length > 0){
+                    console.log(response);
+                    if (typeof response.tempUserToken !== 'undefined'){
                         var redirectUrl = window.location.protocol + "//" + window.location.host + '/resend_token/reset/' + tempUserToken;
                         window.location.replace(redirectUrl);
                     } else {
