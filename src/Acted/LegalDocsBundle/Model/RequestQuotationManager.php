@@ -63,6 +63,6 @@ class RequestQuotationManager
             'quotationLink' => $quotationLink
         ]);
 
-        $this->userManager->sendEmailMessage($rendered, $client->getEmail(), $artist->getEmail());
+        $this->userManager->sendEmailMessage($rendered, $artist->getEmail(), $client->getEmail());
     }
 }
