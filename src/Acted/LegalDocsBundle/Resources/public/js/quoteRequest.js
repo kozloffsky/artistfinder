@@ -135,15 +135,18 @@ $(function () {
 
 
     function createRequestQuotePerformances(artistData, performanceRequestId){
+        console.log(artistData);
         $('.requestQuotePerformances').empty();
         $(artistData.allPerformance).each(function(){
-            var blockPerformance = '<li>'+
-                '<div class="custom-checkbox">'+
-                '<input id="perf'+this.id+'" type="checkbox" name="performance[]" value="'+this.id+'">'+
-                '<label for="perf'+this.id+'">'+this.name+'</label>'+
-                '</div>'+
-                '</li>';
-            $('.requestQuotePerformances').append(blockPerformance);
+            if(this.status != 'draft'){
+                var blockPerformance = '<li>'+
+                    '<div class="custom-checkbox">'+
+                    '<input id="perf'+this.id+'" type="checkbox" name="performance[]" value="'+this.id+'">'+
+                    '<label for="perf'+this.id+'">'+this.name+'</label>'+
+                    '</div>'+
+                    '</li>';
+                $('.requestQuotePerformances').append(blockPerformance);
+            }
         });
         if(performanceRequestId){
             $('.requestQuotePerformances input#perf'+performanceRequestId).prop('checked', true);
