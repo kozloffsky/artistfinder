@@ -380,8 +380,12 @@ class ChatRoomController extends Controller
         $quotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
         $event = $chatRoom->getEvent();
         $quotation = $quotationRepo->findOneBy(['event'=> $event, 'status'=>true]);
+        $link = '#';
+        if ($quotation) {
+            $link = "/".$quotation->getDocumentRequestQuotations()->first()->getPath();
+        }
 
-        return "/".$quotation->getDocumentRequestQuotations()->first()->getPath();
+        return $link;
     }
 
     /**
