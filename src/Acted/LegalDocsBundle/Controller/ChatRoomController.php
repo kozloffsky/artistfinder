@@ -3,6 +3,8 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\ChatRoom;
+use Acted\LegalDocsBundle\Form\ChatRoomTechnicalRequirementsCreateType;
+use Acted\LegalDocsBundle\Form\ChatRoomTechnicalRequirementsCustomCreateType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -380,5 +382,231 @@ class ChatRoomController extends Controller
         $quotation = $quotationRepo->findOneBy(['event'=> $event, 'status'=>true]);
 
         return "/".$quotation->getDocumentRequestQuotations()->first()->getPath();
+    }
+
+    /**
+     * Add technical requirements to chat
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Add technical requirements to chat",
+     *  input="Acted\LegalDocsBundle\Form\ChatRoomTechnicalRequirementsCreateType",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function addTechnicalRequirementsAction(Request $request)
+    {
+        $technicalRequirementsDirectory = $this->container->getParameter('document_technical_requirements_dir');
+        $baseDir = $this->get('kernel')->getRootDir() . '/../web/';
+        $fullPathTechnicalRequirementsDirectory = $baseDir . $technicalRequirementsDirectory;
+
+        $serializer = $this->get('jms_serializer');
+
+        $chatRoomTechnicalRequirementsCreateForm = $this->createForm(ChatRoomTechnicalRequirementsCreateType::class, null, ['method' => 'POST']);
+        $chatRoomTechnicalRequirementsCreateForm->handleRequest($request);
+
+        if ($chatRoomTechnicalRequirementsCreateForm->isSubmitted() && (!$chatRoomTechnicalRequirementsCreateForm->isValid())) {
+            return new JsonResponse($serializer->toArray($chatRoomTechnicalRequirementsCreateForm->getErrors()), Response::HTTP_BAD_REQUEST);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+
+        $data = $chatRoomTechnicalRequirementsCreateForm->getData();
+
+        if (empty($data)) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'There are not any data'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
+
+        $chatRoom = $data['chat_room'];
+        $technicalRequirement = $data['technical_requirement'];
+        $documents = $technicalRequirement->getDocumentTechnicalRequirements();
+        $oldChatTechnicalRequirements = $chatRoom->getTechnicalRequirements();
+
+        $chatTechnicalRequirements = array(
+            'title' => $technicalRequirement->getTitle(),
+            'description' => $technicalRequirement->getDescription(),
+            'documentTechnicalRequirements' => array()
+        );
+
+        $copiedFiles = array();
+        foreach ($documents as $document) {
+            $technicalRequirementsFilePath = $baseDir . $document->getFile();
+            $ext = pathinfo($technicalRequirementsFilePath, PATHINFO_EXTENSION);
+            $technicalRequirementsCopyFileName = /*'COPY_' .*/ uniqid() . '.' . $ext;
+            $technicalRequirementsCopyFilePath = $fullPathTechnicalRequirementsDirectory . '/' . $technicalRequirementsCopyFileName;
+            $copiedFiles[] = $technicalRequirementsCopyFilePath;
+            copy($technicalRequirementsFilePath, $technicalRequirementsCopyFilePath);
+
+            $infoFileCopy = pathinfo($technicalRequirementsCopyFilePath);
+
+            //format json with data from TR
+            $chatTechnicalRequirements['documentTechnicalRequirements'][] = array(
+                'name' => $technicalRequirementsCopyFileName,
+                'size' => $document->getSize(),
+                'file' => $document->getFile(),
+                'originalName' => $document->getOriginalName()
+            );
+        }
+
+        $chatTechnicalRequirements = json_encode($chatTechnicalRequirements);
+
+        $resultUpdated = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->updateTechnicalRequirements($chatRoom->getId(), $chatTechnicalRequirements);
+        if (!$resultUpdated) {
+            foreach ($copiedFiles as $copiedFile) {
+                unlink($copiedFile);
+            }
+
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Creating error'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        //check old technical requirements and remove elements related with one
+        if (!empty($oldChatTechnicalRequirements)) {
+            $oldChatTechnicalRequirements = json_decode($oldChatTechnicalRequirements);
+
+            foreach ($oldChatTechnicalRequirements->documentTechnicalRequirements as $oldChatTechnicalRequirement) {
+                unlink($fullPathTechnicalRequirementsDirectory . '/' . $oldChatTechnicalRequirement->name);
+            }
+        }
+
+        return new JsonResponse([
+            'status' => 'success',
+            'technicalRequirements' => $chatTechnicalRequirements
+        ]);
+    }
+
+    /**
+     * Add custom technical requirements to chat
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Add custom technical requirements to chat",
+     *  input="Acted\LegalDocsBundle\Form\ChatRoomTechnicalRequirementsCreateType",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function addCustomTechnicalRequirementsAction(Request $request)
+    {
+        $technicalRequirementsDirectory = $this->container->getParameter('document_technical_requirements_dir');
+        $baseDir = $this->get('kernel')->getRootDir() . '/../web/';
+        $fullPathTechnicalRequirementsDirectory = $baseDir . $technicalRequirementsDirectory;
+
+        $serializer = $this->get('jms_serializer');
+
+        $chatRoomCustomTechnicalRequirementsCustomCreateForm = $this->createForm(ChatRoomTechnicalRequirementsCustomCreateType::class, null, ['method' => 'POST']);
+        $chatRoomCustomTechnicalRequirementsCustomCreateForm->handleRequest($request);
+
+        if ($chatRoomCustomTechnicalRequirementsCustomCreateForm->isSubmitted() && (!$chatRoomCustomTechnicalRequirementsCustomCreateForm->isValid())) {
+            return new JsonResponse($serializer->toArray($chatRoomCustomTechnicalRequirementsCustomCreateForm->getErrors()), Response::HTTP_BAD_REQUEST);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $data = $chatRoomCustomTechnicalRequirementsCustomCreateForm->getData();
+
+        if (empty($data)) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'There are not any data'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
+
+        $chatRoom = $data['chat_room'];
+        $title = $data['title'];
+        $description = $data['description'];
+        $oldChatTechnicalRequirements = $chatRoom->getTechnicalRequirements();
+
+        $user = $this->getUser();
+
+        $chatTechnicalRequirements = array(
+            'title' => $title,
+            'description' => $description,
+            'documentTechnicalRequirements' => array()
+        );
+
+        $chatTechnicalRequirements = json_encode($chatTechnicalRequirements);
+
+        $resultUpdated = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->updateTechnicalRequirements($chatRoom->getId(), $chatTechnicalRequirements);
+        if (!$resultUpdated) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Creating error'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        //check old technical requirements and remove elements related with one
+        if (!empty($oldChatTechnicalRequirements)) {
+            $oldChatTechnicalRequirements = json_decode($oldChatTechnicalRequirements);
+
+            foreach ($oldChatTechnicalRequirements->documentTechnicalRequirements as $oldChatTechnicalRequirement) {
+                unlink($fullPathTechnicalRequirementsDirectory . '/' . $oldChatTechnicalRequirement->name);
+            }
+        }
+
+        return new JsonResponse([
+            'status' => 'success',
+            'technicalRequirements' => $chatTechnicalRequirements
+        ]);
+    }
+
+
+    /**
+     * Get chat by id
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Add custom technical requirements to chat",
+     *  input="Acted\LegalDocsBundle\Form\ChatRoomTechnicalRequirementsCreateType",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @param integer $chatRoomId
+     * @return JsonResponse
+     */
+    public function getAction(Request $request, $chatRoomId)
+    {
+        $serializer = $this->get('jms_serializer');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+
+        $chat = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->checkUserPermission($user, $chatRoomId);
+
+        if (!$chat) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'You do not have permissions'
+            ], Response::HTTP_FORBIDDEN);
+        }
+
+        $chatRoom = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->find($chatRoomId);
+
+        return new JsonResponse([
+            'status' => 'success',
+            'chat' => $serializer->toArray(
+                $chatRoom,
+                SerializationContext::create()->setGroups(['chat_room'])
+            )
+        ]);
     }
 }

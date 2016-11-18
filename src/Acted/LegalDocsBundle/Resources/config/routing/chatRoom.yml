@@ -68,3 +68,17 @@ technical_requirements:
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:technicalRequirement }
     methods:  GET
 
+chat_room_technical_requirements_create:
+    path:     /technical_requirements
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:addTechnicalRequirements }
+    methods:  POST
+
+chat_room_technical_requirements_custom_create:
+    path:     /technical_requirements/custom
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:addCustomTechnicalRequirements }
+    methods:  POST
+
+chat_room_one:
+    path:     /chat/one/{chatRoomId}
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:get }
+    methods:  GET

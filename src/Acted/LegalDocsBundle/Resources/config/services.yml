@@ -46,4 +46,4 @@ services:
 
     file_uploader:
         class: Acted\LegalDocsBundle\Service\FileUploader
-        arguments: [ @doctrine.orm.entity_manager, @request_stack, @kernel ]
+        arguments: [ @doctrine.orm.entity_manager, @request_stack, @kernel, "%document_technical_requirements_dir%" ]

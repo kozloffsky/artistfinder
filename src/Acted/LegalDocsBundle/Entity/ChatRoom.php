@@ -154,4 +154,65 @@ class ChatRoom
     {
         $this->client = $client;
     }
+
+    /**
+     * @var string
+     */
+    private $technicalRequirements;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->message = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set technicalRequirements
+     *
+     * @param string $technicalRequirements
+     *
+     * @return ChatRoom
+     */
+    public function setTechnicalRequirements($technicalRequirements)
+    {
+        $this->technicalRequirements = $technicalRequirements;
+
+        return $this;
+    }
+
+    /**
+     * Get technicalRequirements
+     *
+     * @return string
+     */
+    public function getTechnicalRequirements()
+    {
+        return $this->technicalRequirements;
+    }
+
+    /**
+     * Add message
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Message $message
+     *
+     * @return ChatRoom
+     */
+    public function addMessage(\Acted\LegalDocsBundle\Entity\Message $message)
+    {
+        $this->message[] = $message;
+
+        return $this;
+    }
+
+    /**
+     * Remove message
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Message $message
+     */
+    public function removeMessage(\Acted\LegalDocsBundle\Entity\Message $message)
+    {
+        $this->message->removeElement($message);
+    }
 }

@@ -8,6 +8,10 @@ Acted\LegalDocsBundle\Entity\ChatRoom:
             id: true
             generator:
                 strategy: AUTO
+    fields:
+        technicalRequirements:
+            type: text
+            nullable: true
     oneToMany:
         message:
             targetEntity: Acted\LegalDocsBundle\Entity\Message

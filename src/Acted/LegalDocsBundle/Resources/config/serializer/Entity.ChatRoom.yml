@@ -10,6 +10,8 @@ Acted\LegalDocsBundle\Entity\ChatRoom:
             groups: [chat_list, chat_room, all_messages]
         message:
             groups: [chat_room]
+        technicalRequirements:
+            groups: [chat_room]
     virtual_properties:
         getLastMessage:
             groups: [chat_list]

@@ -63,4 +63,26 @@ class ChatRoomRepository extends EntityRepository
 
         return $query->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * @param int $chatRoomId
+     * @param string $technicalRequirements
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function updateTechnicalRequirements($chatRoomId, $technicalRequirements)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $params = array('chatRoomId' => $chatRoomId, 'technicalRequirements' => $technicalRequirements);
+
+        $whereCriteria = 'chat.id IN (:chatRoomId)';
+
+        $qb->update('ActedLegalDocsBundle:ChatRoom', 'chat')
+            ->set('chat.technicalRequirements', ':technicalRequirements')
+            ->where($whereCriteria)
+            ->setParameters($params);
+
+        return $qb->getQuery()->execute();
+    }
 }

@@ -25,6 +25,7 @@ parameters:
     image_upload_dir: images
     avatar_dir: images/avatars
     search_image_dir: images/search_images
+    document_technical_requirements_dir: uploads/tr_documents
     performancecontract_dir: docs/performance_contract
     invoice_dir: docs/invoice
     quotation_dir: docs/quotation

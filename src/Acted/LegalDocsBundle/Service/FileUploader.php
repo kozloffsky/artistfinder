@@ -49,16 +49,21 @@ class FileUploader
     // Error array
     private $errors;
 
-    public function __construct(EntityManager $em, RequestStack $requestStack, Kernel $kernel)
+    /**
+     * @var string
+     */
+    private $documentTechnicalRequirementsDir;
+
+    public function __construct(EntityManager $em, RequestStack $requestStack, Kernel $kernel, $documentTechnicalRequirementsDir)
     {
-        //var_dump($this->get('validator'));
+        //document_technical_requirements_dir
         $this->em = $em;
         $this->request = $requestStack->getCurrentRequest();
         $validator = Validation::createValidator();
         $this->validator = $validator;
         $this->kernel = $kernel;
-        $this->directory = 'web/uploads/tr_documents';
-        $this->relativeDirectory = 'uploads/tr_documents';
+        $this->relativeDirectory = $documentTechnicalRequirementsDir;
+        $this->directory = 'web/' . $this->relativeDirectory;
         $this->paths = array();
         $this->dataFiles = array();
         $this->errors = array();
