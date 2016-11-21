@@ -23,7 +23,9 @@ class ChatRoomController extends Controller
      */
     public function getChatRoomListAction(Request $request)
     {
-        $userId = $request->get('userId');
+        //$userId = $request->get('userId');
+
+        $userId = $this->getUser()->getId();
 
         $em = $this->getDoctrine()->getManager();
         $serializer = $this->get('jms_serializer');
@@ -68,7 +70,7 @@ class ChatRoomController extends Controller
      */
     public function getAllMessagesAction(Request $request)
     {
-        $userId = $request->get('userId');
+        $userId = $this->getUser()->getId();
 
         $em = $this->getDoctrine()->getManager();
         $serializer = $this->get('jms_serializer');
@@ -103,7 +105,7 @@ class ChatRoomController extends Controller
      */
     public function getAllMessageByFilterAction(Request $request)
     {
-        $userId = $request->get('userId');
+        $userId = $this->getUser()->getId();
         $filters = $request->query->get('filters');
         $em = $this->getDoctrine()->getManager();
         $serializer = $this->get('jms_serializer');
@@ -344,7 +346,7 @@ class ChatRoomController extends Controller
 
     public function bookingsAction(Request $request)
     {
-        $userId = $request->get('userId');
+        $userId = $this->getUser()->getId();
         $chat = [];
         return $this->render('ActedLegalDocsBundle:ChatRoom:bookings.html.twig',
             compact('chat'));

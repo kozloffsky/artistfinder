@@ -1,10 +1,10 @@
 chat_room_list:
-    path:     /enquiries/{userId}
+    path:     /enquiries
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getChatRoomList }
     methods:  GET
 
 all_messages_user:
-    path:     /messages/{userId}
+    path:     /messages
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getAllMessages }
     methods:  GET
 
@@ -24,7 +24,7 @@ change_status_message:
     methods:  POST
 
 filter_message:
-    path:     /filter/messages/{userId}
+    path:     /filter/messages
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:getAllMessageByFilter }
     methods:  GET
 
@@ -54,7 +54,7 @@ add_quotation_to_event_offer:
     methods:  POST
 
 bookings:
-    path:     /bookings/{userId}
+    path:     /bookings
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:bookings }
     methods:  GET
 
