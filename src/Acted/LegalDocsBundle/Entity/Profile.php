@@ -620,4 +620,62 @@ class Profile
     {
         return $this->categories;
     }
+    /**
+     * @var boolean
+     */
+    private $showFeedbacks = true;
+
+    /**
+     * @var boolean
+     */
+    private $showRating = true;
+
+
+    /**
+     * Set showFeedbacks
+     *
+     * @param boolean $showFeedbacks
+     *
+     * @return Profile
+     */
+    public function setShowFeedbacks($showFeedbacks)
+    {
+        $this->showFeedbacks = $showFeedbacks;
+
+        return $this;
+    }
+
+    /**
+     * Get showFeedbacks
+     *
+     * @return boolean
+     */
+    public function getShowFeedbacks()
+    {
+        return $this->showFeedbacks;
+    }
+
+    /**
+     * Set showRating
+     *
+     * @param boolean $showRating
+     *
+     * @return Profile
+     */
+    public function setShowRating($showRating)
+    {
+        $this->showRating = $showRating;
+
+        return $this;
+    }
+
+    /**
+     * Get showRating
+     *
+     * @return boolean
+     */
+    public function getShowRating()
+    {
+        return $this->showRating;
+    }
 }

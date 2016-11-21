@@ -18,6 +18,11 @@ use Acted\LegalDocsBundle\Form\ProfileSettingsType;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
+
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 class ProfileController extends Controller
 {
@@ -444,5 +449,31 @@ class ProfileController extends Controller
         $domain = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'];
 
         return $this->render('ActedLegalDocsBundle:Profile:settings.html.twig', compact('artist', 'artist_id', 'domain'));
+    }
+
+    /**
+     * switch showing feedbacks
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Get feedback",
+     *  input="Acted\LegalDocsBundle\Form\FeedbackRatingCreateType",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function switchShowingFeedbacksAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $profileId = $this->getUser()->getProfile()->getId();
+
+        $profileRepo = $em->getRepository('ActedLegalDocsBundle:Profile');
+        $profileRepo->switchFeedbacks($profileId);
+
+        return new JsonResponse(array('status' => 'success'), Response::HTTP_OK);
     }
 }

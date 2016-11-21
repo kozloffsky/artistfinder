@@ -643,4 +643,43 @@ class Event
     {
         return $this->requestQuotations;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $feedbacks;
+
+
+    /**
+     * Add feedback
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Feedbacks $feedback
+     *
+     * @return Event
+     */
+    public function addFeedback(\Acted\LegalDocsBundle\Entity\Feedbacks $feedback)
+    {
+        $this->feedbacks[] = $feedback;
+
+        return $this;
+    }
+
+    /**
+     * Remove feedback
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Feedbacks $feedback
+     */
+    public function removeFeedback(\Acted\LegalDocsBundle\Entity\Feedbacks $feedback)
+    {
+        $this->feedbacks->removeElement($feedback);
+    }
+
+    /**
+     * Get feedbacks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFeedbacks()
+    {
+        return $this->feedbacks;
+    }
 }

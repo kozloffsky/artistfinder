@@ -77,3 +77,7 @@ acted_legal_docs_technical_requirement:
 acted_legal_docs_quotation:
   resource: "@ActedLegalDocsBundle/Resources/config/routing/quotation.yml"
   prefix: /quotation
+
+acted_legal_docs_feedback:
+  resource: "@ActedLegalDocsBundle/Resources/config/routing/feedback.yml"
+  prefix: /feedback

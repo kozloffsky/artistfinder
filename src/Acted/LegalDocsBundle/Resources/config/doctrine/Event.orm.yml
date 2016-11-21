@@ -61,5 +61,8 @@ Acted\LegalDocsBundle\Entity\Event:
         requestQuotations:
           targetEntity: Acted\LegalDocsBundle\Entity\RequestQuotation
           mappedBy: event
+        feedbacks:
+          targetEntity: Acted\LegalDocsBundle\Entity\Feedback
+          mappedBy: event
 
     lifecycleCallbacks: {  }

@@ -67,5 +67,8 @@ Acted\LegalDocsBundle\Entity\Artist:
         technicalRequirements:
             targetEntity: Acted\LegalDocsBundle\Entity\TechnicalRequirement
             mappedBy: artist
+        feedbacks:
+            targetEntity: Acted\LegalDocsBundle\Entity\Feedback
+            mappedBy: artist
 
     lifecycleCallbacks: {  }
