@@ -48,8 +48,9 @@
                         <input type="text" id="adress" placeholder="Sr Regis">
                     </div>
                     <div class="frame">
-                        <label for="city">City</label>
+                        <label for="cityEvent">City</label>
                         <select data-class="main-select" class="full-width" name="main-select" id="cityEvent">
+                            <option value="{{ chat.event.city.id }}" name="country" selected="selected">{{ chat.event.city.name }}</option>
                         </select>
                     </div>
                     <div class="frame">
