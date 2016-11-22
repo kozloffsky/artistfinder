@@ -756,11 +756,11 @@ class Artist
     /**
      * Add feedback
      *
-     * @param \Acted\LegalDocsBundle\Entity\Feedbacks $feedback
+     * @param \Acted\LegalDocsBundle\Entity\Feedback $feedback
      *
      * @return Artist
      */
-    public function addFeedback(\Acted\LegalDocsBundle\Entity\Feedbacks $feedback)
+    public function addFeedback(\Acted\LegalDocsBundle\Entity\Feedback $feedback)
     {
         $this->feedbacks[] = $feedback;
 
@@ -770,9 +770,9 @@ class Artist
     /**
      * Remove feedback
      *
-     * @param \Acted\LegalDocsBundle\Entity\Feedbacks $feedback
+     * @param \Acted\LegalDocsBundle\Entity\Feedback $feedback
      */
-    public function removeFeedback(\Acted\LegalDocsBundle\Entity\Feedbacks $feedback)
+    public function removeFeedback(\Acted\LegalDocsBundle\Entity\Feedback $feedback)
     {
         $this->feedbacks->removeElement($feedback);
     }

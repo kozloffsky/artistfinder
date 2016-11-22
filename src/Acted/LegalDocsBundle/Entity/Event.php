@@ -652,11 +652,11 @@ class Event
     /**
      * Add feedback
      *
-     * @param \Acted\LegalDocsBundle\Entity\Feedbacks $feedback
+     * @param \Acted\LegalDocsBundle\Entity\Feedback $feedback
      *
      * @return Event
      */
-    public function addFeedback(\Acted\LegalDocsBundle\Entity\Feedbacks $feedback)
+    public function addFeedback(\Acted\LegalDocsBundle\Entity\Feedback $feedback)
     {
         $this->feedbacks[] = $feedback;
 
@@ -666,9 +666,9 @@ class Event
     /**
      * Remove feedback
      *
-     * @param \Acted\LegalDocsBundle\Entity\Feedbacks $feedback
+     * @param \Acted\LegalDocsBundle\Entity\Feedback $feedback
      */
-    public function removeFeedback(\Acted\LegalDocsBundle\Entity\Feedbacks $feedback)
+    public function removeFeedback(\Acted\LegalDocsBundle\Entity\Feedback $feedback)
     {
         $this->feedbacks->removeElement($feedback);
     }
