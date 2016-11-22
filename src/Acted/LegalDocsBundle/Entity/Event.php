@@ -682,4 +682,43 @@ class Event
     {
         return $this->feedbacks;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $eventArtists;
+
+
+    /**
+     * Add eventArtist
+     *
+     * @param \Acted\LegalDocsBundle\Entity\eventArtist $eventArtist
+     *
+     * @return Event
+     */
+    public function addEventArtist(\Acted\LegalDocsBundle\Entity\eventArtist $eventArtist)
+    {
+        $this->eventArtists[] = $eventArtist;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventArtist
+     *
+     * @param \Acted\LegalDocsBundle\Entity\eventArtist $eventArtist
+     */
+    public function removeEventArtist(\Acted\LegalDocsBundle\Entity\eventArtist $eventArtist)
+    {
+        $this->eventArtists->removeElement($eventArtist);
+    }
+
+    /**
+     * Get eventArtists
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventArtists()
+    {
+        return $this->eventArtists;
+    }
 }

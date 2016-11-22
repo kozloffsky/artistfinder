@@ -1,6 +1,7 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Repository;
+use Acted\LegalDocsBundle\Entity\Artist;
 
 /**
  * FeedbackRepository
@@ -10,6 +11,13 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class FeedbackRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Get artist feedbacks
+     * @param Artist $artist
+     * @param integer $page
+     * @param integer $size
+     * @return array
+     */
     public function getArtistFeedbacks($artist, $page = 1, $size = 2)
     {
         if ($page == 1) {

@@ -1,0 +1,27 @@
+Acted\LegalDocsBundle\Entity\EventArtist:
+    type: entity
+    table: EventArtist
+    repositoryClass: Acted\LegalDocsBundle\Repository\EventArtistRepository
+    uniqueConstraints:
+        uniq_event_id_artist_id:
+            columns: [event_id, artist_id]
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    manyToOne:
+        event:
+           targetEntity: Acted\LegalDocsBundle\Entity\Event
+           inversedBy: eventArtists
+           joinColumn:
+               referencedColumnName: id
+               onDelete: CASCADE
+        artist:
+           targetEntity: Acted\LegalDocsBundle\Entity\Artist
+           inversedBy: eventArtists
+           joinColumn:
+               referencedColumnName: id
+               onDelete: CASCADE
+    lifecycleCallbacks: {  }

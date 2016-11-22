@@ -44,9 +44,6 @@ class DocumentTechnicalRequirementController extends Controller
         $fileFormats = $this->container->getParameter('file_formats');
         $constraints = array('maxSize'=> $maxFileSize, 'mimeTypes' => $fileFormats);
         $uploadFiles = $this->get('file_uploader')->create($documents, $constraints);
-        //$response = [];
-
-        //todo: task AC-171
 
         $uploadFilesIds = array();
         if ($uploadFiles->upload()) {
@@ -57,7 +54,7 @@ class DocumentTechnicalRequirementController extends Controller
                 $documentTechnicalRequirement->setSize($fileData['size']);
                 $documentTechnicalRequirement->setOriginalName($fileData['original_name']);
                 $documentTechnicalRequirement->setFile($fileData['relativeDirectory'] . '/' . $fileData['name']);
-                //$response[] = $documentTechnicalRequirement;
+
                 $documentTechnicalRequirement->setUrl('//' . $_SERVER['HTTP_HOST'] . '/' . $fileData['relativeDirectory'] . '/' . $fileData['name']);
 
                 $em->persist($documentTechnicalRequirement);

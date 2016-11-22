@@ -254,13 +254,12 @@ class FeedbackController extends Controller
 
         $artistFeedbacks = $feedbackRepo->getArtistFeedbacks($artist, $page, $size);
 
-        $response = new JsonResponse(array(
+        return new JsonResponse(array(
             'status' => 'success',
             'feedbacks' => $artistFeedbacks['feedbacks']
+        ), Response::HTTP_OK, array(
+            'count' => $artistFeedbacks['countRows']
         ));
-        
-        $response->headers->set('count', $artistFeedbacks['countRows']);
-        $response->send();
     }
 
     /**

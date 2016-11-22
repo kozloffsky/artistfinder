@@ -32,3 +32,11 @@ check_exist_offer:
     path: /check_exist_offer
     defaults: { _controller: ActedLegalDocsBundle:Events:checkExistOffer, _format: json }
     methods: POST
+
+event_artists:
+    path: /artists/{event}/{page}/{size}
+    requirements:
+      page: \d+
+      size: \d+
+    defaults: { _controller: ActedLegalDocsBundle:Events:getEventArtists, page: 1, size: 10 }
+    methods:  GET
