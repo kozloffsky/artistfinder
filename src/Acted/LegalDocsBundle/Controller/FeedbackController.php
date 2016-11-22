@@ -102,6 +102,10 @@ class FeedbackController extends Controller
         $em->persist($feedback);
         $em->flush();
 
+        //Send notification email
+        $feedbackManager = $this->get('app.feedback.manager');
+        $feedbackManager->sendNotify($user, $feedback);
+
         return new JsonResponse(array(
             'status' => 'success'
         ), Response::HTTP_OK);

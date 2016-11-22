@@ -1,0 +1,15 @@
+{% block subject %}
+    {% autoescape false %}
+        ACTED Feedback received from {{ user.name }}
+    {% endautoescape %}
+{% endblock %}
+{% block body_html %}
+    {% autoescape false %}
+        <p>You have a received a 4/5 rating from {{ user.name }}.</p>
+        {% if feedback.feedback is defined %}
+            <p>feedback.feedback</p>
+        {% endif %}
+        <p>Kind regards,</p>
+        <p>ACTED</p>
+    {% endautoescape %}
+{% endblock %}
