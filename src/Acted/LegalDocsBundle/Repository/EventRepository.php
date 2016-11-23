@@ -27,7 +27,7 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
             $offset -= $size;
         }
 
-        $whereCriteria = "e.user = :user AND e.startingDate > :datetime";
+        $whereCriteria = "e.user = :user AND e.startingDate < :datetime";
 
         $params = array('user' => $user, 'datetime' => new \DateTime('+12 hour'));
 
