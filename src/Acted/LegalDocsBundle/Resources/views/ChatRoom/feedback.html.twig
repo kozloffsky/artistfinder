@@ -1,6 +1,6 @@
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
 
-{% if app.user.artist is defined %}
+{% if app.user.artist is not empty %}
     {% include 'ActedLegalDocsBundle:ChatRoom:feedback_artist.html.twig' %}
 {% else %}
     {% include 'ActedLegalDocsBundle:ChatRoom:feedback_client.html.twig' %}
