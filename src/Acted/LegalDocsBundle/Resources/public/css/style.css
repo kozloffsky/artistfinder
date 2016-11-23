@@ -1,21 +1,28 @@
-@import "parts/footer.css";
-@import "parts/header.css";
-@import "parts/registration.css";
-@import "parts/search.css";
-@import "parts/freeQuote.css";
-@import "parts/loginAndRecovery.css";
+@import "parts/agenda.css";
+@import "parts/artist-selection.css";
+@import "parts/bookings.css";
+@import "parts/chat-room.css";
+@import "parts/client_payments.css";
+@import "parts/comingsoon.css";
 @import "parts/enquiries.css";
+@import "parts/footer.css";
+@import "parts/freeQuote.css";
+@import "parts/header.css";
+@import "parts/how-it-works.css";
+@import "parts/loginAndRecovery.css";
 @import "parts/messages.css";
 @import "parts/prices.css";
+@import "parts/qa.css";
+@import "parts/quotation.css";
+@import "parts/registration.css";
 @import "parts/requirements.css";
-@import "parts/agenda.css";
-@import "parts/chat-room.css";
-@import "parts/artist-selection.css";
+@import "parts/search.css";
 @import "parts/settings-page.css";
-@import "parts/how-it-works.css";
-@import "custom.css";
-
+@import "parts/team.css";
+@import "parts/feedback.css";
 @import "globals/buttons.css";
+@import "globals/menu.css";
+@import "custom.css";
 
 @font-face {
     font-family: LatoBlack;
@@ -40,6 +47,29 @@
 @font-face {
     font-family: UbuntuBold;
     src: url(../fonts/Ubuntu-B.ttf);
+}
+
+@font-face {
+    font-family: LucidaGrande;
+    src: url(../fonts/LucidaGrande/LucidaGrandeRegular.ttf);
+}
+
+@font-face {
+    font-family: LucidaGrandeBold;
+    src: url(../fonts/LucidaGrande/LucidaGrandeBold.ttf);
+}
+
+@font-face {
+    font-family: AvenirBook;
+    src: url(../fonts/Avenir/AvenirLTStd-Book.otf);
+}
+@font-face {
+    font-family: AvenirLight;
+    src: url(../fonts/Avenir/AvenirLTStd-Light.otf);
+}
+@font-face {
+    font-family: AvenirRoman;
+    src: url(../fonts/Avenir/AvenirLTStd-Roman.otf);
 }
 
 * {
@@ -718,73 +748,6 @@ section.used-by {
     font-family: LatoRegular;
     color: #464646;
 }
-.controls {
-    position: relative;
-    float: left;
-    height: 100%;
-    padding-left: 8px;
-    padding-top: 128px;
-}
-
-.controls .button-gradient.follow {
-    margin-right: 15px;
-    margin-bottom: 10px;
-}
-
-.controls .button-gradient {
-    padding: 2px;
-    border-radius: 16px;
-    display: inline-block;
-    margin-right: 8px;
-
-    background: rgb(255,173,108); /* Old browsers */
-    background: -moz-linear-gradient(left,  rgba(255,173,108,1) 0%, rgba(255,117,58,1) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(left,  rgba(255,173,108,1) 0%,rgba(255,117,58,1) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right,  rgba(255,173,108,1) 0%,rgba(255,117,58,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-}
-
-.controls .button-gradient .btn {
-    width: 132px;
-    height: 27px;
-    border-radius: 16px;
-    background: #fff;
-    font-size: 11px;
-    font-family: LatoRegular;
-    color: #4b4b4b;
-    transition-property: all;
-    transition-duration: 0.2s;
-}
-
-.controls .button-gradient.filled {
-    padding: 0;
-}
-
-.controls .button-gradient.filled .btn {
-    background: transparent;
-    font-size: 10px;
-    color: #fff;
-    height: 32px;
-    width: 137px;
-    transition-property: all;
-    transition-duration: 0.2s;
-}
-
-.controls .button-gradient.filled .btn:active {
-    background: rgba(255, 255, 255, 0.7);
-    color: rgba(75, 75, 75, 0.64);
-}
-
-.controls .button-gradient .btn,
-.controls .button-gradient .btn:hover,
-.controls .button-gradient .btn:focus{
-    outline:none!important;
-    box-shadow: none!important;
-}
-
-.controls .button-gradient .btn:active {
-    background: rgba(255, 255, 255, 0);
-    color: white;
-}
 
 .menu {
     height: 54px;
@@ -1057,10 +1020,6 @@ section.used-by {
     width: 45px;
 }
 .price-list .edit-form .button-gradient.blue{
-    background: rgb(88,149,243);
-    background: -moz-linear-gradient(left, rgba(88,149,243,1) 0%, rgba(73,79,199,1) 100%);
-    background: -webkit-linear-gradient(left, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
-    background: linear-gradient(to right, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
     padding: 2px;
 }
 .price-list .edit-form .button-gradient.orange{padding: 2px;}
@@ -1235,20 +1194,6 @@ section.used-by {
     background: -moz-linear-gradient(left,  rgba(255,173,108,1) 0%, rgba(255,117,58,1) 100%); /* FF3.6-15 */
     background: -webkit-linear-gradient(left,  rgba(255,173,108,1) 0%,rgba(255,117,58,1) 100%); /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(to right,  rgba(255,173,108,1) 0%,rgba(255,117,58,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-}
-
-.price-list .controls .button-gradient.blue{
-    background: rgb(88,149,243);
-    background: -moz-linear-gradient(left, rgba(88,149,243,1) 0%, rgba(73,79,199,1) 100%);
-    background: -webkit-linear-gradient(left, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
-    background: linear-gradient(to right, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
-}
-
-.price-list .controls .button-gradient.blue .btn{
-    background: rgb(88,149,243);
-    background: -moz-linear-gradient(left, rgba(88,149,243,1) 0%, rgba(73,79,199,1) 100%);
-    background: -webkit-linear-gradient(left, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
-    background: linear-gradient(to right, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
 }
 
 .price-list .controls .btn:active {
@@ -2183,7 +2128,10 @@ section.used-by {
     box-shadow: none;
     outline: none!important;
     padding: 10px 20px;
-    font-weight: bold;
+    font-family: LatoRegular;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 1);
+    font-weight: 400 !important;
 }
 
 .categories-dropdown.open .btn-primary {
@@ -2209,7 +2157,8 @@ section.used-by {
 .categories-dropdown.open>.dropdown-menu>li>a {
     padding: 10px 20px;
     color: white;
-    font-weight: bold;
+    font-family: LatoRegular;
+    font-weight: 400;
 }
 .categories-dropdown.open>.dropdown-menu>li>a:hover,
 .categories-dropdown.open>.dropdown-menu>li>a:focus{color: #262626;}
@@ -2477,6 +2426,15 @@ input[disabled] {
 
 .pac-container {
     z-index: 5000;
+}
+
+.fa.fa-trash:before {
+    content: "";
+    background: url(/assets/images/delete-light.png) no-repeat;
+    display: inline-block;
+    height: 27px;
+    width: 27px;
+    vertical-align: middle;
 }
 
 @supports ( -webkit-appearance: none ) or ( appearance: none ) or ( ( -moz-appearance: none ) and ( mask-type: alpha ) ) {
@@ -3463,7 +3421,22 @@ only screen and (min-resolution: 2dppx) {
         background: url('../assets/images/close@2x.png');
         background-size: 12px 12px;
     }
-
+    i.pound {
+        background: url(../assets/images/pound_ic@2x.png);
+        background-size: cover;
+    }
+    i.available {
+        background: url(../assets/images/available@2x.png);
+    }
+    i.escrow {
+        background: url(../assets/images/escrow@2x.png);
+    }
+    i.bookings {
+        background: url(../assets/images/bookings@2x.png);
+    }
+    .flex_1 .avatar {
+        background-image: url(../assets/images/client_payment_profile@2x.jpg);
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {

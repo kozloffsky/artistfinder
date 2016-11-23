@@ -1,0 +1,236 @@
+.notification {
+    background-color: rgba(255, 121, 62, 0.3);
+    padding: 8px 4px 4px 6px;
+    text-align: center;
+}
+.client_payments__block {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.client_payments__block .main_flex_1 {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 2px solid rgba(233, 233, 233, 1);
+}
+.main_flex_1 {
+    padding: 10px 10px 36px 10px;
+    position: relative;
+}
+.main_flex_2 {
+    padding: 0 10px;
+    margin: 20px 0 0 0;
+}
+.client_payments__block .flex_1 {
+    border: 1px solid transparent;
+    padding: 0 33px;
+}
+.client_payments__block .flex_2 {
+    border: 1px solid transparent;
+    width: 55%;
+    padding-left: 8px;
+}
+.client_payments__block .flex_2 .client_name {
+    font-size: 18px;
+    opacity: .87;
+    font-family: UbuntuMedium, Serif, sans-serif;
+    padding-bottom: 3px;
+}
+.client_payments__block .flex_2 .client_orderings {
+    padding-left: 1px;
+    font-size: 14px;
+    opacity: .87;
+    font-family: LatoRegular, Serif, sans-serif;
+    padding-bottom: 25px;
+}
+.client_payments__block .flex_2 .client_orderings__item {
+    margin-right: 16px;
+    letter-spacing: 0.02em;
+}
+.deposit_datas,
+.balance_datas {
+    width: 280px;
+}
+.balance_payment_due,
+.deposit_payment_due {
+    width: 251px;
+    margin-left: auto;
+}
+.client_payments__block .flex_1,
+.client_payments__block .flex_2,
+.client_payments__block .flex_3 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+.client_payments__block .flex_3 {
+    justify-content: space-around;
+}
+.client_payments__block .flex_2 .controls .button-gradient,
+.client_payments__block .flex_2 .controls .button-gradient.filled,
+.client_payments__block .flex_2 .controls .button-gradient .btn,
+.client_payments__block .flex_2 .controls .button-gradient.filled .btn {
+    height: 26px;
+}
+.client_payments__block .flex_2 .controls .button-gradient .btn {
+    height: 22px;
+    padding: 0px;
+}
+.client_payments__block .flex_2 .controls .button-gradient.filled .btn,
+.client_payments__block .flex_2 .controls .button-gradient .btn {
+    font-family: LatoRegular, Serif, sans-serif;
+    font-size: 14px;
+    padding: 0px;
+}
+.client_payments__block .flex_2 .controls .button-gradient.filled.blue .btn {
+    width: 140px;
+}
+.client_payments__block .flex_1 .avatar {
+    width: 93px;
+    height: 93px;
+    border-radius: 50px;
+    background-image: url(../../assets/images/client_payment_profile.jpg);
+    background-size: cover;
+}
+.client_payments__block .flex_2 .controls .button-gradient,
+.client_payments__block .flex_2 .controls .button-gradient.filled {
+    margin-right: 20px;
+}
+.client_payments__block .flex_2 .controls .button-gradient.filled .btn {
+    width: 130px;
+}
+.client_payments__block .flex_2 .controls .button-gradient .btn {
+    width: 146px;
+}
+.client_payments__block .flex_3 {
+    border: 1px solid transparent;
+    margin-left: auto;
+}
+
+.client_payments__block .flex_3__item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.client_payments__block .flex_3__item p {
+    font-size: 15px;
+    margin-bottom: 9px;
+}
+.client_payments__block .flex_3__item:first-child {
+    margin-top: 33px;
+}
+.client_payments__block .flex_3__item:last-child {
+    margin-bottom: auto;
+}
+.client_payments__block .flex_3__item  a {
+    display: block;
+    height: 100%;
+    margin-left: 20px;
+    text-decoration: none;
+    color: rgba(0, 0, 0, .48);
+}
+.client_payments__block .flex_3__item  a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.client_payments__block .flex_2 .deposit {
+    color: rgba(155, 217, 129, 1);
+    opacity: .87;
+    padding-left: 1px;
+    padding-bottom: 5px;
+}
+.client_payments__block .flex_2 .balance {
+    opacity: .87;
+    color: rgba(238, 116, 56, 1);
+    padding-bottom: 26px;
+}
+.client_payments__block .flex_2__item {
+    display: flex;
+    flex-direction: row;
+}
+.client_payments__block .flex_2 .controls {
+    padding: 0;
+    height: auto;
+    padding-left: 1px;
+}
+@media (max-width: 1023px) {
+    .client_payments__block .flex_2 .deposit,
+    .client_payments__block .flex_2 .balance {
+        flex-direction: column;
+    }
+    .balance_payment_due,
+    .deposit_payment_due {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+@media (max-width: 939px) {
+    .client_payments__block .flex_2 {
+        width: auto;
+    }
+    .client_payments__block .flex_2 .controls {
+        flex-direction: column;
+    }
+    .client_payments__block .flex_2 .controls .button-gradient,
+    .client_payments__block .flex_2 .controls .button-gradient.filled {
+        margin: 0;
+        width: 130px;
+        margin-bottom: 5px;
+    }
+    .client_payments__block .flex_2 .controls .button-gradient.filled.blue {
+        width: 140px;
+    }
+    .client_payments__block .flex_2 .controls .button-gradient {
+        width: 150px;
+    }
+}
+@media (max-width: 779px) {
+    .client_payments__block .flex_2 {
+        width: 100%;
+        padding-left: 8px;
+        order: 3;
+    }
+    .client_payments__block .main_flex_1 {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .client_payments__block .flex_2 .controls {
+        flex-direction: row;
+    }
+    .client_payments__block .flex_2 .controls .button-gradient,
+    .client_payments__block .flex_2 .controls .button-gradient.filled {
+        margin-right: 10px;
+    }
+}
+@media (max-width: 499px) {
+    .client_payments__block .flex_1 {
+        flex-direction: row;
+        justify-content: flex-start;
+        width: 100%;
+        padding: 10px;
+    }
+    .client_payments__block .flex_2 {
+        order: 2;
+    }
+    .client_payments__block .flex_3 {
+        order: 3;
+    }
+    .client_payments__block .flex_2,
+    .client_payments__block .flex_3 {
+        width: 100%;
+        padding-left: 8px;
+    }
+    .client_payments__block .flex_3 .flex_3__item {
+        justify-content: flex-start;
+    }
+    .client_payments__block .client_payments__block .main_flex_1 {
+        flex-direction: column;
+    }
+    .client_payments__block .flex_2 .controls {
+        flex-direction: column;
+    }
+    .client_payments__block .flex_2 .controls .button-gradient,
+    .client_payments__block .flex_2 .controls .button-gradient.filled {
+        margin-right: 10px;
+    }
+}

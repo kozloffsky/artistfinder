@@ -4,8 +4,6 @@
 }
 
 .enquiries .categories-menu {
-    margin-top: 12px;
-    margin-bottom: 38px;
     position: relative;
 }
 
@@ -82,13 +80,6 @@
 
 .act-request .controls>.button-gradient {
     margin: 0 15px!important;
-}
-
-.act-request .button-gradient.blue {
-    background: rgb(88,149,243);
-    background: -moz-linear-gradient(left, rgba(88,149,243,1) 0%, rgba(73,79,199,1) 100%);
-    background: -webkit-linear-gradient(left, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
-    background: linear-gradient(to right, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
 }
 
 .enq-icon.icon-date {

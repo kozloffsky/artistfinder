@@ -1,8 +1,9 @@
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
+
+
 <main class="messages">
 
     <div class="container">
-        <!-- THIS MENU VISIBLE ONLY ON DESCTIOP SCREEN-->
         {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
 
         <div>
@@ -12,63 +13,113 @@
                 <option value="archived">Archived</option>
             </select>
 
-
             <div class="dialogs">
                 {% for message in messages|reverse %}
-                <article class="col-xs-12 dialog-section noselect" data-longtap-duration="500" id="{{ message.id }}">
-                    <div class="wrap clearfix">
-                        <div class="avatar">
-                            {% if message.sender_user.avatar is defined %}
-                                <img src="{{ message.sender_user.avatar }}" alt=""/>
-                            {% else %}
-                                <img src="/assets/images/noAvatar.png" alt=""/>
-                            {% endif %}
-                        </div>
-                        <div class="user-info">
-                            <span class="user-name">{{ message.sender_user.firstname }}</span>
-                            <span class="time">{{ message.time_from_get }}</span>
-                        </div>
-                        <div class="message-block">
-                            <div class="col-lg-10 col-sm-10 text-block">
-                                <p class="message-heading hidden-xs">Enquiry for {{ message.chat_room.event.title }} / {{ message.chat_room.event.city.name }} / {{ message.chat_room.event.starting_date }}</p>
+                    <article class="col-xs-12 dialog-section noselect" data-longtap-duration="500" id="{{ message.id }}">
+                        <div class="wrap clearfix">
+                            <div class="message-info active"></div>
+                            <div class="avatar">
+                                {% if message.sender_user.avatar is defined %}
+                                    <img src="/{{ message.sender_user.avatar }}" alt=""/>
+                                {% else %}
+                                    <img src="/assets/images/noAvatar.png" alt=""/>
+                                {% endif %}
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name">{{ message.sender_user.firstname }}</span>
+                                <span class="time">{{ message.time_from_get }}</span>
+                            </div>
+                            <div class="message-block">
+                                <div class="col-lg-9 col-sm-9 text-block">
+                                    <p class="message-heading hidden-xs">Enquiry for {{ message.chat_room.event.title }} / {{ message.chat_room.event.city.name }} / {{ message.chat_room.event.starting_date }}</p>
 
-                                <div class="text">
-                                    {% if message.message_text is defined %}
-                                    {{ message.message_text }}
-                                    {% endif %}
-                                </div>
+                                    <div class="text">
+                                        {% if message.message_text is defined %}
+                                            {{ message.message_text }}
+                                        {% endif %}
+                                    </div>
 
-                                <div class="controls hidden-xs">
-                                    <div class="button-gradient filled blue">
-                                        <a href="/dashboard/chat/{{ message.chat_room.chat_id }}" class="btn register">See Conversation</a>
+                                    <div class="controls hidden-xs">
+                                        <div class="button-gradient filled blue">
+                                            <a href="/dashboard/chat/{{ message.chat_room.chat_id }}" class="btn register">Chatroom</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-2 col-sm-2  message-controls no-pad">
-                                <ul class="ul-reset">
-                                    <li class="status confirmed"><i class="confirmed"></i> {{ message.chat_room.offer.event_offer[0].status }}</li>
-                                    {% if message.archived == false %}
-                                    <li class="archive hidden-xs"><a class="archiveMessage"><i class="archive"></i> Archive</a></li>
-                                    {% endif %}
-                                </ul>
+                                <div class="col-lg-2 col-sm-2 message-controls no-pad">
+                                    <ul class="ul-reset">
+                                        <li class="status confirmed">
+                                            <i class="confirmed"></i>
+                                            {{ message.chat_room.offer.event_offer[0].status }}
+                                        </li>
+
+                                        {% if message.archived == false %}
+                                            <li class="archive hidden-xs">
+                                                <a class="archiveMessage">
+                                                    <i class="archive"></i> Archive</a>
+                                            </li>
+                                        {% endif %}
+
+
+                                        {# <li class="status confirmed"><i class="confirmed"></i> Confirmed</li>
+                                        <li class="archive hidden-xs"><a href="#"><i class="archive"></i> Archive</a></li>
+                                        <li class="delete hidden-xs"><a href="#"><i class="delete"></i> Delete</a></li> #}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <ul class="clearfix message-controls controls-mobile ul-reset">
-                        {% if message.archived == false %}
-                            <li class="archive"><a class="archiveMessage"><i class="archive"></i> Archive</a></li>
-                        {% endif %}
-                    </ul>
-                </article>
+                        <ul class="clearfix message-controls controls-mobile ul-reset">
+                            {% if message.archived == false %}
+                                <li class="archive"><a class="archiveMessage"><i class="archive"></i> Archive</a></li>
+                            {% endif %}
+                            {# <li class="archive"><a href="#"><i class="archive"></i> Archive</a></li>
+                            <li class="de #}lete"><a href="#"><i class="delete"></i> Delete</a></li>
+                        </ul>
+
+                        <div class="message-controls message-options hidden-lg hidden-md hidden-sm">
+                            <li class="archive">
+                                <i class="archive"></i>
+                                <a href="#">Archive</a>
+                            </li>
+                            <li class="delete">
+                                <i class="delete"></i>
+                                <a href="#">Delete</a>
+                            </li>
+                        </div>
+                    </article>
                 {% endfor %}
+
+
+
+                <article class="col-xs-12 dialog-rating-container noselect" data-longtap-duration="500">
+                    <div class="wrap clearfix">
+                        <div class="message-info">
+                            <span class="pull-right">14 December 2016</span>
+                            <span>Congratulations! You have received new rating!</span>
+                        </div>
+                        <div class="avatar">
+                            <img src="/assets/images/avatar.jpg" alt=""/>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">Diana Croll</span>
+                        </div>
+                        <div class="rating">
+                            <i class="star-icon filled"></i>
+                            <i class="star-icon filled"></i>
+                            <i class="star-icon filled"></i>
+                            <i class="star-icon unfilled"></i>
+                            <i class="star-icon unfilled"></i>
+                        </div>
+                        <div class="message-block">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                    </div>
+                </article>
             </div>
         </div>
     </div>
 
-
-    </div>
-
 </main>
+
 
 {% include 'ActedLegalDocsBundle:Default:footer.html.twig' %}

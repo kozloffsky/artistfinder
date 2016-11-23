@@ -615,4 +615,12 @@ class ChatRoomController extends Controller
             )
         ]);
     }
+
+    /**
+     * Get all feedbacks
+     */
+     public function feedbacksAction(Request $request)
+     {
+        return $this->render('ActedLegalDocsBundle:ChatRoom:feedback.html.twig');
+     }
 }

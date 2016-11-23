@@ -4,9 +4,6 @@
     display: block;
     content: '';
 }
-.chat-room .categories-menu{
-    margin-top: 16px;
-}
 .chat-room{
     color: #3d4248;
     margin: 0 0 50px;

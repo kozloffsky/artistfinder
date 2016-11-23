@@ -29,5 +29,31 @@ $(function () {
                window.location = redirectUrl;
             });
         });
+
+        $('.messages .dialog-section')
+            .on("swipeleft", function(){
+                $(this).animate(
+                    { left: -160 }, // what we are animating
+                    {
+                        duration: 'fast', // how fast we are animating
+                        easing: 'swing', // the type of easing
+                        complete: function() { // the callback
+
+                        }
+                    }
+                );
+            })
+            .on("swiperight", function(){
+                $(this).animate(
+                    { left: 0 }, // what we are animating
+                    {
+                        duration: 'fast', // how fast we are animating
+                        easing: 'swing', // the type of easing
+                        complete: function() { // the callback
+
+                        }
+                    }
+                );
+            });
     }
 });

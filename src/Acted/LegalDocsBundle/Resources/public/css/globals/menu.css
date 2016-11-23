@@ -1,0 +1,9 @@
+.categories-menu {
+    margin-top: 16px !important;
+    margin-bottom: 24px !important;
+    border-bottom: 2px solid rgba(216, 216, 216, 0.11);
+}
+.categories-menu li.active {
+    border-bottom: 4px solid #ff793e;
+    margin-bottom: -4px;
+}
