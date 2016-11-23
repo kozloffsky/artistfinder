@@ -57,10 +57,10 @@ class FeedbackRepository extends \Doctrine\ORM\EntityRepository
         );
     }
 
-    public function getAverageArtistRating($artistId)
+    public function getAverageArtistRating($artist)
     {
         $whereCriteria = "f.artist = :artist";
-        $params = array('artist' => $artistId);
+        $params = array('artist' => $artist);
 
         $qb = $this->createQueryBuilder('f')
             ->select('avg(f.rating) as averageRating')

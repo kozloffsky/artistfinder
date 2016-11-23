@@ -214,14 +214,14 @@ class FeedbackController extends Controller
      *     }
      * )
      * @param Request $request
-     * @param integer $artistId
+     * @param Artist $artist
      * @return JsonResponse
      */
-    public function getAverageRatingAction(Request $request, $artistId)
+    public function getAverageRatingAction(Request $request, $artist)
     {
         $em = $this->getDoctrine()->getManager();
         $feedbackRepo = $em->getRepository('ActedLegalDocsBundle:Feedback');
-        $data = $feedbackRepo->getAverageArtistRating($artistId);
+        $data = $feedbackRepo->getAverageArtistRating($artist);
 
         return new JsonResponse(array(
             'status' => 'success',

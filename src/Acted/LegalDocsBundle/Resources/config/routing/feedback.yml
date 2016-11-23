@@ -8,15 +8,15 @@ feedback_rating:
     defaults: { _controller: ActedLegalDocsBundle:Feedback:addRating }
     methods:  POST
 
-feedback_artist:
-    path: /artist
-    defaults: { _controller: ActedLegalDocsBundle:Feedback:getFeedbacks }
+feedback_artist_rating:
+    path: /artist/rating/{artist}
+    defaults: { _controller: ActedLegalDocsBundle:Feedback:getAverageRating }
     methods:  GET
 
-feedback_average_rating:
-    path: /list/{artist}/{page}/{size}
+feedback_artist:
+    path: /artist/{artist}/{page}/{size}
     requirements:
       page: \d+
       size: \d+
-    defaults: { _controller: ActedLegalDocsBundle:Feedback:getFeedbacks, page: 1, size: 10 }
+    defaults: { _controller: ActedLegalDocsBundle:Feedback:getFeedbacks, page: 1, size: 3 }
     methods:  GET
