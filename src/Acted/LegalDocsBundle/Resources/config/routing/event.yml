@@ -40,3 +40,11 @@ event_artists:
       size: \d+
     defaults: { _controller: ActedLegalDocsBundle:Events:getEventArtists, page: 1, size: 10 }
     methods:  GET
+
+get_client_events:
+    path: /client/{user}/{page}/{size}
+    requirements:
+      page: \d+
+      size: \d+
+    defaults: { _controller: ActedLegalDocsBundle:Events:getClientEvents, page: 1, size: 10 }
+    methods:  GET

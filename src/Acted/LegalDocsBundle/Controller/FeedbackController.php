@@ -207,7 +207,6 @@ class FeedbackController extends Controller
      * @ApiDoc(
      *  resource=true,
      *  description="Get average rating",
-     *  input="Acted\LegalDocsBundle\Form\FeedbackRatingCreateType",
      *  statusCodes={
      *         200="Returned when successful",
      *         400="Returned when the form has validation errors",
@@ -235,7 +234,6 @@ class FeedbackController extends Controller
      * @ApiDoc(
      *  resource=true,
      *  description="get feedbacks by artist",
-     *  input="Acted\LegalDocsBundle\Form\FeedbackRatingCreateType",
      *  statusCodes={
      *         200="Returned when successful",
      *         400="Returned when the form has validation errors",

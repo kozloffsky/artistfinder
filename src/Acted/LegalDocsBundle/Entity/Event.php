@@ -95,6 +95,10 @@ class Event
      */
     private $numberOfGuests;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $eventArtists;
 
     /**
      * Get id
@@ -682,11 +686,6 @@ class Event
     {
         return $this->feedbacks;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $eventArtists;
-
 
     /**
      * Add eventArtist
