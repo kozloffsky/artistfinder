@@ -277,8 +277,8 @@
 }
 
 .messages .dialogs .dialog-rating-container {
-    height: 147px;
     background-color: rgba(255, 253, 226, 1);
+    padding-bottom: 19px;
 }
 .messages .dialogs .dialog-rating-container .rating {
     display: inline-block;
