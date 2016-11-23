@@ -1,5 +1,46 @@
-(function ($) {
+$(function () {
     'use strict';
+
+
+    function getUserId() {
+        var user = JSON.parse(localStorage.getItem('user'));
+
+        return user.userId;
+    }
+
+    function getEventsByUserId(userId) {
+        $.ajax({
+            method: "GET",
+            url: "/event/client/" + userId,
+            success: function (data) {
+                if (typeof data.events !== 'undefined') {
+                    showEvents(data.events);
+                }
+            }
+        });
+    }
+
+    function showEvents(events) {
+        var $eventsWrapper = $('div.events-menu > ul');
+        var html = "";
+        events.forEach(function (item) {
+            html += "<li class='event-item non-active' data-event-id='" + item.id + "'>";
+            html += item.title;
+            html += "</li>"
+        });
+        $eventsWrapper.html(html);
+    }
+
+    //
+    // function getArtistsByEvent() {
+    //     $.ajax{
+    //
+    //     }
+    // }
+
+    // function showFeedbackFields() {
+    //
+    // }
 
     function changeOnHover() {
         var $this = $(this);
@@ -44,7 +85,7 @@
 
     function sendFeedback() {
         var $this = $(this);
-        if(!$this.hasClass('disabled')){
+        if (!$this.hasClass('disabled')) {
             var $wrapper = $this.parents('.comment-box');
             var data = collectData($wrapper);
             $.ajax({
@@ -53,9 +94,8 @@
         }
     }
 
+
     $('.star-icon').hover(changeOnHover).click(setFixed);
     $('.comment-box > textarea').keyup(charsCounter);
     $('.comment-box >button').click(sendFeedback);
-
-
-})(jQuery);
+});
