@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\Event;
+use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Entity\EventOffer;
 use Acted\LegalDocsBundle\Entity\RequestQuotation;
 use Acted\LegalDocsBundle\Entity\EventArtist;
@@ -295,6 +296,38 @@ class EventsController extends Controller
             'atrists' => $eventArtists['artists']
         ), Response::HTTP_OK, array(
             'count' => $eventArtists['countRows']
+        ));
+    }
+
+    /**
+     * get events by client
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="get events by client",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @param User $user
+     * @param integer $page
+     * @param integer $size
+     * @return JsonResponse
+     */
+    public function getClientEventsAction(Request $request, User $user, $page, $size)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $eventRepo = $em->getRepository('ActedLegalDocsBundle:Event');
+
+        $clientEvents = $eventRepo->getClientEvents($user, $page, $size);
+
+        return new JsonResponse(array(
+            'status' => 'success',
+            'events' => $clientEvents['events']
+        ), Response::HTTP_OK, array(
+            'count' => $clientEvents['countRows']
         ));
     }
 }
