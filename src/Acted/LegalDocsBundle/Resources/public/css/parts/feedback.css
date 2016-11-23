@@ -30,14 +30,14 @@
     display: inline-block;
     font-style: normal;
 }
-.feedback .artist-feedback .info i { 
+.feedback .artist-feedback .info i {
     font-family: LatoRegular;
     font-size: 16px;
     color: #000;
     font-style: normal;
     margin: 0 10px 0 0;
 }
-.feedback .artist-feedback .info .date i { 
+.feedback .artist-feedback .info .date i {
     font-size: 14px;
 }
 .feedback .artist-feedback .info div {
@@ -129,7 +129,7 @@ margin: 0 0 0 47px;**/
 .dashboard.client ul {
     margin: 0;
     padding: 0;
-    list-style-type: none;    
+    list-style-type: none;
     margin: 0 0 0 41px;
 }
 .dashboard.client ul,
@@ -140,12 +140,14 @@ margin: 0 0 0 47px;**/
 .dashboard.client .events-menu {
     margin: 21px 0 25px 0;
     position: relative;
+    display: inline-block;
 }
-.dashboard.client .events-menu .new-event {
+.dashboard.client .new-event {
     display: inline-block;
     font-family: LatoRegular;
     font-size: 14px;
     color: rgba(0, 0, 0, 0.87);
+    margin: 0 0 0 40px;
 }
 .dashboard.client .events-menu .new-event .fa.fa-plus {
     padding: 0 0 0 11px;
@@ -205,7 +207,7 @@ margin: 0 0 0 47px;**/
     position: absolute;
     left: 0;
     top: 2px;
-    
+
 }
 .dashboard.client .events-menu .arrows .right {
     transform: rotate(180deg);
