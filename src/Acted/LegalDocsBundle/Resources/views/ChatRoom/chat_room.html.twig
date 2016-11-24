@@ -6,7 +6,7 @@
         {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
 
         <div class="wrap">
-            <a class="btn-back" href="/dashboard/messages/{{ app.user.id }}">Back to messages</a>
+            <a class="btn-back" href="{{ path('all_messages_user') }}">Back to messages</a>
             <h2 class="main-title">Chatroom #{{ chat.chat_id }}</h2>
             <div class="hidden" id="chatId">{{ chat.chat_id }}</div>
             <!--detail form start-->
