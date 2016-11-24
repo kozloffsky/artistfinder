@@ -36,6 +36,19 @@ Acted\LegalDocsBundle\Entity\EventOffer:
         readDateTime:
           type: datetime
           nullable: true
+        detailsAccepted:
+          type: boolean
+          default: false
+        actsExtrasAccepted:
+          type: boolean
+          default: false
+        timingAccepted:
+          type: boolean
+          default: false
+        technicalRequirementsAccepted:
+          type: boolean
+          default: false
+
     manyToOne:
         event:
           targetEntity: Acted\LegalDocsBundle\Entity\Event

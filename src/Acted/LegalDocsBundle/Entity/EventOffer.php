@@ -354,4 +354,149 @@ class EventOffer
 
         return $period->format('%d days %H hours %i minutes');
     }
+    /**
+     * @var boolean
+     */
+    private $detailsAccepted;
+
+    /**
+     * @var boolean
+     */
+    private $actsEctrasAccepted;
+
+    /**
+     * @var boolean
+     */
+    private $timingAccepted;
+
+    /**
+     * @var boolean
+     */
+    private $technicalRequirementsAccepted;
+
+
+    /**
+     * Set detailsAccepted
+     *
+     * @param boolean $detailsAccepted
+     *
+     * @return EventOffer
+     */
+    public function setDetailsAccepted($detailsAccepted)
+    {
+        $this->detailsAccepted = $detailsAccepted;
+
+        return $this;
+    }
+
+    /**
+     * Get detailsAccepted
+     *
+     * @return boolean
+     */
+    public function getDetailsAccepted()
+    {
+        return $this->detailsAccepted;
+    }
+
+    /**
+     * Set actsEctrasAccepted
+     *
+     * @param boolean $actsEctrasAccepted
+     *
+     * @return EventOffer
+     */
+    public function setActsEctrasAccepted($actsEctrasAccepted)
+    {
+        $this->actsEctrasAccepted = $actsEctrasAccepted;
+
+        return $this;
+    }
+
+    /**
+     * Get actsEctrasAccepted
+     *
+     * @return boolean
+     */
+    public function getActsEctrasAccepted()
+    {
+        return $this->actsEctrasAccepted;
+    }
+
+    /**
+     * Set timingAccepted
+     *
+     * @param boolean $timingAccepted
+     *
+     * @return EventOffer
+     */
+    public function setTimingAccepted($timingAccepted)
+    {
+        $this->timingAccepted = $timingAccepted;
+
+        return $this;
+    }
+
+    /**
+     * Get timingAccepted
+     *
+     * @return boolean
+     */
+    public function getTimingAccepted()
+    {
+        return $this->timingAccepted;
+    }
+
+    /**
+     * Set technicalRequirementsAccepted
+     *
+     * @param boolean $technicalRequirementsAccepted
+     *
+     * @return EventOffer
+     */
+    public function setTechnicalRequirementsAccepted($technicalRequirementsAccepted)
+    {
+        $this->technicalRequirementsAccepted = $technicalRequirementsAccepted;
+
+        return $this;
+    }
+
+    /**
+     * Get technicalRequirementsAccepted
+     *
+     * @return boolean
+     */
+    public function getTechnicalRequirementsAccepted()
+    {
+        return $this->technicalRequirementsAccepted;
+    }
+    /**
+     * @var boolean
+     */
+    private $actsExtrasAccepted;
+
+
+    /**
+     * Set actsExtrasAccepted
+     *
+     * @param boolean $actsExtrasAccepted
+     *
+     * @return EventOffer
+     */
+    public function setActsExtrasAccepted($actsExtrasAccepted)
+    {
+        $this->actsExtrasAccepted = $actsExtrasAccepted;
+
+        return $this;
+    }
+
+    /**
+     * Get actsExtrasAccepted
+     *
+     * @return boolean
+     */
+    public function getActsExtrasAccepted()
+    {
+        return $this->actsExtrasAccepted;
+    }
 }

@@ -39,7 +39,9 @@
         "tweedegolf/swiftmailer-logger-bundle": "dev-master",
         "react/zmq": "^0.3.0",
         "gos/web-socket-bundle": "v1.8.1",
-        "sentry/sentry-symfony": "0.7.x-dev"
+        "sentry/sentry-symfony": "0.7.x-dev",
+        "jms/di-extra-bundle": "dev-master",
+        "jms/security-extra-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "3.0.6",
