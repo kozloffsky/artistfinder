@@ -87,3 +87,7 @@ feedbacks:
     path:     /feedbacks
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:feedbacks }
     methods:  GET
+
+api_accept_details:
+    path:     /api/chat-room/accept-details/{eventId}
+    defaults: {_controller: ActedLegalDocsBundle:ChatRoom:acceptDetails}

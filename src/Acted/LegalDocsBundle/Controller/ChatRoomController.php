@@ -5,10 +5,14 @@ namespace Acted\LegalDocsBundle\Controller;
 use Acted\LegalDocsBundle\Entity\ChatRoom;
 use Acted\LegalDocsBundle\Form\ChatRoomTechnicalRequirementsCreateType;
 use Acted\LegalDocsBundle\Form\ChatRoomTechnicalRequirementsCustomCreateType;
+use Acted\LegalDocsBundle\Model\EventsManager;
+use Doctrine\ORM\EntityManager;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializationContext;
+use JMS\DiExtraBundle\Annotation as DI;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -16,6 +20,19 @@ use FOS\RestBundle\View\View;
 
 class ChatRoomController extends Controller
 {
+
+    /**
+     * @Di\Inject("doctrine.orm.entity_manager")
+     * @var EntityManager
+     */
+    private $em;
+
+    /**
+     * @Di\Inject("app.event.manager")
+     * @var EventsManager
+     */
+    private $eventManager;
+
     /**
      * List of chatRooms
      * @param Request $request
@@ -622,5 +639,18 @@ class ChatRoomController extends Controller
      public function feedbacksAction(Request $request)
      {
         return $this->render('ActedLegalDocsBundle:ChatRoom:feedback.html.twig');
+     }
+
+
+    /**
+     * @Secure(roles="ROLE_ACTOR")
+     * @param int $eventId
+     * @return Response
+     * @TODO: add APIDOC
+     */
+     public function acceptDetailsAction($eventId){
+         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
+         $eor->acceptDetails($eventId);
+         return new Response(json_encode($eventId));
      }
 }
