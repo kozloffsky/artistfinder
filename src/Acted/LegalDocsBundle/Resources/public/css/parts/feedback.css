@@ -73,6 +73,7 @@ i.star-icon {
     width: 22px;
     height: 21px;
     margin: 0 10px 0 0;
+    cursor: pointer;
 }
 /*.feedback i.star-icon:nth-of-type(1) {
     margin: 0 10px 0 10px !important;
@@ -166,6 +167,7 @@ margin: 0 0 0 47px;**/
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
+    cursor: pointer;
 }
 .dashboard.client .events-menu .event-item a {
     font-family: LatoRegular;
@@ -291,7 +293,7 @@ margin: 0 0 0 47px;**/
 }
 .dashboard.client .comment-area .comment-box .char-count {
     position: absolute;
-    top: 45px;
+    top: 20px;
     right: 9.5px;
     font-family: LatoRegular;
     font-size: 13px;
