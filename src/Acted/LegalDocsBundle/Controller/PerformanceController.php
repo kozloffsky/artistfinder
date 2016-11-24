@@ -184,6 +184,13 @@ class PerformanceController extends Controller
         }
 
         $artist = $data['artist'];
+        $comment = $data['comment'];
+        $type = Performance::TYPE_BASE;
+
+        if (!empty($data['type'])) {
+            $type = $data['type'];
+        }
+
         $profile = $artist->getUser()->getProfile();
 
         $performance->setTitle($data['title']);
@@ -191,6 +198,8 @@ class PerformanceController extends Controller
         $performance->setStatus(Performance::STATUS_PUBLISHED);
         $performance->setIsVisible(false);
         $performance->setIsQuotation($data['is_quotation']);
+        $performance->setType($type);
+        $performance->setComment($comment);
         $em->persist($performance);
 
         $package = new Package();
@@ -200,10 +209,27 @@ class PerformanceController extends Controller
         $em->persist($package);
 
         foreach ($data['options'] as $currentOption) {
+            /*If it performance has base type or extra performance with standard type*/
+            if (($type == Performance::TYPE_BASE || $type == Performance::TYPE_STANDARD) &&
+                (empty($currentOption['duration']) || empty($currentOption['qty']))) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'duration or qyt is empty'
+                ],  Response::HTTP_BAD_REQUEST);
+            }
+
+            $duration = null;
+            $qty = null;
+
+            if ($type == Performance::TYPE_BASE || $type == Performance::TYPE_STANDARD) {
+                $duration = $currentOption['duration'];
+                $qty = $currentOption['qty'];
+            }
+
             $option = new Option();
             $option->setPackage($package);
-            $option->setDuration($currentOption['duration']);
-            $option->setQty($currentOption['qty']);
+            $option->setDuration($duration);
+            $option->setQty($qty);
             $option->setPriceOnRequest($currentOption['price_on_request']);
             $em->persist($option);
 

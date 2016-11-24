@@ -58,6 +58,14 @@ class PerformancePriceType extends AbstractType
                 'constraints' => [],
                 'description' => 'RequestQuotationId'
             ])
+            ->add('type', IntegerType::class, [
+                'constraints' => [
+                    new Length(['max' => 6, 'min' => 0])
+                ], 'description' => 'type'])
+            ->add('comment', TextType::class, [
+                'constraints' => [
+                    new Length(['max' => 1000]),
+                ], 'description' => 'Comment'])
         ;
     }
 
