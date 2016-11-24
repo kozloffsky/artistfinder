@@ -67,8 +67,6 @@
         </div>
     </div>
 </div>
-
-
 <!-- QUOTATION SEND SUCCESS -->
 <div class="modal quotation-send-success-modal fade" id="quotationSuccessModal">
     <div class="modal-dialog" role="document">
@@ -116,6 +114,416 @@
 
 
 <!-- QUOTATION MODAL TEMPLATE -->
+
+<!-- NEW QUOTATION MODAL -->
+<div class="modal quotation-modal modal-registered fade" id="quotationModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="title">Request from: clienttest clienttest</span>
+            </div>
+            <form name="quotation_event_info" class="place-info">
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                        <label for="quot_event_name">Name event</label>
+                        <input type="text" class="form-control" id="quot_event_name" placeholder="Name your event" name="event_name" value="Christmas Party">
+                    </div>
+
+                    <!--<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                        <label for="quot_country">Country</label>
+                        <select class="form-control" id="quot_country" name="country" disabled="">
+                            <option value="United Kingdom">United Kingdom</option>
+                            <option value="Germany" selected="">Germany</option>
+                            <option value="France">France</option>
+                        </select>
+                    </div>-->
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                        <label for="quot_date">Date</label>
+                        <input type="text" class="form-control" id="quot_date" placeholder="17/12/2016" name="date" value="15/11/2016">
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                        <label for="quot_city">1 day/multiple days</label>
+                        <input type="text" class="form-control" id="quot_city" placeholder="London" name="city" value="2-day event" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                        <label for="quot_performance_time">Event timing</label>
+                        <input type="text" class="form-control" id="quot_performance_time" placeholder="Evening" name="performance_time" value="Evening">
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                        <label for="quot_address">Country</label>
+                        <input type="text" class="form-control" id="quot_address" placeholder="United Kingdom" name="address" value="United Kingdom">
+                    </div>
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                        <label for="quot_arrival_time">Adress</label>
+                        <input type="text" class="form-control" id="quot_arrival_time" placeholder="St Regis" name="arrival_time" value="St Regis">
+                    </div>
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                        <label for="quot_venue_type">Venue type</label>
+                        <input type="text" class="form-control" id="quot_venue_type" placeholder="Hotel Ballrom" name="venue_type" value="Hotel Ballrom">
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                        <label for="quot_guests_number">Number of guests</label>
+                        <input type="text" class="form-control" id="quot_guests_number" placeholder="Less than 50" name="guests_number" value="Less than 50">
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                        <label for="quot_venue_type">Additional info</label>
+                        <textarea class="additional-info">I want this celebration to be super cool!</textarea>
+                    </div>
+                </div>
+            </form>
+            <form name="quotation_act_info" class="act-info">
+                <div act-id="2096" act-type="performance">
+                    <div class="row">
+                        <div class="act-title">
+                            <div class="custom-checkbox">
+                                <input select-performance="" id="performance_quot_2096" value="" name="quot-title-check" type="checkbox" checked="">
+                                <label for="performance_quot_2096"></label>
+                            </div>
+                            <i class="act-name">Act 1 - Jumps</i>
+                        </div>
+                    </div>
+                    <div package-id="2287" class="row">
+                        <div class="row package">
+                            <div class="custom-checkbox">
+                                <input select-package="" package-id="2287" id="package_2287" name="package-check" value="" type="checkbox" checked="">
+                                <label for="package_2287"></label>
+                            </div>
+                            <label>default package</label>
+                        </div>
+
+
+                        <!-- Set options -->
+                        <div option-id="3182" class="act-option">
+                            <div class="custom-checkbox">
+                                <input select-option="" option-id="3182" id="option_3182" name="package-check" value="" type="checkbox" checked="">
+                                <label for="option_3182"></label>
+                            </div>
+
+                            <select quot-edit-qty="" name="qty" class="quantity-select">
+
+                                <option selected="" value="1">1</option>
+
+                                <option value="2">2</option>
+
+                                <option value="3">3</option>
+
+                                <option value="4">4</option>
+
+                                <option value="5">5</option>
+
+                                <option value="6">6</option>
+
+                            </select>
+                            <span class="multiplier">x</span>
+                            <select quot-edit-duration="" name="duration" class="duration-select">
+                                <option selected="" value="45">45</option>
+                                <option value="50">50</option>
+                                <option value="55">55</option>
+                            </select>
+                            <span class="minutes">min</span>
+                            <input class="price-box" value="3000">
+                            <span>GBP</span>
+                        </div>
+
+
+                    </div>
+                    <div package-id="2288" class="row">
+                        <div class="row package">
+                            <div class="custom-checkbox">
+                                <input select-package="" package-id="2288" id="package_2288" name="package-check" value="" type="checkbox" checked="">
+                                <label for="package_2288"></label>
+                            </div>
+                            <label>Package template</label>
+                        </div>
+
+                        <!-- Set options -->
+                        <div option-id="3183" class="act-option">
+                            <div class="custom-checkbox">
+                                <input select-option="" option-id="3183" id="option_3183" name="package-check" value="" type="checkbox" checked="">
+                                <label for="option_3183"></label>
+                            </div>
+
+                            <select quot-edit-qty="" name="qty" class="quantity-select">
+
+                                <option value="1">1</option>
+
+                                <option value="2">2</option>
+
+                                <option selected="" value="3">3</option>
+
+                                <option value="4">4</option>
+
+                                <option value="5">5</option>
+
+                                <option value="6">6</option>
+
+                            </select>
+                            <span class="multiplier">x</span>
+                            <select quot-edit-duration="" name="duration" class="duration-select">
+                                <option selected="" value="45">45</option>
+                                <option value="50">50</option>
+                                <option value="55">55</option>
+                            </select>
+                            <span class="minutes">min</span>
+                            <input class="price-box" value="3000">
+                            <span>GBP</span>
+                        </div>
+                        <div option-id="3184" class="act-option">
+                            <div class="custom-checkbox">
+                                <input select-option="" option-id="3184" id="option_3184" name="package-check" value="" type="checkbox" checked="">
+                                <label for="option_3184"></label>
+                            </div>
+
+                            <select quot-edit-qty="" name="qty" class="quantity-select">
+
+                                <option value="1">1</option>
+
+                                <option value="2">2</option>
+
+                                <option selected="" value="3">3</option>
+
+                                <option value="4">4</option>
+
+                                <option value="5">5</option>
+
+                                <option value="6">6</option>
+
+                            </select>
+                            <span class="multiplier">x</span>
+                            <select quot-edit-duration="" name="duration" class="duration-select">
+                                <option selected="" value="45">45</option>
+                                <option value="50">50</option>
+                                <option value="55">55</option>
+                            </select>
+                            <span class="minutes">min</span>
+                            <input class="price-box" value="3000">
+                            <span>GBP</span>
+                        </div>
+                        <div option-id="3185" class="act-option">
+                            <div class="custom-checkbox">
+                                <input select-option="" option-id="3185" id="option_3185" name="package-check" value="" type="checkbox" checked="">
+                                <label for="option_3185"></label>
+                            </div>
+
+                            <select quot-edit-qty="" name="qty" class="quantity-select">
+
+                                <option value="1">1</option>
+
+                                <option value="2">2</option>
+
+                                <option selected="" value="3">3</option>
+
+                                <option value="4">4</option>
+
+                                <option value="5">5</option>
+
+                                <option value="6">6</option>
+
+                            </select>
+                            <span class="multiplier">x</span>
+                            <select quot-edit-duration="" name="duration" class="duration-select">
+                                <option selected="" value="45">45</option>
+                                <option value="50">50</option>
+                                <option value="55">55</option>
+                            </select>
+                            <span class="minutes">min</span>
+                            <input class="price-box" value="3000">
+                            <span>GBP</span>
+                        </div>
+                        <div option-id="3186" class="act-option">
+                            <div class="custom-checkbox">
+                                <input select-option="" option-id="3186" id="option_3186" name="package-check" value="" type="checkbox" checked="">
+                                <label for="option_3186"></label>
+                            </div>
+
+                            <select quot-edit-qty="" name="qty" class="quantity-select">
+
+                                <option value="1">1</option>
+
+                                <option value="2">2</option>
+
+                                <option selected="" value="3">3</option>
+
+                                <option value="4">4</option>
+
+                                <option value="5">5</option>
+
+                                <option value="6">6</option>
+
+                            </select>
+                            <span class="multiplier">x</span>
+                            <select quot-edit-duration="" name="duration" class="duration-select">
+                                <option selected="" value="45">45</option>
+                                <option value="50">50</option>
+                                <option value="55">55</option>
+                            </select>
+                            <span class="minutes">min</span>
+                            <input class="price-box" value="3000">
+                            <span>GBP</span>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div act-id="307">
+                    <div class="row">
+                        <div class="act-title act-extras">
+                            <i class="act-name">Extras</i>
+                        </div>
+                    </div>
+                    <div package-id="2289" class="row">
+                        <div class="row package">
+                            <div class="custom-checkbox">
+                                <input id="package_2289" name="package-check" value="" type="checkbox" checked>
+                                <label for="package_2289"></label>
+                            </div>
+                            <div class="extra-block-options">
+                                <select name="" class="extra-select-type">
+                                    <option value="1">Standard Act</option>
+                                    <option value="2">Custom Act</option>
+                                    <option value="3">Travel Expenses</option>
+                                    <option value="4">Technical expenses</option>
+                                    <option value="5">Materials</option>
+                                    <option value="6">Other</option>
+                                </select>
+                                <select quot-edit-qty="" name="qty" class="quantity-select">
+                                    <option value="1">1</option>
+                                    <option selected="" value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                                <span class="multiplier">x</span>
+                                <select quot-edit-duration="" name="duration" class="duration-select">
+                                    <option value="45">45</option>
+                                    <option selected="" value="50">50</option>
+                                    <option value="55">55</option>
+                                </select>
+                                <span>min</span>
+                                <div class="pull-right">
+                                    <input class="price-box" value="3000">
+                                    <span>GBP</span>
+                                    <span class="pull-right"><i class="fa fa-trash"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row package">
+                            <div>
+                                <textarea name="comment" class="quote-comment-box extra" placeholder="Describe this extra"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div package-id="2290" class="row">
+                        <div class="row package">
+                            <div class="custom-checkbox">
+                                <input id="package_2290" name="package-check" value="" type="checkbox">
+                                <label for="package_2290"></label>
+                            </div>
+                            <div class="extra-block-options">
+                                <select name="" class="extra-select-type">
+                                    <option value="1">Standard Act</option>
+                                    <option value="2">Custom Act</option>
+                                    <option value="3">Travel Expenses</option>
+                                    <option value="4" selected>Technical expenses</option>
+                                    <option value="5">Materials</option>
+                                    <option value="6">Other</option>
+                                </select>
+                                <div class="pull-right">
+                                    <input class="price-box" value="3000">
+                                    <span>GBP</span>
+                                    <span class="pull-right"><i class="fa fa-trash"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div package-id="2291" class="row">
+                        <div class="row package">
+                            <div class="custom-checkbox">
+                                <input id="package_2291" name="package-check" value="" type="checkbox" checked>
+                                <label for="package_2291"></label>
+                            </div>
+                            <div class="extra-block-options">
+                                <select name="" class="extra-select-type">
+                                    <option value="1">Standard Act</option>
+                                    <option value="2">Custom Act</option>
+                                    <option value="3">Travel Expenses</option>
+                                    <option value="4" selected>Technical expenses</option>
+                                    <option value="5">Materials</option>
+                                    <option value="6">Other</option>
+                                </select>
+                                <div class="pull-right">
+                                    <input class="price-box" value="3000">
+                                    <span>GBP</span>
+                                    <span class="pull-right"><i class="fa fa-trash"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row package">
+                            <div>
+                                <textarea name="comment" class="quote-comment-box extra" placeholder="Describe this extra"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+                <div>
+                    <div class="add-extra-container text-center">
+                        <button create-performance="" class="add-new-performance-btn" status="adding">Add an extra</button>
+                    </div>
+                </div>
+            </form>
+            <hr>
+            <form name="quotation_payment_info" class="payment-info">
+
+                <div class="row">
+                    <label>Payment terms</label>
+                </div>
+
+                <div class="row payment-deposit">
+                    <select name="quotation-payment-percent">
+                        <option value="30">30%</option>
+                        <option value="50">50%</option>
+                        <option value="100">100%</option>
+                    </select>
+
+                    <span>Guaranteed deposit to be paid with <b>Acted Escrow Account</b> now to confirm the booking</span>
+                </div>
+
+                <div class="row payment-deposit-info">
+                    <span>50% guaranteed Balance payment on <b>Escrow Account</b></span>
+                </div>
+
+                <div style="text-align: center;">
+                    <button quotation-send="" class="btn btn-quotation-send">Send quotation</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!-- // NEW QUOTATION MODAL -->
+
+
+
+
 <script type="text/template" id="quot-modal-tmp">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">×</span>
@@ -454,7 +862,6 @@
 
 </script>
 
-
 <script type="text/template" id="quot-set-template">
 
     <!-- Set options -->
@@ -484,7 +891,6 @@
     </div>
 
 </script>
-
 
 <script type="text/template" id="quot-package-template">
     <div package-id="<%=package.id%>" class="row">
