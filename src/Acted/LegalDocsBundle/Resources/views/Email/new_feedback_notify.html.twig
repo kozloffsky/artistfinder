@@ -5,7 +5,7 @@
 {% endblock %}
 {% block body_html %}
     {% autoescape false %}
-        <p>You have a received a 4/5 rating from {{ user.name }}.</p>
+        <p>You have a received a {{ feedback.rating }}/5 rating from {{ user.name }}.</p>
         {% if feedback.feedback is defined %}
             <p>feedback.feedback</p>
         {% endif %}

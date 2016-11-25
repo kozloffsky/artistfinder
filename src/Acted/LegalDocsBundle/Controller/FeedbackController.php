@@ -63,7 +63,7 @@ class FeedbackController extends Controller
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'There are not any data'
-            ],  Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         $event = $data['event'];
@@ -80,7 +80,7 @@ class FeedbackController extends Controller
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Feedback has already had record with these event and artist'
-            ],  Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         //check event date
@@ -92,7 +92,7 @@ class FeedbackController extends Controller
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Feedback already exists'
-            ],  Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         $feedback = new Feedback();
@@ -169,14 +169,14 @@ class FeedbackController extends Controller
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Feedback already exists'
-            ],  Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         if (!empty($feedback) && !empty($feedback->getFeedback())) {
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Feedback already exists'
-            ],  Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         // feedback is not exists yet
@@ -189,6 +189,9 @@ class FeedbackController extends Controller
             $em->persist($feedbackObj);
             $em->flush();
         }
+
+        $feedbackManager = $this->get('app.feedback.manager');
+        $feedbackManager->sendNotify($user, $feedbackObj);
 
         //there is rating without feedback
         if (!empty($feedback) && empty($feedback->getFeedback())) {
@@ -262,7 +265,7 @@ class FeedbackController extends Controller
             'status' => 'success',
             'feedbacks' => $artistFeedbacks['feedbacks']
         ));
-        
+
         $response->headers->set('count', $artistFeedbacks['countRows']);
         $response->send();
     }
