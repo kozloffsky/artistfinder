@@ -1,6 +1,8 @@
 $(function () {
     'use strict';
 
+    //TODO refactor html to lodash templates!
+
     /**
      * Current route
      * @type {string}
