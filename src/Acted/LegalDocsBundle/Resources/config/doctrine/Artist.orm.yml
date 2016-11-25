@@ -70,5 +70,8 @@ Acted\LegalDocsBundle\Entity\Artist:
         feedbacks:
             targetEntity: Acted\LegalDocsBundle\Entity\Feedback
             mappedBy: artist
+        eventArtists:
+            targetEntity: Acted\LegalDocsBundle\Entity\EventArtist
+            mappedBy: artist
 
     lifecycleCallbacks: {  }

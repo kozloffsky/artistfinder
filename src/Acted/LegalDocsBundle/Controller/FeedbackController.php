@@ -63,7 +63,7 @@ class FeedbackController extends Controller
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'There are not any data'
-            ], Response::HTTP_BAD_REQUEST);
+            ],  Response::HTTP_BAD_REQUEST);
         }
 
         $event = $data['event'];
@@ -80,7 +80,7 @@ class FeedbackController extends Controller
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Feedback has already had record with these event and artist'
-            ], Response::HTTP_BAD_REQUEST);
+            ],  Response::HTTP_BAD_REQUEST);
         }
 
         //check event date
@@ -92,7 +92,7 @@ class FeedbackController extends Controller
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Feedback already exists'
-            ], Response::HTTP_BAD_REQUEST);
+            ],  Response::HTTP_BAD_REQUEST);
         }
 
         $feedback = new Feedback();
@@ -169,14 +169,14 @@ class FeedbackController extends Controller
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Feedback already exists'
-            ], Response::HTTP_BAD_REQUEST);
+            ],  Response::HTTP_BAD_REQUEST);
         }
 
         if (!empty($feedback) && !empty($feedback->getFeedback())) {
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Feedback already exists'
-            ], Response::HTTP_BAD_REQUEST);
+            ],  Response::HTTP_BAD_REQUEST);
         }
 
         // feedback is not exists yet
@@ -188,12 +188,11 @@ class FeedbackController extends Controller
             $feedbackObj->setFeedback($feedbackText);
             $em->persist($feedbackObj);
             $em->flush();
-            
+
+            //Send notification email
             $feedbackManager = $this->get('app.feedback.manager');
             $feedbackManager->sendNotify($user, $feedbackObj);
         }
-
-
 
         //there is rating without feedback
         if (!empty($feedback) && empty($feedback->getFeedback())) {
@@ -216,21 +215,20 @@ class FeedbackController extends Controller
      * @ApiDoc(
      *  resource=true,
      *  description="Get average rating",
-     *  input="Acted\LegalDocsBundle\Form\FeedbackRatingCreateType",
      *  statusCodes={
      *         200="Returned when successful",
      *         400="Returned when the form has validation errors",
      *     }
      * )
      * @param Request $request
-     * @param integer $artistId
+     * @param Artist $artist
      * @return JsonResponse
      */
-    public function getAverageRatingAction(Request $request, $artistId)
+    public function getAverageRatingAction(Request $request, $artist)
     {
         $em = $this->getDoctrine()->getManager();
         $feedbackRepo = $em->getRepository('ActedLegalDocsBundle:Feedback');
-        $data = $feedbackRepo->getAverageArtistRating($artistId);
+        $data = $feedbackRepo->getAverageArtistRating($artist);
 
         return new JsonResponse(array(
             'status' => 'success',
@@ -244,7 +242,6 @@ class FeedbackController extends Controller
      * @ApiDoc(
      *  resource=true,
      *  description="get feedbacks by artist",
-     *  input="Acted\LegalDocsBundle\Form\FeedbackRatingCreateType",
      *  statusCodes={
      *         200="Returned when successful",
      *         400="Returned when the form has validation errors",
@@ -263,13 +260,12 @@ class FeedbackController extends Controller
 
         $artistFeedbacks = $feedbackRepo->getArtistFeedbacks($artist, $page, $size);
 
-        $response = new JsonResponse(array(
+        return new JsonResponse(array(
             'status' => 'success',
             'feedbacks' => $artistFeedbacks['feedbacks']
+        ), Response::HTTP_OK, array(
+            'count' => $artistFeedbacks['countRows']
         ));
-
-        $response->headers->set('count', $artistFeedbacks['countRows']);
-        $response->send();
     }
 
     /**

@@ -2,14 +2,18 @@
 
 namespace Acted\LegalDocsBundle\Controller;
 
+use Acted\LegalDocsBundle\Entity\Event;
+use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Entity\EventOffer;
 use Acted\LegalDocsBundle\Entity\RequestQuotation;
+use Acted\LegalDocsBundle\Entity\EventArtist;
 use Acted\LegalDocsBundle\Form\EventOfferType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
+use Symfony\Component\HttpFoundation\Response;
 
 use JMS\Serializer\SerializationContext;
 
@@ -84,13 +88,21 @@ class EventsController extends Controller
                 return new JsonResponse($prettyErrors, 400);
             }
             $em->flush();
-            $artist = $data->getPerformance()->first()->getProfile()->getUser();
+            $userArtist = $data->getPerformance()->first()->getProfile()->getUser();
+            $artist = $userArtist->getArtist();
+
+            /*Add artist to event*/
+            $eventArtist = new EventArtist();
+            $eventArtist->setEvent($event);
+            $eventArtist->setArtist($artist);
+            $em->persist($eventArtist);
+            $em->flush();
 
             /** Create ChatRoom */
-            $chatManager->createChat($event, $artist, $data, $offer);
+            $chatManager->createChat($event, $userArtist, $data, $offer);
             /** Notify Artist */
-            $eventManager->createEventNotify($data, $artist, $offer);
-            $eventManager->newMessageNotify($data, $artist);
+            $eventManager->createEventNotify($data, $userArtist, $offer);
+            $eventManager->newMessageNotify($data, $userArtist);
 
             /*Create request*/
             $requestQuotation = new RequestQuotation();
@@ -252,5 +264,70 @@ class EventsController extends Controller
         } else {
             return new JsonResponse(['empty']);
         }
+    }
+
+    /**
+     * Get artists in event
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Get artists in event",
+     *  input="Acted\LegalDocsBundle\Form\FeedbackRatingCreateType",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @param Event $event
+     * @param integer $page
+     * @param integer $size
+     * @return JsonResponse
+     */
+    public function getEventArtistsAction(Request $request, Event $event, $page, $size)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $eventArtistRepo = $em->getRepository('ActedLegalDocsBundle:EventArtist');
+
+        $eventArtists = $eventArtistRepo->getEventArtists($event, $page, $size);
+
+        return new JsonResponse(array(
+            'status' => 'success',
+            'artists' => $eventArtists['artists']
+        ), Response::HTTP_OK, array(
+            'count' => $eventArtists['countRows']
+        ));
+    }
+
+    /**
+     * get events by client
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="get events by client",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @param User $user
+     * @param integer $page
+     * @param integer $size
+     * @return JsonResponse
+     */
+    public function getClientEventsAction(Request $request, User $user, $page, $size)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $eventRepo = $em->getRepository('ActedLegalDocsBundle:Event');
+
+        $clientEvents = $eventRepo->getClientEvents($user, $page, $size);
+
+        return new JsonResponse(array(
+            'status' => 'success',
+            'events' => $clientEvents['events']
+        ), Response::HTTP_OK, array(
+            'count' => $clientEvents['countRows']
+        ));
     }
 }

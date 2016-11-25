@@ -2,7 +2,9 @@
 
 namespace Acted\LegalDocsBundle\Repository;
 
+use Acted\LegalDocsBundle\Entity\EventOffer;
 use Doctrine\ORM\EntityRepository;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
  * EventOfferRepository
@@ -100,5 +102,20 @@ class EventOfferRepository extends EntityRepository
         }
 
         return $performanceIds;
+    }
+
+
+    /**
+     * @Secure(roles="ROLE_ACTOR")
+     * @param int $eventId
+     *
+     */
+    public function acceptDetails($eventId){
+        $eventOffer = $this->findOneBy(array("event"=>$eventId));
+        // do nothing if already accepted
+        if($eventOffer->getDetailsAccepted()) return;
+        $eventOffer->setDetailsAccepted(true);
+        $this->_em->persist($eventOffer);
+        $this->_em->flush();
     }
 }

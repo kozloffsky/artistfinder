@@ -64,7 +64,7 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     {% if app.user %}
-                        <li class="bookings"><a href="/dashboard/bookings/{{ app.user.id }}">My bookings
+                        <li class="bookings"><a href="{{ path('bookings') }}">My bookings
                                 <div class="underline">
                                     <div class="top"></div>
                                     <div class="bottom"></div>
@@ -97,13 +97,13 @@
                         <li class="mail">
                             <!--For screens > 991px-->
                             <div class="hidden-sm hidden-xs badge">{{ amount|default(0) }}</div>
-                            <a class="hidden-sm hidden-xs" href="/dashboard/messages/{{ app.user.id }}"><img src="{{ asset('assets/images/messages.png') }}" alt=""></a>
+                            <a class="hidden-sm hidden-xs" href="{{ path('all_messages_user') }}"><img src="{{ asset('assets/images/messages.png') }}" alt=""></a>
                             <!--For screens < 991px-->
 
                             {% if app.user %}
-                                <a class="hidden-md hidden-lg" href="/dashboard/messages/{{ app.user.id }}">Messages<span class="badge">{{ amount|default(0) }}</span></a>
+                                <a class="hidden-md hidden-lg" href="{{ path('all_messages_user') }}">Messages<span class="badge">{{ amount|default(0) }}</span></a>
                             {% else %}
-                                <a class="hidden-md hidden-lg" href="/dashboard/messages/{{ app.user.id }}">Messages<span class="badge">{{ amount|default(0) }}</span></a>
+                                <a class="hidden-md hidden-lg" href="{{ path('all_messages_user') }}">Messages<span class="badge">{{ amount|default(0) }}</span></a>
                             {% endif %}
                         </li>
                         <li class="profile-dropdown dropdown hidden-sm">

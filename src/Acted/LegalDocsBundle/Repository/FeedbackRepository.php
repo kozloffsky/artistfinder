@@ -1,6 +1,7 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Repository;
+use Acted\LegalDocsBundle\Entity\Artist;
 
 /**
  * FeedbackRepository
@@ -10,6 +11,13 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class FeedbackRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Get artist feedbacks
+     * @param Artist $artist
+     * @param integer $page
+     * @param integer $size
+     * @return array
+     */
     public function getArtistFeedbacks($artist, $page = 1, $size = 2)
     {
         if ($page == 1) {
@@ -49,10 +57,10 @@ class FeedbackRepository extends \Doctrine\ORM\EntityRepository
         );
     }
 
-    public function getAverageArtistRating($artistId)
+    public function getAverageArtistRating($artist)
     {
         $whereCriteria = "f.artist = :artist";
-        $params = array('artist' => $artistId);
+        $params = array('artist' => $artist);
 
         $qb = $this->createQueryBuilder('f')
             ->select('avg(f.rating) as averageRating')

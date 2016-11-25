@@ -3,10 +3,8 @@ article.tab {
 }
 
 .qa .categories-menu {
-    margin: 19px 0 30px 0;
     display: block;
     text-align: center;
-    border-bottom: 2px solid #d8d8d8;
 }
 .qa .categories-menu li { margin: 0 36px; }
 .qa .categories-menu li.active { border-bottom: 4px solid #ff793e; margin-bottom: -4px; }

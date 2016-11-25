@@ -3,11 +3,6 @@
     min-height: 450px;
 }
 
-.messages .categories-menu {
-    margin-top: 12px;
-    margin-bottom: 38px;
-}
-
 .select2  {
     width: 135px!important;
     outline: none;
@@ -81,42 +76,56 @@
 .dialog-section {
     background: white;
     min-height: 38px;
-    border-top: 2px solid rgba(0, 0, 0, 0.18);
-    padding: 26px 0 0!important;
+    border-top: 1px solid rgba(0, 0, 0, 0.07);
+    padding: 31px 0 0!important;
 }
 
 .dialog-section.new-message {
     background: #fafafa;
 }
 
+.dialog-section .message-info {
+    background-color: #778eff;
+    border-radius: 12px;
+    height: 12px;
+    width: 12px;
+    margin: 19px 0 0 0;
+    display: inline-block;
+    vertical-align: top;
+    opacity: 0;
+}
+.dialog-section .message-info.active {
+    opacity: 1;
+}
+
 .dialog-section:last-of-type {
-    border-bottom: 2px solid rgba(0, 0, 0, 0.18);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
 }
 
 .dialog-section .message-block {
-    width: calc(100% - 169px);
+    width: calc(100% - 220px);
     display: inline-block;
-    float: left;
     padding-bottom: 19px;
 }
 
 .dialog-section .avatar {
     width: 53px;
     display: inline-block;
-    float: left;
+    margin: 0 0 0 8px;
+    vertical-align: top;
 }
 
 .dialog-section .avatar img {
-    width: 38px;
-    height: 38px;
-    margin-left: 8px;
-    border-radius: 19px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }
 
 .dialog-section .user-info {
-    width: 116px;
+    width: 122px;
     display: inline-block;
-    float: left;
+    margin: 0 0 0 14px;
+    vertical-align: top;
 }
 
 .dialog-section .controls {
@@ -129,28 +138,20 @@
 }
 
 .dialog-section .controls>.button-gradient.filled>.btn {
-    font-size: 11px!important;
-    height: 26px!important;
-    line-height: 24px;
+    font-family: LatoRegular;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 1);
+    height: 33px;
+    width: 160px;
+    line-height: 18px;
 }
 
-.dialog-section .controls>.button-gradient .btn {
+/*.dialog-section .controls>.button-gradient .btn {
     font-size: 11px!important;
     height: 23px!important;
     padding: 0 23px;
     width: auto!important;
-}
-
-.dialog-section .controls>.button-gradient {
-    margin: 0 15px!important;
-}
-
-.dialog-section .button-gradient.blue {
-    background: rgb(88,149,243);
-    background: -moz-linear-gradient(left, rgba(88,149,243,1) 0%, rgba(73,79,199,1) 100%);
-    background: -webkit-linear-gradient(left, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
-    background: linear-gradient(to right, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
-}
+}*/
 
 .dialog-section .text-block {
     padding-bottom: 27px;
@@ -158,23 +159,29 @@
 
 .message-controls i {
     display: inline-block;
-    height: 11px;
-    width: 11px;
+    height: 18px;
+    width: 18px;
     margin-right: 4px;
     background-size: cover!important;
+    vertical-align: middle;
 }
 
 .message-controls ul li a,
 .message-controls ul li {
     text-decoration: none;
-    font-size: 11px;
-    font-family: LatoRegular;
     margin-bottom: 15px;
     color: rgba(0, 0, 0, 0.67);
+    font-family: LatoRegular;
+    font-size: 14px;
 }
 
 .message-controls .status {
-    margin-bottom: 23px;
+    margin-bottom: 27px;
+    font-family: LatoRegular;
+    font-size: 14px;
+}
+.message-controls .ul-reset {
+    float: right;
 }
 
 .message-controls .status.confirmed {
@@ -212,22 +219,37 @@
     background: url("../../assets/images/delete.png") no-repeat center;
 }
 
+/*.message-controls .archive i {
+    height: 14px;
+    width: 14px;
+}
+.message-controls .delete i {
+    height: 14px;
+    width: 11px;
+}*/
+
+.message-block .message-controls {
+    float: right;
+    margin: 0 20px 0 0;
+}
+
 .user-info .user-name {
-    font-size: 11px;
+    font-size: 15px;
     font-family: LatoRegular;
     color: rgba(0, 0, 0, 0.87);
 }
 
 .user-info .time {
-    font-size: 8px;
+    font-size: 11px;
     font-family: LatoRegular;
     color: rgba(0, 0, 0, 0.67);
     float: left;
 }
 
 .message-block .message-heading {
-    font-size: 11px;
     font-family: LatoRegular;
+    font-size: 15px;
+    font-weight: bold;
     color: rgba(0, 0, 0, 0.87);
 }
 
@@ -237,10 +259,11 @@
 }
 
 .message-block .text {
-    font-size: 11px;
+    margin-bottom: 30px;
+    text-align: justify;
     font-family: LatoRegular;
+    font-size: 14px;
     color: rgba(0, 0, 0, 0.67);
-    margin-bottom: 15px;
     text-align: justify;
 }
 
@@ -251,6 +274,61 @@
     -moz-transition: all 0.4s ease-in-out;
     -o-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
+}
+
+.messages .dialogs .dialog-rating-container {
+    background-color: rgba(255, 253, 226, 1);
+    padding-bottom: 19px;
+}
+.messages .dialogs .dialog-rating-container .rating {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0 0 0 9px;
+}
+.messages .dialogs .dialog-rating-container .message-info {
+    padding: 13px 0 17px 15px;
+    font-family: LatoRegular;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 1);
+}
+
+.messages .dialogs .dialog-rating-container .message-block {
+    margin: 0 0 0 61px;
+}
+.messages .dialogs .dialog-rating-container .message-block p {
+    font-family: LatoRegular;
+    font-size: 14px;
+    color: rgba(99, 99, 99, 1);
+    line-height: 21px;
+    margin: 0;
+}
+
+.messages .dialogs .dialog-rating-container .messagse-info span:nth-of-type(2) {
+    color: rgba(0, 0, 0, 0.87);
+}
+.messages .dialogs .dialog-rating-container .avatar,
+.messages .dialogs .dialog-rating-container .user-info {
+    display: inline-block;
+}
+.messages .dialogs .dialog-rating-container .user-info {
+    padding: 0 0 0 13px;
+}
+.messages .dialogs .dialog-rating-container .user-info .user-name {
+    color: rgba(0, 0, 0, 0.87);
+    font-family: LatoRegular;
+    font-size: 16px;
+}
+.messages .dialogs .dialog-rating-container .avatar {
+    padding: 0 0 0 15px;
+}
+.messages .dialogs .dialog-rating-container .avatar img {
+    height: 33px;
+    width: 33px;
+    border-radius: 50%;
+}
+
+.ui-loader.ui-corner-all.ui-body-a.ui-loader-default {
+    display: none !important;
 }
 
 @media (max-width: 767px) {
@@ -271,38 +349,41 @@
     }
 
     .dialog-section .avatar img {
-        width: 38px;
-        height: 38px;
+        width: 50px;
+        height: 50px;
         margin-left: 0;
     }
 
     .dialog-section .message-block {
-        width: calc(100% - 53px);
+        width: calc(100% - 79px);
         display: inline-block;
-        float: left;
+        float: right;
         padding-bottom: 0px;
+        margin: -24px 0 0 0;
     }
-
+    .message-block .message-controls {
+        float: left;
+        margin: 5px 20px 0 0;
+    }
     .dialog-section .user-info {
         width: calc(100% - 53px);
+        display: inline;
     }
-
     .user-info .user-name {
-        font-size: 11px;
+        font-family: LatoRegular;
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.87);
     }
-
     .user-info .time {
-        font-size: 8px;
         line-height: 15px;
+        font-size: 11px;
         float: right;
     }
-
     .dialog-section .text-block {
         padding: 0!important;
     }
-
     .message-block .text {
-        max-height: 15px;
+        max-height: 18px;
         overflow: hidden;
         text-overflow: ellipsis;
         word-wrap: break-word;
@@ -311,26 +392,29 @@
         padding-right: 11px;
         margin-bottom: 0;
     }
-
     .message-controls ul li {
         margin-bottom: 0;
     }
-
+    .message-controls i,
+    .message-controls .status {
+        font-size: 12px;
+    }
+    .message-controls i {
+        height: 11px;
+        width: 11px;
+    }
     .message-controls .status {
         margin-bottom: 0;
     }
-
     .controls-mobile {
         display: block;
         overflow: hidden;
         height: 0;
     }
-
     .controls-mobile a {
         color: rgba(0, 0, 0, 0.67);
         text-decoration: none;
     }
-
     .controls-mobile.opened {
         border-top: 1px solid rgba(0, 0, 0, 0.18);
         display: block;
@@ -338,22 +422,18 @@
         padding-top: 4px;
         margin-top: 8px;
     }
-
     .controls-mobile li {
         display: inline-block;
         width: 50%;
         float: left;
         text-align: center;
     }
-
     .messages .select2 {
         width: 100%!important;
     }
-
     .messages .container {
         padding: 0!important;
     }
-
     .dialog-section.noselect {
         -webkit-touch-callout: none; /* iOS Safari */
         -webkit-user-select: none;   /* Chrome/Safari/Opera */
@@ -362,6 +442,90 @@
         -ms-user-select: none;       /* IE/Edge */
         user-select: none;           /* non-prefixed version, currently
                                   not supported by any browser */
+    }
+    .dialog-section .message-info {
+        height: 6px;
+        width: 6px;
+    }
+    .categories-dropdown .btn-primary {
+        padding: 14px 20px 16px 20px !important;
+    }
+    .messages .dialogs .dialog-rating-container {
+        padding: 0 0 0 12px;
+        height: 100%;
+    }
+    .messages .dialogs .dialog-rating-container .message-info {
+        padding: 13px 10px 17px 0;
+        display: inline-block;
+    }
+    .messages .dialogs .dialog-rating-container .message-info span:nth-of-type(2) {
+        padding:0 4px 0 0;
+        float: right;
+    }
+    .messages .dialogs .dialog-rating-container .avatar {
+        padding: 0;
+    }
+
+    .messages .dialogs .dialog-rating-container .user-info {
+        padding: 0px 0 0 11px;
+    }
+
+    .messages .dialogs .dialog-rating-container .rating {
+        display: inline;
+        padding: 0 0 0 7px;
+    }
+    .messages .dialogs .dialog-rating-container .message-block {
+        margin: 7px 8px 5px 4px;
+        display: inline-block;
+        text-align: justify;
+    }
+    .select2-container--default .select2-selection--single {
+        height: 36px;
+        margin: 12px;
+        border-radius: 18px;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        padding: 8px 0 0 23px !important;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        top: 50% !important;
+        right: 10% !important;
+        margin: -13px !important;
+    }
+    .select2-container--open .select2-dropdown--below {
+        position: absolute;
+        width: 296px !important;
+        top: -12px;
+        left: 12px;
+    }
+
+    .messages .message-options {
+        position: absolute;
+        display: inline;
+        width: 160px;
+        background-color: rgba(240, 240, 240, 1);
+        top: -1px;
+        right: -160px;
+    }
+    .messages .message-options li {
+        list-style: none;
+        display: inline-block;
+        width: 50%;
+        height: 100%;
+        float: left;
+        padding: 30px 16px 23px 20px;
+    }
+    .messages .message-options a {
+        font-family: LatoRegular;
+        text-decoration: none;
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.67);
+    }
+    .messages .message-options i {
+        display: block;
+        margin: 0 auto;
+        height: 14px;
+        width: 14px;
     }
 }
 

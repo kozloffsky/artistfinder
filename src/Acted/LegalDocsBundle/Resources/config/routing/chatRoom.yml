@@ -82,3 +82,12 @@ chat_room_one:
     path:     /chat/one/{chatRoomId}
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:get }
     methods:  GET
+
+feedbacks:
+    path:     /feedbacks
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:feedbacks }
+    methods:  GET
+
+api_accept_details:
+    path:     /api/chat-room/accept-details/{eventId}
+    defaults: {_controller: ActedLegalDocsBundle:ChatRoom:acceptDetails}

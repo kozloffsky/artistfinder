@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Repository;
 
+use Acted\LegalDocsBundle\Entity\User;
 /**
  * EventRepository
  *
@@ -10,4 +11,49 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class EventRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Get client events
+     * @param User $user
+     * @param integer $page
+     * @param integer $size
+     * @return array
+     */
+    public function getClientEvents($user, $page = 1, $size = 2)
+    {
+        if ($page == 1) {
+            $offset = 0;
+        } else {
+            $offset = $page * $size;
+            $offset -= $size;
+        }
+
+        $whereCriteria = "e.user = :user AND e.startingDate < :datetime";
+
+        $params = array('user' => $user, 'datetime' => new \DateTime('+12 hour'));
+
+        $qb = $this->createQueryBuilder('e')
+            ->select('e')
+            ->where($whereCriteria)
+            ->setFirstResult($offset)
+            ->setMaxResults($size)
+            ->setParameters($params);
+
+
+        $events = $qb->getQuery()->getArrayResult();
+
+        $qb = $this->createQueryBuilder('e')
+            ->select('count(e.id) as countRows')
+            ->where($whereCriteria)
+            ->setFirstResult($offset)
+            ->setMaxResults($size)
+            ->setParameters($params);
+
+
+        $eventCount = $qb->getQuery()->getOneOrNullResult();
+
+        return array(
+            'events' => $events,
+            'countRows' => $eventCount['countRows']
+        );
+    }
 }
