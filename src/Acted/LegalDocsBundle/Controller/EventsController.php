@@ -293,7 +293,7 @@ class EventsController extends Controller
 
         return new JsonResponse(array(
             'status' => 'success',
-            'atrists' => $eventArtists['artists']
+            'artists' => $eventArtists['artists']
         ), Response::HTTP_OK, array(
             'count' => $eventArtists['countRows']
         ));

@@ -73,6 +73,7 @@ i.star-icon {
     width: 22px;
     height: 21px;
     margin: 0 10px 0 0;
+    cursor: pointer;
 }
 /*.feedback i.star-icon:nth-of-type(1) {
     margin: 0 10px 0 10px !important;
@@ -160,8 +161,25 @@ margin: 0 0 0 47px;**/
     border-radius: 3px;
     padding: 4px 13px 6px 13px;
     margin: 0 10px 0 0;
+
+    width: 111px;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.dashboard.client .events-menu .event-item a {
     font-family: LatoRegular;
     font-size: 14px;
+    color: rgba(0, 0, 0, 0.87);
+}
+.dashboard.client .events-menu .event-item a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+.dashboard.client .events-menu .event-item.active a {
+    color: #FFF;
 }
 .dashboard.client .events-menu .event-item.non-active {
     background-image: -webkit-linear-gradient(left, rgba(88, 149, 243, 1) 0%, rgba(73, 79, 199, 1) 100%), -webkit-linear-gradient(left, rgba(88, 149, 243, 1) 0%, rgba(73, 79, 199, 1) 100%);
@@ -275,7 +293,7 @@ margin: 0 0 0 47px;**/
 }
 .dashboard.client .comment-area .comment-box .char-count {
     position: absolute;
-    top: 45px;
+    top: 20px;
     right: 9.5px;
     font-family: LatoRegular;
     font-size: 13px;
@@ -312,10 +330,12 @@ margin: 0 0 0 47px;**/
     .dashboard.client .comment-area {
         width: 720px;
     }
-
     .dashboard.client .options-menu .active-tab,
     .dashboard.client .options-menu input[name="options-menu-open"] {
         display: none;
+    }
+    .dashboard.client .events-menu {
+        width: 700px;
     }
 }
 
