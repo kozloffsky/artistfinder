@@ -188,10 +188,12 @@ class FeedbackController extends Controller
             $feedbackObj->setFeedback($feedbackText);
             $em->persist($feedbackObj);
             $em->flush();
+            
+            $feedbackManager = $this->get('app.feedback.manager');
+            $feedbackManager->sendNotify($user, $feedbackObj);
         }
 
-        $feedbackManager = $this->get('app.feedback.manager');
-        $feedbackManager->sendNotify($user, $feedbackObj);
+
 
         //there is rating without feedback
         if (!empty($feedback) && empty($feedback->getFeedback())) {
