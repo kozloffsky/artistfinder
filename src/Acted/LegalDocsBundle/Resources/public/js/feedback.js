@@ -42,14 +42,29 @@ $(function () {
      */
     function showEvents(events) {
         var $eventsWrapper = $('div.events-menu > ul');
-        //todo implement max events on page
-        if (events.length > 0) {
-            $('div.arrows').show();
+        var initCarousel = false;
+        if (events.length > 5) {
+            initCarousel = true;
         }
 
         var html = eventsToHtml(events);
         $eventsWrapper.html(html).promise().done(function () {
-            $('.event-item').click(eventOnClick)
+            $('.event-item').click(eventOnClick);
+
+            if (initCarousel) {
+                $('div.arrows').show();
+
+                var owl = $('.events-menu > ul').owlCarousel({
+                    items: 5,
+                    pagination: false
+                });
+                $('i.left').click(function () {
+                    owl.trigger('owl.prev');
+                });
+                $('i.right').click(function () {
+                    owl.trigger('owl.next');
+                })
+            }
         });
 
     }
@@ -218,7 +233,7 @@ $(function () {
         $this.removeClass('unfilled').addClass('filled');
         $prevStars.removeClass('unfilled').addClass('filled');
         $wrapper.addClass('rating-fixed');
-        $wrapper.find('button').removeClass('disabled');
+        $wrapper.parents('.col-md-12').find('button').removeAttr('disabled');
     }
 
     /**
@@ -252,6 +267,9 @@ $(function () {
         $current.html($this.val().length);
     }
 
+    /**
+     * Collect data from the feedback form to the data obj.
+     */
     function collectData() {
         var $this = $(this);
         var $commentBox = $this.parents('.comment-box');
@@ -259,6 +277,51 @@ $(function () {
         var text = $commentBox.find('textarea').val();
         var eventId = getCurrentEventId();
         var artistId = $commentBox.data('artistId');
+        var data = {};
+        var noText = false;
+
+        if (text.length > 0) {
+            data = {
+                "feedback_create[event]": eventId,
+                "feedback_create[artist]": artistId,
+                "feedback_create[rating]": rating,
+                "feedback_create[feedback]": text
+            };
+        } else {
+            data = {
+                "feedback_rating_create[event]": eventId,
+                "feedback_rating_create[artist]": artistId,
+                "feedback_rating_create[rating]": rating
+            };
+            noText = true;
+        }
+        sendFeedback(data, noText);
+    }
+
+    /**
+     * Send feedback to the api.
+     *
+     * @param {object} data
+     * @param {bool} noText
+     */
+    function sendFeedback(data, noText) {
+        noText = typeof noText == 'undefined' ? false : noText;
+        var url = '/feedback/';
+        if (noText) {
+            url += 'rating';
+        }
+
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: data,
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
     }
 
     if (route.search('dashboard/feedback') > 0) {
