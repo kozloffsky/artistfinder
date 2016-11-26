@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\Option;
+use Acted\LegalDocsBundle\Entity\Performance;
 use Acted\LegalDocsBundle\Form\PriceOptionCreateType;
 use Acted\LegalDocsBundle\Form\PriceOptionEditType;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,8 +73,28 @@ class PriceOptionController extends Controller
                 'message' => 'There are not any data'
             ],  Response::HTTP_BAD_REQUEST);
         }
-        $duration = $data['duration'];
-        $qty = $data['qty'];
+
+        $duration = null;
+        $qty = null;
+
+        $duration = empty($data['duration']) ? null : $data['duration'];
+        $qty = empty($data['qty']) ? null : $data['qty'];
+
+        /*Check if standard or base performance then qty and duration required*/
+        $package = $option->getPackage();
+        if (!empty($package->getPerformance())) {
+            $type = $package->getPerformance()->getType();
+
+            if (($type == Performance::TYPE_BASE || $type == Performance::TYPE_STANDARD) &&
+                empty($qty) || empty($duration)
+            ) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'duration or qty is empty'
+                ],  Response::HTTP_BAD_REQUEST);
+            }
+        }
+
         $priceOnRequest = $data['price_on_request'];
 
         $option->setDuration($duration);

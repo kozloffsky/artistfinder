@@ -214,7 +214,7 @@ class PerformanceController extends Controller
                 (empty($currentOption['duration']) || empty($currentOption['qty']))) {
                 return new JsonResponse([
                     'status' => 'error',
-                    'message' => 'duration or qyt is empty'
+                    'message' => 'duration or qty is empty'
                 ],  Response::HTTP_BAD_REQUEST);
             }
 
@@ -287,6 +287,8 @@ class PerformanceController extends Controller
         $em = $this->getDoctrine()->getManager();
         $performanceData = $performanceFrom->getData();
         $performance->setTitle($performanceData->getTitle());
+        $performance->setType($performanceData->getType());
+        $performance->setComment($performanceData->getComment());
 
         $em->persist($performance);
         $em->flush();

@@ -172,6 +172,8 @@ class PerformanceRequestQuotationRepository extends EntityRepository
             $copiedPerformance->setProfile($profile);
             $copiedPerformance->setStatus($performance['status']);
             $copiedPerformance->setIsVisible($performance['isVisible']);
+            $copiedPerformance->setType($performance['type']);
+            $copiedPerformance->setComment($performance['comment']);
             $em->persist($copiedPerformance);
 
             /*Connect performances to request*/

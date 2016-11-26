@@ -132,7 +132,7 @@ class RequestQuotationController extends Controller
 
                 /*copy payment terms*/
                 $newPaymentTermRequestQuotation = new PaymentTermRequestQuotation();
-                //\Doctrine\Common\Util\Debug::dump($e->getMessage());exit;
+
                 $newPaymentTermRequestQuotation->setGuaranteedDepositPercent(
                     $publishedRequestQuotationObj->getPaymentTermRequestQuotation()->getGuaranteedDepositPercent()
                 );
@@ -274,7 +274,6 @@ class RequestQuotationController extends Controller
                 $performances[] = $performanceRequestQuotation['performance'];
             }
 
-            //\Doctrine\Common\Util\Debug::dump($event);exit;
 
             /*Generate pdf file*/
             //todo: we need to decide which id get from chatRoom in the future
