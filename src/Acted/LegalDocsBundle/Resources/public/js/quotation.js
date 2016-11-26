@@ -558,9 +558,15 @@ $(function() {
     function selectExtraPerformanceSend() {
         var quotId  = QRM.model.id;
         var perfId  = $(this).closest('div[act-id]').attr('act-id');
-        //var allCheckboxes = $(this).closest('div[act-id]').find('input[name="package-check"]');
+        var mainSelector = $(this).closest("div[act-id]");
 
         var selected = $(this).prop('checked');
+
+        if(selected) {
+            mainSelector.find('[extra-performance-comment]').show();
+        } else {
+            mainSelector.find('[extra-performance-comment]').hide();
+        }
 
             var data = {
                 perf: perfId,
@@ -569,17 +575,6 @@ $(function() {
 
         selectQuotaionPerformance(data)
             .then(function(res) {
-                /*if(selected) {
-                    $.each(allCheckboxes, function() {
-                        if(!$(this).prop('checked')) {
-                            $(this).trigger('click');
-                        }
-                    })
-                } else {
-                    $.each(allCheckboxes, function() {
-                        $(this).removeAttr('checked');
-                    })
-                }*/
                 console.log(res);
             })
             .catch(function(err) {
@@ -695,9 +690,6 @@ $(function() {
         e.preventDefault();
 
         var button = $(this);
-        //var dataContainer = $(this).find("#created-extra-performance");
-        /*var dataContainer = $(this).closest('form[name="quotation_act_info"]').find("div[new-act-section]");
-            dataContainer.html('');*/
 
         var newPerf = document.getElementById("quot-new-performance").innerHTML;
         var status = $(this).attr('status');
@@ -741,8 +733,7 @@ $(function() {
                 var html = _.template(newPerf)({
                     data: res
                 });
-
-                //dataContainer.html(html);
+                
                 var lastExtraAct = $("#extra-act").find("[act-type]").last();
                 lastExtraAct.after(html);
 
