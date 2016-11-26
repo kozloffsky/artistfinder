@@ -7,7 +7,6 @@ $(function() {
     function QuotationModel() {
         this.model = {};
     }
-
     function QuotationView(selector) {
         this.template = document.getElementById(selector).innerHTML;
         this.render = function(data) {
@@ -727,38 +726,23 @@ $(function() {
                 return createExtraPerformanceSend(performance);
             })        
             .then(function(res) {
-
                 newAct = res;
 
                 var html = _.template(newPerf)({
                     data: res
                 });
-                
-                var lastExtraAct = $("#extra-act").find("[act-type]").last();
-                lastExtraAct.after(html);
 
-                button.attr("status", "editing");
+                var extraActs = $("#extra-act").find("[act-type]");
+
+                if(extraActs.length) {
+                    extraActs.last().after(html);
+                } else {
+                    $("#extra-act").html(html);
+                }
             })
             .catch(function(err) {
                 console.error(err)
             })
-        }
-
-        if(status == 'editing') {
-            var newActTemplate = document.getElementById('quot-performance-tmp').innerHTML;
-
-            var data = {
-                data: {
-                    model: {
-                        perf: [newAct.performance]
-                    }
-                }
-            };
-
-            var html = _.template(newActTemplate)(data);
-
-
-            button.attr("status", "adding");
         }
     }
 
@@ -892,7 +876,6 @@ $(function() {
                 console.error(err);
             })
     }
-
     function editPerformanceType() {
         var mainSelector = $(this).closest("div[act-id]");
         var performanceId = $(this).closest("div[act-id]").attr("act-id");
@@ -944,7 +927,6 @@ $(function() {
                 console.error(err);
             })
     }
-
     function editOption() {
 
         var mainSelector = $(this).closest("div[option-id]");
@@ -1021,7 +1003,6 @@ $(function() {
             console.error(err);
         })
     }
-
     function editPrice(e) {
         var value = $(this).find('option:selected').val();
         var options = $(this).find('option[price-id]');
@@ -1048,7 +1029,6 @@ $(function() {
         }
 
     }
-
     function editCustomPrice() {
         var priceValue = $(this).val();
         var select = $(this).prev('select');
@@ -1075,7 +1055,6 @@ $(function() {
             console.error(err)
         })
     }
-
     /** --- REMOVING FUNCTIONAL --- **/
     function removePackage(e) {
         var packageContainer = $(this).closest("div[package-id]");
@@ -1118,7 +1097,7 @@ $(function() {
         e.preventDefault();
         $('#quotation_comment_area').toggle();
     }
-    
+
     $("body")
         .on("click",    ".enquiries .quotationSendbtn", openQuotationModal)
         .on("click",    ".quotation-modal button[quotation-send]", quotationSend)
