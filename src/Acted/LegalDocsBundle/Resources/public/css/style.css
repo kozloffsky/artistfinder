@@ -1,3 +1,4 @@
+@import "globals/fonts.css";
 @import "parts/agenda.css";
 @import "parts/artist-selection.css";
 @import "parts/bookings.css";
@@ -21,56 +22,9 @@
 @import "parts/team.css";
 @import "parts/feedback.css";
 @import "globals/buttons.css";
+@import "globals/icons.css";
 @import "globals/menu.css";
 @import "custom.css";
-
-@font-face {
-    font-family: LatoBlack;
-    src: url(../fonts/Lato/Lato-Black.ttf);
-}
-
-@font-face {
-    font-family: LatoBold;
-    src: url(../fonts/Lato/Lato-Bold.ttf);
-}
-
-@font-face {
-    font-family: LatoRegular;
-    src: url(../fonts/Lato/Lato-Regular.ttf);
-}
-
-@font-face {
-    font-family: UbuntuMedium;
-    src: url(../fonts/Ubuntu-M.ttf);
-}
-
-@font-face {
-    font-family: UbuntuBold;
-    src: url(../fonts/Ubuntu-B.ttf);
-}
-
-@font-face {
-    font-family: LucidaGrande;
-    src: url(../fonts/LucidaGrande/LucidaGrandeRegular.ttf);
-}
-
-@font-face {
-    font-family: LucidaGrandeBold;
-    src: url(../fonts/LucidaGrande/LucidaGrandeBold.ttf);
-}
-
-@font-face {
-    font-family: AvenirBook;
-    src: url(../fonts/Avenir/AvenirLTStd-Book.otf);
-}
-@font-face {
-    font-family: AvenirLight;
-    src: url(../fonts/Avenir/AvenirLTStd-Light.otf);
-}
-@font-face {
-    font-family: AvenirRoman;
-    src: url(../fonts/Avenir/AvenirLTStd-Roman.otf);
-}
 
 * {
     box-sizing: border-box;
@@ -3436,6 +3390,30 @@ only screen and (min-resolution: 2dppx) {
     }
     .flex_1 .avatar {
         background-image: url(../assets/images/client_payment_profile@2x.jpg);
+    }
+    i.attach {
+        background: url(../assets/images/attach@2x.png);
+    }
+    i.checkmark {
+        background: url(../assets/images/checkmark@2x.png);
+    }
+    i.close {
+        background: url(../assets/images/close@2x.png);
+    }
+    i.delete_attached {
+        background: url(../assets/images/delete_attached@2x.png);
+    }
+    i.notifications {
+        background: url(../assets/images/notifications@2x.png);
+    }
+    i.picture {
+        background: url(../assets/images/picture@2x.png);
+    }
+    i.print {
+        background: url(../assets/images/print@2x.png);
+    }
+    i.share {
+        background: url(../assets/images/share@2x.png);
     }
 }
 

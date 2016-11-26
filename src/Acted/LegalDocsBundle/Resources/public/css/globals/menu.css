@@ -1,9 +1,13 @@
 .categories-menu {
-    margin-top: 16px !important;
-    margin-bottom: 24px !important;
-    border-bottom: 2px solid rgba(216, 216, 216, 0.11);
+    margin: 18px 3px 12px 3px;
+    /*border-bottom: 2px solid rgba(216, 216, 216, 0.11);*/
 }
 .categories-menu li.active {
     border-bottom: 4px solid #ff793e;
     margin-bottom: -4px;
+    width: 112px;
+}
+.categories-menu li > a {
+    font-size: 16px;
+    padding: 18px 22px 19px 21px;
 }
