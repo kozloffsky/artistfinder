@@ -1048,7 +1048,9 @@ $(function() {
             select.find('option').before('<option selected price-id="'+res.price.id+'">'+priceValue+'</option>');
 
             select.show();
-            tempInput.remove();
+            if (typeof(tempInput.attr('custom-extra-price')) == 'undefined') {
+                tempInput.remove();
+            }
 
             console.log(res)
         })
