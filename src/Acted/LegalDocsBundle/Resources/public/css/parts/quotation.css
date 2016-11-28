@@ -344,7 +344,6 @@
     line-height: 14px;
 }
 
-.quotation-modal select[quot-edit-price],
 .quotation-modal select[quot-edit-duration] {
     border: 2px solid rgba(229, 229, 229, 1);
     border-radius: 5px;
