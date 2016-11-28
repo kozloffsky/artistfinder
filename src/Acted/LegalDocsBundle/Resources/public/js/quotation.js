@@ -398,6 +398,22 @@ $(function() {
         });
     }
 
+    function editPriceSend(id, data) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/price/rate/'+ id +'/edit',
+                method: 'PATCH',
+                data: data,
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
+
     function removePriceSend(id) {
         return new Promise(function(resolve, reject) {
             $.ajax({
@@ -1192,20 +1208,21 @@ $(function() {
             }
         };
 
-        createPriceSend(price)
-        .then(function(res) {
-            select.find('option').before('<option selected price-id="'+res.price.id+'">'+priceValue+'</option>');
+        var rateId = $(this).attr("rate-id");
+        var amount = $(this).val();
 
-            select.show();
-            if (typeof(tempInput.attr('custom-extra-price')) == 'undefined') {
-                tempInput.remove();
-            }
+        var data = {
+            'price_rate_edit[price]': amount
+        };
 
-            console.log(res)
-        })
-        .catch(function(err) {
-            console.error(err)
-        })
+        editPriceSend(rateId, data)
+            .then(function(res){
+
+                console.log(res)
+            })
+            .catch(function(err) {
+                console.error(err)
+            })
     }
     /** --- REMOVING FUNCTIONAL --- **/
     function removePackage(e) {

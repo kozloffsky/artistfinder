@@ -309,7 +309,8 @@
                                 <option <% if(option.duration == 50) { %> selected <% } %> value="50">50 min</option>
                                 <option <% if(option.duration == 55) { %> selected <% } %> value="55">55 min</option>
                             </select>
-                            <select quot-edit-price name="price">
+                            <span class="minutes">min</span>
+                            <select quot-edit-price class="price-box" name="price">
                                 <% for(var r = 0; r < option.rates.length; r++) {
                                     var rate = option.rates[r];
                                     var amount = new Number(rate.price.amount).toFixed();
@@ -360,6 +361,9 @@
 
         var option = package.options[0];
         var perfId = curPerf.id;
+        var rate = option.rates[0];
+        var price = rate.price;
+    console.log(rate);
     %>
     <div act-id="<%=perfId%>" act-type="<%=type%>">
         <div package-id="<%=package.id%>" class="row">
@@ -405,7 +409,7 @@
                     </span>
 
                     <div class="pull-right">
-                        <input edit-custom-price custom-extra-price class="price-box" value="3000">
+                        <input edit-custom-price custom-extra-price class="price-box" placeholder="<%=price.amount%>" rate-id="<%=rate.id%>" value="<%=price.amount%>">
                         <span>GBP</span>
                         <span act-delete class="pull-right"><i class="fa fa-trash"></i></span>
                     </div>
