@@ -40,6 +40,13 @@ class PerformanceController extends Controller
                     return new JsonResponse(['error' => 'Performance can not be published without media'], 400);
                 }
             }
+
+            $performanceData = $performanceForm->getData();
+
+            if (empty($performanceData->getType())) {
+                $performance->setType(Performance::TYPE_BASE);
+            }
+
             $em->persist($performance);
 
             $profile = $artist->getUser()->getProfile();
