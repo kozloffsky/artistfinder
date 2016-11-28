@@ -165,7 +165,7 @@
     font-weight: 300;
     color: rgba(61, 66, 72, 1);
 }
-.quotation-modal .travel-exp-container .custom-checkbox label:after,
+.quotation-modal .travel-exp-container .custom-checkbox label:after, 
 .quotation-modal .travel-exp-container .custom-checkbox label:before {
     width: 18px;
     height: 18px;
@@ -318,7 +318,7 @@
 
 .quotation-modal .new-act-section input[quot-edit-title],
 .quotation-modal .new-act-section input[quot-edit-package-name]
-{
+ {
     height: 28px;
     width: 164px;
     border: 2px solid rgba(229, 229, 229, 1);

@@ -55,3 +55,5 @@ parameters:
     fake_users: show  # show | hide
     confirmation_period: 86400 #24 hours
     confirmation_period_resend: 86400 #24 hours
+
+    #sentry_dsn: "https://user_api_key@sentry.io/appid" #use it on production
