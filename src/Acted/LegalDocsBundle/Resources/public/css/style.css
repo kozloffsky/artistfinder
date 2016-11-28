@@ -3375,10 +3375,10 @@ only screen and (min-resolution: 2dppx) {
         background: url('../assets/images/close@2x.png');
         background-size: 12px 12px;
     }
-    i.pound {
-        background: url(../assets/images/pound_ic@2x.png);
-        background-size: cover;
-    }
+    /*i.pound {*/
+        /*background: url(../assets/images/pound_ic@2x.png);*/
+        /*background-size: cover;*/
+    /*}*/
     i.available {
         background: url(../assets/images/available@2x.png);
     }
@@ -3414,6 +3414,9 @@ only screen and (min-resolution: 2dppx) {
     }
     i.share {
         background: url(../assets/images/share@2x.png);
+    }
+    i.total_collected_bag {
+        background-image: url(../assets/images/total_collected@2x.png);
     }
 }
 

@@ -3,21 +3,55 @@
 <main class="enquiries bookings">
 
     <div class="container">
-        {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
+        <!-- THIS MENU VISIBLE ONLY ON DESCTIOP SCREEN-->
+        <ul class="categories-menu">
+            <li class="menu-block"><a href="/messages">Messages</a></li>
+            <li class="menu-block"><a href="/enquiries">Enquiries</a></li>
+            <li class="menu-block"><a href="/bookings" class="active">Bookings</a></li>
+            <li class="menu-block"><a href="/agenda">Agenda</a></li>
+            <li class="menu-block"><a href="/prices">Prices</a></li>
+            <li class="menu-block"><a href="/reports">Reports</a></li>
+            <li class="menu-block"><a href="/feedbacks">Feedbacks</a></li>
+        </ul>
 
-        <div class="enquiries-wrap">
+        <div class="summary_block">
+            <p class="heading">Summary</p>
+            <ul class="summary_block__ul">
+                <li class="summary_block__ul__li clearfix">
+                    <p>Total current bookings:</p>
+                    <p class="summ">5000</p>
+                    <i class="pound">&pound;</i>
+                    <i class="bookings"></i>
+                </li>
+                <li class="summary_block__ul__li clearfix">
+                    <p>Collected in escrow:</p>
+                    <p class="summ">2500</p>
+                    <i class="pound">&pound;</i>
+                    <i class="escrow"></i>
+                </li>
+                <li class="summary_block__ul__li clearfix">
+                    <p>Available:</p>
+                    <p class="summ">2500</p>
+                    <i class="pound">&pound;</i>
+                    <i class="available"></i>
+                    <div class="controls">
+                        <div class="button-gradient filled">
+                            <button class="btn">Release</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="total_collected">
+                <p>TOTAL COLLECTED - PAST BOOKINGS: <span class="pound_black"><i class="pound_black">&pound;</i></span><span class="total_collected__ammount">15000</span></p>
+                <i class="total_collected_bag"></i>
+            </div>
+        </div>
 
-            <select data-class="booking" name="booking" id="booking">
-                <option value="0">All bookings</option>
-                <option value="1">By date</option>
-                <option value="2">New</option>
-                <option value="2">Archived</option>
-            </select>
+        <div class="enquiries-wrap enquires-wrap-new">
+            <p class="enquiries-wrap__heading">Current bookings</p>
 
-            <article class="enq-block clearfix">
-                <em class="note green"><b>Deposit: </b>Received</em>
-
-                <div class="col-lg-3 no-pad">
+            <article class="enq-block clearfix enq-block_flexboxed">
+                <div class="flex_1">
 
                     <ul class="act-request-data ul-reset">
                         <li><i class="enq-icon icon-date"></i> Date: <span class="value">22 Jan 16</span></li>
@@ -29,37 +63,53 @@
                     </ul>
 
                 </div>
-                <div class="col-lg-9 act-request">
-
-                    <dl class="act-request-list">
-                        <dt>Booking:</dt>
-                        <dd>
-                            <ul>
-                                <li><strong class="bold">Act 1 - Jazz Band </strong>(5-piece Jazz band)</li>
-                                <li><strong class="bold">Act 2 - Dou Saxophonist/singer </strong>(5-piece Jazz band)</li>
-                                <li><strong class="bold">Extra Act </strong>(5-piece Jazz band)</li>
-                            </ul>
-                        </dd>
-                        <dt>Payment:</dt>
-                        <dd>3,000 GBP (30% deposit, balance at the event)</dd>
-                    </dl>
-
-                    <div class="controls">
-                        <div class="button-gradient filled blue">
-                            <button type="button" class="btn register">Send Message</button>
-                        </div>
-
-                        <div class="button-gradient">
-                            <button type="button" class="btn register">See Details</button>
+                <div class="flex_2">
+                    <div class="flex_2__item flex_2__item__booking">
+                        <p>Booking:</p>
+                        <div class="flex_2__item__services">
+                            <p>5-piece Jazz band, Acrobats, Sports Act</p>
+                            <p>DJ set</p>
+                            <p>Sound system</p>
                         </div>
                     </div>
-
+                    <div class="flex_2__item coloured_green">
+                        <p>Deposit (50%): 1500 GBP received in escrow</p>
+                    </div>
+                    <div class="flex_2__item coloured_orange">
+                        <p>Balance (50%): 1500 GBP unpaid</p>
+                    </div>
+                    <div class="flex_2__item flex_2__item-chatroom-btn">
+                        <div class="controls">
+                            <div class="button-gradient filled blue">
+                                <button type="button" class="btn register">Chatroom</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex_3">
+                    <div class="flex_3__item flex_3__ammount">
+                        <p><i class="pound_black">&pound;</i>2500</p>
+                    </div>
+                    <div class="flex_3__item flex_3__quotation">
+                        <p>Quotation</p>
+                        <a href="">See</a>
+                        <a href="">Download</a>
+                    </div>
+                    <div class="flex_3__item flex_3__invoice">
+                        <p>Invoice</p>
+                        <a href="">See</a>
+                        <a href="">Download</a>
+                    </div>
+                    <div class="flex_3__item flex_3__booking-agreement">
+                        <p>BookingAgreement</p>
+                        <a href="">See</a>
+                        <a href="">Download</a>
+                    </div>
                 </div>
             </article>
-            <article class="enq-block clearfix">
-                <em class="note blue"><b>Balance: </b>Received</em>
 
-                <div class="col-lg-3 no-pad">
+            <article class="enq-block clearfix enq-block_flexboxed">
+                <div class="flex_1">
 
                     <ul class="act-request-data ul-reset">
                         <li><i class="enq-icon icon-date"></i> Date: <span class="value">22 Jan 16</span></li>
@@ -71,37 +121,55 @@
                     </ul>
 
                 </div>
-                <div class="col-lg-9 act-request">
-
-                    <dl class="act-request-list">
-                        <dt>Booking:</dt>
-                        <dd>
-                            <ul>
-                                <li><strong class="bold">Act 1 - Jazz Band </strong>(5-piece Jazz band)</li>
-                                <li><strong class="bold">Act 2 - Dou Saxophonist/singer </strong>(5-piece Jazz band)</li>
-                                <li><strong class="bold">Extra Act </strong>(5-piece Jazz band)</li>
-                            </ul>
-                        </dd>
-                        <dt>Payment:</dt>
-                        <dd>3,000 GBP (30% deposit, balance at the event)</dd>
-                    </dl>
-
-                    <div class="controls">
-                        <div class="button-gradient filled blue">
-                            <button type="button" class="btn register">Send Message</button>
-                        </div>
-
-                        <div class="button-gradient">
-                            <button type="button" class="btn register">See Details</button>
+                <div class="flex_2">
+                    <div class="flex_2__item flex_2__item__booking">
+                        <p>Booking:</p>
+                        <div class="flex_2__item__services">
+                            <p>5-piece Jazz band, Acrobats, Sposrts Act</p>
+                            <p>DJ set</p>
+                            <p>Sound system</p>
                         </div>
                     </div>
-
+                    <div class="flex_2__item coloured_green">
+                        <p>Deposit (50%): 1500 GBP received in escrow</p>
+                    </div>
+                    <div class="flex_2__item coloured_orange">
+                        <p>Balance (50%): 1500 GBP unpaid</p>
+                    </div>
+                    <div class="flex_2__item flex_2__item-chatroom-btn">
+                        <div class="controls">
+                            <div class="button-gradient filled blue">
+                                <button type="button" class="btn register">Chatroom</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex_3">
+                    <div class="flex_3__item flex_3__ammount">
+                        <p><i class="pound_black">&pound;</i>2500</p>
+                    </div>
+                    <div class="flex_3__item flex_3__quotation">
+                        <p>Quotation</p>
+                        <a href="">See</a>
+                        <a href="">Download</a>
+                    </div>
+                    <div class="flex_3__item flex_3__invoice">
+                        <p>Invoice</p>
+                        <a href="">See</a>
+                        <a href="">Download</a>
+                    </div>
+                    <div class="flex_3__item flex_3__booking-agreement">
+                        <p>BookingAgreement</p>
+                        <a href="">See</a>
+                        <a href="">Download</a>
+                    </div>
                 </div>
             </article>
-            <article class="enq-block clearfix">
-                <em class="note orange"><b>Full payment: </b>Received</em>
 
-                <div class="col-lg-3 no-pad">
+            <p class="enquiries-wrap__heading">Past bookings</p>
+
+            <article class="enq-block clearfix enq-block_flexboxed">
+                <div class="flex_1">
 
                     <ul class="act-request-data ul-reset">
                         <li><i class="enq-icon icon-date"></i> Date: <span class="value">22 Jan 16</span></li>
@@ -113,37 +181,53 @@
                     </ul>
 
                 </div>
-                <div class="col-lg-9 act-request">
-
-                    <dl class="act-request-list">
-                        <dt>Booking:</dt>
-                        <dd>
-                            <ul>
-                                <li><strong class="bold">Act 1 - Jazz Band </strong>(5-piece Jazz band)</li>
-                                <li><strong class="bold">Act 2 - Dou Saxophonist/singer </strong>(5-piece Jazz band)</li>
-                                <li><strong class="bold">Extra Act </strong>(5-piece Jazz band)</li>
-                            </ul>
-                        </dd>
-                        <dt>Payment:</dt>
-                        <dd>3,000 GBP (30% deposit, balance at the event)</dd>
-                    </dl>
-
-                    <div class="controls">
-                        <div class="button-gradient filled blue">
-                            <button type="button" class="btn register">Send Message</button>
-                        </div>
-
-                        <div class="button-gradient">
-                            <button type="button" class="btn register">See Details</button>
+                <div class="flex_2">
+                    <div class="flex_2__item flex_2__item__booking">
+                        <p>Booking:</p>
+                        <div class="flex_2__item__services">
+                            <p>5-piece Jazz band, Acrobats, Sposrts Act</p>
+                            <p>DJ set</p>
+                            <p>Sound system</p>
                         </div>
                     </div>
-
+                    <div class="flex_2__item coloured_green">
+                        <p>Deposit (50%): 1500 GBP received in escrow</p>
+                    </div>
+                    <div class="flex_2__item coloured_orange">
+                        <p>Balance (50%): 1500 GBP unpaid</p>
+                    </div>
+                    <div class="flex_2__item flex_2__item-chatroom-btn">
+                        <div class="controls">
+                            <div class="button-gradient filled blue">
+                                <button type="button" class="btn register">Chatroom</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex_3">
+                    <div class="flex_3__item flex_3__ammount">
+                        <p><i class="pound_black">&pound;</i>2500</p>
+                    </div>
+                    <div class="flex_3__item flex_3__quotation">
+                        <p>Quotation</p>
+                        <a href="">See</a>
+                        <a href="">Download</a>
+                    </div>
+                    <div class="flex_3__item flex_3__invoice">
+                        <p>Invoice</p>
+                        <a href="">See</a>
+                        <a href="">Download</a>
+                    </div>
+                    <div class="flex_3__item flex_3__booking-agreement">
+                        <p>BookingAgreement</p>
+                        <a href="">See</a>
+                        <a href="">Download</a>
+                    </div>
                 </div>
             </article>
-            <article class="enq-block clearfix">
-                <em class="note green"><b>Deposit: </b>Received</em>
 
-                <div class="col-lg-3 no-pad">
+            <article class="enq-block clearfix enq-block_flexboxed">
+                <div class="flex_1">
 
                     <ul class="act-request-data ul-reset">
                         <li><i class="enq-icon icon-date"></i> Date: <span class="value">22 Jan 16</span></li>
@@ -155,35 +239,53 @@
                     </ul>
 
                 </div>
-                <div class="col-lg-9 act-request">
-
-                    <dl class="act-request-list">
-                        <dt>Booking:</dt>
-                        <dd>
-                            <ul>
-                                <li><strong class="bold">Act 1 - Jazz Band </strong>(5-piece Jazz band)</li>
-                                <li><strong class="bold">Act 2 - Dou Saxophonist/singer </strong>(5-piece Jazz band)</li>
-                                <li><strong class="bold">Extra Act </strong>(5-piece Jazz band)</li>
-                            </ul>
-                        </dd>
-                        <dt>Payment:</dt>
-                        <dd>3,000 GBP (30% deposit, balance at the event)</dd>
-                    </dl>
-
-                    <div class="controls">
-                        <div class="button-gradient filled blue">
-                            <button type="button" class="btn register">Send Message</button>
-                        </div>
-
-                        <div class="button-gradient">
-                            <button type="button" class="btn register">See Details</button>
+                <div class="flex_2">
+                    <div class="flex_2__item flex_2__item__booking">
+                        <p>Booking:</p>
+                        <div class="flex_2__item__services">
+                            <p>5-piece Jazz band, Acrobats, Sposrts Act</p>
+                            <p>DJ set</p>
+                            <p>Sound system</p>
                         </div>
                     </div>
-
+                    <div class="flex_2__item coloured_green">
+                        <p>Deposit (50%): 1500 GBP received in escrow</p>
+                    </div>
+                    <div class="flex_2__item coloured_orange">
+                        <p>Balance (50%): 1500 GBP unpaid</p>
+                    </div>
+                    <div class="flex_2__item flex_2__item-chatroom-btn">
+                        <div class="controls">
+                            <div class="button-gradient filled blue">
+                                <button type="button" class="btn register">Chatroom</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex_3">
+                    <div class="flex_3__item flex_3__ammount">
+                        <p><i class="pound_black">&pound;</i>2500</p>
+                    </div>
+                    <div class="flex_3__item flex_3__quotation">
+                        <p>Quotation</p>
+                        <a href="">See</a>
+                        <a href="">Download</a>
+                    </div>
+                    <div class="flex_3__item flex_3__invoice">
+                        <p>Invoice</p>
+                        <a href="">See</a>
+                        <a href="">Download</a>
+                    </div>
+                    <div class="flex_3__item flex_3__booking-agreement">
+                        <p>BookingAgreement</p>
+                        <a href="">See</a>
+                        <a href="">Download</a>
+                    </div>
                 </div>
             </article>
         </div>
     </div>
+
 </main>
 
 {% include 'ActedLegalDocsBundle:Default:footer.html.twig' %}
