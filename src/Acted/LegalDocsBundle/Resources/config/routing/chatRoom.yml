@@ -88,6 +88,13 @@ feedbacks:
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:feedbacks }
     methods:  GET
 
+feedback_delete:
+    path: /feedbacks/{feedback}
+    requirements:
+      feedback: \d+
+    defaults: {_controller: ActedLegalDocsBundle:Feedback:removeFeedback}
+    methods: DELETE
+
 api_accept_details:
     path:     /api/chat-room/accept-details/{eventId}
     defaults: {_controller: ActedLegalDocsBundle:ChatRoom:acceptDetails}

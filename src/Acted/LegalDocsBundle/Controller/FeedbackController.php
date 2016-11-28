@@ -5,6 +5,7 @@ namespace Acted\LegalDocsBundle\Controller;
 use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Form\FeedbackCreateType;
 use Acted\LegalDocsBundle\Form\FeedbackRatingCreateType;
+use Gedmo\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,7 +64,7 @@ class FeedbackController extends Controller
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'There are not any data'
-            ],  Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         $event = $data['event'];
@@ -80,7 +81,7 @@ class FeedbackController extends Controller
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Feedback has already had record with these event and artist'
-            ],  Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         //check event date
@@ -92,7 +93,7 @@ class FeedbackController extends Controller
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Feedback already exists'
-            ],  Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         $feedback = new Feedback();
@@ -165,14 +166,14 @@ class FeedbackController extends Controller
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Feedback already exists'
-            ],  Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         if (!empty($feedback) && !empty($feedback->getFeedback())) {
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Feedback already exists'
-            ],  Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         // feedback is not exists yet
@@ -278,5 +279,26 @@ class FeedbackController extends Controller
     public function getFeedbackAction(Request $request)
     {
 
+    }
+
+    /**
+     * Remove feedback.
+     *
+     * @param Request $request
+     * @param $feedback
+     *
+     * @return JsonResponse
+     */
+    public function removeFeedbackAction(Request $request, $feedback)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $em = $this->getEM();
+        $repo = $em->getRepository('ActedLegalDocsBundle:Feedback');
+        $feedback = $repo->find($feedback);
+        $em->remove($feedback);
+        $em->flush();
+        return new JsonResponse([
+            'status' => 'success'
+        ], Response::HTTP_OK);
     }
 }
