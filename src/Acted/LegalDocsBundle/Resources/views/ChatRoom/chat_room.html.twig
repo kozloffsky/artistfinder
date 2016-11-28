@@ -4,8 +4,9 @@
 <main class="chat-room">
 
     <div class="container">
+        {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
         <!-- THIS MENU VISIBLE ONLY ON DESCTIOP SCREEN-->
-        <ul class="categories-menu">
+        <!--<ul class="categories-menu">
             <li class="menu-block active"><a href="/messages">Messages</a></li>
             <li class="menu-block"><a href="/enquiries">Enquiries</a></li>
             <li class="menu-block"><a href="/bookings">Bookings</a></li>
@@ -14,10 +15,10 @@
             <li class="menu-block"><a href="/prices">Prices</a></li>
             <li class="menu-block"><a href="/reports">Technical Requirements</a></li>
             <li class="menu-block"><a href="/feedbacks">Feedbacks</a></li>
-        </ul>
+        </ul>-->
 
         <!-- THIS DROPDOWN VISIBLE ONLY ON SM SCREEN-->
-        <div class="dropdown categories-dropdown hidden-lg hidden-md hidden-sm visible-xs">
+        <!--<div class="dropdown categories-dropdown hidden-lg hidden-md hidden-sm visible-xs">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Chat-room
                 <span class="caret"></span></button>
             <ul class="dropdown-menu">
@@ -30,13 +31,14 @@
                 <li class="menu-block"><a href="/reports">Reports</a></li>
                 <li class="menu-block"><a href="/feedbacks">Feedbacks</a></li>
             </ul>
-        </div>
+        </div>-->
 
         <div class="wrap">
             <!-- TITLE SECTION -->
             <section>
                 <!--<a class="btn-back" href="/messages">Back to messages</a>-->
-                <h2 class="main-title">Chatroom #4</h2>
+                <h2 class="main-title">Chatroom #{{ chat.chat_id }}</h2>
+                <div class="hidden" id="chatId">{{ chat.chat_id }}</div>
                 <!--detail form start-->
                 <div class="tooltip-message warning">
                     <i class="notification-bell" aria-hidden="true"></i>
@@ -311,60 +313,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <span class="tr-title">Technical requirements</span>
-                            <div class="tr-select-container">
-                                <select class="tr-select">
-                                    <option>Technical requirement 1</option>
-                                    <option>Technical requirement 2</option>
-                                    <option>Technical requirement 3</option>
-                                    <option>Technical requirement 4</option>
-                                    <option>Technical requirement 5</option>
-                                    <option>Technical requirement 6</option>
-                                    <option>Technical requirement 7</option>
-                                    <option>Technical requirement 8</option>
-                                </select>
-                                <div>
-                                    <span></span>
-                                    <span></span>
-                                </div>
-                            </div>
-                            <div class="tr-desc">
-                                <span class="tr-desc-title">Music system</span>
-                                <p class="tr-desc-text">I need to have few music speakersI need to have few music speakersI need to have few music speakers
-                                    I need to have few musicI need to have few music speakersI need to have few music speakers
-                                    I need to have few music speakersI need to have few musicI need to have few music speakers
-                                    I need to have few music speakersI need to have few music speakers
-                                    I need to have few music</p>
-                            </div>
-                            <div class="tr-files">
-                                <ul>
-                                    <li>
-                                        <i class="fa fa-file-pdf-o icon icon-pdf" aria-hidden="true"></i>
-                                        Event_1
-                                        <i class="icon icon-delete-attached" aria-hidden="true"></i>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-file-pdf-o icon icon-pdf" aria-hidden="true"></i>
-                                        Event_2
-                                        <i class="icon icon-delete-attached" aria-hidden="true"></i>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-file-pdf-o icon icon-pdf" aria-hidden="true"></i>
-                                        Event_3
-                                        <i class="icon icon-delete-attached" aria-hidden="true"></i>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-file-pdf-o icon icon-pdf" aria-hidden="true"></i>
-                                        Event_4
-                                        <i class="icon icon-delete-attached" aria-hidden="true"></i>
-                                    </li>
-                                </ul>
-                                <div class="attach-file-btn">
-                                    <i class="icon icon-attach"></i>
-                                    <label for="attach_file">Attach</label>
-                                    <input id="attach_file" type="file" hidden>
-                                </div>
-                            </div>
+                            {% include 'ActedLegalDocsBundle:ChatRoom:chat_tech_req.html.twig' %}
                         </div>
                     </div>
                 </div>
