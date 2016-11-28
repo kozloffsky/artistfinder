@@ -271,9 +271,10 @@ class RequestQuotationController extends Controller
             }
 
             foreach ($performanceRequestQuotations as $performanceRequestQuotation) {
-                $performances[] = $performanceRequestQuotation['performance'];
+                if (!empty($performanceRequestQuotation['performance'])) {
+                    $performances[] = $performanceRequestQuotation['performance'];
+                }
             }
-
 
             /*Generate pdf file*/
             //todo: we need to decide which id get from chatRoom in the future
@@ -302,7 +303,6 @@ class RequestQuotationController extends Controller
                 ))
                 ->getParsedTemplate()
                 ->generateDocumentPdf($chatRoomId, $requestQuotation->getId());
-
 
             $documentRequestQuotation = new DocumentRequestQuotation();
             $documentRequestQuotation->setRequestQuotation($requestQuotation);
