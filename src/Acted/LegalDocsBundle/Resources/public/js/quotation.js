@@ -877,6 +877,7 @@ $(function() {
             })
     }
     function editPerformanceType() {
+        var standardPerformanceType = 1;
         var mainSelector = $(this).closest("div[act-id]");
         var performanceId = $(this).closest("div[act-id]").attr("act-id");
         var type = mainSelector.find("[quot-edit-performance-type]").find("option:selected").val();
@@ -889,7 +890,7 @@ $(function() {
             }
         };
 
-        if (type == 1) {
+        if (type == standardPerformanceType) {
 
             mainSelector.find("[quot-edit-option]").show();
 

@@ -220,6 +220,7 @@
 <!-- Quotation performance section -->
 <script type="text/template" id="quot-performance-tmp">
     <%
+        var basePerformanceType = 0;
         var isExtraPerformance = data.isExtra;
         var performances = data.model.perf;
         var services     = data.model.serv;
@@ -243,7 +244,7 @@
             curPerf = allData[i].service;
         }
 
-        if (type == 'performance' && curPerf.type != 0) {
+        if (type == 'performance' && curPerf.type != basePerformanceType) {
             continue;
         }
 
@@ -337,6 +338,7 @@
 <!-- Quotation extra performance section -->
 <script type="text/template" id="quot-extra-performance-tmp">
     <%
+        var standardPerformanceType = 1;
         var isExtraPerformance = data.isExtra;
         var performances = data.model.perf;
         var allData      = performances;
@@ -377,7 +379,7 @@
                     </select>
 
 
-                    <span quot-edit-option <% if(curPerf.type != 1) { %> style="display:none" <% } %>>
+                    <span quot-edit-option <% if(curPerf.type != standardPerformanceType) { %> style="display:none" <% } %>>
                         <select quot-edit-qty name="qty" class="quantity-select">
                             <%
                             for(var opt = 1; opt < 7; opt++) {
