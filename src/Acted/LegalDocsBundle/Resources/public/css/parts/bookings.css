@@ -355,10 +355,12 @@ div.enquires-wrap-new {
         flex-direction: column;
         margin-bottom: 4px;
     }
+
     i.total_collected_bag {
         left: 10px;
         top: 21px;
     }
+
     .summary_block ul li {
         background-color: rgba(96, 125, 139, 1);
         border-radius: 3px;
@@ -370,21 +372,26 @@ div.enquires-wrap-new {
         width: 100%;
         height: 57px;
     }
+
     .summary_block ul li:nth-child(2),
     .summary_block ul li:nth-child(3) {
         margin: 3.5px 0;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2 {
         width: 100%;
     }
+
     .summary_block ul li:nth-child(3) {
         height: 101px;
     }
-    .summary_block ul.summary_block__ul li p  {
+
+    .summary_block ul.summary_block__ul li p {
         font-size: 16px;
         padding-left: 5px;
         margin: -3px 1px 1px -3px;
     }
+
     i.pound {
         left: auto;
         right: 65px;
@@ -392,6 +399,7 @@ div.enquires-wrap-new {
         width: 24px;
         top: 15px;
     }
+
     .summary_block ul li p.summ {
         position: relative;
         float: right;
@@ -400,65 +408,86 @@ div.enquires-wrap-new {
         margin-right: 43px;
         margin-top: -16px;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_3__quotation,
     .enquires-wrap-new .enq-block_flexboxed .flex_3__invoice,
     .enquires-wrap-new .enq-block_flexboxed .flex_3__booking-agreement {
         display: none;
     }
+
     .enquires-wrap-new .enq-block_flexboxed {
         position: relative;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_3 {
         position: absolute;
         top: 174px;
         right: 21px;
     }
+
     .summary_block ul li .controls {
         left: auto;
         right: 6px;
         top: auto;
         bottom: 19px;
     }
+
     .summary_block {
         padding: 0 8px;
         margin: 8px 0 5px 0;
     }
+
     .total_collected p .total_collected__ammount {
         position: absolute;
         top: 26px;
         right: 10px;
     }
+
     .total_collected {
         padding-top: 18px;
         padding-bottom: 20px;
     }
+
     .total_collected p {
         width: 150px;
         line-height: 1.22;
     }
+
+    .total_collected .pound_black {
+        margin: -5px 0 0px 4px;
+        position: absolute;
+        right: 30px;
+        top: 50%;
+    }
+
     .enquiries-wrap__heading {
         padding-left: 11px;
         margin-top: 13px;
     }
+
     .enquires-wrap-new .enq-icon {
         height: 18px;
         width: 18px;
         margin-top: -4px;
         margin-right: 7px;
     }
+
     .enquires-wrap-new .enq-block_flexboxed {
         padding-top: 12px;
         padding-bottom: 12px;
         margin-bottom: 0;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2,
     .enquires-wrap-new .act-request-data {
         padding-left: 10px;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2 .flex_2__item__booking {
         flex-direction: column;
         margin-top: -6px;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2 .flex_2__item__booking .flex_2__item__services p {
         font-weight: bold;
         letter-spacing: 0.01em;
@@ -466,24 +495,30 @@ div.enquires-wrap-new {
         color: black;
         opacity: .82;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2 .flex_2__item__booking .flex_2__item__services {
         margin-top: 10px;
         width: 60%;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2 .coloured_green {
         margin: 2px 0;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2 .coloured_orange {
         margin: 4px 0 13px;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2 .flex_2__item .controls {
         padding: 0;
         float: none;
         text-align: center;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2 .flex_2__item-chatroom-btn {
         margin-left: -10px;
     }
+
     div.enquires-wrap-new {
         margin-bottom: 20px;
     }
