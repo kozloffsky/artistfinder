@@ -189,5 +189,5 @@ tweede_golf_swiftmailer_logger:
         entity_logger:
             enabled: true
 
-sentry:
-    dsn: "%sentry_dsn%"
+#sentry:
+#    dsn: "%sentry_dsn%"

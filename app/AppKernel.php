@@ -34,7 +34,7 @@ class AppKernel extends Kernel
             new TweedeGolf\SwiftmailerLoggerBundle\TweedeGolfSwiftmailerLoggerBundle(),
             new Gos\Bundle\WebSocketBundle\GosWebSocketBundle(),
             new Gos\Bundle\PubSubRouterBundle\GosPubSubRouterBundle(),
-            new Sentry\SentryBundle\SentryBundle()
+            //new Sentry\SentryBundle\SentryBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
