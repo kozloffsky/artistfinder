@@ -435,6 +435,246 @@ $(function() {
 
     // }
 
+    /**
+     *  TODO: maybe fix if needed
+     */
+    function selectPackageHandler(container) {
+        "use strict";
+
+        var packId = container.attr("package-id");
+
+        selectQuotaionPackage({id: packId});
+    }
+    function selectPerformanceHandler(context) {
+        "use strict";
+
+        var performanceType = $(context).closest('div[act-type]').attr('act-type');
+        var performanceId   = $(context).closest('div[act-id]').attr('act-id');
+        var currentPerformance = null;
+
+        if(performanceType == 'performance') {
+            currentPerformance = selectQuotaionPerformance({
+                perf: performanceId,
+                quot: QRM.model.id
+            })
+                .then(console.log)
+                .catch(console.error);
+        }
+
+        if(performanceType == 'service') {
+            currentPerformance = selectQuotaionService({
+                serv: performanceId,
+                quot: QRM.model.id
+            })
+                .then(console.log)
+                .catch(console.error);
+        }
+
+        Promise.all(currentPerformance);
+    }
+
+    function checkboxHandler(e) {
+        var _context = e.currentTarget;
+        var itemType = ['select-performance', 'select-package', 'select-option'];
+        var p		 = ['act-id', 'package-id', 'option-id'];
+        var currentType = null;
+
+        var attrs = e.target.attributes;
+
+        _.each(e.target.attributes, function(k, i) {
+            var index = itemType.indexOf(attrs[i].name);
+
+            if(index == 0 || index > 0) {
+                currentType = itemType[index];
+            }
+        });
+
+        if(currentType == 'select-option') {
+            var option = $(_context);
+
+            var actContainer = option.closest('['+p[0]+']');
+            var packageContainer = option.closest('['+p[1]+']');
+
+            var allPackages = actContainer.find('['+itemType[1]+']');
+
+            var act     = actContainer.find('['+itemType[0]+']');
+            var package = packageContainer.find('['+itemType[1]+']');
+            var options = packageContainer.find('['+itemType[2]+']');
+
+            var selectActMask    = 0x0;
+            var selectOptionMask = 0x0;
+
+            var optionId = option.attr("option-id");
+
+            selectQuotaionOption({ id: optionId })
+            .then(console.log)
+            .catch(console.error);
+
+            _.each(options, function(o, i) {
+                if($(o).prop('checked')) {
+                    selectOptionMask = selectOptionMask | 0x1;
+                }
+            });
+
+            if(!package.prop('checked')) {
+                package.prop('checked', true);
+                selectPackageHandler(package);
+            }
+
+            if(package.prop('checked') && !selectOptionMask) {
+                package.prop('checked', false);
+                selectPackageHandler(package);
+            }
+
+            _.each(allPackages, function(o, i) {
+                if($(o).prop('checked')) {
+                    selectActMask = selectActMask | 0x1;
+                }
+            });
+
+            if(!act.prop('checked') && selectActMask) {
+                act.prop('checked', true);
+                selectPerformanceHandler(_context);
+            }
+
+            if(act.prop('checked') && !selectActMask) {
+                act.prop('checked', false);
+                selectPerformanceHandler(_context);
+            }
+        }
+
+        if(currentType == 'select-package') {
+            var package = $(_context);
+            var act 	= package.closest('['+p[0]+']').find('['+itemType[0]+']')
+
+            var options = package.closest('div[package-id]').find('['+itemType[2]+']');
+
+            var selectActMask = 0x0;
+
+            var optionsPromises = [];
+
+            if(package.prop('checked')) {
+                _.each(options, function(o, i) {
+                    $(o).prop('checked', true);
+
+                    var optionId = $(o).attr("option-id");
+
+                    optionsPromises.push(
+                        selectQuotaionOption({ id: optionId })
+                        .then(console.log)
+                        .catch(console.error)
+                    );
+
+                });
+            } else {
+                _.each(options, function(o, i) {
+                    $(o).prop('checked', false);
+
+                    var optionId = $(o).attr("option-id");
+
+                    optionsPromises.push(
+                        selectQuotaionOption({ id: optionId })
+                            .then(console.log)
+                            .catch(console.error)
+                    );
+                });
+            }
+
+            var totalPackages = package.closest('['+p[0]+']').find('[' + itemType[1] + ']')
+
+            _.each(totalPackages, function(o, i) {
+                if($(o).prop('checked')) {
+                    selectActMask = selectActMask | 0x1;
+                }
+            });
+
+
+            selectPackageHandler($(_context));
+
+            Promise.all(optionsPromises);
+
+            if(!act.prop('checked') && selectActMask) {
+                act.prop('checked', true);
+                selectPerformanceHandler(_context);
+            }
+
+            if(act.prop('checked') && !selectActMask){
+                act.prop('checked', false);
+                selectPerformanceHandler(_context);
+            }
+        }
+
+        if(currentType == 'select-performance') {
+            var act = $(_context);
+            var packages = act.closest('['+p[0]+']').find('['+itemType[1]+']');
+
+            var packagePromises = [];
+            var optionsPromises = [];
+
+            if(act.prop('checked')) {
+                _.each(packages, function(o, i) {
+                    $(o).prop('checked', true);
+
+                    var options = $(o).closest('div['+p[1]+']').find('['+itemType[2]+']');
+
+                    var packageId = $(o).attr("package-id");
+
+                    packagePromises.push(
+                        selectQuotaionPackage({id: packageId})
+                            .then(console.log)
+                            .catch(console.error)
+                    );
+
+                    _.each(options, function(o, i) {
+                        $(o).prop('checked', true);
+
+                        var optionId = $(o).attr("option-id");
+
+                        optionsPromises.push(
+                            selectQuotaionOption({ id: optionId })
+                                .then(console.log)
+                                .catch(console.error)
+                        );
+                    });
+                });
+            } else {
+                _.each(packages, function(o, i) {
+                    $(o).prop('checked', false);
+
+                    var options = $(o).closest('div['+p[1]+']').find('['+itemType[2]+']');
+
+                    var packageId = $(o).attr("package-id");
+
+                    packagePromises.push(
+                        selectQuotaionPackage({id: packageId})
+                        .then(console.log)
+                        .catch(console.error)
+                    );
+
+                    _.each(options, function(o, i) {
+                        $(o).prop('checked', false);
+
+                        var optionId = $(o).attr("option-id");
+
+                        optionsPromises.push(
+                            selectQuotaionOption({ id: optionId })
+                                .then(console.log)
+                                .catch(console.error)
+                        );
+                    });
+                });
+            }
+
+            selectPerformanceHandler(_context);
+
+            Promise.all([
+                Promise.all(optionsPromises),
+                Promise.all(packagePromises)
+            ]);
+
+        }
+    }
+
     ///
     /** ------------------------------------------------------- **/
     function openQuotationModal() {
@@ -582,106 +822,15 @@ $(function() {
 
     }
 
-    function selectPerformanceSend() {
-        var quotId  = QRM.model.id;
-        var perfId  = $(this).closest('div[act-id]').attr('act-id');
-        var perfType  = $(this).closest('div[act-type]').attr('act-type');
-        var allCheckboxes = $(this).closest('div[act-id]').find('input[name="package-check"]');
+    function selectPerformanceSend(event) {
+        checkboxHandler(event);
+    };
 
-        var selected = $(this).prop('checked');
-
-        if(perfType == 'performance') {
-
-            var data = {
-                perf: perfId,
-                quot: quotId
-            };
-
-            selectQuotaionPerformance(data)
-            .then(function(res) {
-                if(selected) {
-                     $.each(allCheckboxes, function() {
-                        if(!$(this).prop('checked')) {
-                            $(this).trigger('click');
-                        }
-                    })
-                } else {
-                   $.each(allCheckboxes, function() {
-                        $(this).removeAttr('checked');
-                    })
-                }
-                console.log(res);
-            })
-            .catch(function(err) {
-                console.error(err);
-            })
-
-        } 
-
-        if(perfType == 'service') {
-
-            var data = {
-                serv: perfId,
-                quot: quotId,
-            };
-
-            selectQuotaionService(data)
-            .then(function(res) {
-                if(selected) {
-                     $.each(allCheckboxes, function() {
-                        if(!$(this).prop('checked')) {
-                            $(this).trigger('click');
-                        }
-                    })
-                } else {
-                   $.each(allCheckboxes, function() {
-                        $(this).removeAttr('checked');
-                    })
-                }
-                console.log(res);
-            })
-            .catch(function(err) {
-                console.error(err);
-            })
-        }
-        
+    function selectPackageSend(event) {
+        checkboxHandler(event)
     }
-
-    function selectPackageSend() {
-        var packId = $(this).attr("package-id");
-        var options = $(this).closest('div[package-id]').find('option-id');
-
-        var selected = $(this).is(':checked');
-
-        selectQuotaionPackage({
-            id: packId
-        })
-        .then(function(res) {
-            if(selected) {
-                $.each(options, function() { $(this).removeAttr('checked'); })
-                $(this).removeAttr('checked');
-            } else {
-                $.each(options, function() { $(this).attr('checked', 'checked'); })
-                $(this).attr('checked', 'checked');
-            }
-        })
-        .catch(function(err) {
-            console.error(err)
-        })
-    }
-    function selectOptionSend() {
-        var optId = $(this).attr("option-id");
-        console.log(optId)
-
-        selectQuotaionOption({
-            id: optId
-        })
-        .then(function(res) {
-            console.log(res)
-        })
-        .catch(function(err) {
-            console.error(err)
-        })
+    function selectOptionSend(event) {
+        checkboxHandler(event);
     }
 
     /** --- CREATING FUNCTIONAL --- **/
