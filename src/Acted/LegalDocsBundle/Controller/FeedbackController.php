@@ -103,6 +103,10 @@ class FeedbackController extends Controller
         $em->persist($feedback);
         $em->flush();
 
+        //Send notification email
+        $feedbackManager = $this->get('app.feedback.manager');
+        $feedbackManager->sendNotify($user, $feedback);
+
         return new JsonResponse(array(
             'status' => 'success'
         ), Response::HTTP_OK);
@@ -185,6 +189,10 @@ class FeedbackController extends Controller
             $feedbackObj->setFeedback($feedbackText);
             $em->persist($feedbackObj);
             $em->flush();
+
+            //Send notification email
+            $feedbackManager = $this->get('app.feedback.manager');
+            $feedbackManager->sendNotify($user, $feedbackObj);
         }
 
         //there is rating without feedback

@@ -9,6 +9,15 @@ class Performance
 {
     const STATUS_DRAFT = 'draft';
     const STATUS_PUBLISHED = 'published';
+
+    const TYPE_BASE = 0;
+    const TYPE_STANDARD = 1;
+    const TYPE_CUSTOM = 2;
+    const TYPE_TRAVEL_EXPENSES = 3;
+    const TYPE_TECHNICAL_EXPENSES = 4;
+    const TYPE_MATERIALS = 5;
+    const TYPE_OTHER = 6;
+
     /**
      * @var integer
      */
@@ -83,6 +92,16 @@ class Performance
      * @var \Doctrine\Common\Collections\Collection
      */
     private $performanceRequestQuotations;
+
+    /**
+     * @var integer
+     */
+    private $type = 0;
+
+    /**
+     * @var string
+     */
+    private $comment;
 
     public function __construct()
     {
@@ -510,5 +529,53 @@ class Performance
     public function getIsQuotation()
     {
         return $this->isQuotation;
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     *
+     * @return Performance
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set comment
+     *
+     * @param string $comment
+     *
+     * @return Performance
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
     }
 }

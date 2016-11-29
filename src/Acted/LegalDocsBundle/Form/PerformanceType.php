@@ -29,6 +29,8 @@ class PerformanceType extends AbstractType
             ->add('profile')
             ->add('isVisible')
             ->add('media')
+            ->add('type')
+            ->add('comment')
             ->add('status', ChoiceType::class, [
                 'choices_as_values' => true,
                 'choices' => ['draft', 'published'],

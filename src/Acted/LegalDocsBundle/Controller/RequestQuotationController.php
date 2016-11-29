@@ -132,7 +132,7 @@ class RequestQuotationController extends Controller
 
                 /*copy payment terms*/
                 $newPaymentTermRequestQuotation = new PaymentTermRequestQuotation();
-                //\Doctrine\Common\Util\Debug::dump($e->getMessage());exit;
+
                 $newPaymentTermRequestQuotation->setGuaranteedDepositPercent(
                     $publishedRequestQuotationObj->getPaymentTermRequestQuotation()->getGuaranteedDepositPercent()
                 );
@@ -255,6 +255,9 @@ class RequestQuotationController extends Controller
                 $paymentTermRequestQuotation->setBalancePercent($balancePercent);
                 $paymentTermRequestQuotation->setGuaranteedDepositPercent(PaymentTermRequestQuotation::GUARANTEED_DEPOSIT_PERCENT);
                 $em->persist($paymentTermRequestQuotation);
+            } else {
+                $paymentTermRQ->setBalancePercent($balancePercent);
+                $em->persist($paymentTermRQ);
             }
 
             $performanceRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:PerformanceRequestQuotation');
@@ -271,10 +274,10 @@ class RequestQuotationController extends Controller
             }
 
             foreach ($performanceRequestQuotations as $performanceRequestQuotation) {
-                $performances[] = $performanceRequestQuotation['performance'];
+                if (!empty($performanceRequestQuotation['performance'])) {
+                    $performances[] = $performanceRequestQuotation['performance'];
+                }
             }
-
-            //\Doctrine\Common\Util\Debug::dump($event);exit;
 
             /*Generate pdf file*/
             //todo: we need to decide which id get from chatRoom in the future
@@ -304,7 +307,6 @@ class RequestQuotationController extends Controller
                 ->getParsedTemplate()
                 ->generateDocumentPdf($chatRoomId, $requestQuotation->getId());
 
-
             $documentRequestQuotation = new DocumentRequestQuotation();
             $documentRequestQuotation->setRequestQuotation($requestQuotation);
             $documentRequestQuotation->setPath($path);
@@ -323,7 +325,6 @@ class RequestQuotationController extends Controller
             $connection->commit();
         } catch (\Exception $e) {
             $connection->rollback();
-
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Sending error'

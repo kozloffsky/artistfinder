@@ -33,7 +33,8 @@
 .client_payments__block .flex_2 .client_name {
     font-size: 18px;
     opacity: .87;
-    font-family: UbuntuMedium, Serif, sans-serif;
+    font-family: Ubuntu;
+    font-weight: 500;
     padding-bottom: 3px;
 }
 .client_payments__block .flex_2 .client_orderings {

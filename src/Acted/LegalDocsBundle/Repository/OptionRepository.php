@@ -83,4 +83,27 @@ class OptionRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->execute();
     }
+
+    public function checkIsSelectedOptionsInPackage($packageId)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $params = array('packageId' => $packageId);
+
+        $whereCriteria = 'opt.package IN (:packageId)';
+
+        $qb->from('ActedLegalDocsBundle:Option', 'opt');
+        $qb->select('opt.isSelected');
+        $qb->where($whereCriteria);
+        $qb->setParameters($params);
+
+        $options = $qb->getQuery()->getResult();
+
+        foreach($options as $key => $option) {
+            if ($option['isSelected'])
+                return true;
+        }
+
+        return false;
+    }
 }

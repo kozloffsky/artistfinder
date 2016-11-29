@@ -149,8 +149,11 @@ class PricePackageController extends Controller
                     ],  Response::HTTP_BAD_REQUEST);
                 }
 
-                $performanceRequestQuotation->setIsSelected($isSelected);
-                $em->persist($performanceRequestQuotation);
+                $isSelectedAnyPackage = $packageRepo->checkIsSelectedPackagesInPerformance($performance->getId());
+                if ((!$isSelectedAnyPackage && !$isSelected) || $isSelected) {
+                    $performanceRequestQuotation->setIsSelected($isSelected);
+                    $em->persist($performanceRequestQuotation);
+                }
             }
 
             $optionIds = array();

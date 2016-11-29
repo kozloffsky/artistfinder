@@ -72,16 +72,14 @@
 }
 i.pound {
     display: inline-block;
-    height: 27px;
     position: absolute;
-    top: 121px;
-    left: 26px;
-    width: 27px;
-    background: url(../../assets/images/pound_ic.png);
+    top: 118px;
+    font-size: 24px;
+    /*background: url(../../assets/images/pound_ic.png);*/
 }
 i.bookings {
     display: inline-block;
-    background-size: cover;
+    background-size: cover !important;
     height: 82px;
     width: 61px;
     position: absolute;
@@ -91,7 +89,7 @@ i.bookings {
 }
 i.escrow {
     display: inline-block;
-    background-size: cover;
+    background-size: cover !important;
     height: 80px;
     width: 80px;
     position: absolute;
@@ -101,7 +99,7 @@ i.escrow {
 }
 i.available {
     display: inline-block;
-    background-size: cover;
+    background-size: cover !important;
     height: 81px;
     width: 114px;
     position: absolute;
@@ -123,8 +121,9 @@ i.available {
     font-size: 14px;
     opacity: .87;
 }
-i.total_collected_img {
+i.total_collected_bag {
     display: inline-block;
+    background-size: cover !important;
     position: absolute;
     left: 18px;
     top: 18px;
@@ -134,19 +133,25 @@ i.total_collected_img {
 }
 i.pound_black {
     display: inline-block;
-    position: absolute;
     height: 21px;
     width: 18px;
-    background-image: url(../../assets/images/pound-black.png);
-    background-repeat: no-repeat;
+    /*background-image: url(../../assets/images/pound-black.png);*/
+    /*background-repeat: no-repeat;*/
 }
-.total_collected i.pound_black {
-    top: 24px;
-    left: 303px;
+
+.total_collected .pound_black {
+    margin: 0 0 0 4px;
 }
+
+.total_collected i.pound_black,
 .total_collected p .total_collected__ammount {
     font-size: 18px;
-    margin-left: 24px;
+    font-family: LatoRegular;
+    font-weight: 400;
+}
+
+.total_collected p .total_collected__ammount {
+    margin-left: 4px;
 }
 .enquiries-wrap__heading {
     font-size: 15px;
@@ -194,7 +199,7 @@ div.enquires-wrap-new {
 .enquires-wrap-new .enq-block_flexboxed .flex_1 {
     width: 244px;
     border: 1px solid transparent;
-}   
+}
 .enquires-wrap-new .enq-block_flexboxed .flex_2 {
     border: 1px solid transparent;
     display: flex;
@@ -286,29 +291,25 @@ div.enquires-wrap-new {
 .enquires-wrap-new .enq-block_flexboxed .flex_2 .flex_2__item-chatroom-btn {
     margin-left: 1px;
 }
-.flex_3__ammount i.pound_black {
-    top: 3px;
-    right: 35px;
-}
 @media (max-width: 991px) {
     i.available {
         width: 57px;
         height: 40px;
         background-size: cover;
         bottom: 27.5px;
-/*        display: none;*/
+        /*        display: none;*/
     }
     i.escrow {
         width: 60px;
         height: 60px;
         background-size: cover;
-/*        display: none;*/
+        /*        display: none;*/
     }
     i.bookings {
         width: 40px;
         height: 55px;
         background-size: cover;
-/*        display: none;*/
+        /*        display: none;*/
     }
 }
 @media (max-width: 767px) {
@@ -354,10 +355,12 @@ div.enquires-wrap-new {
         flex-direction: column;
         margin-bottom: 4px;
     }
-    i.total_collected_img {
+
+    i.total_collected_bag {
         left: 10px;
         top: 21px;
     }
+
     .summary_block ul li {
         background-color: rgba(96, 125, 139, 1);
         border-radius: 3px;
@@ -369,21 +372,26 @@ div.enquires-wrap-new {
         width: 100%;
         height: 57px;
     }
+
     .summary_block ul li:nth-child(2),
     .summary_block ul li:nth-child(3) {
         margin: 3.5px 0;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2 {
         width: 100%;
     }
+
     .summary_block ul li:nth-child(3) {
         height: 101px;
     }
-    .summary_block ul.summary_block__ul li p  {
+
+    .summary_block ul.summary_block__ul li p {
         font-size: 16px;
         padding-left: 5px;
         margin: -3px 1px 1px -3px;
     }
+
     i.pound {
         left: auto;
         right: 65px;
@@ -391,6 +399,7 @@ div.enquires-wrap-new {
         width: 24px;
         top: 15px;
     }
+
     .summary_block ul li p.summ {
         position: relative;
         float: right;
@@ -399,70 +408,86 @@ div.enquires-wrap-new {
         margin-right: 43px;
         margin-top: -16px;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_3__quotation,
     .enquires-wrap-new .enq-block_flexboxed .flex_3__invoice,
     .enquires-wrap-new .enq-block_flexboxed .flex_3__booking-agreement {
         display: none;
     }
+
     .enquires-wrap-new .enq-block_flexboxed {
         position: relative;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_3 {
         position: absolute;
         top: 174px;
         right: 21px;
     }
+
     .summary_block ul li .controls {
         left: auto;
         right: 6px;
         top: auto;
         bottom: 19px;
     }
+
     .summary_block {
         padding: 0 8px;
         margin: 8px 0 5px 0;
     }
+
     .total_collected p .total_collected__ammount {
         position: absolute;
         top: 26px;
         right: 10px;
     }
+
     .total_collected {
         padding-top: 18px;
         padding-bottom: 20px;
     }
+
     .total_collected p {
         width: 150px;
         line-height: 1.22;
     }
-    .total_collected i.pound_black {
-        top: 27px;
-        left: auto;
-        right: 61px;
+
+    .total_collected .pound_black {
+        margin: -5px 0 0px 4px;
+        position: absolute;
+        right: 30px;
+        top: 50%;
     }
+
     .enquiries-wrap__heading {
         padding-left: 11px;
         margin-top: 13px;
     }
+
     .enquires-wrap-new .enq-icon {
         height: 18px;
         width: 18px;
         margin-top: -4px;
         margin-right: 7px;
     }
+
     .enquires-wrap-new .enq-block_flexboxed {
         padding-top: 12px;
         padding-bottom: 12px;
         margin-bottom: 0;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2,
     .enquires-wrap-new .act-request-data {
         padding-left: 10px;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2 .flex_2__item__booking {
         flex-direction: column;
         margin-top: -6px;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2 .flex_2__item__booking .flex_2__item__services p {
         font-weight: bold;
         letter-spacing: 0.01em;
@@ -470,24 +495,30 @@ div.enquires-wrap-new {
         color: black;
         opacity: .82;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2 .flex_2__item__booking .flex_2__item__services {
         margin-top: 10px;
         width: 60%;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2 .coloured_green {
         margin: 2px 0;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2 .coloured_orange {
         margin: 4px 0 13px;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2 .flex_2__item .controls {
         padding: 0;
         float: none;
         text-align: center;
     }
+
     .enquires-wrap-new .enq-block_flexboxed .flex_2 .flex_2__item-chatroom-btn {
         margin-left: -10px;
     }
+
     div.enquires-wrap-new {
         margin-bottom: 20px;
     }

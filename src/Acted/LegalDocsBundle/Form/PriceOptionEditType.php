@@ -21,12 +21,10 @@ class PriceOptionEditType extends AbstractType
         $builder
             ->add('qty', IntegerType::class, [
                 'constraints' => [
-                    new NotBlank(),
                     new Length(['max' => 128, 'min' => 1])
                 ], 'description' => 'qty'])
             ->add('duration', IntegerType::class, [
                 'constraints' => [
-                    new NotBlank(),
                     new Length(['max' => 123456789, 'min' => 1])
                 ], 'description' => 'Duration'])
             ->add('price_on_request', BooleanType::class, [

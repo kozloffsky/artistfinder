@@ -201,6 +201,7 @@ class ServiceRequestQuotationRepository extends EntityRepository
                     foreach ($option['rates'] as $rate) {
                         $rateIds[] =  $rate['id'];
 
+
                         $price = new Price();
                         $price->setAmount($rate['price']['amount']);
                         $em->persist($price);
@@ -209,6 +210,7 @@ class ServiceRequestQuotationRepository extends EntityRepository
 
                         $copiedRate = new Rate();
                         $copiedRate->setOption($copiedOption);
+                        $copiedRate->setIsSelected($rate['isSelected']);
                         $copiedRate->setPrice($price);
                         $em->persist($copiedRate);
                     }

@@ -145,7 +145,8 @@ header.small .navbar {
 .header-background .set-box .set-background:hover + .note{opacity:1;}
 
 .header-block h2 {
-    font-family: UbuntuBold;
+    font-family: Ubuntu;
+    font-weight: 600;
     font-size: 38px;
     color: #fff;
     margin-bottom: 55px;
@@ -624,7 +625,8 @@ header.small .navbar {
     }
 
     .search .header-block h2 {
-        font-family: UbuntuBold;
+        font-family: Ubuntu;
+        font-weight: 600;
         font-size: 15px;
         margin-bottom: 11px;
         margin-top: 0px;

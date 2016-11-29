@@ -25,24 +25,6 @@ class RequestQuotationTypeService extends base\TemplatesService
         return Template::TYPE_REQUEST_QUOTATION;
     }
 
-    /*public function artist_name()
-    {
-        if (empty($this->_data['artist_name'])) {
-            throw new TemplateDataMissingException(__FUNCTION__);
-        }
-
-        return $this->_data['artist_name'];
-    }*/
-
-    /*public function today_date()
-    {
-        if (empty($this->_data->getTodayDate())) {
-            throw new TemplateDataMissingException(__FUNCTION__);
-        }
-
-        return $this->_data->getTodayDate()->format('Y-m-d');
-    }*/
-
     public function services()
     {
         $serviceTemplate = '';
