@@ -69,6 +69,12 @@ services:
             - "@templating.engine.twig"
             - "@app.user.manager"
 
+    app.feedback.manager:
+        class: Acted\LegalDocsBundle\Model\FeedbackManager
+        arguments:
+            - "@templating.engine.twig"
+            - "@app.user.manager"
+
     app.form_errors_serializer:
         class: Acted\LegalDocsBundle\FormErrors\FormErrorsSerializer
 
