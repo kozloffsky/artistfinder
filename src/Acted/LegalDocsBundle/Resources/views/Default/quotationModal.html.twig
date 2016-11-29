@@ -320,6 +320,7 @@
 
                                 <% } %>
                             </select>
+                            <span>GBP</span>
                         </div>
                     <% } %>
                 </div>
@@ -361,7 +362,6 @@
         var perfId = curPerf.id;
         var rate = option.rates[0];
         var price = rate.price;
-    console.log(rate);
     %>
     <div act-id="<%=perfId%>" act-type="<%=type%>">
         <div package-id="<%=package.id%>" class="row">
@@ -414,8 +414,8 @@
                 </div>
             </div>
             <div class="row package">
-                <div extra-performance-comment style="display: none">
-                    <textarea edit-performance-comment name="comment" class="quote-comment-box extra" placeholder="Describe this extra"></textarea>
+                <div extra-performance-comment <% if(!actSelected) { %> style="display:none" <% } %>>
+                    <textarea edit-performance-comment name="comment" class="quote-comment-box extra" placeholder="Describe this extra"><%=curPerf.comment%></textarea>
                 </div>
             </div>
         </div>
