@@ -362,6 +362,7 @@
         var perfId = curPerf.id;
         var rate = option.rates[0];
         var price = rate.price;
+        var amount = new Number(price.amount).toFixed();
     %>
     <div act-id="<%=perfId%>" act-type="<%=type%>">
         <div package-id="<%=package.id%>" class="row">
@@ -407,7 +408,7 @@
                     </span>
 
                     <div class="pull-right">
-                        <input edit-custom-price custom-extra-price class="price-box" placeholder="<%=price.amount%>" rate-id="<%=rate.id%>" value="<%=price.amount%>">
+                        <input edit-custom-price custom-extra-price class="price-box" placeholder="<%=amount%>" rate-id="<%=rate.id%>" value="<%=amount%>">
                         <span>GBP</span>
                         <span act-delete class="pull-right"><i class="fa fa-trash"></i></span>
                     </div>

@@ -726,11 +726,6 @@ $(function() {
 
             setTimeout(function() {
                 $("#success-quotation-modal").modal("show");
-                //TODO: Better reload data not page
-                $("#success-quotation-modal").on('hidden.bs.modal',function(){
-                    window.location.reload();
-                })
-
             }, 500);
 
             console.log(res);
