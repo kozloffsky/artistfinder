@@ -322,7 +322,6 @@ class RequestQuotationController extends Controller
             $connection->commit();
         } catch (\Exception $e) {
             $connection->rollback();
-
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Sending error'

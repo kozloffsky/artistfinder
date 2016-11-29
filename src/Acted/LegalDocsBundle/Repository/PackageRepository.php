@@ -159,4 +159,27 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->execute();
     }
+
+    public function checkIsSelectedPackagesInPerformance($performanceId)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $params = array('performanceId' => $performanceId);
+
+        $whereCriteria = 'pac.performance IN (:performanceId)';
+
+        $qb->from('ActedLegalDocsBundle:Package', 'pac');
+        $qb->select('pac.isSelected');
+        $qb->where($whereCriteria);
+        $qb->setParameters($params);
+
+        $packages = $qb->getQuery()->getResult();
+
+        foreach($packages as $key => $package) {
+            if ($package['isSelected'])
+                return true;
+        }
+
+        return false;
+    }
 }

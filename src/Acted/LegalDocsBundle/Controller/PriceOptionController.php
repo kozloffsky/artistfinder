@@ -175,9 +175,13 @@ class PriceOptionController extends Controller
             $isSelected = $option->getIsSelected();
 
             $package = $option->getPackage();
-            $package->setIsSelected($isSelected);
-            $em->persist($package);
 
+            $isSelectedAnyOption = $optionRepo->checkIsSelectedOptionsInPackage($package->getId());
+            if ((!$isSelectedAnyOption && !$isSelected) || $isSelected) {
+                $package->setIsSelected($isSelected);
+                $em->persist($package);
+                $em->flush();
+            }
 
             $service = $package->getService();
             $performance = $package->getPerformance();
@@ -212,8 +216,11 @@ class PriceOptionController extends Controller
                     ],  Response::HTTP_BAD_REQUEST);
                 }
 
-                $performanceRequestQuotation->setIsSelected($isSelected);
-                $em->persist($performanceRequestQuotation);
+                $isSelectedAnyPackage = $packageRepo->checkIsSelectedPackagesInPerformance($performance->getId());
+                if ((!$isSelectedAnyPackage && !$isSelected) || $isSelected) {
+                    $performanceRequestQuotation->setIsSelected($isSelected);
+                    $em->persist($performanceRequestQuotation);
+                }
             }
 
             $em->flush();
