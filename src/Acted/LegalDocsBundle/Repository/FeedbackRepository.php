@@ -69,4 +69,12 @@ class FeedbackRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getOneOrNullResult();
     }
+
+    public function findByArtistQuery(Artist $artist)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.artist = :artist')
+            ->setParameter('artist', $artist)
+            ->getQuery();
+    }
 }

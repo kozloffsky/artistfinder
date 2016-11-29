@@ -23,6 +23,7 @@ use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\VarDumper\VarDumper;
 
 class ProfileController extends Controller
 {
@@ -307,7 +308,7 @@ class ProfileController extends Controller
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
         return $paginator->paginate(
-            $em->getRepository('ActedLegalDocsBundle:ArtistRating')->findByArtistQuery($artist),
+            $em->getRepository('ActedLegalDocsBundle:Feedback')->findByArtistQuery($artist),
             $page,
             $this->getParameter('per_page')
         );
