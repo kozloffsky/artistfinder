@@ -5,7 +5,6 @@ namespace Acted\LegalDocsBundle\Controller;
 use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Form\FeedbackCreateType;
 use Acted\LegalDocsBundle\Form\FeedbackRatingCreateType;
-use Gedmo\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
