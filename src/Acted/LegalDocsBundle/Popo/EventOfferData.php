@@ -23,6 +23,10 @@ final class EventOfferData
     private $regionLat;
     private $regionLng;
     private $regionName;
+    private $detailsAccepted;
+    private $actsExtrasAccepted;
+    private $timingAccepted;
+    private $technicalRequirementsAccepted;
 
     const NUMBER_OF_GUEST_MAX_50 = 'less_then_50';
     const NUMBER_OF_GUEST_MIN_50_MAX_100 = '50-100';
@@ -348,6 +352,70 @@ final class EventOfferData
     public function setRegionName($regionName)
     {
         $this->regionName = $regionName;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getDetailsAccepted()
+    {
+        return $this->detailsAccepted;
+    }
+
+    /**
+     * @param boolean $detailsAccepted
+     */
+    public function setDetailsAccepted($detailsAccepted)
+    {
+        $this->detailsAccepted = $detailsAccepted;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getActsExtrasAccepted()
+    {
+        return $this->actsExtrasAccepted;
+    }
+
+    /**
+     * @param boolean $actsExtrasAccepted
+     */
+    public function setActsExtrasAccepted($actsExtrasAccepted)
+    {
+        $this->actsExtrasAccepted = $actsExtrasAccepted;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getTimingAccepted()
+    {
+        return $this->timingAccepted;
+    }
+
+    /**
+     * @param boolean $timingAccepted
+     */
+    public function setTimingAccepted($timingAccepted)
+    {
+        $this->timingAccepted = $timingAccepted;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getTechnicalRequirementsAccepted()
+    {
+        return $this->technicalRequirementsAccepted ;
+    }
+
+    /**
+     * @param boolean $technicalRequirementsAccepted
+     */
+    public function setTechnicalRequirementsAccepted($technicalRequirementsAccepted)
+    {
+        $this->technicalRequirementsAccepted = $technicalRequirementsAccepted;
     }
     
 }

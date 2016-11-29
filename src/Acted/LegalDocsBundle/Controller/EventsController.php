@@ -74,6 +74,11 @@ class EventsController extends Controller
             $eventOffer = $eventManager->createEventOffer($data);
             $eventOffer->setOffer($offer);
             $eventOffer->setEvent($event);
+            $eventOffer->setActsExtrasAccepted(false);
+            $eventOffer->setTechnicalRequirementsAccepted(false);
+            $eventOffer->setTimingAccepted(false);
+            $eventOffer->setActsEctrasAccepted(false);
+            $eventOffer->setDetailsAccepted(false);
             $validationErrors->addAll($validator->validate($eventOffer));
             $em->persist($eventOffer);
 
