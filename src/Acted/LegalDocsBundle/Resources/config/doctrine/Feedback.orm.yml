@@ -20,7 +20,9 @@ Acted\LegalDocsBundle\Entity\Feedback:
             nullable: true
         viewed:
             type: boolean
-            nullable: true
+            nullable: false
+            options:
+              default: false
         createdAt:
             type: datetime
             nullable: true

@@ -206,9 +206,6 @@ class ChatRoomController extends Controller
     {
         $repo = $this->getDoctrine()->getRepository("TweedeGolfSwiftmailerLoggerBundle:LoggedMessage");
         $data = $repo->findAll();
-
-        var_dump($data);
-        die;
     }
 
     /**
@@ -471,8 +468,7 @@ class ChatRoomController extends Controller
         foreach ($documents as $document) {
             $technicalRequirementsFilePath = $baseDir . $document->getFile();
             $ext = pathinfo($technicalRequirementsFilePath, PATHINFO_EXTENSION);
-            $technicalRequirementsCopyFileName = /*'COPY_' .*/
-                uniqid() . '.' . $ext;
+            $technicalRequirementsCopyFileName = uniqid() . '.' . $ext;
             $technicalRequirementsCopyFilePath = $fullPathTechnicalRequirementsDirectory . '/' . $technicalRequirementsCopyFileName;
             $copiedFiles[] = $technicalRequirementsCopyFilePath;
             copy($technicalRequirementsFilePath, $technicalRequirementsCopyFilePath);
