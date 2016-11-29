@@ -255,6 +255,9 @@ class RequestQuotationController extends Controller
                 $paymentTermRequestQuotation->setBalancePercent($balancePercent);
                 $paymentTermRequestQuotation->setGuaranteedDepositPercent(PaymentTermRequestQuotation::GUARANTEED_DEPOSIT_PERCENT);
                 $em->persist($paymentTermRequestQuotation);
+            } else {
+                $paymentTermRQ->setBalancePercent($balancePercent);
+                $em->persist($paymentTermRQ);
             }
 
             $performanceRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:PerformanceRequestQuotation');

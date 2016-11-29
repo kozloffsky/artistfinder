@@ -431,16 +431,19 @@
 
 <!-- NEW Quotation payment section -->
 <script type="text/template" id="quot-payment-tmp">
-
+    <%
+        var balancePercent = data.model.balance_percent;
+    %>
     <div class="row">
         <label>Payment terms</label>
     </div>
 
     <div class="row payment-deposit">
+        balancePercent
         <select name="quotation-payment-percent">
-            <option value="30">30%</option>
-            <option value="50">50%</option>
-            <option value="100">100%</option>
+            <option <% if(balancePercent == 30) { %> selected <% } %> value="30">30%</option>
+            <option <% if(balancePercent == 50) { %> selected <% } %> value="50">50%</option>
+            <option <% if(balancePercent == 100) { %> selected <% } %> value="100">100%</option>
         </select>
 
         <span>Guaranteed deposit to be paid with <b>Acted Escrow Account</b> now to confirm the booking</span>
