@@ -226,7 +226,8 @@
 
 .free-quote-modal .quote-profile-info h2 {
     font-size: 18px;
-    font-family: UbuntuMedium;
+    font-family: Ubuntu;
+    font-weight: 500;
     color: #3d4248;
     margin: 4px 0;
 }
@@ -345,7 +346,9 @@
 .free-quote-modal.request .modal-header h3{
     color: #3d4248;
     color: rgba(61, 66, 72, .87);
-    font: 22px UbuntuBold, Serif, sans-serif;
+    font-family: Ubuntu;
+    font-weight: 600;
+    font-size: 22px;
 }
 .free-quote-modal.request .title{
     font: 15px LatoBold, Serif, sans-serif;

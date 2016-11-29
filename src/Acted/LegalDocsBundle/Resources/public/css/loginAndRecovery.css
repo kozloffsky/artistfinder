@@ -9,7 +9,8 @@
 }
 
 .login-modal .modal-title {
-    font-family: UbuntuMedium;
+    font-family: Ubuntu;
+    font-weight: 500;
     font-size: 27px;
     color: #3d4248;
     line-height: 35px;

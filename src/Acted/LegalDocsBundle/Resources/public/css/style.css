@@ -216,7 +216,8 @@ section.used-by {
 .content h2.title {
     font-size: 30px;
     line-height: 35px;
-    font-family: UbuntuBold;
+    font-family: Ubuntu;
+    font-weight: 600;
     color: #3d4248;
     margin-top: 0;
     margin-bottom: 14px;
@@ -287,7 +288,8 @@ section.used-by {
 
 .content .title-secure {
     text-align: center;
-    font-family: UbuntuBold;
+    font-family: Ubuntu;
+    font-weight: 600;
     font-size: 18px;
     color: #8a9ffd;
     margin-bottom: 9px;
@@ -594,7 +596,8 @@ section.used-by {
 .info .username {
     width: 100%;
     display: inline-block;
-    font-family: UbuntuMedium;
+    font-family: Ubuntu;
+    font-weight: 500;
     font-size: 36px;
     color: #fff;
     margin-top: 19px;
@@ -773,7 +776,8 @@ section.used-by {
 
 .price-list .heading h2 {
     font-size: 21px;
-    font-family: UbuntuBold;
+    font-family: Ubuntu;
+    font-weight: 600;
     color: #424242;
     margin-top: 0;
 }
@@ -1280,7 +1284,8 @@ section.used-by {
     text-align: left;
     font-size: 21px;
     padding-bottom: 4px;
-    font-family: UbuntuBold;
+    font-family: Ubuntu;
+    font-weight: 600;
     color: #424242;
 }
 
@@ -1599,7 +1604,8 @@ section.used-by {
 
 .spotlight .title {
     text-align: center;
-    font-family: UbuntuBold;
+    font-family: Ubuntu;
+    font-weight: 600;
     font-size: 23px;
     color: white;
     margin-top: 0;
@@ -1744,13 +1750,15 @@ section.used-by {
     -ms-transform: translateY(-50%);
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
-    font-family: UbuntuBold;
+    font-family: Ubuntu;
+    font-weight: 600;
     font-size: 15px;
     color: white;
 }
 
 .panel-text .title {
-    font-family: UbuntuBold;
+    font-family: Ubuntu;
+    font-weight: 600;
     font-size: 15px;
     color: #4a4a4a;
 }
@@ -1865,7 +1873,8 @@ section.used-by {
 }
 
 .used-by .text-panel h2 {
-    font-family: UbuntuBold;
+    font-family: Ubuntu;
+    font-weight: 600;
     font-size: 26px;
     color: #fff;
     margin-top: 24px;
@@ -1907,7 +1916,8 @@ section.used-by {
 }
 
 .stay-in-touch h2 {
-    font-family: UbuntuBold;
+    font-family: Ubuntu;
+    font-weight: 600;
     font-size: 27px;
     color: #fff;
     margin: 0;

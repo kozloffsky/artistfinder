@@ -1,5 +1,5 @@
 .team-section { margin-bottom: 210px; }
-.team-section h2 { font-size: 30px; color: #000; margin: 35px 0 0 0; font-family: 'Ubuntu', sans-serif; font-weight: 500; }
+.team-section h2 { font-size: 30px; color: #000; margin: 35px 0 0 0; font-family: Ubuntu; font-weight: 500; }
 .team-item-block { margin-top: 30px; }
 .team-item-container { position: relative; }
 .team-item-avatar { width: 100%; }
@@ -12,7 +12,7 @@
 }
 .team-item-h p { margin: 0; padding: 0; font-family: Lato-Regular;  font-size: 14px;  color: #ffffff; }
 .team-item-h p:nth-of-type(1) { padding-top: 12px; }
-.team-item-h p.name { font-family: 'Ubuntu', sans-serif; font-weight: 500; }
+.team-item-h p.name { font-family: Ubuntu; font-weight: 500; }
 .team-item-h p.post { font-family: 'Lato', sans-serif;   font-weight: 400; }
 
 .team-item-description {

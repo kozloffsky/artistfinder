@@ -27,7 +27,8 @@
 }
 
 .coming-soon .section-font {
-	font-family: UbuntuBold;
+	font-family: Ubuntu;
+	font-weight: 600;
 	text-align: center;
 	font-size: 5.625em;
 	color: #FFF;
@@ -36,7 +37,8 @@
 }
 
 .coming-soon .section-email .title-div {
-	font-family: UbuntuBold;
+	font-family: Ubuntu;
+	font-weight: 600;
 	text-align: center;
 	font-size: 1.5em;
 	color: #FFF;
