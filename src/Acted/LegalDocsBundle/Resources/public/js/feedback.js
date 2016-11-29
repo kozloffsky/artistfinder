@@ -60,6 +60,8 @@ $(function () {
                     items: 5,
                     pagination: false,
                     mouseDrag: false
+                    responsive: true,
+                    responsiveBaseWidth: window
                 });
                 $('i.left').click(function () {
                     owl.trigger('owl.prev');
