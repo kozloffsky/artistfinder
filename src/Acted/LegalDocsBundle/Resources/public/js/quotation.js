@@ -790,7 +790,6 @@ $(function() {
         var newPerf = document.getElementById("quot-new-performance").innerHTML;
         var status = $(this).attr('status');
 
-
         var performance = {
             performance_price: {
                 title: 'Act title',

@@ -173,7 +173,7 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                 <label for="quot_city">1 day/multiple days</label>
-                <input type="text" class="form-control" id="quot_city" placeholder="London" name="city" value="2-day event" autocomplete="off">
+                <input type="text" class="form-control" id="quot_city" placeholder="London" name="city" value="2-day event" autocomplete="off" <%=disabled%>>
             </div>
         </div>
 
@@ -282,7 +282,7 @@
                         var optionChecked = option.isSelected ? 'checked' : '';
                     %>
                         <!-- Set options -->
-                        <div option-id="<%=option.id%>" class="col-md-6 act-option">
+                        <div option-id="<%=option.id%>" class="act-option">
                             <div class="custom-checkbox">
                                 <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox" <%=optionChecked%> >
                                 <label for="option_<%=option.id%>"></label>
@@ -464,6 +464,7 @@
     var packageChecked = package.isSelected ? 'checked' : '';
 
     var option = package.options[0];
+    var rate   = option.rates[0];
 
     var perfId = curPerf.id;
     %>
@@ -513,7 +514,7 @@
                     <% } %>
 
                     <div class="pull-right">
-                        <input edit-custom-price custom-extra-price class="price-box" value="3000">
+                        <input edit-custom-price custom-extra-price class="price-box" rate-id="<%=rate.id%>" value="3000">
                         <span>GBP</span>
                         <span act-delete class="pull-right"><i class="fa fa-trash"></i></span>
                     </div>
@@ -534,7 +535,7 @@
 <script type="text/template" id="quot-set-template">
 
     <!-- Set options -->
-    <div option-id="<%=option.id%>" class="col-md-6 act-option">
+    <div option-id="<%=option.id%>" class="act-option">
         <div class="custom-checkbox">
             <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
             <label for="option_<%=option.id%>"></label>
@@ -577,7 +578,7 @@
             var option = package.options[k];
         %>
         <!-- Set options -->
-        <div option-id="<%=option.id%>" class="col-md-6 act-option">
+        <div option-id="<%=option.id%>" class="act-option">
             <div class="custom-checkbox">
                 <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
                 <label for="option_<%=option.id%>"></label>
