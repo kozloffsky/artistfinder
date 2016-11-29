@@ -59,7 +59,7 @@ $(function () {
                 var owl = $('.events-menu > ul').owlCarousel({
                     items: 5,
                     pagination: false,
-                    mouseDrag: false
+                    mouseDrag: false,
                     responsive: true,
                     responsiveBaseWidth: window
                 });
