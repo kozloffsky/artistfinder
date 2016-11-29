@@ -466,24 +466,24 @@ $(function() {
 
         var performanceType = $(context).closest('div[act-type]').attr('act-type');
         var performanceId   = $(context).closest('div[act-id]').attr('act-id');
-        var currentPerformance = null;
+        var currentPerformance = [];
 
         if(performanceType == 'performance') {
-            currentPerformance = selectQuotaionPerformance({
+            currentPerformance.push(selectQuotaionPerformance({
                 perf: performanceId,
                 quot: QRM.model.id
             })
-                .then(console.log)
-                .catch(console.error);
+            .then(console.log)
+            .catch(console.error));
         }
 
         if(performanceType == 'service') {
-            currentPerformance = selectQuotaionService({
+            currentPerformance.push(selectQuotaionService({
                 serv: performanceId,
                 quot: QRM.model.id
             })
-                .then(console.log)
-                .catch(console.error);
+            .then(console.log)
+            .catch(console.error));
         }
 
         Promise.all(currentPerformance);
