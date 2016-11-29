@@ -139,11 +139,11 @@
 
 .dialog-section .controls>.button-gradient.filled>.btn {
     font-family: LatoRegular;
-    font-size: 15px;
-    color: rgba(255, 255, 255, 1);
-    height: 33px;
+    font-size: 14px;
+    color: rgba(255,255,255,1);
+    height: 26px;
     width: 160px;
-    line-height: 18px;
+    line-height: 12px;
 }
 
 /*.dialog-section .controls>.button-gradient .btn {

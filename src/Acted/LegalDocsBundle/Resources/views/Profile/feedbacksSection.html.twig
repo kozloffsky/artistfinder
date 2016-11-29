@@ -7,6 +7,12 @@
                 <p class="name">{{ feedback.event.user.firstname }}</p>
             </div>
 
+            <div class="pull-right">
+                <span>{{ feedback.ratingDateTime|date('d F Y') }}</span>
+                <span><i class="fa fa-trash"></i></span>
+            </div>
+        </div>
+        <div class="row">
             <div class="text" data-max-chars-desktop="500" data-max-chars-mobile="200">
                 <div class="stars ratingFeedback">
                     <span class="hidden ratingFeedbackCount">{{ feedback.rating }}</span>

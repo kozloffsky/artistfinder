@@ -58,7 +58,9 @@ $(function () {
 
                 var owl = $('.events-menu > ul').owlCarousel({
                     items: 5,
-                    pagination: false
+                    pagination: false,
+                    responsive: true,
+                    responsiveBaseWidth: window
                 });
                 $('i.left').click(function () {
                     owl.trigger('owl.prev');
