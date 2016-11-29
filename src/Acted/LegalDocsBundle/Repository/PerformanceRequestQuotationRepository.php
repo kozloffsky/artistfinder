@@ -218,6 +218,7 @@ class PerformanceRequestQuotationRepository extends EntityRepository
                         $copiedRate = new Rate();
                         $copiedRate->setOption($copiedOption);
                         $copiedRate->setPrice($price);
+                        $copiedRate->setIsSelected($rate['isSelected']);
                         $em->persist($copiedRate);
                     }
                 }

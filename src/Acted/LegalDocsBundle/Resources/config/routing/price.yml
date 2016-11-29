@@ -116,6 +116,11 @@ price_rate_remove:
     defaults: { _controller: ActedLegalDocsBundle:PriceRate:remove }
     methods:  PATCH
 
+price_rate_select:
+    path: /rate/{id}/select
+    defaults: { _controller: ActedLegalDocsBundle:PriceRate:selectRate }
+    methods:  PATCH
+
 
 price_option_select:
     path:     /option/select/{id}

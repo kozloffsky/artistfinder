@@ -414,6 +414,22 @@ $(function() {
         });
     }
 
+    function selectPriceSend(id) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/price/rate/'+ id +'/select',
+                method: 'PATCH',
+                data: {},
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
+
     function removePriceSend(id) {
         return new Promise(function(resolve, reject) {
             $.ajax({
@@ -1098,6 +1114,16 @@ $(function() {
     function editPrice(e) {
         var value = $(this).find('option:selected').val();
         var options = $(this).find('option[price-id]');
+        var selectedPriceId = $(this).find('option:selected').attr('price-id');
+
+        selectPriceSend(selectedPriceId)
+            .then(function(res){
+
+                console.log(res)
+            })
+            .catch(function(err) {
+                console.error(err)
+            });
 
         if(value == 'custom') {
             $(this).hide();

@@ -29,6 +29,24 @@ class RateRepository extends \Doctrine\ORM\EntityRepository
         $qb->getQuery()->execute();
     }
 
+    public function setIsSelectRateByOptionId($id, $isSelected = true)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $params = array('optionId' => $id, 'isSelected' => $isSelected);
+
+        $whereCriteria = 'rate.deletedTime IS NULL AND rate.option = (:optionId)';
+
+        $qb->update('ActedLegalDocsBundle:Rate', 'rate')
+            ->set('rate.isSelected', ':isSelected')
+            ->where($whereCriteria)
+            ->setParameters($params);
+
+        $qb->setParameters($params);
+
+        $qb->getQuery()->execute();
+    }
+
     public function getRateIdsByOptionIds($ids)
     {
         $em = $this->getEntityManager();
