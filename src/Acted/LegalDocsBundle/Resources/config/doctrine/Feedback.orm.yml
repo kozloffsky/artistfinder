@@ -18,6 +18,14 @@ Acted\LegalDocsBundle\Entity\Feedback:
         feedback:
             type: text
             nullable: true
+        viewed:
+            type: boolean
+            nullable: false
+            options:
+              default: false
+        createdAt:
+            type: datetime
+            nullable: true
     manyToOne:
         event:
            targetEntity: Acted\LegalDocsBundle\Entity\Event

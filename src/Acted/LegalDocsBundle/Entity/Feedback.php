@@ -23,6 +23,11 @@ class Feedback
     private $feedback;
 
     /**
+     * @var bool
+     */
+    private $viewed = false;
+
+    /**
      * @var \Acted\LegalDocsBundle\Entity\Event
      */
     private $event;
@@ -32,6 +37,18 @@ class Feedback
      */
     private $artist;
 
+    /**
+     * @var \DateTime
+     */
+    private $createdAt;
+
+    /**
+     * Feedback constructor.
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     /**
      * Get id
@@ -137,5 +154,53 @@ class Feedback
     public function getArtist()
     {
         return $this->artist;
+    }
+
+    /**
+     * Set viewed
+     *
+     * @param boolean $viewed
+     *
+     * @return Feedback
+     */
+    public function setViewed($viewed)
+    {
+        $this->viewed = $viewed;
+
+        return $this;
+    }
+
+    /**
+     * Get viewed
+     *
+     * @return boolean
+     */
+    public function getViewed()
+    {
+        return $this->viewed;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Feedback
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 }

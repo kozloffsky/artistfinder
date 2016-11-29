@@ -59,6 +59,7 @@ $(function () {
                 var owl = $('.events-menu > ul').owlCarousel({
                     items: 5,
                     pagination: false,
+                    mouseDrag: false
                     responsive: true,
                     responsiveBaseWidth: window
                 });
@@ -106,8 +107,8 @@ $(function () {
     function eventOnClick() {
         var $this = $(this);
         var eventId = $this.data('eventId');
-
-        $this.siblings('.active').toggleClass('active').toggleClass('non-active');
+        var $wrapper = $this.parents('.owl-theme');
+        $wrapper.find('.active').toggleClass('active').toggleClass('non-active');
         $this.toggleClass('active').toggleClass('non-active');
 
         getArtistsByEventId(eventId);

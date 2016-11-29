@@ -39,4 +39,18 @@ class FeedbackManager
         $rendered = $this->templating->render($template,$data);
         $this->userManager->sendEmailMessage($rendered, $userEmail, $artistEmail);
     }
+
+    /**
+     * Set feedbacks to viewed
+     *
+     * @param Feedback $feedbacks
+     */
+    public function makeViewed(Feedback $feedbacks)
+    {
+        foreach ($feedbacks as $feedback) {
+            $feedback->setViewed(true);
+            $this->entityManager->merge($feedback);
+            $this->entityManager->flush();
+        }
+    }
 }
