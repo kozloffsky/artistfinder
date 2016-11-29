@@ -316,7 +316,7 @@
                                     var amount = new Number(rate.price.amount).toFixed();
                                     %>
 
-                                <option price-id="<%=rate.id%>" value="<%=amount%>"><%=amount%></option>
+                                <option price-id="<%=rate.id%>" <% if(rate.isSelected) { %> selected <% } %>  value="<%=amount%>"><%=amount%></option>
 
                                 <% } %>
                             </select>
