@@ -534,12 +534,10 @@ $(function() {
 
             if(!package.prop('checked')) {
                 package.prop('checked', true);
-                selectPackageHandler(package);
             }
 
             if(package.prop('checked') && !selectOptionMask) {
                 package.prop('checked', false);
-                selectPackageHandler(package);
             }
 
             _.each(allPackages, function(o, i) {
@@ -550,12 +548,10 @@ $(function() {
 
             if(!act.prop('checked') && selectActMask) {
                 act.prop('checked', true);
-                selectPerformanceHandler(_context);
             }
 
             if(act.prop('checked') && !selectActMask) {
                 act.prop('checked', false);
-                selectPerformanceHandler(_context);
             }
         }
 
@@ -567,32 +563,13 @@ $(function() {
 
             var selectActMask = 0x0;
 
-            var optionsPromises = [];
-
             if(package.prop('checked')) {
                 _.each(options, function(o, i) {
                     $(o).prop('checked', true);
-
-                    var optionId = $(o).attr("option-id");
-
-                    optionsPromises.push(
-                        selectQuotaionOption({ id: optionId })
-                        .then(console.log)
-                        .catch(console.error)
-                    );
-
                 });
             } else {
                 _.each(options, function(o, i) {
                     $(o).prop('checked', false);
-
-                    var optionId = $(o).attr("option-id");
-
-                    optionsPromises.push(
-                        selectQuotaionOption({ id: optionId })
-                            .then(console.log)
-                            .catch(console.error)
-                    );
                 });
             }
 
@@ -607,16 +584,12 @@ $(function() {
 
             selectPackageHandler($(_context));
 
-            Promise.all(optionsPromises);
-
             if(!act.prop('checked') && selectActMask) {
                 act.prop('checked', true);
-                selectPerformanceHandler(_context);
             }
 
             if(act.prop('checked') && !selectActMask){
                 act.prop('checked', false);
-                selectPerformanceHandler(_context);
             }
         }
 
@@ -624,33 +597,14 @@ $(function() {
             var act = $(_context);
             var packages = act.closest('['+p[0]+']').find('['+itemType[1]+']');
 
-            var packagePromises = [];
-            var optionsPromises = [];
-
             if(act.prop('checked')) {
                 _.each(packages, function(o, i) {
                     $(o).prop('checked', true);
 
                     var options = $(o).closest('div['+p[1]+']').find('['+itemType[2]+']');
 
-                    var packageId = $(o).attr("package-id");
-
-                    packagePromises.push(
-                        selectQuotaionPackage({id: packageId})
-                            .then(console.log)
-                            .catch(console.error)
-                    );
-
                     _.each(options, function(o, i) {
                         $(o).prop('checked', true);
-
-                        var optionId = $(o).attr("option-id");
-
-                        optionsPromises.push(
-                            selectQuotaionOption({ id: optionId })
-                                .then(console.log)
-                                .catch(console.error)
-                        );
                     });
                 });
             } else {
@@ -659,35 +613,13 @@ $(function() {
 
                     var options = $(o).closest('div['+p[1]+']').find('['+itemType[2]+']');
 
-                    var packageId = $(o).attr("package-id");
-
-                    packagePromises.push(
-                        selectQuotaionPackage({id: packageId})
-                        .then(console.log)
-                        .catch(console.error)
-                    );
-
                     _.each(options, function(o, i) {
                         $(o).prop('checked', false);
-
-                        var optionId = $(o).attr("option-id");
-
-                        optionsPromises.push(
-                            selectQuotaionOption({ id: optionId })
-                                .then(console.log)
-                                .catch(console.error)
-                        );
                     });
                 });
             }
 
             selectPerformanceHandler(_context);
-
-            Promise.all([
-                Promise.all(optionsPromises),
-                Promise.all(packagePromises)
-            ]);
-
         }
     }
 
