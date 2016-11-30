@@ -141,19 +141,20 @@ margin: 0 0 0 47px;**/
     margin: 21px 0 25px 0;
     position: relative;
     display: inline-block;
+    vertical-align: middle;
 }
 .dashboard.client .new-event {
     display: inline-block;
     font-family: LatoRegular;
     font-size: 14px;
-    color: rgba(0, 0, 0, 0.87);
-    margin: 0 0 0 40px;
+    color: rgba(73, 79, 199, 0.87);
+    margin: 0 0 0 60px;
 }
 .dashboard.client .events-menu .new-event i.fa.fa-plus {
     margin: 0 0 0 11px;
 }
 .dashboard.client .events-menu .event-item:nth-last-of-type(1) {
-    margin: 0 34px 0 0;
+    margin: 0 20px 0 0;
 }
 .dashboard.client .events-menu .event-item {
     height: 26px;
@@ -229,7 +230,7 @@ margin: 0 0 0 47px;**/
 .dashboard.client .events-menu .arrows .right {
     transform: rotate(180deg);
     position: absolute;
-    right: 0;
+    right: -38px;
     top: 2px;
 }
 /** --- OPTIONS MENU --- **/
