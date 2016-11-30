@@ -35,11 +35,6 @@ services:
           - "%search_image_dir%"
           - %kernel.root_dir%
 
-    app.feedback.manager:
-        class: Acted\LegalDocsBundle\Model\FeedbackManager
-        arguments:
-            - @doctrine.orm.entity_manager
-
     app.event.manager:
         class: Acted\LegalDocsBundle\Model\EventsManager
         arguments:
