@@ -33,10 +33,10 @@ class FeedbackManager
     public function sendNotify(User $client, Feedback $feedback)
     {
         $template = '@ActedLegalDocs/Email/new_feedback_notify.html.twig';
-        $data = compact($client, $feedback);
+        $data = ["client" => $client, "feedback" => $feedback];
         $artistEmail = $feedback->getArtist()->getUser()->getEmail();
         $userEmail = $client->getEmail();
-        $rendered = $this->templating->render($template,$data);
+        $rendered = $this->templating->render($template, $data);
         $this->userManager->sendEmailMessage($rendered, $userEmail, $artistEmail);
     }
 
