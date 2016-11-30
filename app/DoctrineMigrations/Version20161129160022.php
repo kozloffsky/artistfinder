@@ -19,7 +19,6 @@ class Version20161129160022 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE Feedback CHANGE viewed viewed TINYINT(1) DEFAULT \'0\' NOT NULL');
-        $this->addSql('ALTER TABLE Rate ADD is_selected TINYINT(1) DEFAULT \'0\' NOT NULL');
     }
 
     /**
@@ -31,6 +30,5 @@ class Version20161129160022 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE Feedback CHANGE viewed viewed TINYINT(1) DEFAULT NULL');
-        $this->addSql('ALTER TABLE Rate DROP is_selected');
     }
 }
