@@ -293,7 +293,7 @@ margin: 0 0 0 47px;**/
 }
 .dashboard.client .comment-area .comment-box .char-count {
     position: absolute;
-    top: 45px;
+    top: 20px;
     right: 9.5px;
     font-family: LatoRegular;
     font-size: 13px;
