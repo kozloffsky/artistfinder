@@ -384,6 +384,7 @@
     display: inline-block;
     vertical-align: middle;
     text-align: center;
+    padding-right: 0;
 }
 
 .quotation-modal .extra-block-options .price-box {
