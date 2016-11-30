@@ -73,6 +73,7 @@ services:
         arguments:
             - "@templating.engine.twig"
             - "@app.user.manager"
+            - "@doctrine.orm.entity_manager"
 
     app.form_errors_serializer:
         class: Acted\LegalDocsBundle\FormErrors\FormErrorsSerializer

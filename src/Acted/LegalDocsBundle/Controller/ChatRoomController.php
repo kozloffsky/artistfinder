@@ -657,7 +657,7 @@ class ChatRoomController extends Controller
         if ($user->getArtist()) {
             $id = $user->getArtist()->getId();
             $repo = $this->em->getRepository('ActedLegalDocsBundle:Feedback');
-            $feedbacks = $repo->findBy(['artistId' => $id, 'viewed' => false]);
+            $feedbacks = $repo->findBy(['artist' => $id, 'viewed' => false]);
 
             $manager = $this->get('app.feedback.manager');
             $manager->makeViewed($feedbacks);

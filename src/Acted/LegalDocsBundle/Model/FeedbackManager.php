@@ -5,6 +5,7 @@ namespace Acted\LegalDocsBundle\Model;
 use Acted\LegalDocsBundle\Entity\Feedback;
 use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Model\UserManager;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Templating\EngineInterface;
 
 class FeedbackManager
@@ -18,10 +19,11 @@ class FeedbackManager
      * @param EngineInterface $templating
      * @param \Acted\LegalDocsBundle\Model\UserManager $userManager
      */
-    public function __construct(EngineInterface $templating, UserManager $userManager)
+    public function __construct(EngineInterface $templating, UserManager $userManager, EntityManager $entityManager)
     {
         $this->templating = $templating;
         $this->userManager = $userManager;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -43,9 +45,9 @@ class FeedbackManager
     /**
      * Set feedbacks to viewed
      *
-     * @param Feedback $feedbacks
+     * @param array $feedbacks
      */
-    public function makeViewed(Feedback $feedbacks)
+    public function makeViewed($feedbacks)
     {
         foreach ($feedbacks as $feedback) {
             $feedback->setViewed(true);

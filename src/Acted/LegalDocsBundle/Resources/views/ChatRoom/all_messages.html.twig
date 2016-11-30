@@ -92,22 +92,24 @@
                 <article class="col-xs-12 dialog-rating-container noselect" data-longtap-duration="500">
                     <div class="wrap clearfix">
                         <div class="message-info">
-                            <span class="pull-right">{{ feedback.createdAt }}</span>
+                            <span class="pull-right">{{ feedback.createdAt | date('d-m-Y') }}</span>
                             <span>Congratulations! You have received new rating!</span>
                         </div>
                         <div class="avatar">
-                            <img src="/assets/images/avatar.jpg" alt=""/>
+                            <img src="/assets/images/noAvatar.png" alt=""/>
                         </div>
                         <div class="user-info">
-                            <span class="user-name">Diana Croll</span>
+                            <span class="user-name">{{ feedback.event.user.firstname }}</span>
                         </div>
                         <div class="rating">
-                            {% for i in 0..feedback.rating %}
+                            {% for i in 1..feedback.rating %}
                             <i class="star-icon filled"></i>
                             {% endfor %}
-                            {% for i in 0..(5-feedback.rating) %}
-                            <i class="star-icon unfilled"></i>
-                            {% endfor %}
+                            {% if  5-feedback.rating > 0  %}
+                                {% for i in 1..(5-feedback.rating) %}
+                                <i class="star-icon unfilled"></i>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                         <div class="message-block">
                            <p>{{ feedback.feedback }}</p>
