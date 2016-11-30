@@ -249,7 +249,8 @@ $(function () {
      * @returns {int}
      */
     function getRating($commentBox) {
-        return $commentBox.find('i.filled').lenght;
+        var $wrapper = $commentBox.parents('.col-md-12');
+        return $wrapper.find('i.filled').length;
     }
 
     /**
