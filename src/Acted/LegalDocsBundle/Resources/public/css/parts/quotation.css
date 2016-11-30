@@ -297,8 +297,8 @@
     font-size: 36px;
 }
 
-.quotation-modal .form-control[disabled] {
-    background: #d8d8d8 !important;
+.quotation-modal input[disabled] {
+    background: #FFF !important;
 }
 
 .quotation-modal .new-act-section {
@@ -347,7 +347,7 @@
 .quotation-modal input[quot-edit-duration] {
     border: 2px solid rgba(229, 229, 229, 1);
     border-radius: 5px;
-    height: 28px;
+    height: 26px;
     width: 44px;
 }
 
@@ -429,6 +429,24 @@
     font-family: LatoRegular;
     font-size: 14px;
     padding: 0 2px 0 0px;
+}
+
+.quotation-modal div[act-type="service"] .act-option {
+    padding: 12px 12px 0 0 !important;
+}
+
+.quotation-modal .duration-select.extra {
+    width: 57px;
+    padding-left: 12px;
+}
+
+.quotation-modal .custom-price {
+    border: 2px solid rgba(229,229,229,1);
+    border-radius: 4px;
+    height: 26px;
+    width: 56px;
+    text-align: center;
+    margin: 0 2.5px;
 }
 
 @media screen and (max-width: 960px) {
