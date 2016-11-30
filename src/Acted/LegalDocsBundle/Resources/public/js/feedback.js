@@ -330,6 +330,7 @@ $(function () {
         });
     }
 
+
     if (route.search('dashboard/feedback') > 0) {
         getEventsByUserId(getUserId());
     }

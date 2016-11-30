@@ -370,6 +370,10 @@ $(function () {
         format: 'DD/MM/YYYY'
     });
 
+    function removeFeedbackHtml(id) {
+        $("article[data-feedback-id='" + id + "']").remove();
+    }
+
     function deleteFeedback() {
         var $this = $(this);
         if (confirm('Are you sure?')) {
@@ -378,7 +382,7 @@ $(function () {
                 url: "/dashboard/feedbacks/" + id,
                 method: "DELETE",
                 success: function (data) {
-                    console.log(data);
+                    removeFeedbackHtml(id);
                 },
                 error: function (error) {
                     console.log(error);
@@ -386,6 +390,7 @@ $(function () {
             })
         }
     }
+
     $(".remove-feedback").click(deleteFeedback);
 
         // var myTest = ["test", "test2"];

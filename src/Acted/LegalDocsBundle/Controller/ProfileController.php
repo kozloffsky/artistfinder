@@ -307,7 +307,7 @@ class ProfileController extends Controller
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
         return $paginator->paginate(
-            $em->getRepository('ActedLegalDocsBundle:ArtistRating')->findByArtistQuery($artist),
+            $em->getRepository('ActedLegalDocsBundle:Feedback')->findByArtistQuery($artist),
             $page,
             $this->getParameter('per_page')
         );

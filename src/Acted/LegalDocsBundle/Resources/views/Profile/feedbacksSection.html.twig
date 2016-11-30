@@ -1,6 +1,6 @@
 
 {% for feedback in feedbacks %}
-    <article class="feedback-block">
+    <article class="feedback-block" data-feedback-id="{{ feedback.id }}">
         <div class="row">
             <div class="avatar">
                 <img src="{{ feedback.event.user.avatar }}" alt="Avatar">
@@ -8,8 +8,10 @@
             </div>
 
             <div class="pull-right">
-                <span>{{ feedback.ratingDateTime|date('d F Y') }}</span>
-                <span><i class="fa fa-trash"></i></span>
+                <span>{{ feedback.createdAt | date('d F Y') }}</span>
+                {% if app.user.roles[0] == "ROLE_ADMIN"  %}
+                    <span><i class="fa fa-trash remove-feedback"></i></span>
+               {% endif  %}
             </div>
         </div>
         <div class="row">
@@ -37,7 +39,7 @@
                     </div>
                 </div>
                 <p class="feedback-text">
-                    {{ feedback.comments }}
+                    {{ feedback.feedback }}
                 </p>
                 <a class="more">+more</a>
                 <div class="gradient"></div>
