@@ -324,7 +324,9 @@ margin: 0 0 0 47px;**/
     background-image: -o-linear-gradient(left, rgba(250, 217, 97, 1) 0%, rgba(247, 107, 28, 1) 100%), -o-linear-gradient(left, rgba(250, 217, 97, 1) 0%, rgba(247, 107, 28, 1) 100%);
     background-image: linear-gradient(to right, rgba(250, 217, 97, 1) 0%, rgba(247, 107, 28, 1) 100%), linear-gradient(to right, rgba(250, 217, 97, 1) 0%, rgba(247, 107, 28, 1) 100%);
 }
-
+.dashboard.client .comment-area .submit[disabled] {
+    background: #DBDBDB;
+}
 @media screen and (min-width: 768px ){
     .dashboard.client .tip-box,
     .dashboard.client .comment-area {
