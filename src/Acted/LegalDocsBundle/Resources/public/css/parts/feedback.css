@@ -149,8 +149,8 @@ margin: 0 0 0 47px;**/
     color: rgba(0, 0, 0, 0.87);
     margin: 0 0 0 40px;
 }
-.dashboard.client .events-menu .new-event .fa.fa-plus {
-    padding: 0 0 0 11px;
+.dashboard.client .events-menu .new-event i.fa.fa-plus {
+    margin: 0 0 0 11px;
 }
 .dashboard.client .events-menu .event-item:nth-last-of-type(1) {
     margin: 0 34px 0 0;
@@ -166,6 +166,7 @@ margin: 0 0 0 47px;**/
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
+    vertical-align: middle;
 }
 .dashboard.client .events-menu .event-item a {
     font-family: LatoRegular;
