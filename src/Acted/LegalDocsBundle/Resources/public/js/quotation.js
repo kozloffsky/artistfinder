@@ -810,7 +810,7 @@ $(function() {
                 options: [
                     {
                         qty: 1,
-                        duration: 45,
+                        duration: 1,
                         price1: 3000,
                         price_on_request: false
                     }
