@@ -1005,7 +1005,7 @@ $(function() {
 
             mainSelector.find("[quot-edit-option]").show();
 
-            var duration = mainSelector.find("[quot-edit-duration]").find("option:selected").val();
+            var duration = mainSelector.find("[quot-edit-duration]").val();
             var qty      = mainSelector.find("[quot-edit-qty]").find("option:selected").val();
             var optionId = $(this).closest("div[option-id]").attr("option-id");
 
@@ -1043,7 +1043,7 @@ $(function() {
 
         var mainSelector = $(this).closest("div[option-id]");
 
-        var duration = mainSelector.find("[quot-edit-duration]").find("option:selected").val();
+        var duration = mainSelector.find("[quot-edit-duration]").val();
         var qty      = mainSelector.find("[quot-edit-qty]").find("option:selected").val();
         var id       = mainSelector.attr("option-id");
 

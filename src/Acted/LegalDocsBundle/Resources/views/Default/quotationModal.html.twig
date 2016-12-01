@@ -357,7 +357,7 @@
         type = 'performance';
         curPerf = allData[i].performance;
 
-        if (curPerf.type == basePerformanceType || curPerf.packages != 'undefined') {
+        if (curPerf.type == basePerformanceType) {
             continue;
         }
 
@@ -406,11 +406,6 @@
                         </select>
                         <span>x</span>
                         <input type="number" quot-edit-duration name="duration" min="1" max="100" class="duration-select extra">
-                        {#<select quot-edit-duration name="duration" class="duration-select">#}
-                            {#<option <% if(option.duration == 45) { %> selected <% } %> value="45">45 min</option>#}
-                            {#<option <% if(option.duration == 50) { %> selected <% } %> value="50">50 min</option>#}
-                            {#<option <% if(option.duration == 55) { %> selected <% } %> value="55">55 min</option>#}
-                        {#</select>#}
                         <span>min</span>
                     </span>
 
@@ -515,11 +510,6 @@
                         </select>
                         <span>x</span>
                         <input type="number" quot-edit-duration name="duration" min="1" max="100" class="duration-select extra" value="1">
-                        {#<select quot-edit-duration name="duration" class="duration-select">#}
-                            {#<option <% if(option.duration == 45) { %> selected <% } %> value="45">45 min</option>#}
-                            {#<option <% if(option.duration == 50) { %> selected <% } %> value="50">50 min</option>#}
-                            {#<option <% if(option.duration == 55) { %> selected <% } %> value="55">55 min</option>#}
-                        {#</select>#}
                         <span>min</span>
                     </span>
                     <% } %>
