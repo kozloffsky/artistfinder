@@ -251,7 +251,7 @@
             var serviceAmount = new Number(servicePrice.amount).toFixed();
         }
 
-        if (type == 'performance' && curPerf.type != basePerformanceType) {
+        if ((type == 'performance' && curPerf.type != basePerformanceType) || curPerf.packages == 'undefined') {
             continue;
         }
 
