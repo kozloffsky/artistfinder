@@ -2,7 +2,9 @@
 
 namespace Acted\LegalDocsBundle\Repository;
 
+use Acted\LegalDocsBundle\Entity\Event;
 use Acted\LegalDocsBundle\Entity\EventOffer;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 
@@ -111,11 +113,37 @@ class EventOfferRepository extends EntityRepository
      *
      */
     public function acceptDetails($eventId){
+        $this->accept(EventOffer::PROP_DETAILS, $eventId);
+    }
+
+    /**
+     * @Secure(roles="ROLE_CLIENT")
+     * @param int $eventId
+     *
+     */
+    public function acceptTechRequirements($eventId){
         $eventOffer = $this->findOneBy(array("event"=>$eventId));
         // do nothing if already accepted
-        if($eventOffer->getDetailsAccepted()) return;
-        $eventOffer->setDetailsAccepted(true);
+        if($eventOffer->getTechnicalRequirementsAccepted()) return;
+        $eventOffer->setTechnicalRequirementsAccepted(true);
         $this->_em->persist($eventOffer);
         $this->_em->flush();
+
+    }
+
+    public function accept($propName, $eventId){
+        $eventOffer = $this->findOneBy(array("event"=>$eventId));
+        $getter = 'get'.$propName.'Accepted';
+        $setter = 'set'.$propName.'Accepted';
+        // do nothing if already accepted
+        if($eventOffer->$getter()) return;
+
+        $eventOffer->$setter(true);
+        $this->_em->persist($eventOffer);
+        $this->_em->flush();
+    }
+
+    public function getEventArtist(Event $event){
+
     }
 }

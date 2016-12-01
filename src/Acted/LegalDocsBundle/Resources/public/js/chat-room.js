@@ -1,5 +1,19 @@
 $(function(){
     'use strict';
+    try{
+        var vue = new Vue({
+            el: '.chat-room',
+            delimiters: ['${','}'],
+            data: {
+                message: '',
+                chatMessages: window.chatMessages,
+                sendText:""
+            }
+
+        });
+    }catch (e){
+    }
+
 
     function initializeMap(eventLocationMap) {
         // var myLatlng = new google.maps.LatLng(eventLocationMap.latitude, eventLocationMap.longitude);
@@ -120,24 +134,25 @@ $(function(){
     }
 
     function chatSocket(chatId){
-        var webSocket = WS.connect("ws://51.254.217.4:8686");
+        //var webSocket = WS.connect("ws://51.254.217.4:8686");
+        var webSocket = WS.connect("ws://192.168.33.12:8686");
 
         /**
          * connect
          */
         webSocket.on("socket/connect", function(session){
-            //console.log("Successfully Connected!");
+            console.log("Successfully Connected!");
         })
 
         /**
          * disconnect
          */
         webSocket.on("socket/disconnect", function(error){
-            //console.log("Disconnected for " + error.reason + " with code " + error.code);
+            console.log("Disconnected for " + error.reason + " with code " + error.code);
         });
 
         webSocket.on("socket/connect", function(session){
-
+console.log('connected to socket');
             //the callback function in "subscribe" is called everytime an event is published in that channel.
             session.subscribe('acted/chat/'+chatId+'', function(uri, payload){
                 postMessage(payload)
@@ -203,7 +218,7 @@ $(function(){
 
 
             function postMessage(messageChat){
-                //console.log(messageChat)
+                console.log(messageChat);
                 if(messageChat.role){
                     var chatMessageFiles = '';
                     if(messageChat.file){
@@ -248,7 +263,9 @@ $(function(){
                             '</div>'+
                             '</li>';
                     }
-                    $('#twocolumns .comments-list').prepend(messageBlock);
+                    //$('#twocolumns .comments-list').prepend(messageBlock);
+                    vue.$data.chatMessages.unshift(messageChat);
+
                     getFileExtension();
                 }
             }

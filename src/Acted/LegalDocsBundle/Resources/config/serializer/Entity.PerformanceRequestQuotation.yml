@@ -3,6 +3,8 @@ Acted\LegalDocsBundle\Entity\PerformanceRequestQuotation:
     properties:
         isSelected:
             groups: []
+        performance:
+            groups: [chat_room]
     virtual_properties:
         getRequestQuotation:
             serialized_name: requestQuotation
