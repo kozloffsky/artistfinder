@@ -962,6 +962,10 @@ $(function() {
     }
 
     /** --- EDITING FUNCTIONAL --- **/
+    function editPaymentPercent() {
+        var balancePercent = $(this).find("option:selected").val();
+        $(".payment-deposit-amount").html(balancePercent + '%');
+    }
     function editPerformanceComment() {
 
         var mainSelector = $(this).closest("div[act-id]");
@@ -1114,40 +1118,126 @@ $(function() {
     function editPrice(e) {
         var value = $(this).find('option:selected').val();
         var options = $(this).find('option[price-id]');
-        var selectedPriceId = $(this).find('option:selected').attr('price-id');
+        var selectedOption = $(this).find('option:selected');
+        var selectedPriceId = selectedOption.attr('price-id');
+        var customPriceId = $(this).find('[custom-price]').attr('price-id');
+        var isRemovedPrice = false;
 
-        selectPriceSend(selectedPriceId)
-            .then(function(res){
+        var optionId = $(this).closest('[option-id]').attr('option-id');
+        var priceAmount = $(this).val();
 
-                console.log(res)
-            })
-            .catch(function(err) {
-                console.error(err)
-            });
-
+        if (selectedOption.attr('price-removed')) {
+            isRemovedPrice = true;
+        }
+        console.log('ISR:', customPriceId);
         if(value == 'custom') {
+
             $(this).hide();
-            $(this).after('<input edit-custom-price type="text" class="custom-price" onkeypress="return isNumberKey(event);">');
-
-            var optionsToDelete = [];
-
-            $.each(options, function() {
-                var price = $(this);
-                var priceId = $(this).attr('price-id');
-
-                optionsToDelete.push(removePriceSend(priceId));
-            });
-
-            Promise.all(optionsToDelete)
-            .then(function() {
-                options.remove();
-            });
+            var inputCustomPrice = $(this).find("[edit-custom-price]");
+            if (typeof(inputCustomPrice) != 'undefined') {
+                $(this).after('<input edit-custom-price type="text" class="custom-price" onkeypress="return isNumberKey(event);">');
+            } else {
+                inputCustomPrice.show();
+            }
 
             return;
-        }
+        } else {
+            if (isRemovedPrice) {
+                var data = {
+                    price_rate_create: {
+                        option: optionId,
+                        price: priceAmount
+                    }
+                };
 
+                $(this).find('[custom-price]').hide();
+                selectedOption.removeAttr('price-removed');
+
+                createPriceSend(data)
+                    .then(function(res) {
+                        selectedOption.attr('price-id', res.rate.id);
+
+                        return removePriceSend(customPriceId)
+                            .then(function(res){
+
+                            }).catch(function(err) {
+                                $(this).find('[custom-price]').show();
+                                selectedOption.attr('price-removed', true);
+                                console.error(err)
+                            });
+                    })
+                    .catch(function(err) {
+                        $(this).find('[custom-price]').show();
+                        selectedOption.attr('price-removed', true);
+                        console.error(err);
+                    });
+            } else {
+                selectPriceSend(selectedPriceId)
+                    .then(function(res){
+
+                        console.log(res)
+                    })
+                    .catch(function(err) {
+                        console.error(err)
+                    });
+            }
+        }
     }
+
     function editCustomPrice() {
+
+        var _this = $(this);
+        var priceAmount = _this.val();
+        _this.hide();
+        _this.closest('[option-id]').find('[quot-edit-price]').show();
+
+        var options = _this.closest('[option-id]').find('[quot-edit-price]').find('option');
+        var isShowedCustomPrice = false;
+        var optionId = _this.closest('[option-id]').attr('option-id');
+
+        var removedPromise = new Array(0);
+
+        $.each(options, function(index, value) {
+            var customPrice = $(value).attr("custom-price");
+
+            var priceId = $(value).attr("price-id");
+
+            if (typeof(customPrice) != 'undefined') {
+                $(value).remove();
+                isShowedCustomPrice = true;
+            }
+
+            if($(value).attr('value') != 'custom') {
+                $(value).attr('price-removed', true);
+                $(value).removeAttr('selected');
+                removedPromise.push(removePriceSend(priceId));
+            }
+        });
+
+
+        Promise.all(removedPromise)
+        .then(function() {
+
+            var data = {
+                price_rate_create: {
+                    option: optionId,
+                    price: priceAmount
+                }
+            };
+
+            return createPriceSend(data);
+
+        }).then(function (resp) {
+                var rateId = resp.rate.id;
+                var options = _this.closest('[option-id]').find('[quot-edit-price]').find('option');
+                options.find("[custom-price]").remove();
+                options.first().before('<option custom-price price-id="' + rateId + '" selected value="' + priceAmount + '">' + priceAmount + '</option>');
+        }).catch(function (err) {
+                console.log(err);
+        });
+    }
+
+    function editExtraCustomPrice() {
         var priceValue = $(this).val();
         var select = $(this).prev('select');
         var optionId = $(this).closest('div[option-id]').attr('option-id');
@@ -1239,6 +1329,8 @@ $(function() {
         .on("focusout", ".quotation-modal [quot-edit-title]", editActTitle)
         .on("focusout", ".quotation-modal [quot-edit-package-name]", editPackageName)
         .on("focusout", ".quotation-modal [edit-custom-price]", editCustomPrice)
+        .on("focusout", ".quotation-modal [edit-extra-custom-price]", editExtraCustomPrice)
         .on("focusout", ".quotation-modal [edit-performance-comment]", editPerformanceComment)
+        .on("change", ".quotation-modal [edit-quotation-payment-percent]", editPaymentPercent)
 });
 

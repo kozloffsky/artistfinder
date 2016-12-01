@@ -209,7 +209,7 @@
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                 <label for="quot_venue_type">Additional info</label>
-                <textarea class="additional-info">I want this celebration to be super cool!</textarea>
+                <textarea class="additional-info" <%=disabled%>>I want this celebration to be super cool!</textarea>
             </div>
         </div>
     </div>
@@ -336,6 +336,8 @@
 <script type="text/template" id="quot-extra-performance-tmp">
     <%
         var standardPerformanceType = 1;
+        var basePerformanceType = 0;
+
         var isExtraPerformance = data.isExtra;
         var performances = data.model.perf;
         var allData      = performances;
@@ -348,7 +350,7 @@
         type = 'performance';
         curPerf = allData[i].performance;
 
-        if (curPerf.type == 0) {
+        if (curPerf.type == basePerformanceType || curPerf.packages != 'undefined') {
             continue;
         }
 
@@ -406,7 +408,7 @@
                     </span>
 
                     <div class="pull-right">
-                        <input edit-custom-price custom-extra-price class="price-box" placeholder="<%=amount%>" rate-id="<%=rate.id%>" value="<%=amount%>">
+                        <input edit-extra-custom-price custom-extra-price class="price-box" placeholder="<%=amount%>" rate-id="<%=rate.id%>" value="<%=amount%>">
                         <span>GBP</span>
                         <span act-delete class="pull-right"><i class="fa fa-trash"></i></span>
                     </div>
@@ -437,7 +439,7 @@
     </div>
 
     <div class="row payment-deposit">
-        <select name="quotation-payment-percent">
+        <select edit-quotation-payment-percent name="quotation-payment-percent">
             <option <% if(balancePercent == 30) { %> selected <% } %> value="30">30%</option>
             <option <% if(balancePercent == 50) { %> selected <% } %> value="50">50%</option>
             <option <% if(balancePercent == 100) { %> selected <% } %> value="100">100%</option>
@@ -447,7 +449,7 @@
     </div>
 
     <div class="row payment-deposit-info">
-        <span>50% guaranteed Balance payment on <b>Escrow Account</b></span>
+        <span class="payment-deposit-amount"><%=balancePercent%></span><span> guaranteed Balance payment on <b>Escrow Account</b></span>
     </div>
 
     <div style="text-align: center;">
@@ -516,7 +518,7 @@
                     <% } %>
 
                     <div class="pull-right">
-                        <input edit-custom-price custom-extra-price class="price-box" rate-id="<%=rate.id%>" value="3000">
+                        <input edit-extra-custom-price custom-extra-price class="price-box" rate-id="<%=rate.id%>" value="3000">
                         <span>GBP</span>
                         <span act-delete class="pull-right"><i class="fa fa-trash"></i></span>
                     </div>
