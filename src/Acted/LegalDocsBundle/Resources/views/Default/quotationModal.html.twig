@@ -242,6 +242,13 @@
         if(allData[i].service) {
             type = 'service';
             curPerf = allData[i].service;
+
+            var servicePackage = curPerf.packages[0];
+
+            var serviceOption = servicePackage.options[0];
+            var serviceRate = serviceOption.rates[0];
+            var servicePrice = serviceRate.price;
+            var serviceAmount = new Number(servicePrice.amount).toFixed();
         }
 
         if (type == 'performance' && curPerf.type != basePerformanceType) {
@@ -314,7 +321,7 @@
                             <% } %>
 
                             <% if(type == 'service') { %>
-                                <input quot-edit-price class="price-box" name="price" value="<%=amount%>" placeholder="<%=amount%>">
+                                <input edit-extra-custom-price class="price-box" name="price" rate-id="<%=serviceRate.id%>" value="<%=serviceAmount%>" placeholder="<%=serviceAmount%>">
                             <% } %>
 
                             <span>GBP</span>
@@ -398,7 +405,7 @@
                             %>
                         </select>
                         <span>x</span>
-                        <input type="number" quot-edit-duration name="duration" class="duration-select extra">
+                        <input type="number" quot-edit-duration name="duration" min="1" max="100" class="duration-select extra">
                         {#<select quot-edit-duration name="duration" class="duration-select">#}
                             {#<option <% if(option.duration == 45) { %> selected <% } %> value="45">45 min</option>#}
                             {#<option <% if(option.duration == 50) { %> selected <% } %> value="50">50 min</option>#}
@@ -507,7 +514,7 @@
                             %>
                         </select>
                         <span>x</span>
-                        <input type="number" quot-edit-duration name="duration" class="duration-select extra">
+                        <input type="number" quot-edit-duration name="duration" min="1" max="100" class="duration-select extra" value="1">
                         {#<select quot-edit-duration name="duration" class="duration-select">#}
                             {#<option <% if(option.duration == 45) { %> selected <% } %> value="45">45 min</option>#}
                             {#<option <% if(option.duration == 50) { %> selected <% } %> value="50">50 min</option>#}

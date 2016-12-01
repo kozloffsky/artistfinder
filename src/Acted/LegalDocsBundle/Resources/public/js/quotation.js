@@ -1120,6 +1120,7 @@ $(function() {
         var options = $(this).find('option[price-id]');
         var selectedOption = $(this).find('option:selected');
         var selectedPriceId = selectedOption.attr('price-id');
+
         var customPriceId = $(this).find('[custom-price]').attr('price-id');
         var isRemovedPrice = false;
 
@@ -1129,7 +1130,9 @@ $(function() {
         if (selectedOption.attr('price-removed')) {
             isRemovedPrice = true;
         }
+
         console.log('ISR:', customPriceId);
+
         if(value == 'custom') {
 
             $(this).hide();
