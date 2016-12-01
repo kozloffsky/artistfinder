@@ -1191,6 +1191,11 @@ $(function() {
 
         var _this = $(this);
         var priceAmount = _this.val();
+
+        if (priceAmount == '') {
+            return;
+        }
+
         _this.hide();
         _this.closest('[option-id]').find('[quot-edit-price]').show();
 
