@@ -435,6 +435,9 @@
 <script type="text/template" id="quot-payment-tmp">
     <%
         var balancePercent = data.model.balance_percent;
+        if (typeof(balancePercent) == 'undefined') {
+            balancePercent = 50;
+        }
     %>
     <div class="row">
         <label>Payment terms</label>
