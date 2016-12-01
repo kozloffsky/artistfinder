@@ -1,0 +1,284 @@
+.client_event_details {
+    box-sizing: border-box;
+}
+.client_event_details .right_column {
+    width: 650px;
+    padding-left: 34px;
+    padding-right: 14px;
+}
+.client_event_details .left_column {
+    width: 520px;   
+    padding: 0 8px 0 0px;
+}
+.client_event_details .left_column .row .printer_icon {
+    display: none;
+}
+.client_event_details .row {
+    position: relative;
+}
+.client_event_details .row label {
+    color: rgba(72, 91, 189, 1);
+    font-size: 15px;
+    font-family: "LatoBold";
+    margin: 11px 0px 8px 3px;
+}
+.client_event_details .row input,
+.client_event_details .row select {
+    width: 100%;
+    height: 28px;
+    font-family: "LatoRegular";
+    font-size: 14px;
+    border: 2px solid rgba(97, 108, 197, 0.21);
+    margin: 0;
+    outline: none;
+    
+}
+.client_event_details .row input[readonly],
+.client_event_details .row select[readonly],
+.client_event_details .row textarea[readonly],
+.client_event_details .row input:disabled {
+    border: none;
+    background-color: rgba(246, 246, 246, 1) !important;
+    outline: none !important;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+.client_event_details .row textarea {
+    height: 77px;
+    resize: none;
+}
+.client_event_details .entertainer .col-md-4 p {
+    color: rgba(0, 0, 0, 1);
+}
+.client_event_details .additional_info_counter {
+    position: absolute;
+    right: 8px;
+    top: 47px;
+}
+.client_event_details .entertainer {
+    border: 3px solid rgba(255, 240, 188, 1);
+}
+.client_event_details .perfomance_details {
+    border: 3px solid rgba(222, 224, 255, 1);
+}
+.client_event_details .payment_details {
+    border: 3px solid rgba(225, 235, 130, 1);
+}
+.client_event_details .contact_details {
+    border: 3px solid rgba(140, 217, 251, 1);
+}
+.client_event_details .info_block {
+    margin: 1px 0 12px;
+}
+.client_event_details .entertainer {
+    padding-bottom: 8px;
+}
+.client_event_details .perfomance_details {
+    padding-top: 9px;
+    padding-bottom: 1px;
+}
+.client_event_details .payment_details {
+    padding-top: 10px;
+    padding-bottom: 0px;
+}
+.client_event_details .contact_details {
+    padding-top: 10px;
+    padding-bottom: 0px;
+}
+.client_event_details .info_block+.payment_details .col-md-3 {
+    padding-left: 14px;
+}
+.client_event_details .info_block:first-child {
+    margin: 6px 0 12px;
+}
+.client_event_details .entertainer.info_block .col-md-4 p {
+    font-family: "LatoRegular";
+    font-size: 14px;
+}
+
+.client_event_details .info_block .col-md-3 p,
+.client_event_details .info_block .col-md-4 p,
+.client_event_details .info_block .col-md-8 p {
+    font-family: "LatoBold";
+    font-size: 15px;
+}
+.client_event_details .info_block .col-md-6 p,
+.client_event_details .info_block .col-md-9 p,
+.client_event_details .info_block .non-refundable p{
+    font-family: "LatoRegular";
+    font-size: 14px;
+}
+.client_event_details .info_block .col-md-4 h3,
+.client_event_details .info_block .col-md-8 h3 {
+    font-size: 18px;
+    margin-top: 11px;
+    margin-bottom: 8px;
+}
+.client_event_details .info_block .col-md-4 {
+    padding-left: 12px;
+}
+.client_event_details .info_block .col-md-8 {
+    padding-right: 12px;
+}
+.client_event_details .info_block .col-md-3 {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+.client_event_details .info_block .col-md-3 p {
+    margin-bottom: 5px;
+}
+.client_event_details .info_block .col-md-8 h3 {
+    text-align: right;
+}
+.client_event_details .printer_icon p {
+    text-align: right;
+    padding: 13px 16px 0px 0px;
+    margin-bottom: 5px;
+}
+.client_event_details .printer_icon .fa-print {
+    padding-right: 8px;
+}
+.client_event_details .info_block .col-md-9,
+.client_event_details .info_block .col-md-6 {
+    padding-left: 3px;
+    padding-right: 5px;
+}
+.client_event_details .perfomance_details .col-md-9 p {
+    line-height: 1.79;
+    margin-bottom: 4px;
+}
+.client_event_details .info_block+.payment_details .non-refundable {
+    padding-right: 0;
+    padding-left: 0;
+    text-align: right;
+    letter-spacing: -0.06em;
+    padding-right: 5px;
+}
+.client_event_details .info_block .col-md-7 {
+    padding-left: 3px;
+    padding-right: 5px;
+}
+.client_event_details .info_block .col-md-7 p {
+    margin-bottom: 5px;
+}
+.client_event_details .contact_details .col-md-9 p {
+    margin-bottom: 4px;
+}
+.client_event_details .controls {
+    text-align: center;
+    float: none;
+    padding: 0px 0 12px;
+}
+.client_event_details .controls .button-gradient.filled {
+    margin: 0 auto;
+}
+.client_event_details .controls .button-gradient.filled .btn {
+    font-size: 15px;
+    width: 133px;
+    height: 26px;
+    padding: 0;
+    margin: 0 auto;   
+}
+.client_event_details .entertainer_block::after {
+    display: block;
+    content: "";
+    border-bottom: 2px solid rgba(240, 240, 240, 1);
+    margin-bottom: 22px;
+}
+@media (max-width: 1199px) {
+    .client_event_details .right_column,
+    .client_event_details .left_column {
+        width: 50%;
+        padding: 0 10px;
+    }
+    .client_event_details .no-pad-right {
+        margin-top: 0px;
+        padding-left: 10px;
+    }
+    .client_event_details .no-pad-left {
+        margin-top: 0px;
+        padding-right: 10px;
+    }
+    .client_event_details .info_block+.payment_details .non-refundable {
+        text-align: left;
+    }
+}
+@media (max-width: 991px) {
+    .client_event_details .no-pad-right,
+    .client_event_details .no-pad-left{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .client_event_details .info_block .col-md-9,
+    .client_event_details .info_block .col-md-7 {
+        padding: 0 12px;
+    }
+    .client_event_details .info_block+.payment_details .non-refundable {
+        width: 30%;
+        float: right;
+        text-align: right;
+    }
+    .client_event_details .info_block .col-md-7 {
+        width: 70%;
+        float: left;
+    }
+    .client_event_details .name {
+        float: left;
+    }
+    .client_event_details .total_summ {
+        float: right;
+    }
+}
+
+@media (max-width: 767px) {
+    .client_event_details .right_column,
+    .client_event_details .left_column {
+        width: 100%;
+        padding: 0 10px;
+    }
+    .client_event_details .left_column {
+        margin-bottom: 20px;
+    }
+    .client_event_details .printer_icon {
+        display: none;
+    }
+    .client_event_details .left_column .row .printer_icon {
+        display: block;
+        float: right;
+    }
+    .client_event_details .left_column .row .printer_icon p {
+        color: rgba(0, 0, 0, .67);
+        font-size: 14px;
+        padding: 0 5px 0 0;
+        margin: 11px 0 0 0;
+    }
+    .client_event_details .no-pad-right {
+        margin-top: 0px;
+        padding-left: 10px;
+        width: 50%;
+        float: left;
+    }
+    .client_event_details .no-pad-left {
+        margin-top: 0px;
+        padding-right: 10px;
+        width: 50%;
+        float: left;
+    }
+    
+}
+@media (max-width: 520px) {
+    .client_event_details .no-pad-right,
+    .client_event_details .no-pad-left {
+        padding-right: 0px;
+        padding-left: 0px;
+        width: 100%;
+        float: none;
+    }
+    .client_event_details .info_block .col-md-7 {
+        width: 60%;
+    }
+    .client_event_details .info_block+.payment_details .non-refundable {
+        width: 40%;
+        text-align: left;
+    }
+}
