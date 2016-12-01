@@ -1326,7 +1326,7 @@ $(function() {
         .on("click",    ".quotation-modal [create-set]", createSet)
         .on("click",    ".quotation-modal [quot-edit-qty]", editOption)
         .on("click",    ".quotation-modal [quot-edit-duration]", editOption)
-        .on("click",    ".quotation-modal [quot-edit-performance-type]", editPerformanceType)
+        .on("change",    ".quotation-modal [quot-edit-performance-type]", editPerformanceType)
         .on("click",    ".quotation-modal #quotation_comment_toggle", quotation_comment_area)
         .on("change",   ".quotation-modal [quot-edit-price]", editPrice)
         .on("focusout", ".quotation-modal [quot-edit-title]", editActTitle)
