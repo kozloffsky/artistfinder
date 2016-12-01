@@ -445,16 +445,16 @@
 
     <div class="row payment-deposit">
         <select edit-quotation-payment-percent name="quotation-payment-percent">
+            <option <% if(balancePercent == 20) { %> selected <% } %> value="20">20%</option>
             <option <% if(balancePercent == 30) { %> selected <% } %> value="30">30%</option>
             <option <% if(balancePercent == 50) { %> selected <% } %> value="50">50%</option>
-            <option <% if(balancePercent == 100) { %> selected <% } %> value="100">100%</option>
         </select>
 
         <span>guaranteed Deposit payment on <b>Escrow Account</b></span>
     </div>
 
     <div class="row payment-deposit-info">
-        <span class="payment-deposit-amount"><%=balancePercent%>%</span><span> guaranteed Balance payment on <b>Escrow Account</b></span>
+        <span class="payment-deposit-amount"><%depositPercent = 100-balancePercent%><%=depositPercent%>%</span><span> guaranteed Balance payment on <b>Escrow Account</b></span>
     </div>
 
     <div style="text-align: center;">
@@ -518,7 +518,7 @@
                     <% } %>
 
                     <div class="pull-right">
-                        <input edit-extra-custom-price custom-extra-price class="price-box" rate-id="<%=rate.id%>" value="3000">
+                        <input edit-extra-custom-price custom-extra-price class="price-box" rate-id="<%=rate.id%>" value="0">
                         <span>GBP</span>
                         <span act-delete class="pull-right"><i class="fa fa-trash"></i></span>
                     </div>

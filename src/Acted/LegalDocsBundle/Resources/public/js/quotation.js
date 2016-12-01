@@ -964,7 +964,8 @@ $(function() {
     /** --- EDITING FUNCTIONAL --- **/
     function editPaymentPercent() {
         var balancePercent = $(this).find("option:selected").val();
-        $(".payment-deposit-amount").html(balancePercent + '%');
+        var depositPercent = 100 - balancePercent;
+        $(".payment-deposit-amount").html(depositPercent + '%');
     }
     function editPerformanceComment() {
 

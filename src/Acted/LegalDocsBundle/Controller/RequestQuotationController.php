@@ -249,14 +249,18 @@ class RequestQuotationController extends Controller
             $paymentTermRequestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:PaymentTermRequestQuotation');
 
             $paymentTermRQ = $paymentTermRequestQuotationRepo->findOneBy(array('requestQuotation' => $requestQuotation->getId()));
+
+            $depositPercent = 100 - $balancePercent;
+
             if (empty($paymentTermRQ)) {
                 $paymentTermRequestQuotation = new PaymentTermRequestQuotation();
                 $paymentTermRequestQuotation->setRequestQuotation($requestQuotation);
                 $paymentTermRequestQuotation->setBalancePercent($balancePercent);
-                $paymentTermRequestQuotation->setGuaranteedDepositPercent(PaymentTermRequestQuotation::GUARANTEED_DEPOSIT_PERCENT);
+                $paymentTermRequestQuotation->setGuaranteedDepositPercent($depositPercent);
                 $em->persist($paymentTermRequestQuotation);
             } else {
                 $paymentTermRQ->setBalancePercent($balancePercent);
+                $paymentTermRQ->setGuaranteedDepositPercent($depositPercent);
                 $em->persist($paymentTermRQ);
             }
 
