@@ -7,13 +7,65 @@ $(function(){
             data: {
                 message: '',
                 chatMessages: window.chatMessages,
-                sendText:""
+                sendText:"",
+                technicalRequirements:[],
+                selectedRequirement:{}
+            },
+            created: function(){
+                this.fetchTechnicalRequirements();
+            },
+            methods:{
+                fetchTechnicalRequirements:function(){
+                    var self = this;
+                    console.log("fetching tech reqs");
+                    $.ajax({
+                        type:'GET',
+                        url: '/technical_requirement/artist/'+ window.artistId,
+                        success: function(r){
+                            console.log(r);
+                            self.technicalRequirements= r.technicalRequirements;
+                            self.selectedRequirement = self.technicalRequirements[0];
+                        },
+                        error: function(r){
+                            //messageReaded = false;
+                            console.error(r);
+                        }
+                    });
+                },
+
+                setTypesForFiles:function(){
+
+                },
+
+                deleteAttachment:function(id){
+                    console.log(id);
+                    $.ajax({
+                        method:"DELETE",
+                        url:"/technical_requirement/document/"+id+"/remove",
+                        success: function (r) {
+                            console.log(r)
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    })
+                }
+            },
+            filters:{
+                removeExt:function(value){
+                    return value.substring(0, value.indexOf('.'))
+                }
             }
 
         });
     }catch (e){
     }
 
+    function getTechnicalRequirements(){
+
+    }
+
+    getTechnicalRequirements();
 
     function initializeMap(eventLocationMap) {
         // var myLatlng = new google.maps.LatLng(eventLocationMap.latitude, eventLocationMap.longitude);
@@ -134,8 +186,8 @@ $(function(){
     }
 
     function chatSocket(chatId){
-        //var webSocket = WS.connect("ws://51.254.217.4:8686");
-        var webSocket = WS.connect("ws://192.168.33.12:8686");
+        var webSocket = WS.connect("ws://51.254.217.4:8686");
+        //var webSocket = WS.connect("ws://192.168.33.12:8686");
 
         /**
          * connect

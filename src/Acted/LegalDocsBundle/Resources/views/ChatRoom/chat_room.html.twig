@@ -206,6 +206,7 @@
                     <script>
                         //TODO: mode outside Vue template
                         window.chatMessages = []
+                        window.artistId = "{{ chatRoom.artist.artist.id }}"
                     </script>
                     {% for chatMessage in chat.message |reverse %}
                         <script>
