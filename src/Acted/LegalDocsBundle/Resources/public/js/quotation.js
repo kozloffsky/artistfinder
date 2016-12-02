@@ -811,7 +811,7 @@ $(function() {
                     {
                         qty: 1,
                         duration: 1,
-                        price1: 3000,
+                        price1: 0,
                         price_on_request: false
                     }
                 ],
