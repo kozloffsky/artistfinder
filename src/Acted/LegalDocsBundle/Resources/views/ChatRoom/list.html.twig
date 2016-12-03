@@ -46,11 +46,14 @@
                     </p>
 
                     {% if chat.event.published_request is defined %}
-                            {% if chat.event.published_request %}
-                                <p class="act-request-quotation-label">
-                                    Quote sent
-                                </p>
-                            {% endif %}
+
+                            <p {% if not chat.event.published_request %} style="display: none;" {% endif %}class="act-request-quotation-label">
+                                Quote sent
+                            </p>
+
+
+
+
                     {% endif %}
 
 
