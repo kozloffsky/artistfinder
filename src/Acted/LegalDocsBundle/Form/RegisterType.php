@@ -90,6 +90,7 @@ class RegisterType extends AbstractType
             ->add('region_name', TextType::class,  ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'Name of region'])
             ->add('region_lat', NumberType::class, ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'Region latitude'])
             ->add('region_lng', NumberType::class, ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'Region longitude'])
+            ->add('place_id', TextType::class,     ['constraints' => [new NotBlank(['groups' => 'artist'])], 'description' => 'Place id'])
         ;
 
         $builder->get('phone')->addModelTransformer(new PhoneTransformer());

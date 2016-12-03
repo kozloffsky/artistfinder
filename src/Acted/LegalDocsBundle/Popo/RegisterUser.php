@@ -21,6 +21,7 @@ final class RegisterUser
     private $regionLat;
     private $regionLng;
     private $regionName;
+    private $placeId;
 
     /**
      * @return mixed
@@ -292,5 +293,21 @@ final class RegisterUser
     public function setRegionName($regionName)
     {
         $this->regionName = $regionName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlaceId()
+    {
+        return $this->placeId;
+    }
+
+    /**
+     * @param string $placeId
+     */
+    public function setPlaceId($placeId)
+    {
+        $this->placeId = $placeId;
     }
 }

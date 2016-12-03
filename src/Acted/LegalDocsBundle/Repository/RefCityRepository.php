@@ -25,7 +25,7 @@ class RefCityRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function createCity($cityName, RefRegion $region, $lat, $lng)
+    public function createCity($cityName, RefRegion $region, $lat, $lng, $placeId)
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
@@ -48,6 +48,7 @@ class RefCityRepository extends \Doctrine\ORM\EntityRepository
         $cityObj->setName($cityName);
         $cityObj->setLatitude($lat);
         $cityObj->setLongitude($lng);
+        $cityObj->setPlaceId($placeId);
         $em->persist($cityObj);
 
         $em->flush();

@@ -103,6 +103,7 @@ class EventOfferType extends AbstractType
             ->add('region_name', TextType::class,  ['constraints' => [new NotBlank()], 'description' => 'Name of region'])
             ->add('region_lat', NumberType::class, ['constraints' => [new NotBlank()], 'description' => 'Region latitude'])
             ->add('region_lng', NumberType::class, ['constraints' => [new NotBlank()], 'description' => 'Region longitude'])
+            ->add('place_id', TextType::class,     ['constraints' => [new NotBlank()], 'description' => 'Place id'])
         ;
     }
 

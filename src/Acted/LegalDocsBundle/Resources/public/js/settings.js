@@ -23,7 +23,8 @@ $(function(){
         var cityLatInput = $('form[name="paymentForm"]').find('input[name="city_lat"]'),
             cityLngInput = $('form[name="paymentForm"]').find('input[name="city_lng"]'),
             regnLatInput = $('form[name="paymentForm"]').find('input[name="region_lat"]'),
-            regnLngInput = $('form[name="paymentForm"]').find('input[name="region_lng"]');
+            regnLngInput = $('form[name="paymentForm"]').find('input[name="region_lng"]'),
+            placeIdInput = $('form[name="paymentForm"]').find('input[name="place_id"]');
 
         var regionLat = settingsAutocompService.coords.region.lat,
             regionLng = settingsAutocompService.coords.region.lng,
@@ -31,7 +32,8 @@ $(function(){
             cityLng = settingsAutocompService.coords.city.lng,
             country = settingsAutocompService.currentStore.country,
             city = settingsAutocompService.currentStore.city,
-            region = settingsAutocompService.currentStore.region;
+            region = settingsAutocompService.currentStore.region,
+            placeId = settingsAutocompService.currentStore.placeId;
 
         if(cityLat && cityLng) {
             cityLatInput.val(cityLat);
@@ -41,6 +43,10 @@ $(function(){
         if(regionLat && regionLng) {
             regnLatInput.val(regionLat);
             regnLngInput.val(regionLng); 
+        }
+
+        if(placeId) {
+            placeIdInput.val(placeId);
         }
 
         var contactForm = $('form[name="contactForm"]').serializeArray(),

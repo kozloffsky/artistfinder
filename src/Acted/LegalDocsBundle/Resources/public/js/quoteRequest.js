@@ -315,12 +315,14 @@ $(function () {
             cityLat = quoteRequestAutocompService.coords.city.lat,
             cityLng = quoteRequestAutocompService.coords.city.lng,
             region = quoteRequestAutocompService.currentStore.region;
+            placeId = quoteRequestAutocompService.currentStore.placeId;
 
         data += "&city_lat=" + cityLat;
         data += "&city_lng=" + cityLng;
         data += "&region_name=" + region;
         data += "&region_lat=" + regionLat;
         data += "&region_lng=" + regionLng;
+        data += "&place_id=" + placeId;
 
         $.ajax({
             type:'POST',

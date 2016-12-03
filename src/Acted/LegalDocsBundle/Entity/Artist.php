@@ -75,6 +75,16 @@ class Artist
     private $technicalRequirements;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $feedbacks;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $eventArtists;
+
+    /**
      * Get id
      *
      * @return integer
@@ -747,11 +757,21 @@ class Artist
     {
         return $this->city->getRegion()->getName();
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $feedbacks;
 
+    /**
+     * Get place id
+     *
+     * @return string
+     */
+    public function getPlaceId()
+    {
+        $placeId = $this->city->getPlaceId();
+        /*if (empty($placeId)) {
+            $placeId = '';
+        }*/
+        
+        return $placeId;
+    }
 
     /**
      * Add feedback
@@ -786,11 +806,6 @@ class Artist
     {
         return $this->feedbacks;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $eventArtists;
-
 
     /**
      * Add eventArtist

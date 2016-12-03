@@ -101,7 +101,8 @@ class SecurityController extends Controller
                     $data->getCity(),
                     $region,
                     $data->getCityLat(),
-                    $data->getCityLng()
+                    $data->getCityLng(),
+                    $data->getPlaceId()
                 );
 
                 $city = $em->getRepository('ActedLegalDocsBundle:RefCity')->findOneBy(array(
