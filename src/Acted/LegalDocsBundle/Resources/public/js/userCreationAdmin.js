@@ -215,6 +215,7 @@ $(function () {
             country = adminAutocompService.currentStore.country,
             city = adminAutocompService.currentStore.city,
             region = adminAutocompService.currentStore.region;
+            placeId = adminAutocompService.currentStore.placeId;
 
         userInformation += "&country=" + country;
         userInformation += "&city=" + city;
@@ -223,6 +224,8 @@ $(function () {
         userInformation += "&region_name=" + region;
         userInformation += "&region_lat=" + regionLat;
         userInformation += "&region_lng=" + regionLng;
+        userInformation += "&place_id=" + placeId;
+
 
         registerArtist(userInformation, categoriesForm, userRole, userStatusFake, tempPass);
     };

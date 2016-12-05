@@ -108,4 +108,33 @@ class Rate
     {
         return $this->deletedTime;
     }
+    /**
+     * @var boolean
+     */
+    private $isSelected = false;
+
+
+    /**
+     * Set isSelected
+     *
+     * @param boolean $isSelected
+     *
+     * @return Rate
+     */
+    public function setIsSelected($isSelected)
+    {
+        $this->isSelected = $isSelected;
+
+        return $this;
+    }
+
+    /**
+     * Get isSelected
+     *
+     * @return boolean
+     */
+    public function getIsSelected()
+    {
+        return $this->isSelected;
+    }
 }

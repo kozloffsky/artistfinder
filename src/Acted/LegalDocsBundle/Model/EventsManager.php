@@ -79,7 +79,8 @@ class EventsManager
             $eventOfferData->getCity(),
             $region,
             $eventOfferData->getCityLat(),
-            $eventOfferData->getCityLng()
+            $eventOfferData->getCityLng(),
+            $eventOfferData->getPlaceId()
         );
 
         $city = $em->getRepository('ActedLegalDocsBundle:RefCity')->findOneBy(array(

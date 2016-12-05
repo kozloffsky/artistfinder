@@ -401,7 +401,13 @@ class ProfileController extends Controller
         ));
 
         $refCityRepo = $em->getRepository('ActedLegalDocsBundle:RefCity');
-        $cityId = $refCityRepo->createCity($data['city'], $region, $data['city_lat'], $data['city_lng']);
+        $cityId = $refCityRepo->createCity(
+            $data['city'],
+            $region,
+            $data['city_lat'],
+            $data['city_lng'],
+            $data['place_id']
+        );
 
         $city = $em->getRepository('ActedLegalDocsBundle:RefCity')->findOneBy(array(
             'id' => $cityId
@@ -477,4 +483,16 @@ class ProfileController extends Controller
 
         return new JsonResponse(array('status' => 'success'), Response::HTTP_OK);
     }
+
+    /** EVENT DETAILS PAGE */
+    public function eventDetailsAction() {
+        $em = $this->getDoctrine()->getManager();
+
+        $categoriesRepo = $em->getRepository('ActedLegalDocsBundle:Category');
+        $categories = $categoriesRepo->childrenHierarchy();
+
+        return $this->render('ActedLegalDocsBundle:Profile:client_event_details.html.twig', compact('categories'));
+    }
+
+
 }

@@ -1,0 +1,251 @@
+{% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
+
+<main class="dashboard feedback client">
+    <div class="container no-pad client_event_details">
+        {% include 'ActedLegalDocsBundle:Profile:client/client_menu.html.twig' %}
+        <div class="col-md-6 col-sm-6 left_column">
+            <div class="row">
+                <div class="printer_icon">
+                    <p>
+                        <i class="fa fa-print" aria-hidden="true"></i>
+                        Print
+                    </p>
+                </div>
+                <label for="event_name">Event name</label>
+                <input readonly type="text" maxlength="60" class="form-control enable_toggler" id="event_name" placeholder="Christmas party" name="name">
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 no-pad-left">
+                    <label for="event_date">Date</label>
+                    <input readonly type="text" class="date-picker form-control enable_toggler" id="event_date" placeholder="05/04/2016">
+                </div>
+                <div class="col-lg-6 col-md-6 no-pad-right ">
+                    <label class="col-xs-12 no-pad" for="event_days_duration">1 day/multiple days</label>
+                    <select readonly class="enable_toggler" data-class="selections-white low-select" name="event_days_duration" id="event_duration">
+                        <option value="0">1-day event</option>
+                        <option value="1">2-day event</option>
+                        <option value="2">3-day event</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 no-pad-left">
+                    <label for="event_time">Event timing</label>
+                    <input readonly id="event_time" type="text" class="form-control enable_toggler" placeholder="Evening" name="event_time">
+                </div>
+                <div class="col-lg-6 col-md-6 no-pad-right">
+                    <label for="event-country">Country</label>
+                    <input disabled type="text" class="form-control" id="event-country" placeholder="United Kingdom" name="country">
+                </div>
+            </div>
+            <div class="row">
+                <label for="event_address">Address</label>
+                <input readonly type="text" class="form-control enable_toggler" id="event_address" placeholder="Type the address here...">
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 no-pad-left">
+                    <label for="venue_type">Venue type</label>
+                    <select readonly class="select_width_101 enable_toggler" data-class="selections-white low-select" name="venue_type" id="venue_type">
+                        <option value="0">Hotel Ballroom</option>
+                        <option value="1">Lorem Ipsum 1</option>
+                        <option value="2">Lorem Ipsum 2</option>
+                    </select>
+                </div>
+                <div class="col-lg-6 col-md-6 no-pad-right">
+                    <label for="guests_count">Number of guests</label>
+                    <select readonly class="select_width_101 enable_toggler" data-class="selections-white low-select" name="number_of_guests" id="guests_count">
+                        <option value="less_then_50">Less than 50</option>
+                        <option value="50-100">50-100</option>
+                        <option value="100-500">100-500</option>
+                        <option value="500+">500+</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <label for="additional_info">Additional info</label>
+                <span class="additional_info_counter">0/200</span>
+                <textarea readonly maxlength="200" class="form-control additional_info_input enable_toggler" id="additional_info" placeholder="Put your comments here"></textarea>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 right_column">
+            <div class="printer_icon">
+                <p>
+                    <i class="fa fa-print" aria-hidden="true"></i>
+                    Print
+                </p>
+            </div>
+            <div class="entertainer_block">
+                <div class="entertainer info_block">
+                    <div class="row">
+                        <div class="col-md-4 name">
+                            <h3>Frederic Sharp</h3>
+                        </div>
+                        <div class="col-md-8 total_summ">
+                            <h3>£ 5000</h13>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p>Act 1 -Jazz Band</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p>Act 1 -Jazz Band</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p>Extra 1</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="perfomance_details info_block">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Performance time:</p>
+                        </div>
+                        <div class="col-md-9">
+                            <p>6:30 PM</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Additional info:</p>
+                        </div>
+                        <div class="col-md-9">
+                            <p>This performance will continue for 3 days. First two days will start from 2 pm till 3 am. And third day will be a full day party!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="payment_details info_block">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Payment:</p>
+                        </div>
+                        <div class="col-md-7">
+                            <p>Deposit: 1,500 GBP received via secured payment</p>
+                        </div>
+                        <div class="col-md-2 non-refundable">
+                            <p>Non - refundable</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p></p>
+                        </div>
+                        <div class="col-md-7">
+                            <p>Balance: 1,500 GBP unpaid</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact_details info_block">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Contact details:</p>
+                        </div>
+                        <div class="row col-md-9">
+                            <p>+44828495829</p>
+                            <p>Alex.vorobev@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="controls">
+                    <div class="button-gradient filled">
+                        <button class="btn">Chatroom</button>
+                    </div>
+                </div>
+            </div>
+            <div class="entertainer_block">
+                <div class="entertainer info_block">
+                    <div class="row">
+                        <div class="col-md-4 name">
+                            <h3>Frederic Sharp</h3>
+                        </div>
+                        <div class="col-md-8 total_summ">
+                            <h3>£ 5000</h13>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p>Act 1 -Jazz Band</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p>Act 1 -Jazz Band</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p>Extra 1</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="perfomance_details info_block">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Performance time:</p>
+                        </div>
+                        <div class="col-md-9">
+                            <p>6:30 PM</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Additional info:</p>
+                        </div>
+                        <div class="col-md-9">
+                            <p>This performance will continue for 3 days. First two days will start from 2 pm till 3 am. And third day will be a full day party!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="payment_details info_block">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Payment:</p>
+                        </div>
+                        <div class="col-md-7">
+                            <p>Deposit: 1,500 GBP received via secured payment</p>
+                        </div>
+                        <div class="col-md-2 non-refundable">
+                            <p>Non - refundable</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p></p>
+                        </div>
+                        <div class="col-md-7">
+                            <p>Balance: 1,500 GBP unpaid</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact_details info_block">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Contact details:</p>
+                        </div>
+                        <div class="row col-md-9">
+                            <p>+44828495829</p>
+                            <p>Alex.vorobev@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="controls">
+                    <div class="button-gradient filled">
+                        <button class="btn">Chatroom</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% include 'ActedLegalDocsBundle:Default:footer.html.twig' %}

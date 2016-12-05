@@ -32,6 +32,8 @@ Acted\LegalDocsBundle\Entity\Event:
             serialized_name: location
         user:
             groups: [chat_list, getEvent]
+        requestQuotations:
+            groups: [chat_room]
     virtual_properties:
         getCountryId:
             serialized_name: countryId

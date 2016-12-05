@@ -1,6 +1,7 @@
 <?php
 
 namespace Acted\LegalDocsBundle\Repository;
+
 use Acted\LegalDocsBundle\Entity\Artist;
 
 /**
@@ -18,7 +19,7 @@ class FeedbackRepository extends \Doctrine\ORM\EntityRepository
      * @param integer $size
      * @return array
      */
-    public function getArtistFeedbacks($artist, $page = 1, $size = 2)
+    public function getArtistFeedbacks($artist, $page = 1, $size = 3)
     {
         if ($page == 1) {
             $offset = 0;

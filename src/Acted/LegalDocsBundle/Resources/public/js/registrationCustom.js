@@ -256,12 +256,14 @@ $(function () {
             cityLat = registrationAutocompService.coords.city.lat,
             cityLng = registrationAutocompService.coords.city.lng,
             region = registrationAutocompService.currentStore.region;
+            placeId = registrationAutocompService.currentStore.placeId;
 
             data += "&city_lat=" + cityLat;
             data += "&city_lng=" + cityLng;
             data += "&region_name=" + region;
             data += "&region_lat=" + regionLat;
             data += "&region_lng=" + regionLng;
+            data += "&place_id=" + placeId;
 
         $.ajax({
             type: "POST",

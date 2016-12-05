@@ -88,33 +88,35 @@
                         </div>
                     </article>
                 {% endfor %}
-
-
-
+                {% for feedback in feedbacks %}
                 <article class="col-xs-12 dialog-rating-container noselect" data-longtap-duration="500">
                     <div class="wrap clearfix">
                         <div class="message-info">
-                            <span class="pull-right">14 December 2016</span>
+                            <span class="pull-right">{{ feedback.createdAt | date('d-m-Y') }}</span>
                             <span>Congratulations! You have received new rating!</span>
                         </div>
                         <div class="avatar">
-                            <img src="/assets/images/avatar.jpg" alt=""/>
+                            <img src="/assets/images/noAvatar.png" alt=""/>
                         </div>
                         <div class="user-info">
-                            <span class="user-name">Diana Croll</span>
+                            <span class="user-name">{{ feedback.event.user.firstname }}</span>
                         </div>
                         <div class="rating">
+                            {% for i in 1..feedback.rating %}
                             <i class="star-icon filled"></i>
-                            <i class="star-icon filled"></i>
-                            <i class="star-icon filled"></i>
-                            <i class="star-icon unfilled"></i>
-                            <i class="star-icon unfilled"></i>
+                            {% endfor %}
+                            {% if  5-feedback.rating > 0  %}
+                                {% for i in 1..(5-feedback.rating) %}
+                                <i class="star-icon unfilled"></i>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                         <div class="message-block">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                           <p>{{ feedback.feedback }}</p>
                         </div>
                     </div>
                 </article>
+                {% endfor %}
             </div>
         </div>
     </div>

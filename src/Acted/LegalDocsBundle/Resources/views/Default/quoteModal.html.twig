@@ -1,3 +1,167 @@
+{#<div class="modal free-quote-modal modal-registered fade" id="freeQuoteModal" tabindex="-1" role="dialog">#}
+    {#<div class="modal-dialog">#}
+        {#<div class="modal-content">#}
+            {#<div class="modal-header">#}
+                {#<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span#}
+                            {#aria-hidden="true"></span></button>#}
+                {#<h4 class="modal-title eventUnregistered">#}
+                    {#<div class="warn">!</div>#}
+                    {#Tip: Enter your event details below and it will automatically apply to your next quote requests#}
+                {#</h4>#}
+                {#<form id="chosenEvent">#}
+                    {#<h4 class="modal-title eventChooseRequest">#}
+                        {#<span class="title">Event:</span>#}
+                        {#<select data-class="selections-white selection-borderless" name="event" id="event_preset">#}
+                        {#</select>#}
+                        {#<a href="#" id="new-event" class="new-event">New event</a>#}
+                    {#</h4>#}
+                {#</form>#}
+            {#</div>#}
+            {#<form id="requestQuoteForm">#}
+                {#<div class="modal-body">#}
+
+                    {#<div class="row clearfix">#}
+                        {#<div class="col-lg-8 form-group">#}
+                            {#<label for="event_name">Name your event</label>#}
+                            {#<input type="text" maxlength="60" class="form-control" id="event_name" placeholder="Name your event" name="name">#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="row">#}
+                        {#<div class="col-lg-3 form-group">#}
+                            {#<label for="event_date">Date</label>#}
+                            {#<input type="text" class="date-picker form-control" id="event_date" name="event_date">#}
+                        {#</div>#}
+
+                        {#<div class="col-lg-offset-1 col-lg-4 form-group">#}
+                            {#<label for="event_country">Country</label>#}
+                            {#<select class="form-control" id="event_country" name="country">#}
+                                {#<option value="United Kingdom" selected>United Kingdom</option>#}
+                                {#<option value="Germany">Germany</option>#}
+                                {#<option value="France">France</option>#}
+                            {#</select>#}
+
+                            {#<select data-class="selections-white" name="country" id="event_country">#}
+                                {#{% for country in countries() %}#}
+                                    {#{% if country.name == 'United Kingdom' %}#}
+                                        {#<option value="{{ country.id }}" name="country" selected="selected">{{ country.name }}</option>#}
+                                    {#{% else %}#}
+                                        {#<option value="{{ country.id }}" name="country">{{ country.name }}</option>#}
+                                    {#{% endif %}#}
+                                {#{% endfor %}#}
+                            {#</select>#}
+                        {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="row">#}
+                        {#<div class="col-lg-3 form-group">#}
+                            {#<label for="event_time">Time</label>#}
+                            {#<input type="text" class="form-control" id="event_time" placeholder="Evening" name="event_time">#}
+                        {#</div>#}
+
+                        {#<div class="col-lg-offset-1 col-lg-4 form-group">#}
+                            {#<label for="event_city">City</label>#}
+                            {#<input class="form-control" type="text" name="city" id="event_city"/>#}
+
+                            {#<select name="city" id="event_city">#}
+                            {#</select>#}
+                        {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="row">#}
+                        {#<div class="col-lg-3 form-group">#}
+                            {#<label class="col-xs-12 no-pad" for="event_type">Event type</label>#}
+                            {#<select data-class="selections-white" name="type" id="event_type">#}
+                            {#</select>#}
+                        {#</div>#}
+
+                        {#<div class="col-lg-offset-1 col-lg-4 form-group">#}
+                            {#<label for="event_location">Location</label>#}
+                            {#<input type="text" class="form-control" id="event_location" placeholder="Event location" name="location">#}
+                        {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="row">#}
+                        {#<div class="col-lg-8 form-group">#}
+                            {#<label class="col-xs-12 no-pad" for="venue_type">Venue type</label>#}
+                            {#<select data-class="selections-white" name="venue_type" id="venue_type">#}
+                            {#</select>#}
+                        {#</div>#}
+
+                        {#<div class="row col-lg-12 guests-num form-group">#}
+                            {#<label class="col-xs-12 no-pad ">Number of guests</label>#}
+
+                            {#<div class="custom-checkbox">#}
+                                {#<input id="count_1" name="number_of_guests" type="radio" value="less_then_50">#}
+                                {#<label for="count_1">Less than 50</label>#}
+                            {#</div>#}
+                            {#<div class="custom-checkbox">#}
+                                {#<input id="count_2" name="number_of_guests" type="radio" value="50-100">#}
+                                {#<label for="count_2">50-100</label>#}
+                            {#</div>#}
+                            {#<div class="custom-checkbox">#}
+                                {#<input id="count_3" name="number_of_guests" type="radio" value="100-500">#}
+                                {#<label for="count_3">100-500</label>#}
+                            {#</div>#}
+                            {#<div class="custom-checkbox">#}
+                                {#<input id="count_4" name="number_of_guests" type="radio" value="500+">#}
+                                {#<label for="count_4">500+</label>#}
+                            {#</div>#}
+                            {#<span class="errorCat"></span>#}
+                        {#</div>#}
+
+                        {#<div class="map-holder pull-right">#}
+                            {#<div class="map" id="map"></div>#}
+                            {#<em class="note">Pin your location on the map</em>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</form>#}
+            {#<form id="quoteRequestSecond">#}
+                {#<div class="modal-footer">#}
+                    {#<div class="col-lg-12">#}
+                        {#<div class="col-lg-12 no-pad quoteRequestArtistData">#}
+                            {#<img class="quote-profile-avatar avatar" src="" alt="avatar"/>#}
+
+                            {#<div class="quote-profile-info">#}
+                                {#<h2></h2>#}
+                                {#<p></p>#}
+                            {#</div>#}
+                        {#</div>#}
+
+                        {#<ul class="profile-categories requestQuotePerformances ul-reset">#}
+                        {#</ul>#}
+                        {#<span class="errorCat"></span>#}
+
+                        {#<div class="row add-comment-btn">#}
+                            {#<a href="#" id="comment_toggle">Add a comment</a>#}
+                        {#</div>#}
+
+                        {#<div class="col-lg-12 no-pad" id="comment_area" style="display: none;">#}
+                            {#<textarea name="comment" class="quote-profile-desc" placeholder="Write a message to the Artist if you have any question about his performance or if you want to provide with more details about your event"></textarea>#}
+                        {#</div>#}
+
+                        {#<div class="controls">#}
+                            {#<div class="button-gradient filled">#}
+                                {#<button class="btn" id="quoteRequsetSend">Send</button>#}
+                            {#</div>#}
+                        {#</div>#}
+
+                        {#<div class="quote-box alreadyHasEventArtist">#}
+                            {#<p>Quote request already sent. If you want to see the status or contact<br>the artist, you can access your#}
+                                {#<a href="#">chatroom</a>#}
+                            {#</p>#}
+                            {#<p>You can also ask a quote for <a id="new-event">new event</a></p>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</form>#}
+        {#</div>#}
+        {#<!-- /.modal-content -->#}
+    {#</div>#}
+    {#<!-- /.modal-dialog -->#}
+{#</div>#}
+
+
 <div class="modal free-quote-modal modal-registered fade" id="freeQuoteModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -12,6 +176,9 @@
                     <h4 class="modal-title eventChooseRequest">
                         <span class="title">Event:</span>
                         <select data-class="selections-white selection-borderless" name="event" id="event_preset">
+                            <option value="">Event 1</option>
+                            <option value="">Event 2</option>
+                            <option value="">Lorem ipsum dolor sit amet, consectetur </option>
                         </select>
                         <a href="#" id="new-event" class="new-event">New event</a>
                     </h4>
@@ -19,130 +186,255 @@
             </div>
             <form id="requestQuoteForm">
                 <div class="modal-body">
-
+                    <button type="button" class="close close_second" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
                     <div class="row clearfix">
-                        <div class="col-lg-8 form-group">
-                            <label for="event_name">Name your event</label>
+                        <div class="col-lg-12 form-group">
+                            <label for="event_name">Event name</label>
                             <input type="text" maxlength="60" class="form-control" id="event_name" placeholder="Name your event" name="name">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3 form-group">
-                            <label for="event_date">Date</label>
-                            <input type="text" class="date-picker form-control" id="event_date" name="event_date">
-                        </div>
-
-                        <div class="col-lg-offset-1 col-lg-4 form-group">
-                            <label for="event_country">Country</label>
-                            <select class="form-control" id="event_country" name="country">
-                                <option value="United Kingdom" selected>United Kingdom</option>
-                                <option value="Germany">Germany</option>
-                                <option value="France">France</option>
-                            </select>
-
-                            {#<select data-class="selections-white" name="country" id="event_country">#}
-                                {#{% for country in countries() %}#}
-                                    {#{% if country.name == 'United Kingdom' %}#}
-                                        {#<option value="{{ country.id }}" name="country" selected="selected">{{ country.name }}</option>#}
-                                    {#{% else %}#}
-                                        {#<option value="{{ country.id }}" name="country">{{ country.name }}</option>#}
-                                    {#{% endif %}#}
-                                {#{% endfor %}#}
-                            {#</select>#}
+                        <div class="col-lg-12 form-group">
+                            <div class="col-lg-6 no-pad-left">
+                                <label for="event_date">Date</label>
+                                <input type="text" class="date-picker form-control" id="event_date" placeholder="05/04/2016">
+                            </div>
+                            <div class="col-lg-6 no-pad-right ">
+                                <label class="col-xs-12 no-pad" for="event_days_duration">1 day/multiple days</label>
+                                <select class="select_width_101" data-class="selections-white low-select" name="event_days_duration" id="event_duration">
+                                    <option value="0">1-day event</option>
+                                    <option value="1">2-day event</option>
+                                    <option value="2">3-day event</option>
+                                    <option value="3">4-day event</option>
+                                    <option value="4">5-day event</option>
+                                    <option value="5">6-day event</option>
+                                    <option value="6">7-day event</option>
+                                    <option value="7">8-day event</option>
+                                    <option value="8">9-day event</option>
+                                    <option value="9">10-day event</option>
+                                    <option value="10">11-day event</option>
+                                    <option value="11">12-day event</option>
+                                    <option value="12">13-day event</option>
+                                    <option value="13">14-day event</option>
+                                    <option value="14">15-day event</option>
+                                    <option value="15">16-day event</option>
+                                    <option value="16">17-day event</option>
+                                    <option value="17">18-day event</option>
+                                    <option value="18">19-day event</option>
+                                    <option value="19">20-day event</option>
+                                    <option value="20">21-day event</option>
+                                    <option value="21">22-day event</option>
+                                    <option value="22">23-day event</option>
+                                    <option value="23">24-day event</option>
+                                    <option value="24">25-day event</option>
+                                    <option value="25">26-day event</option>
+                                    <option value="26">27-day event</option>
+                                    <option value="27">28-day event</option>
+                                    <option value="28">29-day event</option>
+                                    <option value="29">30-day event</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-
                     <div class="row">
-                        <div class="col-lg-3 form-group">
-                            <label for="event_time">Time</label>
-                            <input type="text" class="form-control" id="event_time" placeholder="Evening" name="event_time">
+                        <div class="col-lg-12 form-group">
+                            <div class="col-lg-6 no-pad-left">
+                                <label for="event_time">Event timing</label>
+                                <input id="event_time" type="text" class="form-control" placeholder="Evening" name="event_time">
+                            </div>
+                            <div class="col-lg-6 no-pad-right">
+                                <label for="event-country">Country</label>
+                                <input disabled type="text" class="form-control" id="event-country" placeholder="United Kingdom" name="country">
+                            </div>
+                            <!--
+                                                        <div class="col-lg-offset-1 col-lg-4 form-group">
+                                                            <label for="event_country">Country</label>
+                                                            <select class="form-control" id="event_country" name="country">
+                                                                <option value="United Kingdom" selected>United Kingdom</option>
+                                                                <option value="Germany">Germany</option>
+                                                                <option value="France">France</option>
+                                                            </select>
+
+                                                            {#<select data-class="selections-white" name="country" id="event_country">#}
+                                                                {#{% for country in countries() %}#}
+                                                                    {#{% if country.name == 'United Kingdom' %}#}
+                                                                        {#<option value="{{ country.id }}" name="country" selected="selected">{{ country.name }}</option>#}
+                                                                    {#{% else %}#}
+                                                                        {#<option value="{{ country.id }}" name="country">{{ country.name }}</option>#}
+                                                                    {#{% endif %}#}
+                                                                {#{% endfor %}#}
+                                                            {#</select>#}
+                                                        </div>
+                            -->
                         </div>
+                        <!--
+                                                   <div class="col-lg-3 form-group">
+                                                        <label for="event_time">Time</label>
+                                                        <input type="text" class="form-control" id="event_time" placeholder="Evening" name="event_time">
+                                                    </div>
 
-                        <div class="col-lg-offset-1 col-lg-4 form-group">
-                            <label for="event_city">City</label>
-                            <input class="form-control" type="text" name="city" id="event_city"/>
+                                                <div class="col-lg-offset-1 col-lg-4 form-group">
+                                                    <label for="event_city">City</label>
+                                                    <input class="form-control" type="text" name="city" id="event_city"/>
 
-                            {#<select name="city" id="event_city">#}
-                            {#</select>#}
+                                                    {#<select name="city" id="event_city">#}
+                                                    {#</select>#}
+                                                </div>
+                        -->
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 form-group">
+                            <label for="event_address">Address</label>
+                            <input type="text" class="form-control" id="event_address" placeholder="Type the address here...">
                         </div>
                     </div>
+                    <!--
+                                        <div class="row">
+                                            <div class="col-lg-3 form-group">
+                                                <label class="col-xs-12 no-pad" for="event_type">Event type</label>
+                                                <select data-class="selections-white" name="type" id="event_type">
+                                                </select>
+                                            </div>
 
+                                            <div class="col-lg-offset-1 col-lg-4 form-group">
+                                                <label for="event_location">Location</label>
+                                                <input type="text" class="form-control" id="event_location" placeholder="Event location" name="location">
+                                            </div>
+                                        </div>
+                    -->
                     <div class="row">
-                        <div class="col-lg-3 form-group">
-                            <label class="col-xs-12 no-pad" for="event_type">Event type</label>
-                            <select data-class="selections-white" name="type" id="event_type">
-                            </select>
+                        <div class="col-lg-12 form-group">
+                            <div class="col-lg-6 no-pad-left">
+                                <label for="venue_type">Venue type</label>
+                                <select class="select_width_101" data-class="selections-white low-select" name="venue_type" id="venue_type">
+                                    <option value="0">Hotel Ballroom</option>
+                                    <option value="1">Lorem Ipsum 1</option>
+                                    <option value="2">Lorem Ipsum 2</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6 no-pad-right">
+                                <label for="guests_count">Number of guests</label>
+                                <select class="select_width_101" data-class="selections-white low-select" name="number_of_guests" id="guests_count">
+                                    <option value="less_then_50">Less than 50</option>
+                                    <option value="50-100">50-100</option>
+                                    <option value="100-500">100-500</option>
+                                    <option value="500+">500+</option>
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="col-lg-offset-1 col-lg-4 form-group">
-                            <label for="event_location">Location</label>
-                            <input type="text" class="form-control" id="event_location" placeholder="Event location" name="location">
-                        </div>
+                        <!--
+                                                <div class="row col-lg-12 guests-num form-group">
+                                                    <label class="col-xs-12 no-pad ">Number of guests</label>
+
+                                                    <div class="custom-checkbox">
+                                                        <input id="count_1" name="number_of_guests" type="radio" value="less_then_50">
+                                                        <label for="count_1">Less than 50</label>
+                                                    </div>
+                                                    <div class="custom-checkbox">
+                                                        <input id="count_2" name="number_of_guests" type="radio" value="50-100">
+                                                        <label for="count_2">50-100</label>
+                                                    </div>
+                                                    <div class="custom-checkbox">
+                                                        <input id="count_3" name="number_of_guests" type="radio" value="100-500">
+                                                        <label for="count_3">100-500</label>
+                                                    </div>
+                                                    <div class="custom-checkbox">
+                                                        <input id="count_4" name="number_of_guests" type="radio" value="500+">
+                                                        <label for="count_4">500+</label>
+                                                    </div>
+                                                    <span class="errorCat"></span>
+                                                </div>
+                        -->
+
+                        <!--
+                                                <div class="map-holder pull-right">
+                                                    <div class="map" id="map"></div>
+                                                    {#<em class="note">Pin your location on the map</em>#}
+                                                </div>
+                        -->
+
+
+
                     </div>
-
                     <div class="row">
-                        <div class="col-lg-8 form-group">
-                            <label class="col-xs-12 no-pad" for="venue_type">Venue type</label>
-                            <select data-class="selections-white" name="venue_type" id="venue_type">
-                            </select>
-                        </div>
-
-                        <div class="row col-lg-12 guests-num form-group">
-                            <label class="col-xs-12 no-pad ">Number of guests</label>
-
-                            <div class="custom-checkbox">
-                                <input id="count_1" name="number_of_guests" type="radio" value="less_then_50">
-                                <label for="count_1">Less than 50</label>
-                            </div>
-                            <div class="custom-checkbox">
-                                <input id="count_2" name="number_of_guests" type="radio" value="50-100">
-                                <label for="count_2">50-100</label>
-                            </div>
-                            <div class="custom-checkbox">
-                                <input id="count_3" name="number_of_guests" type="radio" value="100-500">
-                                <label for="count_3">100-500</label>
-                            </div>
-                            <div class="custom-checkbox">
-                                <input id="count_4" name="number_of_guests" type="radio" value="500+">
-                                <label for="count_4">500+</label>
-                            </div>
-                            <span class="errorCat"></span>
-                        </div>
-
-                        <div class="map-holder pull-right">
-                            <div class="map" id="map"></div>
-                            {#<em class="note">Pin your location on the map</em>#}
+                        <div class="col-lg-12 form-group">
+                            <label for="additional_info">Additional info</label>
+                            <span class="additional_info_counter">41/200</span>
+                            <textarea maxlength="200" class="form-control additional_info_input" id="additional_info" placeholder="Put your comments here"></textarea>
                         </div>
                     </div>
                 </div>
             </form>
             <form id="quoteRequestSecond">
                 <div class="modal-footer">
-                    <div class="col-lg-12">
-                        <div class="col-lg-12 no-pad quoteRequestArtistData">
-                            <img class="quote-profile-avatar avatar" src="" alt="avatar"/>
+                    <div class="col-lg-12 no-pad">
+                        <div class="col-lg-12 grey_popup_background popup_artist_info clearfix">
+                            <img class="quote-profile-avatar" src="assets/images/avatar.jpg" alt="avatar"/>
 
-                            <div class="quote-profile-info">
-                                <h2></h2>
-                                <p></p>
+                            <div class="quote-profile-info text-left">
+                                <h2>Diana Krall</h2>
+                                <p class="quote-profile-info__spec">Jazz Vocalist, Jazz Pianist, Song Writer</p>
+                                <p class="quote-profile-info__residence">Paris, France</p>
                             </div>
                         </div>
 
-                        <ul class="profile-categories requestQuotePerformances ul-reset">
-                        </ul>
-                        <span class="errorCat"></span>
-
-                        <div class="row add-comment-btn">
-                            <a href="#" id="comment_toggle">Add a comment</a>
+                        <div class="col-lg-12 no-pad modal_background_grey">
+                            <ul class="profile-categories ul-reset">
+                                <li>
+                                    <div class="custom-checkbox">
+                                        <input id="checkbox_1" type="checkbox">
+                                        <label for="checkbox_1">Comedy Acts long</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="custom-checkbox">
+                                        <input id="checkbox_2" type="checkbox">
+                                        <label for="checkbox_2">Comedy Acts long</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="custom-checkbox">
+                                        <input id="checkbox_3" type="checkbox">
+                                        <label for="checkbox_3">Comedy Acts long</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="custom-checkbox">
+                                        <input id="checkbox_4" type="checkbox">
+                                        <label for="checkbox_4">Comedy Acts long</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="custom-checkbox">
+                                        <input id="checkbox_5" type="checkbox">
+                                        <label for="checkbox_5">Comedy Acts long</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="custom-checkbox">
+                                        <input id="checkbox_6" type="checkbox">
+                                        <label for="checkbox_6">Comedy Acts long</label>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
+                        <div class="col-lg-12 padd_bottom_15px">
+                            <span class="errorCat"></span>
 
-                        <div class="col-lg-12 no-pad" id="comment_area" style="display: none;">
-                            <textarea name="comment" class="quote-profile-desc" placeholder="Write a message to the Artist if you have any question about his performance or if you want to provide with more details about your event"></textarea>
-                        </div>
+                            <div class="row add-comment-btn">
+                                <a href="#" id="comment_toggle">Add a comment</a>
+                                <span class="comment_area_counter">0/450</span>
+                            </div>
 
-                        <div class="controls">
-                            <div class="button-gradient filled">
-                                <button class="btn" id="quoteRequsetSend">Send</button>
+                            <div class="col-lg-12" id="comment_area" hide-comment="true" style="display: none;">
+                                <textarea maxlength="450" name="comment" class="quote-profile-desc" placeholder="Write a message to the Artist if you have any question about his performance or if you want to provide with more details about your event"></textarea>
+                            </div>
+
+                            <div class="controls">
+                                <div class="button-gradient filled">
+                                    <button class="btn" id="quoteRequsetSend">Send</button>
+                                </div>
                             </div>
                         </div>
 
@@ -160,6 +452,7 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
 
 
 <div class="modal registration-modal fade" id="offerSuccess">

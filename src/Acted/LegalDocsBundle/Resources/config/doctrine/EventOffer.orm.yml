@@ -39,15 +39,19 @@ Acted\LegalDocsBundle\Entity\EventOffer:
         detailsAccepted:
           type: boolean
           default: false
+          nullable: true
         actsExtrasAccepted:
           type: boolean
+          nullable: true
           default: false
         timingAccepted:
           type: boolean
           default: false
+          nullable: true
         technicalRequirementsAccepted:
           type: boolean
           default: false
+          nullable: true
 
     manyToOne:
         event:

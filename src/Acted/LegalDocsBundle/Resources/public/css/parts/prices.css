@@ -387,7 +387,12 @@ main.prices .note{
 }
 .prices .act-section .btn-row{margin-top: -45px;}
 .prices .act-section .btn-row .button-gradient{margin-right: 20px;}
-.prices .fa-trash { padding-left: 8px; color: rgba(121, 121, 121, 0.41); font-size: 22px;}
+.prices .fa-trash {
+    padding-left: 2px;
+    color: rgba(121,121,121,.41);
+    font-size: 22px;
+    vertical-align: middle;
+}
 
 .prices .fa.fa-trash:hover {
     cursor: pointer;

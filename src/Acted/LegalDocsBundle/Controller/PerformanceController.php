@@ -67,6 +67,7 @@ class PerformanceController extends Controller
             $rate = new Rate();
             $rate->setOption($option);
             $rate->setPrice($price);
+            $rate->setIsSelected(true);
             $em->persist($rate);
 
             $performance->setIsVisible(true);
@@ -218,7 +219,7 @@ class PerformanceController extends Controller
         foreach ($data['options'] as $currentOption) {
             /*If it performance has base type or extra performance with standard type*/
             if (($type == Performance::TYPE_BASE || $type == Performance::TYPE_STANDARD) &&
-                (empty($currentOption['duration']) || empty($currentOption['qty']))) {
+                (!isset($currentOption['duration']) || !isset($currentOption['qty']))) {
                 return new JsonResponse([
                     'status' => 'error',
                     'message' => 'duration or qty is empty'
@@ -247,6 +248,7 @@ class PerformanceController extends Controller
             $rate = new Rate();
             $rate->setOption($option);
             $rate->setPrice($price);
+            $rate->setIsSelected(true);
             $em->persist($rate);
 
             if (!empty($currentOption['price2'])) {
@@ -515,6 +517,11 @@ class PerformanceController extends Controller
             $rate = new Rate();
             $rate->setOption($option);
             $rate->setPrice($price);
+
+            if (count($rateIds) == 0) {
+                $rate->setIsSelected(true);
+            }
+
             $em->persist($rate);
 
             $em->flush();
@@ -528,6 +535,14 @@ class PerformanceController extends Controller
             ],  Response::HTTP_BAD_REQUEST);
         }
 
-        return new JsonResponse(array('status' => 'success', 'price' => ['id' => $price->getId()]));
+        return new JsonResponse(array(
+            'status' => 'success',
+            'price' => [
+                'id' => $price->getId()
+            ],
+            'rate' => [
+                'id' => $rate->getId()
+            ])
+        );
     }
 }

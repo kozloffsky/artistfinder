@@ -18,7 +18,8 @@
 
 .registration-modal .modal-dialog .modal-title {
     text-align: center;
-    font-family: UbuntuMedium;
+    font-family: Ubuntu;
+    font-weight: 500;
     font-size: 20px;
     color: #3d4248;
     line-height: normal;
@@ -63,7 +64,8 @@
     padding: 15px 0;
     width: 50%;
     box-shadow: none;
-    font-family: UbuntuMedium;
+    font-family: Ubuntu;
+    font-weight: 500;
     font-size: 21px;
     color: #3d4248;
     border-top: 2px solid rgba(202, 202, 202, 0.25);
@@ -84,7 +86,8 @@
 
 .registration-modal .modal-header #step-counter {
     position: absolute;
-    font-family: UbuntuBold;
+    font-family: Ubuntu;
+    font-weight: 600;
     font-size: 17px;
     color: #ffae6c;
 }
@@ -243,7 +246,8 @@
 
 .category-header .title {
     color: white;
-    font-family: UbuntuMedium;
+    font-family: Ubuntu;
+    font-weight: 500;
     font-size: 16px;
     margin-left: 18px;
     vertical-align: middle;
@@ -408,7 +412,8 @@
     outline: none;
     box-shadow: none;
     border: none;
-    font-family: UbuntuMedium;
+    font-family: Ubuntu;
+    font-weight: 500;
     padding: 0px;
     font-size: 17px;
     margin-top: 20px;
@@ -464,7 +469,8 @@
     display: inline-block;
     position: relative;
     width: 100%;
-    font-family: UbuntuBold;
+    font-family: Ubuntu;
+    font-weight: 600;
     font-size: 23px;
     color: #7f9eff;
     text-align: center;

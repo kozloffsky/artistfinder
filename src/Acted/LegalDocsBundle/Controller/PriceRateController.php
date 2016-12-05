@@ -10,6 +10,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Acted\LegalDocsBundle\Entity\Rate;
 use Symfony\Component\HttpFoundation\Request;
 
+use JMS\Serializer\SerializationContext;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
+
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\View\View;
+
 class PriceRateController extends Controller
 {
     public function editAction(Request $request, Rate $rate)
@@ -82,12 +90,59 @@ class PriceRateController extends Controller
 
             $rateRepository->removeRates($rate->getId());
 
+            $rateRepository->setIsSelectRateByOptionId($rate->getOption()->getId());
+
             $em->getConnection()->commit();
         } catch (\Exception $e) {
             $em->getConnection()->rollback();
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Remove error'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
+
+        return new JsonResponse(array('status' => 'success'));
+    }
+
+    /**
+     * Set isSelect of Rate to true and another elements to false
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Set isSelect of Rate to true and another elements to false",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @param Rate $rate
+     * @return JsonResponse
+     */
+    public function selectRateAction(Request $request, Rate $rate)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $userManager = $this->get('app.user.manager');
+
+        $em->getConnection()->beginTransaction();
+
+        /*Begin transcation*/
+        try {
+            $rateRepository = $this->getDoctrine()
+                ->getRepository('ActedLegalDocsBundle:Rate');
+
+            $rateRepository->setIsSelectRateByOptionId($rate->getOption()->getId(), false);
+
+            $rate->setIsSelected(true);
+            $em->persist($rate);
+            $em->flush();
+
+            $em->getConnection()->commit();
+        } catch (\Exception $e) {
+            $em->getConnection()->rollback();
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Setting isSelect error'
             ],  Response::HTTP_BAD_REQUEST);
         }
 

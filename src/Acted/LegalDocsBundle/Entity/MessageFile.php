@@ -30,6 +30,11 @@ class MessageFile
 
 
     /**
+     * @var Media
+     */
+    private $media;
+
+    /**
      * Get id
      *
      * @return integer
@@ -52,6 +57,7 @@ class MessageFile
 
         return $this;
     }
+
 
     /**
      * Get messageId
@@ -109,5 +115,21 @@ class MessageFile
     public function getFileSize()
     {
         return $this->fileSize;
+    }
+
+    /**
+     * @return Media
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    /**
+     * @param Media $media
+     */
+    public function setMedia($media)
+    {
+        $this->media = $media;
     }
 }

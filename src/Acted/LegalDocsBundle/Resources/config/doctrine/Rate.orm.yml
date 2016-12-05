@@ -12,6 +12,10 @@ Acted\LegalDocsBundle\Entity\Rate:
       deletedTime:
         type: datetime
         nullable: true
+      isSelected:
+        type: boolean
+        options:
+          default: false
     manyToOne:
       option:
         targetEntity: Acted\LegalDocsBundle\Entity\Option

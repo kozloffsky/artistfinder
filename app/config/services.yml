@@ -35,7 +35,6 @@ services:
           - "%search_image_dir%"
           - %kernel.root_dir%
 
-
     app.event.manager:
         class: Acted\LegalDocsBundle\Model\EventsManager
         arguments:
@@ -68,6 +67,13 @@ services:
             - "%mailer_from_address%"
             - "@templating.engine.twig"
             - "@app.user.manager"
+
+    app.feedback.manager:
+        class: Acted\LegalDocsBundle\Model\FeedbackManager
+        arguments:
+            - "@templating.engine.twig"
+            - "@app.user.manager"
+            - "@doctrine.orm.entity_manager"
 
     app.form_errors_serializer:
         class: Acted\LegalDocsBundle\FormErrors\FormErrorsSerializer

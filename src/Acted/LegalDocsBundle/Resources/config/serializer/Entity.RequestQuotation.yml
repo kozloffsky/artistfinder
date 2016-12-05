@@ -7,6 +7,8 @@ Acted\LegalDocsBundle\Entity\RequestQuotation:
             groups: []
         event:
             groups: [enquiries]
+        performanceRequestQuotations:
+            groups: [chat_room]
     virtual_properties:
         getEvent:
             serialized_name: event

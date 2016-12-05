@@ -130,7 +130,7 @@ margin: 0 0 0 47px;**/
     margin: 0;
     padding: 0;
     list-style-type: none;
-    margin: 0 0 0 41px;
+    margin: 0 41px 0 41px;
 }
 .dashboard.client ul,
 .dashboard.client ul li {
@@ -141,19 +141,20 @@ margin: 0 0 0 47px;**/
     margin: 21px 0 25px 0;
     position: relative;
     display: inline-block;
+    vertical-align: middle;
 }
 .dashboard.client .new-event {
     display: inline-block;
     font-family: LatoRegular;
     font-size: 14px;
-    color: rgba(0, 0, 0, 0.87);
-    margin: 0 0 0 40px;
+    color: rgba(73, 79, 199, 0.87);
+    margin: 0 0 0 60px;
 }
-.dashboard.client .events-menu .new-event .fa.fa-plus {
-    padding: 0 0 0 11px;
+.dashboard.client .events-menu .new-event i.fa.fa-plus {
+    margin: 0 0 0 11px;
 }
 .dashboard.client .events-menu .event-item:nth-last-of-type(1) {
-    margin: 0 34px 0 0;
+    margin: 0 20px 0 0;
 }
 .dashboard.client .events-menu .event-item {
     height: 26px;
@@ -166,6 +167,8 @@ margin: 0 0 0 47px;**/
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
 }
 .dashboard.client .events-menu .event-item a {
     font-family: LatoRegular;
@@ -228,7 +231,7 @@ margin: 0 0 0 47px;**/
 .dashboard.client .events-menu .arrows .right {
     transform: rotate(180deg);
     position: absolute;
-    right: 0;
+    right: -38px;
     top: 2px;
 }
 /** --- OPTIONS MENU --- **/
@@ -291,12 +294,13 @@ margin: 0 0 0 47px;**/
 }
 .dashboard.client .comment-area .comment-box .char-count {
     position: absolute;
-    top: 45px;
-    right: 9.5px;
+    top: 20px;
+    right: 18px;
     font-family: LatoRegular;
     font-size: 13px;
     color: rgba(0, 0, 0, 0.65);
 }
+
 .dashboard.client .comment-area textarea {
     border: 2px solid rgba(229, 229, 229, 1);
     border-radius: 11px;
@@ -322,7 +326,9 @@ margin: 0 0 0 47px;**/
     background-image: -o-linear-gradient(left, rgba(250, 217, 97, 1) 0%, rgba(247, 107, 28, 1) 100%), -o-linear-gradient(left, rgba(250, 217, 97, 1) 0%, rgba(247, 107, 28, 1) 100%);
     background-image: linear-gradient(to right, rgba(250, 217, 97, 1) 0%, rgba(247, 107, 28, 1) 100%), linear-gradient(to right, rgba(250, 217, 97, 1) 0%, rgba(247, 107, 28, 1) 100%);
 }
-
+.dashboard.client .comment-area .submit[disabled] {
+    background: #DBDBDB;
+}
 @media screen and (min-width: 768px ){
     .dashboard.client .tip-box,
     .dashboard.client .comment-area {

@@ -190,7 +190,7 @@ class PerformanceRequestQuotationRepository extends EntityRepository
                 $copiedPackage = new Package();
                 $copiedPackage->setProfile($profile);
                 $copiedPackage->setPerformance($copiedPerformance);
-                $copiedPackage->setIsSelected($isSelected);
+                $copiedPackage->setIsSelected($package['isSelected']);
                 $copiedPackage->setName($package['name']);
                 $em->persist($copiedPackage);
 
@@ -202,7 +202,7 @@ class PerformanceRequestQuotationRepository extends EntityRepository
                     $copiedOption->setPackage($copiedPackage);
                     $copiedOption->setDuration($option['duration']);
                     $copiedOption->setQty($option['qty']);
-                    $copiedOption->setIsSelected($isSelected);
+                    $copiedOption->setIsSelected($option['isSelected']);
                     $copiedOption->setPriceOnRequest($option['priceOnRequest']);
                     $em->persist($copiedOption);
 
@@ -218,6 +218,7 @@ class PerformanceRequestQuotationRepository extends EntityRepository
                         $copiedRate = new Rate();
                         $copiedRate->setOption($copiedOption);
                         $copiedRate->setPrice($price);
+                        $copiedRate->setIsSelected($rate['isSelected']);
                         $em->persist($copiedRate);
                     }
                 }

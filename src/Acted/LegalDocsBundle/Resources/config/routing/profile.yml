@@ -67,3 +67,8 @@ profile_feedbacks_switch:
     path:    /feedbacks/switch
     defaults: { _controller: ActedLegalDocsBundle:Profile:switchShowingFeedbacks }
     methods:  PATCH
+
+profile_event_details:
+    path:   /event/details/{slug}
+    defaults: { _controller: ActedLegalDocsBundle:Profile:eventDetails }
+    methods:  GET

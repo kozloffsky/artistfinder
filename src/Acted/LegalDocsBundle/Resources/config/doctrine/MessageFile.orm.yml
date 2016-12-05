@@ -15,6 +15,12 @@ Acted\LegalDocsBundle\Entity\MessageFile:
         fileSize:
           type: integer(9)
           nullable: true
+    oneToOne:
+        media:
+            targetEntity: Acted\LegalDocsBundle\Entity\Media
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
     manyToOne:
         message:
             targetEntity: Acted\LegalDocsBundle\Entity\Message

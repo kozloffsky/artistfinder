@@ -130,4 +130,23 @@ class PerformanceRepository extends \Doctrine\ORM\EntityRepository
             ->setParameters($params)
             ->getQuery()->getArrayResult();
     }
+
+    public function getPerformancesForEvent($eventId){
+        return $this->getEntityManager()->createQuery('
+            select p from ActedLegalDocsBundle:Performance p
+            join p.profile prof
+            join p.performanceRequestQuotations prq
+            join prof.user u
+            JOIN prq.requestQuotation rq
+            where rq.event = ?1
+        ')->setParameter(1, $eventId)->getResult();
+
+        /*return $this->createQueryBuilder('p')->select('p')
+            ->leftJoin('p.profile','prof')
+            ->leftJoin('prof.user', 'u')
+            ->leftJoin('p.performanceRequestQuotations','prq')
+            ->leftJoin('prq.requestQuotation','rq')
+            ->addWhere('rq.event = :event')->setParameter('event', $eventId)
+            ->getQuery()->getResult();*/
+    }
 }

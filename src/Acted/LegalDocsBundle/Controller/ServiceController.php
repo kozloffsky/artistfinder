@@ -71,6 +71,7 @@ class ServiceController extends Controller
         $rate = new Rate();
         $rate->setOption($option);
         $rate->setPrice($price);
+        $rate->setIsSelected(true);
         $em->persist($rate);
         $em->flush();
 

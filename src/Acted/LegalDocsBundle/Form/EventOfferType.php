@@ -21,6 +21,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Acted\LegalDocsBundle\Form\Type\BooleanType;
 
 class EventOfferType extends AbstractType
 {
@@ -82,6 +83,18 @@ class EventOfferType extends AbstractType
                         new Length(['max' => 500])
                 ]
             ])
+            ->add('details_accepted', BooleanType::class, [
+                'constraints' => [
+                ], 'description' => 'details_accepted'])
+            ->add('acts_extras_accepted', BooleanType::class, [
+                'constraints' => [
+                ], 'description' => 'acts_extras_accepted'])
+            ->add('timing_accepted', BooleanType::class, [
+                'constraints' => [
+                ], 'description' => 'timing_accepted'])
+            ->add('technical_requirements_accepted', BooleanType::class, [
+                'constraints' => [
+                ], 'description' => 'technical_requirements_accepted'])
 
             ->add('country', TextType::class,      ['constraints' => [new NotBlank()], 'description' => 'Country'])
             ->add('city', TextType::class,         ['constraints' => [new NotBlank()], 'description' => 'City'])
@@ -90,6 +103,7 @@ class EventOfferType extends AbstractType
             ->add('region_name', TextType::class,  ['constraints' => [new NotBlank()], 'description' => 'Name of region'])
             ->add('region_lat', NumberType::class, ['constraints' => [new NotBlank()], 'description' => 'Region latitude'])
             ->add('region_lng', NumberType::class, ['constraints' => [new NotBlank()], 'description' => 'Region longitude'])
+            ->add('place_id', TextType::class,     ['constraints' => [new NotBlank()], 'description' => 'Place id'])
         ;
     }
 

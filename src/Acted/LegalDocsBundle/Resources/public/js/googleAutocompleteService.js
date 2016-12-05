@@ -8,6 +8,7 @@
         CITY    = 1,
         REGION  = 2,
         ADDRESS = 3;
+        PLACE_ID = 4;
 
     window.GoogleAutocompleteService = function() {
         /**
@@ -375,7 +376,8 @@
                 if(status == google.maps.GeocoderStatus.OK) {
                     cb({
                         lat: results[0].geometry.location.lat(),
-                        lng: results[0].geometry.location.lng()
+                        lng: results[0].geometry.location.lng(),
+                        place_id: results[0].place_id
                     });
                 } else {
                     cb(null);
@@ -478,6 +480,7 @@
                 if(res !== null) {
                     console.log("CITY COORDS: ", _this.currentStore.city, res);
                     _this.coords.city = res;
+                    _this.currentStore.placeId = res.place_id;
                 }
             });
 

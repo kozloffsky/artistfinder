@@ -161,7 +161,7 @@
     <div class="modal-body">
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
-                <label for="quot_event_name">Name event</label>
+                <label for="quot_event_name">Event name</label>
                 <input type="text" class="form-control" id="quot_event_name" placeholder="Name your event" name="event_name" value="<%=data.model.title%>" <%=disabled%> >
             </div>
         </div>
@@ -173,7 +173,7 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                 <label for="quot_city">1 day/multiple days</label>
-                <input type="text" class="form-control" id="quot_city" placeholder="London" name="city" value="2-day event" autocomplete="off">
+                <input type="text" class="form-control" id="quot_city" placeholder="London" name="city" value="2-day event" autocomplete="off" <%=disabled%>>
             </div>
         </div>
 
@@ -209,7 +209,7 @@
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                 <label for="quot_venue_type">Additional info</label>
-                <textarea class="additional-info">I want this celebration to be super cool!</textarea>
+                <textarea class="additional-info" <%=disabled%>>I want this celebration to be super cool!</textarea>
             </div>
         </div>
     </div>
@@ -242,9 +242,16 @@
         if(allData[i].service) {
             type = 'service';
             curPerf = allData[i].service;
+
+            var servicePackage = curPerf.packages[0];
+
+            var serviceOption = servicePackage.options[0];
+            var serviceRate = serviceOption.rates[0];
+            var servicePrice = serviceRate.price;
+            var serviceAmount = new Number(servicePrice.amount).toFixed();
         }
 
-        if (type == 'performance' && curPerf.type != basePerformanceType) {
+        if ((type == 'performance' && curPerf.type != basePerformanceType) || curPerf.packages.length == 0) {
             continue;
         }
 
@@ -265,50 +272,39 @@
             <% for(var j = 0; j < curPerf.packages.length; j++) {
                 var package = curPerf.packages[j];
                 var packageChecked = package.isSelected ? 'checked' : '';
+                var hiddenCheckbox = (type == 'performance') ? '' : 'hidden';
+                if(type == 'service') {
+                    var toLeft = 'pull-left';
+                    var toRight = 'pull-right';
+                }
+
             %>
 
                 <div package-id="<%=package.id%>" class="row">
-                    <div class="row package">
-                        <div class="custom-checkbox">
+                    <div class="row package <%=toLeft%>">
+                        <div class="custom-checkbox <%=hiddenCheckbox%>">
                             <input select-package package-id="<%=package.id%>" id="package_<%=package.id%>" name="package-check" value="" type="checkbox" <%=packageChecked%> >
                             <label for="package_<%=package.id%>"></label>
                         </div>
                         <label><%=package.name%></label>
                     </div>
 
-
                     <% for(var k = 0; k < package.options.length; k++) {
                         var option = package.options[k];
                         var optionChecked = option.isSelected ? 'checked' : '';
                     %>
                         <!-- Set options -->
-                        <div option-id="<%=option.id%>" class="col-md-6 act-option">
-                            <div class="custom-checkbox">
-                                <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox" <%=optionChecked%> >
+                        <div option-id="<%=option.id%>" class="act-option <%=toRight%>">
+                            <div class="custom-checkbox <%=hiddenCheckbox%>">
+                                <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox" <%=optionChecked%>>
                                 <label for="option_<%=option.id%>"></label>
                             </div>
 
-                            <select quot-edit-qty name="qty" class="quantity-select">
-                                <%
-                                    for(var opt = 1; opt < 7; opt++) {
-                                        if(option.qty == opt) {
-                                        %>
-                                            <option selected value="<%=opt%>"><%=opt%></option>
-                                        <%
-                                        } else {
-                                        %>
-                                            <option value="<%=opt%>"><%=opt%></option>
-                                        <%
-                                        }
-                                    }
-                                %>
-                            </select>
+                            <% if(type == 'performance') { %>
+
+                            <input quot-edit-qty name="qty" class="quantity-select" value="<%=option.qty%>" placeholder="<%=option.qty%>" disabled>
                             <span>x</span>
-                            <select quot-edit-duration name="duration" class="duration-select">
-                                <option <% if(option.duration == 45) { %> selected <% } %> value="45">45 min</option>
-                                <option <% if(option.duration == 50) { %> selected <% } %> value="50">50 min</option>
-                                <option <% if(option.duration == 55) { %> selected <% } %> value="55">55 min</option>
-                            </select>
+                            <input quot-edit-duration name="duration" class="duration-select" value="<%=option.duration%>" placeholder="<%=option.duration%>" disabled>
                             <span class="minutes">min</span>
                             <select quot-edit-price class="price-box" name="price">
                                 <% for(var r = 0; r < option.rates.length; r++) {
@@ -316,10 +312,18 @@
                                     var amount = new Number(rate.price.amount).toFixed();
                                     %>
 
-                                <option price-id="<%=rate.id%>" value="<%=amount%>"><%=amount%></option>
+                                <option price-id="<%=rate.id%>" <% if(rate.isSelected) { %> selected <% } %>  value="<%=amount%>"><%=amount%></option>
 
                                 <% } %>
+                                <option value="custom">Custom</option>
                             </select>
+
+                            <% } %>
+
+                            <% if(type == 'service') { %>
+                                <input edit-extra-custom-price class="price-box" name="price" rate-id="<%=serviceRate.id%>" value="<%=serviceAmount%>" placeholder="<%=serviceAmount%>">
+                            <% } %>
+
                             <span>GBP</span>
                         </div>
                     <% } %>
@@ -339,6 +343,8 @@
 <script type="text/template" id="quot-extra-performance-tmp">
     <%
         var standardPerformanceType = 1;
+        var basePerformanceType = 0;
+
         var isExtraPerformance = data.isExtra;
         var performances = data.model.perf;
         var allData      = performances;
@@ -351,7 +357,7 @@
         type = 'performance';
         curPerf = allData[i].performance;
 
-        if (curPerf.type == 0) {
+        if (curPerf.type == basePerformanceType) {
             continue;
         }
 
@@ -362,6 +368,7 @@
         var perfId = curPerf.id;
         var rate = option.rates[0];
         var price = rate.price;
+        var amount = new Number(price.amount).toFixed();
     %>
     <div act-id="<%=perfId%>" act-type="<%=type%>">
         <div package-id="<%=package.id%>" class="row">
@@ -398,16 +405,12 @@
                             %>
                         </select>
                         <span>x</span>
-                        <select quot-edit-duration name="duration" class="duration-select">
-                            <option <% if(option.duration == 45) { %> selected <% } %> value="45">45 min</option>
-                            <option <% if(option.duration == 50) { %> selected <% } %> value="50">50 min</option>
-                            <option <% if(option.duration == 55) { %> selected <% } %> value="55">55 min</option>
-                        </select>
+                        <input type="number" quot-edit-duration name="duration" min="1" max="100" class="duration-select extra" value="<%=option.duration%>">
                         <span>min</span>
                     </span>
 
                     <div class="pull-right">
-                        <input edit-custom-price custom-extra-price class="price-box" placeholder="<%=price.amount%>" rate-id="<%=rate.id%>" value="<%=price.amount%>">
+                        <input edit-extra-custom-price custom-extra-price class="price-box" placeholder="<%=amount%>" rate-id="<%=rate.id%>" value="<%=amount%>">
                         <span>GBP</span>
                         <span act-delete class="pull-right"><i class="fa fa-trash"></i></span>
                     </div>
@@ -430,23 +433,28 @@
 
 <!-- NEW Quotation payment section -->
 <script type="text/template" id="quot-payment-tmp">
-
+    <%
+        var balancePercent = data.model.balance_percent;
+        if (typeof(balancePercent) == 'undefined') {
+            balancePercent = 50;
+        }
+    %>
     <div class="row">
         <label>Payment terms</label>
     </div>
 
     <div class="row payment-deposit">
-        <select name="quotation-payment-percent">
-            <option value="30">30%</option>
-            <option value="50">50%</option>
-            <option value="100">100%</option>
+        <select edit-quotation-payment-percent name="quotation-payment-percent">
+            <option <% if(balancePercent == 20) { %> selected <% } %> value="20">20%</option>
+            <option <% if(balancePercent == 30) { %> selected <% } %> value="30">30%</option>
+            <option <% if(balancePercent == 50) { %> selected <% } %> value="50">50%</option>
         </select>
 
-        <span>Guaranteed deposit to be paid with <b>Acted Escrow Account</b> now to confirm the booking</span>
+        <span>guaranteed Deposit payment on <b>Escrow Account</b></span>
     </div>
 
     <div class="row payment-deposit-info">
-        <span>50% guaranteed Balance payment on <b>Escrow Account</b></span>
+        <span class="payment-deposit-amount"><%depositPercent = 100-balancePercent%><%=depositPercent%>%</span><span> guaranteed Balance payment on <b>Escrow Account</b></span>
     </div>
 
     <div style="text-align: center;">
@@ -464,6 +472,7 @@
     var packageChecked = package.isSelected ? 'checked' : '';
 
     var option = package.options[0];
+    var rate   = option.rates[0];
 
     var perfId = curPerf.id;
     %>
@@ -503,17 +512,13 @@
                             %>
                         </select>
                         <span>x</span>
-                        <select quot-edit-duration name="duration" class="duration-select">
-                            <option <% if(option.duration == 45) { %> selected <% } %> value="45">45 min</option>
-                            <option <% if(option.duration == 50) { %> selected <% } %> value="50">50 min</option>
-                            <option <% if(option.duration == 55) { %> selected <% } %> value="55">55 min</option>
-                        </select>
+                        <input type="number" quot-edit-duration name="duration" min="1" max="100" class="duration-select extra" value="1">
                         <span>min</span>
                     </span>
                     <% } %>
 
                     <div class="pull-right">
-                        <input edit-custom-price custom-extra-price class="price-box" value="3000">
+                        <input edit-extra-custom-price custom-extra-price class="price-box" rate-id="<%=rate.id%>" value="0">
                         <span>GBP</span>
                         <span act-delete class="pull-right"><i class="fa fa-trash"></i></span>
                     </div>
@@ -521,7 +526,7 @@
             </div>
             <div class="row package">
                 <div extra-performance-comment style="display: none">
-                    <textarea name="comment" class="quote-comment-box extra" placeholder="Describe this extra"></textarea>
+                    <textarea edit-performance-comment name="comment" class="quote-comment-box extra" placeholder="Describe this extra"><%=curPerf.comment%></textarea>
                 </div>
             </div>
         </div>
@@ -534,7 +539,7 @@
 <script type="text/template" id="quot-set-template">
 
     <!-- Set options -->
-    <div option-id="<%=option.id%>" class="col-md-6 act-option">
+    <div option-id="<%=option.id%>" class="act-option">
         <div class="custom-checkbox">
             <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
             <label for="option_<%=option.id%>"></label>
@@ -577,7 +582,7 @@
             var option = package.options[k];
         %>
         <!-- Set options -->
-        <div option-id="<%=option.id%>" class="col-md-6 act-option">
+        <div option-id="<%=option.id%>" class="act-option">
             <div class="custom-checkbox">
                 <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox">
                 <label for="option_<%=option.id%>"></label>
