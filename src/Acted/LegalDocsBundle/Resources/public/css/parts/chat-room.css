@@ -169,20 +169,18 @@ body {
     display: block;
     content: '';
 }
-.chat-room{
+.chat-room {
     color: #3d4248;
     margin: 0 0 50px;
 }
-.chat-room .main-title{
+.chat-room .main-title {
     margin: 12px 0 9px 0;
     padding: 0;
     text-align: center;
-    font-family: LatoRegular;
-    font-size: 36px;
-    font-weight: bold;
+    font-family: LatoBold;
     color: rgba(246, 117, 59, 0.87);
 }
-.chat-room .border-b{
+.chat-room .border-b {
     border-bottom: 3px solid #000;
     border-bottom: 3px solid rgba(0, 0, 0, .05);
 }
@@ -231,7 +229,7 @@ body {
     margin: 0 0 12px 0;
 }
 .detail-form .container-custom {
-    width: 512px;
+    max-width: 512px;
 }
 .detail-form .col-custom-size {
     width: 242px;
@@ -274,9 +272,20 @@ body {
 }
 
 .chat-room .section-info-footer .custom-checkbox label:after {
-    height: 8px;
-    width: 10px;
+    /*height: 8px;*/
+    /*width: 10px;*/
+    /*margin: 6px 5px;*/
+
+
     margin: 6px 5px;
+    left: 3px;
+    top: -2px;
+    width: 5px;
+    height: 9px;
+    border: solid rgb(255,173,108);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+
 }
 
 .chat-room .section-one .section-info-title .custom-checkbox:nth-of-type(2) {
@@ -925,7 +934,6 @@ select.full-width + .select2{
     cursor: not-allowed;
 }
 .chat-room .section-three .booking-confirm-list {
-
 }
 .chat-room .section-three .booking-confirm-container {
     padding: 13px 0 0 7px;
@@ -1170,6 +1178,46 @@ select.full-width + .select2{
     .chat-room .quote-section .custom-checkbox.small{
         margin-bottom: 8px;
     }
+    .chat-room .quote-section {
+        width: auto;
+    }
+
+    .chat-room .title {
+        padding: 0;
+        text-align: center;
+    }
+    .chat-room .quote-section .title.quot {
+        padding: 0;
+    }
+    .chat-room .quote-section .controls {
+        margin: 0 auto;
+    }
+    .chat-room .detail-form {
+        padding: 15px 11px 5px 33px;
+    }
+    .chat-room .tr-container .tr-desc {
+        padding: 0;
+        margin: 8px 8px 29px 0;
+    }
+    .chat-room .tr-container .tr-files {
+        margin: 0;
+    }
+    .chat-room .tr-container .tr-files li {
+        padding: 0px 12px 4px 0;
+        display: inline-block;
+    }
+    .chat-room i.icon.icon-pdf {
+        margin: 0 2px 0 0;
+    }
+    .chat-room i.icon.icon-delete-attached {
+        margin: 0 0 0 2px;
+    }
+    .detail-form .col-custom-size,
+    .chat-room input[type="text"].custom-size,
+    .chat-room input[type="email"].custom-size,
+    .chat-room input[type="password"].custom-size {
+        width: 100%;
+    }
 }
 @media (max-width: 991px){
     .chat-room .title{
@@ -1180,11 +1228,13 @@ select.full-width + .select2{
     .chat-room .miscellaneous-list .fa{margin: 0 5px 0 -13px;}
     .message-form .controls{width: 110px;}
 }
-@media (max-width: 767px){
+@media (max-width: 767px) {
     .chat-room > .container{padding: 0;}
-    .chat-room .wrap{padding: 0 20px;}
+    .chat-room .wrap{
+        /*padding: 0 20px;*/
+    }
     .chat-room .main-title{
-        font-size: 18px;
+        font-size: 28px;
         margin: 0 0 10px;
         padding: 0 0 10px;
     }
@@ -1192,6 +1242,14 @@ select.full-width + .select2{
         display: none;
         left: 20px;
         top: 6px;
+    }
+    .chat-room input[type="text"].custom-size,
+    .chat-room input[type="email"].custom-size,
+    .chat-room input[type="password"].custom-size {
+
+    }
+    .detail-form {
+        padding: 0 32px 0 25px;
     }
     .detail-form .holder [class^=col-lg-]{padding: 0;}
     .detail-form .holder [class^=col-lg-].pull-right{
@@ -1264,6 +1322,49 @@ select.full-width + .select2{
     .chat-room .quote-section .price-list .col:first-child{
         width: 50%;
     }
+
+    .chat-room .section-one {
+        border: none;
+    }
+    .chat-room .section-two {
+        border: none;
+    }
+    .chat-room .section-three {
+        border: none;
+    }
+    .chat-room .section-four {
+        border: none;
+    }
+
+    .chat-room .quote-section {
+        width: 100%;
+    }
+    /*.chat-room .section-one .section-info-title {*/
+        /*background-color: rgba(255, 239, 187, 1);*/
+        /*border-bottom: 2px solid rgba(255, 228, 141, 1);*/
+    /*}*/
+    /*.chat-room .section-one .section-info-footer {*/
+        /*background-color: rgba(255, 239, 187, 1);*/
+    /*}*/
+    /*.chat-room .section-two .section-info-title {*/
+        /*background-color: rgba(238, 238, 255, 1);*/
+        /*border-bottom: 2px solid rgba(222, 224, 255, 1);*/
+    /*}*/
+    /*.chat-room .section-two .section-info-footer {*/
+        /*background-color: rgba(238, 238, 255, 1);*/
+        /*margin: 18px 0 0 0;*/
+    /*}*/
+    /*.chat-room .section-three .section-info-title {*/
+        /*background-color: rgba(242, 246, 202, 1);*/
+        /*border-bottom: 2px solid rgba(224, 234, 128, 1);*/
+    /*}*/
+    /*.chat-room .section-four .section-info-title {*/
+        /*background-color: rgba(187, 232, 252, 1);*/
+        /*border-bottom: 2px solid rgba(140, 217, 251, 1);*/
+    /*}*/
+
+
+
 }
 @media (max-width: 599px){
     .chat-room .quote-section .price-list .col,

@@ -3,7 +3,7 @@
 @import "parts/artist-selection.css";
 @import "parts/bookings.css";
 @import "parts/chat-room.css";
-@import "parts/client_payments.css";
+@import "parts/client-payments.css";
 @import "parts/client-event-details.css";
 @import "parts/comingsoon.css";
 @import "parts/enquiries.css";
@@ -58,6 +58,10 @@ main {
 
 .row {
     margin: 0;
+}
+
+.container {
+    padding: 0 0 0 10px;
 }
 
 .modal {
@@ -153,7 +157,7 @@ section.used-by {
     height: 17px;
     width: 17px;
     display: none;
-    background: url("../assets/images/yes.png") no-repeat center;
+    /*background: url("../assets/images/yes.png") no-repeat center;*/
 }
 
 .custom-checkbox input:checked + label:after {
@@ -447,7 +451,7 @@ section.used-by {
     width: auto;
 }
 .profile-info .controls .button-gradient .btn{min-width: 131px;}
-.profile-info .controls .button-gradient:not(.filled) .btn{padding-top: 4px;}
+/*.profile-info .controls .button-gradient:not(.filled) .btn{padding-top: 4px;}*/
 
 .profile-info .avatar {
     position: relative;
@@ -2162,11 +2166,6 @@ section.used-by {
     border: none !important;
 }
 
-.free-quote-modal .custom-checkbox label {
-    color: #000;
-    font-weight: 400;
-}
-
 /*promo view styles start*/
 .promo-view{
     position: relative;
@@ -2400,6 +2399,7 @@ input[disabled] {
     height: 26px;
     width: 27px;
     vertical-align: middle;
+    margin: -7px 1px -7px -7px;
 }
 
 @supports ( -webkit-appearance: none ) or ( appearance: none ) or ( ( -moz-appearance: none ) and ( mask-type: alpha ) ) {
@@ -3377,14 +3377,18 @@ only screen and (min-resolution: 2dppx) {
         background: url('../assets/images/edit-darkgray@2x.png') no-repeat;
         background-size: 24px 24px;
     }
-    .custom-checkbox label:after{
-        background: url('../assets/images/yes@2x.png') no-repeat;
-        background-size: 17px 17px;
-    }
-    .free-quote-modal .modal-content .close > span,
+    /*.custom-checkbox label:after{*/
+        /*background: url('../assets/images/yes@2x.png') no-repeat;*/
+        /*background-size: 17px 17px;*/
+    /*}*/
     .modal.add-entry .modal-content .close > span{
         background: url('../assets/images/close@2x.png');
         background-size: 12px 12px;
+    }
+
+    .free-quote-modal .modal-content .close > span {
+        background: url(../assets/images/cross@2x.png) no-repeat;
+        background-size: cover;
     }
     /*i.pound {*/
         /*background: url(../assets/images/pound_ic@2x.png);*/

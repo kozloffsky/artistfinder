@@ -14,17 +14,16 @@ $(function () {
     );
 
     function initSelect(){
-        $('.free-quote-modal select').each(function () {
-            var placeholder = $(this).attr('data-placeholder');
-            var $select2    = $(this).select2({
-                placeholder            : placeholder || '',
-                minimumResultsForSearch: -1
-            });
-
-            var className = $(this).attr('data-class');
-            $select2.data('select2').$selection.addClass(className);
-            $select2.data('select2').$results.addClass(className);
-        });
+        // $('.free-quote-modal select').each(function () {
+        //     var placeholder = $(this).attr('data-placeholder');
+        //     var $select2    = $(this).select2({
+        //         placeholder            : placeholder || '',
+        //         minimumResultsForSearch: -1
+        //     });
+        //     var className = $(this).attr('data-class');
+        //     $select2.data('select2').$selection.addClass(className);
+        //     $select2.data('select2').$results.addClass(className);
+        // });
     }
 
     $('#comment_toggle').click(function (e) {
