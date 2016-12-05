@@ -9,7 +9,7 @@
 
             <div class="pull-right">
                 <span>{{ feedback.createdAt | date('d F Y') }}</span>
-                {% if app.user is defined %}
+                {% if app.user is not empty %}
                 {% if app.user.roles[0] == "ROLE_ADMIN"  %}
                     <span><i class="fa fa-trash remove-feedback"></i></span>
                {% endif  %}
