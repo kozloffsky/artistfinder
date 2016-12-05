@@ -257,7 +257,10 @@ $(function () {
         var $wrapper = $this.parents('.comment-box');
         var $current = $wrapper.find('.current-count');
 
-        $current.html($this.val().length);
+        var text = $this.val();
+        text = text.replace(/(?:\r\n|\r|\n)/g, ' ');
+        $this.html(text);
+        $current.html(text.length);
     }
 
     /**
