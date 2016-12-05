@@ -668,7 +668,9 @@ class ChatRoomController extends Controller
         return [];
     }
 
-    public function setViewed(Feedback $feedbacks){}
+    public function setViewed(Feedback $feedbacks)
+    {
+    }
 
     /**
      * @Secure(roles="ROLE_ACTOR")
@@ -681,5 +683,12 @@ class ChatRoomController extends Controller
         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
         $eor->acceptDetails($eventId);
         return new Response(json_encode($eventId));
+    }
+
+    function showEventsAction()
+    {
+        $view = '@ActedLegalDocs/Profile/client_event_details.html.twig';
+
+        return $this->render($view);
     }
 }

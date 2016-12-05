@@ -1,64 +1,7 @@
 <main class="dashboard feedback client">
     <div class="container">
 
-        <div class="row events-menu owl-carousel owl-theme">
-            <ul>
-                <li class="event-item non-active">
-                    <a title="Event name 2">Event name 2</a>
-                </li>
-                <li class="event-item active">
-                    <a title="AstraZeneca 2016 Annual Party">AstraZeneca 2016 Annual Party</a>
-                </li>
-                <li class="event-item non-active">
-                    <a title="Event name 3">Event name 3</a>
-                </li>
-                <li class="event-item non-active">
-                    <a title="Event name 4">Event name 4</a>
-                </li>
-                <li class="event-item non-active">
-                    <a title="Event name 5">Event name 5</a>
-                </li>
-            </ul>
-
-            <div class="arrows">
-                <div>
-                    <i class="left"></i>
-                </div>
-                <div>
-                    <i class="right"></i>
-                </div>
-            </div>
-
-        </div>
-        <div class="new-event">
-            <span class="hidden-xs hidden-sm">Add Event</span>
-            <i class="fa fa-plus"></i>
-        </div>
-        <div class="row options-menu">
-            <input id="options-menu-open" name="options-menu-open" type="checkbox" class="hidden">
-            <label for="options-menu-open" class="active-tab">Feedback
-                <i class="fa fa-sort-desc hidden-md hidden-lg pull-right" aria-hidden="true"></i>
-                <i class="fa fa-sort-asc hidden-md hidden-lg pull-right" aria-hidden="true"></i>
-            </label>
-            <ul>
-                <li>
-                    Event details
-                </li>
-                <li>
-                    Messages
-                </li>
-                <li>
-                    Artist selection
-                </li>
-                <li>
-                    Payments
-                </li>
-                <li class="active-item">
-                    Feedback
-                </li>
-            </ul>
-
-        </div>
+        {% include 'ActedLegalDocsBundle:Profile:client/client_menu.html.twig' %}
         <div class="row tip-box">
             <span class="text">Tip: once submitted, the feedback become public and appear on the artist’s profile</span>
         </div>

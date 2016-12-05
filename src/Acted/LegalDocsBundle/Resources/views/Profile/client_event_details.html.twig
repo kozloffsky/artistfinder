@@ -1,6 +1,6 @@
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
 
-<main class="dashboard feedback client">
+<main class="dashboard feedback client" id="client-event-details">
     <div class="container no-pad client_event_details">
         {% include 'ActedLegalDocsBundle:Profile:client/client_menu.html.twig' %}
         <div class="col-md-6 col-sm-6 left_column">
@@ -12,16 +12,16 @@
                     </p>
                 </div>
                 <label for="event_name">Event name</label>
-                <input readonly type="text" maxlength="60" class="form-control enable_toggler" id="event_name" placeholder="Christmas party" name="name">
+                <input type="text" maxlength="60" v-bind:focusout="foo" v-bind:value="event.title" class="form-control enable_toggler" id="event_name" placeholder="Christmas party" name="name">
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-6 no-pad-left">
                     <label for="event_date">Date</label>
-                    <input readonly type="text" class="date-picker form-control enable_toggler" id="event_date" placeholder="05/04/2016">
+                    <input type="text" class="date-picker form-control enable_toggler" id="event_date" v-bind:value="event.starting_date" placeholder="05/04/2016">
                 </div>
-                <div class="col-lg-6 col-md-6 no-pad-right ">
+                <div class="col-lg-6 col-md-6 no-pad-right">
                     <label class="col-xs-12 no-pad" for="event_days_duration">1 day/multiple days</label>
-                    <select readonly class="enable_toggler" data-class="selections-white low-select" name="event_days_duration" id="event_duration">
+                    <select class="enable_toggler" data-class="selections-white low-select" name="event_days_duration" id="event_duration">
                         <option value="0">1-day event</option>
                         <option value="1">2-day event</option>
                         <option value="2">3-day event</option>
@@ -31,7 +31,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 no-pad-left">
                     <label for="event_time">Event timing</label>
-                    <input readonly id="event_time" type="text" class="form-control enable_toggler" placeholder="Evening" name="event_time">
+                    <input id="event_time" v-bind:value="event.timing" type="text" class="form-control enable_toggler" placeholder="Evening" name="event_time">
                 </div>
                 <div class="col-lg-6 col-md-6 no-pad-right">
                     <label for="event-country">Country</label>
@@ -40,24 +40,20 @@
             </div>
             <div class="row">
                 <label for="event_address">Address</label>
-                <input readonly type="text" class="form-control enable_toggler" id="event_address" placeholder="Type the address here...">
+                <input type="text" class="form-control enable_toggler" v-bind:value="event.location" id="event_address" placeholder="Type the address here...">
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-6 no-pad-left">
                     <label for="venue_type">Venue type</label>
-                    <select readonly class="select_width_101 enable_toggler" data-class="selections-white low-select" name="venue_type" id="venue_type">
-                        <option value="0">Hotel Ballroom</option>
-                        <option value="1">Lorem Ipsum 1</option>
-                        <option value="2">Lorem Ipsum 2</option>
+                    <!--<v-select :options="['some', 'some2']"></v-select>-->
+                    <select class="select_width_101 enable_toggler" data-class="selections-white low-select" name="venue_type" id="venue_type" v-model="selectedVenue">
+                        <option v-for="venue in venues" v-bind:value="venue">${venue.venue_type}</option>
                     </select>
                 </div>
                 <div class="col-lg-6 col-md-6 no-pad-right">
                     <label for="guests_count">Number of guests</label>
-                    <select readonly class="select_width_101 enable_toggler" data-class="selections-white low-select" name="number_of_guests" id="guests_count">
-                        <option value="less_then_50">Less than 50</option>
-                        <option value="50-100">50-100</option>
-                        <option value="100-500">100-500</option>
-                        <option value="500+">500+</option>
+                    <select class="select_width_101 enable_toggler" data-class="selections-white low-select" name="number_of_guests" id="guests_count" v-model="selectedGuest">
+                        <option v-for="guest in guests" v-bind:value="guest.value">${ guest.text }</option>
                     </select>
                 </div>
             </div>
