@@ -77,7 +77,7 @@ class EventsController extends Controller
             $eventOffer->setActsExtrasAccepted(false);
             $eventOffer->setTechnicalRequirementsAccepted(false);
             $eventOffer->setTimingAccepted(false);
-            $eventOffer->setActsEctrasAccepted(false);
+            $eventOffer->setActsExtrasAccepted(false);
             $eventOffer->setDetailsAccepted(false);
             $validationErrors->addAll($validator->validate($eventOffer));
             $em->persist($eventOffer);
