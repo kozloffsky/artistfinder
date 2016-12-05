@@ -3,7 +3,7 @@
  */
 $(function () {
     var quoteRequestAutocompService = new GoogleAutocompleteService(),
-        isAvailable = quoteRequestAutocompService.getFormElements('.free-quote-modal form[id="requestQuoteForm"]');
+        isAvailable = quoteRequestAutocompService.getFormElements('form[id="requestQuoteForm"]');
 
     if(isAvailable)
         quoteRequestAutocompService.initAutoComplete();
