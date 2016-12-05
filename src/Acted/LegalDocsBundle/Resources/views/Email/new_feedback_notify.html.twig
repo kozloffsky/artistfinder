@@ -7,7 +7,7 @@
     {% autoescape false %}
         <p>You have a received a {{ feedback.rating }}/5 rating from {{ client.firstname }}.</p>
         {% if feedback.feedback is defined %}
-            <p>{{ feedback.feedback }}</p>
+            <p>"{{ feedback.feedback }}"</p>
         {% endif %}
         <p>Kind regards,</p>
         <p>ACTED</p>
