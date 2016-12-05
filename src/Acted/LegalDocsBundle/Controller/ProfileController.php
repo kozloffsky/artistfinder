@@ -23,6 +23,7 @@ use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\VarDumper\VarDumper;
 
 class ProfileController extends Controller
 {

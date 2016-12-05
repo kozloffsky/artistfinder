@@ -50,6 +50,10 @@ profile_feedbacks_list:
     path:     /{slug}/feedback
     defaults: { _controller: ActedLegalDocsBundle:Profile:feedbacks }
     methods:  GET
+profile_edit_feedabcks_list:
+  path: /edit_profile/{slug}/feedback
+  defaults: { _controller: ActedLegalDocsBundle:Profile:feedbacks }
+  methods:  GET
 profile_new_media:
     path:    /{slug}/media/new
     defaults: { _controller: ActedLegalDocsBundle:Profile:newMedia }
