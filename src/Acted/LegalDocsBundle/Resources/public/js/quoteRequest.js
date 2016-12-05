@@ -323,6 +323,7 @@ $(function () {
         data += "&region_lat=" + regionLat;
         data += "&region_lng=" + regionLng;
         data += "&place_id=" + placeId;
+        data += "&country=United Kingdom";
 
         $.ajax({
             type:'POST',
