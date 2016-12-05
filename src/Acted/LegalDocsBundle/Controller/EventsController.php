@@ -40,7 +40,7 @@ class EventsController extends Controller
         $form->handleRequest($request);
         $serializer = $this->get('jms_serializer');
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getEM();
             $validator = $this->get('validator');
             $data = $form->getData();
@@ -77,7 +77,7 @@ class EventsController extends Controller
             $eventOffer->setActsExtrasAccepted(false);
             $eventOffer->setTechnicalRequirementsAccepted(false);
             $eventOffer->setTimingAccepted(false);
-            $eventOffer->setActsExtrasAccepted(false);
+            $eventOffer->setActsEctrasAccepted(false);
             $eventOffer->setDetailsAccepted(false);
             $validationErrors->addAll($validator->validate($eventOffer));
             $em->persist($eventOffer);
@@ -85,8 +85,8 @@ class EventsController extends Controller
             if (count($validationErrors) > 0) {
                 $errors = $serializer->toArray($validationErrors);
                 $prettyErrors = [];
-                foreach($errors as $error) {
-                    foreach($error as $key=>$value) {
+                foreach ($errors as $error) {
+                    foreach ($error as $key => $value) {
                         $prettyErrors[$key] = $value;
                     }
                 }
@@ -115,7 +115,7 @@ class EventsController extends Controller
             $em->persist($requestQuotation);
             $em->flush();
 
-            return new JsonResponse(['success'=>'Event successfully created!']);
+            return new JsonResponse(['success' => 'Event successfully created!']);
         }
 
         return new JsonResponse($this->get('app.form_errors_serializer')->serializeFormErrors($form, false), 400);
@@ -257,7 +257,8 @@ class EventsController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function getEventByIdAction(Request $request) {
+    public function getEventByIdAction(Request $request)
+    {
         $eventId = $request->get('id');
 
         $serializer = $this->get('jms_serializer');
@@ -265,7 +266,7 @@ class EventsController extends Controller
         $eventOffer = $this->getEM()->getRepository('ActedLegalDocsBundle:EventOffer')->getEventOfferByEventId($eventId);
 
         if ($eventOffer) {
-            return new JsonResponse( $serializer->toArray($eventOffer[0], SerializationContext::create()->setGroups(['getEvent'])) );
+            return new JsonResponse($serializer->toArray($eventOffer[0], SerializationContext::create()->setGroups(['getEvent'])));
         } else {
             return new JsonResponse(['empty']);
         }
@@ -334,5 +335,52 @@ class EventsController extends Controller
         ), Response::HTTP_OK, array(
             'count' => $clientEvents['countRows']
         ));
+    }
+
+    public function updateEventAction(Request $request)
+    {
+//        $repo = $this->getEM()->getRepository('ActedLegalDocsBundle:Event');
+//        $event = $repo->find();
+
+    }
+
+    /**
+     * Get Event data by id.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function getEventDataByIdAction(Request $request)
+    {
+        $id = $request->get('event');
+
+        $em = $this->getEM();
+        $repo = $em->getRepository('ActedLegalDocsBundle:Event');
+        $event = $repo->find($id);
+
+        $serializer = $this->get("jms_serializer");
+        $context = SerializationContext::create()->setGroups('getEvent');
+        $event = $serializer->toArray($event, $context);
+
+        $toResponse = ['status' => 'success', 'event' => $event];
+
+        return new JsonResponse($toResponse);
+    }
+
+    /**
+     * Show all possible venues.
+     *
+     * @return JsonResponse
+     */
+    public function showVenuesAction()
+    {
+        $venues = $this->getEM()->getRepository('ActedLegalDocsBundle:RefVenueType')->findAll();
+
+        $serializer = $this->get('jms_serializer');
+
+        $venues = $serializer->toArray($venues);
+
+        return new JsonResponse(["status" => "success", "venues" => $venues]);
     }
 }
