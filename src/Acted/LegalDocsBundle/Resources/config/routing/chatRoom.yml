@@ -102,3 +102,4 @@ api_accept_details:
 events:
   path: /events
   defaults: {_controller: ActedLegalDocsBundle:ChatRoom:showEvents }
+  methods: GET
