@@ -392,11 +392,7 @@ $(function () {
     }
 
     $(".remove-feedback").click(deleteFeedback);
-
-    $('.feedbacksContainer').change(function(){
-        console.log('change');
-        window.setRatingFeedback();
-    });
+    
     // var disableLabel = $('.free-quote-modal.request .custom-checkbox.small label');
     //
     // disableLabel.on('click', function(){
