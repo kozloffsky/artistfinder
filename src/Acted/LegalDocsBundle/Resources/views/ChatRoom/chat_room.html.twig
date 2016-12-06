@@ -5,6 +5,7 @@
 
     <div class="container">
         {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
+        {{ dump(chatRoom) }}
         <!-- THIS MENU VISIBLE ONLY ON DESCTIOP SCREEN-->
         <!--<ul class="categories-menu">
             <li class="menu-block active"><a href="/messages">Messages</a></li>
@@ -135,10 +136,10 @@
                                 Quotation
                             </div>
                             <div>
-                                <a href="#">See</a>
+                                <a href="{{ quotationLink }}">See</a>
                             </div>
                             <div>
-                                <a href="#">Download</a>
+                                <a href="{{ quotationLink }}">Download</a>
                             </div>
                         </div>
                         <div class="booking-confirm-item">
