@@ -731,4 +731,10 @@ class ChatRoomController extends Controller
         return new JsonResponse(array("result"=>"ok"));
     }
 
+    function showEventsAction()
+    {
+        $view = '@ActedLegalDocs/Profile/client_event_details.html.twig';
+
+        return $this->render($view);
+    }
 }
