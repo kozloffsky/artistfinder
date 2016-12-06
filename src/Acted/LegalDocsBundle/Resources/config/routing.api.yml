@@ -9,6 +9,8 @@ api_event_edit:
   path: /events/{event}/edit
   defaults: { _controller: ActedLegalDocsBundle:Events:updateEvent }
   methods: [PATCH]
+  requirements:
+    event: \d+
 
 api_venue:
   path: /venues

@@ -66,6 +66,21 @@ $(function () {
 
     }
 
+
+    function setCurrentEvent(event) {
+        localStorage.setItem('currentEvent', JSON.stringify(event));
+    }
+
+    function getCurrentEvent() {
+        return JSON.parse(localStorage.getItem('currentEvent'));
+    }
+
+    /**
+     * Get data depending on route.
+     * Calls according function.
+     *
+     * @returns {*}
+     */
     function routeParser() {
         var routeArr = route.substr(1).split('/');
         var currentPage = routeArr[1];
@@ -108,7 +123,7 @@ $(function () {
         $wrapper.find('.active').toggleClass('active').toggleClass('non-active');
         $this.toggleClass('active').toggleClass('non-active');
 
-        getArtistsByEventId(eventId);
+        getDataForEvent(eventId);
     }
 
     /**
@@ -147,6 +162,9 @@ $(function () {
             }
         });
     }
+
+    window.getCurrentEvent = getCurrentEvent;
+    window.setCurrentEvent = setCurrentEvent;
 
     if (route.search('dashboard/') > 0 && getUserRole()[0] == 'ROLE_CLIENT') {
         getEventsByUserId(getUserId());
