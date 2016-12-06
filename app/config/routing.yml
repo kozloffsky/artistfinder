@@ -1,9 +1,6 @@
 acted_legal_docs:
     resource: "@ActedLegalDocsBundle/Resources/config/routing.yml"
     prefix:   /
-acted_legal_docs_api:
-    resource: "@ActedLegalDocsBundle/Resources/config/routing.api.yml"
-    prefix: /api
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
 NelmioApiDocBundle:
