@@ -371,10 +371,9 @@ class EventsController extends Controller
             $errors = $validator->validate($event);
 
             if (count($errors) > 0) {
-                $errorsString = (string)$errors;
-
                 //Debug. Can be removed.
-                return new JsonResponse($errorsString);
+                $response = ['status' => 'error', 'errors' => $errors];
+                return new JsonResponse($response);
             }
 
             $em->persist($event);
