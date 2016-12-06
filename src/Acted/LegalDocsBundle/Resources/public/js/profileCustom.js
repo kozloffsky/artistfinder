@@ -74,49 +74,49 @@ $(function() {
         }
     };
 
-    $('.feedback-block .text').each(function () {
-        var $element  = $(this);
-        var $toggler  = $element.find('.more');
-        var $gradient = $element.find('.gradient');
-        var $text     = $element.find('.feedback-text');
-        var text      = $text.html();
-
-        var maxLength = 0;
-        if ($(window).width() < 768) {
-            maxLength = parseInt($element.attr('data-max-chars-mobile'));
-        } else {
-            maxLength = parseInt($element.attr('data-max-chars-desktop'));
-        }
-
-        if (text.length > maxLength) {
-            var newText = text.substring(0, maxLength - 3) + '...';
-            $text.html(newText);
-
-            $element.attr('data-full-text', text);
-            $element.addClass('expandable');
-
-            $toggler.click(function (e) {
-                e.preventDefault();
-                if (!$element.hasClass('opened')) {
-                    $text.html($element.attr('data-full-text'));
-                    $element.addClass('opened');
-                    $toggler.html('-hide');
-                    $gradient.hide();
-                } else {
-                    $element.removeClass('opened');
-                    var newText = $element.attr('data-full-text').substring(0, maxLength - 3) + '...';
-                    $text.html(newText);
-                    $toggler.html('+more');
-                    $gradient.show();
-                }
-            });
-
-
-        } else {
-            $toggler.hide();
-            $gradient.hide();
-        }
-    });
+    // $('.feedback-block .text').each(function () {
+    //     var $element  = $(this);
+    //     var $toggler  = $element.find('.more');
+    //     var $gradient = $element.find('.gradient');
+    //     var $text     = $element.find('.feedback-text');
+    //     var text      = $text.html();
+    //
+    //     var maxLength = 0;
+    //     if ($(window).width() < 768) {
+    //         maxLength = parseInt($element.attr('data-max-chars-mobile'));
+    //     } else {
+    //         maxLength = parseInt($element.attr('data-max-chars-desktop'));
+    //     }
+    //
+    //     if (text.length > maxLength) {
+    //         var newText = text.substring(0, maxLength - 3) + '...';
+    //         $text.html(newText);
+    //
+    //         $element.attr('data-full-text', text);
+    //         $element.addClass('expandable');
+    //
+    //         $toggler.click(function (e) {
+    //             e.preventDefault();
+    //             if (!$element.hasClass('opened')) {
+    //                 $text.html($element.attr('data-full-text'));
+    //                 $element.addClass('opened');
+    //                 $toggler.html('-hide');
+    //                 $gradient.hide();
+    //             } else {
+    //                 $element.removeClass('opened');
+    //                 var newText = $element.attr('data-full-text').substring(0, maxLength - 3) + '...';
+    //                 $text.html(newText);
+    //                 $toggler.html('+more');
+    //                 $gradient.show();
+    //             }
+    //         });
+    //
+    //
+    //     } else {
+    //         $toggler.hide();
+    //         $gradient.hide();
+    //     }
+    // });
 
 
     /*var imageSlider = console.log('')
@@ -1142,6 +1142,8 @@ $(function() {
         $.get(paginationRoute, function( data ) {
             $(paginationTarget).html(data);
             setPerformanceFrameHeight();
+        }).promise().done(function () {
+            setRatingFeedback();
         });
     }
 
