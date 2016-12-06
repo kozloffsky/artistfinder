@@ -392,11 +392,7 @@ $(function () {
     }
 
     $(".remove-feedback").click(deleteFeedback);
-
-        // var myTest = ["test", "test2"];
-        // var template = document.getElementById('feedbacks-template').innerHTML;//$('#feedbacks-template').text();
-        // var compiled = _.template(template)(myTest);
-    // $('#feedbacks .myWrapper').html(compiled);
+    
     // var disableLabel = $('.free-quote-modal.request .custom-checkbox.small label');
     //
     // disableLabel.on('click', function(){
