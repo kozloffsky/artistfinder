@@ -3,6 +3,11 @@ create_event:
     defaults: { _controller: ActedLegalDocsBundle:Events:addEvent, _format: json }
     methods:  [POST]
 
+update_event:
+    path: /update
+    defaults: { _controller: ActedLegalDocsBundle:Events:updateEvent, _format: json }
+    methods: [PATCH]
+
 get_events_type:
     path:     /list_events_type
     defaults: { _controller: ActedLegalDocsBundle:Events:getListEventsType, _format: json }

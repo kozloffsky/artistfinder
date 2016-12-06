@@ -4,124 +4,12 @@ $(function () {
     //TODO refactor html to lodash templates!
 
     /**
-     * Current route
-     * @type {string}
-     */
-    var route = window.location.pathname;
-
-    /**
-     * Get current user ID.
-     *
-     * @returns {int} userId
-     */
-    function getUserId() {
-        var user = JSON.parse(localStorage.getItem('user'));
-
-        return user.userId;
-    }
-
-    /**
-     * Get all events for the current user.
-     *
-     * @param {int} userId
-     */
-    function getEventsByUserId(userId) {
-        $.ajax({
-            method: "GET",
-            url: "/event/client/" + userId,
-            success: function (data) {
-                if (typeof data.events !== 'undefined') {
-                    showEvents(data.events);
-                }
-            }
-        });
-    }
-
-    /**
-     * Show all received events on the page.
-     *
-     * @param {array} events
-     */
-    function showEvents(events) {
-        var $eventsWrapper = $('div.events-menu > ul');
-        var initCarousel = false;
-        if (events.length > 5) {
-            initCarousel = true;
-        }
-
-        var html = eventsToHtml(events);
-        $eventsWrapper.html(html).promise().done(function () {
-            $('.event-item').click(eventOnClick);
-
-            if (initCarousel) {
-                $('div.arrows').show();
-
-                var owl = $('.events-menu > ul').owlCarousel({
-                    items: 5,
-                    pagination: false,
-                    mouseDrag: false,
-                    responsive: true,
-                    responsiveBaseWidth: window
-                });
-                $('i.left').click(function () {
-                    owl.trigger('owl.prev');
-                });
-                $('i.right').click(function () {
-                    owl.trigger('owl.next');
-                })
-            }
-        });
-
-    }
-
-    /**
-     * Parse array of events and wrap them in html.
-     *
-     * @param {array} events
-     *
-     * @returns {string} html
-     */
-    function eventsToHtml(events) {
-        var html = '';
-        events.forEach(function (item, index) {
-            var id = item.id;
-            var title = item.title;
-            var eClass = 'event-item non-active';
-
-            if (index == 0) {
-                eClass = 'event-item active';
-                getArtistsByEventId(id);
-            }
-            html += "<li class='" + eClass + "' title='" + title + ".' data-event-id='" + id + "'>";
-            html += title;
-            html += "</li>";
-        });
-
-        return html;
-
-    }
-
-    /**
-     * If event item is clicked. Receive all connected artists.
-     */
-    function eventOnClick() {
-        var $this = $(this);
-        var eventId = $this.data('eventId');
-        var $wrapper = $this.parents('.owl-theme');
-        $wrapper.find('.active').toggleClass('active').toggleClass('non-active');
-        $this.toggleClass('active').toggleClass('non-active');
-
-        getArtistsByEventId(eventId);
-    }
-
-    /**
      * Receive all artists by event id.
      * @param {int} eventId
      */
     function getArtistsByEventId(eventId) {
         var page = 1;
         var perPage = 100;
-
         $.ajax({
             method: "GET",
             url: '/event/artists/' + eventId + "/" + page + "/" + perPage,
@@ -331,8 +219,5 @@ $(function () {
         });
     }
 
-
-    if (route.search('dashboard/feedback') > 0) {
-        getEventsByUserId(getUserId());
-    }
+    window.getArtistsByEventId = getArtistsByEventId;
 });

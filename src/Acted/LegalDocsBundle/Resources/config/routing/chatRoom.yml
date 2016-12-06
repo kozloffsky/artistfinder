@@ -98,3 +98,8 @@ feedback_delete:
 api_accept_details:
     path:     /api/chat-room/accept-details/{eventId}
     defaults: {_controller: ActedLegalDocsBundle:ChatRoom:acceptDetails}
+
+events:
+  path: /events
+  defaults: {_controller: ActedLegalDocsBundle:ChatRoom:showEvents }
+  methods: GET

@@ -8,6 +8,7 @@ use Acted\LegalDocsBundle\Entity\EventOffer;
 use Acted\LegalDocsBundle\Entity\RequestQuotation;
 use Acted\LegalDocsBundle\Entity\EventArtist;
 use Acted\LegalDocsBundle\Form\EventOfferType;
+use Doctrine\ORM\EntityManager;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -339,8 +340,52 @@ class EventsController extends Controller
 
     public function updateEventAction(Request $request)
     {
-//        $repo = $this->getEM()->getRepository('ActedLegalDocsBundle:Event');
-//        $event = $repo->find();
+        $eventId = $request->get('event');
+        $data = $request->get('data');
+
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->getEM();
+        $repo = $em->getRepository('ActedLegalDocsBundle:Event');
+
+        if (key_exists('venueType', $data)) {
+            $venueRepo = $em->getRepository('ActedLegalDocsBundle:RefVenueType');
+            $venue = $venueRepo->find($data['venueType']);
+
+            if (!$venue) {
+                $message = "No Venue was found";
+                $response = ['status' => 'error', "message" => $message];
+                return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+            $data['venueType'] = $venue;
+        }
+        /**
+         * @var Event $event
+         */
+        $event = $repo->find($eventId);
+
+        if ($event) {
+            $validator = $this->get('validator');
+            $event->setOptions($data);
+            $errors = $validator->validate($event);
+
+            if (count($errors) > 0) {
+                //Debug. Can be removed.
+                $response = ['status' => 'error', 'errors' => $errors];
+                return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
+            }
+
+            $em->persist($event);
+            $em->flush();
+
+            $response = ['status' => 'success'];
+            return new JsonResponse($response);
+        }
+
+        $message = "No Event was found";
+        $response = ['status' => 'error', "message" => $message];
+        return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
 
     }
 
