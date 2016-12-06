@@ -373,7 +373,7 @@ class EventsController extends Controller
             if (count($errors) > 0) {
                 //Debug. Can be removed.
                 $response = ['status' => 'error', 'errors' => $errors];
-                return new JsonResponse($response);
+                return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
             }
 
             $em->persist($event);
