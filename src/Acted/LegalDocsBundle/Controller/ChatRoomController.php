@@ -3,6 +3,8 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\ChatRoom;
+use Acted\LegalDocsBundle\Entity\EventOffer;
+use Acted\LegalDocsBundle\Entity\Performance;
 use Acted\LegalDocsBundle\Form\ChatRoomTechnicalRequirementsCreateType;
 use Acted\LegalDocsBundle\Form\ChatRoomTechnicalRequirementsCustomCreateType;
 use Acted\LegalDocsBundle\Model\EventsManager;
@@ -18,6 +20,7 @@ use Acted\LegalDocsBundle\Entity\User;
 
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
+use Symfony\Component\Routing\Annotation\Route;
 use Acted\LegalDocsBundle\Entity\Feedback;
 
 class ChatRoomController extends Controller
@@ -228,9 +231,16 @@ class ChatRoomController extends Controller
         $chat = $serializer->toArray($chatRoom, SerializationContext::create()
             ->setGroups(['chat_room']));
 
+        $performances = $this->getEM()->getRepository('ActedLegalDocsBundle:Performance')
+            ->getPerformancesForEvent($chatRoom->getEvent()->getId());
+
+        $files = $this->getEM()->getRepository('ActedLegalDocsBundle:MessageFile')
+            ->getChatRoomFiles($chatRoom);
+
+
         return $this->render('ActedLegalDocsBundle:ChatRoom:chat_room.html.twig',
-            compact('chat', 'quotationLink'));
-    }
+            compact('chat', 'quotationLink', 'chatRoom','performances','files'));
+        }
 
     /**
      * @param Request $request
@@ -668,27 +678,57 @@ class ChatRoomController extends Controller
         return [];
     }
 
-    public function setViewed(Feedback $feedbacks)
-    {
-    }
+    public function setViewed(Feedback $feedbacks){}
 
     /**
-     * @Secure(roles="ROLE_ACTOR")
+     * @Secure(roles="ROLE_ARTIST")
+     * @Route(path="/api/chat-room/accept-details/{eventId}",
+     *     name="api.chat_room.accept_details",
+     *     methods={"GET"})
+     * @param int $eventId
+     * @return JsonResponse
+     * @TODO: add APIDOC
+     */
+     public function acceptDetailsAction($eventId){
+         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
+         $eor->accept(EventOffer::PROP_DETAILS, $eventId);
+         return new JsonResponse(array("result"=>"ok"));
+     }
+
+    /**
+     * @Secure(roles="ROLE_CLIENT")
      * @param int $eventId
      * @return Response
      * @TODO: add APIDOC
      */
-    public function acceptDetailsAction($eventId)
-    {
+    public function acceptTechRequirementsAction($eventId){
         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
-        $eor->acceptDetails($eventId);
-        return new Response(json_encode($eventId));
+        $eor->accept(EventOffer::PROP_TECH_REQ, $eventId);
+        return new JsonResponse(array("result"=>"ok"));
     }
 
-    function showEventsAction()
-    {
-        $view = '@ActedLegalDocs/Profile/client_event_details.html.twig';
-
-        return $this->render($view);
+    /**
+     * @Secure(roles="ROLE_ARTIST")
+     * @param int $eventId
+     * @return Response
+     * @TODO: add APIDOC
+     */
+    public function acceptTimingAction($eventId){
+        $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
+        $eor->accept(EventOffer::PROP_TIMING, $eventId);
+        return new JsonResponse(array("result"=>"ok"));
     }
+
+    /**
+     * @Secure(roles="ROLE_CLIENT")
+     * @param int $eventId
+     * @return Response
+     * @TODO: add APIDOC
+     */
+    public function acceptActionExtrasAction($eventId){
+        $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
+        $eor->accept(EventOffer::PROP_ACTS_EXTRAS, $eventId);
+        return new JsonResponse(array("result"=>"ok"));
+    }
+
 }

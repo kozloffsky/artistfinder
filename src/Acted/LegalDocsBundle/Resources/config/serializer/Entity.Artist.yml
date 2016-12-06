@@ -64,3 +64,6 @@ Acted\LegalDocsBundle\Entity\Artist:
     getRegName:
       serialized_name: reg_name
       groups: [profile_settings]
+    getPlaceId:
+      serialized_name: place_id
+      groups: [profile_settings]

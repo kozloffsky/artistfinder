@@ -191,3 +191,6 @@ tweede_golf_swiftmailer_logger:
 
 #sentry:
 #    dsn: "%sentry_dsn%"
+
+jms_security_extra:
+        secure_all_services: false

@@ -85,3 +85,7 @@ acted_legal_docs_quotation:
 acted_legal_docs_feedback:
   resource: "@ActedLegalDocsBundle/Resources/config/routing/feedback.yml"
   prefix: /feedback
+
+chat_api:
+  resource: "@ActedLegalDocsBundle/Controller/ChatRoomController.php"
+  type: annotation

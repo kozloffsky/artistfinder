@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Model;
 
 use Acted\LegalDocsBundle\Entity\ChatRoom;
+use Acted\LegalDocsBundle\Entity\Media;
 use Acted\LegalDocsBundle\Entity\MessageFile;
 use Doctrine\ORM\EntityManagerInterface;
 use Acted\LegalDocsBundle\Entity\Event;
@@ -111,5 +112,11 @@ class ChatManager
         }
 
         return $message;
+    }
+
+    public function createMediaForFile(MessageFile $file){
+        $media = new Media();
+        $file->setMedia($media);
+
     }
 }

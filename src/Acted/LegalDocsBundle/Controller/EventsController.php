@@ -17,7 +17,6 @@ use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 use JMS\Serializer\SerializationContext;
-use Symfony\Component\VarDumper\VarDumper;
 
 class EventsController extends Controller
 {
@@ -79,7 +78,7 @@ class EventsController extends Controller
             $eventOffer->setActsExtrasAccepted(false);
             $eventOffer->setTechnicalRequirementsAccepted(false);
             $eventOffer->setTimingAccepted(false);
-            $eventOffer->setActsEctrasAccepted(false);
+            $eventOffer->setActsExtrasAccepted(false);
             $eventOffer->setDetailsAccepted(false);
             $validationErrors->addAll($validator->validate($eventOffer));
             $em->persist($eventOffer);

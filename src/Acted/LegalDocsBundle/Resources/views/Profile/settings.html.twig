@@ -298,6 +298,7 @@
                             <input name="region_lat" hidden type="text" value="{{ artist.reg_lat }}">
                             <input name="region_lng" hidden type="text" value="{{ artist.reg_lng }}">
                             <input name="region_name" hidden type="text" value="{{ artist.reg_name }}">
+                            <input name="place_id" hidden type="text" value="{% if artist.place_id is defined %} {{ artist.place_id }}{% endif %}">
                         </div>
                     </form>
                 </article>

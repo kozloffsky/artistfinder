@@ -23,6 +23,7 @@ final class EventOfferData
     private $regionLat;
     private $regionLng;
     private $regionName;
+    private $placeId;
     private $detailsAccepted;
     private $actsExtrasAccepted;
     private $timingAccepted;
@@ -416,6 +417,22 @@ final class EventOfferData
     public function setTechnicalRequirementsAccepted($technicalRequirementsAccepted)
     {
         $this->technicalRequirementsAccepted = $technicalRequirementsAccepted;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlaceId()
+    {
+        return $this->placeId;
+    }
+
+    /**
+     * @param string $placeId
+     */
+    public function setPlaceId($placeId)
+    {
+        $this->placeId = $placeId;
     }
     
 }

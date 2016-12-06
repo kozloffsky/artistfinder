@@ -30,7 +30,7 @@ $(function () {
         var $wrapper = $('div.comment-area');
         $wrapper.html(feedBackFieldsToHtml(artists)).promise().done(
             function () {
-                $('.star-icon').hover(changeOnHover).click(setFixed);
+                $('.star-icon').click(setFixed);
                 $('.comment-box > textarea').keyup(charsCounter);
                 $('.comment-box > button').click(collectData);
             }
@@ -102,30 +102,17 @@ $(function () {
     }
 
     /**
-     * Change stars class when they are hovered.
-     */
-    function changeOnHover() {
-        var $this = $(this);
-        var $wrapper = $this.parent();
-        var $prevStars = $this.prevAll();
-
-        if (!$wrapper.hasClass('rating-fixed')) {
-            $this.toggleClass('unfilled').toggleClass('filled');
-            $prevStars.toggleClass('unfilled').toggleClass('filled');
-        }
-    }
-
-    /**
-     * Fix feedback rating and remove on hover event.
+     * Fix feedback rating.
      */
     function setFixed() {
         var $this = $(this);
         var $wrapper = $this.parent();
         var $prevStars = $this.prevAll();
+        var $firstStar = $('.star-icon').first();
 
-        $this.removeClass('unfilled').addClass('filled');
-        $prevStars.removeClass('unfilled').addClass('filled');
-        $wrapper.addClass('rating-fixed');
+        $this.prevAll().andSelf().addClass('filled');
+        $this.nextAll().removeClass('filled').addClass('unfilled');
+
         $wrapper.parents('.col-md-12').find('button').removeAttr('disabled');
     }
 
@@ -158,7 +145,10 @@ $(function () {
         var $wrapper = $this.parents('.comment-box');
         var $current = $wrapper.find('.current-count');
 
-        $current.html($this.val().length);
+        var text = $this.val();
+        text = text.replace(/(?:\r\n|\r|\n)/g, ' ');
+        $this.html(text);
+        $current.html(text.length);
     }
 
     /**
@@ -193,6 +183,17 @@ $(function () {
     }
 
     /**
+     * Remove form from the page.
+     *
+     * @param {int} artistId
+     */
+    function removeForm(artistId) {
+        var $box = $('.comment-box[data-artist-id="' + artistId + '"]');
+        $box.parents('.col-md-12').remove();
+    }
+
+
+    /**
      * Send feedback to the api.
      *
      * @param {object} data
@@ -210,7 +211,7 @@ $(function () {
             url: url,
             data: data,
             success: function (response) {
-                console.log(response);
+                removeForm(data['feedback_create[artist]']);
             },
             error: function (error) {
                 console.log(error);

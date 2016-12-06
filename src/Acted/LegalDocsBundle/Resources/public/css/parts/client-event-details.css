@@ -7,7 +7,7 @@
     padding-right: 14px;
 }
 .client_event_details .left_column {
-    width: 520px;   
+    width: 520px;
     padding: 0 8px 0 0px;
 }
 .client_event_details .left_column .row .printer_icon {
@@ -31,10 +31,11 @@
     border: 2px solid rgba(97, 108, 197, 0.21);
     margin: 0;
     outline: none;
-    
+    padding-left: 12px;
+
 }
 .client_event_details .row input[readonly],
-.client_event_details .row select[readonly],
+.client_event_details .row select.not-active_select,
 .client_event_details .row textarea[readonly],
 .client_event_details .row input:disabled {
     border: none;
@@ -42,13 +43,11 @@
     outline: none !important;
     box-shadow: none;
     -webkit-box-shadow: none;
+    background-position: calc(100% - 12px) 12px, calc(100% - 7px) 12px, 100% 0;
 }
 .client_event_details .row textarea {
     height: 77px;
     resize: none;
-}
-.client_event_details .entertainer .col-md-4 p {
-    color: rgba(0, 0, 0, 1);
 }
 .client_event_details .additional_info_counter {
     position: absolute;
@@ -91,16 +90,15 @@
 .client_event_details .info_block:first-child {
     margin: 6px 0 12px;
 }
-.client_event_details .entertainer.info_block .col-md-4 p {
-    font-family: "LatoRegular";
-    font-size: 14px;
-}
-
 .client_event_details .info_block .col-md-3 p,
 .client_event_details .info_block .col-md-4 p,
 .client_event_details .info_block .col-md-8 p {
     font-family: "LatoBold";
     font-size: 15px;
+}
+.client_event_details .entertainer .col-md-4 p {
+    font-family: "LatoRegular";
+    font-size: 14px;
 }
 .client_event_details .info_block .col-md-6 p,
 .client_event_details .info_block .col-md-9 p,
@@ -151,8 +149,12 @@
     padding-right: 0;
     padding-left: 0;
     text-align: right;
-    letter-spacing: -0.06em;
-    padding-right: 5px;
+    padding-right: 12px;
+    width: 20%;
+}
+.client_event_details .info_block .col-md-7 {
+    width: 55%;
+    float: left;
 }
 .client_event_details .info_block .col-md-7 {
     padding-left: 3px;
@@ -177,7 +179,7 @@
     width: 133px;
     height: 26px;
     padding: 0;
-    margin: 0 auto;   
+    margin: 0 auto;
 }
 .client_event_details .entertainer_block::after {
     display: block;
@@ -200,7 +202,12 @@
         padding-right: 10px;
     }
     .client_event_details .info_block+.payment_details .non-refundable {
-        text-align: left;
+        /*        text-align: left;*/
+        width: 30%;
+    }
+    .client_event_details .info_block .col-md-7 {
+        width: 45%;
+        float: left;
     }
 }
 @media (max-width: 991px) {
@@ -214,12 +221,12 @@
         padding: 0 12px;
     }
     .client_event_details .info_block+.payment_details .non-refundable {
-        width: 30%;
+        width: 35%;
         float: right;
         text-align: right;
     }
     .client_event_details .info_block .col-md-7 {
-        width: 70%;
+        width: 65%;
         float: left;
     }
     .client_event_details .name {
@@ -264,7 +271,7 @@
         width: 50%;
         float: left;
     }
-    
+
 }
 @media (max-width: 520px) {
     .client_event_details .no-pad-right,
@@ -279,6 +286,5 @@
     }
     .client_event_details .info_block+.payment_details .non-refundable {
         width: 40%;
-        text-align: left;
     }
 }

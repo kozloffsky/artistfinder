@@ -13,6 +13,11 @@ class EventOffer
     const EVENT_OFFER_STATUS_PROPOSE = 'propose';
     const EVENT_OFFER_STATUS_REJECT = 'reject';
 
+    const PROP_TECH_REQ = 'TechnicalRequirement';
+    const PROP_DETAILS = 'Detail';
+    const PROP_TIMING = 'Timing';
+    const PROP_ACTS_EXTRAS = 'ActsExtras';
+
     /**
      * @var integer
      */
@@ -359,10 +364,6 @@ class EventOffer
      */
     private $detailsAccepted;
 
-    /**
-     * @var boolean
-     */
-    private $actsEctrasAccepted;
 
     /**
      * @var boolean
@@ -399,29 +400,6 @@ class EventOffer
         return $this->detailsAccepted;
     }
 
-    /**
-     * Set actsEctrasAccepted
-     *
-     * @param boolean $actsEctrasAccepted
-     *
-     * @return EventOffer
-     */
-    public function setActsEctrasAccepted($actsEctrasAccepted)
-    {
-        $this->actsEctrasAccepted = $actsEctrasAccepted;
-
-        return $this;
-    }
-
-    /**
-     * Get actsEctrasAccepted
-     *
-     * @return boolean
-     */
-    public function getActsEctrasAccepted()
-    {
-        return $this->actsEctrasAccepted;
-    }
 
     /**
      * Set timingAccepted

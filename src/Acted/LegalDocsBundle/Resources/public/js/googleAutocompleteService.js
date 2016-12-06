@@ -8,6 +8,7 @@
         CITY    = 1,
         REGION  = 2,
         ADDRESS = 3;
+        PLACE_ID = 4;
 
     window.GoogleAutocompleteService = function() {
         /**
@@ -298,7 +299,9 @@
         this.autocomplete = {
             country:   null,
             city:      null,
-            post_code: null
+            post_code: null,
+            address: null,
+            location: null
         };
         this.currentStore = {
             country:   '',
@@ -347,14 +350,23 @@
 
             var userCountry = this.findCountryByName(this.inputs[COUNTRY].val());
 
-            this.addAutocomplete(this.inputs[CITY]);
-            this.setAutocompleteCountry(null, userCountry);
+            if(this.inputs[CITY].length == 0) {
+                this.addAutocomplete(this.inputs[ADDRESS]);
+                this.setAutocompleteCountry('location', userCountry);
+            } else {
+                this.addAutocomplete(this.inputs[CITY]);
+                this.setAutocompleteCountry('city', userCountry);
+            }
+
             this.currentStore.country = this.findCountryByCode(userCountry);
 
             // TODO: Warning, HACK! Remove it!!!
-            var city_id = _this.inputs[CITY].attr("id").trim();
-            if(city_id != 'quot_city')
-                _this.unlock(_this.inputs[CITY]);
+            if(this.inputs[CITY].length != 0) {
+                var city_id = _this.inputs[CITY].attr("id").trim();
+                if(city_id != 'quot_city')
+                    _this.unlock(_this.inputs[CITY]);
+            }
+
             //----------------------
         };
         /**
@@ -375,7 +387,8 @@
                 if(status == google.maps.GeocoderStatus.OK) {
                     cb({
                         lat: results[0].geometry.location.lat(),
-                        lng: results[0].geometry.location.lng()
+                        lng: results[0].geometry.location.lng(),
+                        place_id: results[0].place_id
                     });
                 } else {
                     cb(null);
@@ -404,7 +417,7 @@
          * @param element (input)
          */
         this.setAutocompleteCountry = function(context, country) {
-            this.autocomplete.city.setComponentRestrictions({ country: country });
+            this.autocomplete[context].setComponentRestrictions({ country: country });
         };
         this.placeChangeEvent = function(name) {
             var _this = this;
@@ -478,6 +491,7 @@
                 if(res !== null) {
                     console.log("CITY COORDS: ", _this.currentStore.city, res);
                     _this.coords.city = res;
+                    _this.currentStore.placeId = res.place_id;
                 }
             });
 
@@ -558,7 +572,7 @@
             if(!form.find('input[name="address"]').length && !form.find('input[name="location"]').length)
                 address = 0;
 
-            if(country.length && city.length) {
+            if(country.length || city.length) {
                 this.addArray([country, city, postcode, address]);
                 return true;
             }

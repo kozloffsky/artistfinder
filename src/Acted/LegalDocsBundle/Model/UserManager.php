@@ -207,7 +207,11 @@ class UserManager
 
         //  remove old avatar file
         if (!empty($existingAvatar) && $existingAvatar != '/') {
-            unlink($this->avatarDir . '/' . basename($existingAvatar));
+            $filePath = $this->avatarDir . '/' . basename($existingAvatar);
+
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
         }
 
         // move temp file to avatars

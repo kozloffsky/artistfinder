@@ -811,7 +811,7 @@ $(function() {
                     {
                         qty: 1,
                         duration: 1,
-                        price1: 3000,
+                        price1: 0,
                         price_on_request: false
                     }
                 ],
@@ -964,7 +964,8 @@ $(function() {
     /** --- EDITING FUNCTIONAL --- **/
     function editPaymentPercent() {
         var balancePercent = $(this).find("option:selected").val();
-        $(".payment-deposit-amount").html(balancePercent + '%');
+        var depositPercent = 100 - balancePercent;
+        $(".payment-deposit-amount").html(depositPercent + '%');
     }
     function editPerformanceComment() {
 
@@ -1191,6 +1192,11 @@ $(function() {
 
         var _this = $(this);
         var priceAmount = _this.val();
+
+        if (priceAmount == '') {
+            return;
+        }
+
         _this.hide();
         _this.closest('[option-id]').find('[quot-edit-price]').show();
 

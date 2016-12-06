@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Form\DocumentTechnicalRequirementType;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,8 +73,16 @@ class DocumentTechnicalRequirementController extends Controller
         return new JsonResponse(['errors' => $serializer->toArray($uploadFiles->getErrors())], Response::HTTP_BAD_REQUEST);
     }
 
+    /**
+     * @Secure(roles="ROLE_ACTOR")
+     * @param Request $request
+     * @param DocumentTechnicalRequirement|null $documentTechnicalRequirement
+     * @return JsonResponse
+     */
     public function removeAction(Request $request, DocumentTechnicalRequirement $documentTechnicalRequirement = null)
     {
+
+        //$this->denyAccessUnlessGranted('ROLE_ACTOR');
         if (empty($documentTechnicalRequirement)) {
             return new JsonResponse([
                 'status' => 'error',

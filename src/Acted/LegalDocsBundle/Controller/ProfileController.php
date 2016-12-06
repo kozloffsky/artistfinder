@@ -23,6 +23,7 @@ use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\VarDumper\VarDumper;
 
 class ProfileController extends Controller
 {
@@ -400,7 +401,13 @@ class ProfileController extends Controller
         ));
 
         $refCityRepo = $em->getRepository('ActedLegalDocsBundle:RefCity');
-        $cityId = $refCityRepo->createCity($data['city'], $region, $data['city_lat'], $data['city_lng']);
+        $cityId = $refCityRepo->createCity(
+            $data['city'],
+            $region,
+            $data['city_lat'],
+            $data['city_lng'],
+            $data['place_id']
+        );
 
         $city = $em->getRepository('ActedLegalDocsBundle:RefCity')->findOneBy(array(
             'id' => $cityId

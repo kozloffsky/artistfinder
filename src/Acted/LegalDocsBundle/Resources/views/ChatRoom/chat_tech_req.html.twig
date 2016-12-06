@@ -1,14 +1,14 @@
 <span class="tr-title">Technical requirements</span>
 <div class="tr-select-container">
-    <select class="tr-select">
-        <option>Technical requirement 1</option>
-        <option>Technical requirement 2</option>
+    <select class="tr-select" v-model="selectedRequirement">
+        <option v-for="tr in technicalRequirements" v-bind:value="tr">${ tr.title }</option>
+        <!--<option>Technical requirement 2</option>
         <option>Technical requirement 3</option>
         <option>Technical requirement 4</option>
         <option>Technical requirement 5</option>
         <option>Technical requirement 6</option>
         <option>Technical requirement 7</option>
-        <option>Technical requirement 8</option>
+        <option>Technical requirement 8</option>-->
     </select>
     <div>
         <span></span>
@@ -16,21 +16,17 @@
     </div>
 </div>
 <div class="tr-desc">
-    <span class="tr-desc-title">Music system</span>
-    <p class="tr-desc-text">I need to have few music speakersI need to have few music speakersI need to have few music speakers
-        I need to have few musicI need to have few music speakersI need to have few music speakers
-        I need to have few music speakersI need to have few musicI need to have few music speakers
-        I need to have few music speakersI need to have few music speakers
-        I need to have few music</p>
+    <!--<span class="tr-desc-title">Music system</span>-->
+    <p class="tr-desc-text">${selectedRequirement.description}</p>
 </div>
 <div class="tr-files">
     <ul>
-        <li>
+        <li v-for="doc in selectedRequirement.documentTechnicalRequirements">
             <i class="fa fa-file-pdf-o icon icon-pdf" aria-hidden="true"></i>
-            Event_1
-            <i class="icon icon-delete-attached" aria-hidden="true"></i>
+            ${doc.originalName | removeExt }
+            <i class="icon icon-delete-attached" @click="deleteAttachment(doc.id)" aria-hidden="true"></i>
         </li>
-        <li>
+        <!--<li>
             <i class="fa fa-file-pdf-o icon icon-pdf" aria-hidden="true"></i>
             Event_2
             <i class="icon icon-delete-attached" aria-hidden="true"></i>
@@ -44,7 +40,7 @@
             <i class="fa fa-file-pdf-o icon icon-pdf" aria-hidden="true"></i>
             Event_4
             <i class="icon icon-delete-attached" aria-hidden="true"></i>
-        </li>
+        </li>-->
     </ul>
     <div class="attach-file-btn">
         <i class="icon icon-attach"></i>
