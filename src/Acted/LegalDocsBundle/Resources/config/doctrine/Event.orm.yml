@@ -42,6 +42,11 @@ Acted\LegalDocsBundle\Entity\Event:
         numberOfGuests:
           type: string(64)
           nullable: true
+        countDays:
+          type: integer(1)
+          nullable: true
+          options:
+            unsigned: true
     manyToOne:
           user:
             targetEntity: Acted\LegalDocsBundle\Entity\User

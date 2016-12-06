@@ -507,6 +507,10 @@
                     language: 'en-GB'
                 };
 
+            if (_this.inputs[CITY] == 0) {
+                _this.autocomplete[ADDRESS]
+            }
+
             _this.currentStore[name] = elem.val().trim();
             _this.autocomplete[name] = new google.maps.places.Autocomplete(elem[0], options);
             _this.autocomplete[name].addListener('place_changed', _this.placeChangeEvent.bind(_this, name));

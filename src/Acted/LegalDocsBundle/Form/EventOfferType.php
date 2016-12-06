@@ -22,6 +22,7 @@ use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Acted\LegalDocsBundle\Form\Type\BooleanType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class EventOfferType extends AbstractType
 {
@@ -80,7 +81,12 @@ class EventOfferType extends AbstractType
             ])
             ->add('comment', TextType::class, [
                 'constraints' => [
-                        new Length(['max' => 500])
+                    new Length(['max' => 450])
+                ]
+            ])
+            ->add('additional_info', TextType::class, [
+                'constraints' => [
+                    new Length(['max' => 450])
                 ]
             ])
             ->add('details_accepted', BooleanType::class, [
@@ -95,6 +101,10 @@ class EventOfferType extends AbstractType
             ->add('technical_requirements_accepted', BooleanType::class, [
                 'constraints' => [
                 ], 'description' => 'technical_requirements_accepted'])
+            ->add('count_days', IntegerType::class, [
+                'constraints' => [
+                    new Length(['max' => 30, 'min' => 1])
+                ], 'description' => 'Count days'])
 
             ->add('country', TextType::class,      ['constraints' => [new NotBlank()], 'description' => 'Country'])
             ->add('city', TextType::class,         ['constraints' => [new NotBlank()], 'description' => 'City'])

@@ -102,6 +102,8 @@ class EventsManager
         $event->setAddress($eventOfferData->getLocation());
         $event->setTiming($eventOfferData->getEventTime());
         $event->setNumberOfGuests($eventOfferData->getNumberOfGuests());
+        $event->setComments($eventOfferData->getAdditionalInfo());
+        $event->setCountDays($eventOfferData->getCountDays());
 
         return $event;
     }

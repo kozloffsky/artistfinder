@@ -102,6 +102,11 @@ class Event
     private $eventArtists;
 
     /**
+     * @var integer
+     */
+    private $countDays;
+
+    /**
      * Get id
      *
      * @return integer
@@ -751,5 +756,29 @@ class Event
             }
         }
         return $this;
+    }
+
+    /**
+     * Set countDays
+     *
+     * @param integer $countDays
+     *
+     * @return Event
+     */
+    public function setCountDays($countDays)
+    {
+        $this->countDays = $countDays;
+
+        return $this;
+    }
+
+    /**
+     * Get countDays
+     *
+     * @return integer
+     */
+    public function getCountDays()
+    {
+        return $this->countDays;
     }
 }

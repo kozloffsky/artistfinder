@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Controller;
 
+use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Event;
 use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Entity\EventOffer;
@@ -9,6 +10,7 @@ use Acted\LegalDocsBundle\Entity\RequestQuotation;
 use Acted\LegalDocsBundle\Entity\EventArtist;
 use Acted\LegalDocsBundle\Form\EventOfferType;
 use Doctrine\ORM\EntityManager;
+use Acted\LegalDocsBundle\Form\ArtistEventCreateType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -427,5 +429,74 @@ class EventsController extends Controller
         $venues = $serializer->toArray($venues);
 
         return new JsonResponse(["status" => "success", "venues" => $venues]);
+    }
+
+    /**
+     * add artist to event
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="get events by client",
+     *  input="Acted\LegalDocsBundle\Form\ArtistEventCreateType",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function addArtistToEventAction(Request $request)
+    {
+        $serializer = $this->get('jms_serializer');
+        $em = $this->getDoctrine()->getManager();
+        $eventRepo = $em->getRepository('ActedLegalDocsBundle:Event');
+        $eventArtistRepo = $em->getRepository('ActedLegalDocsBundle:EventArtist');
+
+        $form = $this->createForm(ArtistEventCreateType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && (!$form->isValid())) {
+            return new JsonResponse($serializer->toArray($form->getErrors()), Response::HTTP_BAD_REQUEST);
+        }
+
+        $data = $form->getData();
+        if (empty($data)) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'There are not any data'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
+
+        $artist = $em->getRepository('ActedLegalDocsBundle:Artist')->findOneBySlug($data['slug']);
+
+        if (empty($artist)) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'User not found'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
+
+
+        $artist = $em->getRepository('ActedLegalDocsBundle:Artist')->findOneBySlug($data['slug']);
+
+        $eventArtist = $eventArtistRepo->findOneBy(array('event' => $data['event'], 'artist' => $artist));
+        if (!empty($eventArtist)) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Artist already exists in event'
+            ],  Response::HTTP_BAD_REQUEST);
+        }
+
+        /*Add artist to event*/
+        $eventArtist = new EventArtist();
+        $eventArtist->setEvent($data['event']);
+        $eventArtist->setArtist($artist);
+        $em->persist($eventArtist);
+        $em->flush();
+
+        return new JsonResponse(array(
+            'status' => 'success',
+        ), Response::HTTP_OK);
     }
 }
