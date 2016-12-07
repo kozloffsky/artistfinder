@@ -80,6 +80,10 @@
     padding: 31px 0 0!important;
 }
 
+.dashboard.client.messages .dialog-section {
+    border-top: 2px solid rgba(0, 0, 0, 0.18);
+}
+
 .dialog-section.new-message {
     background: #fafafa;
 }
@@ -143,7 +147,7 @@
     color: rgba(255,255,255,1);
     height: 26px;
     width: 160px;
-    line-height: 12px;
+    line-height: 24px;
 }
 
 /*.dialog-section .controls>.button-gradient .btn {
@@ -181,7 +185,8 @@
     font-size: 14px;
 }
 .message-controls .ul-reset {
-    float: right;
+    /*float: right;*/
+    margin: 0 0 0 50px;
 }
 
 .message-controls .status.confirmed {
@@ -247,15 +252,15 @@
 }
 
 .message-block .message-heading {
-    font-family: LatoRegular;
+    font-family: LatoBold;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 400;
     color: rgba(0, 0, 0, 0.87);
 }
 
 .dialog-section.new-message .message-block .message-heading,
-.dialog-section.new-message .message-block .text{
-    font-weight: bold;
+.dialog-section.new-message .message-block .text {
+    font-weight: 400;
 }
 
 .message-block .text {
@@ -526,6 +531,9 @@
         margin: 0 auto;
         height: 14px;
         width: 14px;
+    }
+    .message-controls .ul-reset {
+        margin: 0;
     }
 }
 
