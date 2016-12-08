@@ -2,12 +2,14 @@
 
 namespace Acted\LegalDocsBundle\Controller;
 
+use Acted\LegalDocsBundle\Entity\ChatRoom;
 use Acted\LegalDocsBundle\Entity\Event;
 use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Entity\EventOffer;
 use Acted\LegalDocsBundle\Entity\RequestQuotation;
 use Acted\LegalDocsBundle\Entity\EventArtist;
 use Acted\LegalDocsBundle\Form\EventOfferType;
+use Acted\LegalDocsBundle\Repository\EventRepository;
 use Doctrine\ORM\EntityManager;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
@@ -427,5 +429,44 @@ class EventsController extends Controller
         $venues = $serializer->toArray($venues);
 
         return new JsonResponse(["status" => "success", "venues" => $venues]);
+    }
+
+    /**
+     * Get all messages for the event.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function getMessagesAction(Request $request)
+    {
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+        $userId = $user->getId();
+        $em = $this->getEM();
+        /**
+         * @var EventRepository $eventRepo
+         */
+        $eventRepo = $em->getRepository("ActedLegalDocsBundle:Event");
+        /**
+         * @var Event $event
+         */
+        $event = $eventRepo->find($request->get('event'));
+        $filter = $request->get('filter');
+        /**
+         * @var ChatRoom $chatRoom
+         */
+        $chatRoom = $event->getChatRooms()->first();
+        $chatRoomId = $chatRoom->getId();
+        $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
+        $messages = $messagesRepo->getAllEventMessages($userId, $chatRoomId, $filter);
+        $context = SerializationContext::create()->setGroups(['all_messages']);
+        $serializer = $this->get('jms_serializer');
+        $messages = $serializer->toArray($messages, $context);
+        $response = ['status' => 'success', 'messages' => $messages];
+
+        return new JsonResponse($response);
     }
 }

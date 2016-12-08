@@ -5,6 +5,13 @@ api_event:
   requirements:
     event: \d+
 
+api_event_messages:
+  path: /events/{event}/messages/{filter}
+  defaults: {_controller: ActedLegalDocsBundle:Events:getMessages, filter: false}
+  methods: GET
+  requirements:
+    event: \d+
+
 api_event_edit:
   path: /events/{event}/edit
   defaults: { _controller: ActedLegalDocsBundle:Events:updateEvent }

@@ -239,8 +239,8 @@ class ChatRoomController extends Controller
 
 
         return $this->render('ActedLegalDocsBundle:ChatRoom:chat_room.html.twig',
-            compact('chat', 'quotationLink', 'chatRoom','performances','files'));
-        }
+            compact('chat', 'quotationLink', 'chatRoom', 'performances', 'files'));
+    }
 
     /**
      * @param Request $request
@@ -678,7 +678,9 @@ class ChatRoomController extends Controller
         return [];
     }
 
-    public function setViewed(Feedback $feedbacks){}
+    public function setViewed(Feedback $feedbacks)
+    {
+    }
 
     /**
      * @Secure(roles="ROLE_ARTIST")
@@ -689,11 +691,12 @@ class ChatRoomController extends Controller
      * @return JsonResponse
      * @TODO: add APIDOC
      */
-     public function acceptDetailsAction($eventId){
-         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
-         $eor->accept(EventOffer::PROP_DETAILS, $eventId);
-         return new JsonResponse(array("result"=>"ok"));
-     }
+    public function acceptDetailsAction($eventId)
+    {
+        $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
+        $eor->accept(EventOffer::PROP_DETAILS, $eventId);
+        return new JsonResponse(array("result" => "ok"));
+    }
 
     /**
      * @Secure(roles="ROLE_CLIENT")
@@ -701,10 +704,11 @@ class ChatRoomController extends Controller
      * @return Response
      * @TODO: add APIDOC
      */
-    public function acceptTechRequirementsAction($eventId){
+    public function acceptTechRequirementsAction($eventId)
+    {
         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
         $eor->accept(EventOffer::PROP_TECH_REQ, $eventId);
-        return new JsonResponse(array("result"=>"ok"));
+        return new JsonResponse(array("result" => "ok"));
     }
 
     /**
@@ -713,10 +717,11 @@ class ChatRoomController extends Controller
      * @return Response
      * @TODO: add APIDOC
      */
-    public function acceptTimingAction($eventId){
+    public function acceptTimingAction($eventId)
+    {
         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
         $eor->accept(EventOffer::PROP_TIMING, $eventId);
-        return new JsonResponse(array("result"=>"ok"));
+        return new JsonResponse(array("result" => "ok"));
     }
 
     /**
@@ -725,16 +730,63 @@ class ChatRoomController extends Controller
      * @return Response
      * @TODO: add APIDOC
      */
-    public function acceptActionExtrasAction($eventId){
+    public function acceptActionExtrasAction($eventId)
+    {
         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
         $eor->accept(EventOffer::PROP_ACTS_EXTRAS, $eventId);
-        return new JsonResponse(array("result"=>"ok"));
+        return new JsonResponse(array("result" => "ok"));
     }
 
+    /**
+     * Show event details.
+     *
+     * @return Response
+     */
     function showEventsAction()
     {
         $view = '@ActedLegalDocs/Profile/client_event_details.html.twig';
 
         return $this->render($view);
+    }
+
+    /**
+     * Show all messages for the event.
+     *
+     * @return Response
+     */
+    function showMessagesByEventAction()
+    {
+        $view = '@ActedLegalDocs/ChatRoom/all_messages.html.twig';
+
+        return $this->render($view);
+    }
+
+    /**
+     * Delete message.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    function removeMessageAction(Request $request)
+    {
+        $user = $this->getUser();
+        $messageId = $request->get('message');
+        $em = $this->getEM();
+        $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
+        $userId = $user->getId();
+        $findBy = ['receiverUser' => $userId, 'id' => $messageId];
+        $message = $messagesRepo->findOneBy($findBy);
+        if ($message) {
+            $em->remove($message);
+            $em->flush();
+            $response = ['status' => 'success'];
+
+            return new JsonResponse($response);
+        }
+        $msg = 'Message not found';
+        $response = ['status' => 'error', 'error' => $msg];
+
+        return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
     }
 }

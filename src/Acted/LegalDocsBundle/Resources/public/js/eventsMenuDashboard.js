@@ -1,6 +1,7 @@
 $(function () {
     /**
      * Current route
+     *
      * @type {string}
      */
     var route = window.location.pathname;
@@ -18,6 +19,11 @@ $(function () {
         return getUser().userId;
     }
 
+    /**
+     * Get current user role
+     *
+     * @returns {string}
+     */
     function getUserRole() {
         return getUser().role;
     }
@@ -54,6 +60,7 @@ $(function () {
             var eClass = 'event-item non-active';
 
             if (index == 0) {
+                setCurrentEvent(item);
                 eClass = 'event-item active';
                 getDataForEvent(id);
             }
@@ -66,11 +73,18 @@ $(function () {
 
     }
 
-
+    /**
+     * Set current event to the local storage.
+     *
+     * @param {object} event
+     */
     function setCurrentEvent(event) {
         localStorage.setItem('currentEvent', JSON.stringify(event));
     }
 
+    /**
+     * Get current event from the local storage.
+     */
     function getCurrentEvent() {
         return JSON.parse(localStorage.getItem('currentEvent'));
     }
@@ -87,7 +101,9 @@ $(function () {
 
         var avalFunctions = {
             feedbacks: "getArtistsByEventId",
-            events: "getEventDataById"
+            events: "getEventDataById",
+            messages: "getAllMessagesByEventId"
+
         };
 
         var callFunc = avalFunctions[currentPage];
@@ -103,6 +119,11 @@ $(function () {
 
     }
 
+    /**
+     * Call predefined function based on route to get data for the event.
+     *
+     * @param eventId
+     */
     function getDataForEvent(eventId) {
         var toCall = routeParser();
 
@@ -114,7 +135,8 @@ $(function () {
     }
 
     /**
-     * If event item is clicked. Receive all connected artists.
+     * If event item is clicked.
+     * Call predefined function based on route to get data for the event.
      */
     function eventOnClick() {
         var $this = $(this);
