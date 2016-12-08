@@ -239,8 +239,8 @@ class ChatRoomController extends Controller
 
 
         return $this->render('ActedLegalDocsBundle:ChatRoom:chat_room.html.twig',
-            compact('chat', 'quotationLink', 'chatRoom','performances','files'));
-        }
+            compact('chat', 'quotationLink', 'chatRoom', 'performances', 'files'));
+    }
 
     /**
      * @param Request $request
@@ -652,7 +652,21 @@ class ChatRoomController extends Controller
      */
     public function feedbacksAction(Request $request)
     {
-        return $this->render('ActedLegalDocsBundle:ChatRoom:feedback.html.twig');
+        /**
+         * @var User $user ;
+         */
+        $user = $this->getUser();
+        $userRoles = $user->getRoles();
+        $data = [];
+        if ($userRoles[0] == 'ROLE_ARTIST') {
+            $em = $this->getEM();
+            $feedbackRepo = $em->getRepository('ActedLegalDocsBundle:Feedback');
+            $artist = $user->getArtist();
+            $feedbacks = $artist->getFeedbacks();
+            $rating = $feedbackRepo->getAverageArtistRating($artist->getId());
+            $data = ['rating' => $rating, 'feedbacks' => $feedbacks];
+        }
+        return $this->render('ActedLegalDocsBundle:ChatRoom:feedback.html.twig', $data);
     }
 
     /**
@@ -678,7 +692,9 @@ class ChatRoomController extends Controller
         return [];
     }
 
-    public function setViewed(Feedback $feedbacks){}
+    public function setViewed(Feedback $feedbacks)
+    {
+    }
 
     /**
      * @Secure(roles="ROLE_ARTIST")
@@ -689,11 +705,12 @@ class ChatRoomController extends Controller
      * @return JsonResponse
      * @TODO: add APIDOC
      */
-     public function acceptDetailsAction($eventId){
-         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
-         $eor->accept(EventOffer::PROP_DETAILS, $eventId);
-         return new JsonResponse(array("result"=>"ok"));
-     }
+    public function acceptDetailsAction($eventId)
+    {
+        $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
+        $eor->accept(EventOffer::PROP_DETAILS, $eventId);
+        return new JsonResponse(array("result" => "ok"));
+    }
 
     /**
      * @Secure(roles="ROLE_CLIENT")
@@ -701,10 +718,11 @@ class ChatRoomController extends Controller
      * @return Response
      * @TODO: add APIDOC
      */
-    public function acceptTechRequirementsAction($eventId){
+    public function acceptTechRequirementsAction($eventId)
+    {
         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
         $eor->accept(EventOffer::PROP_TECH_REQ, $eventId);
-        return new JsonResponse(array("result"=>"ok"));
+        return new JsonResponse(array("result" => "ok"));
     }
 
     /**
@@ -713,10 +731,11 @@ class ChatRoomController extends Controller
      * @return Response
      * @TODO: add APIDOC
      */
-    public function acceptTimingAction($eventId){
+    public function acceptTimingAction($eventId)
+    {
         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
         $eor->accept(EventOffer::PROP_TIMING, $eventId);
-        return new JsonResponse(array("result"=>"ok"));
+        return new JsonResponse(array("result" => "ok"));
     }
 
     /**
@@ -725,10 +744,11 @@ class ChatRoomController extends Controller
      * @return Response
      * @TODO: add APIDOC
      */
-    public function acceptActionExtrasAction($eventId){
+    public function acceptActionExtrasAction($eventId)
+    {
         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
         $eor->accept(EventOffer::PROP_ACTS_EXTRAS, $eventId);
-        return new JsonResponse(array("result"=>"ok"));
+        return new JsonResponse(array("result" => "ok"));
     }
 
     function showEventsAction()
