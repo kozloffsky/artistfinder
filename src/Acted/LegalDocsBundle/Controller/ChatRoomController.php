@@ -652,7 +652,21 @@ class ChatRoomController extends Controller
      */
     public function feedbacksAction(Request $request)
     {
-        return $this->render('ActedLegalDocsBundle:ChatRoom:feedback.html.twig');
+        /**
+         * @var User $user ;
+         */
+        $user = $this->getUser();
+        $userRoles = $user->getRoles();
+        $data = [];
+        if ($userRoles[0] == 'ROLE_ARTIST') {
+            $em = $this->getEM();
+            $feedbackRepo = $em->getRepository('ActedLegalDocsBundle:Feedback');
+            $artist = $user->getArtist();
+            $feedbacks = $artist->getFeedbacks();
+            $rating = $feedbackRepo->getAverageArtistRating($artist->getId());
+            $data = ['rating' => $rating, 'feedbacks' => $feedbacks];
+        }
+        return $this->render('ActedLegalDocsBundle:ChatRoom:feedback.html.twig', $data);
     }
 
     /**

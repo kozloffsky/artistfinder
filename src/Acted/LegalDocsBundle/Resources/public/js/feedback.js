@@ -219,5 +219,18 @@ $(function () {
         });
     }
 
+    $('#rating-accept-appear').click(function () {
+        $.ajax({
+            url: '/profile/feedbacks/switch',
+            method: "PATCH",
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    });
+
     window.getArtistsByEventId = getArtistsByEventId;
 });
