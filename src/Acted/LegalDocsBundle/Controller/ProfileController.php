@@ -166,6 +166,7 @@ class ProfileController extends Controller
     public function performancesAction(Request $request, Artist $artist)
     {
         $performances = $this->getPerformances($artist, $request->get('page', 1), true);
+        $performances = $this->sortPerformancesByPrice($performances);
         return $this->render('@ActedLegalDocs/Profile/ordersSection.html.twig', compact('performances', 'artist'));
     }
 

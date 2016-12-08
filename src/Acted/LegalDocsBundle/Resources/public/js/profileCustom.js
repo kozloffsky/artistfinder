@@ -1138,12 +1138,27 @@ $(function() {
         getPagination(paginationRoute, paginationTarget);
     });
 
+    function preventAskQuoteFromArtist(){
+        var checkIfUserLoggedIn = $('header #userInformation').length;
+        if(checkIfUserLoggedIn > 0){
+            var userInformationStorage = JSON.parse(localStorage.getItem('user'));
+            if(userInformationStorage) {
+                if (userInformationStorage.role[0] == 'ROLE_ARTIST') {
+                    $('.askQuoteFromSearch').parent('div').css('visibility','hidden');
+                    $('.requestQuotePerformance').hide();
+                    $('.quoteRequestProfile').hide();
+                }
+            }
+        }
+    }
+
     function getPagination(paginationRoute, paginationTarget){
         $.get(paginationRoute, function( data ) {
             $(paginationTarget).html(data);
             setPerformanceFrameHeight();
         }).promise().done(function () {
             setRatingFeedback();
+            preventAskQuoteFromArtist();
         });
     }
 
