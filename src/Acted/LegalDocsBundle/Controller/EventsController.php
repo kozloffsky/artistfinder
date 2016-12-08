@@ -9,6 +9,7 @@ use Acted\LegalDocsBundle\Entity\EventOffer;
 use Acted\LegalDocsBundle\Entity\RequestQuotation;
 use Acted\LegalDocsBundle\Entity\EventArtist;
 use Acted\LegalDocsBundle\Form\EventOfferType;
+use Acted\LegalDocsBundle\Popo\EventOfferData;
 use Doctrine\ORM\EntityManager;
 use Acted\LegalDocsBundle\Form\ArtistEventCreateType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -64,58 +65,62 @@ class EventsController extends Controller
                 }
             }
 
-            /** Add Offer */
-            $offer = $eventManager->createOffer($data);
-            if (!isset($validationErrors)) {
-                $validationErrors = $validator->validate($offer);
-            } else {
-                $validationErrors->addAll($validator->validate($offer));
-            }
-            $em->persist($offer);
-
-            /** Add EventOffer */
-            $eventOffer = $eventManager->createEventOffer($data);
-            $eventOffer->setOffer($offer);
-            $eventOffer->setEvent($event);
-            $eventOffer->setActsExtrasAccepted(false);
-            $eventOffer->setTechnicalRequirementsAccepted(false);
-            $eventOffer->setTimingAccepted(false);
-            $eventOffer->setActsExtrasAccepted(false);
-            $eventOffer->setDetailsAccepted(false);
-            $validationErrors->addAll($validator->validate($eventOffer));
-            $em->persist($eventOffer);
-
-            if (count($validationErrors) > 0) {
-                $errors = $serializer->toArray($validationErrors);
-                $prettyErrors = [];
-                foreach ($errors as $error) {
-                    foreach ($error as $key => $value) {
-                        $prettyErrors[$key] = $value;
-                    }
+            if (!$data->getPerformance()->isEmpty()) {
+                /** Add Offer */
+                $offer = $eventManager->createOffer($data);
+                if (!isset($validationErrors)) {
+                    $validationErrors = $validator->validate($offer);
+                } else {
+                    $validationErrors->addAll($validator->validate($offer));
                 }
-                return new JsonResponse($prettyErrors, 400);
+                $em->persist($offer);
+
+                /** Add EventOffer */
+                $eventOffer = $eventManager->createEventOffer($data);
+                $eventOffer->setOffer($offer);
+                $eventOffer->setEvent($event);
+                $eventOffer->setActsExtrasAccepted(false);
+                $eventOffer->setTechnicalRequirementsAccepted(false);
+                $eventOffer->setTimingAccepted(false);
+                $eventOffer->setActsExtrasAccepted(false);
+                $eventOffer->setDetailsAccepted(false);
+                $validationErrors->addAll($validator->validate($eventOffer));
+                $em->persist($eventOffer);
+
+                if (count($validationErrors) > 0) {
+                    $errors = $serializer->toArray($validationErrors);
+                    $prettyErrors = [];
+                    foreach ($errors as $error) {
+                        foreach ($error as $key => $value) {
+                            $prettyErrors[$key] = $value;
+                        }
+                    }
+                    return new JsonResponse($prettyErrors, 400);
+                }
+                $em->flush();
+
+                $userArtist = $data->getPerformance()->first()->getProfile()->getUser();
+                $artist = $userArtist->getArtist();
+
+                /*Add artist to event*/
+                $eventArtist = new EventArtist();
+                $eventArtist->setEvent($event);
+                $eventArtist->setArtist($artist);
+                $em->persist($eventArtist);
+                $em->flush();
+
+                /** Create ChatRoom */
+                $chatManager->createChat($event, $userArtist, $data, $offer);
+                /** Notify Artist */
+                $eventManager->createEventNotify($data, $userArtist, $offer);
+                $eventManager->newMessageNotify($data, $userArtist);
+
+                /*Create request*/
+                $requestQuotation = new RequestQuotation();
+                $requestQuotation->setEvent($event);
+                $em->persist($requestQuotation);
             }
-            $em->flush();
-            $userArtist = $data->getPerformance()->first()->getProfile()->getUser();
-            $artist = $userArtist->getArtist();
 
-            /*Add artist to event*/
-            $eventArtist = new EventArtist();
-            $eventArtist->setEvent($event);
-            $eventArtist->setArtist($artist);
-            $em->persist($eventArtist);
-            $em->flush();
-
-            /** Create ChatRoom */
-            $chatManager->createChat($event, $userArtist, $data, $offer);
-            /** Notify Artist */
-            $eventManager->createEventNotify($data, $userArtist, $offer);
-            $eventManager->newMessageNotify($data, $userArtist);
-
-            /*Create request*/
-            $requestQuotation = new RequestQuotation();
-            $requestQuotation->setEvent($event);
-            $em->persist($requestQuotation);
             $em->flush();
 
             return new JsonResponse(['success' => 'Event successfully created!']);
@@ -179,7 +184,7 @@ class EventsController extends Controller
     public function getEventsByUserIdAction(Request $request)
     {
         $userId = $request->query->get('user');
-        $events = $this->getEM()->getRepository('ActedLegalDocsBundle:EventOffer')->getEventsByUserId($userId);
+        $events = $this->getEM()->getRepository('ActedLegalDocsBundle:Event')->getEventsByUserId($userId);
         $artists = $this->getEM()->getRepository('ActedLegalDocsBundle:EventOffer')->getArtists($userId);
         $result = [];
         foreach ($artists as $artist) {
@@ -456,44 +461,102 @@ class EventsController extends Controller
         $form = $this->createForm(ArtistEventCreateType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && (!$form->isValid())) {
-            return new JsonResponse($serializer->toArray($form->getErrors()), Response::HTTP_BAD_REQUEST);
-        }
+        $em->getConnection()->beginTransaction();
 
-        $data = $form->getData();
-        if (empty($data)) {
+        try {
+            if ($form->isSubmitted() && (!$form->isValid())) {
+                return new JsonResponse($serializer->toArray($form->getErrors()), Response::HTTP_BAD_REQUEST);
+            }
+
+            $data = $form->getData();
+            if (empty($data)) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'There are not any data'
+                ],  Response::HTTP_BAD_REQUEST);
+            }
+
+            $event = $data['event'];
+            $artist = $em->getRepository('ActedLegalDocsBundle:Artist')->findOneBySlug($data['slug']);
+            $userArtist = $artist->getUser();
+
+            if (empty($artist)) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'User not found'
+                ],  Response::HTTP_BAD_REQUEST);
+            }
+
+            $eventArtist = $eventArtistRepo->findOneBy(array('event' => $event, 'artist' => $artist));
+            if (!empty($eventArtist)) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => 'Artist already exists in event'
+                ],  Response::HTTP_BAD_REQUEST);
+            }
+
+            $eventOfferData = new EventOfferData();
+            $eventOfferData->setName($event->getTitle());
+            $eventOfferData->setPerformance($data['performance']);
+            $eventOfferData->setComment($data['comment']);
+            $eventOfferData->setEventTime($event->getTiming());
+            $eventOfferData->setUser($userArtist);
+
+            $eventOfferData->setType($event->getEventType());
+            //$eventOfferData->setCountry();
+            $eventOfferData->setCity($event->getCity());
+            $eventOfferData->setLocation($event->getAddress());
+            $eventOfferData->setVenueType($event->getVenueType());
+            $eventOfferData->setNumberOfGuests($event->getNumberOfGuests());
+            $eventOfferData->setAdditionalInfo($event->getComments());
+
+
+            $eventManager = $this->get('app.event.manager');
+            $chatManager = $this->get('app.chat.manager');
+
+            /** Add Offer */
+            $offer = $eventManager->createOffer($eventOfferData);
+            $em->persist($offer);
+
+            /** Add EventOffer */
+            $eventOffer = $eventManager->createEventOffer($eventOfferData);
+            $eventOffer->setOffer($offer);
+            $eventOffer->setEvent($event);
+            $eventOffer->setActsExtrasAccepted(false);
+            $eventOffer->setTechnicalRequirementsAccepted(false);
+            $eventOffer->setTimingAccepted(false);
+            $eventOffer->setActsExtrasAccepted(false);
+            $eventOffer->setDetailsAccepted(false);
+            $em->persist($eventOffer);
+            $em->flush();
+
+            /*Add artist to event*/
+            $eventArtist = new EventArtist();
+            $eventArtist->setEvent($event);
+            $eventArtist->setArtist($artist);
+            $em->persist($eventArtist);
+
+            /** Create ChatRoom */
+            $chatManager->createChat($event, $userArtist, $eventOfferData, $offer);
+            /** Notify Artist */
+            $eventManager->createEventNotify($eventOfferData, $userArtist, $offer);
+            $eventManager->newMessageNotify($eventOfferData, $userArtist);
+
+            /*Create request*/
+            $requestQuotation = new RequestQuotation();
+            $requestQuotation->setEvent($event);
+            $em->persist($requestQuotation);
+            $em->flush();
+
+            $em->getConnection()->commit();
+        } catch (\Exception $e) {
+            $em->getConnection()->rollback();
+
             return new JsonResponse([
                 'status' => 'error',
-                'message' => 'There are not any data'
+                'message' => 'Error connecting'
             ],  Response::HTTP_BAD_REQUEST);
         }
-
-        $artist = $em->getRepository('ActedLegalDocsBundle:Artist')->findOneBySlug($data['slug']);
-
-        if (empty($artist)) {
-            return new JsonResponse([
-                'status' => 'error',
-                'message' => 'User not found'
-            ],  Response::HTTP_BAD_REQUEST);
-        }
-
-
-        $artist = $em->getRepository('ActedLegalDocsBundle:Artist')->findOneBySlug($data['slug']);
-
-        $eventArtist = $eventArtistRepo->findOneBy(array('event' => $data['event'], 'artist' => $artist));
-        if (!empty($eventArtist)) {
-            return new JsonResponse([
-                'status' => 'error',
-                'message' => 'Artist already exists in event'
-            ],  Response::HTTP_BAD_REQUEST);
-        }
-
-        /*Add artist to event*/
-        $eventArtist = new EventArtist();
-        $eventArtist->setEvent($data['event']);
-        $eventArtist->setArtist($artist);
-        $em->persist($eventArtist);
-        $em->flush();
 
         return new JsonResponse(array(
             'status' => 'success',

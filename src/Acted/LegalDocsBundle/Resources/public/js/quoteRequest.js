@@ -9,7 +9,7 @@ $(function () {
     if(isAvailable)
         quoteRequestAutocompService.initAutoComplete();
 
-    $( "#event_date" ).datepicker({
+    $( ".free-quote-modal #event_date" ).datepicker({
         dateFormat: 'dd/mm/yy',
         minDate: 0 }
     );
@@ -214,6 +214,7 @@ $(function () {
             localStorage.removeItem('user');
             $('.eventChooseRequest').hide();
         }
+
     }
 
     function getUserEvents(userInf){
@@ -240,11 +241,10 @@ $(function () {
         })
     }
 
-
     function createEventsListRequest(userEvents){
         $('#event_preset').empty();
         $(userEvents).each(function(i){
-            var eventsOptions='<option value="'+ this.event.id +'" name="event" class="'+i+'" data-meta="'+ this.event.id +'">'+this.event.title+'</option>';
+            var eventsOptions='<option value="'+ this.id +'" name="event" class="'+i+'" data-meta="'+ this.id +'">'+this.title+'</option>';
             $('#event_preset').append(eventsOptions);
         });
 
@@ -275,20 +275,20 @@ $(function () {
     }
 
     function fillFormWithDataFromEvent(userEvents, selectedEvent){
-        $('#requestQuoteForm #event_name').val(userEvents[selectedEvent].event.title);
-        $('#requestQuoteForm #event_date').val(userEvents[selectedEvent].event.starting_date);
-        $('#requestQuoteForm #event_time').val(userEvents[selectedEvent].event.timing);
-        $('#requestQuoteForm #event_city option[value='+userEvents[selectedEvent].event.city.id+']').attr('selected','selected');
+        $('#requestQuoteForm #event_name').val(userEvents[selectedEvent].title);
+        $('#requestQuoteForm #event_date').val(userEvents[selectedEvent].starting_date);
+        $('#requestQuoteForm #event_time').val(userEvents[selectedEvent].timing);
+        $('#requestQuoteForm #event_city option[value='+userEvents[selectedEvent].city.id+']').attr('selected','selected');
 
         //$('#requestQuoteForm #event_country option[value='+userEvents[selectedEvent].event.countryId+']').attr('selected','selected');
-        $('#requestQuoteForm #event_location').val(userEvents[selectedEvent].event.location);
-        $('#requestQuoteForm #event_type option[value='+userEvents[selectedEvent].event.event_type.id+']').attr('selected','selected');
-        $('#requestQuoteForm #venue_type option[value='+userEvents[selectedEvent].event.venue_type.id+']').attr('selected','selected');
+        $('#requestQuoteForm #event_location').val(userEvents[selectedEvent].location);
+        $('#requestQuoteForm #event_type option[value='+userEvents[selectedEvent].event_type.id+']').attr('selected','selected');
+        $('#requestQuoteForm #venue_type option[value='+userEvents[selectedEvent].venue_type.id+']').attr('selected','selected');
         //$('#requestQuoteForm .guests-num input[value="'+userEvents[selectedEvent].event.number_of_guests+'"]').prop('checked',true);
-        $('#requestQuoteForm .guests-number option[value='+userEvents[selectedEvent].event.number_of_guests+']').attr('selected','selected');
+        $('#requestQuoteForm .guests-number option[value='+userEvents[selectedEvent].number_of_guests+']').attr('selected','selected');
     }
 
-    $('#new-event').on('click',function(){
+    $('.free-quote-modal #new-event').on('click',function(){
 
         $("#chosenEvent select").val('newEvent').trigger("change");
 
@@ -310,6 +310,23 @@ $(function () {
 
     $('#quoteRequsetSend').on('click',function(e){
         e.preventDefault();
+
+        var checkedAnyPerformance = false;
+        var performances = [];
+        $("#quoteRequestSecond").find("input[type=checkbox]").each(function() {
+            if ($(this).prop('checked') == true) {
+                checkedAnyPerformance = true;
+                performances.push($(this).val());
+            }
+        });
+
+        var connectEventData = {};
+        if (!checkedAnyPerformance) {
+            var performanceError = 'You should check at least 1 performance';
+            $('#quoteRequestSecond .errorCat').text(performanceError).show();
+            return;
+        }
+
         var requestFormSerialize = $('#requestQuoteForm, #quoteRequestSecond').serialize(),
             userInformationStorage = JSON.parse(localStorage.getItem('user')),
             checkUserLoggedIn = $('#userInformation').text(),
@@ -317,12 +334,19 @@ $(function () {
 
         var currentEvent = $("#chosenEvent select").val();
 
-        console.log();
         var slug = $('#slug').text();
+        var comment = $('#comment_area textarea').val();
 
-        if (currentEvent != 'newEvent') {
+        if (currentEvent != 'newEvent' && currentEvent != '') {
+            connectEventData = {
+                eventId: currentEvent,
+                slug: slug,
+                performances: performances,
+                comment: comment
+            };
+
             //call api for connecting event
-            addArtistToEvent(currentEvent, slug);
+            addArtistToEvent(connectEventData);
             return;
         }
 
@@ -430,13 +454,17 @@ $(function () {
         })
     };
 
-    function addArtistToEvent(eventId, slug) {
+    function addArtistToEvent(data) {
         $.ajax({
             type:'POST',
             url:'/event/artist',
             data: {
-                'artist_event_create[event]': eventId,
-                'artist_event_create[slug]': slug
+                artist_event_create: {
+                    event: data.eventId,
+                    slug: data.slug,
+                    performance: data.performances,
+                    comment: data.comment
+                }
             },
             beforeSend: function () {
                 $('#loadSpinner').fadeIn(500);
@@ -464,7 +492,6 @@ $(function () {
                 $('#quoteRequestSecond .errorCat').text('').hide();
                 $('#requestQuoteForm .errorCat').text('').hide();
                 $.each(response.responseJSON, function(key, value) {
-                    //console.log(key, value);
                     $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
                     if(key == 'performance'){
                         $('#quoteRequestSecond .errorCat').text(value).show();

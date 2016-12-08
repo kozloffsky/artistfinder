@@ -781,4 +781,43 @@ class Event
     {
         return $this->countDays;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $eventOffer;
+
+
+    /**
+     * Add eventOffer
+     *
+     * @param \Acted\LegalDocsBundle\Entity\EventOffer $eventOffer
+     *
+     * @return Event
+     */
+    public function addEventOffer(\Acted\LegalDocsBundle\Entity\EventOffer $eventOffer)
+    {
+        $this->eventOffer[] = $eventOffer;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventOffer
+     *
+     * @param \Acted\LegalDocsBundle\Entity\EventOffer $eventOffer
+     */
+    public function removeEventOffer(\Acted\LegalDocsBundle\Entity\EventOffer $eventOffer)
+    {
+        $this->eventOffer->removeElement($eventOffer);
+    }
+
+    /**
+     * Get eventOffer
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventOffer()
+    {
+        return $this->eventOffer;
+    }
 }

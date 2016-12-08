@@ -56,6 +56,7 @@ Acted\LegalDocsBundle\Entity\EventOffer:
     manyToOne:
         event:
           targetEntity: Acted\LegalDocsBundle\Entity\Event
+          inversedBy: eventOffer
           joinColumn:
             referencedColumnName: id
             onDelete: CASCADE

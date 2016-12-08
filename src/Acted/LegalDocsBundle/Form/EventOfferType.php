@@ -67,7 +67,7 @@ class EventOfferType extends AbstractType
             ->add('performance', EntityType::class, [
                 'class' => Performance::class,
                 'multiple' => true,
-                'constraints' => [new Count(['min' => 1])],
+                'constraints' => [],
                 'description' => 'Array of Performances IDs'
             ])
             ->add('event', EntityType::class, [

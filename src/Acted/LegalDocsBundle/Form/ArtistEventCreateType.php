@@ -7,7 +7,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Acted\LegalDocsBundle\Entity\Event;
+use Acted\LegalDocsBundle\Entity\Performance;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Count;
+use Symfony\Component\Validator\Constraints\Length;
 
 class ArtistEventCreateType extends AbstractType
 {
@@ -26,6 +29,17 @@ class ArtistEventCreateType extends AbstractType
             ->add('slug', TextType::class, [
                 'constraints' => [
                 ]
+            ])
+            ->add('comment', TextType::class, [
+                'constraints' => [
+                    new Length(['max' => 450])
+                ]
+            ])
+            ->add('performance', EntityType::class, [
+                'class' => Performance::class,
+                'multiple' => true,
+                'constraints' => [new Count(['min' => 1])],
+                'description' => 'Array of Performances IDs'
             ])
         ;
     }

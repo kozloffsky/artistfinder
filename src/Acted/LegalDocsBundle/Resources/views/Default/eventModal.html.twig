@@ -1,0 +1,220 @@
+<div class="modal event-modal free-quote-modal modal-registered fade" id="eventModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true"></span></button>
+                <h4 class="modal-title">
+                    <div class="warn">!</div>
+                    Tip: Enter your event details below and it will automatically apply to your next quote requests
+                </h4>
+            </div>
+            <form id="eventForm">{#requestQuoteForm#}
+                <div class="modal-body">
+                    <button type="button" class="close close_second" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+                    <div class="row clearfix">
+                        <div class="col-lg-12 form-group">
+                            <label for="event_name">Event name</label>
+                            <input type="text" maxlength="60" class="form-control" id="event_name" placeholder="Name your event" name="name" v-model="eventObj.name" :value="eventObj.name">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 form-group">
+                            <div class="col-lg-6 no-pad-left">
+                                <label for="event_event_date">Date</label>
+                                <input type="text" class="date-picker form-control" id="event_event_date" name="event_date" placeholder="05/04/2016">
+                            </div>
+                            <div class="col-lg-6 no-pad-right ">
+                                <label class="col-xs-12 no-pad" for="count_days">1 day/multiple days</label>
+                                <select class="select_width_101" data-class="selections-white low-select" v-model="eventObj.countDays" name="count_days" id="event_duration">
+                                    <option v-for="n in 30" :value="n">${ n }-day event</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 form-group">
+                            <div class="col-lg-6 no-pad-left">
+                                <label for="event_time">Event timing</label>
+                                <input id="event_time" type="text" class="form-control" v-model="eventObj.eventTiming" placeholder="Evening" name="event_time">
+                            </div>
+                            <div class="col-lg-6 no-pad-right">
+                                <label for="event_country">Country</label>
+                                <input disabled type="text" class="form-control" id="event_country" placeholder="United Kingdom" value="United Kingdom" name="country">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 form-group">
+                            <label for="event_location">Address</label>
+                            <input type="text" class="form-control" name="location" id="event_location" placeholder="Type the address here...">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 form-group">
+                            <div class="col-lg-6 no-pad-left">
+                                <label for="venue_type">Venue type</label>
+                                <select class="select_width_101" data-class="selections-white low-select" v-model="eventObj.selectedVenueType" name="venue_type" id="venue_type">
+                                    <option v-for="(venueType, venueTypeIndex) in eventObj.venueType" :value="venueType.id" name="venue_type">${ venueType.venue_type }</option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-6 no-pad-right guests-number">
+                                <label for="guests_count">Number of guests</label>
+                                <select class="select_width_101" data-class="selections-white low-select" v-model="eventObj.eventNumberOfGuests" name="number_of_guests" id="guests_count">
+                                    <option value="less_then_50">Less than 50</option>
+                                    <option value="50-100">50-100</option>
+                                    <option value="100-500">100-500</option>
+                                    <option value="500+">500+</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 form-group" id="additional_info_area">
+                            <label for="additional_info">Additional info</label>
+                            <span class="additional_info_counter">
+                                <i class="current-count">0</i>
+                                <i>/</i>
+                                <i>450</i>
+                            </span>
+                            <textarea maxlength="450" name="additional_info" class="form-control additional_info_input" v-model="eventObj.eventAdditionalInfo" id="additional_info" placeholder="Put your comments here"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <form>
+                <div class="modal-footer">
+                    <div class="col-lg-12 no-pad">
+                        <div class="col-lg-12 padd_bottom_15px">
+                            <div class="controls">
+                                <div class="button-gradient filled">
+                                    <button class="btn" v-on:click="createEvent($event)">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {#<form id="quoteRequestSecond">
+                <div class="modal-footer">
+                    <div class="col-lg-12 no-pad">
+                        <div class="col-lg-12 grey_popup_background popup_artist_info clearfix">
+                            <img class="quote-profile-avatar" src="assets/images/avatar.jpg" alt="avatar"/>
+
+                            <div class="quote-profile-info text-left">
+                                <h2>Diana Krall</h2>
+                                <p class="quote-profile-info__spec">Jazz Vocalist, Jazz Pianist, Song Writer</p>
+                                <p class="quote-profile-info__residence">Paris, France</p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 no-pad modal_background_grey">
+                            <ul class="profile-categories ul-reset requestQuotePerformances">
+                            </ul>
+                        </div>
+                        <div class="col-lg-12 padd_bottom_15px">
+                            <span class="errorCat"></span>
+
+                            <div class="row add-comment-btn">
+                                <a href="#" id="comment_toggle">Add a comment</a>
+                            </div>
+
+                            <div class="col-lg-12" id="comment_area" hide-comment="true" style="display: none;">
+                                <span class="comment_area_counter">
+                                    <i class="current-count">0</i>
+                                    <i>/</i>
+                                    <i>450</i>
+                                </span>
+                                <textarea maxlength="450" name="comment" class="quote-profile-desc" placeholder="Write a message to the Artist if you have any question about his performance or if you want to provide with more details about your event"></textarea>
+                            </div>
+
+                            <div class="controls">
+                                <div class="button-gradient filled">
+                                    <button class="btn" id="quoteRequsetSend">Send</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quote-box alreadyHasEventArtist">
+                            <p>Quote request already sent. If you want to see the status or contact<br>the artist, you can access your
+                                <a href="#">chatroom</a>
+                            </p>
+                            <p>You can also ask a quote for <a id="new-event">new event</a></p>
+                        </div>
+                    </div>
+                </div>
+            </form>#}
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+{#
+
+
+<div class="modal registration-modal fade" id="offerSuccess">
+    <div class="modal-dialog" role="document">
+        <div class="modal-body">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="final-stage">
+                    <div class="col-xs-12">
+                        <img class="final-image" src="{{ asset('assets/images/congratulations.png') }}" alt="">
+                    </div>
+                    <div class="row">
+                        <h2>Your offer created</h2>
+
+                        <p class="description">
+
+                        </p>
+                        <p class="description">
+                            And if you need any help, please do not hesitate to use the FAQ
+                        </p>
+
+                        <div class="controls">
+                            <div class="button-gradient filled">
+                                <button data-dismiss="modal" class="btn">Have a nice journey on ACTED</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal registration-modal fade" id="offerErrorModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-body">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="final-stage">
+                    <div class="row">
+                        <h2>Artist cannot create offer</h2>
+
+                        <p class="description">
+
+                        </p>
+                        <p class="description">
+                            And if you need any help, please do not hesitate to use the FAQ
+                        </p>
+
+                        <div class="controls">
+                            <div class="button-gradient filled">
+                                <button data-dismiss="modal" class="btn">Have a nice journey on ACTED</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>#}
