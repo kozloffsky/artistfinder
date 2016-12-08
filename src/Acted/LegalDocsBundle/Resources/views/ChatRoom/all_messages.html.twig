@@ -1,11 +1,14 @@
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
 
-
 <main class="messages">
-
     <div class="container">
-        {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
-
+        {% if app.user is not empty %}
+            {% if app.user.roles[0] == "ROLE_CLIENT"  %}
+                {% include '@ActedLegalDocs/Profile/client/client_menu.html.twig' %}
+            {% else %}
+                {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
+            {% endif %}
+        {% endif %}
         <div>
             <select data-class="selections-white" name="sortMessages" id="sortMessages">
                 <option value="all">All messages</option>
@@ -14,331 +17,52 @@
             </select>
 
             <div class="dialogs">
-                <article class="col-xs-12 dialog-section noselect" data-longtap-duration="500">
+                <article v-for="message in messages" v-bind:data-message-id="message.id" class="col-xs-12 dialog-section noselect" data-longtap-duration="500">
                     <div class="wrap clearfix">
-                        <div class="message-info active"></div>
+                        <div v-if="!message.read_date_time" class="message-info active"></div>
                         <div class="avatar">
-                            <img src="/assets/images/avatar.jpg" alt=""/>
+                            <img v-if="message.sender_user.avatar" v-bind:src="message.sender_user.avatar" alt=""/>
+                            <img v-else src="/assets/images/noAvatar.png" alt=""/>
                         </div>
                         <div class="user-info">
-                            <span class="user-name">Thomas Castagent</span>
+                            <span class="user-name">${message.sender_user.firstname} ${message.sender_user.lastname}</span>
                             <span class="time">12.34 pm</span>
                         </div>
                         <div class="message-block">
                             <div class="col-lg-9 col-sm-9 text-block">
-                                <p class="message-heading hidden-xs">Enquiry for a 4-piece Jazz Band / St Regis / 17 Dec 16</p>
+                                <p class="message-heading hidden-xs"> ${message.chat_room.event.title} / ${message.chat_room.event.city.name} / ${message.chat_room.event.starting_date}</p>
 
                                 <div class="text">
-                                    Hello there! Can you please confirm if you will provide a soundsystem? Hom much space do you need on stage? Can we agree on a balance in cash at the event? Hello there! Can you please confirm if you will provide a soundsystem? Hom much space do you need on stage? Can we agree on a balance in cash at the event?
+                                    ${message.message_text}
                                 </div>
 
                                 <div class="controls hidden-xs">
                                     <div class="button-gradient filled blue">
-                                        <a href="/chat-room.html" class="btn register">Chatroom</a>
+                                        <a v-bind:href="'/dashboard/chat/' + message.chat_room.chat_id" class="btn register">Chatroom</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-2 message-controls no-pad">
                                 <ul class="ul-reset">
                                     <li class="status confirmed"><i class="confirmed"></i> Confirmed</li>
-                                    <li class="archive hidden-xs"><a href="#"><i class="archive"></i> Archive</a></li>
-                                    <li class="delete hidden-xs"><a href="#"><i class="delete"></i> Delete</a></li>
+                                    <li v-on:click="archive" v-if="!message.archived" class="archive hidden-xs"><a href="#"><i class="archive"></i> Archive</a></li>
+                                    <li v-on:click="remove" class="delete hidden-xs"><a href="#"><i class="delete"></i> Delete</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
 
                     <ul class="clearfix message-controls controls-mobile ul-reset">
-                        <li class="archive"><a href="#"><i class="archive"></i> Archive</a></li>
-                        <li class="delete"><a href="#"><i class="delete"></i> Delete</a></li>
+                        <li v-on:click="archive" v-if="!message.archived" class="archive"><a href="#"><i class="archive"></i> Archive</a></li>
+                        <li v-on:click="remove" class="delete"><a href="#"><i class="delete"></i> Delete</a></li>
                     </ul>
 
                     <div class="message-controls message-options hidden-lg hidden-md hidden-sm">
-                        <li class="archive">
+                        <li v-on:click="archive" v-if="!message.archived" class="archive">
                             <i class="archive"></i>
-                            <a href="#">Archive</a>
+                            <a href="#">Archived</a>
                         </li>
-                        <li class="delete">
-                            <i class="delete"></i>
-                            <a href="#">Delete</a>
-                        </li>
-                    </div>
-                </article>
-
-                <article class="col-xs-12 dialog-section noselect" data-longtap-duration="500">
-                    <div class="wrap clearfix">
-                        <div class="message-info"></div>
-                        <div class="avatar">
-                            <img src="/assets/images/avatar.jpg" alt=""/>
-                        </div>
-                        <div class="user-info">
-                            <span class="user-name">Thomas Castagent</span>
-                            <span class="time">12.34 pm</span>
-                        </div>
-                        <div class="message-block">
-                            <div class="col-lg-9 col-sm-9 text-block">
-                                <p class="message-heading hidden-xs">Enquiry for a 4-piece Jazz Band / St Regis / 17 Dec 16</p>
-
-                                <div class="text">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </div>
-
-                                <div class="controls hidden-xs">
-                                    <div class="button-gradient filled blue">
-                                        <a href="/chat-room.html" class="btn register">Chatroom</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-sm-2 message-controls no-pad">
-                                <ul class="ul-reset">
-                                    <li class="status enquiry"><i class="enquiry"></i> Enquiry</li>
-                                    <li class="archive hidden-xs"><a href="#"><i class="archive"></i> Archive</a></li>
-                                    <li class="delete hidden-xs"><a href="#"><i class="delete"></i> Delete</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <ul class="clearfix message-controls controls-mobile ul-reset">
-                        <li class="archive"><a href="#"><i class="archive"></i> Archive</a></li>
-                        <li class="delete"><a href="#"><i class="delete"></i> Delete</a></li>
-                    </ul>
-
-                    <div class="message-controls message-options hidden-lg hidden-md hidden-sm">
-                        <li class="archive">
-                            <i class="archive"></i>
-                            <a href="#">Archive</a>
-                        </li>
-                        <li class="delete">
-                            <i class="delete"></i>
-                            <a href="#">Delete</a>
-                        </li>
-                    </div>
-                </article>
-
-                <article class="col-xs-12 dialog-rating-container noselect" data-longtap-duration="500">
-                    <div class="wrap clearfix">
-                        <div class="message-info">
-                            <span class="pull-right">14 December 2016</span>
-                            <span>Congratulations! You have received new rating!</span>
-                        </div>
-                        <div class="avatar">
-                            <img src="/assets/images/avatar.jpg" alt=""/>
-                        </div>
-                        <div class="user-info">
-                            <span class="user-name">Diana Croll</span>
-                        </div>
-                        <div class="rating">
-                            <i class="star-icon filled"></i>
-                            <i class="star-icon filled"></i>
-                            <i class="star-icon filled"></i>
-                            <i class="star-icon unfilled"></i>
-                            <i class="star-icon unfilled"></i>
-                        </div>
-                        <div class="message-block">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="col-xs-12 dialog-section noselect" data-longtap-duration="500">
-                    <div class="wrap clearfix">
-                        <div class="message-info"></div>
-                        <div class="avatar">
-                            <img src="/assets/images/avatar.jpg" alt=""/>
-                        </div>
-                        <div class="user-info">
-                            <span class="user-name">Thomas Castagent</span>
-                            <span class="time">12.34 pm</span>
-                        </div>
-                        <div class="message-block">
-                            <div class="col-lg-9 col-sm-9 text-block">
-                                <p class="message-heading hidden-xs">Enquiry for a 4-piece Jazz Band / St Regis / 17 Dec 16</p>
-
-                                <div class="text">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </div>
-
-                                <div class="controls hidden-xs">
-                                    <div class="button-gradient filled blue">
-                                        <a href="/chat-room.html" class="btn register">Chatroom</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-sm-2 message-controls no-pad">
-                                <ul class="ul-reset">
-                                    <li class="status not-avaliable"><i class="not-avaliable"></i> Not available</li>
-                                    <li class="archive hidden-xs"><a href="#"><i class="archive"></i> Archive</a></li>
-                                    <li class="delete hidden-xs"><a href="#"><i class="delete"></i> Delete</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <ul class="clearfix message-controls controls-mobile ul-reset">
-                        <li class="archive"><a href="#"><i class="archive"></i> Archive</a></li>
-                        <li class="delete"><a href="#"><i class="delete"></i> Delete</a></li>
-                    </ul>
-
-                    <div class="message-controls message-options hidden-lg hidden-md hidden-sm">
-                        <li class="archive">
-                            <i class="archive"></i>
-                            <a href="#">Archive</a>
-                        </li>
-                        <li class="delete">
-                            <i class="delete"></i>
-                            <a href="#">Delete</a>
-                        </li>
-                    </div>
-                </article>
-
-                <article class="col-xs-12 dialog-section noselect" data-longtap-duration="500">
-                    <div class="wrap clearfix">
-                        <div class="message-info"></div>
-                        <div class="avatar">
-                            <img src="/assets/images/avatar.jpg" alt=""/>
-                        </div>
-                        <div class="user-info">
-                            <span class="user-name">Thomas Castagent</span>
-                            <span class="time">12.03.16</span>
-                        </div>
-                        <div class="message-block">
-                            <div class="col-lg-9 col-sm-9 text-block">
-                                <p class="message-heading hidden-xs">Enquiry for a 4-piece Jazz Band / St Regis / 17 Dec 16</p>
-
-                                <div class="text">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </div>
-
-                                <div class="controls hidden-xs">
-                                    <div class="button-gradient filled blue">
-                                        <a href="/chat-room.html" class="btn register">Chatroom</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-sm-2 message-controls no-pad">
-                                <ul class="ul-reset">
-                                    <li class="status cancelled"><i class="cancelled"></i> Cancelled</li>
-                                    <li class="archive hidden-xs"><a href="#"><i class="archive"></i> Archive</a></li>
-                                    <li class="delete hidden-xs"><a href="#"><i class="delete"></i> Delete</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <ul class="clearfix message-controls controls-mobile ul-reset">
-                        <li class="archive"><a href="#"><i class="archive"></i> Archive</a></li>
-                        <li class="delete"><a href="#"><i class="delete"></i> Delete</a></li>
-                    </ul>
-
-                    <div class="message-controls message-options hidden-lg hidden-md hidden-sm">
-                        <li class="archive">
-                            <i class="archive"></i>
-                            <a href="#">Archive</a>
-                        </li>
-                        <li class="delete">
-                            <i class="delete"></i>
-                            <a href="#">Delete</a>
-                        </li>
-                    </div>
-                </article>
-
-                <article class="col-xs-12 dialog-section noselect" data-longtap-duration="500">
-                    <div class="wrap clearfix">
-                        <div class="message-info"></div>
-                        <div class="avatar">
-                            <img src="/assets/images/avatar.jpg" alt=""/>
-                        </div>
-                        <div class="user-info">
-                            <span class="user-name">Thomas Castagent</span>
-                            <span class="time">10.03.16</span>
-                        </div>
-                        <div class="message-block">
-                            <div class="col-lg-9 col-sm-9 text-block">
-                                <p class="message-heading hidden-xs">Enquiry for a 4-piece Jazz Band / St Regis / 17 Dec 16</p>
-
-                                <div class="text">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </div>
-
-                                <div class="controls hidden-xs">
-                                    <div class="button-gradient filled blue">
-                                        <a href="/chat-room.html" class="btn register">Chatroom</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-sm-2 message-controls no-pad">
-                                <ul class="ul-reset">
-                                    <li class="status confirmed"><i class="confirmed"></i> Confirmed</li>
-                                    <li class="archive hidden-xs"><a href="#"><i class="archive"></i> Archive</a></li>
-                                    <li class="delete hidden-xs"><a href="#"><i class="delete"></i> Delete</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <ul class="clearfix message-controls controls-mobile ul-reset">
-                        <li class="archive"><a href="#"><i class="archive"></i> Archive</a></li>
-                        <li class="delete"><a href="#"><i class="delete"></i> Delete</a></li>
-                    </ul>
-
-                    <div class="message-controls message-options hidden-lg hidden-md hidden-sm">
-                        <li class="archive">
-                            <i class="archive"></i>
-                            <a href="#">Archive</a>
-                        </li>
-                        <li class="delete">
-                            <i class="delete"></i>
-                            <a href="#">Delete</a>
-                        </li>
-                    </div>
-                </article>
-
-                <article class="col-xs-12 dialog-section noselect" data-longtap-duration="500">
-                    <div class="wrap clearfix">
-                        <div class="message-info"></div>
-                        <div class="avatar">
-                            <img src="/assets/images/avatar.jpg" alt=""/>
-                        </div>
-                        <div class="user-info">
-                            <span class="user-name">Thomas Castagent</span>
-                            <span class="time">08.02.16</span>
-                        </div>
-                        <div class="message-block">
-                            <div class="col-lg-9 col-sm-9 text-block">
-                                <p class="message-heading hidden-xs">Enquiry for a 4-piece Jazz Band / St Regis / 17 Dec 16</p>
-
-                                <div class="text">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </div>
-
-                                <div class="controls hidden-xs">
-                                    <div class="button-gradient filled blue">
-                                        <a href="/chat-room.html" class="btn register">Chatroom</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-sm-2 message-controls no-pad">
-                                <ul class="ul-reset">
-                                    <li class="status confirmed"><i class="confirmed"></i> Confirmed</li>
-                                    <li class="archive hidden-xs"><a href="#"><i class="archive"></i> Archive</a></li>
-                                    <li class="delete hidden-xs"><a href="#"><i class="delete"></i> Delete</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <ul class="clearfix message-controls controls-mobile ul-reset">
-                        <li class="archive"><a href="#"><i class="archive"></i> Archive</a></li>
-                        <li class="delete"><a href="#"><i class="delete"></i> Delete</a></li>
-                    </ul>
-
-                    <div class="message-controls message-options hidden-lg hidden-md hidden-sm">
-                        <li class="archive">
-                            <i class="archive"></i>
-                            <a href="#">Archive</a>
-                        </li>
-                        <li class="delete">
+                        <li  v-on:click="remove" class="delete">
                             <i class="delete"></i>
                             <a href="#">Delete</a>
                         </li>

@@ -103,3 +103,15 @@ events:
   path: /events
   defaults: {_controller: ActedLegalDocsBundle:ChatRoom:showEvents }
   methods: GET
+
+event_messages:
+  path: /messages/event
+  defaults: {_controller: ActedLegalDocsBundle:ChatRoom:showMessagesByEvent}
+  methods: GET
+
+delete_message:
+  path: /delete/message/{message}
+  defaults: {_controller: ActedLegalDocsBundle:ChatRoom:removeMessage}
+  methods: DELETE
+  requirements:
+    message: \d+
