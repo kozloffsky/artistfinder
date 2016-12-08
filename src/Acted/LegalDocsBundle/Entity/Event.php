@@ -102,6 +102,11 @@ class Event
     private $eventArtists;
 
     /**
+     * @var integer
+     */
+    private $countDays;
+
+    /**
      * Get id
      *
      * @return integer
@@ -751,5 +756,68 @@ class Event
             }
         }
         return $this;
+    }
+
+    /**
+     * Set countDays
+     *
+     * @param integer $countDays
+     *
+     * @return Event
+     */
+    public function setCountDays($countDays)
+    {
+        $this->countDays = $countDays;
+
+        return $this;
+    }
+
+    /**
+     * Get countDays
+     *
+     * @return integer
+     */
+    public function getCountDays()
+    {
+        return $this->countDays;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $eventOffer;
+
+
+    /**
+     * Add eventOffer
+     *
+     * @param \Acted\LegalDocsBundle\Entity\EventOffer $eventOffer
+     *
+     * @return Event
+     */
+    public function addEventOffer(\Acted\LegalDocsBundle\Entity\EventOffer $eventOffer)
+    {
+        $this->eventOffer[] = $eventOffer;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventOffer
+     *
+     * @param \Acted\LegalDocsBundle\Entity\EventOffer $eventOffer
+     */
+    public function removeEventOffer(\Acted\LegalDocsBundle\Entity\EventOffer $eventOffer)
+    {
+        $this->eventOffer->removeElement($eventOffer);
+    }
+
+    /**
+     * Get eventOffer
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventOffer()
+    {
+        return $this->eventOffer;
     }
 }

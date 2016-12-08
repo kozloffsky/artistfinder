@@ -13,50 +13,52 @@ $(function () {
         {value: "500+", text: "500+"}
     ];
 
-    var eventsVue = new Vue({
-        el: '#client-event-details',
-        delimiters: ['${', '}'],
-        data: {
-            event: '',
-            venues: '',
-            selectedVenue: '',
-            guests: numberOfGuests,
-            selectedGuest: ''
-        },
-        watch: {
-            "event.title": function (newVal, oldVal) {
-                if (wasChanged(newVal, oldVal)) {
-                    toSend = {data: {title: newVal}};
-                    sendData(eventsVue.event.id, toSend);
-                }
+    if (document.querySelector('#client-event-details')) {
+        var eventsVue = new Vue({
+            el: '#client-event-details',
+            delimiters: ['${', '}'],
+            data: {
+                event: '',
+                venues: '',
+                selectedVenue: '',
+                guests: numberOfGuests,
+                selectedGuest: ''
             },
-            "event.timing": function (newVal, oldVal) {
-                if (wasChanged(newVal, oldVal)) {
-                    toSend = {data: {timing: newVal}};
-                    sendData(eventsVue.event.id, toSend);
+            watch: {
+                "event.title": function (newVal, oldVal) {
+                    if (wasChanged(newVal, oldVal)) {
+                        toSend = {data: {title: newVal}};
+                        sendData(eventsVue.event.id, toSend);
+                    }
+                },
+                "event.timing": function (newVal, oldVal) {
+                    if (wasChanged(newVal, oldVal)) {
+                        toSend = {data: {timing: newVal}};
+                        sendData(eventsVue.event.id, toSend);
+                    }
+                },
+                "event.location": function (newVal, oldVal) {
+                    if (wasChanged(newVal, oldVal)) {
+                        toSend = {data: {address: newVal}};
+                        sendData(eventsVue.event.id, toSend);
+                    }
+                },
+                selectedVenue: function (newVal, oldVal) {
+                    if (wasChanged(newVal, oldVal)) {
+                        toSend = {data: {venueType: newVal}};
+                        sendData(eventsVue.event.id, toSend);
+                    }
+                },
+                selectedGuest: function (newVal, oldVal) {
+                    if (wasChanged(newVal, oldVal)) {
+                        toSend = {data: {NumberOfGuests: newVal}};
+                        sendData(eventsVue.event.id, toSend);
+                    }
                 }
-            },
-            "event.location": function (newVal, oldVal) {
-                if (wasChanged(newVal, oldVal)) {
-                    toSend = {data: {address: newVal}};
-                    sendData(eventsVue.event.id, toSend);
-                }
-            },
-            selectedVenue: function (newVal, oldVal) {
-                if (wasChanged(newVal, oldVal)) {
-                    toSend = {data: {venueType: newVal}};
-                    sendData(eventsVue.event.id, toSend);
-                }
-            },
-            selectedGuest:function (newVal, oldVal) {
-                if(wasChanged(newVal, oldVal)){
-                    toSend = {data: {NumberOfGuests: newVal}};
-                    sendData(eventsVue.event.id, toSend);
-                }
-            }
 
-        }
-    });
+            }
+        });
+    }
 
     function wasChanged(newVal, oldVal) {
         return newVal !== oldVal && oldVal;

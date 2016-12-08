@@ -14,6 +14,7 @@ final class EventOfferData
     private $venueType;
     private $numberOfGuests;
     private $comment;
+    private $additionalInfo;
     private $performance;
     private $offer;
     private $event;
@@ -28,6 +29,7 @@ final class EventOfferData
     private $actsExtrasAccepted;
     private $timingAccepted;
     private $technicalRequirementsAccepted;
+    private $countDays;
 
     const NUMBER_OF_GUEST_MAX_50 = 'less_then_50';
     const NUMBER_OF_GUEST_MIN_50_MAX_100 = '50-100';
@@ -192,6 +194,22 @@ final class EventOfferData
     public function setComment($comment)
     {
         $this->comment = $comment;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAdditionalInfo()
+    {
+        return $this->additionalInfo;
+    }
+
+    /**
+     * @param string $additionalInfo
+     */
+    public function setAdditionalInfo($additionalInfo)
+    {
+        $this->additionalInfo = $additionalInfo;
     }
 
     /**
@@ -433,6 +451,22 @@ final class EventOfferData
     public function setPlaceId($placeId)
     {
         $this->placeId = $placeId;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getCountDays()
+    {
+        return $this->countDays;
+    }
+
+    /**
+     * @param integer $countDays
+     */
+    public function setCountDays($countDays)
+    {
+        $this->countDays = $countDays;
     }
     
 }

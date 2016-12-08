@@ -11,6 +11,24 @@ use Acted\LegalDocsBundle\Entity\User;
  */
 class EventRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+     * @param int $userId
+     * @return array
+     */
+    public function getEventsByUserId($userId)
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e', 'eo', 'o')
+            ->leftJoin('e.eventOffer', 'eo')
+            ->leftJoin('eo.offer', 'o')
+            ->where('e.user = :userId')
+            ->groupBy('e.id')
+            ->orderBy('eo.sendDateTime', 'DESC')
+            ->setParameter('userId', $userId)
+            ->getQuery()->getResult();
+    }
+
     /**
      * Get client events
      * @param User $user
