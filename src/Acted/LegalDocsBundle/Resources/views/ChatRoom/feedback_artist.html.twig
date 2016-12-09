@@ -8,9 +8,11 @@
 
         <div class="row rating-wrapper">
             <div>
+                {% if rating.averageRating | round(0, 'floor') > 0   %}
                 {% for i in 1..rating.averageRating | round(0, 'floor')%}
                     <i class="star-icon filled"></i>
                 {% endfor %}
+                {% endif %}
                 {% if  5-rating.averageRating | round(0,'floor') > 0  %}
                     {% for i in 1..(5-rating.averageRating) | round(0, 'ceil') %}
                         <i class="star-icon unfilled"></i>
