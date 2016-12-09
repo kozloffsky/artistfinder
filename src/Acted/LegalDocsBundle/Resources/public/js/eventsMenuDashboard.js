@@ -248,6 +248,9 @@ $(function () {
                 },
                 created: function() {
                     this.getAllVenuesType();
+                    $('.event-modal').find('#event_duration').val(this.eventObj.countDays);
+                    $('.event-modal').find('#guests_count').val(this.eventObj.eventNumberOfGuests);
+                    $('.event-modal').find('#venue_type').val(this.eventObj.venueType);
                 },
                 methods:{
                     createEvent: function (e) {

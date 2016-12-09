@@ -26,7 +26,7 @@
                             </div>
                             <div class="col-lg-6 no-pad-right ">
                                 <label class="col-xs-12 no-pad" for="count_days">1 day/multiple days</label>
-                                <select class="select_width_101" data-class="selections-white low-select" v-model="eventObj.countDays" name="count_days" id="event_duration">
+                                <select class="select_width_101" data-class="selections-white low-select" name="count_days" id="event_duration">
                                     <option v-for="n in 30" :value="n">${ n }-day event</option>
                                 </select>
                             </div>
@@ -55,14 +55,14 @@
                         <div class="col-lg-12 form-group">
                             <div class="col-lg-6 no-pad-left">
                                 <label for="venue_type">Venue type</label>
-                                <select class="select_width_101" data-class="selections-white low-select" v-model="eventObj.selectedVenueType" name="venue_type" id="venue_type">
+                                <select class="select_width_101" data-class="selections-white low-select" name="venue_type" id="venue_type">
                                     <option v-for="(venueType, venueTypeIndex) in eventObj.venueType" :value="venueType.id" name="venue_type">${ venueType.venue_type }</option>
                                 </select>
                             </div>
 
                             <div class="col-lg-6 no-pad-right guests-number">
                                 <label for="guests_count">Number of guests</label>
-                                <select class="select_width_101" data-class="selections-white low-select" v-model="eventObj.eventNumberOfGuests" name="number_of_guests" id="guests_count">
+                                <select class="select_width_101" data-class="selections-white low-select" name="number_of_guests" id="guests_count">
                                     <option value="less_then_50">Less than 50</option>
                                     <option value="50-100">50-100</option>
                                     <option value="100-500">100-500</option>
