@@ -109,6 +109,11 @@ event_messages:
   defaults: {_controller: ActedLegalDocsBundle:ChatRoom:showMessagesByEvent}
   methods: GET
 
+artist_dashboard_messages:
+  path: /messages/artist/{filter}
+  defaults: {_controller: ActedLegalDocsBundle:ChatRoom:showMessagesArtistDashboard, filter: false}
+  methods: GET
+
 delete_message:
   path: /delete/message/{message}
   defaults: {_controller: ActedLegalDocsBundle:ChatRoom:removeMessage}

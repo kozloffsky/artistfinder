@@ -469,9 +469,6 @@ class EventsController extends Controller
         $chatRoomId = $chatRoom->getId();
         $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
         $messages = $messagesRepo->getAllEventMessages($userId, $chatRoomId, $filter);
-        if ($user->getRoles()[0] == "ROLE_ARTIST") {
-            $messages = $messagesRepo->getAllMessages($userId, $filter);
-        }
         $context = SerializationContext::create()->setGroups(['all_messages']);
         $serializer = $this->get('jms_serializer');
 

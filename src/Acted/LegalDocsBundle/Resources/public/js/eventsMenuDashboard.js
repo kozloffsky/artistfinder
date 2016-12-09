@@ -16,7 +16,7 @@ $(function () {
      * @returns {int} userId
      */
     function getUserId() {
-        return getUser().userId;
+        return window.getUser().userId;
     }
 
     /**
@@ -25,7 +25,7 @@ $(function () {
      * @returns {string}
      */
     function getUserRole() {
-        return getUser().role;
+        return window.getUser().role;
     }
 
     /**
@@ -98,15 +98,25 @@ $(function () {
     function routeParser() {
         var routeArr = route.substr(1).split('/');
         var currentPage = routeArr[1];
+        var callFunc;
 
-        var avalFunctions = {
+        var avalFunctionsClient = {
             feedbacks: "getArtistsByEventId",
             events: "getEventDataById",
             messages: "getAllMessagesByEventId"
 
         };
 
-        var callFunc = avalFunctions[currentPage];
+        var avalFunctionsArtist = {
+            messages: "getAllMessagesByArtist"
+        };
+
+        if (getUserRole()[0] == 'ROLE_CLIENT') {
+            callFunc = avalFunctionsClient[currentPage];
+        } else if (getUserRole()[0] == 'ROLE_ARTIST') {
+            callFunc = avalFunctionsArtist[currentPage];
+        }
+
 
         if (typeof callFunc == "undefined") {
             var errorMsg = "No get data function is defined for this page ";
@@ -187,6 +197,9 @@ $(function () {
 
     window.getCurrentEvent = getCurrentEvent;
     window.setCurrentEvent = setCurrentEvent;
+    window.getUser = getUser;
+    window.getUserId = getUserId;
+    window.getUserRole = getUserRole;
 
     $('.new-client-event').click(function () {
         $('.event-modal').modal('show');
@@ -194,8 +207,10 @@ $(function () {
 
     if (route.search('dashboard/') > 0 && getUserRole()[0] == 'ROLE_CLIENT') {
         getEventsByUserId(getUserId());
+    } else if (route.search('dashboard/') > 0 && getUserRole()[0] == 'ROLE_ARTIST') {
+        var toCall = routeParser();
+        window[toCall]();
     }
-
     var eventAutocompService;
 
     /*Count comment text*/
@@ -203,8 +218,8 @@ $(function () {
     $('textarea[name="additional_info"]').keyup(charsCounter);
 
 
-    $(document).ready(function() {
-        $( "#event_event_date" ).datepicker({
+    $(document).ready(function () {
+        $("#event_event_date").datepicker({
             dateFormat: 'dd/mm/yy',
             minDate: 0
         });
@@ -212,13 +227,13 @@ $(function () {
         eventAutocompService = new GoogleAutocompleteService(),
             isAvailable = eventAutocompService.getFormElements('form[id="eventForm"]');
 
-        if(isAvailable)
+        if (isAvailable)
             eventAutocompService.initAutoComplete();
     });
 
     /**
-    * Count chars printed in the textarea and change the counter.
-    */
+     * Count chars printed in the textarea and change the counter.
+     */
     function charsCounter() {
         var $this = $(this);
         var $current = $this.prev('span').find('.current-count');
@@ -229,10 +244,10 @@ $(function () {
     }
 
     if (document.querySelector('.event-modal')) {
-        try{
+        try {
             var vue = new Vue({
                 el: '.event-modal',
-                delimiters: ['${','}'],
+                delimiters: ['${', '}'],
                 data: {
                     eventObj: {
                         name: '',
@@ -246,13 +261,13 @@ $(function () {
                         eventAdditionalInfo: ''
                     }
                 },
-                created: function() {
+                created: function () {
                     this.getAllVenuesType();
                     $('.event-modal').find('#event_duration').val(this.eventObj.countDays);
                     $('.event-modal').find('#guests_count').val(this.eventObj.eventNumberOfGuests);
                     $('.event-modal').find('#venue_type').val(this.eventObj.venueType);
                 },
-                methods:{
+                methods: {
                     createEvent: function (e) {
                         e.preventDefault();
 
@@ -296,8 +311,8 @@ $(function () {
                         };
 
                         $.ajax({
-                            type:'POST',
-                            url:'/event/create',
+                            type: 'POST',
+                            url: '/event/create',
                             data: data,
                             beforeSend: function () {
                                 $('#loadSpinner').fadeIn(500);
@@ -305,7 +320,7 @@ $(function () {
                             complete: function () {
                                 $('#loadSpinner').fadeOut(500);
                             },
-                            success:function(res){
+                            success: function (res) {
                                 $('.event-modal').modal('hide');
                                 // $('#freeQuoteModal').modal('hide');
                                 // $('#offerSuccess').modal('show');
@@ -320,7 +335,7 @@ $(function () {
                                 // $('#requestQuoteForm .errorCat').text('').hide();
                                 // prepareEventRequestForm();
                             },
-                            error: function(response){
+                            error: function (response) {
                                 // $('#loadSpinner').fadeOut(500);
                                 // $('#requestQuoteForm input').attr('style', '');
                                 // $('#quoteRequestSecond .errorCat').text('').hide();
@@ -344,7 +359,7 @@ $(function () {
                         $.ajax({
                             type: "GET",
                             url: '/event/list_venue_type',
-                            success: function(response) {
+                            success: function (response) {
                                 _this.eventObj.venueType = response.venueType;
                             }
                         })
@@ -354,9 +369,7 @@ $(function () {
                         cosnole.log(this.eventObj.selectedVenueType);
                     }
                 },
-                filters:{
-
-                },
+                filters: {},
                 watch: {
                     isAttached: function () {
 
@@ -364,7 +377,7 @@ $(function () {
                 }
 
             });
-        }catch (e){
+        } catch (e) {
         }
     }
 });

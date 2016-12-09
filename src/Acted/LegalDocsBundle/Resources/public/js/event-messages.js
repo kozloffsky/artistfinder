@@ -51,10 +51,31 @@ $(function () {
         });
     }
 
+    function getAllMessagesByArtist(filter) {
+        if (typeof filter == "undefined") {
+            filter = '';
+        }
+        $.ajax({
+            url: '/dashboard/messages/artist' + filter,
+            success: function (response) {
+                if (typeof response.messages !== 'undefined') {
+                    messagesVue.messages = response.messages;
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
     $('.messages #sortMessages').on('select2:select', function () {
-        var eventId = window.getCurrentEvent().id;
         var filter = '/' + $(this).val();
-        getAllMessagesByEventId(eventId, filter);
+        if(window.getUserRole()[0] == 'ROLE_CLIENT'){
+            var eventId = window.getCurrentEvent().id;
+            getAllMessagesByEventId(eventId, filter);
+        }else if(window.getUserRole()[0] == 'ROLE_ARTIST'){
+            getAllMessagesByArtist(filter);
+        }
     });
 
     function archiveMessage(messageId) {
@@ -88,4 +109,5 @@ $(function () {
     }
 
     window.getAllMessagesByEventId = getAllMessagesByEventId;
+    window.getAllMessagesByArtist = getAllMessagesByArtist;
 });
