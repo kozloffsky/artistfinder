@@ -7,7 +7,7 @@
         </div>
 
         <div class="row rating-wrapper">
-            <div>
+            <div class="rating-stars">
                 {% if rating.averageRating | round(0, 'floor') > 0   %}
                 {% for i in 1..rating.averageRating | round(0, 'floor')%}
                     <i class="star-icon filled"></i>
