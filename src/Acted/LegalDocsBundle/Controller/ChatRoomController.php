@@ -810,4 +810,31 @@ class ChatRoomController extends Controller
     public function artistSelectionAction(Request $request) {
         return $this->render('ActedLegalDocsBundle:Profile:client/artist_selection.html.twig');
     }
+
+    /**
+     * Get all messages for the artist.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function showMessagesArtistDashboardAction(Request $request)
+    {
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+        $userId = $user->getId();
+        $em = $this->getEM();
+        $filter = $request->get('filter');
+        $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
+        $messages = $messagesRepo->getAllMessages($userId, $filter);
+        $context = SerializationContext::create()->setGroups(['all_messages']);
+        $serializer = $this->get('jms_serializer');
+
+        $messages = $serializer->toArray($messages, $context);
+        $response = ['status' => 'success', 'messages' => $messages];
+
+        return new JsonResponse($response);
+    }
 }
