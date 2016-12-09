@@ -803,4 +803,11 @@ class ChatRoomController extends Controller
 
         return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
     }
+
+    /**
+     *  Artist section template
+     */
+    public function artistSelectionAction(Request $request) {
+        return $this->render('ActedLegalDocsBundle:Profile:client/artist_selection.html.twig');
+    }
 }

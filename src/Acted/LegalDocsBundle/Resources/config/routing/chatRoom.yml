@@ -115,3 +115,8 @@ delete_message:
   methods: DELETE
   requirements:
     message: \d+
+
+artist_selection:
+    path:     /artist-selection
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:artistSelection }
+    methods:  GET
