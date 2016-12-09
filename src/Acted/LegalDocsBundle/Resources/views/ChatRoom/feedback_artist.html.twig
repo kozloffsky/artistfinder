@@ -20,7 +20,7 @@
                 {% endif %}
             </div>
             <div class="rating-rate">
-                <span>{{ rating.averageRating | round}}/5 ({{ feedbacks | length }} votes)</span>
+                <span>{{ rating.averageRating | round(1)}}/5.0 ({{ feedbacks | length }} votes)</span>
             </div>
             {% if feedbacks | length < 5 %}
             <div class="rating-reach">
