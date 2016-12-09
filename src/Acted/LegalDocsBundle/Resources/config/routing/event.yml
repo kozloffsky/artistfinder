@@ -56,5 +56,5 @@ get_client_events:
     requirements:
       page: \d+
       size: \d+
-    defaults: { _controller: ActedLegalDocsBundle:Events:getClientEvents, page: 1, size: 10 }
+    defaults: { _controller: ActedLegalDocsBundle:Events:getClientEvents, page: null, size: null }
     methods:  GET

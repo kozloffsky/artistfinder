@@ -1,4 +1,12 @@
 $(function () {
+
+    /**
+     * events
+     *
+     * @type {array}
+     */
+    var clientEvents = [];
+
     /**
      * Current route
      *
@@ -33,13 +41,14 @@ $(function () {
      *
      * @param {int} userId
      */
-    function getEventsByUserId(userId) {
+    function getEventsByUserId(userId, reinit) {
         $.ajax({
             method: "GET",
             url: "/event/client/" + userId,
             success: function (data) {
                 if (typeof data.events !== 'undefined') {
-                    showEvents(data.events);
+                    clientEvents = data.events;
+                    showEvents(data.events, reinit);
                 }
             }
         });
@@ -163,7 +172,7 @@ $(function () {
      *
      * @param {array} events
      */
-    function showEvents(events) {
+    function showEvents(events, reinit) {
         var $eventsWrapper = $('div.events-menu > ul');
         var initCarousel = false;
         if (events.length > 4) {
@@ -178,13 +187,19 @@ $(function () {
             if (initCarousel) {
                 $('div.arrows').show();
 
-                var owl = $('.events-menu > ul').owlCarousel({
-                    items: 4,
-                    pagination: false,
-                    mouseDrag: false,
-                    responsive: true,
-                    responsiveBaseWidth: window
-                });
+                if (typeof(reinit) == 'undefined') {
+                    var owl = $('.events-menu > ul').owlCarousel({
+                        items: 4,
+                        pagination: false,
+                        mouseDrag: false,
+                        responsive: true,
+                        responsiveBaseWidth: window
+                    });
+                } else {
+                    //todo - need to fix (Uncaught TypeError: owl.trigger is not a function)
+                    var owl = $(".owl-carousel").data('owlCarousel');
+                    owl.reinit();
+                }
                 $('i.left').click(function () {
                     owl.trigger('owl.prev');
                 });
@@ -320,7 +335,8 @@ $(function () {
                             complete: function () {
                                 $('#loadSpinner').fadeOut(500);
                             },
-                            success: function (res) {
+                            success:function(res){
+                                getEventsByUserId(getUserId(), true);
                                 $('.event-modal').modal('hide');
                                 // $('#freeQuoteModal').modal('hide');
                                 // $('#offerSuccess').modal('show');

@@ -376,11 +376,15 @@ class ChatRoomController extends Controller
     public function bookingsAction(Request $request)
     {
         $userId = $this->getUser()->getId();
+
+        if (empty($this->getUser()->getProfile())) {
+            return $this->redirect($this->generateUrl('acted_legal_docs_homepage'));
+        }
+
         $chat = [];
         return $this->render('ActedLegalDocsBundle:ChatRoom:bookings.html.twig',
             compact('chat'));
     }
-
 
     public function pricesAction()
     {

@@ -1,38 +1,42 @@
 $(function () {
     'use strict';
-
-    var messagesVue = new Vue({
-        el: '.messages',
-        delimiters: ['${', '}'],
-        data: {
-            messages: [],
-            selectedFilter: ''
-        },
-        created: function () {
-            showMessages();
-        },
-        watch: {
-            "selectedFilter": function (newVal, oldVal) {
-                console.log(newVal, oldVal);
-            }
-        },
-        methods: {
-            archive: function (event) {
-                event.preventDefault();
-                var $this = $(event.target);
-                var message = $this.parents('article');
-                var messageId = message.data('messageId');
-                archiveMessage(messageId);
-            },
-            remove: function (event) {
-                event.preventDefault();
-                var $this = $(event.target);
-                var message = $this.parents('article');
-                var messageId = message.data('messageId');
-                removeMessage(messageId);
-            }
+    if (document.querySelector('.messages')) {
+        try{
+            var messagesVue = new Vue({
+                el: '.messages',
+                delimiters: ['${', '}'],
+                data: {
+                    messages: [],
+                    selectedFilter: ''
+                },
+                created: function () {
+                    showMessages();
+                },
+                watch: {
+                    "selectedFilter": function (newVal, oldVal) {
+                        console.log(newVal, oldVal);
+                    }
+                },
+                methods: {
+                    archive: function (event) {
+                        event.preventDefault();
+                        var $this = $(event.target);
+                        var message = $this.parents('article');
+                        var messageId = message.data('messageId');
+                        archiveMessage(messageId);
+                    },
+                    remove: function (event) {
+                        event.preventDefault();
+                        var $this = $(event.target);
+                        var message = $this.parents('article');
+                        var messageId = message.data('messageId');
+                        removeMessage(messageId);
+                    }
+                }
+            });
+        }catch (e){
         }
-    });
+    }
 
     function getAllMessagesByEventId(eventId, filter) {
         if (typeof filter == "undefined") {
