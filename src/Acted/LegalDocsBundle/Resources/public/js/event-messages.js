@@ -8,6 +8,9 @@ $(function () {
             messages: [],
             selectedFilter: ''
         },
+        created: function () {
+            showMessages();
+        },
         watch: {
             "selectedFilter": function (newVal, oldVal) {
                 console.log(newVal, oldVal);
@@ -78,6 +81,10 @@ $(function () {
                 console.log(error);
             }
         })
+    }
+
+    function showMessages() {
+        $('.dialogs').show();
     }
 
     window.getAllMessagesByEventId = getAllMessagesByEventId;
