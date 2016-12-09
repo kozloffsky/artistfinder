@@ -253,13 +253,14 @@ $(function () {
                     createEvent: function (e) {
                         e.preventDefault();
 
-                        console.log(this.eventObj.eventDate);
-
                         var country = 'United Kingdom';
 
                         //todo - need to do with vuejs without jquery
                         var eventDate = $('.event-modal').find('input[name=event_date]').val();
-                        var eventAddress = $('.event-modal').find('.event_location').val();
+                        var eventAddress = $('.event-modal').find('#event_location').val();
+                        var selectedVenueType = $('.event-modal #venue_type').find('option:selected').val();
+                        var countDays = $('.event-modal #event_duration').find('option:selected').val();
+                        var eventNumberOfGuests = $('.event-modal #guests_count').find('option:selected').val();
 
                         var eventType = 1;
                         var regionLat = eventAutocompService.coords.region.lat,
@@ -270,29 +271,31 @@ $(function () {
                             placeId = eventAutocompService.currentStore.placeId,
                             city = eventAutocompService.currentStore.city;
 
+                        var data = {
+                            user: getUserId(),
+                            name: this.eventObj.name,
+                            event_date: eventDate,
+                            venue_type: selectedVenueType,
+                            count_days: countDays,
+                            event_time: this.eventObj.eventTiming,
+                            location: eventAddress,
+                            number_of_guests: eventNumberOfGuests,
+                            additional_info: this.eventObj.eventAdditionalInfo,
+                            city_lat: cityLat,
+                            city_lng: cityLng,
+                            region_name: region,
+                            region_lat: regionLat,
+                            region_lng: regionLng,
+                            place_id: placeId,
+                            country: country,
+                            city: city,
+                            type: eventType
+                        };
+
                         $.ajax({
                             type:'POST',
                             url:'/event/create',
-                            data: {
-                                    user: getUserId(),
-                                    name: this.eventObj.name,
-                                    event_date: eventDate,
-                                    venue_type: this.eventObj.selectedVenueType,
-                                    count_days: this.eventObj.countDays,
-                                    event_time: this.eventObj.eventTiming,
-                                    location: eventAddress,
-                                    number_of_guests: this.eventObj.eventNumberOfGuests,
-                                    additional_info: this.eventObj.eventAdditionalInfo,
-                                    city_lat: cityLat,
-                                    city_lng: cityLng,
-                                    region_name: region,
-                                    region_lat: regionLat,
-                                    region_lng: regionLng,
-                                    place_id: placeId,
-                                    country: country,
-                                    city: city,
-                                    type: eventType
-                            },
+                            data: data,
                             beforeSend: function () {
                                 $('#loadSpinner').fadeIn(500);
                             },
@@ -342,6 +345,10 @@ $(function () {
                                 _this.eventObj.venueType = response.venueType;
                             }
                         })
+                    },
+                    setVenueType: function () {
+                        var _this = this;
+                        cosnole.log(this.eventObj.selectedVenueType);
                     }
                 },
                 filters:{
