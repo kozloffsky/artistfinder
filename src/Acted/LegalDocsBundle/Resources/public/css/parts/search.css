@@ -42,16 +42,16 @@
     vertical-align: middle;
 }
 
-.custom-checkbox label:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 17px;
-    width: 17px;
-    display: none;
-    background: url("../../assets/images/yes.png") no-repeat center;
-}
+/*.custom-checkbox label:after {*/
+    /*content: "";*/
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*top: 0;*/
+    /*height: 17px;*/
+    /*width: 17px;*/
+    /*display: none;*/
+    /*background: url("../../assets/images/yes.png") no-repeat center;*/
+/*}*/
 
 .custom-checkbox input:checked + label:after {
     content: "";

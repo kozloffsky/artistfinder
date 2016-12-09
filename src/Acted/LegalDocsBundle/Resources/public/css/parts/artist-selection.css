@@ -159,7 +159,7 @@
 
 /*artist selection styles start*/
 .artist-selection{
-    padding: 30px 0 70px;
+    /*padding: 30px 0 70px;*/
     min-height: 550px;
 }
 .tabs-block .slider{

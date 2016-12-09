@@ -1,0 +1,218 @@
+/* --- COLORS SECTION --- */
+.color-carrot { color: #ee7438; }
+.color-pistachio { color: #9bd981; }
+/* --- NOTIFICATION --- */
+.notification {
+    background-color: rgba(255, 121, 62, 0.3);
+    padding: 8px 4px 4px 6px;
+    text-align: center;
+}
+.notification p {
+    font-family: LatoRegular;
+    font-size: 14px;
+    color: rgba(60, 60, 60, 0.87);
+    text-align: justify;
+    margin: 0;
+}
+.btn.blue,
+.btn.orange {
+    color: #FFF;
+    height: 26px;
+    width: 140px;
+    border-radius: 13px;
+}
+/* --- AVATAR SECTION --- */
+.client-payments-block .avatar > img {
+    width: 93px;
+    height: 93px;
+    border-radius: 50px;
+    background-size: cover;
+}
+/* --- PAYMENT SECTION --- */
+.client-payments-block > div:nth-of-type(2) {
+    padding: 0 15px 0 30px;
+}
+.client-payments-block .payment-info-block .row {
+    margin: 0 0 10px 0;
+}
+.client-payments-block .payment-info-block .info-item {
+    display: inline-block;
+}
+.client-payments-block .payment-info-block .info-row {
+    text-align: right;
+}
+.client-payments-block .payment-info-block .info-row p {
+    margin: 0;
+}
+.client-payments-block .payment-info-block .info-row a.info-item {
+    color: rgba(0, 0, 0, .48);
+    text-decoration: underline;
+}
+.client-payments-block .payment-info-block .info-row a.info-item:nth-of-type(1) {
+    margin: 0 19px;
+}
+.client-payments-block .payment-info-block .deposit span,
+.client-payments-block .payment-info-block .balance span {
+    display: inline-block;
+    float: right;
+}
+.client-payments-block .payment-info-block .deposit:nth-of-type(1) {
+    margin: 30px 0 10px 0;
+}
+.client-payments-block .payment-info-block .deposit span:nth-of-type(1),
+.client-payments-block .payment-info-block .balance span:nth-of-type(1) {
+    float: left;
+    line-height: 20px;
+}
+.client-payments-block .payment-info-block .deposit span.non-refundable {
+    margin: 0 0 0 10px;
+    float: none;
+}
+/* --- ACT LIST SECTION --- */
+.client-payments-block {
+    font-family: LatoRegular;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 14px;
+    padding: 15px 0 37px 34px;
+    border-bottom: 2px solid #e9e9e9;
+}
+.client-payments-block .client-name {
+    font-family: Ubuntu;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.87);
+    margin: 0 0 2px 0;
+}
+.client-payments-block .client-order-act-info.title,
+.client-payments-block .client-order-act-info.description,
+.client-payments-block .client-order-act-info.time {
+    display: inline-block;
+}
+.client-payments-block .client-order-act-info.title {
+    font-size: 15px;
+}
+.client-payments-block .client-order-act-info.description,
+.client-payments-block .client-order-act-info.time {
+    font-size: 14px;
+}
+.client-payments-block .client-order-act-info.description {
+    margin: 0 16px;
+}
+.client-payments-block .control-list {
+    margin: 20px 0 0 0;
+}
+.client-payments-block .control-list .control-item {
+    display: inline-block;
+}
+.client-payments-block .control-list .control-item:nth-of-type(2) {
+    padding: 0 20px;
+}
+.client-payments-block .act-info-block .act-item {
+    margin: 0 0 7px 0;
+}
+@media screen and (max-width: 1199px) {
+    .client-payments-block .options-list {
+        padding: 0;
+    }
+    .client-payments-block .payment-info-block .deposit:nth-of-type(1) {
+        margin: 10px 0 10px 0;
+    }
+}
+@media screen and (max-width: 991px) {
+    .client-payments-block .payment-info-block .info-row {
+        text-align: center;
+    }
+    .client-payments .container {
+        width: 100%;
+        padding: 0;
+    }
+    .client-payments-block .payment-info-block .info-row {
+        text-align: center;
+        display: table-row;
+    }
+    .client-payments-block .payment-info-block .info-row .info-item {
+        display: table-cell;
+    }
+    .client-payments-block .payment-info-block .info-row p.info-item {
+        text-align: right;
+    }
+    .client-payments-block .payment-info-block .info-row a.info-item:nth-of-type(1) {
+        padding: 0 19px 10px 19px;
+    }
+    .client-payments-block .payment-info-block .info-row a.info-item:nth-of-type(2) {
+        text-align: left;
+    }
+}
+@media screen and (max-width: 768px) {
+    .client-payments-block {
+        padding: 15px 0 37px 13px;
+    }
+    .client-payments-block .client-name {
+        position: absolute;
+        top: -78px;
+        left: 160px;
+        margin: 0px -60px;
+    }
+    .client-payments-block .avatar {
+        margin: 0 0 18px 0;
+    }
+    .client-payments-block > div:nth-of-type(2) {
+        padding: 0;
+    }
+}
+@media screen and (max-width: 567px) {
+    .client-payments-block .row.control-list > div {
+        padding: 0;
+    }
+    .client-payments-block .control-list .control-item:nth-of-type(2) {
+        padding: 0;
+    }
+}
+@media screen and (max-width: 441px) {
+    .client-payments-block .control-item button {
+        width: calc(100vw - 69vw);
+        font-size: 12px;
+        padding: 0 5px;
+    }
+}
+@media screen and (max-width: 320px) {
+    .notification p {
+        padding: 8px 11px 10px 11px;
+    }
+    .client-payments-block {
+        padding: 15px 0 0 13px;
+    }
+    .client-payments-block .control-list .control-item {
+        margin: 0 90px 12px 90px;
+    }
+    .client-payments-block .control-item button {
+        width: 140px;
+        font-size: 14px;
+    }
+    .client-payments-block > div:nth-of-type(2) {
+        padding: 0;
+    }
+    .client-payments-block .client-order-act-info.title,
+    .client-payments-block .client-order-act-info.description {
+        float: left;
+    }
+    .client-payments-block .client-order-act-info.description {
+        margin: 0 0 17px 0;
+        clear: both;
+    }
+    .client-payments-block .client-order-act-info.time {
+        float: right;
+    }
+    .client-payments-block .act-info-block [class*="col-"] {
+        padding: 0 12px 0 3px;
+    }
+    .client-payments-block .payment-info-block > div:nth-of-type(1) {
+        padding: 0;
+    }
+    .client-payments-block .payment-info-block .deposit:nth-of-type(1) {
+        margin: 11px 0 10px 0;
+    }
+    .client-payments-block .control-list {
+        margin: 20px 0 20px -5px;
+    }
+}

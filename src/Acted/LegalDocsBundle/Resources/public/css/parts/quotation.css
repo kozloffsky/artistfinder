@@ -165,7 +165,7 @@
     font-weight: 300;
     color: rgba(61, 66, 72, 1);
 }
-.quotation-modal .travel-exp-container .custom-checkbox label:after, 
+.quotation-modal .travel-exp-container .custom-checkbox label:after,
 .quotation-modal .travel-exp-container .custom-checkbox label:before {
     width: 18px;
     height: 18px;
@@ -297,8 +297,8 @@
     font-size: 36px;
 }
 
-.quotation-modal input[disabled] {
-    background: #FFF !important;
+.quotation-modal .form-control[disabled] {
+    background: #d8d8d8 !important;
 }
 
 .quotation-modal .new-act-section {
@@ -318,7 +318,7 @@
 
 .quotation-modal .new-act-section input[quot-edit-title],
 .quotation-modal .new-act-section input[quot-edit-package-name]
- {
+{
     height: 28px;
     width: 164px;
     border: 2px solid rgba(229, 229, 229, 1);
@@ -344,14 +344,14 @@
     line-height: 14px;
 }
 
-.quotation-modal input[quot-edit-duration] {
+.quotation-modal select[quot-edit-duration] {
     border: 2px solid rgba(229, 229, 229, 1);
     border-radius: 5px;
-    height: 26px;
+    height: 28px;
     width: 44px;
 }
 
-.quotation-modal input[quot-edit-qty] {
+.quotation-modal select[quot-edit-qty] {
     border: 2px solid rgba(229, 229, 229, 1);
     border-radius: 5px;
     height: 26px;
@@ -384,7 +384,6 @@
     display: inline-block;
     vertical-align: middle;
     text-align: center;
-    padding-right: 0 !important;
 }
 
 .quotation-modal .extra-block-options .price-box {
@@ -429,24 +428,6 @@
     font-family: LatoRegular;
     font-size: 14px;
     padding: 0 2px 0 0px;
-}
-
-.quotation-modal div[act-type="service"] .act-option {
-    padding: 12px 12px 0 0 !important;
-}
-
-.quotation-modal .duration-select.extra {
-    width: 57px;
-    padding-left: 12px;
-}
-
-.quotation-modal .custom-price {
-    border: 2px solid rgba(229,229,229,1);
-    border-radius: 4px;
-    height: 26px;
-    width: 56px;
-    text-align: center;
-    margin: 0 2.5px;
 }
 
 @media screen and (max-width: 960px) {
