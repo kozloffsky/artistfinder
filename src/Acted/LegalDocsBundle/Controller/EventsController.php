@@ -469,8 +469,12 @@ class EventsController extends Controller
         $chatRoomId = $chatRoom->getId();
         $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
         $messages = $messagesRepo->getAllEventMessages($userId, $chatRoomId, $filter);
+        if ($user->getRoles()[0] == "ROLE_ARTIST") {
+            $messages = $messagesRepo->getAllMessages($userId, $filter);
+        }
         $context = SerializationContext::create()->setGroups(['all_messages']);
         $serializer = $this->get('jms_serializer');
+
         $messages = $serializer->toArray($messages, $context);
         $response = ['status' => 'success', 'messages' => $messages];
 
@@ -514,7 +518,7 @@ class EventsController extends Controller
                 return new JsonResponse([
                     'status' => 'error',
                     'message' => 'There are not any data'
-                ],  Response::HTTP_BAD_REQUEST);
+                ], Response::HTTP_BAD_REQUEST);
             }
 
             $event = $data['event'];
@@ -525,7 +529,7 @@ class EventsController extends Controller
                 return new JsonResponse([
                     'status' => 'error',
                     'message' => 'User not found'
-                ],  Response::HTTP_BAD_REQUEST);
+                ], Response::HTTP_BAD_REQUEST);
             }
 
             $eventArtist = $eventArtistRepo->findOneBy(array('event' => $event, 'artist' => $artist));
@@ -533,7 +537,7 @@ class EventsController extends Controller
                 return new JsonResponse([
                     'status' => 'error',
                     'message' => 'Artist already exists in event'
-                ],  Response::HTTP_BAD_REQUEST);
+                ], Response::HTTP_BAD_REQUEST);
             }
 
             $eventOfferData = new EventOfferData();
@@ -596,7 +600,7 @@ class EventsController extends Controller
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Error connecting'
-            ],  Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         return new JsonResponse(array(
