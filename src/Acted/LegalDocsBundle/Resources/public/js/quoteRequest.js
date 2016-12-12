@@ -93,6 +93,13 @@ $(function () {
 
     $(document).on('click','.askQuoteFromSearch',function(){
         var artistSlug = $(this).val();
+
+        if (typeof(artistSlug) == 'undefined') {
+            artistSlug = $(this).val();
+        }
+
+        window.artistSlug = artistSlug;
+
         getArtistInformationForQuote(artistSlug);
         $('#freeQuoteModal').modal('show');
     });
@@ -333,7 +340,13 @@ $(function () {
 
         var currentEvent = $("#chosenEvent select").val();
 
-        var slug = $('#slug').text();
+        var slug;
+        if (typeof(window.artistSlug) == 'undefined') {
+            slug = $('#slug').text();
+        } else {
+            slug = window.artistSlug;
+        }
+
         var comment = $('#comment_area textarea').val();
 
         if (currentEvent != 'newEvent' && currentEvent != '') {
