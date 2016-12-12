@@ -130,8 +130,7 @@ $(function () {
         if (typeof callFunc == "undefined") {
             var errorMsg = "No get data function is defined for this page ";
             errorMsg += currentPage;
-
-            throw new Error(errorMsg);
+            // throw new Error(errorMsg);
         }
 
         return callFunc
