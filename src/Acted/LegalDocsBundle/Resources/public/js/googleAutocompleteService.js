@@ -455,6 +455,13 @@
                             _this.currentStore.city = city;
                             $(_this.inputs[CITY]).val(city);
                         }
+                    case 'postal_town':
+                        var city = place_name; console.log("CITY: ", city);
+
+                        if(city) {
+                            _this.currentStore.city = city;
+                            $(_this.inputs[CITY]).val(city);
+                        }
                     case 'administrative_area_level_1':
                         var region = place_name; console.log("REGION: ", region);
 
