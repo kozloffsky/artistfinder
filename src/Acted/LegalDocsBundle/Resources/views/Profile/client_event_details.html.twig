@@ -24,7 +24,7 @@
                     <label class="col-xs-12 no-pad" for="event_days_duration">1 day/multiple days</label>
                     <select class="enable_toggler" data-class="selections-white low-select"
                             v-model.lazy="endingDate" name="event_days_duration" id="event_duration">
-                        <option value="1">1-day event</option>
+                        <option value="0">1-day event</option>
                         <option value="2">2-day event</option>
                         <option value="3">3-day event</option>
                         <option value="4">4-day event</option>
@@ -78,7 +78,7 @@
                 <div class="col-lg-6 col-md-6 no-pad-left">
                     <label for="venue_type">Venue type</label>
                     <select class="select_width_101 enable_toggler" data-class="selections-white low-select"
-                            name="venue_type" id="venue_type" v-model="selectedVenue">
+                            name="venue_type" id="venue_type" v-model.lazy="selectedVenue">
                         <option v-for="venue in venues" v-bind:value="venue.id">${venue.venue_type}</option>
                     </select>
                 </div>
@@ -92,8 +92,8 @@
             </div>
             <div class="row">
                 <label for="additional_info">Additional info</label>
-                <span class="additional_info_counter"><span class="current-count">0</span><span>/1000</span></span>
-                <textarea maxlength="200" v-bind:value="event.comments" class="form-control additional_info_input enable_toggler"
+                <span class="additional_info_counter"><span class="current-count">${charCount}</span><span>/200</span></span>
+                <textarea maxlength="200" v-model.lazy.trim="event.comments" v-bind:value="event.comments" class="form-control additional_info_input enable_toggler"
                           id="additional_info" placeholder="Put your comments here"></textarea>
             </div>
         </div>

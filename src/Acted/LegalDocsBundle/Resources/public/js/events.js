@@ -23,7 +23,8 @@ $(function () {
                 selectedVenue: '',
                 guests: numberOfGuests,
                 selectedGuest: '',
-                endingDate: ''
+                endingDate: '',
+                charCount: 0
             },
             created: function () {
                 showEvents();
@@ -68,6 +69,12 @@ $(function () {
                         toSend = {data: {endingDate: newDate}};
                         sendData(eventsVue.event.id, toSend);
                     }
+                },
+                "event.comments": function (newVal, oldVal) {
+                    if (wasChanged(newVal, oldVal)) {
+                        toSend = {data: {comments: newVal}};
+                        sendData(eventsVue.event.id, toSend);
+                    }
                 }
             }
         });
@@ -91,6 +98,7 @@ $(function () {
                     var st_date = moment(event.starting_date, "DD/MM/YYYY");
                     var end_date = moment(event.ending_date, "DD/MM/YYYY");
                     eventsVue.endingDate = end_date.diff(st_date, 'days');
+                    eventsVue.charCount = event.comments.length;
                 }
             },
             error: function (error) {
@@ -145,6 +153,23 @@ $(function () {
             minDate: 0
         });
     });
+
+    /**
+     * Count chars printed in the textarea and change the   counter.
+     */
+    function charsCounter() {
+        var $this = $(this);
+        var $wrapper = $this.parents('.row');
+        var $current = $wrapper.find('.current-count');
+
+        var text = $this.val();
+        text = text.replace(/(?:\r\n|\r|\n)/g, ' ');
+        $this.html(text);
+        $current.html(text.length);
+    }
+
+
+    $('textarea#additional_info').keyup(charsCounter);
 
     window.getEventDataById = getEventDataById;
 });
