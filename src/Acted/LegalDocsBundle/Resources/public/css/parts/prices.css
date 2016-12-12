@@ -498,6 +498,9 @@ main.prices .note{
     .container {
         width: 100%;
     }
+    .prices .act {
+        padding: 0 0 0 10px;
+    }
     .prices .act .price-list li{
         display: inline-block;
     }

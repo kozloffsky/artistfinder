@@ -1,10 +1,17 @@
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
 
-<main class="messages">
+{% if app.user is not empty %}
+    {% if app.user.roles[0] == "ROLE_CLIENT"  %}
+        <main class="dashboard client messages">
+    {% else %}
+        <main class="messages">
+    {% endif %}
+{% endif %}
+
     <div class="container">
         {% if app.user is not empty %}
             {% if app.user.roles[0] == "ROLE_CLIENT"  %}
-                {% include '@ActedLegalDocs/Profile/client/client_menu.html.twig' %}
+                {% include 'ActedLegalDocsBundle:Profile:client/client_menu.html.twig' %}
             {% else %}
                 {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
             {% endif %}

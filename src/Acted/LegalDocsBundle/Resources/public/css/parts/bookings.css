@@ -75,6 +75,7 @@ i.pound {
     position: absolute;
     top: 118px;
     font-size: 24px;
+    font-style: normal;
     /*background: url(../../assets/images/pound_ic.png);*/
 }
 i.bookings {
@@ -135,6 +136,7 @@ i.pound_black {
     display: inline-block;
     height: 21px;
     width: 18px;
+    font-style: normal;
     /*background-image: url(../../assets/images/pound-black.png);*/
     /*background-repeat: no-repeat;*/
 }
@@ -148,6 +150,7 @@ i.pound_black {
     font-size: 18px;
     font-family: LatoRegular;
     font-weight: 400;
+    font-style: normal;
 }
 
 .total_collected p .total_collected__ammount {

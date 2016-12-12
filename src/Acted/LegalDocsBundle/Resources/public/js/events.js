@@ -5,7 +5,7 @@ $(function () {
     //todo try to re fracture to 1 watcher.
 
     var toSend;
-
+    var eventsVue;
     var numberOfGuests = [
         {value: "less_then_50", text: "Less than 50"},
         {value: "50-100", text: "50-100"},
@@ -14,7 +14,7 @@ $(function () {
     ];
 
     if (document.querySelector('#client-event-details')) {
-        var eventsVue = new Vue({
+        eventsVue = new Vue({
             el: '#client-event-details',
             delimiters: ['${', '}'],
             data: {

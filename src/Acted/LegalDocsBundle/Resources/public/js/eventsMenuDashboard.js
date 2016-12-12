@@ -189,10 +189,11 @@ $(function () {
 
                 if (typeof(reinit) == 'undefined') {
                     var owl = $('.events-menu > ul').owlCarousel({
-                        items: 4,
+                        items: 5,
                         pagination: false,
                         mouseDrag: false,
                         responsive: true,
+                        autoWidth:true,
                         responsiveBaseWidth: window
                     });
                 } else {
