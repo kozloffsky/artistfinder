@@ -1240,6 +1240,21 @@ $(function() {
             return frameService;
         }
     }
+
+
+    $('#freeQuoteModal #comment_toggle').click(function (e) {
+        e.preventDefault();
+
+        $(this).closest('div').find('#comment_area').toggle();
+
+        if($(this).prop('hide-comment')) {
+            $(this).text('Add a comment');
+            $(this).prop('hide-comment', false);
+        } else {
+            $(this).text('Hide a comment');
+            $(this).prop('hide-comment', true);
+        }
+    });
 });
 
 
