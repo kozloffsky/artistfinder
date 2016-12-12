@@ -131,6 +131,7 @@ $(function () {
             var errorMsg = "No get data function is defined for this page ";
             errorMsg += currentPage;
             // throw new Error(errorMsg);
+
         }
 
         return callFunc
@@ -144,11 +145,12 @@ $(function () {
      */
     function getDataForEvent(eventId) {
         var toCall = routeParser();
+        if(typeof toCall !== 'undefined'){
+            try {
+                window[toCall](eventId)
+            } catch (e) {
 
-        try {
-            window[toCall](eventId)
-        } catch (e) {
-
+            }
         }
     }
 
