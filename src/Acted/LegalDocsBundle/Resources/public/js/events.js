@@ -22,7 +22,11 @@ $(function () {
                 venues: '',
                 selectedVenue: '',
                 guests: numberOfGuests,
-                selectedGuest: ''
+                selectedGuest: '',
+                endingDate: ''
+            },
+            created: function () {
+                showEvents();
             },
             watch: {
                 "event.title": function (newVal, oldVal) {
@@ -54,8 +58,17 @@ $(function () {
                         toSend = {data: {NumberOfGuests: newVal}};
                         sendData(eventsVue.event.id, toSend);
                     }
+                },
+                endingDate: function (newVal, oldVal) {
+                    if (wasChanged(newVal, oldVal)) {
+                        var event = eventsVue.event;
+                        var st_date = moment(event.starting_date, "DD/MM/YYYY");
+                        var newDate = st_date.add(newVal, 'days');
+                        newDate = newDate.format("DD/MM/YYYY");
+                        toSend = {data: {endingDate: newDate}};
+                        sendData(eventsVue.event.id, toSend);
+                    }
                 }
-
             }
         });
     }
@@ -65,14 +78,19 @@ $(function () {
     }
 
     function getEventDataById(eventId) {
+        getVenues();
         $.ajax({
             url: '/api/events/' + eventId,
             success: function (response) {
                 if (typeof response.event !== 'undefined') {
                     window.setCurrentEvent(response.event);
+                    var event = response.event;
                     eventsVue.event = response.event;
                     eventsVue.selectedVenue = eventsVue.event.venue_type.id;
                     eventsVue.selectedGuest = eventsVue.event.number_of_guests;
+                    var st_date = moment(event.starting_date, "DD/MM/YYYY");
+                    var end_date = moment(event.ending_date, "DD/MM/YYYY");
+                    eventsVue.endingDate = end_date.diff(st_date, 'days');
                 }
             },
             error: function (error) {
@@ -109,14 +127,23 @@ $(function () {
         });
     }
 
-    getVenues();
-
     //todo re fracture to vuejs
     $('#event_date').change(function () {
         var eventId = window.getCurrentEvent().id;
         var date = $(this).val();
         toSend = {data: {startingDate: date}};
         sendData(eventId, toSend);
+    });
+
+    function showEvents() {
+        $('.left_column').show();
+    }
+
+    $().ready(function () {
+        $("#event_date").datepicker({
+            dateFormat: 'dd/mm/yy',
+            minDate: 0
+        });
     });
 
     window.getEventDataById = getEventDataById;

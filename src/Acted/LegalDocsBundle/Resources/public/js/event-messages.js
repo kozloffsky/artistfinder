@@ -112,6 +112,19 @@ $(function () {
         $('.dialogs').show();
     }
 
+    /**
+     * Return html for charCounter in the textarea.
+     *
+     * @returns {string} html
+     */
+    function charCounterHtml() {
+        var html = "<p class='char-count'>";
+        html += "<span class='current-count'>0</span><span>/1000</span>";
+        html += "</p>";
+
+        return html;
+    }
+
     window.getAllMessagesByEventId = getAllMessagesByEventId;
     window.getAllMessagesByArtist = getAllMessagesByArtist;
 });
