@@ -1,5 +1,11 @@
 $(function () {
 
+    var eventDetailsAutocompService = new GoogleAutocompleteService(),
+        isAvailable = eventDetailsAutocompService.getFormElements('.dashboard form[name="event-details"]');
+
+    if(isAvailable)
+        eventDetailsAutocompService.initAutoComplete();
+
     /**
      * events
      *

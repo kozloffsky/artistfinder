@@ -52,7 +52,7 @@
 .client_event_details .additional_info_counter {
     position: absolute;
     right: 8px;
-    top: 47px;
+    top: 14px;
 }
 .client_event_details .entertainer {
     border: 3px solid rgba(255, 240, 188, 1);

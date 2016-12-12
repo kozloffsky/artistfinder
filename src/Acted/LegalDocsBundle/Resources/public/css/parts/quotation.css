@@ -344,14 +344,14 @@
     line-height: 14px;
 }
 
-.quotation-modal select[quot-edit-duration] {
+.quotation-modal input[quot-edit-duration] {
     border: 2px solid rgba(229, 229, 229, 1);
     border-radius: 5px;
     height: 28px;
     width: 44px;
 }
 
-.quotation-modal select[quot-edit-qty] {
+.quotation-modal input[quot-edit-qty] {
     border: 2px solid rgba(229, 229, 229, 1);
     border-radius: 5px;
     height: 26px;
