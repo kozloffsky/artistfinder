@@ -131,6 +131,7 @@ $(function () {
             var errorMsg = "No get data function is defined for this page ";
             errorMsg += currentPage;
             // throw new Error(errorMsg);
+            callFunc = "noDataFunc";
 
         }
 
@@ -145,13 +146,7 @@ $(function () {
      */
     function getDataForEvent(eventId) {
         var toCall = routeParser();
-        if(typeof toCall !== 'undefined'){
-            try {
-                window[toCall](eventId)
-            } catch (e) {
-
-            }
-        }
+        window[toCall](eventId)
     }
 
     /**
@@ -260,6 +255,11 @@ $(function () {
         $current.html(text.length);
     }
 
+    function noDataFunc() {
+        console.log('No get data function is defined for this page ');
+    }
+
+    window.noDataFunc = noDataFunc;
     if (document.querySelector('.event-modal')) {
         try {
             var vue = new Vue({
