@@ -88,9 +88,11 @@ class ProfileController extends Controller
         $perf = $this->getPerformances($artist, $request->get('page', 1), true);
         $performances = $this->sortPerformancesByPrice($perf);
         $feedbacks = $this->getFeedbacks($artist, 1);
+        $feedbackRepo = $em->getRepository('ActedLegalDocsBundle:Feedback');
+        $rating = $feedbackRepo->getAverageArtistRating($artist->getId());
 
         return $this->render('ActedLegalDocsBundle:Profile:show.html.twig',
-            compact('artist', 'user', 'performances', 'feedbacks', 'categories')
+            compact('artist', 'user', 'performances', 'feedbacks', 'categories', 'rating')
         );
     }
 
