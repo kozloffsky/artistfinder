@@ -65,6 +65,9 @@ $(function () {
                         var event = eventsVue.event;
                         var st_date = moment(event.starting_date, "DD/MM/YYYY");
                         var days = newVal;
+                        if(typeof event.comments == 'undefined'){
+                            eventsVue.event.comments = '';
+                        }
                         if(days == 1){
                             days = 0
                         }
