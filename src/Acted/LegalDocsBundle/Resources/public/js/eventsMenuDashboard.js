@@ -194,7 +194,7 @@ $(function () {
                         pagination: false,
                         mouseDrag: false,
                         responsive: true,
-                        autoWidth:true,
+                        autoWidth: true,
                         responsiveBaseWidth: window
                     });
                 } else {
@@ -337,7 +337,7 @@ $(function () {
                             complete: function () {
                                 $('#loadSpinner').fadeOut(500);
                             },
-                            success:function(res){
+                            success: function (res) {
                                 getEventsByUserId(getUserId(), true);
                                 $('.event-modal').modal('hide');
                                 // $('#freeQuoteModal').modal('hide');
@@ -398,4 +398,14 @@ $(function () {
         } catch (e) {
         }
     }
+
+    function setActiveMenu() {
+        if ($('.options-menu').length > 0) {
+            var $menu = $('.options-menu');
+            $menu.find('li').removeClass('active-item');
+            $menu.find('a[href*="' + route + '"]').parent().addClass('active-item');
+        }
+    }
+
+    $().ready(setActiveMenu);
 });

@@ -23,19 +23,19 @@
     </label>
     <ul class="ul-reset">
         <li class="active-item">
-            <a href="/dashboard/events">Event details</a>
+            <a href="{{ path('events') }}">Event details</a>
         </li>
         <li>
-            Messages
+            <a href="{{ path('event_messages') }}">Messages</a>
         </li>
         <li>
-            <a href="/dashboard/feedbacks">Artist selection</a>
+            <a href="#">Artist selection</a>
         </li>
         <li>
             Payments
         </li>
         <li>
-            <a href="/dashboard/feedbacks">Feedback</a>
+            <a href="{{ path('feedbacks') }}">Feedback</a>
         </li>
     </ul>
 </div>
