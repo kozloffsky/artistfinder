@@ -210,6 +210,9 @@
     padding: 12px 0 0 12px;
     position: relative;
 }
+.quotation-modal .act-option {
+    margin: 12px 11px 0 0;
+}
 .quotation-modal .row.package a {
     margin: 0 0 0 19px;
     vertical-align: super;
@@ -230,13 +233,6 @@
     height: 22px;
     margin: 0;
 }
-.quotation-modal .custom-checkbox label:before,
-.quotation-modal .custom-checkbox label:after {
-    left: 50%;
-    top: 50%;
-    margin: -9px -9px;
-}
-
 /*.quotation-modal i.fa.fa-trash {
     right: 35px;
     position: absolute;
@@ -310,7 +306,7 @@
 }
 .quotation-modal .act-option {
     display: inline-block;
-    margin: 0 0 12px 0;
+    /*margin: 0 0 12px 0;*/
 }
 .quotation-modal .act-option:nth-of-type(even) {
     padding: 0 0 0 12px !important;
@@ -384,6 +380,7 @@
     display: inline-block;
     vertical-align: middle;
     text-align: center;
+    padding: 0 0 0 2px;
 }
 
 .quotation-modal .extra-block-options .price-box {
@@ -428,6 +425,18 @@
     font-family: LatoRegular;
     font-size: 14px;
     padding: 0 2px 0 0px;
+}
+
+.quotation-modal .custom-checkbox label:after {
+    margin: -8px -6px;
+    left: 50%;
+    top: 50%;
+    width: 5px;
+    height: 9px;
+}
+
+.quotation-modal div[act-id] {
+    padding: 0 0 14px 0;
 }
 
 @media screen and (max-width: 960px) {
