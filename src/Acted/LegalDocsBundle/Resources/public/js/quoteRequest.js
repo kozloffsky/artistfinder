@@ -191,8 +191,10 @@ $(function () {
 
     function createArtistDataViewInQuote(artistData){
         var artistCatString = artistData.categories.toString();
-        $('.quoteRequestArtistData .quote-profile-info h2').html(artistData.name);
-        $('.quoteRequestArtistData .quote-profile-info p').html(artistCatString);
+        console.log(artistCatString);
+        $('.free-quote-modal .quote-profile-info h2').html(artistData.name);
+        $('.free-quote-modal .quote-profile-info p.quote-profile-info__spec').html(artistCatString);
+        $('.free-quote-modal .quote-profile-info p.quote-profile-info__residence').html(artistData.country + ' ' + artistData.city);
         if(artistData.user.avatar){
             $('.quote-profile-avatar').attr('src', artistData.user.avatar);
         } else {
