@@ -64,9 +64,17 @@ $(function () {
                     if (wasChanged(newVal, oldVal)) {
                         var event = eventsVue.event;
                         var st_date = moment(event.starting_date, "DD/MM/YYYY");
-                        var newDate = st_date.add(newVal, 'days');
+                        var days = newVal;
+                        if(days == 1){
+                            days = 0
+                        }
+                        var newDate = st_date.add(days, 'days');
                         newDate = newDate.format("DD/MM/YYYY");
                         toSend = {data: {endingDate: newDate}};
+                        sendData(eventsVue.event.id, toSend);
+
+                        days = days == 0 ? 1 : days;
+                        toSend = {data: {countDays: days}};
                         sendData(eventsVue.event.id, toSend);
                     }
                 },
@@ -97,8 +105,12 @@ $(function () {
                     eventsVue.selectedGuest = eventsVue.event.number_of_guests;
                     var st_date = moment(event.starting_date, "DD/MM/YYYY");
                     var end_date = moment(event.ending_date, "DD/MM/YYYY");
-                    eventsVue.endingDate = end_date.diff(st_date, 'days');
                     eventsVue.charCount = (typeof(event.comments) !== 'undefined') ? event.comments.length : 0;
+                    var diff = end_date.diff(st_date, 'days');
+                    if(diff == 0){
+                        diff = 1;
+                    }
+                    eventsVue.endingDate = diff;
                 }
             },
             error: function (error) {

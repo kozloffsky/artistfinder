@@ -24,7 +24,7 @@
                     <label class="col-xs-12 no-pad" for="event_days_duration">1 day/multiple days</label>
                     <select class="enable_toggler" data-class="selections-white low-select"
                             v-model.lazy="endingDate" name="event_days_duration" id="event_duration">
-                        <option value="0">1-day event</option>
+                        <option value="1">1-day event</option>
                         <option value="2">2-day event</option>
                         <option value="3">3-day event</option>
                         <option value="4">4-day event</option>
@@ -92,7 +92,7 @@
             </div>
             <div class="row">
                 <label for="additional_info">Additional info</label>
-                <span class="additional_info_counter"><span class="current-count">${charCount}</span><span>/200</span></span>
+                <span class="additional_info_counter"><span class="current-count">${charCount}</span><span>/450</span></span>
                 <textarea maxlength="200" v-model.lazy.trim="event.comments" v-bind:value="event.comments" class="form-control additional_info_input enable_toggler"
                           id="additional_info" placeholder="Put your comments here"></textarea>
             </div>
