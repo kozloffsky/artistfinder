@@ -98,7 +98,7 @@ $(function () {
                     var st_date = moment(event.starting_date, "DD/MM/YYYY");
                     var end_date = moment(event.ending_date, "DD/MM/YYYY");
                     eventsVue.endingDate = end_date.diff(st_date, 'days');
-                    eventsVue.charCount = event.comments.length;
+                    eventsVue.charCount = (typeof(event.comments) !== 'undefined') ? event.comments.length : 0;
                 }
             },
             error: function (error) {
