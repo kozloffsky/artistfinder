@@ -26,7 +26,7 @@
             <div class="dialogs" style="display: none;">
                 <article v-for="message in messages" v-bind:data-message-id="message.id" class="col-xs-12 dialog-section noselect" data-longtap-duration="500">
                     <div class="wrap clearfix">
-                        <div v-if="!message.read_date_time" class="message-info active"></div>
+                        <div class="message-info" :class="!message.read_date_time ? 'active' : ''"></div>
                         <div class="avatar">
                             <img v-if="message.sender_user.avatar" v-bind:src="message.sender_user.avatar" alt=""/>
                             <img v-else src="/assets/images/noAvatar.png" alt=""/>

@@ -98,6 +98,11 @@ $(function () {
         return JSON.parse(localStorage.getItem('currentEvent'));
     }
 
+    function noDataFunc() {
+        console.log('No get data function is defined for this page ');
+    }
+
+    window.noDataFunc = noDataFunc;
     /**
      * Get data depending on route.
      * Calls according function.
@@ -255,11 +260,6 @@ $(function () {
         $current.html(text.length);
     }
 
-    function noDataFunc() {
-        console.log('No get data function is defined for this page ');
-    }
-
-    window.noDataFunc = noDataFunc;
     if (document.querySelector('.event-modal')) {
         try {
             var vue = new Vue({
