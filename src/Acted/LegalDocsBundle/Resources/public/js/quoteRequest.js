@@ -76,7 +76,7 @@ $(function () {
             url: '/event/list_venue_type',
             success: function(response) {
                 $(response.venueType).each(function(){
-                    $('.free-quote-modal #venue_type').append('<option value="'+ this.id +'" name="venue_type">'+this.venue_type+'</option>');
+                    $('#freeQuoteModal #venue_type').append('<option value="'+ this.id +'" name="venue_type">'+this.venue_type+'</option>');
                 });
                 initSelect();
             }

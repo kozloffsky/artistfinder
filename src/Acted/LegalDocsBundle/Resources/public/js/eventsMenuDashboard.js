@@ -225,6 +225,14 @@ $(function () {
     window.getUserRole = getUserRole;
 
     $('.new-client-event').click(function () {
+        var countDays = 1;
+        var eventNumberOfGuests = 'less_then_50';
+        var venueType = 0;
+
+        $('.event-modal').find('#event_duration').val(countDays);
+        $('.event-modal').find('#guests_count').val(eventNumberOfGuests);
+        $('.event-modal').find('#venue_type').val(venueType);
+        $('.event-modal').find('form').find("input[type=text], textarea").val("");
         $('.event-modal').modal('show');
     });
 
@@ -288,7 +296,10 @@ $(function () {
                     this.getAllVenuesType();
                     $('.event-modal').find('#event_duration').val(this.eventObj.countDays);
                     $('.event-modal').find('#guests_count').val(this.eventObj.eventNumberOfGuests);
-                    $('.event-modal').find('#venue_type').val(this.eventObj.venueType);
+
+                    //console.log($('.event-modal').find('#venue_type').val(this.eventObj.selectedVenueType));
+                    //console.log($('.event-modal').find('#venue_type').find('option').attr('selected', 'selected'));
+                    //$('.event-modal').find('#venue_type').val(this.eventObj.selectedVenueType);
                 },
                 methods: {
                     createEvent: function (e) {

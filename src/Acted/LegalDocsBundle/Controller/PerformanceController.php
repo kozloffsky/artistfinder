@@ -49,6 +49,10 @@ class PerformanceController extends Controller
 
             $em->persist($performance);
 
+            $duration = 1;
+            $qty = 1;
+            $priceAmount = 3000;
+
             $profile = $artist->getUser()->getProfile();
             $package = new Package();
             $package->setProfile($profile);
@@ -58,10 +62,12 @@ class PerformanceController extends Controller
 
             $option = new Option();
             $option->setPackage($package);
+            $option->setQty($qty);
+            $option->setDuration($duration);
             $em->persist($option);
 
             $price = new Price();
-            $price->setAmount(3000);
+            $price->setAmount($priceAmount);
             $em->persist($price);
 
             $rate = new Rate();

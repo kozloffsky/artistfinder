@@ -156,7 +156,14 @@
 
     if(data.model.user.type == 'ARTIST') {
         disabled = 'disabled';
-    } %>
+    }
+
+    var numberOfGuests = data.model.number_of_guests;
+    if (numberOfGuests == 'less_then_50') {
+        numberOfGuests = 'Less then 50';
+    }
+
+    %>
 
     <div class="modal-body">
         <div class="row clearfix">
@@ -172,8 +179,8 @@
                 <input type="text" class="form-control" id="quot_date" placeholder="17/12/2016" name="date" value="<%=data.model.starting_date%>" <%=disabled%>>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                <label for="quot_city">1 day/multiple days</label>
-                <input type="text" class="form-control" id="quot_city" placeholder="London" name="city" value="2-day event" autocomplete="off" <%=disabled%>>
+                <label for="quot_event_duration">1 day/multiple days</label>
+                <input type="text" class="form-control" id="quot_event_duration" placeholder="2-day event" name="event_duration" value="<%=data.model.count_days%>-day event" autocomplete="off" <%=disabled%>>
             </div>
         </div>
 
@@ -203,13 +210,13 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                 <label for="quot_guests_number">Number of guests</label>
-                <input type="text" class="form-control" id="quot_guests_number" placeholder="Less than 50" name="guests_number" value="<%=data.model.number_of_guests%>" <%=disabled%>>
+                <input type="text" class="form-control" id="quot_guests_number" placeholder="Less than 50" name="guests_number" value="<%=numberOfGuests%>" <%=disabled%>>
             </div>
         </div>
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                 <label for="quot_venue_type">Additional info</label>
-                <textarea class="additional-info" <%=disabled%>>I want this celebration to be super cool!</textarea>
+                <textarea class="additional-info" <%=disabled%>><%=data.model.comments%></textarea>
             </div>
         </div>
     </div>
@@ -300,11 +307,22 @@
                                 <label for="option_<%=option.id%>"></label>
                             </div>
 
-                            <% if(type == 'performance') { %>
+                            <%
+                                if(type == 'performance') {
+                                    var curDuration = option.duration;
+                                    var curQty = option.qty;
+                                    if (curDuration == null) {
+                                        curDuration = 1;
+                                    }
 
-                            <input quot-edit-qty name="qty" class="quantity-select" value="<%=option.qty%>" placeholder="<%=option.qty%>" disabled>
+                                    if (curQty == null) {
+                                        curQty = 1;
+                                    }
+                            %>
+
+                            <input quot-edit-qty name="qty" class="quantity-select" value="<%=curQty%>" placeholder="<%=curQty%>" disabled>
                             <span>x</span>
-                            <input quot-edit-duration name="duration" class="duration-select" value="<%=option.duration%>" placeholder="<%=option.duration%>" disabled>
+                            <input quot-edit-duration name="duration" class="duration-select" value="<%=curDuration%>" placeholder="<%=curDuration%>" disabled>
                             <span class="minutes">min</span>
                             <select quot-edit-price class="price-box" name="price">
                                 <% for(var r = 0; r < option.rates.length; r++) {
