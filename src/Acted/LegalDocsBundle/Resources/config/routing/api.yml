@@ -5,14 +5,24 @@ api_event:
   requirements:
     event: \d+
 
+api_event_messages:
+  path: /events/{event}/messages/{filter}
+  defaults: {_controller: ActedLegalDocsBundle:Events:getMessages, filter: false}
+  methods: GET
+  requirements:
+    event: \d+
+
 api_event_edit:
   path: /events/{event}/edit
   defaults: { _controller: ActedLegalDocsBundle:Events:updateEvent }
   methods: [PATCH]
-  requirements:
-    event: \d+
 
 api_venue:
   path: /venues
   methods: [GET]
   defaults: { _controller: ActedLegalDocsBundle:Events:showVenues }
+
+api_artist_new_feedbacks:
+  path: /feedbacks/artist/new
+  methods: GET
+  defaults: {_controller: ActedLegalDocsBundle:Feedback:getAllNewFeedbacks}
