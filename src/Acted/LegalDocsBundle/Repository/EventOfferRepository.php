@@ -83,14 +83,15 @@ class EventOfferRepository extends EntityRepository
      * @param Event $event
      * @return object|null
      */
-    public function getPerformanceIds($event)
+    public function getPerformanceIds($event, $artist)
     {
         $eventOffer = $this->createQueryBuilder('eo')
             ->select('eo, o')
             ->leftJoin('eo.offer', 'o')
-            ->where('eo.event = :event')
+            ->where('eo.event = :event AND eo.artist = :artist')
             ->setParameters([
-                'event' => $event
+                'event' => $event,
+                'artist' => $artist
             ])
             ->getQuery()->getOneOrNullResult();
 

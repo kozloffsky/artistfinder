@@ -77,9 +77,13 @@ class EventsController extends Controller
                 }
                 $em->persist($offer);
 
+                $userArtist = $data->getPerformance()->first()->getProfile()->getUser();
+                $artist = $userArtist->getArtist();
+
                 /** Add EventOffer */
                 $eventOffer = $eventManager->createEventOffer($data);
                 $eventOffer->setOffer($offer);
+                $eventOffer->setArtist($artist);
                 $eventOffer->setEvent($event);
                 $eventOffer->setActsExtrasAccepted(false);
                 $eventOffer->setTechnicalRequirementsAccepted(false);
@@ -101,8 +105,7 @@ class EventsController extends Controller
                 }
                 $em->flush();
 
-                $userArtist = $data->getPerformance()->first()->getProfile()->getUser();
-                $artist = $userArtist->getArtist();
+
 
                 /*Add artist to event*/
                 $eventArtist = new EventArtist();
@@ -564,6 +567,7 @@ class EventsController extends Controller
             $eventOffer = $eventManager->createEventOffer($eventOfferData);
             $eventOffer->setOffer($offer);
             $eventOffer->setEvent($event);
+            $eventOffer->setArtist($artist);
             $eventOffer->setActsExtrasAccepted(false);
             $eventOffer->setTechnicalRequirementsAccepted(false);
             $eventOffer->setTimingAccepted(false);

@@ -182,7 +182,7 @@ $(function () {
     }
 
     //todo re fracture to vuejs
-    $('#event_date').change(function () {
+    $('#client-event-details #event_date').change(function () {
         var eventId = window.getCurrentEvent().id;
         var date = $(this).val();
         toSend = {data: {startingDate: date}};
