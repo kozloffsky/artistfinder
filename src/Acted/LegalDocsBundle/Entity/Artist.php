@@ -429,8 +429,8 @@ class Artist
 
     public function getRating()
     {
-        $ratings = $this->ratings->map(function($entry){
-            /** @var ArtistRating $entry */
+        $ratings = $this->feedbacks->map(function($entry){
+            /** @var Feedback $entry */
             return $entry->getRating();
         });
 
@@ -445,7 +445,7 @@ class Artist
 
     public function getVotesCount()
     {
-        return count($this->ratings);
+        return count($this->feedbacks);
     }
 
     public function __toString()
