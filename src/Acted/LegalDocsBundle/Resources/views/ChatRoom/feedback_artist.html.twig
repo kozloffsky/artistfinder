@@ -50,7 +50,11 @@
         {% for feedback in feedbacks %}
         <div class="row artist-feedback">
             <div class="avatar">
-                <img src="/assets/images/noAvatar.png">
+                {% if feedback.event.user.avatar is defined and feedback.event.user.avatar| length > 1 %}
+                    <img src="{{ feedback.event.user.avatar }}">
+                {% else %}
+                    <img src="/assets/images/noAvatar.png">
+                {% endif %}
             </div>
             <div class="info">
                 <div><i>{{ feedback.event.user.firstname }} {{ feedback.event.user.lastname }}</i></div>
