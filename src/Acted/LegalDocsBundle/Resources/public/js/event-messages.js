@@ -1,13 +1,14 @@
 $(function () {
     'use strict';
     if (document.querySelector('.messages')) {
-        try{
+        try {
             var messagesVue = new Vue({
                 el: '.messages',
                 delimiters: ['${', '}'],
                 data: {
                     messages: [],
-                    selectedFilter: ''
+                    selectedFilter: '',
+                    feedbacks: {}
                 },
                 created: function () {
                     showMessages();
@@ -21,23 +22,40 @@ $(function () {
                     archive: function (event) {
                         event.preventDefault();
                         var $this = $(event.target);
-                        var message = $this.parents('article');
+                        var message = $this.parents('div.message-and-feedback');
                         var messageId = message.data('messageId');
                         archiveMessage(messageId);
                     },
                     remove: function (event) {
                         event.preventDefault();
                         var $this = $(event.target);
-                        var message = $this.parents('article');
+                        var message = $this.parents('div.message-and-feedback');
                         var messageId = message.data('messageId');
                         removeMessage(messageId);
                     }
                 }
             });
-        }catch (e){
+        } catch (e) {
         }
     }
 
+    function prepareMessages(messages) {
+        var prepared = [];
+        messages.forEach(function (value, index) {
+            var createdAt = moment(value.send_date_time, 'ddd, DD MMM YYYY HH:mm:ss Z');
+            var diff = moment().diff(createdAt, 'days');
+            if(diff < 3){
+                value.send_date_time = createdAt.calendar();
+            }else{
+                value.send_date_time = createdAt.format('DD/MM/YYYY');
+            }
+            var eventDate = value.chat_room.event.starting_date;
+            value.chat_room.event.starting_date = moment(eventDate, 'DD/MM/YYYY').format('DD MMM YY');
+            prepared.push(value);
+        });
+        return prepared;
+    }
+    
     function getAllMessagesByEventId(eventId, filter) {
         if (typeof filter == "undefined") {
             filter = '';
@@ -46,7 +64,7 @@ $(function () {
             url: '/api/events/' + eventId + '/messages' + filter,
             success: function (response) {
                 if (typeof response.messages !== 'undefined') {
-                    messagesVue.messages = response.messages;
+                    messagesVue.messages = prepareMessages(response.messages);
                 }
             },
             error: function (error) {
@@ -55,7 +73,34 @@ $(function () {
         });
     }
 
+    function prepareFeedbacks(feedbacks) {
+        var prepared = {};
+        feedbacks.forEach(function (value, index) {
+            prepared[value.event.id] = value;
+        });
+
+        return prepared;
+    }
+
+    function getNewFeedbacks() {
+        $.ajax({
+            url: '/api/feedbacks/artist/new',
+            method: 'GET',
+            success: function (response) {
+                if (typeof response.feedbacks !== 'undefined') {
+                    messagesVue.feedbacks = prepareFeedbacks(response.feedbacks);
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+
     function getAllMessagesByArtist(filter) {
+
+        getNewFeedbacks();
+
         if (typeof filter == "undefined") {
             filter = '';
         }
@@ -63,7 +108,7 @@ $(function () {
             url: '/dashboard/messages/artist' + filter,
             success: function (response) {
                 if (typeof response.messages !== 'undefined') {
-                    messagesVue.messages = response.messages;
+                    messagesVue.messages = prepareMessages(response.messages);
                 }
             },
             error: function (error) {
@@ -74,10 +119,10 @@ $(function () {
 
     $('.messages #sortMessages').on('select2:select', function () {
         var filter = '/' + $(this).val();
-        if(window.getUserRole()[0] == 'ROLE_CLIENT'){
+        if (window.getUserRole()[0] == 'ROLE_CLIENT') {
             var eventId = window.getCurrentEvent().id;
             getAllMessagesByEventId(eventId, filter);
-        }else if(window.getUserRole()[0] == 'ROLE_ARTIST'){
+        } else if (window.getUserRole()[0] == 'ROLE_ARTIST') {
             getAllMessagesByArtist(filter);
         }
     });
@@ -96,33 +141,11 @@ $(function () {
     }
 
     function removeMessage(messageId) {
-        $.ajax({
-            url: '/dashboard/delete/message/' + messageId,
-            method: 'DELETE',
-            success: function () {
-                $('article[data-message-id="' + messageId + '"]').remove();
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        })
+        $('div[data-message-id="' + messageId + '"]').remove();
     }
 
     function showMessages() {
         $('.dialogs').show();
-    }
-
-    /**
-     * Return html for charCounter in the textarea.
-     *
-     * @returns {string} html
-     */
-    function charCounterHtml() {
-        var html = "<p class='char-count'>";
-        html += "<span class='current-count'>0</span><span>/1000</span>";
-        html += "</p>";
-
-        return html;
     }
 
     window.getAllMessagesByEventId = getAllMessagesByEventId;

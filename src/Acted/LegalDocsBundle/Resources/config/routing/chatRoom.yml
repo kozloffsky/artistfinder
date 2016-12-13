@@ -114,13 +114,6 @@ artist_dashboard_messages:
   defaults: {_controller: ActedLegalDocsBundle:ChatRoom:showMessagesArtistDashboard, filter: false}
   methods: GET
 
-delete_message:
-  path: /delete/message/{message}
-  defaults: {_controller: ActedLegalDocsBundle:ChatRoom:removeMessage}
-  methods: DELETE
-  requirements:
-    message: \d+
-
 artist_selection:
     path:     /artist-selection
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:artistSelection }

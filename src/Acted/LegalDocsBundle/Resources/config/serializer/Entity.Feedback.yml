@@ -1,0 +1,17 @@
+Acted\LegalDocsBundle\Entity\Feedback:
+  exclusion_policy: ALL
+  properties:
+    id:
+      groups: [messages_feedbacks]
+    event:
+      groups: [messages_feedbacks]
+    artist:
+      groups: [messages_feedbacks]
+    rating:
+      groups: [messages_feedbacks]
+    feedback:
+      groups: [messages_feedbacks]
+    viewed:
+      groups: [messages_feedbacks]
+    createdAt:
+      groups: [messages_feedbacks]

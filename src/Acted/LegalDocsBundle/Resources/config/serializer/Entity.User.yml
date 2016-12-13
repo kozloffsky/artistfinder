@@ -10,11 +10,11 @@ Acted\LegalDocsBundle\Entity\User:
     roles:
       exclude: true
     avatar:
-      groups: [quote_request, chat_room, message, all_messages, profile_settings]
+      groups: [quote_request, chat_room, message, all_messages, profile_settings, messages_feedbacks]
     firstname:
-      groups: [chat_list, chat_room, message, all_messages, users_list, profile_settings, getEvent]
+      groups: [chat_list, chat_room, message, all_messages, users_list, profile_settings, getEvent, messages_feedbacks]
     lastname:
-      groups: [chat_list, chat_room, message, all_messages, users_list, profile_settings, getEvent]
+      groups: [chat_list, chat_room, message, all_messages, users_list, profile_settings, getEvent, messages_feedbacks]
     active:
       groups: [users_list]
     fake:

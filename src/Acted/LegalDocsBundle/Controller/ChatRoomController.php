@@ -99,7 +99,6 @@ class ChatRoomController extends Controller
 
 
         $data = $em->getRepository('ActedLegalDocsBundle:Message')->getAllMessages($userId);
-        $feedbacks = $this->getAllNewFeedbacks($this->getUser());
         $messages = $serializer->toArray($data, SerializationContext::create()
             ->setGroups(['all_messages']));
 
@@ -674,33 +673,6 @@ class ChatRoomController extends Controller
     }
 
     /**
-     * Return all not viewed feedbacks for Artist.
-     *
-     * @param User $user
-     *
-     * @return \Acted\LegalDocsBundle\Entity\Feedback[]|array
-     */
-    public function getAllNewFeedbacks(User $user)
-    {
-        if ($user->getArtist()) {
-            $id = $user->getArtist()->getId();
-            $repo = $this->em->getRepository('ActedLegalDocsBundle:Feedback');
-            $feedbacks = $repo->findBy(['artist' => $id, 'viewed' => false]);
-
-            $manager = $this->get('app.feedback.manager');
-            $manager->makeViewed($feedbacks);
-
-            return $feedbacks;
-        }
-
-        return [];
-    }
-
-    public function setViewed(Feedback $feedbacks)
-    {
-    }
-
-    /**
      * @Secure(roles="ROLE_ARTIST")
      * @Route(path="/api/chat-room/accept-details/{eventId}",
      *     name="api.chat_room.accept_details",
@@ -786,27 +758,27 @@ class ChatRoomController extends Controller
      *
      * @return JsonResponse
      */
-    function removeMessageAction(Request $request)
-    {
-        $user = $this->getUser();
-        $messageId = $request->get('message');
-        $em = $this->getEM();
-        $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
-        $userId = $user->getId();
-        $findBy = ['receiverUser' => $userId, 'id' => $messageId];
-        $message = $messagesRepo->findOneBy($findBy);
-        if ($message) {
-            $em->remove($message);
-            $em->flush();
-            $response = ['status' => 'success'];
-
-            return new JsonResponse($response);
-        }
-        $msg = 'Message not found';
-        $response = ['status' => 'error', 'error' => $msg];
-
-        return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
-    }
+//    function removeMessageAction(Request $request)
+//    {
+//        $user = $this->getUser();
+//        $messageId = $request->get('message');
+//        $em = $this->getEM();
+//        $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
+//        $userId = $user->getId();
+//        $findBy = ['receiverUser' => $userId, 'id' => $messageId];
+//        $message = $messagesRepo->findOneBy($findBy);
+//        if ($message) {
+//            $em->remove($message);
+//            $em->flush();
+//            $response = ['status' => 'success'];
+//
+//            return new JsonResponse($response);
+//        }
+//        $msg = 'Message not found';
+//        $response = ['status' => 'error', 'error' => $msg];
+//
+//        return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
+//    }
 
     /**
      *  Artist section template
@@ -832,7 +804,7 @@ class ChatRoomController extends Controller
         $em = $this->getEM();
         $filter = $request->get('filter');
         $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
-        $messages = $messagesRepo->getAllMessages($userId, $filter);
+        $messages = $messagesRepo->getMessagesGroupedByChatRoom($userId, $filter);
         $context = SerializationContext::create()->setGroups(['all_messages']);
         $serializer = $this->get('jms_serializer');
 
