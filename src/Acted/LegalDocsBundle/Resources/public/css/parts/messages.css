@@ -37,14 +37,14 @@
     width: 243px !important;
     margin: 18px 0 30px 17px;
 }
-.messages .dialogs {
-    display: inline-block;
-}
+/*.messages .dialogs {*/
+/*display: inline-block;*/
+/*}*/
 .dialog-section {
     background: white;
     min-height: 38px;
     border-top: 1px solid rgba(0, 0, 0, 0.07);
-    padding: 31px 0 0!important;
+    padding: 31px 0;
 }
 
 .dashboard.client.messages .dialog-section {
@@ -305,11 +305,16 @@
 }
 @media (max-width: 1200px) {
     .message-controls .ul-reset {
-            margin: 0 0 0 30px;
+        /*margin: 0 0 0 30px;*/
+        margin: 0;
     }
 }
-
-@media (max-width: 767px) {
+@media (max-width: 991px) {
+    .dialog-section {
+        padding: 31px 5px;
+    }
+}
+@media (max-width: 768px) {
     .dialog-section  {
         width: 100%;
         display: block;
@@ -318,8 +323,8 @@
     }
 
     .dialog-section .avatar {
-        width: 45px;
-        height: 45px;
+        width: 50px;
+        height: 50px;
     }
 
     .dialog-section .wrap {
@@ -337,25 +342,28 @@
         display: inline-block;
         float: right;
         padding-bottom: 0px;
-        margin: -24px 0 0 0;
+        margin: -30px 0 0 0;
     }
     .message-block .message-controls {
         float: left;
-        margin: 5px 20px 0 0;
+        margin: 4px 20px 0 0;
     }
     .dialog-section .user-info {
         width: calc(100% - 53px);
         display: inline;
+        margin: 0 0 0 9px;
     }
     .user-info .user-name {
         font-family: LatoRegular;
         font-size: 14px;
         color: rgba(0, 0, 0, 0.87);
+        display: inline-block;
     }
     .user-info .time {
         line-height: 15px;
         font-size: 11px;
         float: right;
+        display: inline-block;
     }
     .dialog-section .text-block {
         padding: 0!important;
@@ -433,12 +441,14 @@
         height: 100%;
     }
     .messages .dialogs .dialog-rating-container .message-info {
-        padding: 13px 10px 17px 0;
+        padding: 13px 9px 17px 0;
         display: inline-block;
+        width: 100%;
     }
     .messages .dialogs .dialog-rating-container .message-info span:nth-of-type(2) {
         padding:0 4px 0 0;
         float: right;
+        clear: both;
     }
     .messages .dialogs .dialog-rating-container .avatar {
         padding: 0;
@@ -484,9 +494,6 @@
         margin: 0 auto;
         height: 14px;
         width: 14px;
-    }
-    .message-controls .ul-reset {
-        margin: 0;
     }
 }
 
