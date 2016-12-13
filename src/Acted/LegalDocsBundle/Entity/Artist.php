@@ -879,4 +879,43 @@ class Artist
     {
         return $this->eventOffer;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $requestQuotations;
+
+
+    /**
+     * Add requestQuotation
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation
+     *
+     * @return Artist
+     */
+    public function addRequestQuotation(\Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation)
+    {
+        $this->requestQuotations[] = $requestQuotation;
+
+        return $this;
+    }
+
+    /**
+     * Remove requestQuotation
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation
+     */
+    public function removeRequestQuotation(\Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation)
+    {
+        $this->requestQuotations->removeElement($requestQuotation);
+    }
+
+    /**
+     * Get requestQuotations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRequestQuotations()
+    {
+        return $this->requestQuotations;
+    }
 }

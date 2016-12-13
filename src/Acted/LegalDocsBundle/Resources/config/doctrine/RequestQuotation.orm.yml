@@ -38,4 +38,10 @@ Acted\LegalDocsBundle\Entity\RequestQuotation:
             referencedColumnName: id
             onDelete: RESTRICT
           inversedBy: requestQuotations
+        artist:
+          targetEntity: Acted\LegalDocsBundle\Entity\Artist
+          joinColumn:
+            referencedColumnName: id
+            onDelete: RESTRICT
+          inversedBy: requestQuotations
     lifecycleCallbacks: {  }

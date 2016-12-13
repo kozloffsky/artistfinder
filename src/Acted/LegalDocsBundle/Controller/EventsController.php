@@ -123,6 +123,7 @@ class EventsController extends Controller
                 /*Create request*/
                 $requestQuotation = new RequestQuotation();
                 $requestQuotation->setEvent($event);
+                $requestQuotation->setArtist($artist);
                 $em->persist($requestQuotation);
             }
 
@@ -591,6 +592,7 @@ class EventsController extends Controller
             /*Create request*/
             $requestQuotation = new RequestQuotation();
             $requestQuotation->setEvent($event);
+            $requestQuotation->setArtist($artist);
             $em->persist($requestQuotation);
             $em->flush();
 
