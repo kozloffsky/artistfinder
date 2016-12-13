@@ -3,15 +3,17 @@ $(function () {
     var eventDetailsAutocompService = new GoogleAutocompleteService(),
         isAvailable = eventDetailsAutocompService.getFormElements('#client-event-details form[name="event-details"]');
 
-    if(isAvailable)
+    if (isAvailable)
         eventDetailsAutocompService.initAutoComplete();
 
     /**
      * events
      *
-     * @type {array}
+     * @type {object}
      */
-    var clientEvents = [];
+    var clientEvents = {};
+
+    var firstLoad = true;
 
     /**
      * Current route
@@ -53,7 +55,6 @@ $(function () {
             url: "/event/client/" + userId,
             success: function (data) {
                 if (typeof data.events !== 'undefined') {
-                    clientEvents = data.events;
                     showEvents(data.events, reinit);
                 }
             }
@@ -70,12 +71,13 @@ $(function () {
     function eventsToHtml(events) {
         var html = '';
         events.forEach(function (item, index) {
+            clientEvents[item.id] = item;
             var id = item.id;
             var title = item.title;
             var eClass = 'event-item non-active';
-
-            if (index == 0) {
+            if (index == 0 && getCurrentEvent() == null) {
                 setCurrentEvent(item);
+                firstLoad = false;
                 eClass = 'event-item active';
                 getDataForEvent(id);
             }
@@ -83,7 +85,6 @@ $(function () {
             html += title;
             html += "</li>";
         });
-
         return html;
 
     }
@@ -170,7 +171,7 @@ $(function () {
         var $wrapper = $this.parents('.owl-theme');
         $wrapper.find('.active').toggleClass('active').toggleClass('non-active');
         $this.toggleClass('active').toggleClass('non-active');
-
+        setCurrentEvent(clientEvents[eventId]);
         getDataForEvent(eventId);
     }
 
@@ -208,6 +209,19 @@ $(function () {
                     var owl = $(".owl-carousel").data('owlCarousel');
                     owl.reinit();
                 }
+                $().ready(function () {
+                    if (getCurrentEvent() != null) {
+                        currentEventId = getCurrentEvent().id;
+                        var $menu = $('.events-menu > ul');
+                        var $menuEvent = $menu.find('li[data-event-id="' + currentEventId + '"]');
+                        var $menuEventParent = $menuEvent.parent();
+                        var index = $menuEventParent.index();
+                        owl.trigger('owl.jumpTo', index);
+                        $menu.find('li').removeClass('active');
+                        $menuEvent.removeClass('non-active').addClass('active');
+                        getDataForEvent(currentEventId);
+                    }
+                });
                 $('i.left').click(function () {
                     owl.trigger('owl.prev');
                 });
