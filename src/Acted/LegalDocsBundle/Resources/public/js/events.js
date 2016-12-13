@@ -24,43 +24,70 @@ $(function () {
                 guests: numberOfGuests,
                 selectedGuest: '',
                 endingDate: '',
-                charCount: 0
+                charCount: 0,
+                loadedData: false,
+                lastEventId: null
             },
             created: function () {
                 showEvents();
+                this.loadedData = true;
             },
             watch: {
                 "event.title": function (newVal, oldVal) {
+                    if (!this.loadedData) {
+                        return;
+                    }
+
                     if (wasChanged(newVal, oldVal)) {
                         toSend = {data: {title: newVal}};
                         sendData(eventsVue.event.id, toSend);
                     }
                 },
                 "event.timing": function (newVal, oldVal) {
+                    if (!this.loadedData) {
+                        return;
+                    }
+
                     if (wasChanged(newVal, oldVal)) {
                         toSend = {data: {timing: newVal}};
                         sendData(eventsVue.event.id, toSend);
                     }
                 },
                 "event.location": function (newVal, oldVal) {
+                    if (!this.loadedData) {
+                        return;
+                    }
+
                     if (wasChanged(newVal, oldVal)) {
                         toSend = {data: {address: newVal}};
                         sendData(eventsVue.event.id, toSend);
                     }
                 },
                 selectedVenue: function (newVal, oldVal) {
+                    if (!this.loadedData) {
+                        return;
+                    }
+
                     if (wasChanged(newVal, oldVal)) {
                         toSend = {data: {venueType: newVal}};
                         sendData(eventsVue.event.id, toSend);
                     }
                 },
                 selectedGuest: function (newVal, oldVal) {
+                    if (!this.loadedData) {
+                        return;
+                    }
+
                     if (wasChanged(newVal, oldVal)) {
                         toSend = {data: {NumberOfGuests: newVal}};
                         sendData(eventsVue.event.id, toSend);
                     }
                 },
                 endingDate: function (newVal, oldVal) {
+                    if (!this.loadedData) {
+                        return;
+                    }
+
                     if (wasChanged(newVal, oldVal)) {
                         var event = eventsVue.event;
                         var st_date = moment(event.starting_date, "DD/MM/YYYY");
@@ -82,6 +109,10 @@ $(function () {
                     }
                 },
                 "event.comments": function (newVal, oldVal) {
+                    if (!this.loadedData) {
+                        return;
+                    }
+
                     if (wasChanged(newVal, oldVal)) {
                         toSend = {data: {comments: newVal}};
                         sendData(eventsVue.event.id, toSend);

@@ -87,9 +87,11 @@ class EventsManager
             'id' => $cityId
         ));
 
+        $countSeconds = $eventOfferData->getCountDays() * 86400;
+
         $event = new Event();
         $date = $eventOfferData->getEventDate();
-        $nextDate = new \DateTime(date('Y-m-d h:i:s', strtotime($date->format('Y-m-d h:i:s'))+86400));
+        $nextDate = new \DateTime(date('Y-m-d h:i:s', strtotime($date->format('Y-m-d h:i:s')) + $countSeconds));
         $event->setCity($city);
         $event->setEventRef(uniqid());
         $event->setEventType($eventOfferData->getType());
