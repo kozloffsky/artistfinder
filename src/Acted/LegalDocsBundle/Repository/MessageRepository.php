@@ -84,6 +84,7 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('archived', false);
         }
 
+        $query->groupBy('m.chatRoom')->orderBy('m.sendDateTime');
 
         return $query->getQuery()->getResult();
     }
