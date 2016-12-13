@@ -402,8 +402,8 @@
             this.setAutocompleteCountry(context, code);
 
             // Clear inputs after change country
-            this.currentStore.city = 
-            this.currentStore.region = 
+            this.currentStore.city = '';
+            this.currentStore.region = '';
             this.currentStore.post_code = "";
             this.inputs[CITY].val("");
             this.inputs[REGION].val("");
@@ -513,10 +513,6 @@
                 options = {
                     language: 'en-GB'
                 };
-
-            if (_this.inputs[CITY] == 0) {
-                _this.autocomplete[ADDRESS]
-            }
 
             _this.currentStore[name] = elem.val().trim();
             _this.autocomplete[name] = new google.maps.places.Autocomplete(elem[0], options);
