@@ -66,4 +66,10 @@ Acted\LegalDocsBundle\Entity\EventOffer:
           joinColumn:
             referencedColumnName: id
             onDelete: CASCADE
+        artist:
+          targetEntity: Acted\LegalDocsBundle\Entity\Artist
+          inversedBy: eventOffer
+          joinColumn:
+           referencedColumnName: id
+           onDelete: CASCADE
     lifecycleCallbacks: {  }

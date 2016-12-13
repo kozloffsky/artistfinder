@@ -103,7 +103,7 @@ $(function () {
 
     function getRecStarts() {
         $('.profile-card').each(function () {
-            var raiting = $(this).find('.raitingValRecomend').text();
+            var raiting = Math.floor(parseFloat($(this).find('.raitingValRecomend').text()));
             var raitingFull = raiting.toString().split(".")[0];
             var raitingDigits = raiting.toString().split(".")[1];
             var ratingstars = $(this).find('.user-rating .star');

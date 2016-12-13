@@ -245,8 +245,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="rating">{{ recomendedArtist.rating }}/5.0 ({{ recomendedArtist.votes_count }} Votes)</div>
-                                        <span class="raitingValRecomend hidden">{{ recomendedArtist.rating }}</span>
+                                        <div class="rating" data-attr="test">{{ recomendedArtist.rating }}/5.0 ({{ recomendedArtist.votes_count }} Votes)</div>
+                                        <span class="raitingValRecomend hidden">{{ recomendedArtist.rating | round }}</span>
                                     </div>
 
                                     <div class="location">{{ recomendedArtist.country }}, {{ recomendedArtist.city }}</div>

@@ -60,6 +60,8 @@ class RequestQuotationController extends Controller
             ], Response::HTTP_UNAUTHORIZED);
         }
 
+        $artist = $user->getArtist();
+
         $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
         $performanceRepo = $em->getRepository('ActedLegalDocsBundle:Performance');
         $serviceRepo = $em->getRepository('ActedLegalDocsBundle:Service');
@@ -82,8 +84,8 @@ class RequestQuotationController extends Controller
         $event = $data['event'];
 
         $eventOfferRepo = $em->getRepository('ActedLegalDocsBundle:EventOffer');
-        $preSelectedPerformanceIds = $eventOfferRepo->getPerformanceIds($event);
-
+        $preSelectedPerformanceIds = $eventOfferRepo->getPerformanceIds($event, $artist);
+        
         $requestQuotations = $requestQuotationRepo->findBy(array('event' => $event));
 
         foreach ($requestQuotations as $requestQuotation) {

@@ -73,5 +73,8 @@ Acted\LegalDocsBundle\Entity\Artist:
         eventArtists:
             targetEntity: Acted\LegalDocsBundle\Entity\EventArtist
             mappedBy: artist
+        eventOffer:
+            targetEntity: Acted\LegalDocsBundle\Entity\EventOffer
+            mappedBy: artist
 
     lifecycleCallbacks: {  }
