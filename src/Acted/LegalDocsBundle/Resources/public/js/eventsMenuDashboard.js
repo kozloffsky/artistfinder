@@ -1,5 +1,7 @@
 $(function () {
 
+    var vueEventCreate;
+
     var eventDetailsAutocompService = new GoogleAutocompleteService(),
         isAvailable = eventDetailsAutocompService.getFormElements('#client-event-details form[name="event-details"]');
 
@@ -280,6 +282,16 @@ $(function () {
 
         if (isAvailable)
             eventAutocompService.initAutoComplete();
+
+        $('#eventModal').on('hidden.bs.modal', function () {
+            vueEventCreate.eventObj.name = '';
+            vueEventCreate.eventObj.eventDate = '';
+            vueEventCreate.eventObj.countDays = 1;
+            vueEventCreate.eventObj.eventTiming = '';
+            vueEventCreate.eventObj.eventAddress = '';
+            vueEventCreate.eventObj.eventNumberOfGuests = 'less_then_50';
+            vueEventCreate.eventObj.eventAdditionalInfo = '';
+        });
     });
 
     /**
@@ -296,7 +308,7 @@ $(function () {
 
     if (document.querySelector('.event-modal')) {
         try {
-            var vue = new Vue({
+            vueEventCreate = new Vue({
                 el: '.event-modal',
                 delimiters: ['${', '}'],
                 data: {
