@@ -1,0 +1,56 @@
+{% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
+
+<main class="dashboard client artist-selection">
+    <div class="container">
+        {% include 'ActedLegalDocsBundle:Profile:client/client_menu.html.twig' %}
+
+        <div class="row artist-block">
+            <div class="col-sm-1 col-xs-1 no-pad avatar-block">
+                <div class="avatar">
+                    <img src="../../assets/images/client_payment_profile.jpg">
+                </div>
+            </div>
+            <div class="col-sm-10 col-xs-12 no-pad">
+                <div class="row">
+                    <div class="col-sm-10 col-xs-10">
+                        <span class="name">Diana Kroll</span>
+                        <span class="stars">
+                            <i class="star filled"></i>
+                            <i class="star filled"></i>
+                            <i class="star filled"></i>
+                            <i class="star filled"></i>
+                            <i class="star"></i>
+                        </span>
+                        <span class="rate"><i>4.0</i>/<i>5.0</i></span>
+                        <span class="rate-count">(<i>16</i> <span>Ratings</span>)</span>
+                        <ul class="ul-reset artist-categories">
+                            <li>Jazz Vocalist</li>
+                            <li>Jazz Pianist</li>
+                            <li>Vocalist</li>
+                        </ul>
+                        <div>
+                            From Chicago, Illinois
+                        </div>
+                    </div>
+
+                    <div class="right-panel">
+                        <div class="row color-kelly available-flag text-left">Available</div>
+                        <div class="row text-left price-from">From &pound; 1200</div>
+                        <div class="row text-left"><i class="fa fa-trash"></i> Remove</div>
+                    </div>
+                </div>
+
+
+                <div class="row controls-area controls">
+                    <button class="btn button-gradient blue">Chatroom</button>
+                    <div class="button-gradient follow">
+                        <button class="btn">Profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+{% include 'ActedLegalDocsBundle:Default:footer.html.twig' %}

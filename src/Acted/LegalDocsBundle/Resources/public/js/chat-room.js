@@ -1,66 +1,68 @@
 $(function(){
     'use strict';
-    try{
-        var vue = new Vue({
-            el: '.chat-room',
-            delimiters: ['${','}'],
-            data: {
-                message: '',
-                chatMessages: window.chatMessages,
-                sendText:"",
-                technicalRequirements:[],
-                selectedRequirement:{}
-            },
-            created: function(){
-                this.fetchTechnicalRequirements();
-            },
-            methods:{
-                fetchTechnicalRequirements:function(){
-                    var self = this;
-                    console.log("fetching tech reqs");
-                    $.ajax({
-                        type:'GET',
-                        url: '/technical_requirement/artist/'+ window.artistId,
-                        success: function(r){
-                            console.log(r);
-                            self.technicalRequirements= r.technicalRequirements;
-                            self.selectedRequirement = self.technicalRequirements[0];
-                        },
-                        error: function(r){
-                            //messageReaded = false;
-                            console.error(r);
-                        }
-                    });
+    if (document.querySelector('.chat-room')) {
+        try {
+            var vue = new Vue({
+                el: '.chat-room',
+                delimiters: ['${', '}'],
+                data: {
+                    message: '',
+                    chatMessages: window.chatMessages,
+                    sendText: "",
+                    technicalRequirements: [],
+                    selectedRequirement: {}
                 },
-
-                setTypesForFiles:function(){
-
+                created: function () {
+                    console.log('WWWWWWWWWWWWWWWWW');
+                    this.fetchTechnicalRequirements();
                 },
+                methods: {
+                    fetchTechnicalRequirements: function () {
+                        var self = this;
+                        console.log("fetching tech reqs");
+                        $.ajax({
+                            type: 'GET',
+                            url: '/technical_requirement/artist/' + window.artistId,
+                            success: function (r) {
+                                console.log(r);
+                                self.technicalRequirements = r.technicalRequirements;
+                                self.selectedRequirement = self.technicalRequirements[0];
+                            },
+                            error: function (r) {
+                                //messageReaded = false;
+                                console.error(r);
+                            }
+                        });
+                    },
 
-                deleteAttachment:function(id){
-                    console.log(id);
-                    $.ajax({
-                        method:"DELETE",
-                        url:"/technical_requirement/document/"+id+"/remove",
-                        success: function (r) {
-                            console.log(r)
-                        },
-                        error: function (e) {
-                            console.log(e);
-                        }
-                    })
-                }
-            },
-            filters:{
-                removeExt:function(value){
-                    return value.substring(0, value.indexOf('.'))
-                }
-            }
+                    setTypesForFiles: function () {
 
-        });
-    }catch (e){
+                    },
+
+                    deleteAttachment: function (id) {
+                        console.log(id);
+                        $.ajax({
+                            method: "DELETE",
+                            url: "/technical_requirement/document/" + id + "/remove",
+                            success: function (r) {
+                                console.log(r)
+                            },
+                            error: function (e) {
+                                console.log(e);
+                            }
+                        })
+                    }
+                },
+                filters: {
+                    removeExt: function (value) {
+                        return value.substring(0, value.indexOf('.'))
+                    }
+                }
+
+            });
+        } catch (e) {
+        }
     }
-
     function getTechnicalRequirements(){
 
     }
@@ -315,8 +317,8 @@ console.log('connected to socket');
                             '</div>'+
                             '</li>';
                     }
-                    //$('#twocolumns .comments-list').prepend(messageBlock);
-                    vue.$data.chatMessages.unshift(messageChat);
+                    $('#twocolumns .comments-list').prepend(messageBlock);
+                    //vue.$data.chatMessages.unshift(messageChat);
 
                     getFileExtension();
                 }

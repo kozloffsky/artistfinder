@@ -3,81 +3,48 @@
     min-height: 450px;
 }
 
-.select2  {
-    width: 135px!important;
+.messages select {
+    border: none;
+    background-color: rgba(246, 246, 246, 1);
+    padding: 6px 152px 7px 12px;
+}
+
+.messages span.select2-selection.select2-selection--single {
     outline: none;
-    margin-right: 14px;
+    background-color: rgba(246, 246, 246, 1);
 }
 
-.select2-container--default .select2-selection--single {
-    outline: none;
+.messages .select2-container--default .select2-selection--single {
+    background-color: #fff;
     border: none;
-    border-radius: 11px;
-    height: 24px;
-    background-color: #F1F1F1;
+    border-radius: 6px;
 }
-
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    padding: 0 11px;
-    line-height: 24px;
-    text-align: left;
+.messages .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 30px;
+    color: rgba(0, 0, 0, 0.87);
+    font-family: LatoRegular;
+    font-size: 14px !important;
 }
-
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-    top: 0;
-    right: 6px;
+.messages .select2-container--default .select2-results__option {
+    font-size: 14px;
+    font-family: LatoRegular;
+    font-weight: 400;
 }
-
-.select2-container--open .select2-dropdown--below {
-    border: none;
-    background: transparent;
+.messages .select2-container .select2-selection--single {
+    height: 30px;
 }
-
-.select2-container--default .select2-results__option {
-    background: #F1F1F1;
-    padding: 5px 11px;
-    border-bottom: 1px solid #E8E8E8;
+.messages .select2 {
+    width: 243px !important;
+    margin: 18px 0 30px 17px;
 }
-
-.select2-container--default .select2-results__option--highlighted[aria-selected] {
-    background-color: #F1F1F1;
-    color: #828387;
-}
-
-.select2-container--default .select2-results__option[aria-selected=true] {
-    background-color: #F1F1F1;
-    color: #828387;
-}
-
-.select2-container--default .select2-results__option:last-of-type {
-    border-bottom-left-radius: 11px;
-    border-bottom-right-radius: 11px;
-    border: none;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__arrow b {
-    border-color: #FF9758 transparent transparent transparent;
-    border-width: 5px 5px 0 5px;
-}
-
-.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
-    border-color: transparent transparent #FF9758 transparent;
-    border-width: 0 5px 5px 5px;;
-}
-
-.selections-white .select2-results__option {
-    background: white!important;
-}
-
-.dialogs {
-    margin-top: 23px;
-}
-
+/*.messages .dialogs {*/
+/*display: inline-block;*/
+/*}*/
 .dialog-section {
     background: white;
     min-height: 38px;
     border-top: 1px solid rgba(0, 0, 0, 0.07);
-    padding: 31px 0 0!important;
+    padding: 31px 0;
 }
 
 .dashboard.client.messages .dialog-section {
@@ -242,25 +209,26 @@
     font-size: 15px;
     font-family: LatoRegular;
     color: rgba(0, 0, 0, 0.87);
+    display: block;
 }
 
 .user-info .time {
     font-size: 11px;
     font-family: LatoRegular;
     color: rgba(0, 0, 0, 0.67);
-    float: left;
+    display: block;
 }
 
 .message-block .message-heading {
     font-family: LatoBold;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 400;
     color: rgba(0, 0, 0, 0.87);
 }
 
 .dialog-section.new-message .message-block .message-heading,
-.dialog-section.new-message .message-block .text{
-    font-weight: bold;
+.dialog-section.new-message .message-block .text {
+    font-weight: 400;
 }
 
 .message-block .text {
@@ -335,8 +303,18 @@
 .ui-loader.ui-corner-all.ui-body-a.ui-loader-default {
     display: none !important;
 }
-
-@media (max-width: 767px) {
+@media (max-width: 1200px) {
+    .message-controls .ul-reset {
+        /*margin: 0 0 0 30px;*/
+        margin: 0;
+    }
+}
+@media (max-width: 991px) {
+    .dialog-section {
+        padding: 31px 5px;
+    }
+}
+@media (max-width: 768px) {
     .dialog-section  {
         width: 100%;
         display: block;
@@ -345,8 +323,8 @@
     }
 
     .dialog-section .avatar {
-        width: 45px;
-        height: 45px;
+        width: 50px;
+        height: 50px;
     }
 
     .dialog-section .wrap {
@@ -364,28 +342,34 @@
         display: inline-block;
         float: right;
         padding-bottom: 0px;
-        margin: -24px 0 0 0;
+        margin: -30px 0 0 0;
     }
     .message-block .message-controls {
         float: left;
-        margin: 5px 20px 0 0;
+        margin: 4px 20px 0 0;
     }
     .dialog-section .user-info {
         width: calc(100% - 53px);
         display: inline;
+        margin: 0 0 0 9px;
     }
     .user-info .user-name {
         font-family: LatoRegular;
         font-size: 14px;
         color: rgba(0, 0, 0, 0.87);
+        display: inline-block;
     }
     .user-info .time {
         line-height: 15px;
         font-size: 11px;
         float: right;
+        display: inline-block;
     }
     .dialog-section .text-block {
         padding: 0!important;
+    }
+    .messages .select2 {
+        margin: 18px 0 30px 14px;
     }
     .message-block .text {
         max-height: 18px;
@@ -433,9 +417,6 @@
         float: left;
         text-align: center;
     }
-    .messages .select2 {
-        width: 100%!important;
-    }
     .messages .container {
         padding: 0!important;
     }
@@ -460,12 +441,14 @@
         height: 100%;
     }
     .messages .dialogs .dialog-rating-container .message-info {
-        padding: 13px 10px 17px 0;
+        padding: 13px 9px 17px 0;
         display: inline-block;
+        width: 100%;
     }
     .messages .dialogs .dialog-rating-container .message-info span:nth-of-type(2) {
         padding:0 4px 0 0;
         float: right;
+        clear: both;
     }
     .messages .dialogs .dialog-rating-container .avatar {
         padding: 0;
@@ -484,26 +467,6 @@
         display: inline-block;
         text-align: justify;
     }
-    .select2-container--default .select2-selection--single {
-        height: 36px;
-        margin: 12px;
-        border-radius: 18px;
-    }
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-        padding: 8px 0 0 23px !important;
-    }
-    .select2-container--default .select2-selection--single .select2-selection__arrow {
-        top: 50% !important;
-        right: 10% !important;
-        margin: -13px !important;
-    }
-    .select2-container--open .select2-dropdown--below {
-        position: absolute;
-        width: 296px !important;
-        top: -12px;
-        left: 12px;
-    }
-
     .messages .message-options {
         position: absolute;
         display: inline;

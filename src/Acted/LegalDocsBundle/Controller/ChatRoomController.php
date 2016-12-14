@@ -99,7 +99,6 @@ class ChatRoomController extends Controller
 
 
         $data = $em->getRepository('ActedLegalDocsBundle:Message')->getAllMessages($userId);
-        $feedbacks = $this->getAllNewFeedbacks($this->getUser());
         $messages = $serializer->toArray($data, SerializationContext::create()
             ->setGroups(['all_messages']));
 
@@ -239,8 +238,8 @@ class ChatRoomController extends Controller
 
 
         return $this->render('ActedLegalDocsBundle:ChatRoom:chat_room.html.twig',
-            compact('chat', 'quotationLink', 'chatRoom','performances','files'));
-        }
+            compact('chat', 'quotationLink', 'chatRoom', 'performances', 'files'));
+    }
 
     /**
      * @param Request $request
@@ -376,11 +375,15 @@ class ChatRoomController extends Controller
     public function bookingsAction(Request $request)
     {
         $userId = $this->getUser()->getId();
+
+        if (empty($this->getUser()->getProfile())) {
+            return $this->redirect($this->generateUrl('acted_legal_docs_homepage'));
+        }
+
         $chat = [];
         return $this->render('ActedLegalDocsBundle:ChatRoom:bookings.html.twig',
             compact('chat'));
     }
-
 
     public function pricesAction()
     {
@@ -652,33 +655,22 @@ class ChatRoomController extends Controller
      */
     public function feedbacksAction(Request $request)
     {
-        return $this->render('ActedLegalDocsBundle:ChatRoom:feedback.html.twig');
-    }
-
-    /**
-     * Return all not viewed feedbacks for Artist.
-     *
-     * @param User $user
-     *
-     * @return \Acted\LegalDocsBundle\Entity\Feedback[]|array
-     */
-    public function getAllNewFeedbacks(User $user)
-    {
-        if ($user->getArtist()) {
-            $id = $user->getArtist()->getId();
-            $repo = $this->em->getRepository('ActedLegalDocsBundle:Feedback');
-            $feedbacks = $repo->findBy(['artist' => $id, 'viewed' => false]);
-
-            $manager = $this->get('app.feedback.manager');
-            $manager->makeViewed($feedbacks);
-
-            return $feedbacks;
+        /**
+         * @var User $user ;
+         */
+        $user = $this->getUser();
+        $userRoles = $user->getRoles();
+        $data = [];
+        if ($userRoles[0] == 'ROLE_ARTIST') {
+            $em = $this->getEM();
+            $feedbackRepo = $em->getRepository('ActedLegalDocsBundle:Feedback');
+            $artist = $user->getArtist();
+            $feedbacks = $artist->getFeedbacks();
+            $rating = $feedbackRepo->getAverageArtistRating($artist->getId());
+            $data = ['rating' => $rating, 'feedbacks' => $feedbacks];
         }
-
-        return [];
+        return $this->render('ActedLegalDocsBundle:ChatRoom:feedback.html.twig', $data);
     }
-
-    public function setViewed(Feedback $feedbacks){}
 
     /**
      * @Secure(roles="ROLE_ARTIST")
@@ -689,11 +681,12 @@ class ChatRoomController extends Controller
      * @return JsonResponse
      * @TODO: add APIDOC
      */
-     public function acceptDetailsAction($eventId){
-         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
-         $eor->accept(EventOffer::PROP_DETAILS, $eventId);
-         return new JsonResponse(array("result"=>"ok"));
-     }
+    public function acceptDetailsAction($eventId)
+    {
+        $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
+        $eor->accept(EventOffer::PROP_DETAILS, $eventId);
+        return new JsonResponse(array("result" => "ok"));
+    }
 
     /**
      * @Secure(roles="ROLE_CLIENT")
@@ -701,10 +694,11 @@ class ChatRoomController extends Controller
      * @return Response
      * @TODO: add APIDOC
      */
-    public function acceptTechRequirementsAction($eventId){
+    public function acceptTechRequirementsAction($eventId)
+    {
         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
         $eor->accept(EventOffer::PROP_TECH_REQ, $eventId);
-        return new JsonResponse(array("result"=>"ok"));
+        return new JsonResponse(array("result" => "ok"));
     }
 
     /**
@@ -713,10 +707,11 @@ class ChatRoomController extends Controller
      * @return Response
      * @TODO: add APIDOC
      */
-    public function acceptTimingAction($eventId){
+    public function acceptTimingAction($eventId)
+    {
         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
         $eor->accept(EventOffer::PROP_TIMING, $eventId);
-        return new JsonResponse(array("result"=>"ok"));
+        return new JsonResponse(array("result" => "ok"));
     }
 
     /**
@@ -725,10 +720,97 @@ class ChatRoomController extends Controller
      * @return Response
      * @TODO: add APIDOC
      */
-    public function acceptActionExtrasAction($eventId){
+    public function acceptActionExtrasAction($eventId)
+    {
         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
         $eor->accept(EventOffer::PROP_ACTS_EXTRAS, $eventId);
-        return new JsonResponse(array("result"=>"ok"));
+        return new JsonResponse(array("result" => "ok"));
     }
 
+    /**
+     * Show event details.
+     *
+     * @return Response
+     */
+    function showEventsAction()
+    {
+        $view = '@ActedLegalDocs/Profile/client_event_details.html.twig';
+
+        return $this->render($view);
+    }
+
+    /**
+     * Show all messages for the event.
+     *
+     * @return Response
+     */
+    function showMessagesByEventAction()
+    {
+        $view = '@ActedLegalDocs/ChatRoom/all_messages.html.twig';
+
+        return $this->render($view);
+    }
+
+    /**
+     * Delete message.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+//    function removeMessageAction(Request $request)
+//    {
+//        $user = $this->getUser();
+//        $messageId = $request->get('message');
+//        $em = $this->getEM();
+//        $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
+//        $userId = $user->getId();
+//        $findBy = ['receiverUser' => $userId, 'id' => $messageId];
+//        $message = $messagesRepo->findOneBy($findBy);
+//        if ($message) {
+//            $em->remove($message);
+//            $em->flush();
+//            $response = ['status' => 'success'];
+//
+//            return new JsonResponse($response);
+//        }
+//        $msg = 'Message not found';
+//        $response = ['status' => 'error', 'error' => $msg];
+//
+//        return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
+//    }
+
+    /**
+     *  Artist section template
+     */
+    public function artistSelectionAction(Request $request) {
+        return $this->render('ActedLegalDocsBundle:Profile:client/artist_selection.html.twig');
+    }
+
+    /**
+     * Get all messages for the artist.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function showMessagesArtistDashboardAction(Request $request)
+    {
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+        $userId = $user->getId();
+        $em = $this->getEM();
+        $filter = $request->get('filter');
+        $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
+        $messages = $messagesRepo->getMessagesGroupedByChatRoom($userId, $filter);
+        $context = SerializationContext::create()->setGroups(['all_messages']);
+        $serializer = $this->get('jms_serializer');
+
+        $messages = $serializer->toArray($messages, $context);
+        $response = ['status' => 'success', 'messages' => $messages];
+
+        return new JsonResponse($response);
+    }
 }

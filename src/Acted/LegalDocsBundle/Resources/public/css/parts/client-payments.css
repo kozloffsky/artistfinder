@@ -103,9 +103,22 @@
 }
 .client-payments-block .control-list .control-item {
     display: inline-block;
+    padding: 0;
+    float: none;
+}
+.client-payments-block .control-list .control-item button {
+    font-family: LatoRegular;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 1);
 }
 .client-payments-block .control-list .control-item:nth-of-type(2) {
     padding: 0 20px;
+}
+.client-payments-block .control-list .control-item:nth-of-type(3) button {
+    font-family: LatoRegular;
+    font-size: 14px;
+    color: rgba(131, 131, 131, 1);
+    height: 24px;
 }
 .client-payments-block .act-info-block .act-item {
     margin: 0 0 7px 0;

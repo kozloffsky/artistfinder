@@ -1,11 +1,21 @@
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
 
-
-<main class="messages">
+{% if app.user is not empty %}
+    {% if app.user.roles[0] == "ROLE_CLIENT"  %}
+        <main class="dashboard client messages">
+    {% else %}
+        <main class="messages">
+    {% endif %}
+{% endif %}
 
     <div class="container">
-        {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
-
+        {% if app.user is not empty %}
+            {% if app.user.roles[0] == "ROLE_CLIENT"  %}
+                {% include 'ActedLegalDocsBundle:Profile:client/client_menu.html.twig' %}
+            {% else %}
+                {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
+            {% endif %}
+        {% endif %}
         <div>
             <select data-class="selections-white" name="sortMessages" id="sortMessages">
                 <option value="all">All messages</option>
@@ -13,7 +23,85 @@
                 <option value="archived">Archived</option>
             </select>
 
-            <div class="dialogs">
+            <div class="dialogs" style="display: none;" >
+                <div class="message-and-feedback" v-for="message in messages" v-bind:data-message-id="message.id">
+                <article class="col-xs-12 dialog-section noselect" data-longtap-duration="500">
+                    <div class="wrap clearfix">
+                        <div class="message-info" :class="!message.read_date_time ? 'active' : ''"></div>
+                        <div class="avatar">
+                            <img v-if="message.sender_user.avatar" v-bind:src="message.sender_user.avatar" alt=""/>
+                            <img v-else src="/assets/images/noAvatar.png" alt=""/>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">${message.sender_user.firstname} ${message.sender_user.lastname}</span>
+                            <span class="time">${message.send_date_time}</span>
+                        </div>
+                        <div class="message-block">
+                            <div class="col-lg-9 col-sm-9 text-block">
+                                <p class="message-heading hidden-xs"> ${message.chat_room.event.title} / ${message.chat_room.event.city.name} / ${message.chat_room.event.starting_date}</p>
+
+                                <div class="text">
+                                    ${message.message_text}
+                                </div>
+
+                                <div class="controls hidden-xs">
+                                    <div class="button-gradient filled blue">
+                                        <a v-bind:href="'/dashboard/chat/' + message.chat_room.chat_id" class="btn register">Chatroom</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-2 message-controls no-pad">
+                                <ul class="ul-reset">
+                                    <li class="status confirmed"><i class="confirmed"></i> Confirmed</li>
+                                    <li v-on:click="archive" v-if="!message.archived" class="archive hidden-xs"><a href="#"><i class="archive"></i> Archive</a></li>
+                                    <li v-on:click="remove" class="delete hidden-xs"><a href="#"><i class="delete"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="clearfix message-controls controls-mobile ul-reset">
+                        <li v-on:click="archive" v-if="!message.archived" class="archive"><a href="#"><i class="archive"></i> Archive</a></li>
+                        <li v-on:click="remove" class="delete"><a href="#"><i class="delete"></i> Delete</a></li>
+                    </ul>
+
+                    <div class="message-controls message-options hidden-lg hidden-md hidden-sm">
+                        <li v-on:click="archive" v-if="!message.archived" class="archive">
+                            <i class="archive"></i>
+                            <a href="#">Archived</a>
+                        </li>
+                        <li  v-on:click="remove" class="delete">
+                            <i class="delete"></i>
+                            <a href="#">Delete</a>
+                        </li>
+                    </div>
+                </article>
+                    <article v-if="feedbacks[message.chat_room.event.id]" class="col-xs-12 dialog-rating-container noselect" data-longtap-duration="500">
+                    <div class="wrap clearfix">
+                        <div class="message-info">
+                            <span class="pull-right">${feedbacks[message.chat_room.event.id].created_at}</span>
+                            <span>Congratulations! You have received new rating!</span>
+                        </div>
+                        <div class="avatar">
+                            <img v-if="feedbacks[message.chat_room.event.id].event.user.avatar" v-bind:src="feedbacks[message.chat_room.event.id].event.user.avatar" alt=""/>
+                            <img v-else src="/assets/images/noAvatar.png" alt=""/>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name"></span>
+                        </div>
+                        <div class="rating">
+                            <i v-for="i in feedbacks[message.chat_room.event.id].rating" class="star-icon filled"></i>
+                            <i v-for="i in 5-feedbacks[message.chat_room.event.id].rating" class="star-icon unfilled"></i>
+                        </div>
+                        <div class="message-block">
+                            <p>${feedbacks[message.chat_room.event.id].feedback} </p>
+                        </div>
+                    </div>
+                </article>
+                </div>
+            </div>
+
+            {#<div class="dialogs">
                 {% for message in messages|reverse %}
                     <article class="col-xs-12 dialog-section noselect" data-longtap-duration="500" id="{{ message.id }}">
                         <div class="wrap clearfix">
@@ -60,9 +148,9 @@
                                         {% endif %}
 
 
-                                        {# <li class="status confirmed"><i class="confirmed"></i> Confirmed</li>
+                                        #}{# <li class="status confirmed"><i class="confirmed"></i> Confirmed</li>
                                         <li class="archive hidden-xs"><a href="#"><i class="archive"></i> Archive</a></li>
-                                        <li class="delete hidden-xs"><a href="#"><i class="delete"></i> Delete</a></li> #}
+                                        <li class="delete hidden-xs"><a href="#"><i class="delete"></i> Delete</a></li> #}{#
                                     </ul>
                                 </div>
                             </div>
@@ -72,8 +160,8 @@
                             {% if message.archived == false %}
                                 <li class="archive"><a class="archiveMessage"><i class="archive"></i> Archive</a></li>
                             {% endif %}
-                            {# <li class="archive"><a href="#"><i class="archive"></i> Archive</a></li>
-                            <li class="de #}lete"><a href="#"><i class="delete"></i> Delete</a></li>
+                            #}{# <li class="archive"><a href="#"><i class="archive"></i> Archive</a></li>
+                            <li class="de #}{#lete"><a href="#"><i class="delete"></i> Delete</a></li>
                         </ul>
 
                         <div class="message-controls message-options hidden-lg hidden-md hidden-sm">
@@ -117,7 +205,7 @@
                     </div>
                 </article>
                 {% endfor %}
-            </div>
+            </div>#}
         </div>
     </div>
 

@@ -289,6 +289,33 @@ class FeedbackController extends Controller
     }
 
     /**
+     * Return all not viewed feedbacks for Artist.
+     *
+     * @return
+     */
+    public function getAllNewFeedbacksAction()
+    {
+        $user = $this->getUser();
+        $em = $this->getEM();
+        $response = ['status' => 'success', 'feedbacks' => []];
+
+        if ($user->getArtist()) {
+            $id = $user->getArtist()->getId();
+            $repo = $em->getRepository('ActedLegalDocsBundle:Feedback');
+            $feedbacks = $repo->findBy(['artist' => $id, 'viewed' => false]);
+
+            $manager = $this->get('app.feedback.manager');
+            $manager->makeViewed($feedbacks);
+
+            $serializer = $this->get('jms_serializer');
+            $context = SerializationContext::create()->setGroups('messages_feedbacks');
+            $feedbacks = $serializer->toArray($feedbacks, $context);
+            $response = ['status' => 'success', 'feedbacks' => $feedbacks];
+        }
+        return new JsonResponse($response);
+    }
+
+    /**
      * Remove feedback.
      *
      * @param Request $request

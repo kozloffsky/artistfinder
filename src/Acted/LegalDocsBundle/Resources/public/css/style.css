@@ -61,7 +61,7 @@ main {
 }
 
 .container {
-    padding: 0 0 0 10px;
+    padding: 0;
 }
 
 .modal {
@@ -100,7 +100,7 @@ section.used-by {
 }
 
 .select2-container--default .select2-results>.select2-results__options {
-    border: 2px solid #EEEEEE!important;
+    border: 1px solid #EEEEEE!important;
 }
 
 .select2-container--open .select2-dropdown--above .select2-results__options {
@@ -2318,6 +2318,7 @@ input[disabled] {
     height: 100%;
     z-index: 200;
 }
+
 .loader {
     color: #ffffff;
     font-size: 20px;
@@ -2396,10 +2397,11 @@ input[disabled] {
     content: "";
     background: url(/assets/images/delete-light.png) no-repeat;
     display: inline-block;
-    height: 26px;
-    width: 27px;
+    background-position: -7px -5px;
+    height: 16px;
+    width: 13px;
     vertical-align: middle;
-    margin: -7px 1px -7px -7px;
+    margin: 0;
 }
 
 @supports ( -webkit-appearance: none ) or ( appearance: none ) or ( ( -moz-appearance: none ) and ( mask-type: alpha ) ) {
@@ -3191,24 +3193,33 @@ only screen and (-o-min-device-pixel-ratio: 2/1),
 only screen and (min-device-pixel-ratio: 2),
 only screen and (min-resolution: 192dpi),
 only screen and (min-resolution: 2dppx) {
-    .feedbacks .stars > .star > .fill-star{
-        background-image: url("../assets/images/star_feedback@2x.png");
-    }
-    .scroll-icon .icon-desktop{
-        background-image: url("../assets/images/scroll_down@2x.png");
-        background-size: 30px 40px;
-    }
-    footer .social-icons .icon.facebook{
+    footer .social-icons .icon.facebook {
         background-image: url("../assets/images/fb@2x.png");
         background-size: 24px 25px;
     }
-    footer .social-icons .icon.instagram{
+    footer .social-icons .icon.instagram {
         background-image: url("../assets/images/inst@2x.png");
         background-size: 25px 25px;
     }
-    footer .social-icons .icon.twitter{
+    footer .social-icons .icon.twitter {
         background-image: url("../assets/images/twit@2x.png");
         background-size: 26px 22px;
+    }
+    footer.footer-dark .social-icons .icon.facebook {
+        background-image: url("../assets/images/fb_white@2x.png");
+    }
+    footer.footer-dark .social-icons .icon.instagram {
+        background-image: url("../assets/images/inst_white@2x.png");
+    }
+    footer.footer-dark .social-icons .icon.twitter {
+        background-image: url("../assets/images/twit_white@2x.png");
+    }
+    .feedbacks .stars > .star > .fill-star {
+        background-image: url("../assets/images/star_feedback@2x.png");
+    }
+    .scroll-icon .icon-desktop {
+        background-image: url("../assets/images/scroll_down@2x.png");
+        background-size: 30px 40px;
     }
     .scroll-icon .icon-mobile{
         background-image: url("../assets/images/arrow_down@2x.png");
@@ -3228,23 +3239,10 @@ only screen and (min-resolution: 2dppx) {
     .feedbacks .stars > .star{
         background-image: url("../assets/images/star_unfilled_feedback@2x.png");
     }
-    .feedbacks .stars>.star>.fill-star{
-        background-image: url("../assets/images/star_feedback@2x.png");
-        vertical-align: top;
-    }
     .navbar-default .navbar-nav .message-lt{
         background: url("../assets/images/message@2x.png") no-repeat;
         background-size: 25px 18px;
         margin-top: 10px;
-    }
-    footer.footer-dark .social-icons .icon.facebook{
-        background-image: url("../assets/images/fb_white@2x.png");
-    }
-    footer.footer-dark .social-icons .icon.instagram{
-        background-image: url("../assets/images/inst_white@2x.png");
-    }
-    footer.footer-dark .social-icons .icon.twitter{
-        background-image: url("../assets/images/twit_white@2x.png");
     }
     .message-controls .delete i{
         background-image: url("../assets/images/delete@2x.png");
@@ -3377,23 +3375,14 @@ only screen and (min-resolution: 2dppx) {
         background: url('../assets/images/edit-darkgray@2x.png') no-repeat;
         background-size: 24px 24px;
     }
-    /*.custom-checkbox label:after{*/
-        /*background: url('../assets/images/yes@2x.png') no-repeat;*/
-        /*background-size: 17px 17px;*/
-    /*}*/
     .modal.add-entry .modal-content .close > span{
         background: url('../assets/images/close@2x.png');
         background-size: 12px 12px;
     }
-
     .free-quote-modal .modal-content .close > span {
         background: url(../assets/images/cross@2x.png) no-repeat;
         background-size: cover;
     }
-    /*i.pound {*/
-        /*background: url(../assets/images/pound_ic@2x.png);*/
-        /*background-size: cover;*/
-    /*}*/
     i.available {
         background: url(../assets/images/available@2x.png);
     }

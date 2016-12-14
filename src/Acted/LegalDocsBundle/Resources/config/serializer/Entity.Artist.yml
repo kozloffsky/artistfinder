@@ -24,13 +24,13 @@ Acted\LegalDocsBundle\Entity\Artist:
       groups: [profile_settings]
     getCityName:
       serialized_name: city
-      groups: [Default, block, profile_settings]
+      groups: [Default, block, profile_settings, quote_request]
     getCountryId:
       serialized_name: country_id
       groups: [profile_settings]
     getCountryName:
       serialized_name: country
-      groups: [Default, block, profile_settings]
+      groups: [Default, block, profile_settings, quote_request]
     getRating:
       serialized_name: rating
       groups: [Default, block]

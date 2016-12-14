@@ -98,3 +98,23 @@ feedback_delete:
 api_accept_details:
     path:     /api/chat-room/accept-details/{eventId}
     defaults: {_controller: ActedLegalDocsBundle:ChatRoom:acceptDetails}
+
+events:
+  path: /events
+  defaults: {_controller: ActedLegalDocsBundle:ChatRoom:showEvents }
+  methods: GET
+
+event_messages:
+  path: /messages/event
+  defaults: {_controller: ActedLegalDocsBundle:ChatRoom:showMessagesByEvent}
+  methods: GET
+
+artist_dashboard_messages:
+  path: /messages/artist/{filter}
+  defaults: {_controller: ActedLegalDocsBundle:ChatRoom:showMessagesArtistDashboard, filter: false}
+  methods: GET
+
+artist_selection:
+    path:     /artist-selection
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:artistSelection }
+    methods:  GET

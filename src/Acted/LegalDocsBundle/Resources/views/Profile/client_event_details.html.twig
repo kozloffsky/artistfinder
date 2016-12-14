@@ -1,9 +1,9 @@
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
 
-<main class="dashboard feedback client">
+<main class="dashboard feedback client" id="client-event-details">
     <div class="container no-pad client_event_details">
         {% include 'ActedLegalDocsBundle:Profile:client/client_menu.html.twig' %}
-        <div class="col-md-6 col-sm-6 left_column">
+        <form class="col-md-6 col-sm-6 left_column" name="event-details" v-bind:data-event-id="event.id" style="display: none;">
             <div class="row">
                 <div class="printer_icon">
                     <p>
@@ -12,62 +12,92 @@
                     </p>
                 </div>
                 <label for="event_name">Event name</label>
-                <input readonly type="text" maxlength="60" class="form-control enable_toggler" id="event_name" placeholder="Christmas party" name="name">
+                <input type="text" maxlength="60" v-model.lazy.trim="event.title" v-bind:value="event.title"
+                       class="form-control enable_toggler" id="event_name" placeholder="Christmas party" name="name">
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-6 no-pad-left">
                     <label for="event_date">Date</label>
-                    <input readonly type="text" class="date-picker form-control enable_toggler" id="event_date" placeholder="05/04/2016">
+                    <input type="text" id="event_date"  v-bind:value="event.starting_date" class="date-picker form-control" placeholder="05/04/2016">
                 </div>
-                <div class="col-lg-6 col-md-6 no-pad-right ">
+                <div class="col-lg-6 col-md-6 no-pad-right">
                     <label class="col-xs-12 no-pad" for="event_days_duration">1 day/multiple days</label>
-                    <select readonly class="enable_toggler" data-class="selections-white low-select" name="event_days_duration" id="event_duration">
-                        <option value="0">1-day event</option>
-                        <option value="1">2-day event</option>
-                        <option value="2">3-day event</option>
+                    <select class="enable_toggler" data-class="selections-white low-select"
+                            v-model.lazy="endingDate" name="event_days_duration" id="event_duration">
+                        <option value="1">1-day event</option>
+                        <option value="2">2-day event</option>
+                        <option value="3">3-day event</option>
+                        <option value="4">4-day event</option>
+                        <option value="5">5-day event</option>
+                        <option value="6">6-day event</option>
+                        <option value="7">7-day event</option>
+                        <option value="8">8-day event</option>
+                        <option value="9">9-day event</option>
+                        <option value="10">10-day event</option>
+                        <option value="11">11-day event</option>
+                        <option value="12">12-day event</option>
+                        <option value="13">13-day event</option>
+                        <option value="14">14-day event</option>
+                        <option value="15">15-day event</option>
+                        <option value="16">16-day event</option>
+                        <option value="17">17-day event</option>
+                        <option value="18">18-day event</option>
+                        <option value="19">19-day event</option>
+                        <option value="20">20-day event</option>
+                        <option value="21">21-day event</option>
+                        <option value="22">22-day event</option>
+                        <option value="23">23-day event</option>
+                        <option value="24">24-day event</option>
+                        <option value="25">25-day event</option>
+                        <option value="26">26-day event</option>
+                        <option value="27">27-day event</option>
+                        <option value="28">28-day event</option>
+                        <option value="29">29-day event</option>
+                        <option value="30">30-day event</option>
                     </select>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-6 no-pad-left">
                     <label for="event_time">Event timing</label>
-                    <input readonly id="event_time" type="text" class="form-control enable_toggler" placeholder="Evening" name="event_time">
+                    <input id="event_time" v-model.lazy.trim="event.timing" v-bind:value="event.timing" type="text"
+                           class="form-control enable_toggler" placeholder="Evening" name="event_time">
                 </div>
                 <div class="col-lg-6 col-md-6 no-pad-right">
                     <label for="event-country">Country</label>
-                    <input disabled type="text" class="form-control" id="event-country" placeholder="United Kingdom" name="country">
+                    <input disabled type="text" class="form-control" id="event-country" placeholder="United Kingdom"
+                           name="country" value="United Kingdom">
                 </div>
             </div>
             <div class="row">
                 <label for="event_address">Address</label>
-                <input readonly type="text" class="form-control enable_toggler" id="event_address" placeholder="Type the address here...">
+                <input type="text" v-model.lazy.trim="event.location" class="form-control enable_toggler"
+                       v-bind:value="event.location" id="event_address" name="location" placeholder="Type the address here...">
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-6 no-pad-left">
                     <label for="venue_type">Venue type</label>
-                    <select readonly class="select_width_101 enable_toggler" data-class="selections-white low-select" name="venue_type" id="venue_type">
-                        <option value="0">Hotel Ballroom</option>
-                        <option value="1">Lorem Ipsum 1</option>
-                        <option value="2">Lorem Ipsum 2</option>
+                    <select class="select_width_101 enable_toggler" data-class="selections-white low-select"
+                            name="venue_type" id="venue_type" v-model.lazy="selectedVenue">
+                        <option v-for="venue in venues" v-bind:value="venue.id">${venue.venue_type}</option>
                     </select>
                 </div>
                 <div class="col-lg-6 col-md-6 no-pad-right">
                     <label for="guests_count">Number of guests</label>
-                    <select readonly class="select_width_101 enable_toggler" data-class="selections-white low-select" name="number_of_guests" id="guests_count">
-                        <option value="less_then_50">Less than 50</option>
-                        <option value="50-100">50-100</option>
-                        <option value="100-500">100-500</option>
-                        <option value="500+">500+</option>
+                    <select class="select_width_101 enable_toggler" data-class="selections-white low-select"
+                            name="number_of_guests" id="guests_count" v-model.lazy="selectedGuest">
+                        <option v-for="guest in guests" v-bind:value="guest.value">${ guest.text }</option>
                     </select>
                 </div>
             </div>
             <div class="row">
                 <label for="additional_info">Additional info</label>
-                <span class="additional_info_counter">0/200</span>
-                <textarea readonly maxlength="200" class="form-control additional_info_input enable_toggler" id="additional_info" placeholder="Put your comments here"></textarea>
+                <span class="additional_info_counter"><span class="current-count">${charCount}</span><span>/450</span></span>
+                <textarea maxlength="450" v-model.lazy.trim="event.comments" v-bind:value="event.comments" class="form-control additional_info_input enable_toggler"
+                          id="additional_info" placeholder="Put your comments here"></textarea>
             </div>
-        </div>
-        <div class="col-md-6 col-sm-6 right_column">
+        </form>
+        <div class="col-md-6 col-sm-6 right_column" style="visibility: hidden;">
             <div class="printer_icon">
                 <p>
                     <i class="fa fa-print" aria-hidden="true"></i>
@@ -81,7 +111,7 @@
                             <h3>Frederic Sharp</h3>
                         </div>
                         <div class="col-md-8 total_summ">
-                            <h3>£ 5000</h13>
+                            <h3>£ 5000</h3>
                         </div>
                     </div>
                     <div class="row">
@@ -114,7 +144,8 @@
                             <p>Additional info:</p>
                         </div>
                         <div class="col-md-9">
-                            <p>This performance will continue for 3 days. First two days will start from 2 pm till 3 am. And third day will be a full day party!</p>
+                            <p>This performance will continue for 3 days. First two days will start from 2 pm till 3 am.
+                                And third day will be a full day party!</p>
                         </div>
                     </div>
                 </div>
@@ -166,7 +197,7 @@
                             <h3>Frederic Sharp</h3>
                         </div>
                         <div class="col-md-8 total_summ">
-                            <h3>£ 5000</h13>
+                            <h3>£ 5000</h3>
                         </div>
                     </div>
                     <div class="row">
@@ -199,7 +230,8 @@
                             <p>Additional info:</p>
                         </div>
                         <div class="col-md-9">
-                            <p>This performance will continue for 3 days. First two days will start from 2 pm till 3 am. And third day will be a full day party!</p>
+                            <p>This performance will continue for 3 days. First two days will start from 2 pm till 3 am.
+                                And third day will be a full day party!</p>
                         </div>
                     </div>
                 </div>
@@ -247,5 +279,4 @@
         </div>
     </div>
 </main>
-
 {% include 'ActedLegalDocsBundle:Default:footer.html.twig' %}

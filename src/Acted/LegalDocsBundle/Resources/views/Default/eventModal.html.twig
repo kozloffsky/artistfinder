@@ -1,73 +1,33 @@
-<div class="modal free-quote-modal modal-registered fade" id="freeQuoteModal" tabindex="-1" role="dialog">
+<div class="modal event-modal free-quote-modal modal-registered fade" id="eventModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true"></span></button>
-                <h4 class="modal-title eventUnregistered">
+                <h4 class="modal-title">
                     <div class="warn">!</div>
                     Tip: Enter your event details below and it will automatically apply to your next quote requests
                 </h4>
-                <form id="chosenEvent">
-                    <h4 class="modal-title eventChooseRequest">
-                        <span class="title">Event:</span>
-                        <select data-class="selections-white selection-borderless" name="event" id="event_preset">
-                            <option value="">Event 1</option>
-                            <option value="">Event 2</option>
-                            <option value="">Lorem ipsum dolor sit amet, consectetur </option>
-                        </select>
-                        <a href="#" id="new-event" class="new-event">New event</a>
-                    </h4>
-                </form>
             </div>
-            <form id="requestQuoteForm">
+            <form id="eventForm">{#requestQuoteForm#}
                 <div class="modal-body">
                     <button type="button" class="close close_second" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
                     <div class="row clearfix">
                         <div class="col-lg-12 form-group">
                             <label for="event_name">Event name</label>
-                            <input type="text" maxlength="60" class="form-control" id="event_name" placeholder="Name your event" name="name">
+                            <input type="text" maxlength="60" class="form-control" id="event_name" placeholder="Name your event" name="name" v-model="eventObj.name" :value="eventObj.name">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12 form-group">
                             <div class="col-lg-6 no-pad-left">
-                                <label for="event_date">Date</label>
-                                <input type="text" class="date-picker form-control" id="event_date" name="event_date" placeholder="05/04/2016">
+                                <label for="event_event_date">Date</label>
+                                <input type="text" class="date-picker form-control" id="event_event_date" name="event_date" placeholder="05/04/2016">
                             </div>
                             <div class="col-lg-6 no-pad-right ">
                                 <label class="col-xs-12 no-pad" for="count_days">1 day/multiple days</label>
                                 <select class="select_width_101" data-class="selections-white low-select" name="count_days" id="event_duration">
-                                    <option value="1">1-day event</option>
-                                    <option value="2">2-day event</option>
-                                    <option value="3">3-day event</option>
-                                    <option value="4">4-day event</option>
-                                    <option value="5">5-day event</option>
-                                    <option value="6">6-day event</option>
-                                    <option value="7">7-day event</option>
-                                    <option value="8">8-day event</option>
-                                    <option value="9">9-day event</option>
-                                    <option value="10">10-day event</option>
-                                    <option value="11">11-day event</option>
-                                    <option value="12">12-day event</option>
-                                    <option value="13">13-day event</option>
-                                    <option value="14">14-day event</option>
-                                    <option value="15">15-day event</option>
-                                    <option value="16">16-day event</option>
-                                    <option value="17">17-day event</option>
-                                    <option value="18">18-day event</option>
-                                    <option value="19">19-day event</option>
-                                    <option value="20">20-day event</option>
-                                    <option value="21">21-day event</option>
-                                    <option value="22">22-day event</option>
-                                    <option value="23">23-day event</option>
-                                    <option value="24">24-day event</option>
-                                    <option value="25">25-day event</option>
-                                    <option value="26">26-day event</option>
-                                    <option value="27">27-day event</option>
-                                    <option value="28">28-day event</option>
-                                    <option value="29">29-day event</option>
-                                    <option value="30">30-day event</option>
+                                    <option v-for="n in 30" :value="n">${ n }-day event</option>
                                 </select>
                             </div>
                         </div>
@@ -76,7 +36,7 @@
                         <div class="col-lg-12 form-group">
                             <div class="col-lg-6 no-pad-left">
                                 <label for="event_time">Event timing</label>
-                                <input id="event_time" type="text" class="form-control" placeholder="Evening" name="event_time">
+                                <input id="event_time" type="text" class="form-control" v-model="eventObj.eventTiming" placeholder="Evening" name="event_time">
                             </div>
                             <div class="col-lg-6 no-pad-right">
                                 <label for="event_country">Country</label>
@@ -96,6 +56,7 @@
                             <div class="col-lg-6 no-pad-left">
                                 <label for="venue_type">Venue type</label>
                                 <select class="select_width_101" data-class="selections-white low-select" name="venue_type" id="venue_type">
+                                    <option v-for="(venueType, venueTypeIndex) in eventObj.venueType" :value="venueType.id" name="venue_type">${ venueType.venue_type }</option>
                                 </select>
                             </div>
 
@@ -119,21 +80,34 @@
                                 <i>/</i>
                                 <i>450</i>
                             </span>
-                            <textarea maxlength="450" name="additional_info" class="form-control additional_info_input" id="additional_info" placeholder="Put your comments here"></textarea>
+                            <textarea maxlength="450" name="additional_info" class="form-control additional_info_input" v-model="eventObj.eventAdditionalInfo" id="additional_info" placeholder="Put your comments here"></textarea>
                         </div>
                     </div>
                 </div>
             </form>
-            <form id="quoteRequestSecond">
+            <form>
+                <div class="modal-footer">
+                    <div class="col-lg-12 no-pad">
+                        <div class="col-lg-12 padd_bottom_15px">
+                            <div class="controls">
+                                <div class="button-gradient filled">
+                                    <button class="btn" v-on:click="createEvent($event)">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {#<form id="quoteRequestSecond">
                 <div class="modal-footer">
                     <div class="col-lg-12 no-pad">
                         <div class="col-lg-12 grey_popup_background popup_artist_info clearfix">
                             <img class="quote-profile-avatar" src="assets/images/avatar.jpg" alt="avatar"/>
 
                             <div class="quote-profile-info text-left">
-                                <h2></h2>
-                                <p class="quote-profile-info__spec"></p>
-                                <p class="quote-profile-info__residence"></p>
+                                <h2>Diana Krall</h2>
+                                <p class="quote-profile-info__spec">Jazz Vocalist, Jazz Pianist, Song Writer</p>
+                                <p class="quote-profile-info__residence">Paris, France</p>
                             </div>
                         </div>
 
@@ -159,7 +133,7 @@
 
                             <div class="controls">
                                 <div class="button-gradient filled">
-                                    <button class="btn" id="quoteRequsetSend">Create an event</button>
+                                    <button class="btn" id="quoteRequsetSend">Send</button>
                                 </div>
                             </div>
                         </div>
@@ -172,12 +146,16 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            </form>#}
         </div>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+{#
+
+
 <div class="modal registration-modal fade" id="offerSuccess">
     <div class="modal-dialog" role="document">
         <div class="modal-body">
@@ -210,6 +188,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal registration-modal fade" id="offerErrorModal">
     <div class="modal-dialog" role="document">
         <div class="modal-body">
@@ -238,4 +217,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>#}

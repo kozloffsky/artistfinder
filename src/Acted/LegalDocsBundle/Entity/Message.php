@@ -228,6 +228,7 @@ class Message
      */
     public function getSendDateTime()
     {
+        //var_dump($this->sendDateTime);exit;
         return $this->sendDateTime;
     }
 

@@ -4,6 +4,7 @@ namespace Acted\LegalDocsBundle\Entity;
 
 use Acted\LegalDocsBundle\Entity\RefVenueType;
 use Acted\LegalDocsBundle\Entity\RefEventType;
+use Faker\Provider\cs_CZ\DateTime;
 
 /**
  * Event
@@ -99,6 +100,11 @@ class Event
      * @var \Doctrine\Common\Collections\Collection
      */
     private $eventArtists;
+
+    /**
+     * @var integer
+     */
+    private $countDays;
 
     /**
      * Get id
@@ -719,5 +725,99 @@ class Event
     public function getEventArtists()
     {
         return $this->eventArtists;
+    }
+
+    /**
+     * Set entity properties dynamically.
+     *
+     * @param array $option
+     *
+     * @return $this
+     *
+     * @throws \Exception
+     */
+    public function setOptions(array $options)
+    {
+        $_classMethods = get_class_methods($this);
+        foreach ($options as $key => $value) {
+            if(stripos($key, 'date') !== false){
+                $value = \DateTime::createFromFormat('d/m/Y', $value);
+            }
+
+            if(stripos($key, 'venue') !== false){
+
+            }
+
+            $method = 'set' . ucfirst($key);
+            if (in_array($method, $_classMethods)) {
+                $this->$method($value);
+            } else {
+                throw new \Exception('Invalid method name');
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Set countDays
+     *
+     * @param integer $countDays
+     *
+     * @return Event
+     */
+    public function setCountDays($countDays)
+    {
+        $this->countDays = $countDays;
+
+        return $this;
+    }
+
+    /**
+     * Get countDays
+     *
+     * @return integer
+     */
+    public function getCountDays()
+    {
+        return $this->countDays;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $eventOffer;
+
+
+    /**
+     * Add eventOffer
+     *
+     * @param \Acted\LegalDocsBundle\Entity\EventOffer $eventOffer
+     *
+     * @return Event
+     */
+    public function addEventOffer(\Acted\LegalDocsBundle\Entity\EventOffer $eventOffer)
+    {
+        $this->eventOffer[] = $eventOffer;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventOffer
+     *
+     * @param \Acted\LegalDocsBundle\Entity\EventOffer $eventOffer
+     */
+    public function removeEventOffer(\Acted\LegalDocsBundle\Entity\EventOffer $eventOffer)
+    {
+        $this->eventOffer->removeElement($eventOffer);
+    }
+
+    /**
+     * Get eventOffer
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventOffer()
+    {
+        return $this->eventOffer;
     }
 }

@@ -2,13 +2,14 @@
  * Created by pavel on 12.05.16.
  */
 $(function () {
+
     var quoteRequestAutocompService = new GoogleAutocompleteService(),
         isAvailable = quoteRequestAutocompService.getFormElements('form[id="requestQuoteForm"]');
 
     if(isAvailable)
         quoteRequestAutocompService.initAutoComplete();
 
-    $( "#event_date" ).datepicker({
+    $( ".free-quote-modal #event_date" ).datepicker({
         dateFormat: 'dd/mm/yy',
         minDate: 0 }
     );
@@ -30,6 +31,24 @@ $(function () {
         e.preventDefault();
         $('#comment_area').toggle();
     });
+
+    /*Count comment text*/
+    $('textarea[name="comment"]').keyup(charsCounter);
+    $('textarea[name="additional_info"]').keyup(charsCounter);
+
+
+
+    /**
+     * Count chars printed in the textarea and change the counter.
+     */
+    function charsCounter() {
+        var $this = $(this);
+        var $current = $this.prev('span').find('.current-count');
+        var text = $this.val();
+        text = text.replace(/(?:\r\n|\r|\n)/g, ' ');
+        $this.html(text);
+        $current.html(text.length);
+    }
 
     addValuesInQuoteRequest();
 
@@ -57,7 +76,7 @@ $(function () {
             url: '/event/list_venue_type',
             success: function(response) {
                 $(response.venueType).each(function(){
-                    $('.free-quote-modal #venue_type').append('<option value="'+ this.id +'" name="venue_type">'+this.venue_type+'</option>');
+                    $('#freeQuoteModal #venue_type').append('<option value="'+ this.id +'" name="venue_type">'+this.venue_type+'</option>');
                 });
                 initSelect();
             }
@@ -74,6 +93,13 @@ $(function () {
 
     $(document).on('click','.askQuoteFromSearch',function(){
         var artistSlug = $(this).val();
+
+        if (typeof(artistSlug) == 'undefined') {
+            artistSlug = $(this).val();
+        }
+
+        window.artistSlug = artistSlug;
+
         getArtistInformationForQuote(artistSlug);
         $('#freeQuoteModal').modal('show');
     });
@@ -99,11 +125,19 @@ $(function () {
     }
 
     function preventMultipleQuotes(artistSlug){
-        var selectedEvent = $('#chosenEvent select').find('option:selected').val();
-        hideFormIfExistEvent(selectedEvent, artistSlug)
+        var selectedEvent = $('#chosenEvent select').find('option:selected').data('meta');
+
         $('#chosenEvent select').on('change',function(){
-            var selectedEvent = $(this).find('option:selected').val();
-            hideFormIfExistEvent(selectedEvent, artistSlug)
+            var selectedEvent = $(this).find('option:selected').data('meta');
+            if (selectedEvent != 'newEvent') {
+                $('#requestQuoteForm .modal-body').slideUp();
+                $('#requestQuoteForm .modal-body').addClass('choosePrevEvent');
+
+                hideFormIfExistEvent(selectedEvent, artistSlug)
+            } else {
+                $('#requestQuoteForm .modal-body').slideDown();
+                $('#requestQuoteForm .modal-body').removeClass('choosePrevEvent');
+            }
         });
 
     }
@@ -112,12 +146,14 @@ $(function () {
         var getEventsReady = sessionStorage.getItem(selectedEvent);
         if(getEventsReady){
             var findArtistInEvent = getEventsReady.search(artistSlug);
-            //console.log(findArtistInEvent)
-            if(findArtistInEvent >= 0){
+
+            /*if(findArtistInEvent >= 0){
                 preventEventSending()
             } else {
                 allowEventSending()
-            }
+            }*/
+
+            allowEventSending()
         }
     }
 
@@ -143,19 +179,22 @@ $(function () {
                     '<label for="perf'+this.id+'">'+this.name+'</label>'+
                     '</div>'+
                     '</li>';
+
                 $('.requestQuotePerformances').append(blockPerformance);
             }
         });
         if(performanceRequestId){
-            $('.requestQuotePerformances input#perf'+performanceRequestId).prop('checked', true);
+            //$('.requestQuotePerformances input#perf'+performanceRequestId).prop('checked', true);
+            $('.requestQuotePerformances input#checkbox_'+performanceRequestId).prop('checked', true);
         }
     }
 
     function createArtistDataViewInQuote(artistData){
-        //console.log(artistData)
         var artistCatString = artistData.categories.toString();
-        $('.quoteRequestArtistData .quote-profile-info h2').html(artistData.name);
-        $('.quoteRequestArtistData .quote-profile-info p').html(artistCatString);
+        console.log(artistCatString);
+        $('.free-quote-modal .quote-profile-info h2').html(artistData.name);
+        $('.free-quote-modal .quote-profile-info p.quote-profile-info__spec').html(artistCatString);
+        $('.free-quote-modal .quote-profile-info p.quote-profile-info__residence').html(artistData.country + ' ' + artistData.city);
         if(artistData.user.avatar){
             $('.quote-profile-avatar').attr('src', artistData.user.avatar);
         } else {
@@ -170,7 +209,7 @@ $(function () {
 
     function prepareEventRequestForm(){
         var checkIfUserLoggedIn = $('header #userInformation').length;
-        //console.log(checkIfUserLoggedIn)
+
         if(checkIfUserLoggedIn > 0){
             var userInformationStorage = JSON.parse(localStorage.getItem('user'));
             if(userInformationStorage) {
@@ -183,6 +222,7 @@ $(function () {
             localStorage.removeItem('user');
             $('.eventChooseRequest').hide();
         }
+
     }
 
     function getUserEvents(userInf){
@@ -209,14 +249,16 @@ $(function () {
         })
     }
 
-
     function createEventsListRequest(userEvents){
         $('#event_preset').empty();
         $(userEvents).each(function(i){
-            var eventsOptions='<option value="'+ this.event.id +'" name="event" class="'+i+'">'+this.event.title+'</option>';
+            var eventsOptions='<option value="'+ this.id +'" name="event" class="'+i+'" data-meta="'+ this.id +'">'+this.title+'</option>';
             $('#event_preset').append(eventsOptions);
-            //console.log('preveEventList')
         });
+
+        var eventsOptions='<option value="newEvent" name="event" class="select-new-event" data-meta="newEvent">New event</option>';
+        $('#event_preset').append(eventsOptions);
+
         $('.eventUnregistered').hide();
         $('#requestQuoteForm .modal-body').hide();
         $('#requestQuoteForm .modal-body').addClass('choosePrevEvent');
@@ -226,25 +268,38 @@ $(function () {
     function setDataEvent(userEvents){
         $('#chosenEvent select').on('change',function(){
             var selectedEvent = $(this).find('option:selected').attr('class');
-            fillFormWithDataFromEvent(userEvents, selectedEvent)
+            var selectedEventData = $(this).find('option:selected').data('meta');
+            if (selectedEventData == 'newEvent') {
+                $('#requestQuoteForm .modal-body').slideDown();
+                $('#requestQuoteForm .modal-body').removeClass('choosePrevEvent');
+                return;
+            }
+
+            fillFormWithDataFromEvent(userEvents, selectedEvent);
         });
+
         var selectedEvent = $('#chosenEvent select').find('option:selected').attr('class');
-        fillFormWithDataFromEvent(userEvents, selectedEvent)
+        fillFormWithDataFromEvent(userEvents, selectedEvent);
     }
 
     function fillFormWithDataFromEvent(userEvents, selectedEvent){
-        $('#requestQuoteForm #event_name').val(userEvents[selectedEvent].event.title);
-        $('#requestQuoteForm #event_date').val(userEvents[selectedEvent].event.starting_date);
-        $('#requestQuoteForm #event_time').val(userEvents[selectedEvent].event.timing);
-        $('#requestQuoteForm #event_city option[value='+userEvents[selectedEvent].event.city.id+']').attr('selected','selected');
-        $('#requestQuoteForm #event_country option[value='+userEvents[selectedEvent].event.countryId+']').attr('selected','selected');
-        $('#requestQuoteForm #event_location').val(userEvents[selectedEvent].event.location);
-        $('#requestQuoteForm #event_type option[value='+userEvents[selectedEvent].event.event_type.id+']').attr('selected','selected');
-        $('#requestQuoteForm #venue_type option[value='+userEvents[selectedEvent].event.venue_type.id+']').attr('selected','selected');
-        $('#requestQuoteForm .guests-num input[value="'+userEvents[selectedEvent].event.number_of_guests+'"]').prop('checked',true);
+        $('#requestQuoteForm #event_name').val(userEvents[selectedEvent].title);
+        $('#requestQuoteForm #event_date').val(userEvents[selectedEvent].starting_date);
+        $('#requestQuoteForm #event_time').val(userEvents[selectedEvent].timing);
+        $('#requestQuoteForm #event_city option[value='+userEvents[selectedEvent].city.id+']').attr('selected','selected');
+
+        //$('#requestQuoteForm #event_country option[value='+userEvents[selectedEvent].event.countryId+']').attr('selected','selected');
+        $('#requestQuoteForm #event_location').val(userEvents[selectedEvent].location);
+        $('#requestQuoteForm #event_type option[value='+userEvents[selectedEvent].event_type.id+']').attr('selected','selected');
+        $('#requestQuoteForm #venue_type option[value='+userEvents[selectedEvent].venue_type.id+']').attr('selected','selected');
+        //$('#requestQuoteForm .guests-num input[value="'+userEvents[selectedEvent].event.number_of_guests+'"]').prop('checked',true);
+        $('#requestQuoteForm .guests-number option[value='+userEvents[selectedEvent].number_of_guests+']').attr('selected','selected');
     }
 
-    $('#new-event').on('click',function(){
+    $('.free-quote-modal #new-event').on('click',function(){
+
+        $("#chosenEvent select").val('newEvent').trigger("change");
+
         $('#requestQuoteForm .modal-body').slideDown();
         $('#requestQuoteForm .modal-body').removeClass('choosePrevEvent');
         $('#requestQuoteForm .modal-body').addClass('newEventRegistered');
@@ -255,7 +310,7 @@ $(function () {
 
     function cleanNewEventForm(){
         $('#requestQuoteForm #event_name, #requestQuoteForm #event_date, #requestQuoteForm #event_time, #requestQuoteForm #event_location').val('');
-        $('#requestQuoteForm .guests-num input').prop('checked',false);
+        $('#requestQuoteForm .guests-numer input').prop('checked',false);
         $('#requestQuoteForm input').attr('style', '');
         $('#quoteRequestSecond .errorCat').text('').hide();
         $('#requestQuoteForm .errorCat').text('').hide();
@@ -263,11 +318,52 @@ $(function () {
 
     $('#quoteRequsetSend').on('click',function(e){
         e.preventDefault();
+
+        var checkedAnyPerformance = false;
+        var performances = [];
+        $("#quoteRequestSecond").find("input[type=checkbox]").each(function() {
+            if ($(this).prop('checked') == true) {
+                checkedAnyPerformance = true;
+                performances.push($(this).val());
+            }
+        });
+
+        var connectEventData = {};
+        if (!checkedAnyPerformance) {
+            var performanceError = 'You should check at least 1 performance';
+            $('#quoteRequestSecond .errorCat').text(performanceError).show();
+            return;
+        }
+
         var requestFormSerialize = $('#requestQuoteForm, #quoteRequestSecond').serialize(),
             userInformationStorage = JSON.parse(localStorage.getItem('user')),
             checkUserLoggedIn = $('#userInformation').text(),
             prevEventChosen = $('#requestQuoteForm .modal-body').hasClass('choosePrevEvent');
-        //console.log(userInformationStorage)
+
+        var currentEvent = $("#chosenEvent select").val();
+
+        var slug;
+        if (typeof(window.artistSlug) == 'undefined') {
+            slug = $('#slug').text();
+        } else {
+            slug = window.artistSlug;
+        }
+
+        var comment = $('#comment_area textarea').val();
+
+        if (currentEvent != 'newEvent' && currentEvent != '') {
+            connectEventData = {
+                eventId: currentEvent,
+                slug: slug,
+                performances: performances,
+                comment: comment
+            };
+
+            //call api for connecting event
+            addArtistToEvent(connectEventData);
+            return;
+        }
+
         if(userInformationStorage && prevEventChosen == false){
             sendQuoteRequest(requestFormSerialize, userInformationStorage);
         } else if (!userInformationStorage){
@@ -277,7 +373,6 @@ $(function () {
             chooseRogLog();
         } else if(prevEventChosen == true && checkUserLoggedIn && userInformationStorage){
             var chosenEvent = $('#chosenEvent, #requestQuoteForm, #quoteRequestSecond').serialize();
-            //console.log(chosenEvent)
             sendQuoteRequest(chosenEvent, userInformationStorage);
         }
     });
@@ -313,8 +408,12 @@ $(function () {
             regionLng = quoteRequestAutocompService.coords.region.lng,
             cityLat = quoteRequestAutocompService.coords.city.lat,
             cityLng = quoteRequestAutocompService.coords.city.lng,
-            region = quoteRequestAutocompService.currentStore.region;
-            placeId = quoteRequestAutocompService.currentStore.placeId;
+            region = quoteRequestAutocompService.currentStore.region,
+            placeId = quoteRequestAutocompService.currentStore.placeId,
+            city = quoteRequestAutocompService.currentStore.city;
+
+        //todo: remove type in event, we use venue_type
+        var eventType = 1;
 
         data += "&city_lat=" + cityLat;
         data += "&city_lng=" + cityLng;
@@ -323,6 +422,8 @@ $(function () {
         data += "&region_lng=" + regionLng;
         data += "&place_id=" + placeId;
         data += "&country=United Kingdom";
+        data += "&city=" + city;
+        data += "&type=" + eventType;
 
         $.ajax({
             type:'POST',
@@ -337,7 +438,11 @@ $(function () {
             success:function(res){
                 $('#freeQuoteModal').modal('hide');
                 $('#offerSuccess').modal('show');
+                $('#additional_info_area').find(".current-count").html("0");
+                $('#additional_info_area textarea').val('');
+
                 $('#comment_area').hide();
+                $('#comment_area').find(".current-count").html("0");
                 $('#comment_area textarea').val('');
                 $('#requestQuoteForm input').attr('style', '');
                 $('#quoteRequestSecond .errorCat').text('').hide();
@@ -362,4 +467,81 @@ $(function () {
             }
         })
     };
+
+    function addArtistToEvent(data) {
+        $.ajax({
+            type:'POST',
+            url:'/event/artist',
+            data: {
+                artist_event_create: {
+                    event: data.eventId,
+                    slug: data.slug,
+                    performance: data.performances,
+                    comment: data.comment
+                }
+            },
+            beforeSend: function () {
+                $('#loadSpinner').fadeIn(500);
+            },
+            complete: function () {
+                $('#loadSpinner').fadeOut(500);
+            },
+            success:function(res){
+                $('#freeQuoteModal').modal('hide');
+                $('#offerSuccess').modal('show');
+                $('#additional_info_area').find(".current-count").html("0");
+                $('#additional_info_area textarea').val('');
+
+                $('#comment_area').hide();
+                $('#comment_area').find(".current-count").html("0");
+                $('#comment_area textarea').val('');
+                $('#requestQuoteForm input').attr('style', '');
+                $('#quoteRequestSecond .errorCat').text('').hide();
+                $('#requestQuoteForm .errorCat').text('').hide();
+                prepareEventRequestForm();
+            },
+            error: function(response){
+                $('#loadSpinner').fadeOut(500);
+                $('#requestQuoteForm input').attr('style', '');
+                $('#quoteRequestSecond .errorCat').text('').hide();
+                $('#requestQuoteForm .errorCat').text('').hide();
+                $.each(response.responseJSON, function(key, value) {
+                    $('#requestQuoteForm input[name='+key+']').attr('style', 'border-color: #ff735a !important');
+                    if(key == 'performance'){
+                        $('#quoteRequestSecond .errorCat').text(value).show();
+                    }
+                    if(key == 'number_of_guests'){
+                        $('#requestQuoteForm .errorCat').text(value).show();
+                    }
+                });
+            }
+        })
+    };
+
+    /* todo: For refactor - we need to use vue js for future
+    if (document.querySelector('.free-quote-modal')) {
+        try{
+            var vue = new Vue({
+                el: '.free-quote-modal',
+                delimiters: ['${','}'],
+                data: {
+
+                },
+                created: function(){
+                    prepareEventRequestForm();
+                },
+                ready: function(){
+                    debugger;
+                },
+                methods:{
+
+                },
+                filters:{
+
+                }
+
+            });
+        }catch (e){
+        }
+    }*/
 });

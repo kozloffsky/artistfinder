@@ -402,8 +402,8 @@
             this.setAutocompleteCountry(context, code);
 
             // Clear inputs after change country
-            this.currentStore.city = 
-            this.currentStore.region = 
+            this.currentStore.city = '';
+            this.currentStore.region = '';
             this.currentStore.post_code = "";
             this.inputs[CITY].val("");
             this.inputs[REGION].val("");
@@ -449,6 +449,13 @@
 
                 switch(type) {
                     case 'locality':
+                        var city = place_name; console.log("CITY: ", city);
+
+                        if(city) {
+                            _this.currentStore.city = city;
+                            $(_this.inputs[CITY]).val(city);
+                        }
+                    case 'postal_town':
                         var city = place_name; console.log("CITY: ", city);
 
                         if(city) {

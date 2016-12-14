@@ -60,6 +60,8 @@ class RequestQuotationController extends Controller
             ], Response::HTTP_UNAUTHORIZED);
         }
 
+        $artist = $user->getArtist();
+
         $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
         $performanceRepo = $em->getRepository('ActedLegalDocsBundle:Performance');
         $serviceRepo = $em->getRepository('ActedLegalDocsBundle:Service');
@@ -82,9 +84,12 @@ class RequestQuotationController extends Controller
         $event = $data['event'];
 
         $eventOfferRepo = $em->getRepository('ActedLegalDocsBundle:EventOffer');
-        $preSelectedPerformanceIds = $eventOfferRepo->getPerformanceIds($event);
-
-        $requestQuotations = $requestQuotationRepo->findBy(array('event' => $event));
+        $preSelectedPerformanceIds = $eventOfferRepo->getPerformanceIds($event, $artist);
+        
+        $requestQuotations = $requestQuotationRepo->findBy(array(
+            'event' => $event,
+            'artist' => $artist
+        ));
 
         foreach ($requestQuotations as $requestQuotation) {
             if ($requestQuotation->getStatus() == RequestQuotation::STATUS_DRAFT) {
@@ -119,7 +124,7 @@ class RequestQuotationController extends Controller
             }
 
             /*Create new request with draft status*/
-            $newRequestQuotation = $requestQuotationRepo->createDraftRequestQuotation($event);
+            $newRequestQuotation = $requestQuotationRepo->createDraftRequestQuotation($event, $artist);
 
             if ($isExistsPublishedRequestQuotation) {
                 //copy performances from published requestQuotation

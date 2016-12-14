@@ -1,17 +1,5 @@
 <div class="row events-menu">
-    <ul>
-        <li class="event-item non-active">
-            <a title="Event name 2">Event name 2</a>
-        </li>
-        <li class="event-item active">
-            <a title="AstraZeneca 2016 Annual Party">AstraZeneca 2016 Annual Party</a>
-        </li>
-        <li class="event-item non-active">
-            <a title="Event name 3">Event name 3</a>
-        </li>
-        <li class="event-item non-active">
-            <a title="Event name 4">Event name 4</a>
-        </li>
+    <ul class="ul-reset">
     </ul>
 
     <div class="arrows">
@@ -22,33 +10,32 @@
             <i class="right"></i>
         </div>
     </div>
-
 </div>
-<div class="new-event">
+<div class="new-event new-client-event">
     <span class="hidden-xs hidden-sm">Add Event</span>
     <i class="fa fa-plus"></i>
 </div>
 <div class="row options-menu">
     <input id="options-menu-open" name="options-menu-open" type="checkbox" class="hidden">
-    <label for="options-menu-open" class="active-tab">Event details
+    <label for="options-menu-open" class="active-tab">
         <i class="fa fa-sort-desc hidden-md hidden-lg pull-right" aria-hidden="true"></i>
         <i class="fa fa-sort-asc hidden-md hidden-lg pull-right" aria-hidden="true"></i>
     </label>
-    <ul>
+    <ul class="ul-reset">
         <li class="active-item">
-            Event details
+            <a href="{{ path('events') }}">Event details</a>
         </li>
         <li>
-            Messages
+            <a href="{{ path('event_messages') }}">Messages</a>
         </li>
         <li>
-            Artist selection
+            <a href="{{ path('artist_selection') }}">Artist selection</a>
         </li>
         <li>
             Payments
         </li>
         <li>
-            Feedback
+            <a href="{{ path('feedbacks') }}">Feedback</a>
         </li>
     </ul>
 </div>

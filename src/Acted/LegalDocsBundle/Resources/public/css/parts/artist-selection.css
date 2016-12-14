@@ -58,7 +58,7 @@
     font-weight: 500;
 }
 .artist-selection .artist-block .avatar-block {
-    margin: 4px 18px 0 40px;
+    margin: 7px 12px 0 37px;
 }
 .artist-selection .artist-block .available-flag {
     font-family: LatoBold;
@@ -90,7 +90,11 @@
     background: url(../../assets/images/star_feedback.png);
     background-size: cover;
 }
+.artist-selection .artist-block .rate i,
 .artist-selection .artist-block .rate-count i {
+    font-style: normal;
+}
+.artist-selection .artist-block .rate-count span {
     font-family: LucidaGrande;
     font-size: 14px;
     font-weight: 400;
@@ -101,7 +105,7 @@
     padding: 0 0 0 58px;
 }
 .artist-selection .artist-block .controls-area {
-    margin: -24px 0 0 15px;
+    margin: -28px 0 0 15px;
     padding: 0;
 }
 .artist-selection .artist-block .controls-area > button {
@@ -125,7 +129,14 @@
     width: 130px;
     font-size: 14px !important;
 }
-
+.artist-selection .remove-artist {
+    font-family: LatoRegular;
+    font-size: 14px;
+    font-weight: 400;
+}
+.artist-selection .remove-artist i {
+    margin: 0 8px 0 0;
+}
 
 @media screen and (max-width: 1199px) {
     .artist-selection .artist-block .right-panel {
@@ -135,7 +146,7 @@
 
 @media screen and (max-width: 696px) {
     .artist-selection .artist-block .avatar-block {
-        margin: 6px 30px 0 0;
+        margin: 6px 30px 0 12px;
     }
 }
 
@@ -604,7 +615,7 @@
         float: none !important;
     }
 }
-@media (max-width: 767px){
+@media (max-width: 768px){
     .artist-selection{padding: 0 0 40px;}
     .artist-selection .container{padding: 0;}
     .detail-form.main-form{padding: 20px 15px;}
@@ -663,5 +674,61 @@
     .category-tab .artists-list .place{margin-left: -20%;}
     .category-tab .request-title-list{padding-top: 8px;}
 }
+@media (max-width: 768px) {
+    .artist-selection .artist-block .avatar-block {
+        margin: 7px 12px 0 14px;
+    }
+    .artist-selection .artist-block {
+        padding: 38px 0 24px 0;
+    }
+    .artist-selection .artist-block .avatar img {
+        width: 54px;
+        height: 54px;
+    }
+    .artist-selection .artist-block .name {
+        position: absolute;
+        top: -50px;
+        left: 75px;
+    }
+    .artist-selection .artist-block .stars {
+        margin: 0;
+        position: absolute;
+        top: -20px;
+        left: 75px;
+    }
+    .artist-selection .artist-block .rate {
+        position: absolute;
+        top: -22px;
+        left: 175px;
+    }
+    .artist-selection .artist-block .rate-count {
+        position: absolute;
+        top: -22px;
+        left: 226px;
+    }
+    .artist-selection .artist-block .right-panel {
+        position: absolute;
+        top: 0;
+        right: 16px;
+    }
+    .artist-selection .artist-block .controls-area {
+        margin: 16px 0 0 12px;
+    }
+    .artist-selection .artist-block .price-from {
+        margin: 25px 0 0 0;
+    }
+    .artist-selection .artist-block .available-flag {
+        position: absolute;
+        top: -90px;
+    }
+    .artist-selection .remove-artist {
+        position: absolute;
+        top: -50px;
+    }
+    .artist-selection .artist-block .controls-area > button {
+        margin: 0 30px 0 0;
+    }
+}
+
 /*media styles end*/
 /*artist selection styles end*/

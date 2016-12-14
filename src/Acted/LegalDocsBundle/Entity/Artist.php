@@ -429,8 +429,8 @@ class Artist
 
     public function getRating()
     {
-        $ratings = $this->ratings->map(function($entry){
-            /** @var ArtistRating $entry */
+        $ratings = $this->feedbacks->map(function($entry){
+            /** @var Feedback $entry */
             return $entry->getRating();
         });
 
@@ -445,7 +445,7 @@ class Artist
 
     public function getVotesCount()
     {
-        return count($this->ratings);
+        return count($this->feedbacks);
     }
 
     public function __toString()
@@ -839,5 +839,83 @@ class Artist
     public function getEventArtists()
     {
         return $this->eventArtists;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $eventOffer;
+
+
+    /**
+     * Add eventOffer
+     *
+     * @param \Acted\LegalDocsBundle\Entity\EventOffer $eventOffer
+     *
+     * @return Artist
+     */
+    public function addEventOffer(\Acted\LegalDocsBundle\Entity\EventOffer $eventOffer)
+    {
+        $this->eventOffer[] = $eventOffer;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventOffer
+     *
+     * @param \Acted\LegalDocsBundle\Entity\EventOffer $eventOffer
+     */
+    public function removeEventOffer(\Acted\LegalDocsBundle\Entity\EventOffer $eventOffer)
+    {
+        $this->eventOffer->removeElement($eventOffer);
+    }
+
+    /**
+     * Get eventOffer
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventOffer()
+    {
+        return $this->eventOffer;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $requestQuotations;
+
+
+    /**
+     * Add requestQuotation
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation
+     *
+     * @return Artist
+     */
+    public function addRequestQuotation(\Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation)
+    {
+        $this->requestQuotations[] = $requestQuotation;
+
+        return $this;
+    }
+
+    /**
+     * Remove requestQuotation
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation
+     */
+    public function removeRequestQuotation(\Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation)
+    {
+        $this->requestQuotations->removeElement($requestQuotation);
+    }
+
+    /**
+     * Get requestQuotations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRequestQuotations()
+    {
+        return $this->requestQuotations;
     }
 }

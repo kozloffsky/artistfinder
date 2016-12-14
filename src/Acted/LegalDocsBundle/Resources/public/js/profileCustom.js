@@ -74,49 +74,49 @@ $(function() {
         }
     };
 
-    $('.feedback-block .text').each(function () {
-        var $element  = $(this);
-        var $toggler  = $element.find('.more');
-        var $gradient = $element.find('.gradient');
-        var $text     = $element.find('.feedback-text');
-        var text      = $text.html();
-
-        var maxLength = 0;
-        if ($(window).width() < 768) {
-            maxLength = parseInt($element.attr('data-max-chars-mobile'));
-        } else {
-            maxLength = parseInt($element.attr('data-max-chars-desktop'));
-        }
-
-        if (text.length > maxLength) {
-            var newText = text.substring(0, maxLength - 3) + '...';
-            $text.html(newText);
-
-            $element.attr('data-full-text', text);
-            $element.addClass('expandable');
-
-            $toggler.click(function (e) {
-                e.preventDefault();
-                if (!$element.hasClass('opened')) {
-                    $text.html($element.attr('data-full-text'));
-                    $element.addClass('opened');
-                    $toggler.html('-hide');
-                    $gradient.hide();
-                } else {
-                    $element.removeClass('opened');
-                    var newText = $element.attr('data-full-text').substring(0, maxLength - 3) + '...';
-                    $text.html(newText);
-                    $toggler.html('+more');
-                    $gradient.show();
-                }
-            });
-
-
-        } else {
-            $toggler.hide();
-            $gradient.hide();
-        }
-    });
+    // $('.feedback-block .text').each(function () {
+    //     var $element  = $(this);
+    //     var $toggler  = $element.find('.more');
+    //     var $gradient = $element.find('.gradient');
+    //     var $text     = $element.find('.feedback-text');
+    //     var text      = $text.html();
+    //
+    //     var maxLength = 0;
+    //     if ($(window).width() < 768) {
+    //         maxLength = parseInt($element.attr('data-max-chars-mobile'));
+    //     } else {
+    //         maxLength = parseInt($element.attr('data-max-chars-desktop'));
+    //     }
+    //
+    //     if (text.length > maxLength) {
+    //         var newText = text.substring(0, maxLength - 3) + '...';
+    //         $text.html(newText);
+    //
+    //         $element.attr('data-full-text', text);
+    //         $element.addClass('expandable');
+    //
+    //         $toggler.click(function (e) {
+    //             e.preventDefault();
+    //             if (!$element.hasClass('opened')) {
+    //                 $text.html($element.attr('data-full-text'));
+    //                 $element.addClass('opened');
+    //                 $toggler.html('-hide');
+    //                 $gradient.hide();
+    //             } else {
+    //                 $element.removeClass('opened');
+    //                 var newText = $element.attr('data-full-text').substring(0, maxLength - 3) + '...';
+    //                 $text.html(newText);
+    //                 $toggler.html('+more');
+    //                 $gradient.show();
+    //             }
+    //         });
+    //
+    //
+    //     } else {
+    //         $toggler.hide();
+    //         $gradient.hide();
+    //     }
+    // });
 
 
     /*var imageSlider = console.log('')
@@ -1138,10 +1138,27 @@ $(function() {
         getPagination(paginationRoute, paginationTarget);
     });
 
+    function preventAskQuoteFromArtist(){
+        var checkIfUserLoggedIn = $('header #userInformation').length;
+        if(checkIfUserLoggedIn > 0){
+            var userInformationStorage = JSON.parse(localStorage.getItem('user'));
+            if(userInformationStorage) {
+                if (userInformationStorage.role[0] == 'ROLE_ARTIST') {
+                    $('.askQuoteFromSearch').parent('div').css('visibility','hidden');
+                    $('.requestQuotePerformance').hide();
+                    $('.quoteRequestProfile').hide();
+                }
+            }
+        }
+    }
+
     function getPagination(paginationRoute, paginationTarget){
         $.get(paginationRoute, function( data ) {
             $(paginationTarget).html(data);
             setPerformanceFrameHeight();
+        }).promise().done(function () {
+            setRatingFeedback();
+            preventAskQuoteFromArtist();
         });
     }
 
@@ -1223,6 +1240,21 @@ $(function() {
             return frameService;
         }
     }
+
+
+    $('#freeQuoteModal #comment_toggle').click(function (e) {
+        e.preventDefault();
+
+        $(this).closest('div').find('#comment_area').toggle();
+
+        if($(this).prop('hide-comment')) {
+            $(this).text('Add a comment');
+            $(this).prop('hide-comment', false);
+        } else {
+            $(this).text('Hide a comment');
+            $(this).prop('hide-comment', true);
+        }
+    });
 });
 
 

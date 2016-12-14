@@ -8,9 +8,7 @@
     content: "";
 }
 
-.prices .act .info-list .col {
-    width: 18% !important;
-}
+
 
 main.prices{
     margin-bottom: 60px;
@@ -63,9 +61,6 @@ main.prices{
     padding-left: 0;
 }
 .prices .act .info-list .col{
-    width: 25%;
-}
-.prices .act .info-list .col:nth-of-type(1){
     width: 18%;
 }
 .prices .act .info-list .col:first-child:after{
@@ -194,7 +189,7 @@ main.prices{
     display: inline-block;
     vertical-align: top;
     text-align: inherit !important;
-    width: 200px !important;
+    width: 200px;
     padding-right: 5px;
 }
 /*.act .price-list li:last-child{*/
@@ -218,12 +213,12 @@ main.prices{
 .prices .act .price-list dd{
     float: left;
 }
-.prices .act .note-x{
+.prices .act .note-x {
     display: inline-block;
     vertical-align: top;
-    margin: -2px 0 0 6px;
+    margin: -2px 4px 0 0;
 }
-.prices .act .add{
+.prices .act .add {
     font-size: 14px;
     text-decoration: underline;
     position: relative;
@@ -433,7 +428,7 @@ main.prices .note{
     width: 20px;
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 1200px) {
     .prices .act,
     .prices .act .quantity{
         font-size: 13px;
@@ -460,6 +455,12 @@ main.prices .note{
         font-size: 11px;
     }
     .prices .act .price-list li{width: 200px;}
+    .prices .act .price-list li:nth-of-type(1) {
+        width: 180px;
+    }
+    .prices .act .price-list li:nth-of-type(3) {
+        width: 130px;
+    }
     /*.act .price-list li:last-child{width: 100px;}*/
     .prices .act .select2-container--default .select2-selection--single{
         height: 28px !important;
@@ -486,10 +487,22 @@ main.prices .note{
         min-height: 23px;
     }
     .prices .act .price-list .add{padding-top: 0;}
+    .prices .act .info-list .col-2, .prices .act .info-list .col {
+        padding: 0;
+    }
+    .prices .act .price-list dt {
+        margin: 0;
+    }
 }
 @media (max-width: 991px){
+    .container {
+        width: 100%;
+    }
+    .prices .act {
+        padding: 0 0 0 10px;
+    }
     .prices .act .price-list li{
-        display: block;
+        display: inline-block;
     }
     .prices .act .price-list .ico-holder{
         position: absolute;
@@ -500,12 +513,42 @@ main.prices .note{
     .prices .act .price-list{margin-bottom: 0;}
     .prices .act .info-list > li{padding: 30px 0;}
     .prices .act-section .btn-row{margin-top: -70px;}
+    .prices .act .info-list .col {
+        width: 25%;
+    }
+    .prices .act .info-list .col-2, 
+    .prices .act .info-list .col {
+        width: 50%;
+    }
+    .prices .act .info-list .col:first-child {
+        width: 25%;
+    }
+    .prices .act .input-num.long {
+        width: 96px;
+    }
+    .prices .act .info-list .col:first-child {
+        width: 15%;
+    }
+    .prices .act .info-list .col-2 {
+        width: 60%;
+    }
+    .prices .act .info-list .col {
+        width: 22%;
+    }
+    .prices .act .price-list li {
+        width: 160px;
+    }
+    .prices .act .input-num {
+        width: 40px;
+    }
+    .prices .act .info-list .col:nth-of-type(3n+1) {
+        width: 15%;
+        clear: both;
+    }
 }
-@media (max-width: 767px){
-    main.prices .container{padding: 0;}
-    .prices .act .price-list li:first-child{width: 100%;}
+@media (max-width: 800px) {
     .prices .act{
-        padding: 10px 15px 5px;
+        padding: 10px 15px 5px 10px;
         margin-bottom: 15px;
     }
     .prices .act:first-child{
@@ -515,15 +558,7 @@ main.prices .note{
     .prices .act .categories-dropdown{
         margin-bottom: 20px;
     }
-    .prices .act .info-list .col,
-    .prices .act .info-list .col:first-child {
-        width: 49%;
-        min-height: 0;
-        padding: 0 0 6px;
-        float: none;
-        display: inline-block;
-        vertical-align: top;
-    }
+    
     .prices .act .info-list .col:last-child{padding: 0;}
     .prices .act .info-list .col:after,
     .prices .act .info-list .col-2:after{border: 0;}
@@ -540,7 +575,7 @@ main.prices .note{
     }
     .prices .act .price-list li{
         padding: 0;
-        width: 100%;
+        width: 170px;
     }
     .prices .act .row{position: relative;}
     .prices .act .ico-holder{
@@ -615,8 +650,34 @@ main.prices .note{
         margin-top: 0;
         padding: 0 15px;
     }
+    .prices .act .price-list .add {
+        position: relative;
+    }
+    /*.prices .act .info-list .col {
+        width: 20%;
+        clear: both;
+    }*/
+    .prices .act .input-num.long {
+        width: 110px;
+    }
+    .prices .act .input-num {
+       width: 44px;
+       font-size: 13px;    
+    }
+    .prices .act .price-list li:nth-of-type(1) {
+        width: 160px;
+    }
+    .prices .act .curr {
+        margin: 0 5px;
+    }
+    .prices .price-list dt > select {
+        width: 36px;
+    }
+    .prices .act .info-list .col-2 {
+        width: 63%;
+    }
 }
-@media (max-width: 429px){
+@media (max-width: 760px){
     .prices .act .input-num.huge{width: 270px;}
     .prices .act .info-list .col,
     .prices .act .info-list .col-2{
@@ -636,5 +697,10 @@ main.prices .note{
 @media only screen and (max-width: 425px) {
     .prices .act .price-list .add {
         position: relative;
+    }
+}
+@media only screen and (max-width: 320px) {
+    .prices .act .info-list .col {
+        width: 100% !important;
     }
 }

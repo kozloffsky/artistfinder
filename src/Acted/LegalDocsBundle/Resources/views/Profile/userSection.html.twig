@@ -44,6 +44,7 @@
                     on-request per event
                 {% endif %}
             </div>
+            {% if artist.user.profile.showFeedbacks or artist.feedbacks | length > 4 %}
             <div class="user-rating">
                 <div class="stars">
                     <div class="star">
@@ -63,9 +64,10 @@
                     </div>
                 </div>
 
-                <div class="rating">{{ artist.rating }}/5.0 ({{ artist.ratings|length }} Votes)</div>
-                <span id="raitingVal" class="hidden">{{ artist.rating }}</span>
+                <div class="rating">{{ rating.averageRating | round(1) }}/5.0 ({{ artist.feedbacks|length }} Votes)</div>
+                <span id="raitingVal" class="hidden">{{ rating.averageRating }}</span>
             </div>
+            {% endif %}
         </div>
         <div class="controls">
 
@@ -91,6 +93,7 @@
                     </div>
                 </li>
                 <li>
+                    {% if artist.user.profile.showFeedbacks or artist.feedbacks | length > 4 %}
                     <div class="menu-item">
                         <a class="anchor-scroll" href="#feedbacks">
                             <div class="hover-bg">
@@ -98,6 +101,7 @@
                             </div>
                         </a>
                     </div>
+                    {% endif %}
                 </li>
                 <li>
                     <div class="menu-item">

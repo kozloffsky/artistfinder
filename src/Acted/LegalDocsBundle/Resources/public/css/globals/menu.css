@@ -72,35 +72,48 @@
 /** --- FEEDBACK CLIENT --- **/
 .dashboard.client .options-menu ul {
     list-style-type: none;
-    margin: 0 41px 0 41px;
+    margin: 0 0 0 50px;
 }
 
 .dashboard.client .options-menu ul,
 .dashboard.client .options-menu li {
     display: inline-block;
 }
+.dashboard.client .options-menu li a {
+    color: rgba(0,0,0,.87);
+}
+.dashboard.client .options-menu li:hover {
+    padding-bottom: 10px;
+    border-bottom: 3px solid rgba(255, 121, 62, 1);
+}
+.dashboard.client .options-menu li:hover > a {
+    text-decoration: none;
+}
 
 /** --- EVENTS MENU --- **/
 .dashboard.client .events-menu {
-    margin: 21px 0 25px 0;
+    margin: 21px 0 21px 0;
     position: relative;
     display: inline-block;
 }
 .dashboard.client .events-menu ul {
     overflow: hidden;
     height: 26px;
-    margin: 0 40px;
+    margin: 0 40px 0 50px;
 }
 .dashboard.client .new-event {
     display: inline-block;
     font-family: LatoRegular;
     font-size: 14px;
     color: rgba(24, 31, 161, 1);
-    margin: 0 0 20px 40px;
-    vertical-align: middle;
+    margin: 23px 10px 0 0px;
+    float: right;
+}
+.dashboard.client .new-event:hover {
+    cursor: pointer;
 }
 .dashboard.client .new-event > span {
-    padding: 0 10px 0 0;
+    padding: 0 5px 0 0;
 }
 .dashboard.client .new-event > i.fa.fa-plus {
     vertical-align: middle;
@@ -117,8 +130,8 @@
     width: 169px;
     border-radius: 3px;
     border-radius: 3px;
-    padding: 4px 13px 6px 13px;
-    margin: 0 10px 0 0;
+    padding: 1px 13px 6px 0px;
+    margin: 0 7px 0 0;
     overflow: hidden;
     display: inline-block;
     text-overflow: ellipsis;
@@ -136,7 +149,7 @@
     cursor: pointer;
 }
 .dashboard.client .events-menu .event-item.active a {
-    color: #FFF;
+    color: rgba(255, 255, 255, 0.87);
 }
 .dashboard.client .events-menu .event-item.non-active {
     background-image: -webkit-linear-gradient(left, rgba(88, 149, 243, 1) 0%, rgba(73, 79, 199, 1) 100%), -webkit-linear-gradient(left, rgba(88, 149, 243, 1) 0%, rgba(73, 79, 199, 1) 100%);
@@ -175,7 +188,7 @@
 .dashboard.client .events-menu .arrows .left,
 .dashboard.client .events-menu .arrows .right {
     position: absolute;
-    top: 4px;
+    top: 2px;
 }
 
 .dashboard.client .events-menu .arrows .left {
@@ -197,16 +210,27 @@
     margin: 0 0 20px 0;
 }
 .dashboard.client .options-menu li {
-    margin: 0 66px 0 0;
+    margin: 0 78px 0 0;
+    font-family: LatoRegular;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.87);
 }
 .dashboard.client .options-menu li.active-item {
     border-bottom: 3px solid rgba(255, 121, 62, 1);
     padding-bottom: 10px;
 }
-
-
-
+.owl-carousel {
+    width: initial;
+}
+@media screen and (min-width: 1200px) {
+    .dashboard.client .events-menu {
+        width: 980px;
+    }
+}
 @media screen and (max-width: 1200px) {
+    .dashboard.client .events-menu {
+        width: 100%;
+    }
     .dashboard.client .new-event {
         margin: 0;
     }
@@ -220,24 +244,24 @@
         left: 80%;
     }
 }
-
-@media screen and (min-width: 991px ){
-    .dashboard.client .events-menu {
-        width: 950px;
-    }
-}
 @media screen and (min-width: 768px) {
     .dashboard.client .options-menu .active-tab,
     .dashboard.client .options-menu input[name="options-menu-open"] {
         display: none;
     }
 }
-
+@media screen and (max-width: 991px) {
+    .dashboard.client .options-menu li {
+        margin: 0 40px 0 0;
+    }
+}
 @media screen and (max-width: 768px) {
     .container {
         padding: 0 !important;
     }
-
+    .dashboard.client .options-menu li a {
+        color: #FFF;
+    }
     .dashboard.client .container {
         padding: 0;
         margin: 0;
@@ -261,11 +285,9 @@
     .dashboard.client .events-menu .new-event .fa.fa-plus {
         padding: 0;
     }
-
-
-
-
-
+    .categories-menu {
+        display: none;
+    }
     /** Options menu **/
     .dashboard.client .options-menu {
         background-color: rgba(144, 189, 223, 1);
@@ -329,7 +351,5 @@
 }
 
 @media screen and (max-width: 320px) {
-    .dashboard.client .events-menu ul {
-        margin: 0 30px;
-    }
+
 }
