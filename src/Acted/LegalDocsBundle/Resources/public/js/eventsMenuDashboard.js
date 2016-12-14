@@ -241,12 +241,18 @@ $(function () {
     $('.new-client-event').click(function () {
         var countDays = 1;
         var eventNumberOfGuests = 'less_then_50';
-        var venueType = 0;
+        var venueType = 1;
+        var additionalInfo = '';
+        var eventTime = '';
 
         $('.event-modal').find('#event_duration').val(countDays);
         $('.event-modal').find('#guests_count').val(eventNumberOfGuests);
         $('.event-modal').find('#venue_type').val(venueType);
         $('.event-modal').find('form').find("input[type=text], textarea").val("");
+
+        $('.event-modal').find('#additional_info').val(additionalInfo);
+        $('.event-modal').find('#event_time').val(eventTime);
+
         $('.event-modal').modal('show');
     });
 
@@ -310,15 +316,12 @@ $(function () {
                     this.getAllVenuesType();
                     $('.event-modal').find('#event_duration').val(this.eventObj.countDays);
                     $('.event-modal').find('#guests_count').val(this.eventObj.eventNumberOfGuests);
-
-                    //console.log($('.event-modal').find('#venue_type').val(this.eventObj.selectedVenueType));
-                    //console.log($('.event-modal').find('#venue_type').find('option').attr('selected', 'selected'));
-                    //$('.event-modal').find('#venue_type').val(this.eventObj.selectedVenueType);
                 },
                 methods: {
                     createEvent: function (e) {
                         e.preventDefault();
 
+                        var _this = this;
                         var country = 'United Kingdom';
 
                         //todo - need to do with vuejs without jquery
@@ -370,6 +373,15 @@ $(function () {
                             },
                             success: function (res) {
                                 getEventsByUserId(getUserId(), true);
+
+                                _this.eventObj.name = '';
+                                _this.eventObj.eventDate = '';
+                                _this.eventObj.countDays = 1;
+                                _this.eventObj.eventTiming = '';
+                                _this.eventObj.eventAddress = '';
+                                _this.eventObj.eventNumberOfGuests = 'less_then_50';
+                                _this.eventObj.eventAdditionalInfo = '';
+
                                 $('.event-modal').modal('hide');
                                 // $('#freeQuoteModal').modal('hide');
                                 // $('#offerSuccess').modal('show');
