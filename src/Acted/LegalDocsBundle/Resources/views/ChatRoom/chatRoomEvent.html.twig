@@ -1,4 +1,4 @@
-<form action="#" class="detail-form">
+{#<form action="#" class="detail-form">
     <div class="row clearfix">
         {% if not app.user.artist %}
             <div class="col-lg-6 col-md-6 col-sm-6 no-padding">
@@ -170,144 +170,144 @@
         </div>
 
     </div>
+</form>#}
+
+<form action="#" class="detail-form">
+    <div class="row clearfix">
+        <div class="col-lg-6 col-md-6 col-sm-6 container-custom no-padding">
+            <h2 class="title event">Event details</h2>
+
+            <div class="frame">
+                <label for="name_event">Event name</label>
+                <input id="name_event" type="text" placeholder="{{ chat.event.title }}" value="{{ chat.event.title }}">
+            </div>
+
+            <div class="row holder clearfix">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-custom-size">
+                    <div class="frame">
+                        <label for="datetimepicker">Date</label>
+                        <input id="datetimepicker" type="text" class="custom-size" placeholder="{{ chat.event.starting_date }}" value="{{ chat.event.starting_date }}">
+                    </div>
+                    <div class="frame">
+                        <label for="event_time">Event timing</label>
+                        <input id="event_time" type="text" class="custom-size" placeholder="{{ chat.event.timing }}" value="{{ chat.event.timing }}">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 pull-right col-custom-size">
+                    <div class="frame">
+                        <label for="performance">1 day/multiple days</label>
+                        <input id="performance" type="text" class="custom-size" placeholder="2-day event" value="2-day event">
+                    </div>
+                    <div class="frame">
+                        <label for="country">Country</label>
+                        <input id="country" type="text" class="custom-size" placeholder="{{ chat.event.countryName }}" value="{{ chat.event.countryName }}" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <div class="frame">
+                <label for="address">Address</label>
+                <input id="address" type="text" placeholder="St Regis" value="St Regis">
+            </div>
+
+            <div class="row holder clearfix">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-custom-size">
+                    <div class="frame">
+                        <label for="venue_type">Venue type</label>
+                        <input id="venue_type" type="text" class="custom-size" placeholder="{{ chat.event.venue_type.venue_type }}" value="{{ chat.event.venue_type.venue_type }}">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 pull-right col-custom-size">
+                    <div class="frame">
+                        <label for="guests_count">Number of guests</label>
+                        <input id="guests_count" type="text" class="custom-size" placeholder="{{ chat.event.number_of_guests }}" value="{{ chat.event.number_of_guests }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="frame">
+                <label for="extra_info">Additional info</label>
+                <textarea id="extra_info" placeholder="I want this celebration to be super cool!">I want this celebration to be super cool!</textarea>
+            </div>
+        </div>
+        <!--quote section start-->
+        <div class="col-lg-6 col-md-6 col-sm-6 no-padding quote-section">
+            <h2 class="title quot">Quote #1</h2>
+            <!--quote section holder start-->
+            <div class="holder">
+                <!--service start-->
+                {% for p in performances %}
+                <article class="service">
+                    <h3 class="package-name">{{ p }}</h3>
+                    <ul class="">
+                    {% for package in p.packages %}
+                        <li>
+                            <strong class="sub-title">{{ package.name }}</strong>
+                            <div class="row">
+                                {% for option in package.options %}
+                                <div class="col-md-12 no-pad">
+                                    <span class="short" name="currency1" id="currency1">{{ option.qty }}</span>
+                                    <span class="">x</span>
+                                    <span class="short" name="currency11" id="currency11">{{ option.duration }} min</span>
+                                    <div class="pull-right">
+                                        <span class="short">{{ option.rates[0].price.amount }}</span>
+                                        <span class="pull-right">GBP</span>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </article>
+                {% endfor %}
+                <article class="service act-extras">
+                    <h3 class="package-name">Extra - 1</h3>
+                    <ul class="">
+                        <li>
+                            <div class="row">
+                                <div class="col-md-12 no-pad">
+                                    <strong class="sub-title">Standart Act</strong>
+                                    <span class="short" name="currency1" id="currency1">2</span>
+                                    <span class="">x</span>
+                                    <span class="short" name="currency11" id="currency11">45 min</span>
+                                    <div class="pull-right">
+                                        <span class="short">3.000</span>
+                                        <span class="pull-right">GBP</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <span class="extra-descr">Description of extra is really nice singe. and I’m writing it for fill this place</span>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+                <!--service end-->
+            </div>
+            <div class="row">
+                <div class="text-box">
+                    <h3>Payment terms</h3>
+                    <p><span class="percent">30%</span> guaranteed Deposit payment on <b>Escrow Account</b></p>
+                    <p><span class="percent">50%</span> guaranteed Balance payment on <b>Escrow Account</b></p>
+                </div>
+                <div class="controls">
+                    <div class="button-gradient filled">
+                        <button class="btn" type="submit">Edit Quotation</button>
+                    </div>
+                </div>
+            </div>
+            <!--quote section holder end-->
+            <ul class="miscellaneous-list">
+                <li>
+                    <a href="#"><i class="icon icon-print" aria-hidden="true"></i>Print</a>
+                </li>
+            </ul>
+        </div>
+        <!--quote section end-->
+    </div>
+
 </form>
-
-{#<form action="#" class="detail-form">#}
-    {#<div class="row clearfix">#}
-        {#<div class="col-lg-6 col-md-6 col-sm-6 container-custom no-padding">#}
-            {#<h2 class="title event">Event details</h2>#}
-
-            {#<div class="frame">#}
-                {#<label for="name_event">Event name</label>#}
-                {#<input id="name_event" type="text" placeholder="{{ chat.event.title }}" value="{{ chat.event.title }}">#}
-            {#</div>#}
-
-            {#<div class="row holder clearfix">#}
-                {#<div class="col-lg-6 col-md-6 col-sm-6 col-custom-size">#}
-                    {#<div class="frame">#}
-                        {#<label for="datetimepicker">Date</label>#}
-                        {#<input id="datetimepicker" type="text" class="custom-size" placeholder="{{ chat.event.starting_date }}" value="{{ chat.event.starting_date }}">#}
-                    {#</div>#}
-                    {#<div class="frame">#}
-                        {#<label for="event_time">Event timing</label>#}
-                        {#<input id="event_time" type="text" class="custom-size" placeholder="{{ chat.event.timing }}" value="{{ chat.event.timing }}">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="col-lg-6 col-md-6 col-sm-6 pull-right col-custom-size">#}
-                    {#<div class="frame">#}
-                        {#<label for="performance">1 day/multiple days</label>#}
-                        {#<input id="performance" type="text" class="custom-size" placeholder="2-day event" value="2-day event">#}
-                    {#</div>#}
-                    {#<div class="frame">#}
-                        {#<label for="country">Country</label>#}
-                        {#<input id="country" type="text" class="custom-size" placeholder="{{ chat.event.countryName }}" value="{{ chat.event.countryName }}" disabled>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-
-            {#<div class="frame">#}
-                {#<label for="address">Address</label>#}
-                {#<input id="address" type="text" placeholder="St Regis" value="St Regis">#}
-            {#</div>#}
-
-            {#<div class="row holder clearfix">#}
-                {#<div class="col-lg-6 col-md-6 col-sm-6 col-custom-size">#}
-                    {#<div class="frame">#}
-                        {#<label for="venue_type">Venue type</label>#}
-                        {#<input id="venue_type" type="text" class="custom-size" placeholder="{{ chat.event.venue_type.venue_type }}" value="{{ chat.event.venue_type.venue_type }}">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="col-lg-6 col-md-6 col-sm-6 pull-right col-custom-size">#}
-                    {#<div class="frame">#}
-                        {#<label for="guests_count">Number of guests</label>#}
-                        {#<input id="guests_count" type="text" class="custom-size" placeholder="{{ chat.event.number_of_guests }}" value="{{ chat.event.number_of_guests }}">#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-
-            {#<div class="frame">#}
-                {#<label for="extra_info">Additional info</label>#}
-                {#<textarea id="extra_info" placeholder="I want this celebration to be super cool!">I want this celebration to be super cool!</textarea>#}
-            {#</div>#}
-        {#</div>#}
-        {#<!--quote section start-->#}
-        {#<div class="col-lg-6 col-md-6 col-sm-6 no-padding quote-section">#}
-            {#<h2 class="title quot">Quote #1</h2>#}
-            {#<!--quote section holder start-->#}
-            {#<div class="holder">#}
-                {#<!--service start-->#}
-                {#{% for p in performances %}#}
-                {#<article class="service">#}
-                    {#<h3 class="package-name">{{ p }}</h3>#}
-                    {#<ul class="">#}
-                    {#{% for package in p.packages %}#}
-                        {#<li>#}
-                            {#<strong class="sub-title">{{ package.name }}</strong>#}
-                            {#<div class="row">#}
-                                {#{% for option in package.options %}#}
-                                {#<div class="col-md-12 no-pad">#}
-                                    {#<span class="short" name="currency1" id="currency1">{{ option.qty }}</span>#}
-                                    {#<span class="">x</span>#}
-                                    {#<span class="short" name="currency11" id="currency11">{{ option.duration }} min</span>#}
-                                    {#<div class="pull-right">#}
-                                        {#<span class="short">{{ option.rates[0].price.amount }}</span>#}
-                                        {#<span class="pull-right">GBP</span>#}
-                                    {#</div>#}
-                                {#</div>#}
-                                {#{% endfor %}#}
-                            {#</div>#}
-                        {#</li>#}
-                    {#{% endfor %}#}
-                    {#</ul>#}
-                {#</article>#}
-                {#{% endfor %}#}
-                {#<article class="service act-extras">#}
-                    {#<h3 class="package-name">Extra - 1</h3>#}
-                    {#<ul class="">#}
-                        {#<li>#}
-                            {#<div class="row">#}
-                                {#<div class="col-md-12 no-pad">#}
-                                    {#<strong class="sub-title">Standart Act</strong>#}
-                                    {#<span class="short" name="currency1" id="currency1">2</span>#}
-                                    {#<span class="">x</span>#}
-                                    {#<span class="short" name="currency11" id="currency11">45 min</span>#}
-                                    {#<div class="pull-right">#}
-                                        {#<span class="short">3.000</span>#}
-                                        {#<span class="pull-right">GBP</span>#}
-                                    {#</div>#}
-                                {#</div>#}
-                            {#</div>#}
-                            {#<div class="row">#}
-                                {#<span class="extra-descr">Description of extra is really nice singe. and I’m writing it for fill this place</span>#}
-                            {#</div>#}
-                        {#</li>#}
-                    {#</ul>#}
-                {#</article>#}
-                {#<!--service end-->#}
-            {#</div>#}
-            {#<div class="row">#}
-                {#<div class="text-box">#}
-                    {#<h3>Payment terms</h3>#}
-                    {#<p><span class="percent">30%</span> guaranteed Deposit payment on <b>Escrow Account</b></p>#}
-                    {#<p><span class="percent">50%</span> guaranteed Balance payment on <b>Escrow Account</b></p>#}
-                {#</div>#}
-                {#<div class="controls">#}
-                    {#<div class="button-gradient filled">#}
-                        {#<button class="btn" type="submit">Edit Quotation</button>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-            {#<!--quote section holder end-->#}
-            {#<ul class="miscellaneous-list">#}
-                {#<li>#}
-                    {#<a href="#"><i class="icon icon-print" aria-hidden="true"></i>Print</a>#}
-                {#</li>#}
-            {#</ul>#}
-        {#</div>#}
-        {#<!--quote section end-->#}
-    {#</div>#}
-
-{#</form>#}
 {#{{ dump(chat.event) }}#}
 {#{{ dump(chatRoom.event) }}#}
 

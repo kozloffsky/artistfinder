@@ -317,8 +317,8 @@ console.log('connected to socket');
                             '</div>'+
                             '</li>';
                     }
-                    $('#twocolumns .comments-list').prepend(messageBlock);
-                    //vue.$data.chatMessages.unshift(messageChat);
+                    //$('#twocolumns .comments-list').prepend(messageBlock);
+                    vue.$data.chatMessages.unshift(messageChat);
 
                     getFileExtension();
                 }
