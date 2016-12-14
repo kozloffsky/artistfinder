@@ -199,8 +199,13 @@
     transform: rotate(180deg);
     right: 0;
 }
+
 .dashboard.client .events-menu .arrows .left:hover,
 .dashboard.client .events-menu .arrows .right:hover {
+    cursor: pointer;
+}
+
+.dashboard.client .owl-item .event-item:hover {
     cursor: pointer;
 }
 
@@ -218,9 +223,6 @@
 .dashboard.client .options-menu li.active-item {
     border-bottom: 3px solid rgba(255, 121, 62, 1);
     padding-bottom: 10px;
-}
-.owl-carousel {
-    width: initial;
 }
 @media screen and (min-width: 1200px) {
     .dashboard.client .events-menu {
@@ -352,4 +354,17 @@
 
 @media screen and (max-width: 320px) {
 
+}
+
+
+/* --- CLIENT MENU --- */
+@media screen and (max-width: 1199px) {
+    .dashboard.client .new-event {
+        left: 86%;
+    }
+}
+@media screen and (max-width: 876px) {
+    .dashboard.client .new-event {
+        left: 80%;
+    }
 }
