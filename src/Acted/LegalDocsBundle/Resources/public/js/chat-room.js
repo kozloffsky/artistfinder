@@ -325,4 +325,6 @@ console.log('connected to socket');
             }
         })
     }
+
+    $().ready(chekUserReadedMessage);
 });
