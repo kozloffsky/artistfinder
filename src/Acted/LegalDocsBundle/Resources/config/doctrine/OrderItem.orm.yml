@@ -1,0 +1,51 @@
+Acted\LegalDocsBundle\Entity\OrderItem:
+      type: entity
+      table: "OrderItem"
+      inheritanceType: SINGLE_TABLE
+      discriminatorColumn:
+          name: discr
+          type: string
+      discriminatorMap:
+          base: Acted\LegalDocsBundle\Entity\OrderItem
+          performance: Acted\LegalDocsBundle\Entity\OrderItemPerformance
+          service: Acted\LegalDocsBundle\Entity\OrderItemService
+      repositoryClass: Acted\LegalDocsBundle\Repository\OrderItemRepository
+      id:
+        id:
+          type: integer
+          id: true
+          generator:
+              strategy: AUTO
+
+      fields:
+        data:
+          type: json_array
+          nullable: true
+        total_price:
+          type: float
+          notnull: true
+          default: 0
+
+
+      oneToMany:
+          package:
+            targetEntity: Acted\LegalDocsBundle\Entity\Package
+            mappedBy: orderItem
+          option:
+              targetEntity: Acted\LegalDocsBundle\Entity\Option
+              mappedBy: orderItem
+          rate:
+              targetEntity: Acted\LegalDocsBundle\Entity\Rate
+              mappedBy: orderItem
+
+          price:
+              targetEntity: Acted\LegalDocsBundle\Entity\Price
+              mappedBy: orderItem
+
+
+
+
+
+
+
+

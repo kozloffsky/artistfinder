@@ -455,6 +455,14 @@ class EventsController extends Controller
          * @var User $user
          */
         $user = $this->getUser();
+
+        if (empty($user)) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'User is not authorized'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
         $userId = $user->getId();
         $em = $this->getEM();
         /**
@@ -470,6 +478,16 @@ class EventsController extends Controller
          * @var ChatRoom $chatRoom
          */
         $chatRoom = $event->getChatRooms()->first();
+
+        if (empty($chatRoom)) {
+            return new JsonResponse(array(
+                'status' => 'success',
+                'messages' => array(
+
+                )
+            ));
+        }
+
         $chatRoomId = $chatRoom->getId();
         $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
         $messages = $messagesRepo->getAllEventMessages($userId, $chatRoomId, $filter);

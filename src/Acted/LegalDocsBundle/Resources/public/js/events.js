@@ -26,7 +26,8 @@ $(function () {
                 endingDate: '',
                 charCount: 0,
                 loadedData: false,
-                lastEventId: null
+                lastEventId: null,
+                restrictModelChange: false
             },
             created: function () {
                 showEvents();
@@ -34,7 +35,8 @@ $(function () {
             },
             watch: {
                 "event.title": function (newVal, oldVal) {
-                    if (!this.loadedData) {
+                    console.log('restrictModelChange', eventsVue.restrictModelChange);
+                    if (checkEmptyFormFields() || eventsVue.restrictModelChange) {
                         return;
                     }
 
@@ -44,7 +46,7 @@ $(function () {
                     }
                 },
                 "event.timing": function (newVal, oldVal) {
-                    if (!this.loadedData) {
+                    if (checkEmptyFormFields() || eventsVue.restrictModelChange) {
                         return;
                     }
 
@@ -54,7 +56,7 @@ $(function () {
                     }
                 },
                 "event.location": function (newVal, oldVal) {
-                    if (!this.loadedData) {
+                    if (checkEmptyFormFields() || eventsVue.restrictModelChange) {
                         return;
                     }
 
@@ -64,7 +66,7 @@ $(function () {
                     }
                 },
                 selectedVenue: function (newVal, oldVal) {
-                    if (!this.loadedData) {
+                    if (checkEmptyFormFields() || eventsVue.restrictModelChange) {
                         return;
                     }
 
@@ -74,7 +76,7 @@ $(function () {
                     }
                 },
                 selectedGuest: function (newVal, oldVal) {
-                    if (!this.loadedData) {
+                    if (checkEmptyFormFields() || eventsVue.restrictModelChange) {
                         return;
                     }
 
@@ -84,7 +86,7 @@ $(function () {
                     }
                 },
                 endingDate: function (newVal, oldVal) {
-                    if (!this.loadedData) {
+                    if (checkEmptyFormFields() || eventsVue.restrictModelChange) {
                         return;
                     }
 
@@ -109,7 +111,7 @@ $(function () {
                     }
                 },
                 "event.comments": function (newVal, oldVal) {
-                    if (!this.loadedData) {
+                    if (checkEmptyFormFields() || eventsVue.restrictModelChange) {
                         return;
                     }
 
@@ -122,11 +124,27 @@ $(function () {
         });
     }
 
+    function checkEmptyFormFields() {
+        var isEmpty = true;
+        $('#client-event-details form :input').each(function() {
+            if ( $(this).val() != '' )
+                isEmpty = false;
+        });
+
+        var additionalInfo = $('#client-event-details form').find('#additional_info').val();
+        if (additionalInfo != '') {
+            isEmpty = false;
+        }
+
+        return isEmpty;
+    }
+
     function wasChanged(newVal, oldVal) {
         return newVal !== oldVal && oldVal;
     }
 
     function getEventDataById(eventId) {
+        eventsVue.restrictModelChange = true;
         getVenues();
         $.ajax({
             url: '/api/events/' + eventId,
@@ -145,6 +163,10 @@ $(function () {
                         diff = 1;
                     }
                     eventsVue.endingDate = diff;
+
+                    setTimeout(function () {
+                        eventsVue.restrictModelChange = false;
+                    }, 1000);
                 }
             },
             error: function (error) {

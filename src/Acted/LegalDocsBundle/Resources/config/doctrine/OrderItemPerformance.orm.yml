@@ -1,0 +1,8 @@
+Acted\LegalDocsBundle\Entity\OrderItemPerformance:
+  type: entity
+  manyToOne:
+    performance:
+      targetEntity: Acted\LegalDocsBundle\Entity\Performance
+      joinColumn:
+          name: performance_id
+          referencedColumnName: id

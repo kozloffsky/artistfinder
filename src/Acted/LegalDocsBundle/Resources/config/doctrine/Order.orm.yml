@@ -1,0 +1,125 @@
+Acted\LegalDocsBundle\Entity\Order:
+    type: entity
+    table: `Order`
+    repositoryClass: Acted\LegalDocsBundle\Repository\OrderRepository
+    id:
+      id:
+        type: integer
+        id: true
+        generator:
+          strategy: AUTO
+    fields:
+          #due to limitations timestampable behavior will be located in annotations
+          created:
+            type: datetime
+
+          updated:
+            type: datetime
+          #Order statis, can be 0 - new, 1 - booked, 2- confirmed, 3 - pre paid (whene event is already finished
+          #but payment date not yet reached),4 -  archived(all payments are done)
+          status:
+            type: integer
+            notnull: true
+            default: 0
+          #calculated field
+          total_price:
+            type: float
+            notnull: true
+            default: 0
+          #ending date when payments should be done
+          payment_expiration_date:
+            type: datetime
+            notnull: true
+          #Amount of money that should be deposited
+          deposit_amount:
+            type: float
+            notnull: true
+          #amout that already deposited
+          deposit_ballance:
+            type: float
+            notnull: true
+          #Serialized data about actor contact person
+          #name, phone, email
+          actor_details:
+            type: json_array
+            nullable: true
+          #Serialized data about client contact person
+          #name, phone, email
+          client_details:
+            type: json_array
+            nullable: true
+          #order subject start time
+          performance_start_time:
+            type: string(255)
+            notnull: true
+            default: "00,00 PM"
+          #Additional info (This will be included in the booking agreement):
+          additional_info:
+            type: text
+            notnull: true
+            default: ""
+
+          #serialized data about artist technical requirements
+          technical_requirements:
+            type: json_array
+            nullable: true
+
+          guaranteed_deposit_term:
+            type: integer
+            notnull: true
+            default: 30
+
+          guaranteed_balance_term:
+            type: integer
+            notnull: true
+            default: 70
+
+
+          detailsAccepted:
+            type: boolean
+            default: false
+            nullable: true
+          actsExtrasAccepted:
+            type: boolean
+            nullable: true
+            default: false
+          timingAccepted:
+            type: boolean
+            default: false
+            nullable: true
+          technicalRequirementsAccepted:
+            type: boolean
+            default: false
+            nullable: true
+
+    oneToMany:
+        items:
+          targetEntity: Acted\LegalDocsBundle\Entity\OrderItem
+          mappedBy: order
+
+    manyToOne:
+        event:
+          targetEntity: Acted\LegalDocsBundle\Entity\Event
+          joinCloumn:
+            name: event_id
+            referencedColumnName: id
+            onDelete: CASCADE
+        client:
+            targetEntity: Acted\LegalDocsBundle\Entity\Client
+            joinCloumn:
+              name: client_id
+              referencedColumnName: id
+              onDelete: CASCADE
+        artist:
+            targetEntity: Acted\LegalDocsBundle\Entity\Artist
+            joinCloumn:
+              name: artist_id
+              referencedColumnName: id
+              onDelete: CASCADE
+        currency:
+            targetEntity: Acted\LegalDocsBundle\Entity\RefCurrency
+            joinColumn:
+                name: currency_id
+                referencedColumnName: id
+
+
