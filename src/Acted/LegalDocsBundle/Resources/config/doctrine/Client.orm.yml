@@ -9,20 +9,25 @@ Acted\LegalDocsBundle\Entity\Client:
             generator:
                 strategy: AUTO
     fields:
-        userId:
-          type: integer(20)
-          notnull: true
         clientType:
           type: string(32)
-          notnull: true
+          nullable: true
         company:
           type: string(128)
         comments:
           type: string(512)
         address:
           type: string(256)
-          notnull: true
+          nullable: true
         cityId:
           type: integer(11)
-          notnull: true
+          nullable: true
+
+    oneToOne:
+        user:
+          targetEntity: Acted\LegalDocsBundle\Entity\User
+          joinColumn:
+            name: user_id
+            referencedColumnName: id
+
     lifecycleCallbacks: {  }

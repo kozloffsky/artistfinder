@@ -74,6 +74,9 @@ Acted\LegalDocsBundle\Entity\User:
         paymentSetting:
           targetEntity: Acted\LegalDocsBundle\Entity\PaymentSetting
           mappedBy: user
+        client:
+          targetEntity: Acted\LegalDocsBundle\Entity\Client
+          mappedBy: user
     manyToMany:
         roles:
           targetEntity: Acted\LegalDocsBundle\Entity\RefRole

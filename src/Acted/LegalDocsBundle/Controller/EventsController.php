@@ -10,6 +10,7 @@ use Acted\LegalDocsBundle\Entity\EventOffer;
 use Acted\LegalDocsBundle\Entity\RequestQuotation;
 use Acted\LegalDocsBundle\Entity\EventArtist;
 use Acted\LegalDocsBundle\Form\EventOfferType;
+use Acted\LegalDocsBundle\Model\OrderManager;
 use Acted\LegalDocsBundle\Repository\EventRepository;
 use Acted\LegalDocsBundle\Popo\EventOfferData;
 use Doctrine\ORM\EntityManager;
@@ -20,11 +21,19 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;
+use JMS\DiExtraBundle\Annotation as DI;
 
 use JMS\Serializer\SerializationContext;
 
 class EventsController extends Controller
 {
+
+    /**
+     * @DI\Inject("acted_legal_docs.model.order_manager")
+     * @var OrderManager
+     */
+    private $orderManager;
+
     /**
      * Create event
      *
@@ -114,8 +123,11 @@ class EventsController extends Controller
                 $em->persist($eventArtist);
                 $em->flush();
 
+
+
+
                 /** Create ChatRoom */
-                $chatManager->createChat($event, $userArtist, $data, $offer);
+                $chat = $chatManager->createChat($event, $userArtist, $data, $offer);
                 /** Notify Artist */
                 $eventManager->createEventNotify($data, $userArtist, $offer);
                 $eventManager->newMessageNotify($data, $userArtist);
@@ -125,7 +137,9 @@ class EventsController extends Controller
                 $requestQuotation->setEvent($event);
                 $requestQuotation->setArtist($artist);
                 $em->persist($requestQuotation);
+                $this->orderManager->createOrder($event, $artist, $event->getUser()->getClient(), $chat);
             }
+
 
             $em->flush();
 
@@ -602,7 +616,7 @@ class EventsController extends Controller
             $em->persist($eventArtist);
 
             /** Create ChatRoom */
-            $chatManager->createChat($event, $userArtist, $eventOfferData, $offer);
+            $chat = $chatManager->createChat($event, $userArtist, $eventOfferData, $offer);
             /** Notify Artist */
             $eventManager->createEventNotify($eventOfferData, $userArtist, $offer);
             $eventManager->newMessageNotify($eventOfferData, $userArtist);
@@ -615,12 +629,14 @@ class EventsController extends Controller
             $em->flush();
 
             $em->getConnection()->commit();
+
+            $this->orderManager->createOrder($event, $artist, $event->getUser()->getClient(), $chat);
         } catch (\Exception $e) {
             $em->getConnection()->rollback();
 
             return new JsonResponse([
                 'status' => 'error',
-                'message' => 'Error connecting'
+                'message' => $e->getMessage()
             ], Response::HTTP_BAD_REQUEST);
         }
 

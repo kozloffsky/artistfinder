@@ -234,4 +234,12 @@ class Option
     {
         return $this->isSelected;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->rates = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 }

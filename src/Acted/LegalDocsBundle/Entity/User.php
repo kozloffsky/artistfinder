@@ -128,6 +128,11 @@ class User implements UserInterface, \Serializable
     private $confirmationPeriod;
 
     /**
+     * @var Client
+     */
+    private $client;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -806,4 +811,90 @@ class User implements UserInterface, \Serializable
     {
 
     }
+
+    /**
+     * Get fake
+     *
+     * @return boolean
+     */
+    public function getFake()
+    {
+        return $this->fake;
+    }
+
+    /**
+     * Get paymentSetting
+     *
+     * @return \Acted\LegalDocsBundle\Entity\PaymentSetting
+     */
+    public function getPaymentSetting()
+    {
+        return $this->paymentSetting;
+    }
+
+    /**
+     * Add chatRoomsArtist
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoomsArtist
+     *
+     * @return User
+     */
+    public function addChatRoomsArtist(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoomsArtist)
+    {
+        $this->chatRoomsArtist[] = $chatRoomsArtist;
+
+        return $this;
+    }
+
+    /**
+     * Remove chatRoomsArtist
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoomsArtist
+     */
+    public function removeChatRoomsArtist(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoomsArtist)
+    {
+        $this->chatRoomsArtist->removeElement($chatRoomsArtist);
+    }
+
+    /**
+     * Add chatRoomsClient
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoomsClient
+     *
+     * @return User
+     */
+    public function addChatRoomsClient(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoomsClient)
+    {
+        $this->chatRoomsClient[] = $chatRoomsClient;
+
+        return $this;
+    }
+
+    /**
+     * Remove chatRoomsClient
+     *
+     * @param \Acted\LegalDocsBundle\Entity\ChatRoom $chatRoomsClient
+     */
+    public function removeChatRoomsClient(\Acted\LegalDocsBundle\Entity\ChatRoom $chatRoomsClient)
+    {
+        $this->chatRoomsClient->removeElement($chatRoomsClient);
+    }
+
+    /**
+     * @return Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param Client $client
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
+    }
+
+
 }

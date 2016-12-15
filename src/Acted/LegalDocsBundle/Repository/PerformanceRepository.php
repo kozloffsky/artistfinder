@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Repository;
 use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Performance;
+use Acted\LegalDocsBundle\Entity\RequestQuotation;
 
 /**
  * PerformanceRepository
@@ -132,14 +133,25 @@ class PerformanceRepository extends \Doctrine\ORM\EntityRepository
     }
 
     public function getPerformancesForEvent($eventId){
+        /*$sql = $this->getEntityManager()->createQuery('
+            select p from ActedLegalDocsBundle:Performance p
+            join p.profile prof
+            join p.performanceRequestQuotations prq
+            join prof.user u
+            JOIN prq.requestQuotation rq
+            where rq.event = ?1            
+            AND rq.isOutdated = ?2
+        ')->setParameter(1, $eventId)->setParameter(2,0)->getSQL();
+        dump($sql);*/
         return $this->getEntityManager()->createQuery('
             select p from ActedLegalDocsBundle:Performance p
             join p.profile prof
             join p.performanceRequestQuotations prq
             join prof.user u
             JOIN prq.requestQuotation rq
-            where rq.event = ?1
-        ')->setParameter(1, $eventId)->getResult();
+            where rq.event = ?1            
+            AND rq.isOutdated = ?2
+        ')->setParameter(1, $eventId)->setParameter(2,0)->getResult();
 
         /*return $this->createQueryBuilder('p')->select('p')
             ->leftJoin('p.profile','prof')

@@ -64,4 +64,18 @@ class Price
         return $this->amount;
     }
 
+
+    /**
+     * Set rate
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Rate $rate
+     *
+     * @return Price
+     */
+    public function setRate(\Acted\LegalDocsBundle\Entity\Rate $rate = null)
+    {
+        $this->rate = $rate;
+
+        return $this;
+    }
 }

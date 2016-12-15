@@ -110,4 +110,35 @@ class RefCurrency
     {
         return $this->symbol;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->refCountry = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add refCountry
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefCountry $refCountry
+     *
+     * @return RefCurrency
+     */
+    public function addRefCountry(\Acted\LegalDocsBundle\Entity\RefCountry $refCountry)
+    {
+        $this->refCountry[] = $refCountry;
+
+        return $this;
+    }
+
+    /**
+     * Remove refCountry
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RefCountry $refCountry
+     */
+    public function removeRefCountry(\Acted\LegalDocsBundle\Entity\RefCountry $refCountry)
+    {
+        $this->refCountry->removeElement($refCountry);
+    }
 }

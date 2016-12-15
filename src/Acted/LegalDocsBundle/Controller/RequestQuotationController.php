@@ -20,9 +20,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Acted\LegalDocsBundle\Form\RequestQuotationPrepareType;
 use Acted\LegalDocsBundle\Form\RequestQuotationSendType;
+use JMS\DiExtraBundle\Annotation as DI;
 
 class RequestQuotationController extends Controller
 {
+
+    /**
+     * @DI\Inject("acted_legal_docs.model.order_manager")
+     * @var OrderManager
+     */
+    private $orderManager;
     /**
      * Prepare quotations
      *
@@ -290,6 +297,7 @@ class RequestQuotationController extends Controller
 
             /*Generate pdf file*/
             //todo: we need to decide which id get from chatRoom in the future
+            $chat = $chatRepository->getChatByParams($event, $user);
             $chatRoomId = $event->getChatRooms()->first()->getId();
 
             $path = $this->get('request_quotation_type')
@@ -331,12 +339,17 @@ class RequestQuotationController extends Controller
 
             $em->flush();
 
+            $this->orderManager->createOrder($event, $user->getArtist(), $event->getUser()->getClient(), $chat);
+
+            $em-flush();
             $connection->commit();
+
+
         } catch (\Exception $e) {
             $connection->rollback();
             return new JsonResponse([
                 'status' => 'error',
-                'message' => 'Sending error'
+                'message' => 'Sending error'.$e->getMessage()
             ], Response::HTTP_BAD_REQUEST);
         }
 

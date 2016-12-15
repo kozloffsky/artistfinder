@@ -260,7 +260,7 @@
         }
     };
 
-    function applyUploader(input, obj) {
+    function  applyUploader(input, obj) {
         input.fileupload({
             url: '/technical_requirement/document/upload',
             formData: {
@@ -328,6 +328,10 @@
             alert(e, data.response().responseJSON.errors[0])
         });
     }
+
+        window.applyUploader = applyUploader;
+
+
     function thumbGenerator(files) {
         var html = '',
             count = files.length;

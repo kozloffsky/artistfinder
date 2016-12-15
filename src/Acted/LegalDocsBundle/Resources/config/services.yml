@@ -24,6 +24,10 @@ services:
             - [setSavePath, ['%request_quotation_dir%']]
         folder: %kernel.root_dir%
 
+    acted_legal_docs.model.order_manager:
+        class: Acted\LegalDocsBundle\Model\OrderManager
+        arguments: ["@doctrine.orm.entity_manager"]
+
     ####### RPC #############
     socket_chat.rpc_server:
         class: Acted\LegalDocsBundle\RPC\SocketChat

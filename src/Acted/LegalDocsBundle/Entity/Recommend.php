@@ -112,4 +112,3 @@ class Recommend
         return $this->category;
     }
 }
-

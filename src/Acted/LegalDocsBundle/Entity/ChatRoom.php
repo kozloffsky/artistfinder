@@ -44,6 +44,11 @@ class ChatRoom
     private $client;
 
     /**
+     * @var Order
+     */
+    private $order;
+
+    /**
      * Get id
      *
      * @return int
@@ -215,4 +220,22 @@ class ChatRoom
     {
         $this->message->removeElement($message);
     }
+
+    /**
+     * @return Order
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param Order $order
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+    }
+
+
 }

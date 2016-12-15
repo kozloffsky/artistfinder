@@ -60,6 +60,8 @@ class ChatManager
             $this->entityManager->persist($message);
             $this->entityManager->flush();
         }
+
+        return $chatRoom;
     }
 
     /**

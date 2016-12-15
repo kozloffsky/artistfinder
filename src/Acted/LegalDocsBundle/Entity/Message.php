@@ -297,4 +297,14 @@ class Message
 
         return $period->format('%d days %h hours %i minutes');
     }
+
+    /**
+     * Get archived
+     *
+     * @return boolean
+     */
+    public function getArchived()
+    {
+        return $this->archived;
+    }
 }

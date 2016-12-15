@@ -237,8 +237,10 @@ class ChatRoomController extends Controller
             ->getChatRoomFiles($chatRoom);
 
 
+        $order = $chatRoom->getOrder();
+
         return $this->render('ActedLegalDocsBundle:ChatRoom:chat_room.html.twig',
-            compact('chat', 'quotationLink', 'chatRoom', 'performances', 'files'));
+            compact('chat', 'quotationLink', 'chatRoom', 'performances', 'files', 'order'));
     }
 
     /**

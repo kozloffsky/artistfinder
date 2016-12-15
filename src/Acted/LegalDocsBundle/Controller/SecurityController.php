@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 
+use Acted\LegalDocsBundle\Entity\Client;
 use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Form\RegisterType;
 use Acted\LegalDocsBundle\Form\RequestResettingFormType;
@@ -119,6 +120,16 @@ class SecurityController extends Controller
 
                 $em->persist($profile);
                 $em->persist($artist);
+            } elseif ($data->getRole() == 'ROLE_CLIENT'){
+                //TODO: use for client profile
+                $client = new Client();
+                $client->setCompany("");
+                $client->setAddress("");
+                $client->setClientType("Client");
+                $client->setComments("");
+                $client->setUser($user);
+                $em->persist($client);
+
             }
 
 

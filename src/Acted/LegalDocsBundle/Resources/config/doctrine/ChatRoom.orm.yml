@@ -41,4 +41,9 @@ Acted\LegalDocsBundle\Entity\ChatRoom:
             joinColumn:
                 referencedColumnName: id
                 onDelete: CASCADE
+
+        order:
+            targetEntity: Acted\LegalDocsBundle\Entity\Order
+            joinColumn:
+                referencedColumnName: id
     lifecycleCallbacks: {  }

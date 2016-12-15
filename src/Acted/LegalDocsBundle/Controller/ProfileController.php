@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\Artist;
+use Acted\LegalDocsBundle\Entity\Client;
 use Acted\LegalDocsBundle\Entity\Media;
 use Acted\LegalDocsBundle\Entity\Offer;
 use Acted\LegalDocsBundle\Entity\Performance;
@@ -68,6 +69,7 @@ class ProfileController extends Controller
 
     public function showAction(Request $request, Artist $artist) {
         $em = $this->getDoctrine()->getManager();
+
 
         $categoriesRepo = $em->getRepository('ActedLegalDocsBundle:Category');
         $categories = $categoriesRepo->childrenHierarchy();
@@ -495,6 +497,12 @@ class ProfileController extends Controller
         $categories = $categoriesRepo->childrenHierarchy();
 
         return $this->render('ActedLegalDocsBundle:Profile:client_event_details.html.twig', compact('categories'));
+    }
+
+    public function recoverAllProfilesAction(){
+        $this->getEM()->getRepository("ActedLegalDocsBundle:Order")->createQueryBuilder('o')->delete('ActedLegalDocsBundle:Order', 'o')->getQuery()->execute();
+        $this->getEM()->getRepository("ActedLegalDocsBundle:RefRole")->createQueryBuilder('o')->delete('ActedLegalDocsBundle:RefRole', 'rr')->getQuery()->execute();
+        $this->getEM()->getRepository("ActedLegalDocsBundle:User")->createQueryBuilder('o')->delete('ActedLegalDocsBundle:User', 'u')->getQuery()->execute();
     }
 
 
