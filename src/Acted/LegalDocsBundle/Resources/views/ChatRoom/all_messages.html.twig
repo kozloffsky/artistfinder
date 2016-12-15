@@ -24,8 +24,8 @@
             </select>
 
             <div class="dialogs" style="display: none;" >
-                <div class="message-and-feedback" v-for="message in messages" v-bind:data-message-id="message.id">
-                <article class="col-xs-12 dialog-section noselect" data-longtap-duration="500">
+                <div class="message-and-feedback">
+                <article v-if="message.send_date_time" v-for="message in messages" v-bind:data-message-id="message.id" class="col-xs-12 dialog-section noselect" data-longtap-duration="500">
                     <div class="wrap clearfix">
                         <div class="message-info" :class="!message.read_date_time ? 'active' : ''"></div>
                         <div class="avatar">
@@ -76,25 +76,25 @@
                         </li>
                     </div>
                 </article>
-                    <article v-if="feedbacks[message.chat_room.event.id]" class="col-xs-12 dialog-rating-container noselect" data-longtap-duration="500">
+                    <article v-else class="col-xs-12 dialog-rating-container noselect" data-longtap-duration="500">
                     <div class="wrap clearfix">
                         <div class="message-info">
-                            <span class="pull-right">${feedbacks[message.chat_room.event.id].created_at}</span>
+                            <span class="pull-right">${message.created_at}</span>
                             <span>Congratulations! You have received new rating!</span>
                         </div>
                         <div class="avatar">
-                            <img v-if="feedbacks[message.chat_room.event.id].event.user.avatar" v-bind:src="feedbacks[message.chat_room.event.id].event.user.avatar" alt=""/>
+                            <img v-if="message.event.user.avatar" v-bind:src="message.event.user.avatar" alt=""/>
                             <img v-else src="/assets/images/noAvatar.png" alt=""/>
                         </div>
                         <div class="user-info">
                             <span class="user-name"></span>
                         </div>
                         <div class="rating">
-                            <i v-for="i in feedbacks[message.chat_room.event.id].rating" class="star-icon filled"></i>
-                            <i v-for="i in 5-feedbacks[message.chat_room.event.id].rating" class="star-icon unfilled"></i>
+                            <i v-for="i in message.rating" class="star-icon filled"></i>
+                            <i v-for="i in 5-message.rating" class="star-icon unfilled"></i>
                         </div>
                         <div class="message-block">
-                            <p>${feedbacks[message.chat_room.event.id].feedback} </p>
+                            <p>${message.feedback} </p>
                         </div>
                     </div>
                 </article>

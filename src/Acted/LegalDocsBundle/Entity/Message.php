@@ -53,6 +53,11 @@ class Message
      * @var boolean
      */
     private $archived = false;
+
+    /**
+     * @var boolean
+     */
+    private $hidden = false;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -296,5 +301,21 @@ class Message
         $period = $now->diff($this->getSendDateTime());
 
         return $period->format('%d days %h hours %i minutes');
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isHidden()
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * @param boolean $hidden
+     */
+    public function setHidden($hidden)
+    {
+        $this->hidden = $hidden;
     }
 }

@@ -3,6 +3,8 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\ChatRoom;
+use Acted\LegalDocsBundle\Entity\Event;
+use Acted\LegalDocsBundle\Entity\EventArtist;
 use Acted\LegalDocsBundle\Entity\EventOffer;
 use Acted\LegalDocsBundle\Entity\Performance;
 use Acted\LegalDocsBundle\Form\ChatRoomTechnicalRequirementsCreateType;
@@ -752,33 +754,35 @@ class ChatRoomController extends Controller
     }
 
     /**
-     * Delete message.
+     * Don't display chatroom.
      *
      * @param Request $request
      *
      * @return JsonResponse
      */
-//    function removeMessageAction(Request $request)
-//    {
-//        $user = $this->getUser();
-//        $messageId = $request->get('message');
-//        $em = $this->getEM();
-//        $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
-//        $userId = $user->getId();
-//        $findBy = ['receiverUser' => $userId, 'id' => $messageId];
-//        $message = $messagesRepo->findOneBy($findBy);
-//        if ($message) {
-//            $em->remove($message);
-//            $em->flush();
-//            $response = ['status' => 'success'];
-//
-//            return new JsonResponse($response);
-//        }
-//        $msg = 'Message not found';
-//        $response = ['status' => 'error', 'error' => $msg];
-//
-//        return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
-//    }
+    function hideChatRoomAction(Request $request)
+    {
+        $user = $this->getUser();
+        $chatRoomId = $request->get('chatRoom');
+        $em = $this->getEM();
+        $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
+        $userId = $user->getId();
+        $findBy = ['receiverUser' => $userId, 'chatRoom' => $chatRoomId];
+        $messages = $messagesRepo->findBy($findBy);
+        if (count($messages)) {
+            foreach ($messages as $message){
+                $message->setHidden(true);
+                $em->flush($message);
+            }
+            $response = ['status' => 'success'];
+
+            return new JsonResponse($response);
+        }
+        $msg = 'Message not found';
+        $response = ['status' => 'error', 'error' => $msg];
+
+        return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
+    }
 
     /**
      *  Artist section template
@@ -803,8 +807,22 @@ class ChatRoomController extends Controller
         $userId = $user->getId();
         $em = $this->getEM();
         $filter = $request->get('filter');
+        $events = $user->getArtist()->getEventArtists();
+        $messages = [];
         $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
-        $messages = $messagesRepo->getMessagesGroupedByChatRoom($userId, $filter);
+        foreach ($events as $event){
+            /**
+             * @var EventArtist $event
+             */
+            $chatRooms = $event->getEvent()->getChatRooms();
+            foreach ($chatRooms as $chatRoom){
+                $chatId = $chatRoom->getId();
+                $message = $messagesRepo->getChatRoomMessage($userId, $chatId, $filter);
+                if(count($message)){
+                    $messages[] = $message[0];
+                }
+            }
+        }
         $context = SerializationContext::create()->setGroups(['all_messages']);
         $serializer = $this->get('jms_serializer');
 
