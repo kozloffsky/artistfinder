@@ -12,25 +12,20 @@ $(function () {
                 created: function () {
                     showMessages();
                 },
-                watch: {
-                    "selectedFilter": function (newVal, oldVal) {
-                        console.log(newVal, oldVal);
-                    }
-                },
                 methods: {
                     archive: function (event) {
                         event.preventDefault();
                         var $this = $(event.target);
-                        var message = $this.parents('div.message-and-feedback');
-                        var messageId = message.data('messageId');
-                        archiveMessage(messageId);
+                        var message = $this.parents('article[data-chatroom-id]');
+                        var chatRoomId = message.data('chatroomId');
+                        archiveMessage(chatRoomId);
                     },
                     remove: function (event) {
                         event.preventDefault();
                         var $this = $(event.target);
-                        var message = $this.parents('div.message-and-feedback');
-                        var messageId = message.data('messageId');
-                        removeMessage(messageId);
+                        var message = $this.parents('article[data-chatroom-id]');
+                        var chatRoomId = message.data('chatroomId');
+                        removeMessage(chatRoomId);
                     }
                 }
             });
@@ -53,8 +48,8 @@ $(function () {
             value.chat_room.event.starting_date = moment(eventDate, 'DD/MM/YYYY').format('DD MMM YY');
             prepared.push(value);
         });
-        feedbacks.forEach(function(item){
-           prepared.push(item);
+        feedbacks.forEach(function (item) {
+            prepared.push(item);
         });
         prepared = _.sortBy(prepared, 'timestamp').reverse();
         return prepared;
@@ -127,16 +122,20 @@ $(function () {
             var eventId = window.getCurrentEvent().id;
             getAllMessagesByEventId(eventId, filter);
         } else if (window.getUserRole()[0] == 'ROLE_ARTIST') {
-            getAllMessagesByArtist(filter);
+            if (filter.search('all') > -1) {
+                getNewFeedbacks();
+            } else {
+                getAllMessagesByArtist(filter);
+            }
         }
     });
 
     function archiveMessage(messageId) {
         $.ajax({
-            url: '/dashboard/archived/message/' + messageId,
+            url: '/dashboard/archived/chat-room/' + messageId,
             method: 'POST',
             success: function () {
-                $('article[data-message-id="' + messageId + '"]').remove();
+                $('article[data-chatroom-id="' + messageId + '"]').remove();
             },
             error: function (error) {
                 console.log(error)
@@ -144,8 +143,17 @@ $(function () {
         })
     }
 
-    function removeMessage(messageId) {
-        $('div[data-message-id="' + messageId + '"]').remove();
+    function removeMessage(chatRoomId) {
+        $.ajax({
+            url: '/dashboard/chat-room/' + chatRoomId + '/hide',
+            method: 'DELETE',
+            success: function (response) {
+                $('article[data-chatroom-id="'+ chatRoomId +'"]').remove();
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        });
     }
 
     function showMessages() {

@@ -24,8 +24,7 @@
             </select>
 
             <div class="dialogs" style="display: none;" >
-                <div class="message-and-feedback">
-                <article v-if="message.send_date_time" v-for="message in messages" v-bind:data-message-id="message.id" class="col-xs-12 dialog-section noselect" data-longtap-duration="500">
+                <article v-if="message.send_date_time"  v-for="message in messages" v-bind:data-chatroom-id="message.chat_room.chat_id" class="col-xs-12 dialog-section noselect" data-longtap-duration="500">
                     <div class="wrap clearfix">
                         <div class="message-info" :class="!message.read_date_time ? 'active' : ''"></div>
                         <div class="avatar">
@@ -98,7 +97,6 @@
                         </div>
                     </div>
                 </article>
-                </div>
             </div>
 
             {#<div class="dialogs">
