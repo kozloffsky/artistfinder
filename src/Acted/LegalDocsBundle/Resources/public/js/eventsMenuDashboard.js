@@ -131,7 +131,7 @@ $(function () {
         };
 
         var avalFunctionsArtist = {
-            messages: "getAllMessagesByArtist"
+            messages: "getNewFeedbacks"
         };
 
         if (getUserRole()[0] == 'ROLE_CLIENT') {

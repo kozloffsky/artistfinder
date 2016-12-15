@@ -101,11 +101,10 @@ class EventsController extends Controller
                             $prettyErrors[$key] = $value;
                         }
                     }
+
                     return new JsonResponse($prettyErrors, 400);
                 }
                 $em->flush();
-
-
 
                 /*Add artist to event*/
                 $eventArtist = new EventArtist();
@@ -312,7 +311,7 @@ class EventsController extends Controller
         $eventArtists = $eventArtistRepo->getEventArtists($event, $page, $size);
 
         return new JsonResponse(array(
-            'status' => 'success',
+            'status'  => 'success',
             'artists' => $eventArtists['artists']
         ), Response::HTTP_OK, array(
             'count' => $eventArtists['countRows']
@@ -369,6 +368,7 @@ class EventsController extends Controller
             if (!$venue) {
                 $message = "No Venue was found";
                 $response = ['status' => 'error', "message" => $message];
+
                 return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
             }
             $data['venueType'] = $venue;
@@ -386,6 +386,7 @@ class EventsController extends Controller
             if (count($errors) > 0) {
                 //Debug. Can be removed.
                 $response = ['status' => 'error', 'errors' => $errors];
+
                 return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
             }
 
@@ -393,11 +394,13 @@ class EventsController extends Controller
             $em->flush();
 
             $response = ['status' => 'success'];
+
             return new JsonResponse($response);
         }
 
         $message = "No Event was found";
         $response = ['status' => 'error', "message" => $message];
+
         return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
 
     }
@@ -465,6 +468,7 @@ class EventsController extends Controller
 
         $userId = $user->getId();
         $em = $this->getEM();
+        $messages = [];
         /**
          * @var EventRepository $eventRepo
          */
@@ -474,26 +478,17 @@ class EventsController extends Controller
          */
         $event = $eventRepo->find($request->get('event'));
         $filter = $request->get('filter');
-        /**
-         * @var ChatRoom $chatRoom
-         */
-        $chatRoom = $event->getChatRooms()->first();
-
-        if (empty($chatRoom)) {
-            return new JsonResponse(array(
-                'status' => 'success',
-                'messages' => array(
-
-                )
-            ));
-        }
-
-        $chatRoomId = $chatRoom->getId();
+        $chatRooms = $event->getChatRooms();
         $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
-        $messages = $messagesRepo->getAllEventMessages($userId, $chatRoomId, $filter);
+        foreach ($chatRooms as $chatRoom) {
+            $chatRoomId = $chatRoom->getId();
+            $message = $messagesRepo->getChatRoomMessage($userId, $chatRoomId, $filter);
+            if(count($message)){
+                $messages[] = $message[0];
+            }
+        }
         $context = SerializationContext::create()->setGroups(['all_messages']);
         $serializer = $this->get('jms_serializer');
-
         $messages = $serializer->toArray($messages, $context);
         $response = ['status' => 'success', 'messages' => $messages];
 
@@ -535,7 +530,7 @@ class EventsController extends Controller
             $data = $form->getData();
             if (empty($data)) {
                 return new JsonResponse([
-                    'status' => 'error',
+                    'status'  => 'error',
                     'message' => 'There are not any data'
                 ], Response::HTTP_BAD_REQUEST);
             }
@@ -546,7 +541,7 @@ class EventsController extends Controller
 
             if (empty($artist)) {
                 return new JsonResponse([
-                    'status' => 'error',
+                    'status'  => 'error',
                     'message' => 'User not found'
                 ], Response::HTTP_BAD_REQUEST);
             }
@@ -554,7 +549,7 @@ class EventsController extends Controller
             $eventArtist = $eventArtistRepo->findOneBy(array('event' => $event, 'artist' => $artist));
             if (!empty($eventArtist)) {
                 return new JsonResponse([
-                    'status' => 'error',
+                    'status'  => 'error',
                     'message' => 'Artist already exists in event'
                 ], Response::HTTP_BAD_REQUEST);
             }
@@ -619,7 +614,7 @@ class EventsController extends Controller
             $em->getConnection()->rollback();
 
             return new JsonResponse([
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => 'Error connecting'
             ], Response::HTTP_BAD_REQUEST);
         }
