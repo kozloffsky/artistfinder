@@ -41,6 +41,9 @@ html, body {
 body{
     min-width: 320px;
 }
+html {
+    overflow-x: initial;
+}
 
 main {
     position: relative;
@@ -70,9 +73,9 @@ main {
     min-width: 320px;
 }
 
-body.modal-open {
-    padding: 0!important;
-}
+/*body.modal-open {*/
+    /*padding: 0!important;*/
+/*}*/
 
 main .scroll-icon {
     position: absolute;
@@ -150,13 +153,18 @@ section.used-by {
 }
 
 .custom-checkbox label:after {
-    content: "";
+    /*height: 8px;*/
+    /*width: 10px;*/
+    /*margin: 6px 5px;*/
     position: absolute;
-    left: 0;
-    top: 0;
-    height: 17px;
-    width: 17px;
-    display: none;
+    margin: 0;
+    left: 6px;
+    top: 3px;
+    width: 5px;
+    height: 9px;
+    border: solid rgb(255,173,108);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
     /*background: url("../assets/images/yes.png") no-repeat center;*/
 }
 

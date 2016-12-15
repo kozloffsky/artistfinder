@@ -197,12 +197,15 @@ $(function () {
 
                 if (typeof(reinit) == 'undefined') {
                     var owl = $('.events-menu > ul').owlCarousel({
-                        items: 5,
-                        pagination: false,
-                        mouseDrag: false,
-                        responsive: true,
                         autoWidth: true,
-                        responsiveBaseWidth: window
+                        singleItem: false,
+                        responsive:	true,
+                        responsiveRefreshRate: 100,
+                        itemsDesktop : [1199, 4],
+                        itemsDesktopSmall : [980, 4],
+                        itemsTablet: [768, 3],
+                        itemsTabletSmall: [640, 2],
+                        itemsMobile : [500, 1]
                     });
                 } else {
                     //todo - need to fix (Uncaught TypeError: owl.trigger is not a function)

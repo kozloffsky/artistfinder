@@ -241,10 +241,10 @@ body {
     font-size: 15px;
     color: rgba(72, 91, 189, 0.87);
 }
-.chat-room .section-one .section-info-title .custom-checkbox {
+.custom-checkbox {
     margin: 17px 0 13px 36px;
 }
-.chat-room .section-one .section-info-title .custom-checkbox label {
+.custom-checkbox label {
     margin: 0;
     font-family: LatoBold;
     line-height: 15px;
@@ -252,11 +252,11 @@ body {
     color: rgba(0, 0, 0, 0.87);
 }
 
-.chat-room .section-info-footer .custom-checkbox {
+.custom-checkbox {
     margin: 15px 0 11px 33px;
 }
 
-.chat-room .section-info-footer .custom-checkbox label {
+.custom-checkbox label {
     font-family: LatoBold;
     font-size: 14px;
     color: rgba(0, 0, 0, 0.87);
@@ -264,26 +264,7 @@ body {
     vertical-align: initial;
     padding-left: 26px;
 }
-.chat-room .section-info-footer .custom-checkbox label:before {
-    height: 19px;
-    width: 20px;
-    border-radius: 4px;
-    vertical-align: initial;
-}
 
-.chat-room .section-info-footer .custom-checkbox label:after {
-    /*height: 8px;*/
-    /*width: 10px;*/
-    /*margin: 6px 5px;*/
-    margin: 6px 5px;
-    left: 3px;
-    top: -2px;
-    width: 5px;
-    height: 9px;
-    border: solid rgb(255,173,108);
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-}
 
 .chat-room .section-one .section-info-title .custom-checkbox:nth-of-type(2) {
     margin: 17px 0 13px 387px;
@@ -849,7 +830,7 @@ select.full-width + .select2{
     margin: 0;
     padding: 6px 10px 7px 14px;
 }
-.chat-room .quote-section article.act-extras h3 {
+.quote-section article.act-extras h3 {
     background: rgb(88,149,243);
     background: -moz-linear-gradient(left, rgba(88,149,243,1) 0%, rgba(73,79,199,1) 100%);
     background: -webkit-linear-gradient(left, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
@@ -1164,8 +1145,6 @@ select.full-width + .select2{
 .chat-room .document-files .icon-delete-attached {
     margin: 0 !important;
 }
-
-
 @media (max-width: 1199px){
     .chat-room .quote-section .price-list .col,
     .chat-room .quote-section .price-list .col:first-child{
@@ -1337,27 +1316,27 @@ select.full-width + .select2{
         width: 100%;
     }
     /*.chat-room .section-one .section-info-title {*/
-        /*background-color: rgba(255, 239, 187, 1);*/
-        /*border-bottom: 2px solid rgba(255, 228, 141, 1);*/
+    /*background-color: rgba(255, 239, 187, 1);*/
+    /*border-bottom: 2px solid rgba(255, 228, 141, 1);*/
     /*}*/
     /*.chat-room .section-one .section-info-footer {*/
-        /*background-color: rgba(255, 239, 187, 1);*/
+    /*background-color: rgba(255, 239, 187, 1);*/
     /*}*/
     /*.chat-room .section-two .section-info-title {*/
-        /*background-color: rgba(238, 238, 255, 1);*/
-        /*border-bottom: 2px solid rgba(222, 224, 255, 1);*/
+    /*background-color: rgba(238, 238, 255, 1);*/
+    /*border-bottom: 2px solid rgba(222, 224, 255, 1);*/
     /*}*/
     /*.chat-room .section-two .section-info-footer {*/
-        /*background-color: rgba(238, 238, 255, 1);*/
-        /*margin: 18px 0 0 0;*/
+    /*background-color: rgba(238, 238, 255, 1);*/
+    /*margin: 18px 0 0 0;*/
     /*}*/
     /*.chat-room .section-three .section-info-title {*/
-        /*background-color: rgba(242, 246, 202, 1);*/
-        /*border-bottom: 2px solid rgba(224, 234, 128, 1);*/
+    /*background-color: rgba(242, 246, 202, 1);*/
+    /*border-bottom: 2px solid rgba(224, 234, 128, 1);*/
     /*}*/
     /*.chat-room .section-four .section-info-title {*/
-        /*background-color: rgba(187, 232, 252, 1);*/
-        /*border-bottom: 2px solid rgba(140, 217, 251, 1);*/
+    /*background-color: rgba(187, 232, 252, 1);*/
+    /*border-bottom: 2px solid rgba(140, 217, 251, 1);*/
     /*}*/
 
 
@@ -1367,5 +1346,258 @@ select.full-width + .select2{
     .chat-room .quote-section .price-list .col,
     .chat-room .quote-section .price-list .col:first-child{
         width: 100%;
+    }
+}
+
+
+/* ----------------------- BOOKING MODAL ----------------------- */
+.booking-modal .modal-title {
+    font-family: Ubuntu;
+    font-size: 22px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.87);
+}
+.booking-modal .modal-header {
+    border-bottom: 2px solid rgba(243, 243, 243, 1);
+}
+.booking-modal .modal-footer {
+    border-top: 2px solid rgba(243, 243, 243, 1);
+    text-align: center;
+}
+.booking-modal .modal-body {
+    padding: 0;
+}
+
+.booking-modal .section-1 {
+    border-right: 2px solid rgba(243, 243, 243, 1);
+}
+.booking-modal .section-2 {
+    margin: 17px 0 0 0;
+}
+.booking-modal .section-2 > div {
+    padding: 13px 31px 20px 16px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.booking-modal .section-2 p {
+    font-family: LatoRegular;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.54);
+    text-align: justify;
+}
+
+.booking-modal .agreement-title {
+    font-family: LatoBold;
+    font-size: 18px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.75);
+}
+.booking-modal .quote-section {
+    height: 317px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.booking-modal .quote-section article.service > ul {
+    margin: 0 28px 9px 25px;
+}
+.booking-modal .quote-section article.service > ul > li {
+    margin: 11px 0 0 0;
+}
+.booking-modal .quote-section article.service > ul > li > strong {
+    font-family: LatoBold;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.87);
+}
+.booking-modal .quote-section article.service > ul > li > div > div {
+    font-family: LatoRegular;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.87);
+}
+.booking-modal .quote-section article.service > ul > li > div > div > span.cross {
+    font-family: LucidaGrande;
+}
+.booking-modal .quote-section article.service > ul > li span.short {
+    margin: 0 4px 0 0;
+}
+.booking-modal .quote-section article.service > ul > li > div.row {
+    margin: 15px 0 0 0;
+}
+
+.booking-modal .quote-section .package-name {
+    font-family: LatoBold;
+    font-size: 18px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.87);
+    margin: 0;
+    padding: 5px 0 8px 25px;
+}
+.booking-modal .payment-info {
+    padding: 10px 28px 11px 28px;
+    border-top: 2px solid rgba(243, 243, 243, 1);
+    border-bottom: 2px solid rgba(243, 243, 243, 1);
+}
+.booking-modal .payment-info .total-title,
+.booking-modal .payment-info .total-cost,
+.booking-modal .payment-info .total-cost > i {
+    font-family: LatoBold;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.87);
+}
+.booking-modal .payment-info .total-title {
+    font-size: 18px;
+    margin: 0 312px 0 0;
+}
+.booking-modal .payment-info .total-cost {
+    font-size: 14px;
+}
+.booking-modal .payment-info .total-cost > i {
+    font-style: normal;
+}
+.booking-modal .payment-additional-info {
+    padding: 10px 28px 11px 28px;
+}
+.booking-modal .payment-additional-info > span {
+    font-family: LatoBold;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.87);
+}
+.booking-modal .payment-additional-info .list {
+    margin: 12px 0 0 0;
+}
+.booking-modal .payment-additional-info .list > div:before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #000;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin: -2px 0 0 0;
+}
+.booking-modal .payment-additional-info .list > div {
+    margin: 0 0 10px 0;
+    padding: 0 0 0 8px !important;
+    position: relative;
+}
+.booking-modal .payment-additional-info .list > div > div:nth-of-type(2) {
+    font-size: 12px;
+}
+.booking-modal .payment-additional-info .list > div > div:nth-of-type(2) > i {
+    font-style: normal;
+}
+.booking-modal .payment-additional-info a {
+    font-family: LatoRegular;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 1);
+    text-decoration: underline;
+}
+.booking-modal .payment-additional-info a:hover {
+    cursor: pointer;
+}
+.booking-modal .payment-additional-info a:nth-of-type(1) {
+    padding: 0 26px 0 0;
+}
+
+/* TODO Warning! Hack! Remove it!!!!! */
+.booking-modal .modal-footer .button-gradient {
+    border-radius: 16px;
+    display: inline-block;
+    margin-right: 8px;
+    background: rgb(255,173,108);
+    background: -moz-linear-gradient(left, rgba(255,173,108,1) 0%, rgba(255,117,58,1) 100%);
+    background: -webkit-linear-gradient(left, rgba(255,173,108,1) 0%,rgba(255,117,58,1) 100%);
+    background: linear-gradient(to right, rgba(255,173,108,1) 0%,rgba(255,117,58,1) 100%);
+}
+.booking-modal .modal-footer button {
+    height: 26px;
+    width: 151px;
+    background: none;
+    color: #FFF;
+    font-family: LatoRegular;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 1);
+    line-height: 20px;
+}
+.booking-modal .modal-footer .custom-checkbox {
+    position: absolute;
+    right: 1%;
+    margin: 0;
+}
+.booking-modal .modal-footer .custom-checkbox label {
+    font-family: LatoRegular;
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+@media (min-width: 768px) {
+    .booking-modal .modal-dialog {
+        width: 965px;
+        margin: 198px auto 30px auto;
+    }
+}
+
+@media screen and (max-width: 996px) {
+    .booking-modal .modal-dialog {
+        width: 100%;
+        margin: 0;
+    }
+    .booking-modal .modal-header {
+        position: relative;
+        padding: 11px 0 13px 0;
+    }
+    .booking-modal .modal-footer {
+        padding: 0 0 22px 0;
+    }
+    .booking-modal .modal-content {
+        border: none;
+        border-radius: 0;
+    }
+    .booking-modal .modal-content .close {
+        top: 50%;
+        right: 0;
+        background: transparent;
+        margin: -19px 0 0 0;
+    }
+    .booking-modal .payment-info {
+        padding: 10px 14px 8px 14px;
+    }
+    .booking-modal .payment-additional-info {
+        padding: 10px 14px 14px 14px;
+    }
+    .booking-modal .section-2 {
+        border-top: 2px solid rgba(243, 243, 243, 1);
+    }
+    .booking-modal .section-2 > div {
+        padding: 0 14px 0 14px;
+    }
+    .booking-modal .agreement-title {
+        margin: 9px 0;
+        display: block;
+    }
+    .booking-modal .payment-info .total-title {
+        margin: 0;
+    }
+    .booking-modal .payment-info .total-cost {
+        float: right;
+    }
+    .booking-modal .quote-section article.service > ul {
+        margin: 0 19px 9px 14px;
+    }
+    .booking-modal .modal-footer .custom-checkbox {
+        margin: 16px 0 15px 0;
+    }
+}
+
+@media screen and (max-width: 660px) {
+    .booking-modal .quote-section {
+        height: auto;
+    }
+    .booking-modal .modal-footer .custom-checkbox {
+        position: relative;
+        display: block;
     }
 }
