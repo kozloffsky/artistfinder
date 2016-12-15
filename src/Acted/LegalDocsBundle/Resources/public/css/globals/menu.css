@@ -343,7 +343,15 @@
 }
 
 /* --- STYLES FOR CLIENT DASHBOARD CAROUSEL --- */
-@media screen and (max-width: 1200px) {
+@media screen and (min-width: 1200px) {
+    .dashboard.client .new-event {
+        left: 85%;
+    }
+    .dashboard.client .events-menu ul {
+        width: 920px;
+    }
+}
+@media screen and (max-width: 1199px) {
     .dashboard.client .new-event {
         left: 85%;
     }
@@ -354,12 +362,28 @@
         width: 752px;
     }
 }
-@media screen and (max-width: 768px) {
+
+@media screen and (max-width: 980px) {
+    .dashboard.client .new-event {
+        left: 90%;
+    }
+    .dashboard.client .events-menu ul {
+        width: 660px;
+    }
+}
+@media screen and (max-width: 800px) {
+    .dashboard.client .events-menu ul {
+        /*width: 573px;*/
+        width: 573px;
+    }
+}
+@media screen and (max-width: 700px) {
     .dashboard.client .new-event {
         left: 85%;
     }
     .dashboard.client .events-menu ul {
-        width: 573px;
+        /*width: 573px;*/
+        width: 430px;
     }
 }
 @media screen and (max-width: 550px) {

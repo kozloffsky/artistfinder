@@ -204,9 +204,9 @@ $(function () {
                         responsive:	true,
                         responsiveRefreshRate: 100,
                         itemsDesktop : [1199, 4],
-                        itemsDesktopSmall : [980, 4],
-                        itemsTablet: [768, 3],
-                        itemsTabletSmall: [640, 2],
+                        itemsDesktopSmall : [980, 3],
+                        itemsTablet: [800, 3],
+                        itemsTabletSmall: [700, 2],
                         itemsMobile : [500, 1]
                     });
                 } else {
