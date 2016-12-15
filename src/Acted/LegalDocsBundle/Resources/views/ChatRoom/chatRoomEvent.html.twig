@@ -246,11 +246,11 @@
                             <div class="row">
                                 {% for option in package['options'] %}
                                 <div class="col-md-12 no-pad">
-                                    <span class="short" name="currency1" id="currency1">{{ option['option_id'] }}</span>
+                                    <span class="short" name="currency1" id="currency1">{{ option['option_quantity'] }}</span>
                                     <span class="">x</span>
                                     <span class="short" name="currency11" id="currency11">{{ option['option_duration'] }} min</span>
                                     <div class="pull-right">
-                                        <span class="short">{# option['rates'].price.amount #}</span>
+                                        <span class="short">{{ option['rates'][0]["rate_amount"] }}</span>
                                         <span class="pull-right">GBP</span>
                                     </div>
                                 </div>
