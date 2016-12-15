@@ -146,10 +146,15 @@ class OrderManager
                     $optionData = [];
                     $optionData['option_id'] = $option->getId();
                     $optionData['option_duration'] = $option->getDuration();
+                    $optionData['option_quantity'] = $option->getQty();
                     $packageData['options'][] = $optionData;
+                    $optionData['rates'] = [];
                     foreach ($option->getRates() as $rate) {
                         if ($rate->getIsSelected()) {
                             $price += $rate->getPrice()->getAmount();
+                            $rateData = [];
+                            $rateData['rate_amount'] = $rate->getPrice()->getAmount();
+                            $optionData['rates'][] = $rateData;
                         }
                     }
                 }

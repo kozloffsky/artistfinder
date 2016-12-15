@@ -1,5 +1,5 @@
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
-
+{# dump(order.performances) #}
 <main class="chat-room">
 
     <div class="container">
@@ -87,7 +87,7 @@
                             <span class="title">Performance time</span>
                             <div class="performance-time">
                                 <span class="info">The performance starts at:</span>
-                                <span class="time">6:30 PM</span>
+                                <span class="time">{{ order.performanceStartTime }}</span>
                             </div>
                             <div class="performance-info">
                                 Additional info <i>(This will be included in the booking agreement):</i>

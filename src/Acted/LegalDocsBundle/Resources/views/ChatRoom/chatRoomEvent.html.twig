@@ -5,13 +5,13 @@
             <h2 class="title">Event details</h2>
             <div class="frame">
                 <label for="name_event">Name event</label>
-                <input type="text" id="name_event" placeholder="{{ chat.event.title }}" value="{{ chat.event.title }}">
+                <input type="text" id="name_event" placeholder="{{ order.event.title }}" value="{{ order.event.title }}">
             </div>
             <div class="frame">
                 <label for="country-select">Country</label>
                 <select data-class="main-select" class="full-width" name="main-select" id="country-select">
                     {% for country in countries() %}
-                        {% if country.name == chat.event.countryName %}
+                        {% if country.name == order.event.countryName %}
                             <option value="{{ country.id }}" name="country" selected="selected">{{ country.name }}</option>
                         {% else %}
                             <option value="{{ country.id }}" name="country">{{ country.name }}</option>
@@ -23,7 +23,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="frame">
                         <label for="datetimepicker">Date</label>
-                        <input id="datetimepicker" placeholder="{{ chat.event.starting_date }}" type="text" value="{{ chat.event.starting_date }}">
+                        <input id="datetimepicker" placeholder="{{ order.event.starting_date }}" type="text" value="{{ order.event.starting_date }}">
                     </div>
                     <div class="frame">
                         <label for="performance">Performance time</label>
@@ -35,11 +35,11 @@
                     </div>
                     <div class="frame">
                         <label for="guests">Number of guests</label>
-                        <input type="text" id="guests" placeholder="{{ chat.event.number_of_guests }}" value="{{ chat.event.number_of_guests }}">
+                        <input type="text" id="guests" placeholder="{{ order.event.number_of_guests }}" value="{{ order.event.number_of_guests }}">
                     </div>
                     <div class="frame">
                         <label for="vanue">Vanue type</label>
-                        <input type="text" id="vanue" placeholder="{{ chat.event.venue_type.venue_type }}" value="{{ chat.event.venue_type.venue_type }}">
+                        <input type="text" id="vanue" placeholder="{{ order.event.venue_type.venue_type }}" value="{{ order.event.venue_type.venue_type }}">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 pull-right">
@@ -50,7 +50,7 @@
                     <div class="frame">
                         <label for="cityEvent">City</label>
                         <select data-class="main-select" class="full-width" name="main-select" id="cityEvent">
-                            <option value="{{ chat.event.city.id }}" name="country" selected="selected">{{ chat.event.city.name }}</option>
+                            <option value="{{ order.event.city.id }}" name="country" selected="selected">{{ order.event.city.name }}</option>
                         </select>
                     </div>
                     <div class="frame">
@@ -62,9 +62,9 @@
                         <em class="note">Pin your location on the map</em>
                     </div>
                     <div class="hidden" id="eventLocationCoordinates">
-                        <span class="eventCityId">{{ chat.event.city.id }}</span>
-                        <span class="latitude">{{ chat.event.city.latitude }}</span>
-                        <span class="longitude">{{ chat.event.city.longitude }}</span>
+                        <span class="eventCityId">{{ order.event.city.id }}</span>
+                        <span class="latitude">{{ order.event.city.latitude }}</span>
+                        <span class="longitude">{{ order.event.city.longitude }}</span>
                     </div>
                 </div>
             </div>
@@ -74,21 +74,21 @@
                     <h2 class="title">Event details</h2>
                     <div class="frame">
                         <label for="name_event">Name event</label>
-                        <input type="text" placeholder="{{ chat.event.title }}" value="{{ chat.event.title }}" disabled>
+                        <input type="text" placeholder="{{ order.event.title }}" value="{{ order.event.title }}" disabled>
                     </div>
                     <div class="frame">
                         <label for="country-select">Country</label>
-                        <input type="text" placeholder="{{ chat.event.countryName }}" value="{{ chat.event.countryName }}" disabled>
+                        <input type="text" placeholder="{{ order.event.countryName }}" value="{{ order.event.countryName }}" disabled>
                     </div>
                     <div class="row holder border-b clearfix">
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="frame">
                                 <label for="datetimepicker">Date</label>
-                                <input type="text" placeholder="{{ chat.event.starting_date }}" value="{{ chat.event.starting_date }}" disabled>
+                                <input type="text" placeholder="{{ order.event.starting_date }}" value="{{ order.event.starting_date }}" disabled>
                             </div>
                             <div class="frame">
                                 <label for="performance">Performance time</label>
-                                <input type="text" placeholder="{{ chat.event.timing }}" value="{{ chat.event.timing }}" disabled>
+                                <input type="text" placeholder="{{ order.event.timing }}" value="{{ order.event.timing }}" disabled>
                             </div>
                             <div class="frame">
                                 <label for="arrival">Arrival time</label>
@@ -96,34 +96,34 @@
                             </div>
                             <div class="frame">
                                 <label for="guests">Number of guests</label>
-                                <input type="text" placeholder="{{ chat.event.number_of_guests }}" value="{{ chat.event.number_of_guests }}" disabled>
+                                <input type="text" placeholder="{{ order.event.number_of_guests }}" value="{{ order.event.number_of_guests }}" disabled>
                             </div>
                             <div class="frame">
                                 <label for="vanue">Vanue type</label>
-                                <input type="text" placeholder="{{ chat.event.venue_type.venue_type }}" value="{{ chat.event.venue_type.venue_type }}" disabled>
+                                <input type="text" placeholder="{{ order.event.venue_type.venue_type }}" value="{{ order.event.venue_type.venue_type }}" disabled>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 pull-right">
                             <div class="frame">
                                 <label for="adress">Adress</label>
-                                <input type="text" placeholder="{{ chat.event.location }}" value="{{ chat.event.location }}" disabled>
+                                <input type="text" placeholder="{{ order.event.location }}" value="{{ order.event.location }}" disabled>
                             </div>
                             <div class="frame">
                                 <label for="city">City</label>
-                                <input type="text" placeholder="{{ chat.event.city.name }}" value="{{ chat.event.city.name }}" disabled>
+                                <input type="text" placeholder="{{ order.event.city.name }}" value="{{ order.event.city.name }}" disabled>
                             </div>
                             <div class="frame">
                                 <label for="p-code">Post code</label>
                                 <input type="text" placeholder="" value="" disabled>
                             </div>
                             <div class="map-holder">
-                                <img src="https://maps.googleapis.com/maps/api/staticmap?center={{ chat.event.location|url_encode }}&zoom=14&key={{googlemaps.key}}&size=196x106&markers=size:mid|color:blue|label:E%7C{{ chat.event.location|url_encode }}
+                                <img src="https://maps.googleapis.com/maps/api/staticmap?center={{ order.event.location|url_encode }}&zoom=14&key={{googlemaps.key}}&size=196x106&markers=size:mid|color:blue|label:E%7C{{ order.event.location|url_encode }}
 ">
                             </div>
                             <div class="hidden" id="eventLocationCoordinates">
-                                <span class="eventCityId">{{ chat.event.city.id }}</span>
-                                <span class="latitude">{{ chat.event.city.latitude }}</span>
-                                <span class="longitude">{{ chat.event.city.longitude }}</span>
+                                <span class="eventCityId">{{ order.event.city.id }}</span>
+                                <span class="latitude">{{ order.event.city.latitude }}</span>
+                                <span class="longitude">{{ order.event.city.longitude }}</span>
                             </div>
                         </div>
                     </div>
@@ -179,18 +179,18 @@
 
             <div class="frame">
                 <label for="name_event">Event name</label>
-                <input id="name_event" type="text" placeholder="{{ chat.event.title }}" value="{{ chat.event.title }}">
+                <input id="name_event" type="text" placeholder="{{ order.event.title }}" value="{{ order.event.title }}">
             </div>
 
             <div class="row holder clearfix">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-custom-size">
                     <div class="frame">
                         <label for="datetimepicker">Date</label>
-                        <input id="datetimepicker" type="text" class="custom-size" placeholder="{{ chat.event.starting_date }}" value="{{ chat.event.starting_date }}">
+                        <input id="datetimepicker" type="text" class="custom-size" placeholder="{{ order.event.startingDate | date("Y:M:d") }}" value="{{ order.event.startingDate | date("Y:M:d")}}">
                     </div>
                     <div class="frame">
                         <label for="event_time">Event timing</label>
-                        <input id="event_time" type="text" class="custom-size" placeholder="{{ chat.event.timing }}" value="{{ chat.event.timing }}">
+                        <input id="event_time" type="text" class="custom-size" placeholder="{{ order.event.timing }}" value="{{ order.event.timing }}">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 pull-right col-custom-size">
@@ -200,57 +200,57 @@
                     </div>
                     <div class="frame">
                         <label for="country">Country</label>
-                        <input id="country" type="text" class="custom-size" placeholder="{{ chat.event.countryName }}" value="{{ chat.event.countryName }}" disabled>
+                        <input id="country" type="text" class="custom-size" placeholder="{{ order.event.countryName }}" value="{{ order.event.countryName }}" disabled>
                     </div>
                 </div>
             </div>
 
             <div class="frame">
                 <label for="address">Address</label>
-                <input id="address" type="text" placeholder="St Regis" value="St Regis">
+                <input id="address" type="text" placeholder="{{ order.event.address }}" value="{{ order.event.address }}">
             </div>
 
             <div class="row holder clearfix">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-custom-size">
                     <div class="frame">
                         <label for="venue_type">Venue type</label>
-                        <input id="venue_type" type="text" class="custom-size" placeholder="{{ chat.event.venue_type.venue_type }}" value="{{ chat.event.venue_type.venue_type }}">
+                        <input id="venue_type" type="text" class="custom-size" placeholder="{{ order.event.venueType.venueType }}" value="{{ order.event.venueType.venueType }}">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 pull-right col-custom-size">
                     <div class="frame">
                         <label for="guests_count">Number of guests</label>
-                        <input id="guests_count" type="text" class="custom-size" placeholder="{{ chat.event.number_of_guests }}" value="{{ chat.event.number_of_guests }}">
+                        <input id="guests_count" type="text" class="custom-size" placeholder="{{ order.event.numberOfGuests }}" value="{{ order.event.numberOfGuests }}">
                     </div>
                 </div>
             </div>
 
             <div class="frame">
                 <label for="extra_info">Additional info</label>
-                <textarea id="extra_info" placeholder="I want this celebration to be super cool!">I want this celebration to be super cool!</textarea>
+                <textarea id="extra_info" placeholder="{{ order.event.comments }}">{{ order.event.comments }}</textarea>
             </div>
         </div>
         <!--quote section start-->
         <div class="col-lg-6 col-md-6 col-sm-6 no-padding quote-section">
-            <h2 class="title quot">Quote #1</h2>
+            <h2 class="title quot">Quote #{{ order.id }}</h2>
             <!--quote section holder start-->
             <div class="holder">
                 <!--service start-->
-                {% for p in performances %}
+                {% for p in order.performances %}
                 <article class="service">
-                    <h3 class="package-name">{{ p }}</h3>
+                    <h3 class="package-name">{{ p.data['performance_title'] }}</h3>
                     <ul class="">
-                    {% for package in p.packages %}
+                    {% for package in p.data.packages %}
                         <li>
-                            <strong class="sub-title">{{ package.name }}</strong>
+                            <strong class="sub-title">{{ package['package_name'] }}</strong>
                             <div class="row">
-                                {% for option in package.options %}
+                                {% for option in package['options'] %}
                                 <div class="col-md-12 no-pad">
-                                    <span class="short" name="currency1" id="currency1">{{ option.qty }}</span>
+                                    <span class="short" name="currency1" id="currency1">{{ option['option_id'] }}</span>
                                     <span class="">x</span>
-                                    <span class="short" name="currency11" id="currency11">{{ option.duration }} min</span>
+                                    <span class="short" name="currency11" id="currency11">{{ option['option_duration'] }} min</span>
                                     <div class="pull-right">
-                                        <span class="short">{{ option.rates[0].price.amount }}</span>
+                                        <span class="short">{# option['rates'].price.amount #}</span>
                                         <span class="pull-right">GBP</span>
                                     </div>
                                 </div>
@@ -288,8 +288,8 @@
             <div class="row">
                 <div class="text-box">
                     <h3>Payment terms</h3>
-                    <p><span class="percent">30%</span> guaranteed Deposit payment on <b>Escrow Account</b></p>
-                    <p><span class="percent">50%</span> guaranteed Balance payment on <b>Escrow Account</b></p>
+                    <p><span class="percent">{{ order.guaranteedDepositTerm }}%</span> guaranteed Deposit payment on <b>Escrow Account</b></p>
+                    <p><span class="percent">{{ order.guaranteedBalanceTerm }}%</span> guaranteed Balance payment on <b>Escrow Account</b></p>
                 </div>
                 <div class="controls">
                     <div class="button-gradient filled">
@@ -308,7 +308,7 @@
     </div>
 
 </form>
-{#{{ dump(chat.event) }}#}
+{#{{ dump(order.event) }}#}
 {#{{ dump(chatRoom.event) }}#}
 
 {#{% for p in performances %}#}
