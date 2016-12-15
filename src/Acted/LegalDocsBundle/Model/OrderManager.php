@@ -20,6 +20,7 @@ use Acted\LegalDocsBundle\Repository\OrderItemRepository;
 use Acted\LegalDocsBundle\Repository\OrderRepository;
 use Acted\LegalDocsBundle\Repository\PerformanceRepository;
 use Acted\LegalDocsBundle\Repository\TechnicalRequirementRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Orm\Query;
@@ -67,17 +68,20 @@ class OrderManager
      * @param Event $event
      * @param Artist $artist
      * @param Client $client
+     * @param $performances
      * @return Order
      * @throws UniqueConstraintViolationException
      */
     public function createOrder(Event $event,
                                 Artist $artist,
                                 Client $client,
+                                ArrayCollection $performances,
                                 ChatRoom $chatRoom = null
                                 ){
 
         if($this->orderRepository->findOneBy(['event'=>$event, 'artist'=>$artist, 'client'=>$client])){
-            throw new \Exception('order for this artist from this event already exists');
+            //todo: DO NOT FORDET UNCOMMENT AFTER TESTING!!!!
+            //throw new \Exception('order for this artist from this event already exists');
         }
 
         $artistTechnicalRequirements = $this->technicalRequirementsRepository->createQueryBuilder('r')
@@ -109,8 +113,8 @@ class OrderManager
             $chatRoom->setOrder($order);
         }
 
-        $performances = $this->performanceRepository
-            ->getPerformancesForEvent($event->getId());
+        /*$performances = $this->performanceRepository
+            ->getPerformancesForEvent($event->getId());*/
 
         $total = 0;
 
@@ -125,33 +129,32 @@ class OrderManager
             $performanceData['packages'] = [];
             $packages = $performance->getPackages();
             $price = 0;
-            foreach($packages as $package){
-                if($package->getIsSelected()){
-                    $packageData = [];
-                    $packageData['package_id'] = $package->getId();
-                    $packageData['package_name'] = $package->getName();
-                    $packageData['options'] = [];
-                    foreach ($package->getOptions() as $option){
-                        if($option->getIsSelected()){
-                            $optionData = [];
-                            $optionData['option_id'] = $option->getId();
-                            $optionData['option_duration'] = $option->getDuration();
-                            $packageData['options'][] = $optionData;
-                            foreach ($option->getRates() as $rate){
-                                if($rate->getIsSelected()){
-                                    $price+=$rate->getPrice()->getAmount();
-                                }
-                            }
+            foreach ($packages as $package) {
+
+                $packageData = [];
+                $packageData['package_id'] = $package->getId();
+                $packageData['package_name'] = $package->getName();
+                $packageData['options'] = [];
+                foreach ($package->getOptions() as $option) {
+                    $optionData = [];
+                    $optionData['option_id'] = $option->getId();
+                    $optionData['option_duration'] = $option->getDuration();
+                    $packageData['options'][] = $optionData;
+                    foreach ($option->getRates() as $rate) {
+                        if ($rate->getIsSelected()) {
+                            $price += $rate->getPrice()->getAmount();
                         }
                     }
-                    $performanceData['packages'][] = $packageData;
                 }
+                $performanceData['packages'][] = $packageData;
+
             }
             $orderItemPerformance->setTotalPrice($price);
             $performanceData['total'] = $price;
             $orderItemPerformance->setData($performanceData);
             $this->entityManager->persist($orderItemPerformance);
             $order->addItem($orderItemPerformance);
+            $orderItemPerformance->setOrder($order);
             $total += $price;
         }
 

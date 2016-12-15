@@ -36,11 +36,11 @@ Acted\LegalDocsBundle\Entity\ChatRoom:
                 referencedColumnName: id
                 onDelete: CASCADE
     oneToOne:
-        offer:
-            targetEntity: Acted\LegalDocsBundle\Entity\Offer
-            joinColumn:
-                referencedColumnName: id
-                onDelete: CASCADE
+        #offer:
+        #    targetEntity: Acted\LegalDocsBundle\Entity\Offer
+        #    joinColumn:
+        #        referencedColumnName: id
+        #        onDelete: CASCADE
 
         order:
             targetEntity: Acted\LegalDocsBundle\Entity\Order

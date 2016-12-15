@@ -23,10 +23,6 @@ class ChatRoom
      */
     private $event;
 
-    /**
-     * @var Offer
-     */
-    private $offer;
 
     /**
      * @var Message
@@ -76,22 +72,6 @@ class ChatRoom
     public function getEvent()
     {
         return $this->event;
-    }
-
-    /**
-     * @return Offer
-     */
-    public function getOffer()
-    {
-        return $this->offer;
-    }
-
-    /**
-     * @param Offer $offer
-     */
-    public function setOffer(Offer $offer)
-    {
-        $this->offer = $offer;
     }
 
     /**

@@ -45,13 +45,11 @@ class ChatManager
      * @param Event $event
      * @param User $receiver
      * @param EventOfferData $data
-     * @param Offer $offer
      */
-    public function createChat($event, $receiver, $data, $offer)
+    public function createChat($event, $receiver, $data)
     {
         $chatRoom = new ChatRoom();
         $chatRoom->setEvent($event);
-        $chatRoom->setOffer($offer);
         $chatRoom->setArtist($receiver);
         $chatRoom->setClient($event->getUser());
         $this->entityManager->persist($chatRoom);

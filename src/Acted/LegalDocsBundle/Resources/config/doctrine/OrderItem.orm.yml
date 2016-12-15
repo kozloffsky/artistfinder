@@ -42,7 +42,12 @@ Acted\LegalDocsBundle\Entity\OrderItem:
               targetEntity: Acted\LegalDocsBundle\Entity\Price
               mappedBy: orderItem
 
-
+      manyToOne:
+          order:
+              targetEntity: Acted\LegalDocsBundle\Entity\Order
+              joinColumn: order_id
+              referencedColumnName: id
+              onDelete: CASCADE
 
 
 

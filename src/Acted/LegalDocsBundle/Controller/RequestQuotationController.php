@@ -339,7 +339,7 @@ class RequestQuotationController extends Controller
 
             $em->flush();
 
-            $this->orderManager->createOrder($event, $user->getArtist(), $event->getUser()->getClient(), $chat);
+            //$this->orderManager->createOrder($event, $user->getArtist(), $event->getUser()->getClient(), $chat);
 
             $em-flush();
             $connection->commit();

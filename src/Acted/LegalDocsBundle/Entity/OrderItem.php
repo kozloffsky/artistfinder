@@ -59,6 +59,11 @@ class OrderItem
     private $price;
 
     /**
+     * @var Order
+     */
+    private $order;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -324,4 +329,22 @@ class OrderItem
     {
         return $this->price;
     }
+
+    /**
+     * @return \Acted\LegalDocsBundle\Entity\Order
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param \Acted\LegalDocsBundle\Entity\Order $order
+     */
+    public function setOrder(\Acted\LegalDocsBundle\Entity\Order $order)
+    {
+        $this->order = $order;
+    }
+
+
 }
