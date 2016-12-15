@@ -2,10 +2,15 @@ Acted\LegalDocsBundle\Entity\Performance:
     exclusion_policy: NONE
     properties:
         id:
-            groups: [chat_list, chat_room, all_messages, performance_create]
+            groups: [order, chat_list, chat_room, all_messages, performance_create]
         title:
-            groups: [chat_list, chat_room, all_messages]
+            groups: [order, chat_list, chat_room, all_messages]
         status:
-            groups: [performance_create]
+            groups: [performance_create, order]
         profile:
             groups: [getEvent]
+        isVisible:
+          groups: [order]
+
+        deletedTime:
+          groups: [order]

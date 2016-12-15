@@ -72,103 +72,52 @@ class EventsController extends Controller
     {
         $form = $this->createForm(EventOfferType::class);
         $form->handleRequest($request);
-        //$serializer = $this->get('jms_serializer');
-        //
-        //return;
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            //$em = $this->getEM();
-            $validator = $this->get('validator');
-            $data = $form->getData();
+        $this->entityManager->getConnection()->beginTransaction();
+        try {
+            if ($form->isSubmitted() && $form->isValid()) {
+                $validator = $this->get('validator');
+                $data = $form->getData();
 
-            //$eventManager = $this->get('app.event.manager');
-            //$chatManager = $this->get('app.chat.manager');
-
-            /** Add or get Event */
-            //if (!$data->getEvent()) {
+                /** Add or get Event */
                 $event = $this->eventManager->createEvent($data);
                 //TODO: if there are errors then return error response
                 $validationErrors = $validator->validate($event);
                 $this->entityManager->persist($event);
-//            } else {
-//                $event = $data->getEvent();
-////                $offers = $eventManager->getOfferByParams($data->getUser()->getId(), $event);
-////                if ($offers) {
-////                    return new JsonResponse(['error' => 'Offer for artist already exist'], 400);
-////                }
-//            }
 
-            if (!$data->getPerformance()->isEmpty()) {
-                /** Add Offer */
-                $performances = $data->getPerformance();
-                //$offer = $eventManager->createOffer($data);
-//                if (!isset($validationErrors)) {
-//                    $validationErrors = $validator->validate($offer);
-//                } else {
-//                    $validationErrors->addAll($validator->validate($offer));
-//                }
-//                $em->persist($offer);
-
-                $userArtist = $data->getPerformance()->first()->getProfile()->getUser();
-                $artist = $userArtist->getArtist();
-
-                /** Add EventOffer */
-//                $eventOffer = $eventManager->createEventOffer($data);
-//                $eventOffer->setOffer($offer);
-//                $eventOffer->setArtist($artist);
-//                $eventOffer->setEvent($event);
-//                $eventOffer->setActsExtrasAccepted(false);
-//                $eventOffer->setTechnicalRequirementsAccepted(false);
-//                $eventOffer->setTimingAccepted(false);
-//                $eventOffer->setActsExtrasAccepted(false);
-//                $eventOffer->setDetailsAccepted(false);
-//                $validationErrors->addAll($validator->validate($eventOffer));
-//                $em->persist($eventOffer);
-//
-//                if (count($validationErrors) > 0) {
-//                    $errors = $serializer->toArray($validationErrors);
-//                    $prettyErrors = [];
-//                    foreach ($errors as $error) {
-//                        foreach ($error as $key => $value) {
-//                            $prettyErrors[$key] = $value;
-//                        }
-//                    }
-//                    return new JsonResponse($prettyErrors, 400);
-//                }
-//                $em->flush();
+                if (!$data->getPerformance()->isEmpty()) {
+                    /** Add Offer */
+                    $performances = $data->getPerformance();
+                    $userArtist = $data->getPerformance()->first()->getProfile()->getUser();
+                    $artist = $userArtist->getArtist();
+                    /** Create ChatRoom */
+                    $chat = $this->chatManager->createChat($event, $userArtist, $data);
+                    /** Notify Artist */
 
 
-
-                /*Add artist to event*/
-//                $eventArtist = new EventArtist();
-//                $eventArtist->setEvent($event);
-//                $eventArtist->setArtist($artist);
-//                $em->persist($eventArtist);
-//                $em->flush();
+                    $this->orderManager->createOrder($event, $artist, $event->getUser()->getClient(), $performances, $chat);
+                }
 
 
+                $this->entityManager->flush();
+                $this->entityManager->commit();
 
-
-                /** Create ChatRoom */
-                $chat = $this->chatManager->createChat($event, $userArtist, $data);
-                /** Notify Artist */
                 //TODO: move functionality to order
                 //$eventManager->createEventNotify($data, $userArtist, $offer);
                 $this->eventManager->newMessageNotify($data, $userArtist);
 
-                /*Create request*/
-//                $requestQuotation = new RequestQuotation();
-//                $requestQuotation->setEvent($event);
-//                $requestQuotation->setArtist($artist);
-//                $this->entityManager->persist($requestQuotation);
-                $this->orderManager->createOrder($event, $artist, $event->getUser()->getClient(), $performances, $chat);
+                return new JsonResponse(['success' => 'Event successfully created!']);
             }
+        }catch(\Exception $e){
+            $this->entityManager->rollback();
 
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
 
-            $this->entityManager->flush();
-
-            return new JsonResponse(['success' => 'Event successfully created!']);
         }
+
 
         return new JsonResponse($this->get('app.form_errors_serializer')->serializeFormErrors($form, false), 400);
     }
@@ -556,7 +505,6 @@ class EventsController extends Controller
     public function addArtistToEventAction(Request $request)
     {
         $serializer = $this->get('jms_serializer');
-        //$eventRepo = $em->getRepository('ActedLegalDocsBundle:Event');
         $eventArtistRepo = $this->entityManager->getRepository('ActedLegalDocsBundle:EventArtist');
 
         $form = $this->createForm(ArtistEventCreateType::class);
@@ -620,49 +568,19 @@ class EventsController extends Controller
             $eventManager = $this->get('app.event.manager');
             $chatManager = $this->get('app.chat.manager');
 
-            /** Add Offer */
-            //$offer = $eventManager->createOffer($eventOfferData);
-            //$em->persist($offer);
-
-            /** Add EventOffer */
-//            $eventOffer = $eventManager->createEventOffer($eventOfferData);
-//            $eventOffer->setOffer($offer);
-//            $eventOffer->setEvent($event);
-//            $eventOffer->setArtist($artist);
-//            $eventOffer->setActsExtrasAccepted(false);
-//            $eventOffer->setTechnicalRequirementsAccepted(false);
-//            $eventOffer->setTimingAccepted(false);
-//            $eventOffer->setActsExtrasAccepted(false);
-//            $eventOffer->setDetailsAccepted(false);
-//            $em->persist($eventOffer);
-//            $em->flush();
-
-            /*Add artist to event*/
-            //TODO: find where it uses and move to order
-//            $eventArtist = new EventArtist();
-//            $eventArtist->setEvent($event);
-//            $eventArtist->setArtist($artist);
-//            $em->persist($eventArtist);
-
             /** Create ChatRoom */
             $chat = $chatManager->createChat($event, $userArtist, $eventOfferData);
-            /** Notify Artist */
-            //TODO: fix to order
-            //$eventManager->createEventNotify($eventOfferData, $userArtist, $offer);
-            $eventManager->newMessageNotify($eventOfferData, $userArtist);
-
-            /*Create request*/
-//            $requestQuotation = new RequestQuotation();
-//            $requestQuotation->setEvent($event);
-//            $requestQuotation->setArtist($artist);
-//            $em->persist($requestQuotation);
-//            $em->flush();
-
 
 
             $this->orderManager->createOrder($event, $artist, $event->getUser()->getClient(), $performances, $chat);
             $this->entityManager->flush();
             $this->entityManager->getConnection()->commit();
+
+
+            /** Notify Artist */
+            //TODO: fix to order
+            //$eventManager->createEventNotify($eventOfferData, $userArtist, $offer);
+            $eventManager->newMessageNotify($eventOfferData, $userArtist);
         } catch (\Exception $e) {
             $this->entityManager->getConnection()->rollback();
 

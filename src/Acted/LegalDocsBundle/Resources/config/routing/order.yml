@@ -1,0 +1,4 @@
+order_get_by_id:
+    path:     /{orderId}
+    defaults: { _controller: ActedLegalDocsBundle:Order:getOrderById, _format: json }
+    methods:  GET

@@ -1,0 +1,7 @@
+Acted\LegalDocsBundle\Entity\Client:
+  properties:
+    id:
+      groups: [order]
+
+    user:
+      groups: [order]

@@ -97,6 +97,14 @@ Acted\LegalDocsBundle\Entity\Order:
           targetEntity: Acted\LegalDocsBundle\Entity\OrderItem
           mappedBy: order
 
+        performances:
+          targetEntity: Acted\LegalDocsBundle\Entity\OrderItemPerformance
+          mappedBy: order
+
+        services:
+          targetEntity: Acted\LegalDocsBundle\Entity\OrderItemService
+          mappedBy: order
+
     manyToOne:
         event:
           targetEntity: Acted\LegalDocsBundle\Entity\Event
@@ -122,4 +130,7 @@ Acted\LegalDocsBundle\Entity\Order:
                 name: currency_id
                 referencedColumnName: id
 
-
+    oneToOne:
+      chat:
+        targetEntity: Acted\LegalDocsBundle\Entity\ChatRoom
+        mappedBy: order

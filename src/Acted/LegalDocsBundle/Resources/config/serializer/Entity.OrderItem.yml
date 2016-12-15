@@ -1,0 +1,7 @@
+Acted\LegalDocsBundle\Entity\OrderItem:
+  properties:
+    id:
+      groups: [order]
+
+    data:
+      groups: [order]

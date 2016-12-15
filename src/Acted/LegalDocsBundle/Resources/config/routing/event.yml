@@ -23,11 +23,6 @@ get_events_by_user_id:
     defaults: { _controller: ActedLegalDocsBundle:Events:getEventsByUserId, _format: json }
     methods:  GET
 
-get_event_by_id:
-    path:     /user_events/{id}
-    defaults: { _controller: ActedLegalDocsBundle:Events:getEventById, _format: json }
-    methods:  POST
-
 reject_offer:
     path: /change_status/reject/{id}
     defaults: { _controller: ActedLegalDocsBundle:Events:changeStatusToReject, _format: json }

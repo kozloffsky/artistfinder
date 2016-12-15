@@ -10,3 +10,4 @@ artists_info_by_slug:
     path:     /info/artist/{slug}
     defaults: { _controller: ActedLegalDocsBundle:Artist:getArtistInfoBySlug, _format: json }
     methods:  GET
+

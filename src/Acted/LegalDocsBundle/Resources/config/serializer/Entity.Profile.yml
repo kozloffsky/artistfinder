@@ -3,3 +3,6 @@ Acted\LegalDocsBundle\Entity\Profile:
     properties:
         user:
             groups: [getEvent]
+
+        performances:
+            groups: [order]

@@ -12,9 +12,9 @@ Acted\LegalDocsBundle\Entity\User:
     avatar:
       groups: [quote_request, chat_room, message, all_messages, profile_settings, messages_feedbacks]
     firstname:
-      groups: [chat_list, chat_room, message, all_messages, users_list, profile_settings, getEvent, messages_feedbacks]
+      groups: [order, chat_list, chat_room, message, all_messages, users_list, profile_settings, getEvent, messages_feedbacks]
     lastname:
-      groups: [chat_list, chat_room, message, all_messages, users_list, profile_settings, getEvent, messages_feedbacks]
+      groups: [order, chat_list, chat_room, message, all_messages, users_list, profile_settings, getEvent, messages_feedbacks]
     active:
       groups: [users_list]
     fake:
@@ -27,6 +27,8 @@ Acted\LegalDocsBundle\Entity\User:
       groups: [profile_settings]
     primaryPhone:
       groups: [profile_settings]
+    profile:
+      groups: [order]
   virtual_properties:
       getUserEmail:
         serialized_name: email

@@ -23,6 +23,7 @@ use Acted\LegalDocsBundle\Repository\TechnicalRequirementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\Orm\Query;
 
 class OrderManager
@@ -89,13 +90,19 @@ class OrderManager
             ->setParameter('artist', $artist->getId())
             ->getQuery()->getResult(Query::HYDRATE_ARRAY);
 
+
+        $requirement = [];
+        if (!empty($artistTechnicalRequirements)){
+            $requirement = $artistTechnicalRequirements[0];
+        }
+
         $order = new Order();
         //todo create chat room for new order
         //$chat->setOrder($order);
         $order->setEvent($event);
         $order->setClient($client);
         $order->setArtist($artist);
-        $order->setTechnicalRequirements(['requirement'=>$artistTechnicalRequirements[0]]);
+        $order->setTechnicalRequirements(['requirement'=>$requirement]);
         $order->setCreated(new \DateTime());
         $order->setUpdated(new \DateTime());
         $order->setStatus(ORDER::STATUS_NEW);
@@ -163,6 +170,22 @@ class OrderManager
         $this->entityManager->persist($order);
 
         return $order;
+    }
+
+
+    public function getOrdersForArtist(Artist $artist)
+    {
+        return $this->orderRepository->createQueryBuilder('ord')
+            ->join("ord.items", 'oi')
+            ->where('ord.artist = :artist')
+            ->setParameter('artist', $artist)->getQuery()->setFetchMode('Order','items',ClassMetadata::FETCH_EAGER)
+            ->getResult();
+    }
+
+
+    public function getOrderById($orderId)
+    {
+        return $this->orderRepository->find($orderId);
     }
 
 }

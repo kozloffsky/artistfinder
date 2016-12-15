@@ -163,13 +163,13 @@ $(function() {
             });
         });
     }
-    function getEventData(eventId) {
+    function getEventData(orderId) {
         return new Promise(function(resolve, reject) {
             $.ajax({
-                url: "/event/user_events/" + eventId,
-                method: "POST",
+                url: "/order/" + orderId,
+                method: "GET",
                 success: function(resp) {
-                    resolve(resp.event);
+                    resolve(resp);
                 },
                 error: function(err) {
                     reject(err);
@@ -642,16 +642,19 @@ $(function() {
     ///
     /** ------------------------------------------------------- **/
     function openQuotationModal() {
-        var eventId = $(this).attr("event-id");
+        var orderId = $(this).attr("order-id");
 
         Promise.props({
-            event: getEventData(eventId),
-            user: userDataProvider.currentUser(),
-            quot: prepareQuotationReply(eventId)
+            order: getEventData(orderId),
+            user: userDataProvider.currentUser()
+            //quot: prepareQuotationReply(orderId)
         }).then(function(result) {
-            var event = result.event;
+
+            var event = result.order.event;
             var user  = result.user;
-            var quot  = result.quot;
+            var quot  = result.order;
+
+
 
             _.assign(event.user, user);
 
@@ -707,6 +710,7 @@ $(function() {
 
             QMV = new QuotationModalView(allData),
             QMVRendered = QMV.render();
+
 
             $("#quotationModal").find(".modal-content").html(QMVRendered);
 

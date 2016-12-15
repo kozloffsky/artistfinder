@@ -89,3 +89,7 @@ acted_legal_docs_feedback:
 chat_api:
   resource: "@ActedLegalDocsBundle/Controller/ChatRoomController.php"
   type: annotation
+
+order_api:
+  resource: "@ActedLegalDocsBundle/Resources/config/routing/order.yml"
+  prefix: /order

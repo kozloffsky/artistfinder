@@ -8,6 +8,7 @@ use Acted\LegalDocsBundle\Entity\Performance;
 use Acted\LegalDocsBundle\Form\ChatRoomTechnicalRequirementsCreateType;
 use Acted\LegalDocsBundle\Form\ChatRoomTechnicalRequirementsCustomCreateType;
 use Acted\LegalDocsBundle\Model\EventsManager;
+use Acted\LegalDocsBundle\Model\OrderManager;
 use Doctrine\ORM\EntityManager;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,6 +21,7 @@ use Acted\LegalDocsBundle\Entity\User;
 
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Acted\LegalDocsBundle\Entity\Feedback;
 
@@ -39,50 +41,63 @@ class ChatRoomController extends Controller
     private $eventManager;
 
     /**
+     * @Di\Inject("acted_legal_docs.model.order_manager")
+     * @var OrderManager
+     */
+    private $orderManager;
+
+    /**
      * List of chatRooms
      * @param Request $request
      * @return  array
      */
     public function getChatRoomListAction(Request $request)
     {
-        //$userId = $request->get('userId');
+        $this->denyAccessUnlessGranted('ROLE_ARTIST');
 
-        $userId = $this->getUser()->getId();
+        $user = $this->getUser();
 
-        $em = $this->getDoctrine()->getManager();
-        $serializer = $this->get('jms_serializer');
-        $chatRoomList = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->getChatRoomByParams($userId);
+        $orders = $this->orderManager->getOrdersForArtist($user->getArtist());
 
-        $eventIds = array();
-        foreach ($chatRoomList as $chatRoom) {
-            $eventIds[] = $chatRoom->getEvent()->getId();
-        }
+        //var_dump($orders);
+        //exit;
 
-        $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
-        $requestQuotationEnquiries = $requestQuotationRepo->findBy(array('event' => $eventIds));
 
-        $chats = $serializer->toArray($chatRoomList, SerializationContext::create()
-            ->setGroups(['chat_list']));
 
-        $enquiries = $serializer->toArray($requestQuotationEnquiries, SerializationContext::create()
-            ->setGroups(['enquiries']));
-
-        foreach ($chats as &$chat) {
-            foreach ($enquiries as $enquire) {
-                if ($chat['event']['id'] == $enquire['event']['id']) {
-                    $chat['event']['published_request'] = $enquire['status'];
-                    break;
-                }
-
-            }
-        }
-
-        $uk = $em->getRepository('ActedLegalDocsBundle:RefCountry')->findOneByName('United Kingdom');
-        $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
-        $regions = $em->getRepository('ActedLegalDocsBundle:RefRegion')->findByCountry($uk);
+//        $em = $this->getDoctrine()->getManager();
+//        $serializer = $this->get('jms_serializer');
+//        $chatRoomList = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->getChatRoomByParams($userId);
+//
+//        $eventIds = array();
+//        foreach ($chatRoomList as $chatRoom) {
+//            $eventIds[] = $chatRoom->getEvent()->getId();
+//        }
+//
+//        $requestQuotationRepo = $em->getRepository('ActedLegalDocsBundle:RequestQuotation');
+//        $requestQuotationEnquiries = $requestQuotationRepo->findBy(array('event' => $eventIds));
+//
+//        $chats = $serializer->toArray($chatRoomList, SerializationContext::create()
+//            ->setGroups(['chat_list']));
+//
+//        $enquiries = $serializer->toArray($requestQuotationEnquiries, SerializationContext::create()
+//            ->setGroups(['enquiries']));
+//
+//        foreach ($chats as &$chat) {
+//            foreach ($enquiries as $enquire) {
+//                if ($chat['event']['id'] == $enquire['event']['id']) {
+//                    $chat['event']['published_request'] = $enquire['status'];
+//                    break;
+//                }
+//
+//            }
+//        }
+//
+        $uk = $this->em->getRepository('ActedLegalDocsBundle:RefCountry')->findOneByName('United Kingdom');
+        $categories = $this->em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
+        $regions = $this->em->getRepository('ActedLegalDocsBundle:RefRegion')->findByCountry($uk);
 
         return $this->render('ActedLegalDocsBundle:ChatRoom:list.html.twig',
-            compact('chats', 'categories', 'regions'));
+            compact('orders', 'categories', 'regions'));
     }
 
     /**

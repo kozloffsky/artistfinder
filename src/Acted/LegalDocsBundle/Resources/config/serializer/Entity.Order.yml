@@ -1,0 +1,22 @@
+Acted\LegalDocsBundle\Entity\Order:
+  properties:
+    id:
+      groups: [order]
+
+    items:
+      groups: [order]
+
+    artist:
+      groups: [order]
+
+    event:
+      groups: [order]
+
+    client:
+      groups: [order]
+
+    performances:
+      groups: [order]
+
+    services:
+      groups: [order]

@@ -2,7 +2,7 @@ Acted\LegalDocsBundle\Entity\Event:
     exclusion_policy: NONE
     properties:
         id:
-            groups: [chat_list, getEvent, enquiries, messages_feedbacks, all_messages]
+            groups: [chat_list, getEvent, enquiries, messages_feedbacks, all_messages, order]
         city:
             groups: [Default, getEvent, chat_list, chat_room, all_messages]
         eventRef:
@@ -12,23 +12,23 @@ Acted\LegalDocsBundle\Entity\Event:
         venueTypeId:
             groups: [Default, getEvent]
         startingDate:
-            groups: [Default, getEvent, chat_list, chat_room, all_messages]
+            groups: [Default, getEvent, chat_list, chat_room, all_messages, order]
         endingDate:
             groups: [Default, getEvent]
         timing:
-            groups: [Default, getEvent, chat_list, chat_room]
+            groups: [Default, getEvent, chat_list, chat_room, order]
         comments:
-            groups: [Default, getEvent, chat_list, chat_room]
+            groups: [Default, getEvent, chat_list, chat_room, order]
         numberOfGuests:
-            groups: [getEvent, chat_room]
+            groups: [getEvent, chat_room, order]
         venueType:
-            groups: [getEvent, chat_room]
+            groups: [getEvent, chat_room, order]
         eventType:
-            groups: [getEvent, chat_room]
+            groups: [getEvent, chat_room, order]
         title:
-            groups: [Default, getEvent, chat_list, chat_room, all_messages]
+            groups: [Default, getEvent, chat_list, chat_room, all_messages, order]
         address:
-            groups: [Default, getEvent, chat_list, chat_room]
+            groups: [Default, getEvent, chat_list, chat_room, order]
             serialized_name: location
         user:
             groups: [chat_list, getEvent, messages_feedbacks]
@@ -37,7 +37,7 @@ Acted\LegalDocsBundle\Entity\Event:
         eventOffer:
           groups: [getEvent]
         countDays:
-          groups: [getEvent]
+          groups: [getEvent, order]
     virtual_properties:
         getCountryId:
             serialized_name: countryId

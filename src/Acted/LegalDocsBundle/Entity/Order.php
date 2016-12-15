@@ -114,6 +114,16 @@ class Order
     private $items;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $performances;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $services;
+
+    /**
      * @var \Acted\LegalDocsBundle\Entity\Event
      */
     private $event;
@@ -132,6 +142,11 @@ class Order
      * @var \Acted\LegalDocsBundle\Entity\RefCurrency
      */
     private $currency;
+
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\ChatRoom
+     */
+    private $chat;
 
     /**
      * Constructor
@@ -680,6 +695,74 @@ class Order
     }
 
     /**
+     * Add item
+     *
+     * @param \Acted\LegalDocsBundle\Entity\OrderItemPerformance $item
+     *
+     * @return Order
+     */
+    public function addPerformance(\Acted\LegalDocsBundle\Entity\OrderItemPerformance $item)
+    {
+        $this->performances[] = $item;
+
+        return $this;
+    }
+
+    /**
+     * Remove item
+     *
+     * @param \Acted\LegalDocsBundle\Entity\OrderItemPerformance $item
+     */
+    public function removePerformance(\Acted\LegalDocsBundle\Entity\OrderItemPerformance $item)
+    {
+        $this->performances->removeElement($item);
+    }
+
+    /**
+     * Get items
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPerformances()
+    {
+        return $this->performances;
+    }
+
+    /**
+     * Add item
+     *
+     * @param \Acted\LegalDocsBundle\Entity\OrderItemService $item
+     *
+     * @return Order
+     */
+    public function addService(\Acted\LegalDocsBundle\Entity\OrderItemService $item)
+    {
+        $this->services[] = $item;
+
+        return $this;
+    }
+
+    /**
+     * Remove item
+     *
+     * @param \Acted\LegalDocsBundle\Entity\OrderItemService $item
+     */
+    public function removeService(\Acted\LegalDocsBundle\Entity\OrderItemService $item)
+    {
+        $this->services->removeElement($item);
+    }
+
+    /**
+     * Get items
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getServices()
+    {
+        return $this->services;
+    }
+
+    /**
      * Set event
      *
      * @param \Acted\LegalDocsBundle\Entity\Event $event
@@ -774,4 +857,29 @@ class Order
     {
         return $this->currency;
     }
+
+    /**
+     * @return Order
+     */
+    public function getChat()
+    {
+        return $this->chat;
+    }
+
+    /**
+     * @param Order $order
+     */
+    public function setChat(\Acted\LegalDocsBundle\Entity\Order $chat)
+    {
+        $this->chat = $chat;
+    }
+
+
+
+
+    public function getTimeFromAdd(){
+        return $this->getCreated()->diff(new \DateTime())->format("%m month, %d days, %H, %M");
+    }
+
+
 }
