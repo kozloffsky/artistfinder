@@ -505,6 +505,11 @@
             if($(".quotation-modal .map-holder").length) {
                 _this.addMarker();
             }
+
+
+            var event = document.createEvent('Event');
+            event.initEvent('googlePlaceChanged', true, true);
+            document.dispatchEvent(event);
         };
         this.addAutocomplete = function(elem) {
             var _this = this;
