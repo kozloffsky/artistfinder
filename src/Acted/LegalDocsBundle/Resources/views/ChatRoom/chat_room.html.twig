@@ -1,7 +1,27 @@
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
 {# dump(order.performances) #}
 <main class="chat-room">
+<script type="text/javascript">
+    window.getOrderId = function(){ return {{ order.id }}};
 
+    window.getAcceptFieldTypes = function () {
+        return {
+            technicalRequirements: {{ constant("Acted\\LegalDocsBundle\\Entity\\Order::FIELD_TECHNICAL_REQUIREMENTS") }},
+            actsExtras: {{ constant("Acted\\LegalDocsBundle\\Entity\\Order::FIELD_ACTS_EXTRAS") }},
+            details: {{ constant("Acted\\LegalDocsBundle\\Entity\\Order::FIELD_DETAILS") }},
+            timing: {{ constant("Acted\\LegalDocsBundle\\Entity\\Order::FIELD_TIMING") }}
+        }
+    }
+
+    window.userRole = '{{ user.roles[0] }}';
+
+    window.order = {
+        technicalRequirementsAccepted: Boolean({{ order.technicalRequirementsAccepted }}),
+        timingAccepted: Boolean({{ order.timingAccepted }}),
+        actsExtrasAccepted: Boolean({{ order.actsExtrasAccepted }}),
+        detailsAccepted: Boolean({{ order.detailsAccepted }})
+    }
+</script>
     <div class="container">
         {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
         <!-- THIS MENU VISIBLE ONLY ON DESCTIOP SCREEN-->
@@ -62,13 +82,13 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
-                                <input id="details_agree" name="package-check" value="" type="checkbox">
+                                <input id="details_agree" name="package-check" value="" type="checkbox" v-model="detailsAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT'">
                                 <label for="details_agree">I agree with these details</label>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
-                                <input id="extra_provide_acts" name="package-check" value="" type="checkbox">
+                                <input id="extra_provide_acts" name="package-check" value="" type="checkbox" v-model="actsExtrasAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT'">
                                 <label for="extra_provide_acts">I can provide the acts & extras selected</label>
                             </div>
                         </div>
@@ -105,14 +125,14 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
-                                <input id="timing_agree" name="timing_agree" value="" type="checkbox">
+                                <input id="timing_agree" name="timing_agree" value="" type="checkbox" v-model="timingAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT'">
                                 <label for="timing_agree">I agree with this timing</label>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
-                                <input id="requirements_agree" name="requirements_agree" value="" type="checkbox">
-                                <label for="requirements_agree">I agree to provide these requirements</label>
+                                <input id="requirements_agree" name="requirements_agree" value="" type="checkbox" v-model="requirementsAccepted" v-bind:disabled="userRole == 'ROLE_ARTIST'" >
+                                <label for="requirements_agree">I agree to provide these requirements${requirementsAccepted}</label>
                             </div>
                         </div>
                     </div>

@@ -10,6 +10,12 @@ class Order
 {
     const STATUS_NEW = 0;
 
+
+    const FIELD_DETAILS = 1;
+    const FIELD_TIMING = 2;
+    const FIELD_TECHNICAL_REQUIREMENTS = 3;
+    const FIELD_ACTS_EXTRAS = 4;
+
     /**
      * @var integer
      */

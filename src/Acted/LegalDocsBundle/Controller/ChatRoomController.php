@@ -255,7 +255,7 @@ class ChatRoomController extends Controller
         $order = $chatRoom->getOrder();
 
         return $this->render('ActedLegalDocsBundle:ChatRoom:chat_room.html.twig',
-            compact('chat', 'quotationLink', 'chatRoom', 'performances', 'files', 'order'));
+            compact('chat', 'quotationLink', 'chatRoom', 'performances', 'files', 'order', 'user'));
     }
 
     /**

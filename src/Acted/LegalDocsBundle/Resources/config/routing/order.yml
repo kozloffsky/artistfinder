@@ -2,3 +2,7 @@ order_get_by_id:
     path:     /{orderId}
     defaults: { _controller: ActedLegalDocsBundle:Order:getOrderById, _format: json }
     methods:  GET
+
+order_accept_field:
+    path:     /accept/{orderId}/{fieldId}/{value}
+    defaults: { _controller: ActedLegalDocsBundle:Order:acceptOrderField, _format: json }

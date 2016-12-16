@@ -10,11 +10,76 @@ $(function(){
                     chatMessages: window.chatMessages,
                     sendText: "",
                     technicalRequirements: [],
-                    selectedRequirement: {}
+                    selectedRequirement: {},
+                    _requirementsAccepted: false,
+                    _timingAccepted: false,
+                    _actsExtrasAccepted: false,
+                    _detailsAccepted: false,
+                    userRole: ""
+                },
+
+                computed:{
+                    requirementsAccepted: {
+                        get: function () {
+                            return this._requirementsAccepted;
+                        },
+                        
+                        set: function (val) {
+                            var self = this;
+                            this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().technicalRequirements, Number(!val), function () {
+                                self._requirementsAccepted = val;
+                            });
+                        }
+                    },
+
+                    timingAccepted: {
+                        get: function () {
+                            return this._timingAccepted;
+                        },
+
+                        set: function (val) {
+                            var self = this;
+                            this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().timing, Number(!val), function () {
+                                self._timingAccepted = val;
+                            });
+                        }
+                    },
+
+                    actsExtrasAccepted: {
+                        get: function () {
+                            return this._actsExtrasAccepted;
+                        },
+
+                        set: function (val) {
+                            var self = this;
+                            this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().actsExtras, Number(!val), function () {
+                                self._actsExtrasAccepted = val;
+                            });
+                        }
+                    },
+
+                    detailsAccepted: {
+                        get: function () {
+                            return this._detailsAccepted;
+                        },
+
+                        set: function (val) {
+                            var self = this;
+                            this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().details, Number(!val), function () {
+                                self._detailsAccepted = val;
+                            });
+                        }
+                    }
                 },
                 created: function () {
                     console.log('WWWWWWWWWWWWWWWWW');
                     this.fetchTechnicalRequirements();
+                    this.userRole = window.userRole;
+                    this._requirementsAccepted = window.order.technicalRequirementsAccepted;
+                    this._timingAccepted = window.order.timingAccepted;
+                    this._actsExtrasAccepted = window.order.actsExtrasAccepted;
+                    this._detailsAccepted = window.order.actsExtrasAccepted;
+
                 },
                 methods: {
                     fetchTechnicalRequirements: function () {
@@ -26,7 +91,9 @@ $(function(){
                             success: function (r) {
                                 console.log(r);
                                 self.technicalRequirements = r.technicalRequirements;
-                                self.selectedRequirement = self.technicalRequirements[0];
+                                if(self.technicalRequirements.length > 0) {
+                                    self.selectedRequirement = self.technicalRequirements[0];
+                                }
                             },
                             error: function (r) {
                                 //messageReaded = false;
@@ -37,6 +104,20 @@ $(function(){
 
                     setTypesForFiles: function () {
 
+                    },
+
+                    acceptField: function (orderId, fieldId, value, callback) {
+                        $.ajax({
+                            method:"GET",
+                            url:"/order/accept/"+orderId+"/"+fieldId+"/"+Number(!value),
+                            success: function (r) {
+                                console.log(r);
+                                if (callback){
+                                    callback();
+                                }
+                            }
+
+                        });
                     },
 
                     deleteAttachment: function (id) {

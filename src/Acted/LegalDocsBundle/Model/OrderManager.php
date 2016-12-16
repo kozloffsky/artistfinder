@@ -23,6 +23,7 @@ use Acted\LegalDocsBundle\Repository\TechnicalRequirementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\Orm\Query;
 
@@ -191,6 +192,37 @@ class OrderManager
     public function getOrderById($orderId)
     {
         return $this->orderRepository->find($orderId);
+    }
+
+    public function acceptFieldById($orderId, $fieldId, $value = true){
+        $order = $this->orderRepository->find($orderId);
+        if (! $order){
+            throw new EntityNotFoundException("Order not found");
+        }
+
+        switch ($fieldId){
+            case Order::FIELD_TECHNICAL_REQUIREMENTS:
+                $order->setTechnicalRequirementsAccepted($value);
+                break;
+
+            case Order::FIELD_ACTS_EXTRAS:
+                $order->setActsExtrasAccepted($value);
+                break;
+
+            case Order::FIELD_TIMING:
+                $order->setTimingAccepted($value);
+                break;
+
+            case Order::FIELD_DETAILS:
+                $order->setDetailsAccepted($value);
+                break;
+            default:
+                throw new \Exception("Wrong field");
+                break;
+        }
+
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
     }
 
 }

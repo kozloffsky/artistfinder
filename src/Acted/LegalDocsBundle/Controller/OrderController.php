@@ -49,4 +49,17 @@ class OrderController extends Controller
         return new JsonResponse(
             $this->serializer->toArray($order, SerializationContext::create()->setGroups('order')));
     }
+
+
+    public function acceptOrderFieldAction($orderId, $fieldId, $value)
+    {
+        try {
+            $this->orderManager->acceptFieldById($orderId, $fieldId, $value);
+        }catch(\Exception $e){
+            return new JsonResponse(['status'=>"error", "message"=>$e->getMessage()],500);
+        }
+
+        return new JsonResponse(['status'=>'ok']);
+
+    }
 }
