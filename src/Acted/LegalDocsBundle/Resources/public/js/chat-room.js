@@ -137,14 +137,20 @@ $(function(){
 
 
     function chekUserReadedMessage(chatId){
-        $(window).scroll(function() {
+        var commentsList = $('.comments-list');
+
+        function commentsListScroll() {
             if ($('.comments-list').isVisible()) {
                 setTimeout(function(){
                     markMessageAsRead(chatId);
                 }, 1500);
             }
             return false;
-        });
+        }
+
+        if(commentsList.length) {
+            $(window).scroll(commentsListScroll);
+        }
     }
 
     var messageReaded = false;
