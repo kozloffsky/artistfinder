@@ -107,6 +107,10 @@ $(function () {
         return JSON.parse(localStorage.getItem('currentEvent'));
     }
 
+    function unsetCurrentEvent() {
+        localStorage.removeItem('currentEvent');
+    }
+
     function noDataFunc() {
         console.log('No get data function is defined for this page ');
     }
@@ -177,6 +181,20 @@ $(function () {
         getDataForEvent(eventId);
     }
 
+    function activateMenuTab(owl) {
+        var $menu = $('.events-menu > ul');
+        if (getCurrentEvent() != null) {
+            currentEventId = getCurrentEvent().id;
+            var $menuEvent = $menu.find('li[data-event-id="' + currentEventId + '"]');
+            var $menuEventParent = $menuEvent.parent();
+            var index = $menuEventParent.index();
+            owl.trigger('owl.jumpTo', index);
+            $menu.find('li').removeClass('active');
+            $menuEvent.removeClass('non-active').addClass('active');
+            getDataForEvent(currentEventId);
+        }
+    }
+
     /**
      * Show all received events on the page.
      *
@@ -202,24 +220,12 @@ $(function () {
                     itemsTabletSmall: [640, 2],
                     itemsMobile: [500, 1]
                 });
+                $().ready(activateMenuTab(owl));
             } else {
                 //todo - need to fix (Uncaught TypeError: owl.trigger is not a function)
                 var owl = $(".owl-carousel").data('owlCarousel');
                 owl.reinit();
             }
-            $().ready(function () {
-                if (getCurrentEvent() != null) {
-                    currentEventId = getCurrentEvent().id;
-                    var $menu = $('.events-menu > ul');
-                    var $menuEvent = $menu.find('li[data-event-id="' + currentEventId + '"]');
-                    var $menuEventParent = $menuEvent.parent();
-                    var index = $menuEventParent.index();
-                    owl.trigger('owl.jumpTo', index);
-                    $menu.find('li').removeClass('active');
-                    $menuEvent.removeClass('non-active').addClass('active');
-                    getDataForEvent(currentEventId);
-                }
-            });
             $('i.left').click(function () {
                 owl.trigger('owl.prev');
             });
@@ -379,6 +385,7 @@ $(function () {
                                 $('#loadSpinner').fadeOut(500);
                             },
                             success: function (res) {
+                                unsetCurrentEvent();
                                 getEventsByUserId(getUserId(), true);
 
                                 _this.eventObj.name = '';
