@@ -72,8 +72,8 @@ $(function () {
                     //     var redirectUrl = window.location.protocol + "//" + window.location.host + '/resend_token/reset/' + tempUserToken;
                     //     window.location.replace(redirectUrl);
                 }
-                window.location.replace(window.location.href);
 
+                window.location.reload();
             },
             error: function(response){
                 var responseTextLogIn = response.responseJSON;
