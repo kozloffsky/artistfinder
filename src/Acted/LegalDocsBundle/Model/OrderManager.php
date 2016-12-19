@@ -132,7 +132,8 @@ class OrderManager
             $orderItemPerformance = new OrderItemPerformance();
             $performanceData = [];
             $performanceData['performance'] = $performance->getId();
-            $performanceData['performance_title'] = $performance->getTitle();
+            $performanceData['title'] = $performance->getTitle();
+            $performanceData['type'] = $performance->getType();
             $orderItemPerformance->setPerformance($performance);
             $performanceData['packages'] = [];
             $packages = $performance->getPackages();
@@ -140,25 +141,33 @@ class OrderManager
             foreach ($packages as $package) {
 
                 $packageData = [];
-                $packageData['package_id'] = $package->getId();
-                $packageData['package_name'] = $package->getName();
+                $packageData['id'] = $package->getId();
+                $packageData['name'] = $package->getName();
                 $packageData['options'] = [];
                 foreach ($package->getOptions() as $option) {
                     $optionData = [];
-                    $optionData['option_id'] = $option->getId();
-                    $optionData['option_duration'] = $option->getDuration();
-                    $optionData['option_quantity'] = $option->getQty();
-                    $packageData['options'][] = $optionData;
+                    $optionData['id'] = $option->getId();
+                    $optionData['duration'] = $option->getDuration();
+                    $optionData['qty'] = $option->getQty();
                     $optionData['rates'] = [];
                     foreach ($option->getRates() as $rate) {
-                        if ($rate->getIsSelected()) {
-                            $price += $rate->getPrice()->getAmount();
-                            $rateData = [];
-                            $rateData['rate_amount'] = $rate->getPrice()->getAmount();
-                            $optionData['rates'][] = $rateData;
-                        }
+                        $currentAmount = $rate->getPrice()->getAmount();
+                        $price += $currentAmount;
+                        $priceId = $rate->getPrice()->getId();
+
+                        $rateData = array(
+                            "id" => $rate->getId(),
+                            "price" => array(
+                                "id" => $priceId,
+                                "amount" => (int)$currentAmount
+                            )
+                        );
+                        $optionData['rates'][] = $rateData;
                     }
+
+                    $packageData['options'][] = $optionData;
                 }
+
                 $performanceData['packages'][] = $packageData;
 
             }

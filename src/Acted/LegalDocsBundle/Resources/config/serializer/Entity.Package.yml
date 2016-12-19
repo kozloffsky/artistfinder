@@ -1,0 +1,10 @@
+Acted\LegalDocsBundle\Entity\Package:
+  properties:
+    id:
+      groups: [order]
+
+    name:
+      groups: [order]
+
+    options:
+      groups: [order]

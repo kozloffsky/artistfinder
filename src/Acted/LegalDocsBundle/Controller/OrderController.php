@@ -45,7 +45,6 @@ class OrderController extends Controller
     public function getOrderByIdAction($orderId)
     {
         $order = $this->orderManager->getOrderById($orderId);
-        //var_dump($order);
         return new JsonResponse(
             $this->serializer->toArray($order, SerializationContext::create()->setGroups('order')));
     }

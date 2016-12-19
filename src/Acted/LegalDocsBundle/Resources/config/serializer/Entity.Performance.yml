@@ -11,6 +11,9 @@ Acted\LegalDocsBundle\Entity\Performance:
             groups: [getEvent]
         isVisible:
           groups: [order]
-
+        type:
+          groups: [order]
+        packages:
+          groups: [order]
         deletedTime:
           groups: [order]

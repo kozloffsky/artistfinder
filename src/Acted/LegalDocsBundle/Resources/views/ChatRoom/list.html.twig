@@ -39,7 +39,7 @@
                     <p class="act-request-title">
                         Act request: <span class="bold-title">
                             {% for orderItem in order.items %}
-                                {{ orderItem.data['performance_title'] }},
+                                {{ orderItem.data['title'] }},
 
                             {% endfor %}
                         </span>
@@ -129,7 +129,7 @@
                             <p class="act-request-title">
                                 Act request: <span class="bold-title">
                             {% for item in order.items %}
-                                {{ item.data['performance_title'] }},
+                                {{ item.data['title'] }},
                             {% endfor %}
                         </span>
                                 <!--<span class="see-more">(<a href="#">See more</a>)</span>-->

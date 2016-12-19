@@ -20,3 +20,12 @@ Acted\LegalDocsBundle\Entity\Order:
 
     services:
       groups: [order]
+
+    guaranteedBalanceTerm:
+      groups: [order]
+
+    guaranteedDepositTerm:
+      groups: [order]
+
+    status:
+      groups: [order]

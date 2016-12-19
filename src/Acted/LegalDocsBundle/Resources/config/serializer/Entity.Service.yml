@@ -2,9 +2,11 @@ Acted\LegalDocsBundle\Entity\Service:
 #  exclusion_policy: NONE
   properties:
     id:
-      groups: [price_service]
+      groups: [price_service, order]
     title:
-      groups: [price_service]
+      groups: [price_service, order]
+    packages:
+      groups: [order]
   virtual_properties:
     getPackages:
       serialized_name: packages

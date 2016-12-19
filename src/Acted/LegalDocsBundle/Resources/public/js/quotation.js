@@ -538,9 +538,9 @@ $(function() {
 
             var optionId = option.attr("option-id");
 
-            selectQuotaionOption({ id: optionId })
+            /*selectQuotaionOption({ id: optionId })
             .then(console.log)
-            .catch(console.error);
+            .catch(console.error);*/
 
             _.each(options, function(o, i) {
                 if($(o).prop('checked')) {
@@ -598,7 +598,7 @@ $(function() {
             });
 
 
-            selectPackageHandler($(_context));
+            //selectPackageHandler($(_context));
 
             if(!act.prop('checked') && selectActMask) {
                 act.prop('checked', true);
@@ -635,7 +635,7 @@ $(function() {
                 });
             }
 
-            selectPerformanceHandler(_context);
+            //selectPerformanceHandler(_context);
         }
     }
 
@@ -649,27 +649,73 @@ $(function() {
             user: userDataProvider.currentUser()
             //quot: prepareQuotationReply(orderId)
         }).then(function(result) {
+            var orderStatuses = {
+                newOrder: 0
+            };
 
             var event = result.order.event;
-            var user  = result.user;
-            var quot  = result.order;
+            var clientUser  = result.order.client.user;
+            var order  = result.order;
+            var currentOrderStatus =  result.order.status;
 
+            var performances = order.performances;
+            var artistPerformances = order.artist.user.profile.performances;
+            var artistServices = order.artist.user.profile.services;
+            var services     = order.services;
+            var payment      = {
+                balancePercent: order.guaranteedBalanceTerm,
+                depositPercent: order.guaranteedDepositTerm
+            };
 
+            var newPerformances = [];
+            var newServices = [];
+            var preSelectedPerformanceIds = [];
 
-            _.assign(event.user, user);
+            for (performanceIndex in performances) {
+                var currentPerformanceId = performances[performanceIndex]["data"]["performance"];
+                var currentPerformance = {
+                    performance: {
+                        packages: performances[performanceIndex]["data"]["packages"],
+                        title : performances[performanceIndex]["data"]["title"],
+                        type : performances[performanceIndex]["data"]["type"],
+                        id : currentPerformanceId,
+                        isOrder: true
+                    }
+                };
 
-            var performances = quot.performances;
-            var services     = quot.services;
-            var request      = quot.request_quotation;
-            var payment      = quot.payment_terms;
+                preSelectedPerformanceIds.push(currentPerformanceId);
+                newPerformances.push(currentPerformance);
+            }
+
+            if (orderStatuses.newOrder == currentOrderStatus) {
+                for (artistPerformanceIndex in artistPerformances) {
+                    if (preSelectedPerformanceIds.indexOf(artistPerformances[artistPerformanceIndex]["id"]) != -1) {
+                        continue;
+                    }
+
+                    var currentPerformance = {
+                        performance: artistPerformances[artistPerformanceIndex]
+                    };
+
+                    newPerformances.push(currentPerformance);
+                }
+
+                for (artistServiceIndex in artistServices) {
+                    var currentService = {
+                        service: artistServices[artistServiceIndex]
+                    };
+
+                    newServices.push(currentService);
+                }
+            }
 
             var actObj = {
-                perf: performances,
-                serv: services
+                perf: newPerformances,
+                serv: newServices
             };
 
             var extraActObj = {
-                perf: performances
+                perf: newPerformances
             };
 
             // Event template generation
@@ -682,6 +728,7 @@ $(function() {
             QAV = new QuotationActView(QAM);
             QAV = QAV.render();
 
+            /*TODO - need to uncomment*/
             // Extra performance template generation
             QEAM = new QuotationExtraActModel(extraActObj);
             QEAV = new QuotationExtraActView(QEAM);
@@ -692,13 +739,14 @@ $(function() {
             QPV = new QuotationPaymentView(QPM);
             QPV = QPV.render();
 
+
             // Service template generation
 
             // Generate and render modal view
-            var fromUser = event.user.firstname.concat(" ", event.user.lastname);
+            var fromUser = clientUser.firstname.concat(" ", clientUser.lastname);
 
             var allData = {
-                quotation: request,
+                order: order,
                 title: fromUser,
                 eventTemplate: QEV,
                 paymentTemplate: QPV,
@@ -706,9 +754,9 @@ $(function() {
                 extraPerformanceTemplate: QEAV
             };
 
-            QRM = new QuotationRequestModel(request);
+            QRM = new QuotationRequestModel(order);
 
-            QMV = new QuotationModalView(allData),
+            QMV = new QuotationModalView(allData);
             QMVRendered = QMV.render();
 
 
@@ -730,17 +778,94 @@ $(function() {
     function quotationSend(e) {
         e.preventDefault();
 
-        var requestId = QRM.model.id;
+        var orderId = QRM.model.id;
         var eventId   = QEM.model.id;
         var percent   = parseInt($(this).closest('form').find('select[name="quotation-payment-percent"]').find('option:selected').val());
         
         var data = {
             'request_quotation_send[event]': eventId,
-            'request_quotation_send[request_quotation]': requestId,
+            'request_quotation_send[order]': orderId,
             'request_quotation_send[balance_percent]': percent
         };
 
-        sendQuotationConfirmation(data)
+
+        var form = $("#quotationModal").find('form[name="quotation_act_info"]');
+
+        var basePerformances = form.find('[act-type="performance"][base-type="true"]');
+        var services = form.find('[act-type="service"][base-type="true"]');
+
+        var newBasePerformances = [];
+
+        _.each(basePerformances, function (performance, performanceIndex) {
+
+            var currentNewBasePerformance = {};
+            var currentPerformance = $(performance).find('[select-performance]');
+            if (!currentPerformance.prop('checked')) {
+                return;
+            }
+
+            var newPackages = [];
+            var packages = $(performance).find("[package-block]");
+            _.each(packages, function (package, packageIndex) {
+                var currentPackage = {};
+                var packageInput = $(package).find('[select-package]');
+
+                if (!$(packageInput).prop('checked')) {
+                    return;
+                }
+
+                var newOptions = [];
+                var options = $(package).find("[option-block]");
+                _.each(options, function (option, optionIndex) {
+                    var currentOption = {};
+                    var optionInput = $(option).find('[select-option]');
+                    if (!$(optionInput).prop('checked')) {
+                        return;
+                    }
+
+                    var qty = $(option).find('[name="qty"]').val();
+                    var duration = $(option).find('[name="duration"]').val();
+                    var price = $(option).find('[quot-edit-price]').find('option:selected').val();
+
+                    currentOption = {
+                        qty: qty,
+                        duration: duration,
+                        price: price
+                    };
+
+                    newOptions.push(currentOption);
+                });
+
+                currentPackage["options"] = newOptions;
+                newPackages.push(currentPackage);
+            });
+
+
+
+            currentNewBasePerformance["packages"] = newPackages;
+            newBasePerformances.push(currentNewBasePerformance);
+        });
+
+        console.log(newBasePerformances);
+
+        /*var act = $(_context);
+        var packages = act.closest('['+p[0]+']').find('['+itemType[1]+']');
+
+        if(act.prop('checked')) {
+            _.each(packages, function (o, i) {
+                $(o).prop('checked', true);
+
+                var options = $(o).closest('div[' + p[1] + ']').find('[' + itemType[2] + ']');
+
+                _.each(options, function (o, i) {
+                    $(o).prop('checked', true);
+                });
+            });
+        }*/
+
+
+
+        /*sendQuotationConfirmation(data)
         .then(function(res) {
             $("#quotationModal").modal("hide");
 
@@ -752,7 +877,7 @@ $(function() {
         })
         .catch(function(err) {
             console.error(err);
-        });
+        });*/
         $("button[quotation-send]").html('Quotation Sent');
         console.log($("button[quotation-send]").val());
     }
@@ -775,13 +900,13 @@ $(function() {
                 quot: quotId
             };
 
-        selectQuotaionPerformance(data)
+        /*selectQuotaionPerformance(data)
             .then(function(res) {
                 console.log(res);
             })
             .catch(function(err) {
                 console.error(err);
-            })
+            })*/
 
     }
 

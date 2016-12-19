@@ -6,3 +6,6 @@ Acted\LegalDocsBundle\Entity\Profile:
 
         performances:
             groups: [order]
+
+        services:
+            groups: [order]

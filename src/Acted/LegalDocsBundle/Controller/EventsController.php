@@ -74,6 +74,8 @@ class EventsController extends Controller
         $form->handleRequest($request);
 
         $this->entityManager->getConnection()->beginTransaction();
+        $this->entityManager->getConnection()->setAutoCommit(false);
+
         try {
             if ($form->isSubmitted() && $form->isValid()) {
                 $validator = $this->get('validator');
@@ -93,23 +95,20 @@ class EventsController extends Controller
                     /** Create ChatRoom */
                     $chat = $this->chatManager->createChat($event, $userArtist, $data);
                     /** Notify Artist */
-
+                    //TODO: move functionality to order
+                    $this->eventManager->newMessageNotify($data, $userArtist);
+                    //$eventManager->createEventNotify($data, $userArtist, $offer);
 
                     $this->orderManager->createOrder($event, $artist, $event->getUser()->getClient(), $performances, $chat);
                 }
 
-
                 $this->entityManager->flush();
-                $this->entityManager->commit();
-
-                //TODO: move functionality to order
-                //$eventManager->createEventNotify($data, $userArtist, $offer);
-                $this->eventManager->newMessageNotify($data, $userArtist);
+                $this->entityManager->getConnection()->commit();
 
                 return new JsonResponse(['success' => 'Event successfully created!']);
             }
         }catch(\Exception $e){
-            $this->entityManager->rollback();
+            $this->entityManager->getConnection()->rollback();
 
             return new JsonResponse([
                 'status' => 'error',
@@ -511,6 +510,7 @@ class EventsController extends Controller
         $form->handleRequest($request);
 
         $this->entityManager->getConnection()->beginTransaction();
+        $this->entityManager->getConnection()->setAutoCommit(false);
 
         try {
             if ($form->isSubmitted() && (!$form->isValid())) {
@@ -541,13 +541,13 @@ class EventsController extends Controller
                 ], Response::HTTP_BAD_REQUEST);
             }
 
-            $eventArtist = $eventArtistRepo->findOneBy(array('event' => $event, 'artist' => $artist));
+            /*$eventArtist = $eventArtistRepo->findOneBy(array('event' => $event, 'artist' => $artist));
             if (!empty($eventArtist)) {
                 return new JsonResponse([
                     'status' => 'error',
                     'message' => 'Artist already exists in event'
                 ], Response::HTTP_BAD_REQUEST);
-            }
+            }*/
 
             $eventOfferData = new EventOfferData();
             $eventOfferData->setName($event->getTitle());
@@ -575,7 +575,6 @@ class EventsController extends Controller
             $this->orderManager->createOrder($event, $artist, $event->getUser()->getClient(), $performances, $chat);
             $this->entityManager->flush();
             $this->entityManager->getConnection()->commit();
-
 
             /** Notify Artist */
             //TODO: fix to order

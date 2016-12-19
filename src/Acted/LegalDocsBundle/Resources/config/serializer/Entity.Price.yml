@@ -1,0 +1,6 @@
+Acted\LegalDocsBundle\Entity\Price:
+  properties:
+    id:
+      groups: [order]
+    amount:
+      groups: [order]

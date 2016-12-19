@@ -152,11 +152,15 @@
 
 <!-- New Quotation event section -->
 <script type="text/template" id="quot-event-tmp">
-    <% var disabled = '';
+    <%
+
+    /*var disabled = '';
 
     if(data.model.user.type == 'ARTIST') {
         disabled = 'disabled';
-    }
+    }*/
+
+    var disabled = 'disabled';
 
     var numberOfGuests = data.model.number_of_guests;
     if (numberOfGuests == 'less_then_50') {
@@ -233,9 +237,10 @@
         var services     = data.model.serv;
         var allData      = performances.concat(services);
 
+
     for(var i = 0; i < allData.length; i++) {
 
-        var actSelected = allData[i].isSelected ? 'checked' : '';
+        //var actSelected = allData[i].isSelected ? 'checked' : '';
         //var perfId = allData[i].id;
 
         var curPerf = null;
@@ -258,6 +263,13 @@
             var serviceAmount = new Number(servicePrice.amount).toFixed();
         }
 
+        var isOrder = false;
+        if (typeof(curPerf.isOrder) != 'undefined') {
+            isOrder = true;
+        }
+
+        var actSelected = isOrder ? 'checked' : '';
+
         if ((type == 'performance' && curPerf.type != basePerformanceType) || curPerf.packages.length == 0) {
             continue;
         }
@@ -265,7 +277,7 @@
         var perfId = curPerf.id;
 
         %>
-        <div act-id="<%=perfId%>" act-type="<%=type%>">
+        <div act-id="<%=perfId%>" base-type="true" act-type="<%=type%>">
             <div class="row">
                 <div class="act-title">
                     <div class="custom-checkbox">
@@ -278,7 +290,7 @@
 
             <% for(var j = 0; j < curPerf.packages.length; j++) {
                 var package = curPerf.packages[j];
-                var packageChecked = package.isSelected ? 'checked' : '';
+                var packageChecked = isOrder ? 'checked' : '';
                 var hiddenCheckbox = (type == 'performance') ? '' : 'hidden';
                 if(type == 'service') {
                     var toLeft = 'pull-left';
@@ -287,7 +299,7 @@
 
             %>
 
-                <div package-id="<%=package.id%>" class="row">
+                <div package-block package-id="<%=package.id%>" class="row">
                     <div class="row package <%=toLeft%>">
                         <div class="custom-checkbox <%=hiddenCheckbox%>">
                             <input select-package package-id="<%=package.id%>" id="package_<%=package.id%>" name="package-check" value="" type="checkbox" <%=packageChecked%> >
@@ -298,10 +310,10 @@
 
                     <% for(var k = 0; k < package.options.length; k++) {
                         var option = package.options[k];
-                        var optionChecked = option.isSelected ? 'checked' : '';
+                        var optionChecked = isOrder ? 'checked' : '';
                     %>
                         <!-- Set options -->
-                        <div option-id="<%=option.id%>" class="act-option <%=toRight%>">
+                        <div option-block option-id="<%=option.id%>" class="act-option <%=toRight%>">
                             <div class="custom-checkbox <%=hiddenCheckbox%>">
                                 <input select-option option-id="<%=option.id%>" id="option_<%=option.id%>" name="package-check" value="" type="checkbox" <%=optionChecked%>>
                                 <label for="option_<%=option.id%>"></label>

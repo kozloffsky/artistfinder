@@ -1,0 +1,10 @@
+Acted\LegalDocsBundle\Entity\Option:
+  properties:
+    id:
+      groups: [order]
+    qty:
+      groups: [order]
+    duration:
+      groups: [order]
+    rates:
+      groups: [order]
