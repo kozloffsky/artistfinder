@@ -48,9 +48,11 @@ $(function () {
             value.chat_room.event.starting_date = moment(eventDate, 'DD/MM/YYYY').format('DD MMM YY');
             prepared.push(value);
         });
-        feedbacks.forEach(function (item) {
-            prepared.push(item);
-        });
+        if (window.getUserRole()[0] == 'ROLE_ARTIST'){
+            feedbacks.forEach(function (item) {
+                prepared.push(item);
+            });
+        }
         prepared = _.sortBy(prepared, 'timestamp').reverse();
         return prepared;
     }
