@@ -61,4 +61,24 @@ class OrderController extends Controller
         return new JsonResponse(['status'=>'ok']);
 
     }
+
+    /**
+     * Here goes actual payment
+     * TODO: Here will be mongopay, right now faking this and manually create payment transaction and book order
+     * @param $orderId
+     */
+    public function payAction($orderId){
+        if (!$this->orderManager->checkOrderForBooking($orderId)){
+            $this->createNotFoundException("Bad Order");
+        }
+        return $this->render("@ActedLegalDocs/Order/payment.html.twig",['order'=>$orderId]);
+    }
+
+    public function paySuccessAction($orderId){
+        if (!$this->orderManager->bookOrder($orderId)){
+            $this->createNotFoundException("Error while booking");
+        }
+
+
+    }
 }

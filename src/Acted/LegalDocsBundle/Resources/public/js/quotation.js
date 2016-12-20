@@ -673,8 +673,10 @@ $(function() {
 
             for (performanceIndex in performances) {
                 var currentPerformanceId = performances[performanceIndex]["data"]["performance"];
+                var itemId = performances[performanceIndex]["id"];
                 var currentPerformance = {
                     performance: {
+                        itemId: itemId,
                         packages: performances[performanceIndex]["data"]["packages"],
                         title : performances[performanceIndex]["data"]["title"],
                         type : performances[performanceIndex]["data"]["type"],
@@ -793,76 +795,14 @@ $(function() {
 
         var basePerformances = form.find('[act-type="performance"][base-type="true"]');
         var services = form.find('[act-type="service"][base-type="true"]');
+        var extraPerformances = form.find('#extra-act').find('[act-type="performance"]');
 
-        var newBasePerformances = [];
-
-        _.each(basePerformances, function (performance, performanceIndex) {
-
-            var currentNewBasePerformance = {};
-            var currentPerformance = $(performance).find('[select-performance]');
-            if (!currentPerformance.prop('checked')) {
-                return;
-            }
-
-            var newPackages = [];
-            var packages = $(performance).find("[package-block]");
-            _.each(packages, function (package, packageIndex) {
-                var currentPackage = {};
-                var packageInput = $(package).find('[select-package]');
-
-                if (!$(packageInput).prop('checked')) {
-                    return;
-                }
-
-                var newOptions = [];
-                var options = $(package).find("[option-block]");
-                _.each(options, function (option, optionIndex) {
-                    var currentOption = {};
-                    var optionInput = $(option).find('[select-option]');
-                    if (!$(optionInput).prop('checked')) {
-                        return;
-                    }
-
-                    var qty = $(option).find('[name="qty"]').val();
-                    var duration = $(option).find('[name="duration"]').val();
-                    var price = $(option).find('[quot-edit-price]').find('option:selected').val();
-
-                    currentOption = {
-                        qty: qty,
-                        duration: duration,
-                        price: price
-                    };
-
-                    newOptions.push(currentOption);
-                });
-
-                currentPackage["options"] = newOptions;
-                newPackages.push(currentPackage);
-            });
-
-
-
-            currentNewBasePerformance["packages"] = newPackages;
-            newBasePerformances.push(currentNewBasePerformance);
-        });
-
-        console.log(newBasePerformances);
-
-        /*var act = $(_context);
-        var packages = act.closest('['+p[0]+']').find('['+itemType[1]+']');
-
-        if(act.prop('checked')) {
-            _.each(packages, function (o, i) {
-                $(o).prop('checked', true);
-
-                var options = $(o).closest('div[' + p[1] + ']').find('[' + itemType[2] + ']');
-
-                _.each(options, function (o, i) {
-                    $(o).prop('checked', true);
-                });
-            });
-        }*/
-
+        newBasePerformances = prepareServicePerformance(basePerformances, 'performance');
+        newServices = prepareServicePerformance(services, 'service');
+        newExtraPerformances = prepareExtraPerformance(extraPerformances);
+        // console.log(newBasePerformances);
+        // console.log(newServices);
+        //console.log(newExtraPerformances);
 
 
         /*sendQuotationConfirmation(data)
@@ -879,14 +819,148 @@ $(function() {
             console.error(err);
         });*/
         $("button[quotation-send]").html('Quotation Sent');
-        console.log($("button[quotation-send]").val());
+        //console.log($("button[quotation-send]").val());
     }
+    /** ------------------------------------------------------- **/
+    function prepareExtraPerformance(objects) {
+        var newExtraObjects = [];
+        var standardPerformanceType = 1;
 
+        _.each(objects, function (object, objectIndex) {
+            var currentNewExtraObject = {};
+            var currentObject = $(object).find('[select-extra-performance]');
+            var itemId = $(object).attr('item-id');
+
+            var isSelected = false;
+            if (currentObject.prop('checked')) {
+                isSelected = true;
+            }
+
+            var price       = $(object).find('[edit-extra-custom-price]').val();
+            var type        = $(object).find("[quot-edit-performance-type]").find("option:selected").val();
+            var comment     = $(object).find('[name="comment"]').val();
+            var duration    = $(object).find("[quot-edit-duration]").val();
+            var qty         = $(object).find("[quot-edit-qty]").find("option:selected").val();
+
+            var option = {
+                price: price
+            };
+            if (type == standardPerformanceType) {
+                option["qty"] = qty;
+                option["duration"] = duration;
+            }
+
+            currentObject = {
+                itemId: itemId,
+                type: type,
+                isSelected: isSelected,
+                comment: comment,
+                packages: [{
+                    options: [option]
+                }]
+            };
+
+            newExtraObjects.push(currentObject);
+        });
+
+        return newExtraObjects;
+    }
+    /** ------------------------------------------------------- **/
+    function prepareServicePerformance(objects, type) {
+        var newBaseObjects = [];
+
+        _.each(objects, function (object, objectIndex) {
+            var currentNewBaseObject = {};
+            var currentObject = $(object).find('[select-performance]');
+            var actId = $(object).attr('act-id');
+            var itemId = $(object).attr('item-id');
+
+            if (!currentObject.prop('checked')) {
+                return;
+            }
+
+            if (type == 'service') {
+                var price = $(object).find('[edit-extra-custom-price]').val();
+                var packageName = $(object).find('.row.package').find('label').text();
+                var packageId = $(object).find('[package-block]').attr('package-id');
+                var optionId = $(object).find('[option-block]').attr('option-id');
+
+                currentObject = {
+                    id: actId,
+                    itemId: itemId,
+                    title: packageName,
+                    packages: [{
+                        id: packageId,
+                        options: [{
+                            id: optionId,
+                            price: price
+                        }]
+                    }]
+                };
+
+                newBaseObjects.push(currentObject);
+                return;
+            }
+
+            var newPackages = [];
+            var packages = $(object).find("[package-block]");
+            _.each(packages, function (package, packageIndex) {
+                var currentPackage = {};
+                var packageId = $(package).attr('package-id');
+                var packageInput = $(package).find('[select-package]');
+                var packageName = $(package).find('.row.package').find('label').text();
+
+
+                if (!$(packageInput).prop('checked')) {
+                    return;
+                }
+
+                var newOptions = [];
+                var options = $(package).find("[option-block]");
+                _.each(options, function (option, optionIndex) {
+                    var currentOption = {};
+                    var optionId = $(option).attr('option-id');
+                    var optionInput = $(option).find('[select-option]');
+                    if (!$(optionInput).prop('checked')) {
+                        return;
+                    }
+
+                    var qty = $(option).find('[name="qty"]').val();
+                    var duration = $(option).find('[name="duration"]').val();
+                    var price = $(option).find('[quot-edit-price]').find('option:selected').val();
+
+
+                    currentOption = {
+                        id: optionId,
+                        price: price,
+                        qty: qty,
+                        duration: duration
+                    };
+
+                    newOptions.push(currentOption);
+                });
+
+                currentPackage["id"] = packageId;
+                currentPackage["title"] = packageName;
+                currentPackage["options"] = newOptions;
+                newPackages.push(currentPackage);
+            });
+
+            currentNewBaseObject["id"] = actId;
+            currentNewBaseObject["itemId"] = itemId;
+            currentNewBaseObject["packages"] = newPackages;
+            newBaseObjects.push(currentNewBaseObject);
+        });
+
+        return newBaseObjects;
+    }
+    /** ------------------------------------------------------- **/
     function selectExtraPerformanceSend() {
-        var quotId  = QRM.model.id;
-        var perfId  = $(this).closest('div[act-id]').attr('act-id');
+        /*var quotId  = QRM.model.id;
+        var perfId  = $(this).closest('div[act-id]').attr('item-id');*/
         var mainSelector = $(this).closest("div[act-id]");
 
+        console.log($(this));
         var selected = $(this).prop('checked');
 
         if(selected) {
@@ -895,12 +969,12 @@ $(function() {
             mainSelector.find('[extra-performance-comment]').hide();
         }
 
-            var data = {
+        /*    var data = {
                 perf: perfId,
                 quot: quotId
             };
 
-        /*selectQuotaionPerformance(data)
+        selectQuotaionPerformance(data)
             .then(function(res) {
                 console.log(res);
             })
@@ -931,54 +1005,36 @@ $(function() {
         var status = $(this).attr('status');
 
         var performance = {
-            performance_price: {
+            performance: {
                 title: 'Act title',
-                package_name: 'Package',
-                artist: null,
                 type: 1,
-                options: [
-                    {
+                packages: [{
+                    title: 'Package',
+                    options: [{
                         qty: 1,
                         duration: 1,
-                        price1: 0,
-                        price_on_request: false
-                    }
-                ],
-                request_quotation: null,
-                is_quotation: true
+                        rates: [{
+                            price: {
+                                amount: 0
+                            }
+                        }]
+                    }]
+                }]
             }
         };
 
         if(status == 'adding') {
+            var html = _.template(newPerf)({
+                data: performance
+            });
 
-            userDataProvider.currentUser()
-            .then(function(res) {
-                return res.user.artistId;
-            })
-            .then(function(artistId) {
-                performance.performance_price.artist = artistId;
-                performance.performance_price.request_quotation = QRM.model.id;
+            var extraActs = $("#extra-act").find("[act-type]");
 
-                return createExtraPerformanceSend(performance);
-            })        
-            .then(function(res) {
-                newAct = res;
-
-                var html = _.template(newPerf)({
-                    data: res
-                });
-
-                var extraActs = $("#extra-act").find("[act-type]");
-
-                if(extraActs.length) {
-                    extraActs.last().after(html);
-                } else {
-                    $("#extra-act").html(html);
-                }
-            })
-            .catch(function(err) {
-                console.error(err)
-            })
+            if(extraActs.length) {
+                extraActs.last().after(html);
+            } else {
+                $("#extra-act").html(html);
+            }
         }
     }
 
@@ -1098,7 +1154,7 @@ $(function() {
     }
     function editPerformanceComment() {
 
-        var mainSelector = $(this).closest("div[act-id]");
+        /*var mainSelector = $(this).closest("div[act-id]");
         var performanceId = $(this).closest("div[act-id]").attr("act-id");
         var comment = mainSelector.find('[name="comment"]').val();
 
@@ -1115,7 +1171,7 @@ $(function() {
             })
             .catch(function(err) {
                 console.error(err);
-            })
+            })*/
     }
     function editPerformanceType() {
         var standardPerformanceType = 1;
@@ -1139,7 +1195,7 @@ $(function() {
             var qty      = mainSelector.find("[quot-edit-qty]").find("option:selected").val();
             var optionId = $(this).closest("div[option-id]").attr("option-id");
 
-            var option = {
+            /*var option = {
                 id: optionId,
                 data: {
                     'price_option_edit[qty]': qty,
@@ -1154,20 +1210,20 @@ $(function() {
                 })
                 .catch(function(err) {
                     console.error(err);
-                });
+                });*/
 
         } else {
             mainSelector.find("[quot-edit-option]").hide();
         }
 
 
-        updatePerformanceSend(performance)
+       /* updatePerformanceSend(performance)
             .then(function(res) {
                 console.log(res);
             })
             .catch(function(err) {
                 console.error(err);
-            })
+            })*/
     }
     function editOption() {
 
@@ -1177,7 +1233,7 @@ $(function() {
         var qty      = mainSelector.find("[quot-edit-qty]").find("option:selected").val();
         var id       = mainSelector.attr("option-id");
 
-        var option = {
+      /*  var option = {
             id: id,
             data: {
                 'price_option_edit[qty]': qty,
@@ -1192,7 +1248,7 @@ $(function() {
             })
             .catch(function(err) {
                 console.error(err);
-            })
+            })*/
     }
     function editActTitle(e) {
         var id    = $(this).closest("div[act-id]").attr("act-id");
@@ -1261,7 +1317,6 @@ $(function() {
             isRemovedPrice = true;
         }
 
-        console.log('ISR:', customPriceId);
 
         if(value == 'custom') {
 
@@ -1276,7 +1331,11 @@ $(function() {
             return;
         } else {
             if (isRemovedPrice) {
-                var data = {
+                $(this).find('[custom-price]').hide();
+                selectedOption.removeAttr('price-removed');
+                selectedOption.attr('price-id', res.rate.id);
+
+               /* var data = {
                     price_rate_create: {
                         option: optionId,
                         price: priceAmount
@@ -1303,16 +1362,16 @@ $(function() {
                         $(this).find('[custom-price]').show();
                         selectedOption.attr('price-removed', true);
                         console.error(err);
-                    });
+                    });*/
             } else {
-                selectPriceSend(selectedPriceId)
+                /*selectPriceSend(selectedPriceId)
                     .then(function(res){
 
                         console.log(res)
                     })
                     .catch(function(err) {
                         console.error(err)
-                    });
+                    });*/
             }
         }
     }
@@ -1348,12 +1407,17 @@ $(function() {
             if($(value).attr('value') != 'custom') {
                 $(value).attr('price-removed', true);
                 $(value).removeAttr('selected');
-                removedPromise.push(removePriceSend(priceId));
+                //removedPromise.push(removePriceSend(priceId));
             }
         });
 
+        var rateId = '';
+        var options = _this.closest('[option-id]').find('[quot-edit-price]').find('option');
+        options.find("[custom-price]").remove();
+        options.first().before('<option custom-price price-id="' + rateId + '" selected value="' + priceAmount + '">' + priceAmount + '</option>');
 
-        Promise.all(removedPromise)
+
+        /*Promise.all(removedPromise)
         .then(function() {
 
             var data = {
@@ -1372,7 +1436,7 @@ $(function() {
                 options.first().before('<option custom-price price-id="' + rateId + '" selected value="' + priceAmount + '">' + priceAmount + '</option>');
         }).catch(function (err) {
                 console.log(err);
-        });
+        });*/
     }
 
     function editExtraCustomPrice() {
@@ -1395,21 +1459,21 @@ $(function() {
             'price_rate_edit[price]': amount
         };
 
-        editPriceSend(rateId, data)
+       /* editPriceSend(rateId, data)
             .then(function(res){
 
                 console.log(res)
             })
             .catch(function(err) {
                 console.error(err)
-            })
+            })*/
     }
     /** --- REMOVING FUNCTIONAL --- **/
     function removePackage(e) {
         var packageContainer = $(this).closest("div[package-id]");
         var packageId = $(this).attr("remove-package");
 
-        removePackageSend({
+        /*removePackageSend({
             id: packageId
         })
         .then(function(res) {
@@ -1418,7 +1482,7 @@ $(function() {
         })
         .catch(function(err) {
             console.error(err)
-        })
+        })*/
     }
     function removeAct(e) {
         var actContainer = $(this).closest('div[act-id]');
@@ -1430,14 +1494,14 @@ $(function() {
             type: actType
         };
 
-        removeActSend(act)
+       /* removeActSend(act)
         .then(function(res) {
             actContainer.remove();
             console.log(res)
         })
         .catch(function(err) {
             console.error(err)
-        })
+        })*/
     }
 
     $('.modal').on('show.bs.modal', function (event) { console.log(this.id); });

@@ -9,6 +9,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Order
 {
     const STATUS_NEW = 0;
+    const STATUS_ACCEPTED = 1;
+    const STATUS_BOOKED = 2;
 
 
     const FIELD_DETAILS = 1;
@@ -885,6 +887,14 @@ class Order
 
     public function getTimeFromAdd(){
         return $this->getCreated()->diff(new \DateTime())->format("%m month, %d days, %H, %M");
+    }
+
+    public function getDepositToPay(){
+        return $this->getTotalPrice() * ($this->getGuaranteedDepositTerm() / 100);
+    }
+
+    public function getBalanceToPay(){
+        return $this->getTotalPrice() * ($this->getGuaranteedBalanceTerm() / 100);
     }
 
 
