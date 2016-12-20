@@ -275,9 +275,10 @@
         }
 
         var perfId = curPerf.id;
+        var itemId = curPerf.itemId;
 
         %>
-        <div act-id="<%=perfId%>" base-type="true" act-type="<%=type%>">
+        <div act-id="<%=perfId%>" item-id="<%=itemId%>" base-type="true" act-type="<%=type%>">
             <div class="row">
                 <div class="act-title">
                     <div class="custom-checkbox">
@@ -392,15 +393,17 @@
         }
 
         var package = curPerf.packages[0];
+
         var packageChecked = package.isSelected ? 'checked' : '';
 
         var option = package.options[0];
         var perfId = curPerf.id;
+        var itemId = curPerf.itemId;
         var rate = option.rates[0];
         var price = rate.price;
         var amount = new Number(price.amount).toFixed();
     %>
-    <div act-id="<%=perfId%>" act-type="<%=type%>">
+    <div act-id="<%=perfId%>" item-id="<%=itemId%>" act-type="<%=type%>">
         <div package-id="<%=package.id%>" class="row">
             <div class="row package">
                 <div class="custom-checkbox">
