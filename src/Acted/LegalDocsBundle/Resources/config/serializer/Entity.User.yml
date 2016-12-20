@@ -10,7 +10,7 @@ Acted\LegalDocsBundle\Entity\User:
     roles:
       exclude: true
     avatar:
-      groups: [quote_request, chat_room, message, all_messages, profile_settings, messages_feedbacks]
+      groups: [order, quote_request, chat_room, message, all_messages, profile_settings, messages_feedbacks]
     firstname:
       groups: [order, chat_list, chat_room, message, all_messages, users_list, profile_settings, getEvent, messages_feedbacks]
     lastname:

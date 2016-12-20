@@ -5,6 +5,7 @@ namespace Acted\LegalDocsBundle\Controller;
 use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Form\FeedbackCreateType;
 use Acted\LegalDocsBundle\Form\FeedbackRatingCreateType;
+use Acted\LegalDocsBundle\Repository\FeedbackRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -102,6 +103,18 @@ class FeedbackController extends Controller
         $em->persist($feedback);
         $em->flush();
 
+        $average = $feedbackRepo->getAverageArtistRating($artist);
+        $average = $average['averageRating'];
+        $total = $feedbackRepo->countArtistFeedbacks($artist);
+        $total = $total[0]['countRows'];
+        $artistRepo = $em->getRepository('ActedLegalDocsBundle:Artist');
+        $artist = $artistRepo->find($artist);
+        $artist->setAverageRating($average);
+        $artist->setTotalRatings($total);
+        $em->persist($artist);
+        $em->flush();
+
+
         //Send notification email
         $feedbackManager = $this->get('app.feedback.manager');
         $feedbackManager->sendNotify($user, $feedback);
@@ -189,6 +202,17 @@ class FeedbackController extends Controller
             $em->persist($feedbackObj);
             $em->flush();
 
+            $average = $feedbackRepo->getAverageArtistRating($artist);
+            $average = $average['averageRating'];
+            $total = $feedbackRepo->countArtistFeedbacks($artist);
+            $total = $total[0]['countRows'];
+            $artistRepo = $em->getRepository('ActedLegalDocsBundle:Artist');
+            $artist = $artistRepo->find($artist);
+            $artist->setAverageRating($average);
+            $artist->setTotalRatings($total);
+            $em->persist($artist);
+            $em->flush();
+
             //Send notification email
             $feedbackManager = $this->get('app.feedback.manager');
             $feedbackManager->sendNotify($user, $feedbackObj);
@@ -229,9 +253,10 @@ class FeedbackController extends Controller
         $em = $this->getDoctrine()->getManager();
         $feedbackRepo = $em->getRepository('ActedLegalDocsBundle:Feedback');
         $data = $feedbackRepo->getAverageArtistRating($artist);
-
+        $countFeedbacks = $feedbackRepo->countArtistFeedbacks($artist);
         return new JsonResponse(array(
             'status' => 'success',
+            'total' => $countFeedbacks[0]['countRows'],
             'averageRating' => $data['averageRating']
         ), Response::HTTP_OK);
     }
@@ -256,6 +281,7 @@ class FeedbackController extends Controller
     public function getFeedbacksAction(Request $request, Artist $artist, $page, $size)
     {
         $em = $this->getDoctrine()->getManager();
+
         $feedbackRepo = $em->getRepository('ActedLegalDocsBundle:Feedback');
 
         $artistFeedbacks = $feedbackRepo->getArtistFeedbacks($artist, $page, $size);

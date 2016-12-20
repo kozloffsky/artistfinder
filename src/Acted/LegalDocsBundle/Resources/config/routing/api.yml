@@ -26,3 +26,10 @@ api_artist_new_feedbacks:
   path: /feedbacks/artist/new
   methods: GET
   defaults: {_controller: ActedLegalDocsBundle:Feedback:getAllNewFeedbacks}
+
+api_event_orders:
+  path: /events/{event}/orders
+  methods: GET
+  defaults: {_controller: ActedLegalDocsBundle:Events:getOrdersByEvent}
+  requirements:
+    event: \d+

@@ -4,47 +4,45 @@
     <div class="container">
         {% include 'ActedLegalDocsBundle:Profile:client/client_menu.html.twig' %}
 
-        <div class="row artist-block">
+        <div class="row artist-block" style="display: none;" v-for="order in orders">
             <div class="col-sm-1 col-xs-1 no-pad avatar-block">
                 <div class="avatar">
-                    <img src="../../assets/images/client_payment_profile.jpg">
+                    <img v-if="order.artist.avatar" src="order.artist.avatar">
+                    <img v-else src="/assets/images/noAvatar.png">
                 </div>
             </div>
             <div class="col-sm-10 col-xs-12 no-pad">
                 <div class="row">
                     <div class="col-sm-10 col-xs-10">
-                        <span class="name">Diana Kroll</span>
+                        <span class="name">${order.artist.user.firstname} ${order.artist.user.lastname}</span>
                         <span class="stars">
-                            <i class="star filled"></i>
-                            <i class="star filled"></i>
-                            <i class="star filled"></i>
-                            <i class="star filled"></i>
-                            <i class="star"></i>
+                            <i v-for="i in Math.floor(order.artist.average_rating)" class="star filled"></i>
+                            <i v-for="i in 5-Math.floor(order.artist.average_rating)" class="star"></i>
                         </span>
-                        <span class="rate"><i>4.0</i>/<i>5.0</i></span>
-                        <span class="rate-count">(<i>16</i> <span>Ratings</span>)</span>
+                        <span class="rate"><i>${order.artist.average_rating.toFixed(1)}</i>/<i>5.0</i></span>
+                        <span class="rate-count">(<i>${order.artist.total_ratings}</i> <span>Ratings</span>)</span>
                         <ul class="ul-reset artist-categories">
-                            <li>Jazz Vocalist</li>
-                            <li>Jazz Pianist</li>
-                            <li>Vocalist</li>
+                            <li v-for="category in order.artist.categories">${category}</li>
                         </ul>
                         <div>
-                            From Chicago, Illinois
+                            From ${order.artist.city}
                         </div>
                     </div>
 
                     <div class="right-panel">
-                        <div class="row color-kelly available-flag text-left">Available</div>
-                        <div class="row text-left price-from">From &pound; 1200</div>
+                        <div class="row color-kelly available-flag text-left" v-if="order.status == 0">Enquiry</div>
+                        <div class="row color-kelly available-flag text-left" v-else-if="order.status == 1">Available</div>
+                        <div class="row color-kelly available-flag text-left" v-else-if="order.status == 2">Confirmed</div>
+                        <div class="row text-left price-from" v-if="order.status == 1">From &pound; ${order.minPrice}</div>
                         <div class="row text-left"><i class="fa fa-trash"></i> Remove</div>
                     </div>
                 </div>
 
 
                 <div class="row controls-area controls">
-                    <button class="btn button-gradient blue">Chatroom</button>
+                    <a class="btn button-gradient blue" v-bind:href="'/dashboard/chat/'+ order.chat.chat_id">Chatroom</a>
                     <div class="button-gradient follow">
-                        <button class="btn">Profile</button>
+                        <a class="btn" v-bind:href="'/profile/'+ order.artist.slug">Profile</a>
                     </div>
                 </div>
             </div>

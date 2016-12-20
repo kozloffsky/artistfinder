@@ -29,3 +29,6 @@ Acted\LegalDocsBundle\Entity\Order:
 
     status:
       groups: [order]
+
+    chat:
+      groups: [order]

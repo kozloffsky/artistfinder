@@ -188,6 +188,17 @@ class OrderManager
     }
 
 
+    public function getOrdersForEvent($event)
+    {
+        return $this->orderRepository
+                    ->createQueryBuilder('o')
+                    ->where('o.event = :event')
+                    ->setParameter('event', $event)
+                    ->getQuery()
+                    ->getResult();
+
+    }
+
     public function getOrdersForArtist(Artist $artist)
     {
         return $this->orderRepository->createQueryBuilder('ord')

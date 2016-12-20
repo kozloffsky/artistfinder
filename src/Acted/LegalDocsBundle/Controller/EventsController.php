@@ -107,11 +107,11 @@ class EventsController extends Controller
 
                 return new JsonResponse(['success' => 'Event successfully created!']);
             }
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $this->entityManager->getConnection()->rollback();
 
             return new JsonResponse([
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => $e->getMessage()
             ], Response::HTTP_BAD_REQUEST);
 
@@ -298,7 +298,7 @@ class EventsController extends Controller
         $eventArtists = $eventArtistRepo->getEventArtists($event, $page, $size);
 
         return new JsonResponse(array(
-            'status' => 'success',
+            'status'  => 'success',
             'artists' => $eventArtists['artists']
         ), Response::HTTP_OK, array(
             'count' => $eventArtists['countRows']
@@ -355,6 +355,7 @@ class EventsController extends Controller
             if (!$venue) {
                 $message = "No Venue was found";
                 $response = ['status' => 'error', "message" => $message];
+
                 return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
             }
             $data['venueType'] = $venue;
@@ -372,6 +373,7 @@ class EventsController extends Controller
             if (count($errors) > 0) {
                 //Debug. Can be removed.
                 $response = ['status' => 'error', 'errors' => $errors];
+
                 return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
             }
 
@@ -379,11 +381,13 @@ class EventsController extends Controller
             $em->flush();
 
             $response = ['status' => 'success'];
+
             return new JsonResponse($response);
         }
 
         $message = "No Event was found";
         $response = ['status' => 'error', "message" => $message];
+
         return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
 
     }
@@ -444,7 +448,7 @@ class EventsController extends Controller
 
         if (empty($user)) {
             return new JsonResponse([
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => 'User is not authorized'
             ], Response::HTTP_UNAUTHORIZED);
         }
@@ -467,10 +471,8 @@ class EventsController extends Controller
 
         if (empty($chatRoom)) {
             return new JsonResponse(array(
-                'status' => 'success',
-                'messages' => array(
-
-                )
+                'status'   => 'success',
+                'messages' => array()
             ));
         }
 
@@ -520,14 +522,12 @@ class EventsController extends Controller
             $data = $form->getData();
             if (empty($data)) {
                 return new JsonResponse([
-                    'status' => 'error',
+                    'status'  => 'error',
                     'message' => 'There are not any data'
                 ], Response::HTTP_BAD_REQUEST);
             }
 
             $performances = $data['performance'];
-
-
 
             $event = $data['event'];
             //TODO: find by id may be?
@@ -536,7 +536,7 @@ class EventsController extends Controller
 
             if (empty($artist)) {
                 return new JsonResponse([
-                    'status' => 'error',
+                    'status'  => 'error',
                     'message' => 'User not found'
                 ], Response::HTTP_BAD_REQUEST);
             }
@@ -584,7 +584,7 @@ class EventsController extends Controller
             $this->entityManager->getConnection()->rollback();
 
             return new JsonResponse([
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => $e->getMessage()
             ], Response::HTTP_BAD_REQUEST);
         }
@@ -592,5 +592,18 @@ class EventsController extends Controller
         return new JsonResponse(array(
             'status' => 'success',
         ), Response::HTTP_OK);
+    }
+
+    public function getOrdersByEventAction(Request $request)
+    {
+        $event = $request->get('event');
+        $orderManager = $this->get('acted_legal_docs.model.order_manager');
+        $context = SerializationContext::create()->setGroups('order');
+        $serializer = $this->get('jms_serializer');
+        $orders = $orderManager->getOrdersForEvent($event);
+        $orders = $serializer->toArray($orders, $context);
+        $response = ['status' => 'success', 'orders' => $orders];
+
+        return new JsonResponse($response);
     }
 }
