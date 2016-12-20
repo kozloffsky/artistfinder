@@ -6,3 +6,12 @@ order_get_by_id:
 order_accept_field:
     path:     /accept/{orderId}/{fieldId}/{value}
     defaults: { _controller: ActedLegalDocsBundle:Order:acceptOrderField, _format: json }
+
+order_payment:
+    path:     /pay/{orderId}
+    defaults: { _controller: ActedLegalDocsBundle:Order:pay, _format: html }
+    methods: GET
+
+order_payment_success:
+    path:    /pay/success/{orderId}
+    defaults: { _controller: ActedLegalDocsBundle:Order:paySuccess, _format: html }

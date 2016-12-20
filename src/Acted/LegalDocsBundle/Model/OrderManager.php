@@ -234,4 +234,46 @@ class OrderManager
         $this->entityManager->flush();
     }
 
+    public function checkOrderForBooking($orderId){
+        $order = $this->orderRepository->find($orderId);
+        if (! $order){
+            return false;
+        }
+
+        if ($order->getDetailsAccepted() != true ||
+            $order->getTechnicalRequirementsAccepted() != true ||
+            $order->getActsExtrasAccepted() != true ||
+            $order->getTimingAccepted() != true
+            ){
+            return false;
+        }
+
+        if(empty($order->getActorDetails()) || empty($order->getClientDetails())){
+            return false;
+        }
+    }
+
+    public function bookOrder($orderId){
+        $order = $this->orderRepository->find($orderId);
+
+        if (!$this->checkOrderForBooking($orderId)){
+            $this->createNotFoundException("Bad Order");
+        }
+
+        $order->setStatus(Order::STATUS_BOOKED);
+
+        //Amount of money sent to escrow as deposit
+        $order->setDepositBallance($order->getDepositToPay());
+        //Amount of money left to pay
+        $order->setDepositBallance($order->getBalanceToPay());
+
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
+
+        return true;
+    }
+
+
+
+
 }

@@ -2,6 +2,7 @@ $(function(){
     'use strict';
     if (document.querySelector('.chat-room')) {
         try {
+
             var vue = new Vue({
                 el: '.chat-room',
                 delimiters: ['${', '}'],
@@ -15,7 +16,8 @@ $(function(){
                     _timingAccepted: false,
                     _actsExtrasAccepted: false,
                     _detailsAccepted: false,
-                    userRole: ""
+                    userRole: "",
+                    termsConditionsAccepted: false
                 },
 
                 computed:{
@@ -26,8 +28,9 @@ $(function(){
                         
                         set: function (val) {
                             var self = this;
-                            this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().technicalRequirements, Number(!val), function () {
+                            this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().technicalRequirements, Number(val), function () {
                                 self._requirementsAccepted = val;
+                                //self.$forceUpdate();
                             });
                         }
                     },
@@ -39,8 +42,9 @@ $(function(){
 
                         set: function (val) {
                             var self = this;
-                            this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().timing, Number(!val), function () {
+                            this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().timing, Number(val), function () {
                                 self._timingAccepted = val;
+                                //self.$forceUpdate();
                             });
                         }
                     },
@@ -52,8 +56,9 @@ $(function(){
 
                         set: function (val) {
                             var self = this;
-                            this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().actsExtras, Number(!val), function () {
+                            this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().actsExtras, Number(val), function () {
                                 self._actsExtrasAccepted = val;
+                                //self.$forceUpdate();
                             });
                         }
                     },
@@ -65,9 +70,26 @@ $(function(){
 
                         set: function (val) {
                             var self = this;
-                            this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().details, Number(!val), function () {
+                            this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().details, Number(val), function () {
                                 self._detailsAccepted = val;
                             });
+                        }
+                    },
+
+                    bookingAllowed: {
+                        cache: false,
+                        get: function () {
+                            if(window.userRole == 'ROLE_ACTOR'){
+                                return false;
+                            }
+                        if(this._actsExtrasAccepted == true &&
+                            this._detailsAccepted == true &&
+                            this._timingAccepted == true &&
+                            this._requirementsAccepted == true){
+
+                            return false
+                        };
+                        return true;
                         }
                     }
                 },
@@ -78,10 +100,16 @@ $(function(){
                     this._requirementsAccepted = window.order.technicalRequirementsAccepted;
                     this._timingAccepted = window.order.timingAccepted;
                     this._actsExtrasAccepted = window.order.actsExtrasAccepted;
-                    this._detailsAccepted = window.order.actsExtrasAccepted;
+                    this._detailsAccepted = window.order.detailsAccepted;
+                    console.log(window.order);
 
                 },
                 methods: {
+                    showConfirmModal: function () {
+                        $('#confirmBookingModal').modal('show');
+                        console.log('Showing modal');
+                    },
+                    
                     fetchTechnicalRequirements: function () {
                         var self = this;
                         console.log("fetching tech reqs");
@@ -107,9 +135,12 @@ $(function(){
                     },
 
                     acceptField: function (orderId, fieldId, value, callback) {
+                        if (isNaN(value)){
+                            value = 0;
+                        }
                         $.ajax({
                             method:"GET",
-                            url:"/order/accept/"+orderId+"/"+fieldId+"/"+Number(!value),
+                            url:"/order/accept/"+orderId+"/"+fieldId+"/"+value,
                             success: function (r) {
                                 console.log(r);
                                 if (callback){
@@ -132,6 +163,10 @@ $(function(){
                                 console.log(e);
                             }
                         })
+                    },
+
+                    proceedToPayment: function(){
+                            window.location = "/order/pay/"+window.getOrderId();
                     }
                 },
                 filters: {

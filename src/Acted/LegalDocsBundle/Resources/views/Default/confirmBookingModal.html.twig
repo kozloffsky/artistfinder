@@ -12,11 +12,13 @@
                             <div class="quote-section">
                                 <div class="holder">
                                     <!--service start-->
+                                    {% for p in order.performances %}
                                     <article class="service">
-                                        <h3 class="package-name">Act 1 - Jazz Band</h3>
+                                        <h3 class="package-name">{{ p.data['title'] }}</h3>
                                         <ul class="ul-reset">
+                                            {% for package in p.data.packages %}
                                             <li>
-                                                <strong class="sub-title">3-piece Jazz Band</strong>
+                                                <strong class="sub-title">{{  package['name'] }}</strong>
                                                 <div class="row">
                                                     <div class="col-md-12 no-pad">
                                                         <span class="short" name="currency1" id="currency1">1</span>
@@ -29,94 +31,11 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li>
-                                                <strong class="sub-title">3-piece Jazz Band</strong>
-                                                <div class="row">
-                                                    <div class="col-md-12 no-pad">
-                                                        <div class="row">
-                                                            <span class="short" name="currency1" id="currency1">1</span>
-                                                            <span class="cross">x</span>
-                                                            <span class="short" name="currency11" id="currency11">45 min</span>
-                                                            <div class="pull-right">
-                                                                <span class="short">3.000</span>
-                                                                <span class="pull-right">GBP</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
+                                            {% endfor %}
+
                                         </ul>
                                     </article>
-                                    <article class="service">
-                                        <h3 class="package-name">Act 1 - Jazz Band</h3>
-                                        <ul class="ul-reset">
-                                            <li>
-                                                <strong class="sub-title">3-piece Jazz Band</strong>
-                                                <div class="row">
-                                                    <div class="col-md-12 no-pad">
-                                                        <span class="short" name="currency1" id="currency1">1</span>
-                                                        <span class="cross">x</span>
-                                                        <span class="short" name="currency11" id="currency11">45 min</span>
-                                                        <div class="pull-right">
-                                                            <span class="short">3.000</span>
-                                                            <span class="pull-right">GBP</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <strong class="sub-title">3-piece Jazz Band</strong>
-                                                <div class="row">
-                                                    <div class="col-md-12 no-pad">
-                                                        <div class="row">
-                                                            <span class="short" name="currency1" id="currency1">1</span>
-                                                            <span class="cross">x</span>
-                                                            <span class="short" name="currency11" id="currency11">45 min</span>
-                                                            <div class="pull-right">
-                                                                <span class="short">3.000</span>
-                                                                <span class="pull-right">GBP</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </article>
-                                    <article class="service">
-                                        <h3 class="package-name">Act 1 - Jazz Band</h3>
-                                        <ul class="ul-reset">
-                                            <li>
-                                                <strong class="sub-title">3-piece Jazz Band</strong>
-                                                <div class="row">
-                                                    <div class="col-md-12 no-pad">
-                                                        <span class="short" name="currency1" id="currency1">1</span>
-                                                        <span class="cross">x</span>
-                                                        <span class="short" name="currency11" id="currency11">45 min</span>
-                                                        <div class="pull-right">
-                                                            <span class="short">3.000</span>
-                                                            <span class="pull-right">GBP</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <strong class="sub-title">3-piece Jazz Band</strong>
-                                                <div class="row">
-                                                    <div class="col-md-12 no-pad">
-                                                        <div class="row">
-                                                            <span class="short" name="currency1" id="currency1">1</span>
-                                                            <span class="cross">x</span>
-                                                            <span class="short" name="currency11" id="currency11">45 min</span>
-                                                            <div class="pull-right">
-                                                                <span class="short">3.000</span>
-                                                                <span class="pull-right">GBP</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </article>
+                                    {% endfor %}
                                     <article class="service act-extras">
                                         <h3 class="package-name">Extra - 1</h3>
                                         <ul class="ul-reset">
@@ -144,17 +63,17 @@
                             </div>
                             <div class="payment-info">
                                 <span class="total-title">Total:</span>
-                                <span class="total-cost">9750 <i>GBP</i></span>
+                                <span class="total-cost">{{ order.totalPrice }} <i>GBR</i></span>
                             </div>
                             <div class="payment-additional-info">
                                 <span>Payment terms:</span>
 
                                 <div class="row list">
                                     <div class="col-xs-12 col-sm-12 no-pad">
-                                        <div class="col-xs-9 col-sm-6 no-pad">Deposit (50%) to be paid now</div><div class="col-xs-3 col-sm-6 no-pad">: 4,500 <i>GBP</i></div>
+                                        <div class="col-xs-9 col-sm-6 no-pad">Deposit ({{ order.guaranteedDepositTerm }}%) to be paid now</div><div class="col-xs-3 col-sm-6 no-pad">: {{ order.depositToPay }} <i>GBP</i></div>
                                     </div>
                                     <div class="col-xs-12 col-sm-12 no-pad">
-                                        <div class="col-xs-9 col-sm-6 no-pad">Balance (50%) to be paid on Act</div><div class="col-xs-3 col-sm-6 no-pad">: 4,500 <i>GBP</i></div>
+                                        <div class="col-xs-9 col-sm-6 no-pad">Balance ({{ order.guaranteedBalanceTerm }}%) to be paid on Act</div><div class="col-xs-3 col-sm-6 no-pad">: {{ order.balanceToPay }} <i>GBP</i></div>
                                     </div>
                                 </div>
 
@@ -184,14 +103,15 @@
                 </div>
                 <div class="modal-footer text-center">
                     <div class="custom-checkbox">
-                        <input id="details_agree" name="package-check" value="" type="checkbox">
+                        <input id="details_agree" name="package-check" value="" type="checkbox" v-model="termsConditionsAccepted">
                         <label for="details_agree">I agree with these terms & condition</label>
                     </div>
                     <div class="button-gradient filled">
-                        <button type="button" class="btn register quotationSendbtn">Proceed to payment</button>
+                        <button type="button" class="btn register quotationSendbtn" v-on:click="proceedToPayment">Proceed to payment</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
