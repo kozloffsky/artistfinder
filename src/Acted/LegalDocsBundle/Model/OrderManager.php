@@ -80,22 +80,21 @@ class OrderManager
                                 Client $client,
                                 ArrayCollection $performances,
                                 ChatRoom $chatRoom = null
-    )
-    {
+                                ){
 
-        if ($this->orderRepository->findOneBy(['event' => $event, 'artist' => $artist, 'client' => $client])) {
+        if($this->orderRepository->findOneBy(['event'=>$event, 'artist'=>$artist, 'client'=>$client])){
             //todo: DO NOT FORDET UNCOMMENT AFTER TESTING!!!!
             //throw new \Exception('order for this artist from this event already exists');
         }
 
         $artistTechnicalRequirements = $this->technicalRequirementsRepository->createQueryBuilder('r')
-                                                                             ->where('r.artist = :artist')
-                                                                             ->setParameter('artist', $artist->getId())
-                                                                             ->getQuery()->getResult(Query::HYDRATE_ARRAY);
+            ->where('r.artist = :artist')
+            ->setParameter('artist', $artist->getId())
+            ->getQuery()->getResult(Query::HYDRATE_ARRAY);
 
 
         $requirement = [];
-        if (!empty($artistTechnicalRequirements)) {
+        if (!empty($artistTechnicalRequirements)){
             $requirement = $artistTechnicalRequirements[0];
         }
 
@@ -105,7 +104,7 @@ class OrderManager
         $order->setEvent($event);
         $order->setClient($client);
         $order->setArtist($artist);
-        $order->setTechnicalRequirements(['requirement' => $requirement]);
+        $order->setTechnicalRequirements(['requirement'=>$requirement]);
         $order->setCreated(new \DateTime());
         $order->setUpdated(new \DateTime());
         $order->setStatus(ORDER::STATUS_NEW);
@@ -119,7 +118,7 @@ class OrderManager
         $order->setGuaranteedDepositTerm(30);
         $order->setCurrency($event->getCurrencyId());
 
-        if ($chatRoom != null) {
+        if($chatRoom != null){
             $chatRoom->setOrder($order);
         }
 
@@ -128,7 +127,7 @@ class OrderManager
 
         $total = 0;
 
-        foreach ($performances as $performance) {
+        foreach($performances as $performance){
             $orderItemPerformance = new OrderItemPerformance();
             $performanceData = [];
             $performanceData['performance'] = $performance->getId();
@@ -156,9 +155,9 @@ class OrderManager
                         $priceId = $rate->getPrice()->getId();
 
                         $rateData = array(
-                            "id"    => $rate->getId(),
+                            "id" => $rate->getId(),
                             "price" => array(
-                                "id"     => $priceId,
+                                "id" => $priceId,
                                 "amount" => (int)$currentAmount
                             )
                         );
@@ -204,10 +203,10 @@ class OrderManager
     public function getOrdersForArtist(Artist $artist)
     {
         return $this->orderRepository->createQueryBuilder('ord')
-                                     ->join("ord.items", 'oi')
-                                     ->where('ord.artist = :artist')
-                                     ->setParameter('artist', $artist)->getQuery()->setFetchMode('Order', 'items', ClassMetadata::FETCH_EAGER)
-                                     ->getResult();
+            ->join("ord.items", 'oi')
+            ->where('ord.artist = :artist')
+            ->setParameter('artist', $artist)->getQuery()->setFetchMode('Order','items',ClassMetadata::FETCH_EAGER)
+            ->getResult();
     }
 
 
@@ -216,14 +215,13 @@ class OrderManager
         return $this->orderRepository->find($orderId);
     }
 
-    public function acceptFieldById($orderId, $fieldId, $value = true)
-    {
+    public function acceptFieldById($orderId, $fieldId, $value = true){
         $order = $this->orderRepository->find($orderId);
-        if (!$order) {
+        if (! $order){
             throw new EntityNotFoundException("Order not found");
         }
 
-        switch ($fieldId) {
+        switch ($fieldId){
             case Order::FIELD_TECHNICAL_REQUIREMENTS:
                 $order->setTechnicalRequirementsAccepted($value);
                 break;
@@ -248,9 +246,10 @@ class OrderManager
         $this->entityManager->flush();
     }
 
-    public function checkOrderForBooking($orderId)
-    {
+    public function checkOrderForBooking($orderId){
         $order = $this->orderRepository->find($orderId);
+        if (empty($order)){
+            echo "order is empty";
         if (!$order) {
             return false;
         }
@@ -259,20 +258,29 @@ class OrderManager
             $order->getTechnicalRequirementsAccepted() != true ||
             $order->getActsExtrasAccepted() != true ||
             $order->getTimingAccepted() != true
-        ) {
+            ){
+            echo "details not accepted";
             return false;
         }
 
-        if (empty($order->getActorDetails()) || empty($order->getClientDetails())) {
+        if(empty($order->getActorDetails()) || empty($order->getClientDetails())){
+            echo "details are empty";
             return false;
         }
+
+        if($order->getStatus() > Order::STATUS_ACCEPTED){
+            echo "wrong status";
+            return false;
+        }
+
+        return true;
+    }
     }
 
-    public function bookOrder($orderId)
-    {
+    public function bookOrder($orderId){
         $order = $this->orderRepository->find($orderId);
 
-        if (!$this->checkOrderForBooking($orderId)) {
+        if (!$this->checkOrderForBooking($orderId)){
             $this->createNotFoundException("Bad Order");
         }
 
@@ -286,7 +294,23 @@ class OrderManager
         $this->entityManager->persist($order);
         $this->entityManager->flush();
 
-        return true;
+        return $order;
+    }
+
+    public function setDetails($orderId, $data, $userRole){
+        $order = $this->orderRepository->find($orderId);
+        if(!$order){
+            throw new EntityNotFoundException("Order Not Found with id".$orderId);
+        }
+
+        if($userRole == "ROLE_CLIENT"){
+            $order->setClientDetails($data);
+        }else{
+            $order->setActorDetails($data);
+        }
+
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
     }
 
     public function updateOrder($orderId, $extraPerformances, $performances, $services, $paymentDetails)
@@ -342,7 +366,7 @@ class OrderManager
     public function prepareServices($services, $order)
     {
         $total = 0;
-        foreach ($services as $service) {
+        foreach($services as $service){
             $orderItemService = new OrderItemService();
             $serviceData = [];
             $serviceData['service'] = $service['id'];
@@ -365,9 +389,9 @@ class OrderManager
                     $optionData['qty'] = null;
 
                     $rateData = array(
-                        "id"    => null,
+                        "id" => null,
                         "price" => array(
-                            "id"     => null,
+                            "id" => null,
                             "amount" => $currentAmount
                         )
                     );
@@ -400,7 +424,7 @@ class OrderManager
     public function preparePerformances($performances, $order, $isExtra = false)
     {
         $total = 0;
-        foreach ($performances as $performance) {
+        foreach($performances as $performance){
             $orderItemPerformance = new OrderItemPerformance();
             $performanceData = [];
             $performanceData['performance'] = $performance['id'];
@@ -434,9 +458,9 @@ class OrderManager
                     $optionData['qty'] = $option['qty'];
 
                     $rateData = array(
-                        "id"    => null,
+                        "id" => null,
                         "price" => array(
-                            "id"     => null,
+                            "id" => null,
                             "amount" => $currentAmount
                         )
                     );
