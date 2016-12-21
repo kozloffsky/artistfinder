@@ -12,6 +12,8 @@ class Order
     const STATUS_ACCEPTED = 1;
     const STATUS_BOOKED = 2;
 
+    const STATUS_CANCELED = 10;
+
 
     const FIELD_DETAILS = 1;
     const FIELD_TIMING = 2;
