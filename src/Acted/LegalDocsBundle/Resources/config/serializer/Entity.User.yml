@@ -24,9 +24,9 @@ Acted\LegalDocsBundle\Entity\User:
     postcode:
       groups: [profile_settings]
     email:
-      groups: [profile_settings]
+      groups: [profile_settings, order]
     primaryPhone:
-      groups: [profile_settings]
+      groups: [profile_settings, order]
     profile:
       groups: [order]
   virtual_properties:

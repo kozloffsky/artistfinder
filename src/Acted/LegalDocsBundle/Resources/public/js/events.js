@@ -27,7 +27,8 @@ $(function () {
                 charCount: 0,
                 loadedData: false,
                 lastEventId: null,
-                restrictModelChange: false
+                restrictModelChange: false,
+                orders: []
             },
             created: function () {
                 showEvents();
@@ -94,10 +95,10 @@ $(function () {
                         var event = eventsVue.event;
                         var st_date = moment(event.starting_date, "DD/MM/YYYY");
                         var days = newVal;
-                        if(typeof event.comments == 'undefined'){
+                        if (typeof event.comments == 'undefined') {
                             eventsVue.event.comments = '';
                         }
-                        if(days == 1){
+                        if (days == 1) {
                             days = 0
                         }
                         var newDate = st_date.add(days, 'days');
@@ -126,8 +127,8 @@ $(function () {
 
     function checkEmptyFormFields() {
         var isEmpty = true;
-        $('#client-event-details form :input').each(function() {
-            if ( $(this).val() != '' )
+        $('#client-event-details form :input').each(function () {
+            if ($(this).val() != '')
                 isEmpty = false;
         });
 
@@ -146,6 +147,7 @@ $(function () {
     function getEventDataById(eventId) {
         eventsVue.restrictModelChange = true;
         getVenues();
+        getOrdersForEvent(eventId);
         $.ajax({
             url: '/api/events/' + eventId,
             success: function (response) {
@@ -159,7 +161,7 @@ $(function () {
                     var end_date = moment(event.ending_date, "DD/MM/YYYY");
                     eventsVue.charCount = (typeof(event.comments) !== 'undefined') ? event.comments.length : 0;
                     var diff = end_date.diff(st_date, 'days');
-                    if(diff == 0){
+                    if (diff == 0) {
                         diff = 1;
                     }
                     eventsVue.endingDate = diff;
@@ -187,6 +189,29 @@ $(function () {
                 console.log(error);
             }
         })
+    }
+
+    function getOrdersForEvent(eventId) {
+        $.ajax({
+            url: '/api/events/' + eventId + '/orders',
+            method: "GET",
+            success: function (response) {
+                if (typeof response.orders !== 'undefined') {
+                    var orders = response.orders;
+                    orders.forEach(function (order, index) {
+                        var items = order.items;
+                        var sum = _.sumBy(items, function(i){
+                            return i.data.total;
+                        });
+                        orders[index].sumPrice = sum;
+                    });
+                    eventsVue.orders = orders;
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
     }
 
     function sendData(eventId, data) {

@@ -32,3 +32,12 @@ Acted\LegalDocsBundle\Entity\Order:
 
     chat:
       groups: [order]
+
+    performance_start_time:
+      groups: [order]
+
+    deposit_amount:
+      groups: [order]
+
+    deposit_ballance:
+      groups: [order]
