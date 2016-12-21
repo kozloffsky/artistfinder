@@ -107,6 +107,10 @@ $(function () {
         return JSON.parse(localStorage.getItem('currentEvent'));
     }
 
+    function unsetCurrentEvent() {
+        localStorage.removeItem('currentEvent');
+    }
+
     function noDataFunc() {
         console.log('No get data function is defined for this page ');
     }
@@ -131,7 +135,7 @@ $(function () {
         };
 
         var avalFunctionsArtist = {
-            messages: "getAllMessagesByArtist"
+            messages: "getNewFeedbacks"
         };
 
         if (getUserRole()[0] == 'ROLE_CLIENT') {
@@ -177,6 +181,20 @@ $(function () {
         getDataForEvent(eventId);
     }
 
+    function activateMenuTab(owl) {
+        var $menu = $('.events-menu > ul');
+        if (getCurrentEvent() != null) {
+            currentEventId = getCurrentEvent().id;
+            var $menuEvent = $menu.find('li[data-event-id="' + currentEventId + '"]');
+            var $menuEventParent = $menuEvent.parent();
+            var index = $menuEventParent.index();
+            owl.trigger('owl.jumpTo', index);
+            $menu.find('li').removeClass('active');
+            $menuEvent.removeClass('non-active').addClass('active');
+            getDataForEvent(currentEventId);
+        }
+    }
+
     /**
      * Show all received events on the page.
      *
@@ -184,53 +202,36 @@ $(function () {
      */
     function showEvents(events, reinit) {
         var $eventsWrapper = $('div.events-menu > ul');
-        var initCarousel = false;
-        if (events.length > 4) {
-            initCarousel = true;
-        }
 
         var html = eventsToHtml(events);
         $eventsWrapper.html(html).promise().done(function () {
 
             $('.event-item').click(eventOnClick);
 
-            if (initCarousel) {
-                $('div.arrows').show();
-
-                if (typeof(reinit) == 'undefined') {
-                    var owl = $('.events-menu > ul').owlCarousel({
-                        items: 5,
-                        pagination: false,
-                        mouseDrag: false,
-                        responsive: true,
-                        autoWidth: true,
-                        responsiveBaseWidth: window
-                    });
-                } else {
-                    //todo - need to fix (Uncaught TypeError: owl.trigger is not a function)
-                    var owl = $(".owl-carousel").data('owlCarousel');
-                    owl.reinit();
-                }
-                $().ready(function () {
-                    if (getCurrentEvent() != null) {
-                        currentEventId = getCurrentEvent().id;
-                        var $menu = $('.events-menu > ul');
-                        var $menuEvent = $menu.find('li[data-event-id="' + currentEventId + '"]');
-                        var $menuEventParent = $menuEvent.parent();
-                        var index = $menuEventParent.index();
-                        owl.trigger('owl.jumpTo', index);
-                        $menu.find('li').removeClass('active');
-                        $menuEvent.removeClass('non-active').addClass('active');
-                        getDataForEvent(currentEventId);
-                    }
+            if (typeof(reinit) == 'undefined') {
+                var owl = $('.events-menu > ul').owlCarousel({
+                    autoWidth: true,
+                    singleItem: false,
+                    responsive: true,
+                    responsiveRefreshRate: 100,
+                    itemsDesktop: [1199, 4],
+                    itemsDesktopSmall: [980, 4],
+                    itemsTablet: [768, 3],
+                    itemsTabletSmall: [640, 2],
+                    itemsMobile: [500, 1]
                 });
-                $('i.left').click(function () {
-                    owl.trigger('owl.prev');
-                });
-                $('i.right').click(function () {
-                    owl.trigger('owl.next');
-                })
+                $().ready(activateMenuTab(owl));
+            } else {
+                //todo - need to fix (Uncaught TypeError: owl.trigger is not a function)
+                var owl = $(".owl-carousel").data('owlCarousel');
+                owl.reinit();
             }
+            $('i.left').click(function () {
+                owl.trigger('owl.prev');
+            });
+            $('i.right').click(function () {
+                owl.trigger('owl.next');
+            })
         });
     }
 
@@ -384,6 +385,7 @@ $(function () {
                                 $('#loadSpinner').fadeOut(500);
                             },
                             success: function (res) {
+                                unsetCurrentEvent();
                                 getEventsByUserId(getUserId(), true);
 
                                 _this.eventObj.name = '';

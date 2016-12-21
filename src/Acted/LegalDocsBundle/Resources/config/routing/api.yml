@@ -22,7 +22,14 @@ api_venue:
   methods: [GET]
   defaults: { _controller: ActedLegalDocsBundle:Events:showVenues }
 
+api_chatroom_hide:
+  path: /chatroom/{chatroom}/hide
+  methods: DELETE
+  defaults: {_controller: ActedLegalDocsBundle:ChatRoom:hideChatRoom}
+  requirements:
+    chatroom: \d+
+
 api_artist_new_feedbacks:
-  path: /feedbacks/artist/new
+  path: /feedbacks/artist
   methods: GET
-  defaults: {_controller: ActedLegalDocsBundle:Feedback:getAllNewFeedbacks}
+  defaults: {_controller: ActedLegalDocsBundle:Feedback:getMonthFeedbacks}
