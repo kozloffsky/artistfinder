@@ -25,3 +25,10 @@ order_update:
     path:     /{orderId}
     defaults: { _controller: ActedLegalDocsBundle:Order:updateOrder, _format: json }
     methods:  PUT
+
+order_cancel:
+    path:     /{orderId}
+    defaults: { _controller: ActedLegalDocsBundle:Order:cancelOrder, _format: json }
+    methods:  DELETE
+    requirements:
+      orderId: \d+

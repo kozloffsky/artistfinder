@@ -21,7 +21,9 @@ $(function () {
                         var $this = $(event.target);
                         var $order = $this.parents('.artist-block');
                         var chatRoomId = $order.data('chatroomId');
+                        var orderId = $order.data('orderId');
                         reject(chatRoomId);
+                        cancelOrder(orderId);
                     }
                 }
             });
@@ -101,7 +103,19 @@ $(function () {
         })
     }
 
-    //TODO add ajax request to change order status
+    function cancelOrder(orderId) {
+        $.ajax({
+            url: '/order/' + orderId,
+            method: "DELETE",
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
     function reject(chatRoomId) {
         var message = "The client has decided to book another performance";
         $.ajax({
@@ -109,7 +123,7 @@ $(function () {
             method: "POST",
             data: {message: message},
             success: function (response) {
-                console.log(response);
+
             },
             error: function (error) {
                 console.log(error);

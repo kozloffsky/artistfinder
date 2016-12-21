@@ -11,6 +11,7 @@ namespace Acted\LegalDocsBundle\Controller;
 use Acted\LegalDocsBundle\Entity\Order;
 use Acted\LegalDocsBundle\Entity\OrderItemService;
 use Acted\LegalDocsBundle\Model\OrderManager;
+use Doctrine\ORM\EntityNotFoundException;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Serializer;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -149,7 +150,30 @@ class OrderController extends Controller
         return new JsonResponse(['status'=>'ok']);
     }
 
+    /**
+     * @ApiDoc(
+     *  description="Cancel order",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param $orderId
+     * @return JsonResponse
+     */
+    public function cancelOrderAction($orderId)
+    {
+        $response = ['status'=>'success'];
 
+        try{
+            $this->orderManager->cancelOrder($orderId);
+        }catch (EntityNotFoundException $e){
+            $response['status']  = 'error';
+            $response['error'] = $e->getMessage();
+        }
+
+        return new JsonResponse($response);
+    }
 
 
 }
