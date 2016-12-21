@@ -130,7 +130,8 @@ $(function () {
             feedbacks: "getArtistsByEventId",
             events: "getEventDataById",
             messages: "getAllMessagesByEventId",
-            artist_selection: "getOrdersForEvent"
+            artist_selection: "getOrdersForEvent",
+            payments: "getOrderPaymentsForEvent"
         };
 
         var avalFunctionsArtist = {

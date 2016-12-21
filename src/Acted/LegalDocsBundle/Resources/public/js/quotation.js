@@ -918,13 +918,13 @@ $(function() {
 
             currentObject = {
                 id: null,
-                title: '',
+                title: 'extra performance',
                 itemId: itemId,
                 type: type,
                 comment: comment,
                 packages: [{
                     id: null,
-                    title: '',
+                    title: 'extra package',
                     isSelected: isSelected,
                     options: [option]
                 }]
