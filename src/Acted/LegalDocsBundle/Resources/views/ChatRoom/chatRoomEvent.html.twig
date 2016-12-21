@@ -179,28 +179,28 @@
 
             <div class="frame">
                 <label for="name_event">Event name</label>
-                <input id="name_event" type="text" placeholder="{{ order.event.title }}" value="{{ order.event.title }}">
+                <input id="name_event" type="text" disabled placeholder="{{ order.event.title }}" value="{{ order.event.title }}">
             </div>
 
             <div class="row holder clearfix">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-custom-size">
                     <div class="frame">
                         <label for="datetimepicker">Date</label>
-                        <input id="datetimepicker" type="text" class="custom-size" placeholder="{{ order.event.startingDate | date("Y:M:d") }}" value="{{ order.event.startingDate | date("Y:M:d")}}">
+                        <input id="datetimepicker" type="text" class="custom-size" disabled placeholder="{{ order.event.startingDate | date("Y:M:d") }}" value="{{ order.event.startingDate | date("Y:M:d")}}">
                     </div>
                     <div class="frame">
                         <label for="event_time">Event timing</label>
-                        <input id="event_time" type="text" class="custom-size" placeholder="{{ order.event.timing }}" value="{{ order.event.timing }}">
+                        <input id="event_time" type="text" class="custom-size" disabled accesskey="" placeholder="{{ order.event.timing }}" value="{{ order.event.timing }}">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 pull-right col-custom-size">
                     <div class="frame">
                         <label for="performance">1 day/multiple days</label>
-                        <input id="performance" type="text" class="custom-size" placeholder="2-day event" value="2-day event">
+                        <input id="performance" type="text" class="custom-size" disabled placeholder="2-day event" value="2-day event">
                     </div>
                     <div class="frame">
                         <label for="country">Country</label>
-                        <input id="country" type="text" class="custom-size" placeholder="{{ order.event.countryName }}" value="{{ order.event.countryName }}" disabled>
+                        <input id="country" type="text" class="custom-size" disabled placeholder="{{ order.event.countryName }}" value="{{ order.event.countryName }}" disabled>
                     </div>
                 </div>
             </div>
@@ -214,20 +214,20 @@
                 <div class="col-lg-6 col-md-6 col-sm-6 col-custom-size">
                     <div class="frame">
                         <label for="venue_type">Venue type</label>
-                        <input id="venue_type" type="text" class="custom-size" placeholder="{{ order.event.venueType.venueType }}" value="{{ order.event.venueType.venueType }}">
+                        <input id="venue_type" type="text" class="custom-size" disabled placeholder="{{ order.event.venueType.venueType }}" value="{{ order.event.venueType.venueType }}">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 pull-right col-custom-size">
                     <div class="frame">
                         <label for="guests_count">Number of guests</label>
-                        <input id="guests_count" type="text" class="custom-size" placeholder="{{ order.event.numberOfGuests }}" value="{{ order.event.numberOfGuests }}">
+                        <input id="guests_count" type="text" class="custom-size" disabled placeholder="{{ order.event.numberOfGuests }}" value="{{ order.event.numberOfGuests }}">
                     </div>
                 </div>
             </div>
 
             <div class="frame">
                 <label for="extra_info">Additional info</label>
-                <textarea id="extra_info" placeholder="{{ order.event.comments }}">{{ order.event.comments }}</textarea>
+                <textarea disabled id="extra_info" placeholder="{{ order.event.comments }}">{{ order.event.comments }}</textarea>
             </div>
         </div>
         <!--quote section start-->

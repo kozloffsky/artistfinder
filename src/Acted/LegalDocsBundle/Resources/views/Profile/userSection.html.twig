@@ -74,10 +74,11 @@
             <div class="button-gradient follow">
                 <button class="btn">Follow me</button>
             </div>
-
+            {% if(is_granted('ROLE_CLIENT')) %}
             <div class="button-gradient filled">
                 <button data-toggle="modal" class="btn quoteRequestProfile">REQUEST FREE QUOTE</button>
             </div>
+            {% endif %}
 
         </div>
     </section>
