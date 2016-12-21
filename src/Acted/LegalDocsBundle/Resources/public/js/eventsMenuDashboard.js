@@ -124,14 +124,13 @@ $(function () {
      */
     function routeParser() {
         var routeArr = route.substr(1).split('/');
-        var currentPage = routeArr[1];
+        var currentPage = routeArr[1].replace('-', '_');
         var callFunc;
-
         var avalFunctionsClient = {
             feedbacks: "getArtistsByEventId",
             events: "getEventDataById",
-            messages: "getAllMessagesByEventId"
-
+            messages: "getAllMessagesByEventId",
+            artist_selection: "getOrdersForEvent"
         };
 
         var avalFunctionsArtist = {

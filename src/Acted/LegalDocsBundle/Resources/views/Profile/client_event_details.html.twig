@@ -97,36 +97,26 @@
                           id="additional_info" placeholder="Put your comments here"></textarea>
             </div>
         </form>
-        <div class="col-md-6 col-sm-6 right_column" style="visibility: hidden;">
+        <div class="col-md-6 col-sm-6 right_column">
             <div class="printer_icon">
-                <p>
+                <p style="visibility:hidden;">
                     <i class="fa fa-print" aria-hidden="true"></i>
                     Print
                 </p>
             </div>
-            <div class="entertainer_block">
+            <div class="entertainer_block" v-if="order.status==2" v-for="order in orders">
                 <div class="entertainer info_block">
                     <div class="row">
                         <div class="col-md-4 name">
-                            <h3>Frederic Sharp</h3>
+                            <h3>${order.artist.user.firstname} ${order.artist.user.lastname}</h3>
                         </div>
                         <div class="col-md-8 total_summ">
-                            <h3>£ 5000</h3>
+                            <h3>£ ${order.sumPrice}</h3>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" v-for="item in order.items">
                         <div class="col-md-4">
-                            <p>Act 1 -Jazz Band</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <p>Act 1 -Jazz Band</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <p>Extra 1</p>
+                            <p>${item.data.title}</p>
                         </div>
                     </div>
                 </div>
@@ -136,7 +126,7 @@
                             <p>Performance time:</p>
                         </div>
                         <div class="col-md-9">
-                            <p>6:30 PM</p>
+                            <p>${order.performance_start_time}</p>
                         </div>
                     </div>
                     <div class="row">
@@ -144,8 +134,7 @@
                             <p>Additional info:</p>
                         </div>
                         <div class="col-md-9">
-                            <p>This performance will continue for 3 days. First two days will start from 2 pm till 3 am.
-                                And third day will be a full day party!</p>
+                            <p>${order.event.comments}</p>
                         </div>
                     </div>
                 </div>
@@ -155,7 +144,7 @@
                             <p>Payment:</p>
                         </div>
                         <div class="col-md-7">
-                            <p>Deposit: 1,500 GBP received via secured payment</p>
+                            <p>Deposit: ${order.deposit_amount} GBP received via secured payment</p>
                         </div>
                         <div class="col-md-2 non-refundable">
                             <p>Non - refundable</p>
@@ -166,7 +155,7 @@
                             <p></p>
                         </div>
                         <div class="col-md-7">
-                            <p>Balance: 1,500 GBP unpaid</p>
+                            <p>Balance: ${order.deposit_ballance} GBP unpaid</p>
                         </div>
                         <div class="col-md-2">
                             <p></p>
@@ -179,100 +168,14 @@
                             <p>Contact details:</p>
                         </div>
                         <div class="row col-md-9">
-                            <p>+44828495829</p>
-                            <p>Alex.vorobev@gmail.com</p>
+                            <p>${order.artist.user.primary_phone}</p>
+                            <p>${order.artist.user.email}</p>
                         </div>
                     </div>
                 </div>
                 <div class="controls">
                     <div class="button-gradient filled">
-                        <button class="btn">Chatroom</button>
-                    </div>
-                </div>
-            </div>
-            <div class="entertainer_block">
-                <div class="entertainer info_block">
-                    <div class="row">
-                        <div class="col-md-4 name">
-                            <h3>Frederic Sharp</h3>
-                        </div>
-                        <div class="col-md-8 total_summ">
-                            <h3>£ 5000</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <p>Act 1 -Jazz Band</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <p>Act 1 -Jazz Band</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <p>Extra 1</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="perfomance_details info_block">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <p>Performance time:</p>
-                        </div>
-                        <div class="col-md-9">
-                            <p>6:30 PM</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <p>Additional info:</p>
-                        </div>
-                        <div class="col-md-9">
-                            <p>This performance will continue for 3 days. First two days will start from 2 pm till 3 am.
-                                And third day will be a full day party!</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="payment_details info_block">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <p>Payment:</p>
-                        </div>
-                        <div class="col-md-7">
-                            <p>Deposit: 1,500 GBP received via secured payment</p>
-                        </div>
-                        <div class="col-md-2 non-refundable">
-                            <p>Non - refundable</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <p></p>
-                        </div>
-                        <div class="col-md-7">
-                            <p>Balance: 1,500 GBP unpaid</p>
-                        </div>
-                        <div class="col-md-2">
-                            <p></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="contact_details info_block">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <p>Contact details:</p>
-                        </div>
-                        <div class="row col-md-9">
-                            <p>+44828495829</p>
-                            <p>Alex.vorobev@gmail.com</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="controls">
-                    <div class="button-gradient filled">
-                        <button class="btn">Chatroom</button>
+                        <a v-bind:href="'/dashboard/chat/'+ order.chat.chat_id" class="btn">Chatroom</a>
                     </div>
                 </div>
             </div>

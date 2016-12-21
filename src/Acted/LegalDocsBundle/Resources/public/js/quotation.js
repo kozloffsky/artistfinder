@@ -851,11 +851,11 @@ $(function() {
 
         updateOrderSend(orderId, data)
             .then(function(res) {
-                /*$("#quotationModal").modal("hide");
+                $("#quotationModal").modal("hide");
 
                 setTimeout(function() {
                     $("#success-quotation-modal").modal("show");
-                }, 500);*/
+                }, 500);
 
                 console.log(res);
             })

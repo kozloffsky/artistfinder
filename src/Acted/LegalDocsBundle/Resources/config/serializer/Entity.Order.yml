@@ -29,3 +29,15 @@ Acted\LegalDocsBundle\Entity\Order:
 
     status:
       groups: [order]
+
+    chat:
+      groups: [order]
+
+    performance_start_time:
+      groups: [order]
+
+    deposit_amount:
+      groups: [order]
+
+    deposit_ballance:
+      groups: [order]

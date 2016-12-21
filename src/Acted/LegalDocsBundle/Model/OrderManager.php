@@ -127,8 +127,6 @@ class OrderManager
 
         $total = 0;
 
-
-
         foreach($performances as $performance){
             $orderItemPerformance = new OrderItemPerformance();
             $performanceData = [];
@@ -189,6 +187,19 @@ class OrderManager
     }
 
 
+    public function getOrdersForEvent($event, $status = null)
+    {
+        $parameters = array(
+            "event" => $event,
+        );
+
+        if (!is_null($status)) {
+            $parameters["status"] = $status;
+        }
+
+        return $this->orderRepository->findBy($parameters);
+    }
+
     public function getOrdersForArtist(Artist $artist)
     {
         return $this->orderRepository->createQueryBuilder('ord')
@@ -239,6 +250,7 @@ class OrderManager
         $order = $this->orderRepository->find($orderId);
         if (empty($order)){
             echo "order is empty";
+        if (!$order) {
             return false;
         }
 
@@ -263,12 +275,13 @@ class OrderManager
 
         return true;
     }
+    }
 
     public function bookOrder($orderId){
         $order = $this->orderRepository->find($orderId);
 
         if (!$this->checkOrderForBooking($orderId)){
-            return false;
+            $this->createNotFoundException("Bad Order");
         }
 
         $order->setStatus(Order::STATUS_BOOKED);

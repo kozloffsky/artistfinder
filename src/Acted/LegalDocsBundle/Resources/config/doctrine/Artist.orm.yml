@@ -30,6 +30,13 @@ Acted\LegalDocsBundle\Entity\Artist:
         vatRate:
           type: float
           nullable: true
+        averageRating:
+          type: float
+          options:
+            default: 0
+        totalRatings:
+          type: integer
+          default: 0
         comments:
           type: string(512)
           nullable: true
