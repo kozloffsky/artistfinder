@@ -127,6 +127,8 @@ class OrderManager
 
         $total = 0;
 
+
+
         foreach($performances as $performance){
             $orderItemPerformance = new OrderItemPerformance();
             $performanceData = [];
@@ -235,7 +237,8 @@ class OrderManager
 
     public function checkOrderForBooking($orderId){
         $order = $this->orderRepository->find($orderId);
-        if (! $order){
+        if (empty($order)){
+            echo "order is empty";
             return false;
         }
 
@@ -244,19 +247,28 @@ class OrderManager
             $order->getActsExtrasAccepted() != true ||
             $order->getTimingAccepted() != true
             ){
+            echo "details not accepted";
             return false;
         }
 
         if(empty($order->getActorDetails()) || empty($order->getClientDetails())){
+            echo "details are empty";
             return false;
         }
+
+        if($order->getStatus() > Order::STATUS_ACCEPTED){
+            echo "wrong status";
+            return false;
+        }
+
+        return true;
     }
 
     public function bookOrder($orderId){
         $order = $this->orderRepository->find($orderId);
 
         if (!$this->checkOrderForBooking($orderId)){
-            $this->createNotFoundException("Bad Order");
+            return false;
         }
 
         $order->setStatus(Order::STATUS_BOOKED);
@@ -269,7 +281,23 @@ class OrderManager
         $this->entityManager->persist($order);
         $this->entityManager->flush();
 
-        return true;
+        return $order;
+    }
+
+    public function setDetails($orderId, $data, $userRole){
+        $order = $this->orderRepository->find($orderId);
+        if(!$order){
+            throw new EntityNotFoundException("Order Not Found with id".$orderId);
+        }
+
+        if($userRole == "ROLE_CLIENT"){
+            $order->setClientDetails($data);
+        }else{
+            $order->setActorDetails($data);
+        }
+
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
     }
 
     public function updateOrder($orderId, $extraPerformances, $performances, $services, $paymentDetails)
@@ -447,4 +475,7 @@ class OrderManager
             'total' => $total
         );
     }
+
+
+
 }

@@ -1,6 +1,6 @@
 <span class="tr-title">Technical requirements</span>
 <div class="tr-select-container">
-    <select class="tr-select" v-model="selectedRequirement">
+    <select class="tr-select" v-model="selectedRequirement" v-bind:disabled="!editable">
         <option v-for="tr in technicalRequirements" v-bind:value="tr">${ tr.title }</option>
         <!--<option>Technical requirement 2</option>
         <option>Technical requirement 3</option>

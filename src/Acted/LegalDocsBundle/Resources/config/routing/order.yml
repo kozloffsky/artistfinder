@@ -16,6 +16,11 @@ order_payment_success:
     path:    /pay/success/{orderId}
     defaults: { _controller: ActedLegalDocsBundle:Order:paySuccess, _format: html }
 
+order_save_details:
+    path:    /save_details/{orderId}
+    methods: POST
+    defaults: { _controller: ActedLegalDocsBundle:Order:saveDetails, _format: json }
+
 order_update:
     path:     /{orderId}
     defaults: { _controller: ActedLegalDocsBundle:Order:updateOrder, _format: json }

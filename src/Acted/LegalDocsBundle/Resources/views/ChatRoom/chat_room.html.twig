@@ -18,7 +18,22 @@
         technicalRequirementsAccepted: Boolean({{ order.technicalRequirementsAccepted }}),
         timingAccepted: Boolean({{ order.timingAccepted }}),
         actsExtrasAccepted: Boolean({{ order.actsExtrasAccepted }}),
-        detailsAccepted: Boolean({{ order.detailsAccepted }})
+        detailsAccepted: Boolean({{ order.detailsAccepted }}),
+        status: {{ order.status }}
+    }
+
+    window.actorDetails = {
+        'email': '{{ order.actorDetails.email|default('') }}',
+        'phone': '{{ order.actorDetails.phone|default('')  }}',
+        'name': '{{ order.actorDetails.name|default('')  }}',
+        'person': '{{ order.actorDetails.person|default('')  }}',
+    }
+
+    window.clientDetails = {
+        'email': '{{ order.clientDetails.email|default('')  }}',
+        'phone': '{{ order.clientDetails.phone|default('')  }}',
+        'name': '{{ order.clientDetails.name|default('')  }}',
+        'person': '{{ order.clientDetails.person|default('')  }}',
     }
 </script>
 <main class="chat-room">
@@ -83,13 +98,13 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
-                                <input id="details_agree" name="package-check" value="" type="checkbox" v-model="detailsAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT'">
+                                <input id="details_agree" name="package-check" value="" type="checkbox" v-model="detailsAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable">
                                 <label for="details_agree">I agree with these details</label>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
-                                <input id="extra_provide_acts" name="package-check" value="" type="checkbox" v-model="actsExtrasAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT'">
+                                <input id="extra_provide_acts" name="package-check" value="" type="checkbox" v-model="actsExtrasAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable">
                                 <label for="extra_provide_acts">I can provide the acts & extras selected</label>
                             </div>
                         </div>
@@ -126,13 +141,13 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
-                                <input id="timing_agree" name="timing_agree" value="" type="checkbox" v-model="timingAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT'">
+                                <input id="timing_agree" name="timing_agree" value="" type="checkbox" v-model="timingAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable">
                                 <label for="timing_agree">I agree with this timing</label>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
-                                <input id="requirements_agree" name="requirements_agree" value="" type="checkbox" v-model="requirementsAccepted" v-bind:disabled="userRole == 'ROLE_ARTIST'" >
+                                <input id="requirements_agree" name="requirements_agree" value="" type="checkbox" v-model="requirementsAccepted" v-bind:disabled="userRole == 'ROLE_ARTIST' || !editable" >
                                 <label for="requirements_agree">I agree to provide these requirements${requirementsAccepted}</label>
                             </div>
                         </div>
@@ -185,9 +200,11 @@
                         </div>
                     </div>
                 </div>
+                {% if user.roles[0] == 'ROLE_CLIENT' and order.status < 2 %}
                 <div class="row text-center">
                     <button class="book-now-btn" v-on:click="showConfirmModal" v-bind:disabled="bookingAllowed">Book now</button>
                 </div>
+                {% endif %}
             </section>
             <section class="section-four">
                 <div class="section-info-title">
@@ -197,19 +214,19 @@
                 <div class="row list contacts-info clearfix">
                     <div class="col-lg-3 col-md-3 col-sm-3 no-pad">
                         <label for="c-name">Name</label>
-                        <input type="text" id="c-name" placeholder="Thomas Man" value="Thomas Man">
+                        <input type="text" id="c-name" placeholder="Thomas Man" v-model="contactName" value="" v-bind:disabled="!editable" @input="saveDetails">
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-3 no-pad">
                         <label for="c-person">Contact person</label>
-                        <input type="text" id="c-person" placeholder="***************" value="***************">
+                        <input type="text" id="c-person" placeholder="***************" v-model="contactPerson" value="" v-bind:disabled="!editable" @input="saveDetails">
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-3 no-pad">
                         <label for="p-number">Phone Number</label>
-                        <input type="text" id="p-number" placeholder="***************" value="***************">
+                        <input type="text" id="p-number" placeholder="***************" v-model="contactPhone" value="" v-bind:disabled="!editable" @input="saveDetails">
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-3 no-pad">
                         <label for="e-address">Email address</label>
-                        <input type="text" id="e-address" placeholder="***************" value="***************">
+                        <input type="text" id="e-address" placeholder="***************" v-model="contactEmail" value="" v-bind:disabled="!editable" @input="saveDetails">
                     </div>
                 </div>
             </section>

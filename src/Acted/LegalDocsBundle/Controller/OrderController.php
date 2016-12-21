@@ -20,6 +20,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Response;
 use Acted\LegalDocsBundle\Entity\OrderItemPerformance;
 
+use Symfony\Component\HttpFoundation\Request;
 
 class OrderController extends Controller
 {
@@ -87,9 +88,12 @@ class OrderController extends Controller
 
     public function paySuccessAction($orderId)
     {
-        if (!$this->orderManager->bookOrder($orderId)) {
-            $this->createNotFoundException("Error while booking");
+        $order = $this->orderManager->bookOrder($orderId);
+        if ($order == false) {
+            throw $this->createNotFoundException("Error while booking");
         }
+
+        return $this->redirect($this->generateUrl('chat_room_item',['chat'=>$order->getChat()->getId()]));
     }
 
     /**
@@ -117,7 +121,7 @@ class OrderController extends Controller
         try {
             $this->orderManager->updateOrder($orderId, $extraPerformances, $performances, $services, $paymentDetails);
             $this->entityManager->getConnection()->commit();
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $this->entityManager->getConnection()->rollback();
 
             return new JsonResponse([
@@ -126,6 +130,26 @@ class OrderController extends Controller
             ], Response::HTTP_BAD_REQUEST);
         }
 
+        return new JsonResponse(['status' => 'ok']);
+    }
+
+    public function saveDetailsAction(Request $request, $orderId){
+        $data = [
+            'email' => $request->get('c-email'),
+            'name' => $request->get('c-name'),
+            'person' => $request->get('c-person'),
+            'phone' => $request->get('c-phone')
+        ];
+        try{
+            $this->orderManager->setDetails($orderId, $data, $this->getUser()->getRoles()[0]);
+        }catch(\Exception $e){
+            return new JsonResponse(['error'=>$e->getMessage(), 500]);
+        }
+
         return new JsonResponse(['status'=>'ok']);
     }
+
+
+
+
 }

@@ -17,7 +17,12 @@ $(function(){
                     _actsExtrasAccepted: false,
                     _detailsAccepted: false,
                     userRole: "",
-                    termsConditionsAccepted: false
+                    termsConditionsAccepted: false,
+                    contactName:"",
+                    contactPerson:"",
+                    contactPhone:"",
+                    contactEmail:"",
+                    editable:true
                 },
 
                 computed:{
@@ -101,9 +106,26 @@ $(function(){
                     this._timingAccepted = window.order.timingAccepted;
                     this._actsExtrasAccepted = window.order.actsExtrasAccepted;
                     this._detailsAccepted = window.order.detailsAccepted;
+                    var data = {}
+                    if(window.order.status > 1){
+                        this.editable = false;
+                        if(this.userRole == 'ROLE_CLIENT'){
+                            data = window.actorDetails;
+                        }else{
+                            data = window.clientDetails;
+                        }
+                    }else{
+                        if(this.userRole == 'ROLE_CLIENT'){
+                            data = window.clientDetails;
+                        }else{
+                            data = window.actorDetails;
+                        }
+                    }
+                    this.setDetails(data);
                     console.log(window.order);
 
                 },
+                
                 methods: {
                     showConfirmModal: function () {
                         $('#confirmBookingModal').modal('show');
@@ -128,6 +150,13 @@ $(function(){
                                 console.error(r);
                             }
                         });
+                    },
+                    
+                    setDetails: function (data) {
+                        this.contactEmail = data.email;
+                        this.contactName = data.name;
+                        this.contactPerson = data.person;
+                        this.contactPhone = data.phone;
                     },
 
                     setTypesForFiles: function () {
@@ -167,7 +196,22 @@ $(function(){
 
                     proceedToPayment: function(){
                             window.location = "/order/pay/"+window.getOrderId();
-                    }
+                    },
+
+                    saveDetails: _.debounce(function(e){
+                        var data = {
+                            'c-email': this.contactEmail,
+                            'c-name': this.contactName,
+                            'c-phone': this.contactPhone,
+                            'c-person': this.contactPerson,
+                        }
+                        console.log(data);
+                        $.ajax({
+                            method:"POST",
+                            data:data,
+                            url: "/order/save_details/"+window.getOrderId()
+                        })
+                    }, 300)
                 },
                 filters: {
                     removeExt: function (value) {
