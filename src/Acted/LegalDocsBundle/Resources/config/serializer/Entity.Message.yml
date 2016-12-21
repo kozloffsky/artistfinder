@@ -14,6 +14,8 @@ Acted\LegalDocsBundle\Entity\Message:
             groups: [chat_list, message, chat_room, all_messages]
         archived:
             groups: [chat_list, message, chat_room, all_messages]
+        hidden:
+            groups: [chat_list, message, chat_room, all_messages]
         senderUser:
             groups: [chat_room, message, all_messages]
         files:

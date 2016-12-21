@@ -25,6 +25,10 @@ Acted\LegalDocsBundle\Entity\Message:
           type: boolean
           options:
             default: false
+        hidden:
+          type: boolean
+          options:
+            default: false
     manyToOne:
         chatRoom:
             targetEntity: Acted\LegalDocsBundle\Entity\ChatRoom

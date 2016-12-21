@@ -5,6 +5,7 @@ namespace Acted\LegalDocsBundle\Controller;
 use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Form\FeedbackCreateType;
 use Acted\LegalDocsBundle\Form\FeedbackRatingCreateType;
+use JMS\Serializer\Tests\Serializer\DateIntervalFormatTest;
 use Acted\LegalDocsBundle\Repository\FeedbackRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -281,7 +282,6 @@ class FeedbackController extends Controller
     public function getFeedbacksAction(Request $request, Artist $artist, $page, $size)
     {
         $em = $this->getDoctrine()->getManager();
-
         $feedbackRepo = $em->getRepository('ActedLegalDocsBundle:Feedback');
 
         $artistFeedbacks = $feedbackRepo->getArtistFeedbacks($artist, $page, $size);
@@ -319,19 +319,16 @@ class FeedbackController extends Controller
      *
      * @return
      */
-    public function getAllNewFeedbacksAction()
+    public function getMonthFeedbacksAction()
     {
         $user = $this->getUser();
-        $em = $this->getEM();
         $response = ['status' => 'success', 'feedbacks' => []];
 
         if ($user->getArtist()) {
             $id = $user->getArtist()->getId();
+            $em = $this->getEM();
             $repo = $em->getRepository('ActedLegalDocsBundle:Feedback');
-            $feedbacks = $repo->findBy(['artist' => $id, 'viewed' => false]);
-
-            $manager = $this->get('app.feedback.manager');
-            $manager->makeViewed($feedbacks);
+            $feedbacks = $repo->getArtistMonthFeedbacks($id);
 
             $serializer = $this->get('jms_serializer');
             $context = SerializationContext::create()->setGroups('messages_feedbacks');

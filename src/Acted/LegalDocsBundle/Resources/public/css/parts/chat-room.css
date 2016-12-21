@@ -181,6 +181,8 @@ body {
     padding: 0;
     text-align: center;
     font-family: LatoBold;
+    font-size: 36px;
+    font-weight: 400;
     color: rgba(246, 117, 59, 0.87);
 }
 .chat-room .border-b {
@@ -230,12 +232,6 @@ body {
 .chat-room .detail-form .frame{
     margin: 0 0 12px 0;
 }
-/*.chat-room .detail-form .container-custom {*/
-    /*max-width: 512px;*/
-/*}*/
-.chat-room .detail-form .col-custom-size {
-    width: 242px;
-}
 .chat-room .detail-form label{
     margin: 0 0 6px 4px;
     font-family: LatoBold;
@@ -244,12 +240,13 @@ body {
     color: rgba(72, 91, 189, 0.87);
 }
 .chat-room .custom-checkbox {
-    margin: 17px 0 13px 36px;
+    margin: 14px 0 16px 36px;
 }
 .chat-room .custom-checkbox label {
-    padding-left: 29px;
+    padding-left: 22px;
     margin: 0;
     font-family: LatoBold;
+    font-weight: 400;
     line-height: 15px;
     font-size: 14px;
     color: rgba(0, 0, 0, 0.87);
@@ -258,7 +255,8 @@ body {
     height: 18px;
     width: 18px;
     background-color: rgba(255, 255, 255, 1);
-    border: 2px solid rgba(181, 181, 181, 1);
+    border: 0.156rem solid rgba(0, 0, 0, 0.32);
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.17);
     border-radius: 4px;
 }
 .chat-room .custom-checkbox label:after {
@@ -267,7 +265,8 @@ body {
 }
 .chat-room .custom-checkbox input[disabled] + label:before {
     background-color: rgba(226, 226, 226, 1);
-    border: 2px solid rgba(181, 181, 181, 1);
+    border: 0.156rem solid rgba(0, 0, 0, 0.32);
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.17);
 }
 .chat-room .custom-checkbox input[disabled] + label:after {
     border: solid rgb(0, 0, 0);
@@ -325,12 +324,36 @@ body {
     display: inline-block;
     width: 383px;
 }
-.chat-room .quote-section .holder article ul li .row span:nth-of-type(1) {
-    margin: 0 4px 0 0;
+.chat-room .quote-section .holder article ul li .row .currency-box span:nth-of-type(1) {
+    /*margin: 0 4px 0 0;*/
+    font-family: LatoRegular;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.87);
 }
-.chat-room .quote-section .holder article ul li .row span:nth-of-type(3) {
-    margin: 0 0 0 3px;
+.chat-room .quote-section .holder article ul li .row .currency-box span:nth-of-type(2) {
+    font-family: Lucida Grande;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.87);
 }
+.chat-room .quote-section .holder article ul li .row .currency-box span:nth-of-type(3) {
+    /*margin: 0 0 0 3px;*/
+    font-family: LatoRegular;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.87);
+}
+.chat-room .quote-section .holder article ul li .row .currency-box .set-currency span:nth-of-type(2) {
+    font-family: LatoRegular;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.87);
+    margin: 0 0 0 2px;
+}
+.chat-room .quote-section .holder article.service .set-currency {
+    float: right;
+    margin: 0 109px 0 0;
+    font-size: 12px;
+}
+
+
 .chat-room .quote-section .holder article ul li .pull-right span:nth-of-type(1) {
     margin: 0 5px 0 0;
 }
@@ -398,6 +421,9 @@ body {
     /*padding-top: 4px !important;*/
     height: 26px !important;
     width: 100% !important;
+}
+.chat-room .quote-section .holder .no-quote-submitted {
+    text-align: center;
 }
 .chat-room .quote-section .controls {
     height: 26px;
@@ -765,7 +791,7 @@ select.full-width + .select2{
     background: #f1f1f1;
     -webkit-border-radius: 8px;
     border-radius: 8px;
-    padding: 11px 18px;
+    padding: 20px 25px;
     position: relative;
     font-size: 12px;
 }
@@ -814,9 +840,8 @@ select.full-width + .select2{
     margin: 15px 11px 21px 0;
 }
 .chat-room .quote-section .holder{
-    height: 331px;
     overflow: auto;
-    margin: 0 0 2px 0;
+    margin: 0;
 }
 .chat-room .quote-section .title {
     margin: 0 0 20px;
@@ -881,10 +906,10 @@ select.full-width + .select2{
     font-size: 13px;
 }
 .chat-room .quote-section .text-box p {
-    margin: 0 0 3px 0;
+    margin: 0 0 16px 0;
 }
-.chat-room .quote-section .text-box h3{
-    margin: 3px 0 8px 0;
+.chat-room .quote-section .text-box h3 {
+    margin: 24px 0 13px 0;
     font-family: LatoBold;
     font-size: 15px;
     color: rgba(61, 66, 72, 1);
@@ -997,7 +1022,7 @@ select.full-width + .select2{
     float: left;
     width: 310px;
     height: 130px;
-    padding: 8px 8px 29px 0;
+    padding: 8px 0 29px 0;
     overflow-y: visible;
     overflow-x: hidden;
 }
@@ -1094,7 +1119,7 @@ select.full-width + .select2{
     font-family: Ubuntu;
     font-size: 18px;
     font-weight: 400;
-    color: rgba(18, 18, 18, 1);
+    color: rgba(18, 18, 18, 0.87);
 }
 .chat-room .tr-container .tr-select-container {
     margin: 8px 0 0 -5px;
@@ -1134,7 +1159,7 @@ select.full-width + .select2{
 }
 .chat-room .document-list .doc-item {
     display: inline-block;
-    margin: 0 7px 0 0;
+    margin: 0 7px 7px 0;
     position: relative;
 }
 .chat-room .document-list .doc-item i {
@@ -1166,7 +1191,7 @@ select.full-width + .select2{
     display: block;
 }
 .chat-room .document-files .file-item {
-    display: inline-block;
+    display: block;
     margin: 0 5px 14px 0;
 }
 .chat-room .document-files .icon-delete-attached {
@@ -1177,10 +1202,131 @@ select.full-width + .select2{
     font-size: 14px;
     color: rgba(0, 0, 0, 0.67);
     padding: 15px 32px 0 0;
+    z-index: 200;
 }
 .chat-room .print-act:hover {
     text-decoration: none;
 }
+
+.chat-room .controls.book-now-btn {
+    margin: 0 0 11px 0;
+}
+.chat-room .controls.book-now-btn .button-gradient.filled {
+    height: 26px;
+    width: 126px;
+    border-radius: 13px;
+}
+.chat-room .controls.book-now-btn .button-gradient.filled button {
+    color: #FFF;
+    font-family: LatoRegular;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 1);
+    line-height: 20px;
+}
+
+.chat-room article .currency-box {
+    margin: 7px 0 6px 0;
+}
+
+/* --- CLIENT QUOTE RECEIVED TEMPLATE --- */
+
+.chat-room.client.quote-received article .set-currency {
+    display: inline-block;
+    margin: 0 0 0 11px;
+}
+
+.chat-room.client.quote-received article .custom-checkbox {
+    margin: 0;
+}
+.chat-room.client.quote-received article .custom-checkbox label {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+.chat-room.client.quote-received article .custom-checkbox label:before {
+    height: 16px;
+    width: 16px;
+}
+.chat-room.client.quote-received article .custom-checkbox label:after {
+    left: 6px;
+    top: 3px;
+    width: 5px;
+    height: 8px;
+}
+.chat-room.client.quote-received .tr-container .tr-files {
+    margin: 0 0 0 18px;
+}
+.chat-room.client.quote-received .tr-container .tr-select-container {
+    margin: 8px 0 0 0px;
+}
+.chat-room.client.quote-received .tr-container .attach-file-btn {
+    display: none;
+}
+.chat-room .quote-section .text-box p span.escrow-nonref {
+    color: rgba(0, 0, 0, 0.87);
+    font-family: LatoRegular;
+    font-size: 14px;
+    margin: 0 0 0 16px;
+}
+
+.chat-room button.show-attached-files {
+    padding: 5px 0 6px 0;
+    border: 2px solid rgba(238, 116, 56, 0.25);
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+    width: 292px;
+
+    font-family: LatoRegular;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(46, 46, 46, 1);
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+@media screen and (min-width: 1199px) {
+    .chat-room .detail-form .col-custom-size {
+        width: 242px;
+    }
+}
+@media screen and (min-width: 768px) {
+    .chat-room .quote-section .holder {
+        height: 480px;
+    }
+    .chat-room .quote-section .holder .no-quote-submitted {
+        text-align: center;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin: 0 -86px;
+    }
+    .chat-room .tr-container .col-sm-6:nth-of-type(2) .row:nth-of-type(1) {
+        margin: 0 0 0 35px;
+    }
+    .chat-room .section-three .booking-confirm-list {
+         padding: 0 64px 0 0 !important;
+    }
+    .chat-room .tr-container .col-sm-6:nth-of-type(1) .row:nth-of-type(1) {
+        margin: 0;
+    }
+}
+@media screen and (min-width: 321px) {
+    .chat-room .print-act {
+        position: absolute;
+        right: 15px;
+        top: 19px;
+        padding: 0;
+    }
+    .chat-room .quote-section {
+        margin: 19px 11px 21px 0;
+    }
+    .chat-room .event-details-section {
+        margin: 19px 23px 14px 32px;
+    }
+}
+
+
+
 @media (max-width: 1199px){
     .chat-room .quote-section .price-list .col,
     .chat-room .quote-section .price-list .col:first-child{
@@ -1191,9 +1337,8 @@ select.full-width + .select2{
         margin-bottom: 8px;
     }
     .chat-room .quote-section {
-        width: 50%;
+        width: auto;
     }
-
     .chat-room .title {
         padding: 0;
         text-align: center;
@@ -1204,9 +1349,6 @@ select.full-width + .select2{
     .chat-room .quote-section .controls {
         margin: 0 auto;
     }
-    /*.chat-room .detail-form {*/
-        /*padding: 15px 11px 5px 33px;*/
-    /*}*/
     .chat-room .tr-container .tr-desc {
         padding: 0;
         margin: 8px 8px 29px 0;
@@ -1216,7 +1358,7 @@ select.full-width + .select2{
     }
     .chat-room .tr-container .tr-files li {
         padding: 0px 12px 4px 0;
-        display: inline-block;
+        display: block;
     }
     .chat-room i.icon.icon-pdf {
         margin: 0 2px 0 0;
@@ -1230,15 +1372,50 @@ select.full-width + .select2{
     .chat-room input[type="password"].custom-size {
         width: 100%;
     }
+    .chat-room .section-four .row.list.contacts-info input {
+        width: calc(100% - 10%);
+    }
+    .chat-room .quote-section .holder article.service .set-currency {
+        margin: 0px 60px 0 0;
+    }
 }
 @media (max-width: 991px){
     .chat-room .title{
         font-size: 17px;
-        padding: 0 110px;
     }
-    .chat-room .miscellaneous-list li{ padding-left: 19px;}
-    .chat-room .miscellaneous-list .fa{margin: 0 5px 0 -13px;}
-    .message-form .controls{width: 110px;}
+    .chat-room .tr-container {
+        padding: 24px 0px 0 0px;
+    }
+    .chat-room .tr-container .title {
+        display: block;
+        margin: 0;
+        padding: 0;
+    }
+    .chat-room .miscellaneous-list li {
+        padding-left: 19px;
+    }
+    .chat-room .miscellaneous-list .fa {
+        margin: 0 5px 0 -13px;
+    }
+    .message-form .controls{
+        width: 133px;
+    }
+    .message-form .upload-box .controls .button-gradient {
+        width: 133px;
+    }
+    .chat-room .tr-container .col-md-6:nth-of-type(2) {
+        padding: 0;
+    }
+    .chat-room .tr-container .col-md-6 .row:nth-of-type(1) {
+        padding: 15px 0 0 35px;
+    }
+    .chat-room .quote-section .holder article.service .set-currency {
+        margin: 0;
+    }
+    .chat-room .quote-section .holder article ul li .row span.extra-descr {
+        width: 100%;
+        margin: 10px 0 0 0;
+    }
 }
 @media (max-width: 768px) {
     .chat-room > .container{padding: 0;}
@@ -1260,15 +1437,15 @@ select.full-width + .select2{
     .chat-room input[type="password"].custom-size {
 
     }
-    .detail-form {
-        padding: 0 32px 0 25px;
+    .chat-room .detail-form {
+        /*padding: 0 32px 0 25px;*/
     }
-    .detail-form .holder [class^=col-lg-]{padding: 0;}
-    .detail-form .holder [class^=col-lg-].pull-right{
+    .chat-room .detail-form .holder [class^=col-lg-]{padding: 0;}
+    .chat-room .detail-form .holder [class^=col-lg-].pull-right{
         float: none !important;
         padding: 0;
     }
-    .detail-form .map-holder{
+    .chat-room .detail-form .map-holder{
         padding-top: 20px;
         margin: 0 0 10px;
         height: 163px;
@@ -1303,7 +1480,7 @@ select.full-width + .select2{
     }
     .chat-room .block-list > li{margin: 0 0 10px;}
     .chat-room .block-list{padding: 0;}
-    #twocolumns{padding: 20px;}
+    #twocolumns{padding: 14px;}
     #twocolumns .col-1,
     #twocolumns .col-2{
         float: none;
@@ -1348,33 +1525,48 @@ select.full-width + .select2{
     .chat-room .quote-section {
         width: 100%;
     }
-    /*.chat-room .section-one .section-info-title {*/
-    /*background-color: rgba(255, 239, 187, 1);*/
-    /*border-bottom: 2px solid rgba(255, 228, 141, 1);*/
-    /*}*/
     /*.chat-room .section-one .section-info-footer {*/
-    /*background-color: rgba(255, 239, 187, 1);*/
+        /*margin: 0 32px 0 25px;*/
     /*}*/
-    /*.chat-room .section-two .section-info-title {*/
-    /*background-color: rgba(238, 238, 255, 1);*/
-    /*border-bottom: 2px solid rgba(222, 224, 255, 1);*/
-    /*}*/
-    /*.chat-room .section-two .section-info-footer {*/
-    /*background-color: rgba(238, 238, 255, 1);*/
-    /*margin: 18px 0 0 0;*/
-    /*}*/
-    /*.chat-room .section-three .section-info-title {*/
-    /*background-color: rgba(242, 246, 202, 1);*/
-    /*border-bottom: 2px solid rgba(224, 234, 128, 1);*/
-    /*}*/
-    /*.chat-room .section-four .section-info-title {*/
-    /*background-color: rgba(187, 232, 252, 1);*/
-    /*border-bottom: 2px solid rgba(140, 217, 251, 1);*/
-    /*}*/
-
-
-    .chat-room .section-one .section-info-footer {
-        margin: 0 -32px;
+    .chat-room .contacts-info {
+        border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    }
+    .chat-room .section-four .row.list.contacts-info input {
+        display: block;
+        margin: 0 0 15px 0;
+    }
+    .chat-room .contacts-info label {
+        display: block;
+        margin: 0 0 8px 0;
+    }
+    .chat-room .section-three .booking-confirm-list {
+        margin: 0 36px 0 0;
+    }
+    .chat-room section .section-info-title p.booking-status {
+        margin: 15px 0 15px 0;
+    }
+    .chat-room .tr-container {
+        padding: 24px 16px 0 32px;
+        display: block;
+    }
+    .chat-room .section-two .section-info-footer {
+        margin: 18px -16px 0 -32px;
+    }
+    .chat-room .quote-section .holder article {
+        padding: 0;
+    }
+    .chat-room .quote-section .holder article ul {
+        margin: 0 32px;
+    }
+    .chat-room .quote-section .package-name {
+        padding: 6px 10px 7px 32px;
+    }
+    .chat-room .quote-section .text-box {
+        margin: 0 0 15px 32px;
+    }
+    .chat-room .tr-container .tr-title {
+        margin: 15px 0 0 0;
+        display: block;
     }
 }
 @media screen and (max-width: 610px) {
@@ -1395,22 +1587,6 @@ select.full-width + .select2{
         width: 100%;
     }
 }
-@media screen and (min-width: 320px) {
-    .chat-room .print-act {
-        position: absolute;
-        right: 15px;
-        top: 19px;
-        padding: 0;
-        z-index: 5000;
-    }
-    .chat-room .quote-section {
-        margin: 19px 11px 21px 0;
-    }
-    .chat-room .event-details-section {
-        margin: 19px 23px 14px 32px;
-    }
-
-}
 @media screen and (max-width: 320px) {
     .chat-room .main-title {
         margin: 0 0 13px 0;
@@ -1418,6 +1594,7 @@ select.full-width + .select2{
     }
     .chat-room .detail-form {
         padding: 0;
+        clear: both;
     }
     .chat-room .tooltip-message {
         margin: 0 0 8px 0;
@@ -1425,12 +1602,19 @@ select.full-width + .select2{
     .chat-room .custom-checkbox {
         margin: 15px 0 15px 31px;
     }
+    .chat-room .quote-section {
+        margin: 0 11px 21px 0;
+    }
     .chat-room .quote-section .title {
         margin: 0;
     }
     .chat-room .quote-section .holder {
         height: 100%;
     }
+    .chat-room .quote-section .title.quot {
+        margin: 13px 0 17px 0;
+    }
+
     .chat-room .tooltip-message:nth-of-type(2) {
         margin: 0 0 14px 0;
     }
@@ -1451,11 +1635,50 @@ select.full-width + .select2{
         position: relative;
         margin: 68px 0 79px 67px;
     }
+    .chat-room .quote-section .holder article {
+        padding: 0;
+    }
+    .chat-room .quote-section .holder article ul {
+        margin: 0 0 0 15px;
+    }
+    .chat-room .quote-section .holder article.service .set-currency {
+        margin: 0 32px 0 0;
+    }
+    .chat-room .quote-section .holder article ul li .row span.extra-descr {
+        width: 100%;
+        margin: 10px 0 0 0;
+    }
+    .chat-room .quote-section .holder article.service.act-extras {
+        border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+    }
+    .chat-room .quote-section .holder article.service.act-extras ul li:nth-last-of-type(1) {
+        margin: 12px 0 9px 0;
+    }
 
-
-    .chat-room .tr-container {
-        padding: 24px 14px 0 16px;
+    .chat-room section .section-info-title span {
+        margin: 7px 0 6px 8px;
+        float: left;
+    }
+    .chat-room section .section-info-title p {
+        padding: 13px 0 13px 8px;
+        margin: 0;
         display: block;
+        overflow: hidden;
+    }
+    .chat-room .section-one .section-info-title {
+        border-top: 2px solid rgba(255, 228, 141, 1);
+    }
+    .chat-room .section-two .section-info-title {
+        border-top: 2px solid rgba(222, 224, 255, 1);
+    }
+    .chat-room .section-three .section-info-title {
+        border-top: 2px solid rgba(224, 234, 128, 1);
+    }
+    .chat-room .section-four .section-info-title {
+        border-top: 2px solid rgba(140, 217, 251, 1);
+    }
+    .chat-room .tr-container {
+        padding: 24px 16px 0 14px;
     }
     .chat-room .tr-container .title {
         padding: 0;
@@ -1468,17 +1691,49 @@ select.full-width + .select2{
     .chat-room .tr-container .performance-info-desc {
         margin: 0;
     }
+    .chat-room .tr-container .performance-info-desc p {
+        padding: 6px 18px 9px 12px;
+        margin: 0;
+    }
+    .chat-room .tr-container .col-md-6:nth-of-type(2) {
+        padding: 15px 0 0 0;
+    }
+    .chat-room .tr-container .tr-files li {
+        display: block;
+    }
+    .chat-room .tr-container .tr-desc {
+        width: 100%;
+        margin: 0px 8px 29px 0;
+    }
+    .chat-room .tr-container .tr-title {
+        margin: 15px 0 18px 0;
+        display: block;
+    }
+    .chat-room.client.quote-received .tr-container .tr-files {
+        margin: 0 0 0 0;
+    }
+    .chat-room .custom-checkbox label {
+        padding-left: 25px;
+    }
+    .chat-room .message-form .controls {
+        width: auto;
+    }
+    .chat-room section .section-info-title p.booking-status {
+        margin: 0;
+    }
+    .chat-room .message-form .textarea {
+        margin: 36px 0 11px 0;
+    }
+    .chat-room.client.quote-received .tr-container .tr-select-container {
+        margin: 0 0 19px 0;
+    }
+    .chat-room .quote-section .package-name {
+        padding: 6px 10px 7px 14px;
+    }
+    .chat-room .quote-section .text-box {
+        margin: 0 0 15px 15px;
+    }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

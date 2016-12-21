@@ -1,11 +1,14 @@
 .categories-menu {
+    margin: 6px 0px 12px 0px;
+}
+.categories-menu {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
     display: -ms-flexbox;
     justify-content: space-between;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .categories-menu li {
@@ -28,7 +31,7 @@
     content: "";
     position: absolute;
     width: 0;
-    height: 3px;
+    height: 4px;
     bottom: 0;
     background: #ff793e;
     left: 50%;
@@ -52,12 +55,7 @@
 
 .categories-menu li>a.active:after {
     /*.categories-menu li>a:hover::after {*/
-    width: 100%;
-}
-
-.categories-menu {
-    margin: 18px 3px 12px 3px;
-    /*border-bottom: 2px solid rgba(216, 216, 216, 0.11);*/
+    width: 65px;
 }
 .categories-menu li.active {
     border-bottom: 4px solid #ff793e;
@@ -66,7 +64,7 @@
 }
 .categories-menu li > a {
     font-size: 16px;
-    padding: 18px 22px 19px 21px;
+    padding: 23px 23px 22px 22px;
 }
 
 /** --- FEEDBACK CLIENT --- **/
@@ -99,7 +97,8 @@
 .dashboard.client .events-menu ul {
     overflow: hidden;
     height: 26px;
-    margin: 0 40px 0 50px;
+    margin: 0 43px 0 43px;
+    width: 895px;
 }
 .dashboard.client .new-event {
     display: inline-block;
@@ -122,16 +121,13 @@
 .dashboard.client .events-menu .new-event .fa.fa-plus {
     padding: 0 0 0 11px;
 }
-.dashboard.client .events-menu .event-item:nth-last-of-type(1) {
-    margin: 0;
-}
 .dashboard.client .events-menu .event-item {
     height: 26px;
     width: 169px;
     border-radius: 3px;
     border-radius: 3px;
     padding: 1px 13px 6px 0px;
-    margin: 0 7px 0 0;
+    margin: 0 10px 0 0;
     overflow: hidden;
     display: inline-block;
     text-overflow: ellipsis;
@@ -199,11 +195,11 @@
     transform: rotate(180deg);
     right: 0;
 }
+.dashboard.client .owl-item:hover,
 .dashboard.client .events-menu .arrows .left:hover,
 .dashboard.client .events-menu .arrows .right:hover {
     cursor: pointer;
 }
-
 
 /** --- OPTIONS MENU --- **/
 .dashboard.client .options-menu {
@@ -223,25 +219,20 @@
     width: initial;
 }
 @media screen and (min-width: 1200px) {
-    .dashboard.client .events-menu {
-        width: 980px;
-    }
+
 }
 @media screen and (max-width: 1200px) {
-    .dashboard.client .events-menu {
-        width: 100%;
-    }
-    .dashboard.client .new-event {
-        margin: 0;
-    }
-    .dashboard.client .new-event > span {
-        display: none;
-    }
     .dashboard.client .new-event {
         margin: 0;
         position: absolute;
         top: 24px;
-        left: 80%;
+        left: 94%;
+    }
+    .dashboard.client .new-event > span {
+        display: none;
+    }
+    .dashboard.client .events-menu ul {
+        width: 890px;
     }
 }
 @media screen and (min-width: 768px) {
@@ -267,9 +258,6 @@
         margin: 0;
         width: 100%;
     }
-    .dashboard.client .events-menu {
-        width: 100%;
-    }
     /*.dashboard.client .events-menu ul {
         margin: 0 40px;
     }*/
@@ -278,9 +266,6 @@
     }
     .dashboard.client .events-menu .arrows .right {
         right: 10px;
-    }
-    .dashboard.client .events-menu .event-item.non-active {
-        display: none;
     }
     .dashboard.client .events-menu .new-event .fa.fa-plus {
         padding: 0;
@@ -349,7 +334,68 @@
         display: none;
     }
 }
-
-@media screen and (max-width: 320px) {
-
+@media screen and (max-width: 860px) {
+    .dashboard.client .events-menu ul {
+        width: 710px;
+    }
 }
+
+/* --- STYLES FOR CLIENT DASHBOARD CAROUSEL --- */
+@media screen and (min-width: 1200px) {
+    .dashboard.client .new-event {
+        left: 85%;
+    }
+    .dashboard.client .events-menu ul {
+        width: 920px;
+    }
+}
+@media screen and (max-width: 1199px) {
+    .dashboard.client .new-event {
+        left: 85%;
+    }
+    .dashboard.client .events-menu {
+        width: 100%;
+    }
+    .dashboard.client .events-menu ul {
+        width: 752px;
+    }
+}
+
+@media screen and (max-width: 980px) {
+    .dashboard.client .new-event {
+        left: 90%;
+    }
+    .dashboard.client .events-menu ul {
+        width: 660px;
+    }
+}
+@media screen and (max-width: 800px) {
+    .dashboard.client .events-menu ul {
+        /*width: 573px;*/
+        width: 573px;
+    }
+}
+@media screen and (max-width: 700px) {
+    .dashboard.client .new-event {
+        left: 85%;
+    }
+    .dashboard.client .events-menu ul {
+        /*width: 573px;*/
+        width: 430px;
+    }
+}
+@media screen and (max-width: 550px) {
+    .dashboard.client .events-menu ul {
+        width: 358px;
+    }
+}
+@media screen and (max-width: 500px) {
+    .dashboard.client .new-event {
+        left: 75%;
+    }
+    .dashboard.client .events-menu ul {
+        width: 179px;
+    }
+}
+@media screen and (max-width: 425px) {}
+@media screen and (max-width: 320px) {}

@@ -830,4 +830,15 @@ class ChatRoomController extends Controller
 
         return new JsonResponse($response);
     }
+
+    /**
+     * Show payments page for client.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function showPaymentsAction(Request $request) {
+        return $this->render('ActedLegalDocsBundle:Profile:client/payments.html.twig');
+    }
 }

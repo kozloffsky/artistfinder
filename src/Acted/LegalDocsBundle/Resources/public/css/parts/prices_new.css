@@ -1,0 +1,306 @@
+/* --- COLORS --- */
+.color-skyblue { background: rgba(133, 192, 255, 1); }
+.color-cheese { background: rgba(255, 189, 133, 1); }
+.color-mango { color: rgba(255, 122, 62, 1); }
+
+
+i.visible-acts,
+i.invisible-acts {
+    display: inline-block;
+    margin: 0 13px 0 0;
+    width: 25px;
+    vertical-align: middle;
+    background-size: cover;
+}
+i.visible-acts {
+    background-image: url(/assets/images/visible_acts_notification.png);
+    height: 17px;
+}
+i.invisible-acts {
+    background-image: url(/assets/images/invisible_acts_notification.png);
+    height: 23px;
+}
+.prices .custom-checkbox label {
+    font-family: LatoRegular;
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 1);
+
+    line-height: 20px;
+    padding-left: 32px;
+}
+.prices .custom-checkbox label:before {
+    width: 20px;
+    height: 20px;
+}
+.prices .custom-checkbox label:after {
+    left: 7px;
+    top: 3px;
+    width: 7px;
+    height: 11px;
+}
+/* ------------------------------------------- */
+/* --- GLOBAL STYLES --- */
+.prices .heading {
+    padding: 9px 0 11px 16px;
+    font-family: LatoBold;
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.87);
+}
+.prices .performance-helper-container {
+    margin: 10px 0 13px 0;
+}
+.prices .performance-container {
+    padding: 12px 0 0 23px;
+}
+.prices .performance-container .row {
+    margin: 0 0 15px 0;
+}
+.prices .performance-container .act-title {
+    font-family: LatoBold;
+    font-weight: 400;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.52);
+}
+.prices .performance-container .add-sets a {
+    text-decoration: underline;
+    margin: 0 10px 0 0;
+}
+.prices .performance-container .add-sets,
+.prices .performance-container .package-set,
+.prices .performance-container .package-price {
+    margin: 0 0 15px 0;
+}
+.prices .performance-container .package-name {
+    margin: 0 0 5px 0;
+}
+.prices .performance-container .package-cross {
+    font-family: LucidaGrande;
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 1);
+
+    margin: 0 7px 2px 6px;
+    vertical-align: middle;
+    display: inline-block;
+}
+.prices .performance-container .package-min {
+    font-family: LatoRegular;
+    font-weight: 400;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 1);
+
+    margin: 0 10px 0px 4px;
+    vertical-align: text-top;
+    /*display: inline-block;*/
+}
+
+.prices .performance-container .package-price {
+    font-family: LatoBold;
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.87);
+
+    margin: 0 8px 0 0;
+}
+.prices .performance-container .package-crncy {
+    font-family: LatoRegular;
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.87);
+
+    margin: 0 2px 0 2px;
+}
+.prices .performance-container input {
+    height: 26px;
+    padding: 0;
+}
+.prices .performance-container .block-1 {
+    padding: 3px 0 12px 0;
+}
+.prices .performance-container .block-2 {
+    padding: 5px 0 0px 11px;
+}
+.prices .performance-container .block-3 {
+    padding: 8px 0 12px 19px;
+}
+
+.prices .performance-container .block-4 {
+    padding: 8px 0 12px 35px;
+}
+
+.prices .performance-helper-container .block-2 > span {
+    padding: 0 0 0 46px;
+}
+.prices .performance-helper-container .block-3 > span {
+    padding: 0 0 0 52px;
+}
+.prices .performance-helper-container .block-4 > span {
+    padding: 0 0 0 31px;
+}
+
+.prices .performance-helper-container .block-1,
+.prices .performance-helper-container .block-2,
+.prices .performance-helper-container .block-3,
+.prices .performance-helper-container .block-4 {
+    font-family: LatoRegular;
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(133, 192, 255, 1);
+}
+.prices .performance-container:nth-of-type(odd) .block-1,
+.prices .performance-container:nth-of-type(odd) .block-2,
+.prices .performance-container:nth-of-type(odd) .block-3 {
+    border-right: 2px solid rgba(246, 250, 255, 1);
+}
+.prices .performance-container:nth-of-type(even) .block-1,
+.prices .performance-container:nth-of-type(even) .block-2,
+.prices .performance-container:nth-of-type(even) .block-3 {
+    border-right: 2px solid rgba(255, 255, 255, 1);
+}
+.prices .performance-container .block-1 .row:nth-of-type(1),
+.prices .performance-container .block-2 .row:nth-of-type(1),
+.prices .performance-container .block-3 .row:nth-of-type(1) {
+    font-size: 16px;
+}
+
+.prices .performance-container .block-1 > .row > div > .row:nth-of-type(1),
+.prices .performance-container .block-2 .row:nth-of-type(1),
+.prices .performance-container .block-3 .row:nth-of-type(1),
+.prices .performance-container .block-4 .row:nth-of-type(1) {
+    margin: 0 0 12px 0;
+}
+
+
+.prices .performance-container .block-1 input.act-name {
+    height: 24px;
+    width: 164px;
+    text-align: left;
+    padding: 2px 0 4px 8.5px;
+}
+
+.prices .performance-container .block-1 input.act-name::-webkit-input-placeholder, /* Chrome/Opera/Safari */
+.prices .performance-container .block-1 input.act-name::-moz-placeholder, /* Firefox 19+ */
+.prices .performance-container .block-1 input.act-name:-ms-input-placeholder, /* IE 10+ */
+.prices .performance-container .block-1 input.act-name:-moz-placeholder /* Firefox 18- */
+{
+    font-family: LatoRegular;
+    font-size: 14px !important;
+    color: rgba(0, 0, 0, 0.17);
+}
+
+.prices .performance-container .block-1 input.package-name {
+    width: 164px;
+    text-align: left;
+    padding: 2px 0 4px 8.5px;
+}
+.prices .performance-container .block-1 input {
+    width: 44px;
+}
+.prices .performance-container .block-2 input,
+.prices .performance-container .block-3 input {
+    width: 56px;
+}
+.prices .performance-container input {
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 5px;
+    text-align: center;
+
+    font-family: LatoRegular;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.87);
+}
+.prices .custom-checkbox {
+    margin: 0;
+}
+.prices .custom-checkbox label:before {
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 3px;
+}
+.prices .button-gradient {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 1px;
+    border-radius: 21px;
+    -webkit-border-radius: 21px;
+    position: relative;
+    z-index: 10;
+    margin: 0 20px 0 0;
+}
+.prices .button-gradient.add-btn .btn{
+    background: #fff;
+    border-radius: 21px;
+    -webkit-border-radius: 21px;
+    padding: 0 19px;
+    font-size: 13px;
+    color: #000;
+    color: rgba(0, 0, 0, .87);
+    outline: none;
+    transition-property: all;
+    transition-duration: 0.2s;
+
+    vertical-align: initial;
+    height: 26px;
+    width: 140px;
+
+    font-family: LatoRegular;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.87);
+}
+.prices .button-gradient.add-btn .btn:active{
+    background: rgba(255, 255, 255, 0);
+    color: white;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+.prices .button-gradient.add-btn {
+    background: rgb(88,149,243);
+    background-image: -moz-linear-gradient(left, rgba(88,149,243,1) 0%, rgba(73,79,199,1) 100%);
+    background-image: -webkit-linear-gradient(left, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
+    background-image: linear-gradient(to right, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
+}
+.prices .button-gradient.add-btn.orange {
+    background: rgb(255,173,108);
+    background-image: -moz-linear-gradient(left,  rgba(255,173,108,1) 0%, rgba(255,117,58,1) 100%);
+    background-image: -webkit-linear-gradient(left,  rgba(255,173,108,1) 0%,rgba(255,117,58,1) 100%);
+    background-image: linear-gradient(to right,  rgba(255,173,108,1) 0%,rgba(255,117,58,1) 100%);
+}
+
+/* --- VISIBLE ACTS SECTION --- */
+.prices .visible-acts {
+
+}
+.prices .visible-acts .performance-container input {
+    border: 2px solid rgba(228, 241, 255, 1);
+}
+
+.prices .visible-acts .custom-checkbox label:before {
+    border: 2px solid rgba(228, 241, 255, 1);
+}
+
+.prices .visible-acts .performance-container:nth-of-type(even) {
+    background: rgba(133, 192, 255, 0.07);
+}
+
+/* --- INVISIBLE ACTS SECTION --- */
+.prices .hidden-acts {
+
+}
+.prices .hidden-acts .performance-container input {
+    border: 2px solid rgba(255, 241, 228, 1);
+}
+.prices .hidden-acts .performance-container:nth-of-type(odd) {
+    background: rgba(255, 189, 133, 0.07);
+}
+.prices .hidden-acts .buttons-control {
+    margin: 11px 0 0 0;
+}
+
+@media (min-width: 1200px) {
+    .prices .container {
+        margin: 0 380px 139px 380px;
+        width: 1160px;
+    }
+}

@@ -15,6 +15,7 @@ use Acted\LegalDocsBundle\Entity\Client;
 use Acted\LegalDocsBundle\Entity\Event;
 use Acted\LegalDocsBundle\Entity\Order;
 use Acted\LegalDocsBundle\Entity\OrderItemPerformance;
+use Acted\LegalDocsBundle\Entity\OrderItemService;
 use Acted\LegalDocsBundle\Entity\Performance;
 use Acted\LegalDocsBundle\Repository\OrderItemRepository;
 use Acted\LegalDocsBundle\Repository\OrderRepository;
@@ -125,8 +126,6 @@ class OrderManager
             ->getPerformancesForEvent($event->getId());*/
 
         $total = 0;
-
-
 
         foreach($performances as $performance){
             $orderItemPerformance = new OrderItemPerformance();
@@ -284,7 +283,179 @@ class OrderManager
         return true;
     }
 
+    public function updateOrder($orderId, $extraPerformances, $performances, $services, $paymentDetails)
+    {
+        $orderRepo = $this->entityManager->getRepository('ActedLegalDocsBundle:Order');
+        $order = $orderRepo->find($orderId);
 
+        $total = 0;
+        $extraPerformanceTotal = 0;
+        $performanceTotal = 0;
+        $serviceTotal = 0;
 
+        //remove old items related with order
+        $orderItemRepo = $this->entityManager->getRepository('ActedLegalDocsBundle:OrderItem');
+        $orderItems = $orderItemRepo->findBy(array(
+            'order' => $order
+        ));
 
+        foreach ($orderItems as $orderItem) {
+            $this->entityManager->remove($orderItem);
+        }
+
+        if (!empty($performances)) {
+            $resultPreparingPerformances = $this->preparePerformances($performances, $order);
+            $order = $resultPreparingPerformances['order'];
+            $performanceTotal = $resultPreparingPerformances['total'];
+        }
+
+        if (!empty($services)) {
+            $resultPreparingServices = $this->prepareServices($services, $order);
+            $order = $resultPreparingServices['order'];
+            $serviceTotal = $resultPreparingServices['total'];
+        }
+
+        if (!empty($extraPerformances)) {
+            $resultPreparingExtraPerformances = $this->preparePerformances($extraPerformances, $order, true);
+            $order = $resultPreparingExtraPerformances['order'];
+            $extraPerformanceTotal = $resultPreparingExtraPerformances['total'];
+        }
+
+        $total = $extraPerformanceTotal + $performanceTotal + $serviceTotal;
+
+        $order->setTotalPrice($total);
+        $order->setStatus(Order::STATUS_ACCEPTED);
+        $order->setGuaranteedDepositTerm($paymentDetails['depositPercent']);
+        $order->setGuaranteedBalanceTerm($paymentDetails['balancePercent']);
+
+        $this->entityManager->persist($order);
+
+        $this->entityManager->flush();
+    }
+
+    public function prepareServices($services, $order)
+    {
+        $total = 0;
+        foreach($services as $service){
+            $orderItemService = new OrderItemService();
+            $serviceData = [];
+            $serviceData['service'] = $service['id'];
+            $serviceData['title'] = $service['title'];
+            $serviceData['packages'] = [];
+
+            $packages = $service['packages'];
+            $price = 0;
+            foreach ($packages as $package) {
+                $packageData = [];
+                $packageData['id'] = $package['id'];
+                $packageData['name'] = $package['title'];
+                $packageData['options'] = [];
+                $optionData['rates'] = array();
+                foreach ($package['options'] as $option) {
+                    $currentAmount = $option['price'];
+                    $optionData = [];
+                    $optionData['id'] = $option['id'];
+                    $optionData['duration'] = null;
+                    $optionData['qty'] = null;
+
+                    $rateData = array(
+                        "id" => null,
+                        "price" => array(
+                            "id" => null,
+                            "amount" => $currentAmount
+                        )
+                    );
+
+                    $optionData['rates'][] = $rateData;
+
+                    $price += $currentAmount;
+                    $packageData['options'][] = $optionData;
+                }
+
+                $serviceData['packages'][] = $packageData;
+
+            }
+
+            $orderItemService->setTotalPrice($price);
+            $serviceData['total'] = $price;
+            $orderItemService->setData($serviceData);
+            $this->entityManager->persist($orderItemService);
+            $order->addItem($orderItemService);
+            $orderItemService->setOrder($order);
+            $total += $price;
+        }
+
+        return array(
+            'order' => $order,
+            'total' => $total
+        );
+    }
+
+    public function preparePerformances($performances, $order, $isExtra = false)
+    {
+        $total = 0;
+        foreach($performances as $performance){
+            $orderItemPerformance = new OrderItemPerformance();
+            $performanceData = [];
+            $performanceData['performance'] = $performance['id'];
+            $performanceData['title'] = $performance['title'];
+            $performanceData['type'] = $performance['type'];
+
+            if ($isExtra) {
+                $performanceData['comment'] = $performance['comment'];
+            }
+
+            $performanceData['packages'] = [];
+
+            $packages = $performance['packages'];
+            $price = 0;
+            foreach ($packages as $package) {
+                $packageData = [];
+                $packageData['id'] = $package['id'];
+                $packageData['name'] = $package['title'];
+
+                if ($isExtra) {
+                    $packageData['isSelected'] = $package['isSelected'];
+                }
+
+                $packageData['options'] = [];
+                $optionData['rates'] = array();
+                foreach ($package['options'] as $option) {
+                    $currentAmount = $option['price'];
+                    $optionData = [];
+                    $optionData['id'] = $option['id'];
+                    $optionData['duration'] = $option['duration'];
+                    $optionData['qty'] = $option['qty'];
+
+                    $rateData = array(
+                        "id" => null,
+                        "price" => array(
+                            "id" => null,
+                            "amount" => $currentAmount
+                        )
+                    );
+
+                    $optionData['rates'][] = $rateData;
+
+                    $price += $currentAmount;
+                    $packageData['options'][] = $optionData;
+                }
+
+                $performanceData['packages'][] = $packageData;
+            }
+
+            $orderItemPerformance->setTotalPrice($price);
+            $performanceData['total'] = $price;
+            $orderItemPerformance->setData($performanceData);
+            $this->entityManager->persist($orderItemPerformance);
+            $order->addItem($orderItemPerformance);
+            $orderItemPerformance->setOrder($order);
+            $total += $price;
+        }
+
+        return array(
+            'order' => $order,
+            'total' => $total
+        );
+    }
 }

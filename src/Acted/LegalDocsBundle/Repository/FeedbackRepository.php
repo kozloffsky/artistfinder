@@ -33,21 +33,21 @@ class FeedbackRepository extends \Doctrine\ORM\EntityRepository
         $params = array('artist' => $artist);
 
         $qb = $this->createQueryBuilder('f')
-                   ->select('f')
-                   ->where($whereCriteria)
-                   ->setFirstResult($offset)
-                   ->setMaxResults($size)
-                   ->setParameters($params);
+            ->select('f')
+            ->where($whereCriteria)
+            ->setFirstResult($offset)
+            ->setMaxResults($size)
+            ->setParameters($params);
 
 
         $feedbacks = $qb->getQuery()->getArrayResult();
 
         $qb = $this->createQueryBuilder('f')
-                   ->select('count(f.id) as countRows')
-                   ->where($whereCriteria)
-                   ->setFirstResult($offset)
-                   ->setMaxResults($size)
-                   ->setParameters($params);
+            ->select('count(f.id) as countRows')
+            ->where($whereCriteria)
+            ->setFirstResult($offset)
+            ->setMaxResults($size)
+            ->setParameters($params);
 
 
         $feedbackCount = $qb->getQuery()->getOneOrNullResult();
@@ -64,9 +64,9 @@ class FeedbackRepository extends \Doctrine\ORM\EntityRepository
         $params = array('artist' => $artist);
 
         $qb = $this->createQueryBuilder('f')
-                   ->select('avg(f.rating) as averageRating')
-                   ->where($whereCriteria)
-                   ->setParameters($params);
+            ->select('avg(f.rating) as averageRating')
+            ->where($whereCriteria)
+            ->setParameters($params);
 
         return $qb->getQuery()->getOneOrNullResult();
     }
@@ -74,9 +74,9 @@ class FeedbackRepository extends \Doctrine\ORM\EntityRepository
     public function findByArtistQuery(Artist $artist)
     {
         return $this->createQueryBuilder('r')
-                    ->where('r.artist = :artist')
-                    ->setParameter('artist', $artist)
-                    ->getQuery();
+            ->where('r.artist = :artist')
+            ->setParameter('artist', $artist)
+            ->getQuery();
     }
 
     public function countArtistFeedbacks($artist)
@@ -85,6 +85,20 @@ class FeedbackRepository extends \Doctrine\ORM\EntityRepository
                     ->select('count(f.id) as countRows')
                     ->where('f.artist = :artist')
                     ->setParameter('artist', $artist)
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    public function getArtistMonthFeedbacks($artistId)
+    {
+        $now = new \DateTime();
+        $monthAgo = $now->sub(new \DateInterval('P30D'));
+
+        return $this->createQueryBuilder('f')
+                    ->where('f.createdAt > :created_at')
+                    ->setParameter('created_at', $monthAgo)
+                    ->andWhere('f.artist = :artist')
+                    ->setParameter('artist', $artistId)
                     ->getQuery()
                     ->getResult();
     }

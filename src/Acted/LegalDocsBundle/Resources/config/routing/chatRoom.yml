@@ -19,8 +19,8 @@ chat_room_message:
     methods:  GET
 
 change_status_message:
-    path:     /archived/message/{messageId}
-    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:archivedMessage }
+    path:     /archived/chat-room/{chatRoom}
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:archiveChatRoom }
     methods:  POST
 
 filter_message:
@@ -100,21 +100,34 @@ api_accept_details:
     defaults: {_controller: ActedLegalDocsBundle:ChatRoom:acceptDetails}
 
 events:
-  path: /events
-  defaults: {_controller: ActedLegalDocsBundle:ChatRoom:showEvents }
-  methods: GET
+    path: /events
+    defaults: {_controller: ActedLegalDocsBundle:ChatRoom:showEvents }
+    methods: GET
 
 event_messages:
-  path: /messages/event
-  defaults: {_controller: ActedLegalDocsBundle:ChatRoom:showMessagesByEvent}
-  methods: GET
+    path: /messages/event
+    defaults: {_controller: ActedLegalDocsBundle:ChatRoom:showMessagesByEvent}
+    methods: GET
 
 artist_dashboard_messages:
-  path: /messages/artist/{filter}
-  defaults: {_controller: ActedLegalDocsBundle:ChatRoom:showMessagesArtistDashboard, filter: false}
-  methods: GET
+    path: /messages/artist/{filter}
+    defaults: {_controller: ActedLegalDocsBundle:ChatRoom:showMessagesArtistDashboard, filter: false}
+    methods: GET
+
+hide_chatroom:
+  path: /chat-room/{chatRoom}/hide
+  defaults: {_controller: ActedLegalDocsBundle:ChatRoom:hideChatRoom}
+  methods: DELETE
+  requirements:
+    chatRoom: \d+
+
 
 artist_selection:
     path:     /artist-selection
     defaults: { _controller: ActedLegalDocsBundle:ChatRoom:artistSelection }
+    methods:  GET
+
+client_payments:
+    path:     /payments
+    defaults: { _controller: ActedLegalDocsBundle:ChatRoom:showPayments }
     methods:  GET

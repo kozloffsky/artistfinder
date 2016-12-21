@@ -380,8 +380,8 @@
         var performances = data.model.perf;
         var allData      = performances;
 
+        var extraPerfIndex = 0;
         for(var i = 0; i < allData.length; i++) {
-        var actSelected = allData[i].isSelected ? 'checked' : '';
 
         var curPerf = null;
 
@@ -392,9 +392,15 @@
             continue;
         }
 
+        extraPerfIndex++
         var package = curPerf.packages[0];
 
-        var packageChecked = package.isSelected ? 'checked' : '';
+        var actSelected = false;
+        var packageChecked = '';
+        if (package.isSelected == "true") {
+            actSelected = true;
+            var packageChecked = 'checked';
+        }
 
         var option = package.options[0];
         var perfId = curPerf.id;
@@ -407,8 +413,8 @@
         <div package-id="<%=package.id%>" class="row">
             <div class="row package">
                 <div class="custom-checkbox">
-                    <input select-extra-performance package-id="<%=package.id%>" id="package_<%=package.id%>" name="package-check" value="" type="checkbox" <%=packageChecked%> >
-                    <label for="package_<%=package.id%>"></label>
+                    <input select-extra-performance package-id="<%=package.id%>" id="package_<%=extraPerfIndex%>" name="package-check" value="" type="checkbox" <%=packageChecked%> >
+                    <label for="package_<%=extraPerfIndex%>"></label>
                 </div>
                 <div option-id="<%=option.id%>" class="extra-block-options">
                     <select quot-edit-performance-type name="" class="extra-select-type">

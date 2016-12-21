@@ -53,6 +53,11 @@ class Message
      * @var boolean
      */
     private $archived = false;
+
+    /**
+     * @var boolean
+     */
+    private $hidden = false;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -306,5 +311,21 @@ class Message
     public function getArchived()
     {
         return $this->archived;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isHidden()
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * @param boolean $hidden
+     */
+    public function setHidden($hidden)
+    {
+        $this->hidden = $hidden;
     }
 }

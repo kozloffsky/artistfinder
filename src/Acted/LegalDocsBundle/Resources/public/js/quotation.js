@@ -460,6 +460,22 @@ $(function() {
         });
     }
 
+    function updateOrderSend(id, data) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/order/'+ id,
+                method: 'PUT',
+                data: data,
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
+
     // TODO
 
     // function sendChatMessage(message) {
@@ -659,6 +675,7 @@ $(function() {
             var currentOrderStatus =  result.order.status;
 
             var performances = order.performances;
+
             var artistPerformances = order.artist.user.profile.performances;
             var artistServices = order.artist.user.profile.services;
             var services     = order.services;
@@ -677,6 +694,7 @@ $(function() {
                 var currentPerformance = {
                     performance: {
                         itemId: itemId,
+                        comment: performances[performanceIndex]["data"]["comment"],
                         packages: performances[performanceIndex]["data"]["packages"],
                         title : performances[performanceIndex]["data"]["title"],
                         type : performances[performanceIndex]["data"]["type"],
@@ -705,6 +723,23 @@ $(function() {
                 for (artistServiceIndex in artistServices) {
                     var currentService = {
                         service: artistServices[artistServiceIndex]
+                    };
+
+                    newServices.push(currentService);
+                }
+            } else {
+                for (serviceIndex in services) {
+                    var currentServiceId = services[serviceIndex]["data"]["service"];
+                    var itemId = services[serviceIndex]["id"];
+                    var currentService = {
+                        service: {
+                            itemId: itemId,
+                            packages: services[serviceIndex]["data"]["packages"],
+                            title : services[serviceIndex]["data"]["title"],
+                            type : services[serviceIndex]["data"]["type"],
+                            id : currentServiceId,
+                            isOrder: true
+                        }
                     };
 
                     newServices.push(currentService);
@@ -784,11 +819,11 @@ $(function() {
         var eventId   = QEM.model.id;
         var percent   = parseInt($(this).closest('form').find('select[name="quotation-payment-percent"]').find('option:selected').val());
         
-        var data = {
+      /*  var data = {
             'request_quotation_send[event]': eventId,
             'request_quotation_send[order]': orderId,
             'request_quotation_send[balance_percent]': percent
-        };
+        };*/
 
 
         var form = $("#quotationModal").find('form[name="quotation_act_info"]');
@@ -800,6 +835,36 @@ $(function() {
         newBasePerformances = prepareServicePerformance(basePerformances, 'performance');
         newServices = prepareServicePerformance(services, 'service');
         newExtraPerformances = prepareExtraPerformance(extraPerformances);
+
+        var balancePercent = $("[edit-quotation-payment-percent]").find("option:selected").val();
+        var depositPercent = 100 - balancePercent;
+
+        var data = {
+            performances: newBasePerformances,
+            extraPerformances: newExtraPerformances,
+            services: newServices,
+            paymentDetails: {
+                balancePercent: balancePercent,
+                depositPercent: depositPercent
+            }
+        };
+
+        updateOrderSend(orderId, data)
+            .then(function(res) {
+                /*$("#quotationModal").modal("hide");
+
+                setTimeout(function() {
+                    $("#success-quotation-modal").modal("show");
+                }, 500);*/
+
+                console.log(res);
+            })
+            .catch(function(err) {
+                console.error(err);
+            });
+
+        //add order
+
         // console.log(newBasePerformances);
         // console.log(newServices);
         //console.log(newExtraPerformances);
@@ -843,6 +908,7 @@ $(function() {
             var qty         = $(object).find("[quot-edit-qty]").find("option:selected").val();
 
             var option = {
+                id: null,
                 price: price
             };
             if (type == standardPerformanceType) {
@@ -851,11 +917,15 @@ $(function() {
             }
 
             currentObject = {
+                id: null,
+                title: '',
                 itemId: itemId,
                 type: type,
-                isSelected: isSelected,
                 comment: comment,
                 packages: [{
+                    id: null,
+                    title: '',
+                    isSelected: isSelected,
                     options: [option]
                 }]
             };
@@ -874,6 +944,8 @@ $(function() {
             var currentObject = $(object).find('[select-performance]');
             var actId = $(object).attr('act-id');
             var itemId = $(object).attr('item-id');
+            var actTitle = $(object).find('.act-title').find('i.act-name').text();
+            var basePerformanceType = 0;
 
             if (!currentObject.prop('checked')) {
                 return;
@@ -881,16 +953,17 @@ $(function() {
 
             if (type == 'service') {
                 var price = $(object).find('[edit-extra-custom-price]').val();
-                var packageName = $(object).find('.row.package').find('label').text();
                 var packageId = $(object).find('[package-block]').attr('package-id');
                 var optionId = $(object).find('[option-block]').attr('option-id');
+                var packageName = $(object).find('.row.package').find('label').text();
 
                 currentObject = {
                     id: actId,
                     itemId: itemId,
-                    title: packageName,
+                    title: actTitle,
                     packages: [{
                         id: packageId,
+                        title: packageName,
                         options: [{
                             id: optionId,
                             price: price
@@ -909,7 +982,6 @@ $(function() {
                 var packageId = $(package).attr('package-id');
                 var packageInput = $(package).find('[select-package]');
                 var packageName = $(package).find('.row.package').find('label').text();
-
 
                 if (!$(packageInput).prop('checked')) {
                     return;
@@ -947,6 +1019,8 @@ $(function() {
             });
 
             currentNewBaseObject["id"] = actId;
+            currentNewBaseObject["title"] = actTitle;
+            currentNewBaseObject["type"] = basePerformanceType;
             currentNewBaseObject["itemId"] = itemId;
             currentNewBaseObject["packages"] = newPackages;
             newBaseObjects.push(currentNewBaseObject);
@@ -1035,6 +1109,13 @@ $(function() {
             } else {
                 $("#extra-act").html(html);
             }
+
+            extraActs = $("#extra-act").find("[act-type]");
+            var index = extraActs.length;
+            var extraActInput = extraActs.last().find("input[select-extra-performance]");
+            var extraActLabel = extraActs.last().find(".custom-checkbox label");
+            $(extraActInput).attr('id', 'package_' + index);
+            $(extraActLabel).attr('for', 'package_' + index);
         }
     }
 
