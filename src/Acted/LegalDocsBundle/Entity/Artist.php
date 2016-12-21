@@ -85,6 +85,16 @@ class Artist
     private $eventArtists;
 
     /**
+     * @var float
+     */
+    private $averageRating;
+
+    /**
+     * @var integer
+     */
+    private $totalRatings;
+
+    /**
      * Get id
      *
      * @return integer
@@ -917,5 +927,37 @@ class Artist
     public function getRequestQuotations()
     {
         return $this->requestQuotations;
+    }
+
+    /**
+     * @return float
+     */
+    public function getAverageRating()
+    {
+        return $this->averageRating;
+    }
+
+    /**
+     * @param float $averageRating
+     */
+    public function setAverageRating($averageRating)
+    {
+        $this->averageRating = $averageRating;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalRatings()
+    {
+        return $this->totalRatings;
+    }
+
+    /**
+     * @param int $totalRatings
+     */
+    public function setTotalRatings($totalRatings)
+    {
+        $this->totalRatings = $totalRatings;
     }
 }
