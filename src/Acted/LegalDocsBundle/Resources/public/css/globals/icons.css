@@ -37,3 +37,7 @@ i.icon.icon-question-mark {
     width: 16px;
     vertical-align: middle;
 }
+
+i.icon.icon-quotation-sent {
+    background-image: url(/assets/images/success.png);
+}

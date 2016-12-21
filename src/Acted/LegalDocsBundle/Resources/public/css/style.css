@@ -3378,122 +3378,122 @@ only screen and (min-device-pixel-ratio: 2),
 only screen and (min-resolution: 192dpi),
 only screen and (min-resolution: 2dppx) {
     footer .social-icons .icon.facebook {
-        background-image: url("../assets/images/fb@2x.png");
+        background-image: url(/assets/images/fb@2x.png);
         background-size: 24px 25px;
     }
     footer .social-icons .icon.instagram {
-        background-image: url("../assets/images/inst@2x.png");
+        background-image: url(/assets/images/inst@2x.png);
         background-size: 25px 25px;
     }
     footer .social-icons .icon.twitter {
-        background-image: url("../assets/images/twit@2x.png");
+        background-image: url(/assets/images/twit@2x.png);
         background-size: 26px 22px;
     }
     footer.footer-dark .social-icons .icon.facebook {
-        background-image: url("../assets/images/fb_white@2x.png");
+        background-image: url(/assets/images/fb_white@2x.png);
     }
     footer.footer-dark .social-icons .icon.instagram {
-        background-image: url("../assets/images/inst_white@2x.png");
+        background-image: url(/assets/images/inst_white@2x.png);
     }
     footer.footer-dark .social-icons .icon.twitter {
-        background-image: url("../assets/images/twit_white@2x.png");
+        background-image: url(/assets/images/twit_white@2x.png);
     }
     .feedbacks .stars > .star > .fill-star {
-        background-image: url("../assets/images/star_feedback@2x.png");
+        background-image: url(/assets/images/star_feedback@2x.png);
     }
     .scroll-icon .icon-desktop {
-        background-image: url("../assets/images/scroll_down@2x.png");
+        background-image: url(/assets/images/scroll_down@2x.png);
         background-size: 30px 40px;
     }
     .scroll-icon .icon-mobile{
-        background-image: url("../assets/images/arrow_down@2x.png");
+        background-image: url(/assets/images/arrow_down@2x.png);
         background-size: 12px 16px;
     }
     .info .price .dollar{
-        background-image: url("../assets/images/price_ic@2x.png");
+        background-image: url(/assets/images/price_ic@2x.png);
         background-size: 22px 22px;
     }
     .info .user-rating .stars>.star{
-        background-image: url("../assets/images/star_unfilled_rate@2x.png");
+        background-image: url(/assets/images/star_unfilled_rate@2x.png);
     }
     .info .user-rating .stars>.star>.fill-star{
-        background-image: url("../assets/images/star_rate@2x.png");
+        background-image: url(/assets/images/star_rate@2x.png);
         vertical-align: top;
     }
     .feedbacks .stars > .star{
-        background-image: url("../assets/images/star_unfilled_feedback@2x.png");
+        background-image: url(/assets/images/star_unfilled_feedback@2x.png);
     }
     .navbar-default .navbar-nav .message-lt{
-        background: url("../assets/images/message@2x.png") no-repeat;
+        background: url(/assets/images/message@2x.png) no-repeat;
         background-size: 25px 18px;
         margin-top: 10px;
     }
     .message-controls .delete i{
-        background-image: url("../assets/images/delete@2x.png");
+        background-image: url(/assets/images/delete@2x.png);
     }
     .message-controls .archive i{
-        background-image: url("../assets/images/archive@2x.png");
+        background-image: url(/assets/images/archive@2x.png);
     }
     .message-controls .confirmed i{
-        background-image: url("../assets/images/confirmed@2x.png");
+        background-image: url(/assets/images/confirmed@2x.png);
     }
     .profile-card .video-icon{
-        background-image: url("../assets/images/video_icon@2x.png");
+        background-image: url(/assets/images/video_icon@2x.png);
         background-size: 22px 18px;
     }
     .enq-icon.icon-date{
-        background-image: url("../assets/images/date@2x.png");
+        background-image: url(/assets/images/date@2x.png);
     }
     .enq-icon.icon-timing{
-        background-image: url("../assets/images/timing@2x.png");
+        background-image: url(/assets/images/timing@2x.png);
     }
     .enq-icon.icon-location{
-        background-image: url("../assets/images/location@2x.png");
+        background-image: url(/assets/images/location@2x.png);
     }
     .enq-icon.icon-event{
-        background-image: url("../assets/images/event@2x.png");
+        background-image: url(/assets/images/event@2x.png);
     }
     .enq-icon.icon-client{
-        background-image: url("../assets/images/client@2x.png");
+        background-image: url(/assets/images/client@2x.png);
     }
     .act .ico.edit{
-        background-image: url("../assets/images/edit@2x.png");
+        background-image: url(/assets/images/edit@2x.png);
         background-size: 28px 27px;
     }
     .act .ico.delete{
-        background-image: url("../assets/images/delete-light@2x.png");
+        background-image: url(/assets/images/delete-light@2x.png);
         background-size: 27px 26px;
     }
     .act .ico.question{
-        background-image: url("../assets/images/question@2x.png");
+        background-image: url(/assets/images/question@2x.png);
         background-size: 28px 28px;
     }
     .requirement-form .btn-close{
-        background-image: url("../assets/images/close-modal@2x.png");
+        background-image: url(/assets/images/close-modal@2x.png);
         background-size: 28px 28px;
     }
     .requirement-form .item-trash{
-        background-image: url("../assets/images/remove-item@2x.png");
+        background-image: url(/assets/images/remove-item@2x.png);
         background-size: 15px 15px;
     }
     .note .btn-close{
-        background-image: url("../assets/images/close@2x.png");
+        background-image: url(/assets/images/close@2x.png);
         background-size: 12px 12px;
     }
     .requirements .add-box .btn{
-        background-image: url("../assets/images/add-req@2x.png");
+        background-image: url(/assets/images/add-req@2x.png);
         background-size: 28px 28px;
     }
     .calendar .add:after{
-        background-image: url("../assets/images/add-entry@2x.png");
+        background-image: url(/assets/images/add-entry@2x.png);
         background-size: 20px 20px;
     }
     .message-form .btn-upload:before{
-        background-image: url("../assets/images/upload@2x.png");
+        background-image: url(/assets/images/upload@2x.png);
         background-size: 12px 15px;
     }
     .chat-room .block-list .confirm:before{
-        background-image: url("../assets/images/confirmed@2x.png");
+        background-image: url(/assets/images/confirmed@2x.png);
         background-size: 18px 18px;
     }
     .navbar-default .navbar-right .profile .dropdown-menu li:after,
@@ -3501,115 +3501,118 @@ only screen and (min-resolution: 2dppx) {
         background-size: 18px 18px;
     }
     .navbar-default .orange_dashboard:after{
-        background: url('../assets/images/dashboard@2x.png') no-repeat;
+        background: url(/assets/images/dashboard@2x.png) no-repeat;
     }
     .navbar-default .orange_edit:after{
-        background: url('../assets/images/edit-orange@2x.png') no-repeat;
+        background: url(/assets/images/edit-orange@2x.png) no-repeat;
     }
     .navbar-default .orange_logout:after{
-        background: url('../assets/images/log_out@2x.png') no-repeat;
+        background: url(/assets/images/log_out@2x.png) no-repeat;
     }
     .navbar-default .orange_profile:after{
-        background: url('../assets/images/profile@2x.png') no-repeat;
+        background: url(/assets/images/profile@2x.png) no-repeat;
     }
     .navbar-default .orange_settings:after{
-        background: url('../assets/images/settings@2x.png') no-repeat;
+        background: url(/assets/images/settings@2x.png) no-repeat;
     }
     .header-background .set-background .ico{
-        background: url('../assets/images/change_photo@2x.png') no-repeat;
+        background: url(/assets/images/change_photo@2x.png) no-repeat;
         background-size: 24px 22px;
     }
     .profile-info .set-avatar .ico{
-        background: url('../assets/images/change_photo@2x.png') no-repeat;
+        background: url(/assets/images/change_photo@2x.png) no-repeat;
         background-size: 24px 22px;
     }
     .profile-info .info .set-categories .ico{
-        background: url('../assets/images/edit_categories@2x.png') no-repeat;
+        background: url(/assets/images/edit_categories@2x.png) no-repeat;
         background-size: 20px 20px;
     }
     .btns-list .btn-add.photo .ico{
-        background: url('../assets/images/change_photo@2x.png') no-repeat;
+        background: url(/assets/images/change_photo@2x.png) no-repeat;
         background-size: 18px 16px;
     }
     .btns-list .btn-add.video .ico{
-        background: url('../assets/images/change_video@2x.png') no-repeat;
+        background: url(/assets/images/change_video@2x.png) no-repeat;
         background-size: 18px 16px;
     }
     .edit-form .options-list .btn-option.edit .ico{
-        background: url('../assets/images/edit_blue@2x.png') no-repeat;
+        background: url(/assets/images/edit_blue@2x.png) no-repeat;
         background-size: 18px 17px;
     }
     .edit-form .options-list .btn-option.remove .ico{
-        background: url('../assets/images/delete_blue@2x.png') no-repeat;
+        background: url(/assets/images/delete_blue@2x.png) no-repeat;
         background-size: 18px 17px;
     }
     .edit-form .options-list .btn-option.check .ico{
-        background: url('../assets/images/done-blue@2x.png') no-repeat;
+        background: url(/assets/images/done-blue@2x.png) no-repeat;
         background-size: 18px 17px;
     }
     .promo-view .logo{
-        background: url('../assets/images/logo-black@2x.png') no-repeat;
+        background: url(/assets/images/logo-black@2x.png) no-repeat;
         background-size: 275px 124px;
     }
     .recovery-form .notify-list li:after{
-        background: url('../assets/images/checkmark_recovery_password@2x.png') no-repeat;
+        background: url(/assets/images/checkmark_recovery_password@2x.png) no-repeat;
         background-size: 19px 14px;
     }
     .settings .btn-edit{
-        background: url('../assets/images/edit-darkgray@2x.png') no-repeat;
+        background: url(/assets/images/edit-darkgray@2x.png) no-repeat;
         background-size: 24px 24px;
     }
     .modal.add-entry .modal-content .close > span{
-        background: url('../assets/images/close@2x.png');
+        background: url(/assets/images/close@2x.png);
         background-size: 12px 12px;
     }
     .free-quote-modal .modal-content .close > span {
-        background: url(../assets/images/cross@2x.png) no-repeat;
+        background: url(/assets/images/cross@2x.png) no-repeat;
         background-size: cover;
     }
     i.available {
-        background: url(../assets/images/available@2x.png);
+        background: url(/assets/images/available@2x.png);
     }
     i.escrow {
-        background: url(../assets/images/escrow@2x.png);
+        background: url(/assets/images/escrow@2x.png);
     }
     i.bookings {
-        background: url(../assets/images/bookings@2x.png);
+        background: url(/assets/images/bookings@2x.png);
     }
     .flex_1 .avatar {
-        background-image: url(../assets/images/client_payment_profile@2x.jpg);
+        background-image: url(/assets/images/client_payment_profile@2x.jpg);
     }
     i.attach {
-        background: url(../assets/images/attach@2x.png);
+        background: url(/assets/images/attach@2x.png);
     }
     i.checkmark {
-        background: url(../assets/images/checkmark@2x.png);
+        background: url(/assets/images/checkmark@2x.png);
     }
     i.close {
-        background: url(../assets/images/close@2x.png);
+        background: url(/assets/images/close@2x.png);
     }
     i.delete_attached {
-        background: url(../assets/images/delete_attached@2x.png);
+        background: url(/assets/images/delete_attached@2x.png);
     }
     i.notifications {
-        background: url(../assets/images/notifications@2x.png);
+        background: url(/assets/images/notifications@2x.png);
     }
     i.picture {
-        background: url(../assets/images/picture@2x.png);
+        background: url(/assets/images/picture@2x.png);
     }
     i.print {
-        background: url(../assets/images/print@2x.png);
+        background: url(/assets/images/print@2x.png);
     }
     i.share {
-        background: url(../assets/images/share@2x.png);
+        background: url(/assets/images/share@2x.png);
     }
     i.total_collected_bag {
-        background-image: url(../assets/images/total_collected@2x.png);
+        background-image: url(/assets/images/total_collected@2x.png);
     }
     i.visible-acts {
-        background-image: url(../assets/images/visible_acts_notification@2x.png);
+        background-image: url(/assets/images/visible_acts_notification@2x.png);
     }
     i.invisible-acts {
-        background-image: url(../assets/images/invisible_acts_notification@2x.png);
+        background-image: url(/assets/images/invisible_acts_notification@2x.png);
+    }
+    i.icon.icon-quotation-sent {
+        background-image: url(/assets/images/success@2x.png);
     }
 }

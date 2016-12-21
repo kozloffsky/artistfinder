@@ -73,11 +73,11 @@
 
                     <div class="controls">
                         {% if order.event.published_request is defined and order.event.published_request %}
-                            <div class="button-gradient filled">
+                            <div class="button-gradient filled orange">
                                 <button type="button" class="btn register quotationSendbtn" order-id="{{ order.id }}">Edit Quotation</button>
                             </div>
                         {% else %}
-                            <div class="button-gradient filled">
+                            <div class="button-gradient filled orange">
                                 <button type="button" class="btn register quotationSendbtn" order-id="{{ order.id }}">Send Quotation</button>
                             </div>
                         {% endif %}
@@ -86,7 +86,7 @@
                             <button type="button" class="btn register"><a href="/dashboard/chat/{{ order.chat.id }}">Send Message</a></button>
                         </div>
 
-                        <div class="button-gradient">
+                        <div class="button-gradient orange">
                             <button type="button" class="btn register rejectRequest">Not available</button>
                         </div>
                     </div>
@@ -149,7 +149,7 @@
                             </p>
 
                             <div class="controls">
-                                <div class="button-gradient filled">
+                                <div class="button-gradient filled orange">
                                     <button type="button" class="btn register quotationSendbtn" disabled>Send Quotation</button>
                                 </div>
 
@@ -158,7 +158,7 @@
                                     <button type="button" class="btn register"><a href="/dashboard/chat/{{ order.chat_id }}">Send Message</a></button>
                                 </div>
 
-                                <div class="button-gradient">
+                                <div class="button-gradient orange">
                                     <button type="button" class="btn register rejectRequest" disabled>Rejected</button>
                                 </div>
                             </div>

@@ -94,7 +94,7 @@ $(function () {
         var visibleCards = parseInt(areaWidth / cardWidth);
         var cardMargin = (areaWidth - cardWidth * visibleCards) / visibleCards;
 
-        console.log(areaWidth,cardWidth,visibleCards,cardMargin);
+        //console.log(areaWidth,cardWidth,visibleCards,cardMargin);
 
         $('.profile-card.mobile-horizontal').each(function() {
             $(this).css({

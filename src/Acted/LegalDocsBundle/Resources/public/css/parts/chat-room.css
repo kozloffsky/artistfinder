@@ -345,12 +345,15 @@ body {
     font-family: LatoRegular;
     font-size: 12px;
     color: rgba(0, 0, 0, 0.87);
-    margin: 0 0 0 2px;
+    margin: 0 0 0 4px;
 }
 .chat-room .quote-section .holder article.service .set-currency {
     float: right;
     margin: 0 109px 0 0;
     font-size: 12px;
+}
+.chat-room .quote-section .holder article.service .set-currency span:nth-of-type(2) {
+    margin: 0 0 0 4px;
 }
 
 
@@ -424,6 +427,7 @@ body {
 }
 .chat-room .quote-section .holder .no-quote-submitted {
     text-align: center;
+    margin: 69px 0 66px 0;
 }
 .chat-room .quote-section .controls {
     height: 26px;
@@ -431,7 +435,7 @@ body {
 }
 .chat-room .quote-section .controls.no-quote {
     position: absolute;
-    top: 66%;
+    top: 50%;
     left: 0;
 }
 .chat-room .info-block{
@@ -1223,6 +1227,9 @@ select.full-width + .select2{
     color: rgba(255, 255, 255, 1);
     line-height: 20px;
 }
+.chat-room .controls.book-now-btn .button-gradient.filled button[disabled] {
+    background: rgba(219, 219, 219, 1);
+}
 
 .chat-room article .currency-box {
     margin: 7px 0 6px 0;
@@ -1283,6 +1290,29 @@ select.full-width + .select2{
     color: rgba(46, 46, 46, 1);
 }
 
+
+.chat-room input.edit-time,
+.chat-room textarea.edit-time {
+    border: 2px solid rgba(97, 108, 197, 0.21);
+    border-radius: 6px;
+    background: transparent;
+    font-family: LatoRegular;
+    font-size: 14px;
+    color: rgba(18, 18, 18, 0.87);
+}
+.chat-room input.edit-time {
+    height: 28px;
+    width: 67px;
+    padding: 0 0 0 4px;
+}
+.chat-room textarea.edit-time {
+    height: 69px;
+    width: 510px;
+    line-height: 21px;
+    padding: 6px 20px 0 12px;
+    resize: none;
+}
+
 /*--------------------------------------------------------------------------------------------------------------------*/
 @media screen and (min-width: 1199px) {
     .chat-room .detail-form .col-custom-size {
@@ -1291,7 +1321,7 @@ select.full-width + .select2{
 }
 @media screen and (min-width: 768px) {
     .chat-room .quote-section .holder {
-        height: 480px;
+        height: 314px;
     }
     .chat-room .quote-section .holder .no-quote-submitted {
         text-align: center;
@@ -1377,6 +1407,9 @@ select.full-width + .select2{
     }
     .chat-room .quote-section .holder article.service .set-currency {
         margin: 0px 60px 0 0;
+    }
+    .chat-room textarea.edit-time {
+        width: 100%;
     }
 }
 @media (max-width: 991px){
@@ -1566,6 +1599,9 @@ select.full-width + .select2{
     }
     .chat-room .tr-container .tr-title {
         margin: 15px 0 0 0;
+        display: block;
+    }
+    .chat-room .tr-container .performance-info i {
         display: block;
     }
 }
@@ -1986,5 +2022,89 @@ select.full-width + .select2{
     .booking-modal .modal-footer .custom-checkbox {
         position: relative;
         display: block;
+    }
+}
+
+/* ------- QUOTATION SENT MODAL ---------- */
+.quotation-sent-modal .modal-body {
+    padding: 0;
+}
+.quotation-sent-modal .modal-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    height: 183px;
+    width: 297px;
+
+    margin: -91.5px -148.5px;
+}
+.quotation-sent-modal .modal-dialog .modal-content {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: none;
+    border: none;
+    border-radius: 11px;
+}
+.quotation-sent-modal span.title,
+.quotation-sent-modal span.subtitle {
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.87);
+    display: block;
+}
+.quotation-sent-modal span.title {
+    font-family: LatoBold;
+    font-size: 18px;
+
+    padding: 14px 0 0 0;
+}
+.quotation-sent-modal span.subtitle {
+    font-family: LatoRegular;
+    font-size: 15px;
+
+    padding: 28px 0 0 0;
+}
+.quotation-sent-modal i.icon-quotation-sent {
+    height: 27px;
+    width: 33px;
+    margin: 29px 0 33px 0;
+}
+
+@media screen and (max-width: 320px) {
+    .quotation-sent-modal {
+        margin: 54px 0 0 0;
+    }
+    .quotation-sent-modal span.title {
+        padding: 61px 0 0 0;
+    }
+    .quotation-sent-modal .modal-dialog {
+        position: relative;
+        width: 100%;
+        margin: 0;
+        top: 0;
+        left: 0;
+    }
+    .quotation-sent-modal .modal-dialog .modal-content {
+        border-radius: 0;
+        height: calc(100vh - 54px);
+    }
+
+    .quotation-sent-modal ~ .modal-backdrop.in {
+        opacity: 0;
+    }
+
+    .quotation-sent-modal .close-button {
+        background: transparent;
+        outline: none;
+        border: none;
+        width: 27px;
+        height: 27px;
+        position: absolute;
+        right: 18px;
+        top: 12px;
+    }
+
+    .quotation-sent-modal .close-button i.icon-close {
+        height: 27px;
+        width: 27px;
     }
 }

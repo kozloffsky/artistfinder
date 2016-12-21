@@ -40,51 +40,22 @@
     {% include '@ActedLegalDocs/Default/confirmBookingModal.html.twig' %}
     <div class="container">
         {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
-        <!-- THIS MENU VISIBLE ONLY ON DESCTIOP SCREEN-->
-        <!--<ul class="categories-menu">
-            <li class="menu-block active"><a href="/messages">Messages</a></li>
-            <li class="menu-block"><a href="/enquiries">Enquiries</a></li>
-            <li class="menu-block"><a href="/bookings">Bookings</a></li>
-            <li class="menu-block"><a href="/agenda">Agenda</a></li>
-            <li class="menu-block"><a href="/payment">Payments</a></li>
-            <li class="menu-block"><a href="/prices">Prices</a></li>
-            <li class="menu-block"><a href="/reports">Technical Requirements</a></li>
-            <li class="menu-block"><a href="/feedbacks">Feedbacks</a></li>
-        </ul>-->
-
-        <!-- THIS DROPDOWN VISIBLE ONLY ON SM SCREEN-->
-        <!--<div class="dropdown categories-dropdown hidden-lg hidden-md hidden-sm visible-xs">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Chat-room
-                <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-                <li class="menu-block"><a href="/messages">Messages</a></li>
-                <li class="menu-block"><a href="/enquiries">Enquiries</a></li>
-                <li class="menu-block"><a href="/bookings">Bookings</a></li>
-                <li class="menu-block"><a href="/agenda">Agenda</a></li>
-                <li class="menu-block"><a href="/prices">Prices</a></li>
-                <li class="menu-block"><a href="/payment">Payment & Accounts</a></li>
-                <li class="menu-block"><a href="/reports">Reports</a></li>
-                <li class="menu-block"><a href="/feedbacks">Feedbacks</a></li>
-            </ul>
-        </div>-->
 
         <div class="wrap">
             <!-- TITLE SECTION -->
             <section>
-                <!--<a class="btn-back" href="/messages">Back to messages</a>-->
                 <h2 class="main-title">Chatroom #{{ chat.chat_id }}</h2>
                 <div class="hidden" id="chatId">{{ chat.chat_id }}</div>
-                <!--detail form start-->
-                <!--<div class="tooltip-message warning">
+
+                <div class="tooltip-message warning">
                     <i class="notification-bell" aria-hidden="true"></i>
                     <span>The client has updated the event details, please validate them!</span>
                 </div>
                 <div class="tooltip-message info">
                     <i class="notification-bell" aria-hidden="true"></i>
                     <span>The client has updated the performance time, please confirm you are fine with this change</span>
-                </div>-->
+                </div>
             </section>
-
             <!-- EVENT INFO SECTION -->
             <section class="section-one">
                 <div class="section-info-title">
@@ -94,7 +65,7 @@
 
                 {% include "ActedLegalDocsBundle:ChatRoom:chatRoomEvent.html.twig" %}
 
-                <div class="section-info-footer">
+                <div class="section-info-footer hidden-xs">
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
@@ -111,33 +82,42 @@
                     </div>
                 </div>
             </section>
-
             <section class="section-two">
                 <div class="section-info-title">
                     <span></span>
-                    <p>Agree on the timing and technical requirements</p>
+                    <p>Agree on timing and tech requirements</p>
                 </div>
                 <div class="row clearfix">
                     <div class="tr-container">
-                        <div class="col-md-6 no-pad">
-                            <span class="title">Performance time</span>
-                            <div class="performance-time">
-                                <span class="info">The performance starts at:</span>
-                                <span class="time">{{ order.performanceStartTime }}</span>
+                        <div class="col-sm-6 no-pad">
+                            <div class="row">
+                                <span class="title">Performance time</span>
+                                <div class="performance-time">
+                                    <span class="info">The performance starts at:</span>
+                                    <span class="time">{{ order.performanceStartTime }}</span>
+                                </div>
+                                <div class="performance-info">
+                                    Additional info <i>(This will be included in the booking agreement)</i>
+                                </div>
+                                <div class="performance-info-desc">
+                                    <p>This performance will continue for 3 days. First two days will start from 2 pm till 3 am. And third day will be a full day party!</p>
+                                </div>
                             </div>
-                            <div class="performance-info">
-                                Additional info <i>(This will be included in the booking agreement):</i>
-                            </div>
-                            <div class="performance-info-desc">
-                                <p>This performance will continue for 3 days. First two days will start from 2 pm till 3 am. And third day will be a full day party!</p>
+                            <div class="row section-info-footer hidden-sm hidden-md hidden-lg">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-pad">
+                                    <div class="custom-checkbox">
+                                        <input id="timing_agree_1" name="timing_agree_1" value="" type="checkbox" >
+                                        <label for="timing_agree_1">I agree with this timing</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-sm-6 no-pad">
                             {% include 'ActedLegalDocsBundle:ChatRoom:chat_tech_req.html.twig' %}
                         </div>
                     </div>
                 </div>
-                <div class="section-info-footer">
+                <div class="section-info-footer hidden-xs">
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
@@ -156,53 +136,68 @@
             </section>
             <section class="section-three">
                 <div class="section-info-title">
-                    <span></span>
-                    <p>Confirm the booking</p>
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-7 no-pad">
+                            <span></span>
+                            <p>Confirm the booking</p>
+                        </div>
+                        <div class="col-sm-6 col-xs-5 no-pad">
+                            <p class="booking-status">Status: <b>Confirmed</b></p>
+                        </div>
+                    </div>
                 </div>
                 <div class="row booking-confirm-container">
-                    <div class="col-md-6">
-                        <p class="deposit-info"><b>Deposit:</b> 1500 GBP received via secured payment</p>
+                    <div class="col-sm-6">
+                        <p class="deposit-info"><b>Deposit:</b> 1500 GBP received via secured payment <b class="non-refundable-info">(Non - refundable)</b></p>
                         <p class="deposit-info"><b>Balance:</b> 1500 GBP unpaid</p>
                     </div>
-                    <div class="col-md-3 booking-confirm-list pull-right">
-                        <div class="booking-confirm-item">
-                            <div>
-                                Quotation
+                    <div class="col-sm-6 booking-confirm-list no-pad">
+                        <div class="pull-right">
+                            <div class="booking-confirm-item">
+                                <div>
+                                    Quotation
+                                </div>
+                                <div>
+                                    <a href="{{ quotationLink }}">See</a>
+                                </div>
+                                <div>
+                                    <a href="{{ quotationLink }}">Download</a>
+                                </div>
                             </div>
-                            <div>
-                                <a href="{{ quotationLink }}">See</a>
+                            <div class="booking-confirm-item">
+                                <div>
+                                    Invoice
+                                </div>
+                                <div>
+                                    <a href="#">See</a>
+                                </div>
+                                <div>
+                                    <a href="#">Download</a>
+                                </div>
                             </div>
-                            <div>
-                                <a href="{{ quotationLink }}">Download</a>
-                            </div>
-                        </div>
-                        <div class="booking-confirm-item">
-                            <div>
-                                Invoice
-                            </div>
-                            <div>
-                                <a href="#">See</a>
-                            </div>
-                            <div>
-                                <a href="#">Download</a>
-                            </div>
-                        </div>
-                        <div class="booking-confirm-item">
-                            <div>
-                                Booking Agreement
-                            </div>
-                            <div>
-                                <a href="#">See</a>
-                            </div>
-                            <div>
-                                <a href="#">Download</a>
+                            <div class="booking-confirm-item">
+                                <div>
+                                    Booking Agreement
+                                </div>
+                                <div>
+                                    <a href="#">See</a>
+                                </div>
+                                <div>
+                                    <a href="#">Download</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
                 {% if user.roles[0] == 'ROLE_CLIENT' and order.status < 2 %}
+
                 <div class="row text-center">
-                    <button class="book-now-btn" v-on:click="showConfirmModal" v-bind:disabled="bookingAllowed">Book now</button>
+                    <div class="controls book-now-btn">
+                        <div class="button-gradient filled orange">
+                            <button class="btn" type="submit" v-on:click="showConfirmModal" v-bind:disabled="bookingAllowed">Book now</button>
+                        </div>
+                    </div>
                 </div>
                 {% endif %}
             </section>
@@ -230,11 +225,6 @@
                     </div>
                 </div>
             </section>
-
-            <!--detail form end-->
-            <!--miscellaneous list start-->
-
-            <!--miscellaneous list end-->
         </div>
         <!--twocolumns start-->
         <div id="twocolumns">
@@ -257,24 +247,11 @@
                                 ]
                             })
                         </script>
-                        <!--<li>
-                            <a href="#" class="img-holder">
-                                <img src="assets/images/{{ asset('assets/images/noAvatar.png') }}" alt="image description"/>
-                            </a>
-                            <div class="holder">
-                                {% if chatMessage.message_text is defined %}
-                                <div class="box">
-                                    <p>{{ chatMessage.message_text }}</p>
-                                    <em class="date">{{ chatMessage.time_from_get }}</em>
-                                </div>
-                                {% endif %}
-                            </div>
-                        </li>-->
                     {% endfor %}
 
                     <li v-for="message in chatMessages">
                         <a href="#" class="img-holder">
-                            <img src="assets/images/avatar.jpg" alt="image description">
+                            <img src="/assets/images/avatar.jpg" alt="image description">
                         </a>
                         <div class="holder">
                             <div class="box">
@@ -295,56 +272,61 @@
                     <textarea class="textarea" maxlength="512" placeholder="Write your message" id="chat-room">${sendText}</textarea>
                     <div class="upload-box">
                         <div class="row">
-                            <input type="file" name="files[]" id="filer_input1" class="chatFileUpload" multiple="multiple">
+                            <input type="file" name="files[]" id="filer_input1" multiple="multiple">
                         </div>
                         <div class="controls">
-                            <div class="button-gradient filled">
-                                <button class="btn" id="sendMsg" type="submit"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate chatMessageSending"></span> Send</button>
+                            <div class="button-gradient filled orange">
+                                <button class="btn" type="submit" chatMessageSending>Send</button>
                             </div>
                         </div>
                     </div>
                 </form>
-                <div class="document-list">
-                    {% for file in files %}
-                            <div class="doc-item">
-                                <i class="icon icon-white-cross"></i>
-                                <img src="{{ file.fileName }}">
+                <div>
+                    <div class="text-center">
+                        <button show-attached-files class="show-attached-files hidden-sm hidden-md hidden-lg">See attached files</button>
+                    </div>
+
+                    <div attached-files class="hidden-xs">
+                        <div class="document-list">
+                            {% for file in files %}
+                                <div class="doc-item">
+                                    <i class="icon icon-white-cross"></i>
+                                    <img src="{{ file.fileName }}">
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="document-files">
+                            <div class="file-item">
+                                <span>Document</span>
+                                <i class="icon icon-delete-attached" aria-hidden="true"></i>
+                                <span>Event_1.pdf</span>
                             </div>
-
-                    {% endfor %}
-
-                </div>
-                <div class="document-files">
-
-                    <div class="file-item">
-                        <span>Document</span>
-                        <i class="icon icon-delete-attached" aria-hidden="true"></i>
-                        <span>Event_1.pdf</span>
-                    </div>
-                    <div class="file-item">
-                        <span>Document</span>
-                        <i class="icon icon-delete-attached" aria-hidden="true"></i>
-                        <span>Event_1.pdf</span>
-                    </div>
-                    <div class="file-item">
-                        <span>Document</span>
-                        <i class="icon icon-delete-attached" aria-hidden="true"></i>
-                        <span>Event_1.pdf</span>
-                    </div>
-                    <div class="file-item">
-                        <span>Document</span>
-                        <i class="icon icon-delete-attached" aria-hidden="true"></i>
-                        <span>Event_1.pdf</span>
-                    </div>
-                    <div class="file-item">
-                        <span>Document</span>
-                        <i class="icon icon-delete-attached" aria-hidden="true"></i>
-                        <span>Event_1.pdf</span>
+                            <div class="file-item">
+                                <span>Document</span>
+                                <i class="icon icon-delete-attached" aria-hidden="true"></i>
+                                <span>Event_1.pdf</span>
+                            </div>
+                            <div class="file-item">
+                                <span>Document</span>
+                                <i class="icon icon-delete-attached" aria-hidden="true"></i>
+                                <span>Event_1.pdf</span>
+                            </div>
+                            <div class="file-item">
+                                <span>Document</span>
+                                <i class="icon icon-delete-attached" aria-hidden="true"></i>
+                                <span>Event_1.pdf</span>
+                            </div>
+                            <div class="file-item">
+                                <span>Document</span>
+                                <i class="icon icon-delete-attached" aria-hidden="true"></i>
+                                <span>Event_1.pdf</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
-        <!--twocolumns end-->
     </div>
 
 </main>
