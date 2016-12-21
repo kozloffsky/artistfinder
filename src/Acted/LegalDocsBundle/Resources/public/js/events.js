@@ -243,6 +243,7 @@ $(function () {
 
     function showEvents() {
         $('.left_column').show();
+        $('.right_column').show();
     }
 
     $().ready(function () {
@@ -265,6 +266,14 @@ $(function () {
         $this.html(text);
         $current.html(text.length);
     }
+
+    //TODO refracture googleplace ID
+    document.addEventListener('googlePlaceChanged', function (e) {
+        var eventId = window.getCurrentEvent().id;
+        var address = $(e.target).find('#event_address').val();
+        var data = {data: {address: address}};
+        sendData(eventId, data)
+    }, false);
 
 
     $('textarea#additional_info').keyup(charsCounter);
