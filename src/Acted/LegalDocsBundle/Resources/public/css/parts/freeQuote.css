@@ -25,7 +25,7 @@
     outline: none!important;
 }
 
-.free-quote-modal .modal-content .close > span {
+.modal-content .close > span {
     background: url(../../assets/images/cross.png) no-repeat;
     height: 18px;
     margin: -9px -9px;
@@ -100,7 +100,7 @@
     font-size: 14px;
     color: white;
     float: right;
-    padding-top: 4px;
+    padding-top: 3px;
 }
 
 .free-quote-modal.modal-registered .quote-box a{
@@ -199,15 +199,15 @@
     margin: 0;
     position: relative;
     width: 100%;
-    -webkit-column-count: 3;
-    -moz-column-count: 3;
-    column-count: 3;
-    -moz-column-gap: 0;
-    -webkit-column-gap: 0;
-    column-gap: 0;
+    /*-webkit-column-count: 3;*/
+    /*-moz-column-count: 3;*/
+    /*column-count: 3;*/
+    /*-moz-column-gap: 0;*/
+    /*-webkit-column-gap: 0;*/
+    /*column-gap: 0;*/
     padding: 0;
     background-color: rgba(97, 109, 197, 0.06);
-    padding: 0 0 16px 0;
+    padding: 0 0 2px 0;
 }
 .padd_bottom_15px {
     padding-bottom: 15px;
@@ -216,10 +216,11 @@
 .free-quote-modal .profile-categories li{
     float: left;
     margin-right: 0;
-    margin-left: 9px;
+    /*margin-left: 9px;*/
     margin-top: 5px;
     text-align: left;
     padding-left: 15px;
+    width: 33%;
 }
 
 .free-quote-modal .profile-categories .custom-checkbox label:before {
@@ -915,12 +916,6 @@ h4.eventChooseRequest select:active {
         color: white;
     }
 
-    .free-quote-modal .profile-categories {
-        -webkit-column-count: 3;
-        -moz-column-count: 3;
-        column-count: 3;
-    }
-
     /*free-quote-modal request media styles start*/
     .free-quote-modal.request .modal-header{padding: 14px 0px 15px;}
     .free-quote-modal.request .modal-content .close > span{color: #959595;}
@@ -1029,10 +1024,8 @@ h4.eventChooseRequest select:active {
     }
 }
 @media (max-width: 520px) {
-    .free-quote-modal .profile-categories {
-        -webkit-column-count: 2;
-        -moz-column-count: 2;
-        column-count: 2;
+    .free-quote-modal .profile-categories li {
+        width: 50%;
     }
 }
 @media (max-width: 479px) {
@@ -1103,9 +1096,7 @@ h4.eventChooseRequest select:active {
     }
 }
 @media (max-width: 390px) {
-    .free-quote-modal .profile-categories {
-        -webkit-column-count: 1;
-        -moz-column-count: 1;
-        column-count: 1;
+    .free-quote-modal .profile-categories li {
+        width: 100%;
     }
 }
