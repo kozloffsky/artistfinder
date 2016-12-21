@@ -35,8 +35,9 @@ api_artist_new_feedbacks:
   defaults: {_controller: ActedLegalDocsBundle:Feedback:getMonthFeedbacks}
 
 api_event_orders:
-  path: /events/{event}/orders
+  path: /events/{eventId}/orders/status/{status}
   methods: GET
-  defaults: {_controller: ActedLegalDocsBundle:Events:getOrdersByEvent}
+  defaults: {_controller: ActedLegalDocsBundle:Events:getOrdersByEvent, status: null}
   requirements:
     event: \d+
+    status: \d+

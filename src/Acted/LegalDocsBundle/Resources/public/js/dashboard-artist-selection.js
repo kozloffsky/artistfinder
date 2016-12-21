@@ -88,7 +88,7 @@ $(function () {
 
     function getOrdersForEvent(eventId) {
         $.ajax({
-            url: "/api/events/" + eventId + "/orders",
+            url: "/api/events/" + eventId + "/orders/status",
             method: "GET",
             success: function (response) {
                 if (typeof response.orders !== 'undefined') {

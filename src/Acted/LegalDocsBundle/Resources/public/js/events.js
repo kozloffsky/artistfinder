@@ -2,6 +2,10 @@ $(function () {
 
     'use strict';
 
+    const AWAITING = 0;
+    const AVAILABLE = 1;
+    const BOOKED = 2;
+
     //todo try to re fracture to 1 watcher.
 
     var toSend;
@@ -192,8 +196,9 @@ $(function () {
     }
 
     function getOrdersForEvent(eventId) {
+        var status = BOOKED;
         $.ajax({
-            url: '/api/events/' + eventId + '/orders',
+            url: '/api/events/' + eventId + '/orders/status/' + status,
             method: "GET",
             success: function (response) {
                 if (typeof response.orders !== 'undefined') {

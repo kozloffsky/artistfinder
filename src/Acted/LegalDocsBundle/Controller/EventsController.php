@@ -594,13 +594,27 @@ class EventsController extends Controller
         ), Response::HTTP_OK);
     }
 
-    public function getOrdersByEventAction(Request $request)
+    /**
+     * @ApiDoc(
+     *  description="Update order",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param Event $eventId
+     * @param integer $status
+     * @return JsonResponse
+     */
+    public function getOrdersByEventAction($eventId, $status)
     {
-        $event = $request->get('event');
-        $orderManager = $this->get('acted_legal_docs.model.order_manager');
-        $context = SerializationContext::create()->setGroups('order');
         $serializer = $this->get('jms_serializer');
-        $orders = $orderManager->getOrdersForEvent($event);
+        $eventRepo = $this->entityManager->getRepository('ActedLegalDocsBundle:Event');
+        $event = $eventRepo->find($eventId);
+
+        $context = SerializationContext::create()->setGroups('order');
+
+        $orders = $this->orderManager->getOrdersForEvent($event, $status);
         $orders = $serializer->toArray($orders, $context);
         $response = ['status' => 'success', 'orders' => $orders];
 
