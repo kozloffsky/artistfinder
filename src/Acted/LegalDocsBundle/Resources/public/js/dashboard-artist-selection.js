@@ -15,6 +15,14 @@ $(function () {
                 },
                 created: function () {
                     showArtists();
+                },
+                methods: {
+                    reject: function (event) {
+                        var $this = $(event.target);
+                        var $order = $this.parents('.artist-block');
+                        var chatRoomId = $order.data('chatroomId');
+                        reject(chatRoomId);
+                    }
                 }
             });
         }
@@ -91,6 +99,22 @@ $(function () {
                 console.log(error);
             }
         })
+    }
+
+    //TODO add ajax request to change order status
+    function reject(chatRoomId) {
+        var message = "The client has decided to book another performance";
+        $.ajax({
+            url: '/dashboard/web/push/' + chatRoomId,
+            method: "POST",
+            data: {message: message},
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
     }
 
     window.getOrdersForEvent = getOrdersForEvent;
