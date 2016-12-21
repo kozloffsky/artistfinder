@@ -8,13 +8,18 @@
 
 namespace Acted\LegalDocsBundle\Controller;
 
-
+use Acted\LegalDocsBundle\Entity\Order;
+use Acted\LegalDocsBundle\Entity\OrderItemService;
 use Acted\LegalDocsBundle\Model\OrderManager;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Serializer;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use JMS\DiExtraBundle\Annotation as DI;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\Response;
+use Acted\LegalDocsBundle\Entity\OrderItemPerformance;
+
 
 class OrderController extends Controller
 {
@@ -24,6 +29,12 @@ class OrderController extends Controller
      * @var OrderManager
      */
     private $orderManager;
+
+    /**
+     * @DI\Inject("doctrine.orm.entity_manager")
+     * @var EntityManager
+     */
+    private $entityManager;
 
     /**
      * @DI\Inject("jms_serializer")
@@ -74,11 +85,47 @@ class OrderController extends Controller
         return $this->render("@ActedLegalDocs/Order/payment.html.twig",['order'=>$orderId]);
     }
 
-    public function paySuccessAction($orderId){
-        if (!$this->orderManager->bookOrder($orderId)){
+    public function paySuccessAction($orderId)
+    {
+        if (!$this->orderManager->bookOrder($orderId)) {
             $this->createNotFoundException("Error while booking");
         }
+    }
+
+    /**
+     * @ApiDoc(
+     *  description="Update order",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param $orderId
+     * @return JsonResponse
+     */
+    public function updateOrderAction($orderId)
+    {
+        $extraPerformances = $this->get('request')->request->get('extraPerformances');
+        $performances = $this->get('request')->request->get('performances');
+        $services = $this->get('request')->request->get('services');
+        $paymentDetails = $this->get('request')->request->get('paymentDetails');
 
 
+        $this->entityManager->getConnection()->beginTransaction();
+        //$this->entityManager->getConnection()->setAutoCommit(false);
+
+        try {
+            $this->orderManager->updateOrder($orderId, $extraPerformances, $performances, $services, $paymentDetails);
+            $this->entityManager->getConnection()->commit();
+        }catch(\Exception $e){
+            $this->entityManager->getConnection()->rollback();
+
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        return new JsonResponse(['status'=>'ok']);
     }
 }
