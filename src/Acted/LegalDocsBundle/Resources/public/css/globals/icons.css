@@ -4,29 +4,36 @@ i.icon {
     background-repeat: no-repeat;
 }
 i.icon.icon-attach {
-    background-image: url(../../assets/images/attach.png);
+    background-image: url(/assets/images/attach.png);
 }
 i.icon.icon-checkmark {
-    background-image: url(../../assets/images/checkmark.png);
+    background-image: url(/assets/images/checkmark.png);
 }
 i.icon.icon-close {
-    background-image: url(../../assets/images/close.png);
+    background-image: url(/assets/images/close.png);
 }
 i.icon.icon-delete-attached {
-    background-image: url(../../assets/images/delete_attached.png);
+    background-image: url(/assets/images/delete_attached.png);
 }
 i.icon.icon-notifications {
-    background-image: url(../../assets/images/notifications.png);
+    background-image: url(/assets/images/notifications.png);
 }
 i.icon.icon-picture {
-    background-image: url(../../assets/images/picture.png);
+    background-image: url(/assets/images/picture.png);
 }
 i.icon.icon-print {
-    background-image: url(../../assets/images/print.png);
+    background-image: url(/assets/images/print.png);
 }
 i.icon.icon-share {
-    background-image: url(../../assets/images/share.png);
+    background-image: url(/assets/images/share.png);
 }
 i.icon.icon-white-cross {
-    background-image: url(../../assets/images/cross.png);
+    background-image: url(/assets/images/cross.png);
+}
+i.icon.icon-question-mark {
+    background-image: url(/assets/images/question_ic.png);
+
+    height: 16px;
+    width: 16px;
+    vertical-align: middle;
 }
