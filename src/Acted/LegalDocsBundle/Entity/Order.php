@@ -11,6 +11,7 @@ class Order
     const STATUS_NEW = 0;
     const STATUS_ACCEPTED = 1;
     const STATUS_BOOKED = 2;
+    const STATUS_ARCHIVED  = 3;
 
     const STATUS_CANCELED = 10;
 

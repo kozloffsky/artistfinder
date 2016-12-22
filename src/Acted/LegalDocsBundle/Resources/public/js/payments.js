@@ -5,22 +5,35 @@ $(function () {
     const AWAITING = 0;
     const AVAILABLE = 1;
     const BOOKED = 2;
+    const ARCHIVED = 3;
 
     var vueEventPayments;
+    var orderIsLoaded = false;
 
     function getOrderPaymentsForEvent(eventId) {
         var status = BOOKED;
         $.ajax({
-            url: '/api/events/' + eventId + '/orders/status/' + status,
+            url: '/api/events/' + eventId + '/orders/status',
             method: "GET",
             success: function (response) {
                 console.log(response);
                 if (typeof response.orders !== 'undefined') {
-                    vueEventPayments.paymentOrders = response.orders;
+                    var orders = [];
+                    for(var orderIndex in response.orders) {
+                        if (response.orders[orderIndex].status != BOOKED && response.orders[orderIndex].status != ARCHIVED) {
+                            continue;
+                        }
+
+                        orders.push(response.orders[orderIndex]);
+                    }
+
+                    vueEventPayments.paymentOrders = orders;
                     if (response.orders.length > 0) {
                         vueEventPayments.event = response.orders[0].event;
-                        //artist/user
                     }
+
+                    vueEventPayments.orderIsLoaded = true;
+                    $('.client-payments-main-block').show();
                 }
             },
             error: function (error) {
@@ -36,7 +49,14 @@ $(function () {
                 delimiters: ['${', '}'],
                 data: {
                     paymentOrders: [],
-                    event: {}
+                    event: {},
+                    orderIsLoaded: false,
+                    statuses: {
+                        awaiting: 0,
+                        available: 1,
+                        booked: 2,
+                        archived: 3
+                    }
                 },
                 created: function () {
 
@@ -66,6 +86,13 @@ $(function () {
                         date = date[1] + '/' + date[0] + '/' + date[2];
                         return moment(date).format('DD MMMM YYYY');
                         //var diff = moment().diff(createdAt, 'days');
+                    },
+                    "check_avatar": function (value) {
+                        if (typeof(value) == 'undefined') {
+                            return '../assets/images/client_payment_profile.jpg';
+                        }
+
+                        return value;
                     }
                 },
                 watch: {
