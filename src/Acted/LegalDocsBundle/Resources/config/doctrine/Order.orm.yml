@@ -15,8 +15,8 @@ Acted\LegalDocsBundle\Entity\Order:
 
           updated:
             type: datetime
-          #Order statis, can be 0 - new, 1 - booked, 2- confirmed, 3 - pre paid (whene event is already finished
-          #but payment date not yet reached),4 -  archived(all payments are done)
+          #Order statis, can be 0 - new, 1 - confirmed, 2 -  booked (whene event is already finished
+          #but payment date not yet reached),3 -  archived(all payments are done)
           status:
             type: integer
             notnull: true
