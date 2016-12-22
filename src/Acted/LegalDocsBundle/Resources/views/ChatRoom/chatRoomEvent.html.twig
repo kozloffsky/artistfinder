@@ -254,7 +254,6 @@
                 <h2 class="title quot">Quote #{{ order.id }}</h2>
                 <!--quote section holder start-->
                 <div class="holder">
-                    {% if order.status %}
                         {% for p in order.performances %}
                             <article class="service">
                                 <h3 class="package-name">{{ p.data['title'] }}</h3>
@@ -302,35 +301,20 @@
                                 </li>
                             </ul>
                         </article>
-                    {% else %}
-                        {% if user.artist is defined %}
-                            <div class="controls no-quote">
-                                <div class="button-gradient filled orange">
-                                    <button class="btn">Send a quote now</button>
-                                </div>
-                            </div>
-                        {% else %}
-                            <div class="no-quote-submitted">
-                                No quote submitted yet
-                            </div>
-                        {% endif %}
-                    {% endif %}
                 </div>
                 <!--quote section holder end-->
-                {% if order.status %}
-                    <div class="row">
-                        <div class="text-box">
-                            <h3>Payment terms</h3>
-                            <p><span class="percent">30%</span> guaranteed Deposit payment on <b>Escrow Account</b></p>
-                            <p><span class="percent">50%</span> guaranteed Balance payment on <b>Escrow Account</b></p>
-                        </div>
-                        <div class="controls">
-                            <div class="button-gradient filled orange">
-                                <button class="btn" type="submit">Edit Quotation</button>
-                            </div>
+                <div class="row">
+                    <div class="text-box">
+                        <h3>Payment terms</h3>
+                        <p><span class="percent">30%</span> guaranteed Deposit payment on <b>Escrow Account</b></p>
+                        <p><span class="percent">50%</span> guaranteed Balance payment on <b>Escrow Account</b></p>
+                    </div>
+                    <div class="controls">
+                        <div class="button-gradient filled orange">
+                            <button class="btn" type="submit">Edit Quotation</button>
                         </div>
                     </div>
-                {% endif %}
+                </div>
             </div>
             <div class="row section-info-footer hidden-sm hidden-md hidden-lg">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-pad">
