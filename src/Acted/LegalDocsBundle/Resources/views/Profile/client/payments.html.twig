@@ -23,20 +23,41 @@
                        <span>Diana Kroll</span>
                    </div>
 
-                   <div class="act-info-block">
-                       <div v-for="performance in paymentOrder.performances" class="col-md-12 col-sm-12 col-xs-12 act-item">
-                           <div class="client-order-act-info title">${ performance.data.title }</div>
-                           <div v-for="package in performance.data.packages">
-                               <div class="client-order-act-info description">${ package.name }</div>
-                               <div v-for="option in package.options">
-                                   <div class="client-order-act-info time">${ option.qty } x ${ option.duration }</div>
+                   <div class="col-md-12 act-info-block">
+                       <!-- PERFORMANCE -->
+                       <div class="row" v-for="performance in paymentOrder.performances">
+                           <div class="col-sm-2 no-pad">
+                               <div class="client-order-act-info title">${ performance.data.title }</div>
+                           </div>
+                           <div class="col-sm-4 no-pad">
+                               <!-- PACKAGE -->
+                               <div class="row order-package" v-for="package in performance.data.packages">
+                                   <div class="col-sm-6 no-pad">
+                                       <div class="client-order-act-info description">${ package.name }</div>
+                                   </div>
+                                   <div class="col-sm-6 no-pad">
+                                       <!-- SET -->
+                                       <div class="row" v-for="option in package.options">
+                                           <div class="col-sm-12 no-pad">
+                                               <div class="client-order-act-info time">${ option.qty } x ${ option.duration }</div>
+                                           </div>
+                                       </div>
+                                   </div>
                                </div>
                            </div>
-
-                           {#<div class="client-order-act-info title">Act 2 -Jazz Band</div>
-                           <div class="client-order-act-info description">3-piece Jazz Band</div>
-                           <div class="client-order-act-info time">2 x 45 min</div>#}
                        </div>
+
+
+
+                       {#<div v-for="performance in paymentOrder.performances" class="col-md-12 col-sm-12 col-xs-12 act-item">#}
+                           {#<div class="client-order-act-info title">${ performance.data.title }</div>#}
+                           {#<div v-for="package in performance.data.packages">#}
+                               {#<div class="client-order-act-info description">${ package.name }</div>#}
+                               {#<div v-for="option in package.options">#}
+                                   {#<div class="client-order-act-info time">${ option.qty } x ${ option.duration }</div>#}
+                               {#</div>#}
+                           {#</div>#}
+                       {#</div>#}
                       {# <div class="col-md-12 col-sm-12 col-xs-12 act-item">
                            <div class="client-order-act-info title">Act 2 -Jazz Band</div>
                            <div class="client-order-act-info description">3-piece Jazz Band</div>
