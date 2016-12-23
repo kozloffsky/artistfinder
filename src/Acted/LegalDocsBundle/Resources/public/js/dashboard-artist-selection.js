@@ -1,9 +1,9 @@
 $(function () {
     'use strict';
 
-    const AWAITING = 0;
-    const AVAILABLE = 1;
-    const BOOKED = 2;
+    var AWAITING = 0;
+    var AVAILABLE = 1;
+    var BOOKED = 2;
 
     try {
         if ($('.artist-selection').length > 0) {
