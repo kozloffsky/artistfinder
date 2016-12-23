@@ -27,9 +27,9 @@
         </ul>
         <p>
             You can reply instantly to this enquiry, or message me through our
-            <a href="{{ url('chat_room_list', {'userId': artist.id } ) }}">chatroom</a>.
+            <a href="{{ url('chat_room_list') }}">chatroom</a>.
             If you are not available, you just need to
-            <a href="{{ url('reject_offer', {'id': offer.id}) }}">click here</a>. </p>
+            <a href="{{ url('order_cancel', {'orderId': order.id}) }}">click here</a>. </p>
         <p>Many thanks & kind regards,</p>
         <p>{{ event.user.firstname }}</p>
     {% endautoescape %}

@@ -95,11 +95,12 @@ class EventsController extends Controller
                     /** Create ChatRoom */
                     $chat = $this->chatManager->createChat($event, $userArtist, $data);
                     /** Notify Artist */
-                    //TODO: move functionality to order
                     $this->eventManager->newMessageNotify($data, $userArtist);
-                    //$eventManager->createEventNotify($data, $userArtist, $offer);
 
-                    $this->orderManager->createOrder($event, $artist, $event->getUser()->getClient(), $performances, $chat);
+                    $order = $this->orderManager->createOrder($event, $artist, $event->getUser()->getClient(), $performances, $chat);
+                    $this->entityManager->flush();
+
+                    $this->eventManager->createEventNotify($data, $userArtist, $order);
                 }
 
                 $this->entityManager->flush();
@@ -572,13 +573,12 @@ class EventsController extends Controller
             $chat = $chatManager->createChat($event, $userArtist, $eventOfferData);
 
 
-            $this->orderManager->createOrder($event, $artist, $event->getUser()->getClient(), $performances, $chat);
+            $order = $this->orderManager->createOrder($event, $artist, $event->getUser()->getClient(), $performances, $chat);
             $this->entityManager->flush();
             $this->entityManager->getConnection()->commit();
 
             /** Notify Artist */
-            //TODO: fix to order
-            //$eventManager->createEventNotify($eventOfferData, $userArtist, $offer);
+            $eventManager->createEventNotify($eventOfferData, $userArtist, $order);
             $eventManager->newMessageNotify($eventOfferData, $userArtist);
         } catch (\Exception $e) {
             $this->entityManager->getConnection()->rollback();

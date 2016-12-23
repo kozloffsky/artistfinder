@@ -159,6 +159,7 @@ class OrderController extends Controller
      *     }
      * )
      * @param $orderId
+     * @param $type
      * @return JsonResponse
      */
     public function cancelOrderAction($orderId)
@@ -168,12 +169,21 @@ class OrderController extends Controller
         try{
             $this->orderManager->cancelOrder($orderId);
         }catch (EntityNotFoundException $e){
+
+            if (empty($type)) {
+                $this->addFlash('error', $e->getMessage());
+                return $this->redirectToRoute('acted_legal_docs_homepage');
+            }
+
             $response['status']  = 'error';
             $response['error'] = $e->getMessage();
         }
 
+        if (empty($type)) {
+            $this->addFlash('success', 'You rejected order');
+            return $this->redirectToRoute('acted_legal_docs_homepage');
+        }
+
         return new JsonResponse($response);
     }
-
-
 }

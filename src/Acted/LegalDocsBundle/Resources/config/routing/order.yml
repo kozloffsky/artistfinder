@@ -27,8 +27,8 @@ order_update:
     methods:  PUT
 
 order_cancel:
-    path:     /{orderId}
-    defaults: { _controller: ActedLegalDocsBundle:Order:cancelOrder, _format: json }
+    path:     /{orderId}/{type}
+    defaults: { _controller: ActedLegalDocsBundle:Order:cancelOrder, _format: json, type: null }
     methods:  DELETE
     requirements:
       orderId: \d+

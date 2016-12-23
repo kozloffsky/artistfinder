@@ -149,12 +149,12 @@ class EventsManager
      * @param $artist
      * @param $offer
      */
-    public function createEventNotify($eventData, $artist, $offer)
+    public function createEventNotify($eventData, $artist, $order)
     {
         $rendered = $this->templating->render('@ActedLegalDocs/Email/create_event_notify.html.twig', [
             'event' => $eventData,
             'artist' => $artist,
-            'offer' => $offer
+            'order' => $order
         ]);
 
         $this->userManager->sendEmailMessage($rendered, $this->mailFrom, $artist->getEmail());

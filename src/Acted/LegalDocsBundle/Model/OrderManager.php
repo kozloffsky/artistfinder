@@ -83,8 +83,7 @@ class OrderManager
                                 ){
 
         if($this->orderRepository->findOneBy(['event'=>$event, 'artist'=>$artist, 'client'=>$client])){
-            //todo: DO NOT FORDET UNCOMMENT AFTER TESTING!!!!
-            //throw new \Exception('order for this artist from this event already exists');
+            throw new \Exception('order for this artist from this event already exists');
         }
 
         $artistTechnicalRequirements = $this->technicalRequirementsRepository->createQueryBuilder('r')
