@@ -2,10 +2,10 @@ $(function () {
 
     'use strict';
 
-    const AWAITING = 0;
-    const AVAILABLE = 1;
-    const BOOKED = 2;
-    const ARCHIVED = 3;
+    var AWAITING = 0;
+    var AVAILABLE = 1;
+    var BOOKED = 2;
+    var ARCHIVED = 3;
 
     var vueEventPayments;
     var orderIsLoaded = false;
