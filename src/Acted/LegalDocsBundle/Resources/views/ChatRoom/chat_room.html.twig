@@ -100,7 +100,7 @@
                                     Additional info <i>(This will be included in the booking agreement)</i>
                                 </div>
                                 <div class="performance-info-desc">
-                                    <p>This performance will continue for 3 days. First two days will start from 2 pm till 3 am. And third day will be a full day party!</p>
+                                    <p>{{ order.event.comments }}</p>
                                 </div>
                             </div>
                             <div class="row section-info-footer hidden-sm hidden-md hidden-lg">
@@ -128,7 +128,7 @@
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
                                 <input id="requirements_agree" name="requirements_agree" value="" type="checkbox" v-model="requirementsAccepted" v-bind:disabled="userRole == 'ROLE_ARTIST' || !editable" >
-                                <label for="requirements_agree">I agree to provide these requirements${requirementsAccepted}</label>
+                                <label for="requirements_agree">I agree to provide these requirements</label>
                             </div>
                         </div>
                     </div>
@@ -148,8 +148,8 @@
                 </div>
                 <div class="row booking-confirm-container">
                     <div class="col-sm-6">
-                        <p class="deposit-info"><b>Deposit:</b> 1500 GBP received via secured payment <b class="non-refundable-info">(Non - refundable)</b></p>
-                        <p class="deposit-info"><b>Balance:</b> 1500 GBP unpaid</p>
+                        <p class="deposit-info"><b>Deposit:</b> {{ order.depositAmout }} GBP received via secured payment <b class="non-refundable-info">(Non - refundable)</b></p>
+                        <p class="deposit-info"><b>Balance:</b> {{ order.depositBallance }} GBP unpaid</p>
                     </div>
                     <div class="col-sm-6 booking-confirm-list no-pad">
                         <div class="pull-right">
@@ -276,7 +276,7 @@
                         </div>
                         <div class="controls">
                             <div class="button-gradient filled orange">
-                                <button class="btn" type="submit" chatMessageSending>Send</button>
+                                <button class="btn chatMessageSending" type="submit" >Send</button>
                             </div>
                         </div>
                     </div>
