@@ -269,10 +269,14 @@ $(function () {
 
     //TODO refracture googleplace ID
     document.addEventListener('googlePlaceChanged', function (e) {
-        var eventId = window.getCurrentEvent().id;
-        var address = $(e.target).find('#event_address').val();
-        var data = {data: {address: address}};
-        sendData(eventId, data)
+        try{
+            var eventId = window.getCurrentEvent().id;
+            var address = $(e.target).find('#event_address').val();
+            var data = {data: {address: address}};
+            sendData(eventId, data)
+        }catch (e){
+
+        }
     }, false);
 
 
