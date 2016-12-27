@@ -4,6 +4,7 @@ namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\ChatRoom;
 use Acted\LegalDocsBundle\Entity\EventOffer;
+use Acted\LegalDocsBundle\Entity\Order;
 use Acted\LegalDocsBundle\Entity\Performance;
 use Acted\LegalDocsBundle\Form\ChatRoomTechnicalRequirementsCreateType;
 use Acted\LegalDocsBundle\Form\ChatRoomTechnicalRequirementsCustomCreateType;
@@ -63,7 +64,6 @@ class ChatRoomController extends Controller
         //exit;
 
 
-
 //        $em = $this->getDoctrine()->getManager();
 //        $serializer = $this->get('jms_serializer');
 //        $chatRoomList = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->getChatRoomByParams($userId);
@@ -115,7 +115,7 @@ class ChatRoomController extends Controller
 
         $data = $em->getRepository('ActedLegalDocsBundle:Message')->getAllMessages($userId);
         $messages = $serializer->toArray($data, SerializationContext::create()
-            ->setGroups(['all_messages']));
+                                                                    ->setGroups(['all_messages']));
 
         $uk = $em->getRepository('ActedLegalDocsBundle:RefCountry')->findOneByName('United Kingdom');
         $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
@@ -150,7 +150,7 @@ class ChatRoomController extends Controller
 
         $data = $em->getRepository('ActedLegalDocsBundle:Message')->getAllMessages($userId, $filters);
         $messages = $serializer->toArray($data, SerializationContext::create()
-            ->setGroups(['all_messages']));
+                                                                    ->setGroups(['all_messages']));
 
         return new JsonResponse($messages);
 
@@ -194,7 +194,7 @@ class ChatRoomController extends Controller
 
         $message = $em->getRepository('ActedLegalDocsBundle:Message')->find($messageId);
         $chat = $serializer->toArray($message, SerializationContext::create()
-            ->setGroups(['message']));
+                                                                   ->setGroups(['message']));
         if (!$message->getReadDateTime()) {
             $now = new \DateTime();
             $message->setReadDateTime($now);
@@ -243,13 +243,13 @@ class ChatRoomController extends Controller
         $chatRoom = $this->getEM()->getRepository('ActedLegalDocsBundle:ChatRoom')->find($chatRoomId);
         $quotationLink = $this->getQuotationLink($chatRoom);
         $chat = $serializer->toArray($chatRoom, SerializationContext::create()
-            ->setGroups(['chat_room']));
+                                                                    ->setGroups(['chat_room']));
 
         $performances = $this->getEM()->getRepository('ActedLegalDocsBundle:Performance')
-            ->getPerformancesForEvent($chatRoom->getEvent()->getId());
+                             ->getPerformancesForEvent($chatRoom->getEvent()->getId());
 
         $files = $this->getEM()->getRepository('ActedLegalDocsBundle:MessageFile')
-            ->getChatRoomFiles($chatRoom);
+                      ->getChatRoomFiles($chatRoom);
 
 
         $order = $chatRoom->getOrder();
@@ -304,13 +304,13 @@ class ChatRoomController extends Controller
 
             $pusher->push(
                 [
-                    'msg' => $messageText,
-                    'avatar' => $user->getAvatar(),
-                    'user_name' => $user->getFullName(),
-                    'room' => $chatId,
-                    'file' => $filePaths,
-                    'role' => $user->getRoleName(),
-                    'send_date' => $message->getTimeFromGet(),
+                    'msg'        => $messageText,
+                    'avatar'     => $user->getAvatar(),
+                    'user_name'  => $user->getFullName(),
+                    'room'       => $chatId,
+                    'file'       => $filePaths,
+                    'role'       => $user->getRoleName(),
+                    'send_date'  => $message->getTimeFromGet(),
                     'message_id' => $message->getId()
                 ],
                 'acted_topic_chat',
@@ -398,6 +398,7 @@ class ChatRoomController extends Controller
         }
 
         $chat = [];
+
         return $this->render('ActedLegalDocsBundle:ChatRoom:bookings.html.twig',
             compact('chat'));
     }
@@ -408,7 +409,7 @@ class ChatRoomController extends Controller
         $serializer = $this->get('jms_serializer');
         $homespotlights = $em->getRepository('ActedLegalDocsBundle:Artist')->allSpotlightArtist();
         $homespotlight = $serializer->toArray($homespotlights, SerializationContext::create()
-            ->setGroups(['block']));
+                                                                                   ->setGroups(['block']));
 
         $categories = $em->getRepository('ActedLegalDocsBundle:Category')->childrenHierarchy();
 
@@ -478,7 +479,7 @@ class ChatRoomController extends Controller
 
         if (empty($data)) {
             return new JsonResponse([
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => 'There are not any data'
             ], Response::HTTP_BAD_REQUEST);
         }
@@ -489,8 +490,8 @@ class ChatRoomController extends Controller
         $oldChatTechnicalRequirements = $chatRoom->getTechnicalRequirements();
 
         $chatTechnicalRequirements = array(
-            'title' => $technicalRequirement->getTitle(),
-            'description' => $technicalRequirement->getDescription(),
+            'title'                         => $technicalRequirement->getTitle(),
+            'description'                   => $technicalRequirement->getDescription(),
             'documentTechnicalRequirements' => array()
         );
 
@@ -507,9 +508,9 @@ class ChatRoomController extends Controller
 
             //format json with data from TR
             $chatTechnicalRequirements['documentTechnicalRequirements'][] = array(
-                'name' => $technicalRequirementsCopyFileName,
-                'size' => $document->getSize(),
-                'file' => $document->getFile(),
+                'name'         => $technicalRequirementsCopyFileName,
+                'size'         => $document->getSize(),
+                'file'         => $document->getFile(),
                 'originalName' => $document->getOriginalName()
             );
         }
@@ -523,7 +524,7 @@ class ChatRoomController extends Controller
             }
 
             return new JsonResponse([
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => 'Creating error'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -538,7 +539,7 @@ class ChatRoomController extends Controller
         }
 
         return new JsonResponse([
-            'status' => 'success',
+            'status'                => 'success',
             'technicalRequirements' => $chatTechnicalRequirements
         ]);
     }
@@ -579,7 +580,7 @@ class ChatRoomController extends Controller
 
         if (empty($data)) {
             return new JsonResponse([
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => 'There are not any data'
             ], Response::HTTP_BAD_REQUEST);
         }
@@ -592,8 +593,8 @@ class ChatRoomController extends Controller
         $user = $this->getUser();
 
         $chatTechnicalRequirements = array(
-            'title' => $title,
-            'description' => $description,
+            'title'                         => $title,
+            'description'                   => $description,
             'documentTechnicalRequirements' => array()
         );
 
@@ -602,7 +603,7 @@ class ChatRoomController extends Controller
         $resultUpdated = $em->getRepository('ActedLegalDocsBundle:ChatRoom')->updateTechnicalRequirements($chatRoom->getId(), $chatTechnicalRequirements);
         if (!$resultUpdated) {
             return new JsonResponse([
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => 'Creating error'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -617,7 +618,7 @@ class ChatRoomController extends Controller
         }
 
         return new JsonResponse([
-            'status' => 'success',
+            'status'                => 'success',
             'technicalRequirements' => $chatTechnicalRequirements
         ]);
     }
@@ -651,7 +652,7 @@ class ChatRoomController extends Controller
 
         if (!$chat) {
             return new JsonResponse([
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => 'You do not have permissions'
             ], Response::HTTP_FORBIDDEN);
         }
@@ -660,7 +661,7 @@ class ChatRoomController extends Controller
 
         return new JsonResponse([
             'status' => 'success',
-            'chat' => $serializer->toArray(
+            'chat'   => $serializer->toArray(
                 $chatRoom,
                 SerializationContext::create()->setGroups(['chat_room'])
             )
@@ -686,6 +687,7 @@ class ChatRoomController extends Controller
             $rating = $feedbackRepo->getAverageArtistRating($artist->getId());
             $data = ['rating' => $rating, 'feedbacks' => $feedbacks];
         }
+
         return $this->render('ActedLegalDocsBundle:ChatRoom:feedback.html.twig', $data);
     }
 
@@ -702,6 +704,7 @@ class ChatRoomController extends Controller
     {
         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
         $eor->accept(EventOffer::PROP_DETAILS, $eventId);
+
         return new JsonResponse(array("result" => "ok"));
     }
 
@@ -715,6 +718,7 @@ class ChatRoomController extends Controller
     {
         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
         $eor->accept(EventOffer::PROP_TECH_REQ, $eventId);
+
         return new JsonResponse(array("result" => "ok"));
     }
 
@@ -728,6 +732,7 @@ class ChatRoomController extends Controller
     {
         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
         $eor->accept(EventOffer::PROP_TIMING, $eventId);
+
         return new JsonResponse(array("result" => "ok"));
     }
 
@@ -741,6 +746,7 @@ class ChatRoomController extends Controller
     {
         $eor = $this->em->getRepository('ActedLegalDocsBundle:EventOffer');
         $eor->accept(EventOffer::PROP_ACTS_EXTRAS, $eventId);
+
         return new JsonResponse(array("result" => "ok"));
     }
 
@@ -800,7 +806,8 @@ class ChatRoomController extends Controller
     /**
      *  Artist section template
      */
-    public function artistSelectionAction(Request $request) {
+    public function artistSelectionAction(Request $request)
+    {
         return $this->render('ActedLegalDocsBundle:Profile:client/artist_selection.html.twig');
     }
 
@@ -819,9 +826,23 @@ class ChatRoomController extends Controller
         $user = $this->getUser();
         $userId = $user->getId();
         $em = $this->getEM();
+        $ordersManager = $this->get('acted_legal_docs.model.order_manager');
+        $messagesRepo = $em->getRepository("ActedLegalDocsBundle:Message");
+        $orders = $ordersManager->getOrdersForArtist($user->getArtist());
         $filter = $request->get('filter');
-        $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
-        $messages = $messagesRepo->getMessagesGroupedByChatRoom($userId, $filter);
+        $messages = [];
+        foreach ($orders as $order) {
+            /**
+             * @var Order $order
+             */
+            $chat = $order->getChat();
+            $chatId = $chat->getId();
+            $message = $messagesRepo->getChatRoomMessage($userId, $chatId, $filter);
+            if (count($message)) {
+                $messages[] = $message[0];
+            }
+        }
+
         $context = SerializationContext::create()->setGroups(['all_messages']);
         $serializer = $this->get('jms_serializer');
 
@@ -838,7 +859,8 @@ class ChatRoomController extends Controller
      *
      * @return JsonResponse
      */
-    public function showPaymentsAction(Request $request) {
+    public function showPaymentsAction(Request $request)
+    {
         return $this->render('ActedLegalDocsBundle:Profile:client/payments.html.twig');
     }
 }
