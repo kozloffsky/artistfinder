@@ -36,7 +36,8 @@ Acted\LegalDocsBundle\Entity\Artist:
             default: 0
         totalRatings:
           type: integer
-          default: 0
+          options:
+            default: 0
         comments:
           type: string(512)
           nullable: true

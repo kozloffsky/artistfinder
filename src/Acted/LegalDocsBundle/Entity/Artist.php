@@ -87,12 +87,12 @@ class Artist
     /**
      * @var float
      */
-    private $averageRating;
+    private $averageRating = 0;
 
     /**
      * @var integer
      */
-    private $totalRatings;
+    private $totalRatings = 0;
 
     /**
      * Get id
