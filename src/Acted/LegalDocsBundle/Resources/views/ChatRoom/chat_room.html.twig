@@ -242,7 +242,7 @@
                                 send_date:"{{ chatMessage.time_from_get }}",
                             {%  if chatMessage.sender_user.avatar is defined  %}
                                 avatar: "{{ chatMessage.sender_user.avatar }}",
-                            {%  elseif %}
+                            {%  else %}
                                 avatar: "/assets/images/noAvatar.png",
                             {%  endif %}
                                 file: [
