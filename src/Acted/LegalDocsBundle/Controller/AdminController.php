@@ -469,6 +469,18 @@ class AdminController extends Controller
             }else{
                 if($user->getClient() != null) {
                     $em->remove($user->getClient());
+                    $events = $em->getRepository('ActedLegalDocsBundle:Event')->createQueryBuilder('e')
+                        ->where("e.user", $user)
+                        ->getQuery()->getResult();
+
+                    foreach($events as $event){
+                        $rqs = $em->getRepository("ActedLegalDocsBundle:RequestQuotation")->createQueryBuilder("r")
+                            ->where("r.event",$event);
+
+                        foreach($rqs as $quotation)
+                            $em->remove($quotation);
+
+                    }
                 }
 
             }
