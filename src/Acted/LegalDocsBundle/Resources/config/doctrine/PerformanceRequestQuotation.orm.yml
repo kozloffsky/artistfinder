@@ -19,7 +19,7 @@ Acted\LegalDocsBundle\Entity\PerformanceRequestQuotation:
             inversedBy: performanceRequestQuotations
             joinColumn:
                 referencedColumnName: id
-                onDelete: RESTRICT
+                onDelete: CASCADE
         performance:
             targetEntity: Acted\LegalDocsBundle\Entity\Performance
             inversedBy: performanceRequestQuotations

@@ -468,6 +468,7 @@ class AdminController extends Controller
                 $mediaManager->removeFiles($user, $messageFiles);
             }else{
                 $em->remove($user->getClient());
+
             }
             $em->remove($user);
             $em->flush();

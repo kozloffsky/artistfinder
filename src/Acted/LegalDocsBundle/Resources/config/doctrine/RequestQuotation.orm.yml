@@ -36,7 +36,7 @@ Acted\LegalDocsBundle\Entity\RequestQuotation:
           targetEntity: Acted\LegalDocsBundle\Entity\Event
           joinColumn:
             referencedColumnName: id
-            onDelete: RESTRICT
+            onDelete: CASCADE
           inversedBy: requestQuotations
         artist:
           targetEntity: Acted\LegalDocsBundle\Entity\Artist
