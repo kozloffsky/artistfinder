@@ -466,23 +466,23 @@ class AdminController extends Controller
             if ($user->getRoles()[0] === 'ROLE_ARTIST'){
                 $em->remove($user->getArtist());
                 $mediaManager->removeFiles($user, $messageFiles);
-            }else{
-                if($user->getClient() != null) {
+            }else {
+                if ($user->getClient() != null) {
                     $em->remove($user->getClient());
-                    $events = $em->getRepository('ActedLegalDocsBundle:Event')->createQueryBuilder('e')
-                        ->where("e.user", $user)
-                        ->getQuery()->getResult();
-
-                    foreach($events as $event){
-                        $rqs = $em->getRepository("ActedLegalDocsBundle:RequestQuotation")->createQueryBuilder("r")
-                            ->where("r.event",$event);
-
-                        foreach($rqs as $quotation)
-                            $em->remove($quotation);
-
-                    }
                 }
 
+                $events = $em->getRepository('ActedLegalDocsBundle:Event')->createQueryBuilder('e')
+                    ->where("e.user", $user)
+                    ->getQuery()->getResult();
+
+                foreach ($events as $event) {
+                    $rqs = $em->getRepository("ActedLegalDocsBundle:RequestQuotation")->createQueryBuilder("r")
+                        ->where("r.event", $event);
+
+                    foreach ($rqs as $quotation)
+                        $em->remove($quotation);
+
+                }
             }
             $em->remove($user);
             $em->flush();
