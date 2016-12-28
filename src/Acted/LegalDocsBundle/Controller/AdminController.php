@@ -472,12 +472,12 @@ class AdminController extends Controller
                 }
 
                 $events = $em->getRepository('ActedLegalDocsBundle:Event')->createQueryBuilder('e')
-                    ->where("e.user = :1")->setParameter(1, $user)
+                    ->where("e.user = ?1")->setParameter(1, $user)
                     ->getQuery()->getResult();
 
                 foreach ($events as $event) {
                     $rqs = $em->getRepository("ActedLegalDocsBundle:RequestQuotation")->createQueryBuilder("r")
-                        ->where("r.event = :1")->setParameter(1, $event)
+                        ->where("r.event = ?1")->setParameter(1, $event)
                         ->getQuery()->getResult();
 
                     foreach ($rqs as $quotation)
