@@ -467,7 +467,9 @@ class AdminController extends Controller
                 $em->remove($user->getArtist());
                 $mediaManager->removeFiles($user, $messageFiles);
             }else{
-                $em->remove($user->getClient());
+                if($user->getClient() != null) {
+                    $em->remove($user->getClient());
+                }
 
             }
             $em->remove($user);
