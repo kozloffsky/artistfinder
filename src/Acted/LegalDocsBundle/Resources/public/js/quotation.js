@@ -1,5 +1,3 @@
-$(function() {
-
     var inheritFrom = function (child, parent) {
         child.prototype = Object.create(parent.prototype);
     };
@@ -1614,6 +1612,5 @@ $(function() {
         .on("focusout", ".quotation-modal [edit-custom-price]", editCustomPrice)
         .on("focusout", ".quotation-modal [edit-extra-custom-price]", editExtraCustomPrice)
         .on("focusout", ".quotation-modal [edit-performance-comment]", editPerformanceComment)
-        .on("change", ".quotation-modal [edit-quotation-payment-percent]", editPaymentPercent)
-});
+        .on("change", ".quotation-modal [edit-quotation-payment-percent]", editPaymentPercent);
 

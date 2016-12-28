@@ -246,6 +246,8 @@ $(function(){
 
     initUploadFilesFiller();
 
+    $('.chat-room .quote-section button[edit-order]').click(openQuotationModal);
+
     function initUploadFilesFiller(){
         $('#filer_input1').filer({
             limit: 10,
