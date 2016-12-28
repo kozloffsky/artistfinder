@@ -480,8 +480,10 @@ class AdminController extends Controller
                         ->where("r.event = ?1")->setParameter(1, $event)
                         ->getQuery()->getResult();
 
-                    foreach ($rqs as $quotation)
+                    foreach ($rqs as $quotation) {
                         $em->remove($quotation);
+
+                    }
 
                 }
             }
