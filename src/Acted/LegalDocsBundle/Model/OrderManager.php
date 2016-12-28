@@ -109,8 +109,8 @@ class OrderManager
         $order->setStatus(ORDER::STATUS_NEW);
         $order->setTotalPrice(0);
         $order->setPaymentExpirationDate(new \DateTime());
-        $order->setDepositAmount(50);
-        $order->setDepositBallance(25);
+        $order->setDepositAmount(0);
+
         $order->setPerformanceStartTime("6.pm");
         $order->setAdditionalInfo("");
         $order->setGuaranteedBalanceTerm(70);
@@ -179,6 +179,7 @@ class OrderManager
         }
 
         $order->setTotalPrice($total);
+        $order->setDepositBallance($total);
 
         $this->entityManager->persist($order);
 

@@ -464,7 +464,10 @@ class AdminController extends Controller
             $messageFileRepo = $em->getRepository('ActedLegalDocsBundle:MessageFile');
             $messageFiles = $messageFileRepo->getFileByUser($user);
             if ($user->getRoles()[0] === 'ROLE_ARTIST'){
+                $em->remove($user->getArtist());
                 $mediaManager->removeFiles($user, $messageFiles);
+            }else{
+                $em->remove($user->getClient());
             }
             $em->remove($user);
             $em->flush();

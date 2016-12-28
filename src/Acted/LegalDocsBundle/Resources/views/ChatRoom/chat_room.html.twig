@@ -69,13 +69,13 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
-                                <input id="details_agree" name="package-check" value="" type="checkbox" v-model="detailsAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable">
+                                <input id="details_agree" name="details_agree" value="" type="checkbox" v-model="detailsAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable">
                                 <label for="details_agree">I agree with these details</label>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
-                                <input id="extra_provide_acts" name="package-check" value="" type="checkbox" v-model="actsExtrasAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable">
+                                <input id="extra_provide_acts" name="extra_provide_acts" value="" type="checkbox" v-model="actsExtrasAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable">
                                 <label for="extra_provide_acts">I can provide the acts & extras selected</label>
                             </div>
                         </div>
