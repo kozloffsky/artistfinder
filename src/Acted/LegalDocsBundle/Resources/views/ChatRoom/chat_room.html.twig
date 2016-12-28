@@ -240,6 +240,11 @@
                             window.chatMessages.push({
                                 msg:"{{ chatMessage.message_text }}",
                                 send_date:"{{ chatMessage.time_from_get }}",
+                            {%  if chatMessage.sender_user.avatar is defined  %}
+                                avatar: "{{ chatMessage.sender_user.avatar }}",
+                            {%  elseif %}
+                                avatar: "/assets/images/noAvatar.png",
+                            {%  endif %}
                                 file: [
                                     {% for file in chatMessage.files %}
                                     { path:"{{ file.file_name }}"},
@@ -251,7 +256,7 @@
 
                     <li v-for="message in chatMessages">
                         <a href="#" class="img-holder">
-                            <img src="/assets/images/avatar.jpg" alt="image description">
+                            <img :src="message.avatar" alt="image description">
                         </a>
                         <div class="holder">
                             <div class="box">
