@@ -141,7 +141,13 @@ class OrderController extends Controller
             'person' => $request->get('c-person'),
             'phone' => $request->get('c-phone')
         ];
+
+        $performanceStartTime = $request->get('performance_start_time');
+        $additionalInfo = $request->get('additional_info');
+
         try{
+            $this->orderManager->setPerformanceStartTime($orderId, $performanceStartTime, $this->getUser()->getRoles()[0]);
+            $this->orderManager->setAdditionalInfo($orderId, $additionalInfo, $this->getUser()->getRoles()[0]);
             $this->orderManager->setDetails($orderId, $data, $this->getUser()->getRoles()[0]);
         }catch(\Exception $e){
             return new JsonResponse(['error'=>$e->getMessage(), 500]);

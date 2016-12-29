@@ -313,6 +313,32 @@ class OrderManager
         $this->entityManager->flush();
     }
 
+    public function setPerformanceStartTime($orderId, $performanceStartTime, $userRole){
+        $order = $this->orderRepository->find($orderId);
+        if(!$order){
+            throw new EntityNotFoundException("Order Not Found with id".$orderId);
+        }
+
+        $order->setPerformanceStartTime($performanceStartTime);
+
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
+    }
+
+    public function setAdditionalInfo($orderId, $additionalInfo, $userRole){
+        $order = $this->orderRepository->find($orderId);
+        if(!$order){
+            throw new EntityNotFoundException("Order Not Found with id".$orderId);
+        }
+
+        $order->setAdditionalInfo($additionalInfo);
+
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
+    }
+
+
+
     public function updateOrder($orderId, $extraPerformances, $performances, $services, $paymentDetails)
     {
         $orderRepo = $this->entityManager->getRepository('ActedLegalDocsBundle:Order');
