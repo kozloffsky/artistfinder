@@ -141,8 +141,14 @@ $(function(){
                             success: function (r) {
                                 console.log(r);
                                 self.technicalRequirements = r.technicalRequirements;
+                                var empty = {
+                                    "title": "None",
+                                    "description":"",
+                                    "documentTechnicalRequirements":[]
+                                };
+                                self.technicalRequirements.push(empty)
                                 if(self.technicalRequirements.length > 0) {
-                                    self.selectedRequirement = self.technicalRequirements[0];
+                                    self.selectedRequirement = empty;
                                 }
                             },
                             error: function (r) {

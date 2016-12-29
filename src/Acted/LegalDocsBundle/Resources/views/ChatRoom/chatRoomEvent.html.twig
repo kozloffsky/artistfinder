@@ -312,7 +312,7 @@
                     </div>
                     <div class="controls">
                         <div class="button-gradient filled orange">
-                            <button edit-order order-id="{{ order.id }}" class="btn" type="submit">Edit Quotation</button>
+                            <button edit-order order-id="{{ order.id }}" v-bind:disabled="userRole == 'ROLE_CLIENT'" class="btn" type="submit">Edit Quotation</button>
                         </div>
                     </div>
                 </div>
