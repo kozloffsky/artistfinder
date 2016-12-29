@@ -35,6 +35,10 @@
         'name': '{{ order.clientDetails.name|default('')  }}',
         'person': '{{ order.clientDetails.person|default('')  }}',
     }
+
+    window.selectedRequrement = {
+        "title" : "{{ order.technicalRequirements['requirement']['title'] }}"
+    }
 </script>
 <main class="chat-room">
     {% include '@ActedLegalDocs/Default/confirmBookingModal.html.twig' %}

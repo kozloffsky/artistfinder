@@ -51,7 +51,7 @@
 
 <span class="tr-title">Technical requirements</span>
 <div class="tr-select-container">
-    <select class="tr-select" v-model="selectedRequirement" v-bind:disabled="!editable">
+    <select v-bind:disabled="userRole == 'ROLE_CLIENT'" class="tr-select" v-model="selectedRequirement" v-bind:disabled="!editable">
         <option v-for="tr in technicalRequirements" v-bind:value="tr">${ tr.title }</option>
     </select>
     <div>
