@@ -678,9 +678,9 @@
             var artistServices = order.artist.user.profile.services;
             var services     = order.services;
             var payment      = {
-                balancePercent: order.guaranteedBalanceTerm,
-                depositPercent: order.guaranteedDepositTerm
-            };
+                balancePercent: order.guaranteed_balance_term,
+                depositPercent: order.guaranteed_deposit_term
+        };
 
             var newPerformances = [];
             var newServices = [];
