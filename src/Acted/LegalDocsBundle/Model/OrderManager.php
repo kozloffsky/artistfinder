@@ -113,8 +113,8 @@ class OrderManager
 
         $order->setPerformanceStartTime("6.pm");
         $order->setAdditionalInfo("");
-        $order->setGuaranteedBalanceTerm(70);
-        $order->setGuaranteedDepositTerm(30);
+        $order->setGuaranteedBalanceTerm(20);
+        $order->setGuaranteedDepositTerm(80);
         $order->setCurrency($event->getCurrencyId());
 
         if($chatRoom != null){
