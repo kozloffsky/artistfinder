@@ -5,6 +5,7 @@ namespace Acted\LegalDocsBundle\Controller;
 use Acted\LegalDocsBundle\Entity\ChatRoom;
 use Acted\LegalDocsBundle\Entity\Artist;
 use Acted\LegalDocsBundle\Entity\Event;
+use Acted\LegalDocsBundle\Entity\Order;
 use Acted\LegalDocsBundle\Entity\User;
 use Acted\LegalDocsBundle\Entity\EventOffer;
 use Acted\LegalDocsBundle\Entity\RequestQuotation;
@@ -464,22 +465,21 @@ class EventsController extends Controller
          * @var Event $event
          */
         $event = $eventRepo->find($request->get('event'));
-        $filter = $request->get('filter');
-        /**
-         * @var ChatRoom $chatRoom
-         */
-        $chatRoom = $event->getChatRooms()->first();
-
-        if (empty($chatRoom)) {
-            return new JsonResponse(array(
-                'status'   => 'success',
-                'messages' => array()
-            ));
-        }
-
-        $chatRoomId = $chatRoom->getId();
+        $orderManager = $this->get('acted_legal_docs.model.order_manager');
+        $orders = $orderManager->getOrdersForEvent($event);
         $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
-        $messages = $messagesRepo->getAllEventMessages($userId, $chatRoomId, $filter);
+        $filter = $request->get('filter');
+        $messages = [];
+        foreach ($orders as $order) {
+            /**
+             * @var Order $order
+             */
+            $chatRoomId = $order->getChat()->getId();
+            $message = $messagesRepo->getChatRoomMessage($userId, $chatRoomId, $filter);
+            if (count($message)) {
+                $messages[] = $message[0];
+            }
+        }
         $context = SerializationContext::create()->setGroups(['all_messages']);
         $serializer = $this->get('jms_serializer');
 
