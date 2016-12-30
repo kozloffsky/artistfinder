@@ -95,15 +95,15 @@
                                 <div class="performance-time">
                                     <span class="info">The performance starts at:</span>
                                     {#<span class="time">{{ order.performanceStartTime }}</span>#}
-                                    <span v-if="userRole == 'ROLE_ARTIST' || !editable" class="time">6:30 PM</span>
-                                    <input type="text" class="edit-time" placeholder="{{ order.performanceStartTime }}" value="{{ order.performanceStartTime }}" @input="saveDetails" v-if="userRole != 'ROLE_ARTIST' || editable">
+                                    <span v-if="userRole == 'ROLE_ARTIST'" class="time">6:30 PM</span>
+                                    <input type="text" class="edit-time" placeholder="{{ order.performanceStartTime }}" value="{{ order.performanceStartTime }}" @input="saveDetails" v-if="userRole != 'ROLE_ARTIST'">
                                 </div>
                                 <div class="performance-info">
                                     Additional info <i>(This will be included in the booking agreement)</i>
                                 </div>
                                 <div class="performance-info-desc">
-                                    <p v-if="userRole == 'ROLE_ARTIST' || !editable">{{ order.event.comments }}</p>
-                                    <textarea class="edit-time" @input="saveDetails" v-if="userRole != 'ROLE_ARTIST' || editable">{{ order.additionalInfo }}</textarea>
+                                    <p v-if="userRole == 'ROLE_ARTIST'">{{ order.event.comments }}</p>
+                                    <textarea class="edit-time" @input="saveDetails" v-if="userRole != 'ROLE_ARTIST'">{{ order.additionalInfo }}</textarea>
                                 </div>
                             </div>
                             <div class="row section-info-footer hidden-sm hidden-md hidden-lg">
