@@ -36,10 +36,15 @@
         'person': '{{ order.clientDetails.person|default('')  }}',
     }
 </script>
-<main class="chat-room">
+
+<main class="chat-room {% if user.client is not empty %} dashboard client {% endif %}">
     {% include '@ActedLegalDocs/Default/confirmBookingModal.html.twig' %}
     <div class="container">
-        {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
+        {% if user.client is not empty %}
+            {% include 'ActedLegalDocsBundle:Profile:client/client_menu.html.twig' %}
+        {% else %}
+            {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
+        {% endif %}
 
         <div class="wrap">
             <!-- TITLE SECTION -->
