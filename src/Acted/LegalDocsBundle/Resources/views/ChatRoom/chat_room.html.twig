@@ -95,7 +95,7 @@
                                 <div class="performance-time">
                                     <span class="info">The performance starts at:</span>
                                     {#<span class="time">{{ order.performanceStartTime }}</span>#}
-                                    <span v-if="userRole == 'ROLE_ARTIST'" class="time">6:30 PM</span>
+                                    <span v-if="userRole == 'ROLE_ARTIST'" class="time">{{ order.performanceStartTime }}</span>
                                     <input type="text" class="edit-time" placeholder="{{ order.performanceStartTime }}" value="{{ order.performanceStartTime }}" @input="saveDetails" v-if="userRole != 'ROLE_ARTIST'">
                                 </div>
                                 <div class="performance-info">
