@@ -249,10 +249,8 @@ class OrderManager
     public function checkOrderForBooking($orderId){
         $order = $this->orderRepository->find($orderId);
         if (empty($order)){
-            echo "order is empty";
-        if (!$order) {
             return false;
-        }
+
 
         if ($order->getDetailsAccepted() != true ||
             $order->getTechnicalRequirementsAccepted() != true ||
