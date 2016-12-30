@@ -25,6 +25,9 @@
     overflow-y: scroll;
     overflow-x: hidden;
 }
+.quotation-modal .act-info label {
+    margin: 0;
+}
 .quotation-modal .payment-info {
     padding: 20px;
 }
@@ -73,6 +76,15 @@
 .quotation-modal .payment-deposit > span {
     padding: 5px 0;
 }
+.quotation-modal .payment-deposit > .custom-checkbox {
+    margin: 0 0 0 17px;
+}
+.quotation-modal .payment-deposit > .custom-checkbox label {
+    font-family: LatoBold;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.87);
+}
 .quotation-modal .payment-deposit-info > span {
     margin: 0 0 23px 0;
 }
@@ -101,7 +113,7 @@
 }
 
 .quotation-modal .act-extras {
-    padding: 8px 0 10px 40px;
+    padding: 8px 0 10px 12px;
     background: rgb(88,149,243);
     background: -moz-linear-gradient(left, rgba(88,149,243,1) 0%, rgba(73,79,199,1) 100%);
     background: -webkit-linear-gradient(left, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
@@ -189,6 +201,7 @@
 .quotation-modal label {
     font-family: LatoBold;
     font-size: 15px;
+    font-weight: 400;
     color: rgba(72, 91, 189, 0.87);
     margin-bottom: 8px;
     /*vertical-align: super !important;*/
@@ -198,6 +211,7 @@
 .quotation-modal .act-info label {
     font-family: LatoBold;
     font-size: 15px;
+    font-weight: 400;
     color: rgba(0, 0, 0, 0.87);
 }
 
@@ -207,7 +221,7 @@
 }
 
 .quotation-modal .row.package {
-    padding: 12px 0 0 12px;
+    /*padding: 0 0 0 12px;*/
     position: relative;
 }
 .quotation-modal .act-option {
@@ -228,17 +242,19 @@
     vertical-align: middle;
     margin: 0;
 }
-
+.quotation-modal .custom-checkbox,
 .quotation-modal .custom-checkbox label {
-    height: 22px;
     margin: 0;
+}
+.quotation-modal .custom-checkbox label {
+    height: 20px;
+    padding-left: 22px;
 }
 /*.quotation-modal i.fa.fa-trash {
     right: 35px;
     position: absolute;
     font-size: 16px;
 }*/
-
 .quotation-modal .package-create {
     margin: 6px 0 6px 35px;
     font-size: 12px;
@@ -293,8 +309,10 @@
     font-size: 36px;
 }
 
+.quotation-modal textarea[disabled],
 .quotation-modal .form-control[disabled] {
     background: #d8d8d8 !important;
+    box-shadow: none;
 }
 
 .quotation-modal .new-act-section {
@@ -309,29 +327,24 @@
     /*margin: 0 0 12px 0;*/
 }
 .quotation-modal .act-option:nth-of-type(even) {
-    padding: 0 0 0 12px !important;
+    padding: 0 0 0 12px;
 }
-
 .quotation-modal .new-act-section input[quot-edit-title],
-.quotation-modal .new-act-section input[quot-edit-package-name]
-{
+.quotation-modal .new-act-section input[quot-edit-package-name] {
     height: 28px;
     width: 164px;
     border: 2px solid rgba(229, 229, 229, 1);
     border-radius: 4px;
 }
-
 .quotation-modal .new-act-section input[quot-edit-title],
 .quotation-modal .new-act-section input[quot-edit-package-name],
 .quotation-modal .new-act-section .act-option {
     display: inline;
 }
-
 .quotation-modal select {
     display: inline-block;
     vertical-align: middle;
 }
-
 .quotation-modal select,
 .quotation-modal input {
     color: rgba(0, 0, 0, 0.87);
@@ -343,8 +356,9 @@
 .quotation-modal input[quot-edit-duration] {
     border: 2px solid rgba(229, 229, 229, 1);
     border-radius: 5px;
-    height: 26px;
+    height: 28px;
     width: 44px;
+    text-align: center;
 }
 
 .quotation-modal input[quot-edit-qty] {
@@ -352,6 +366,7 @@
     border-radius: 5px;
     height: 26px;
     width: 44px;
+    text-align: center;
 }
 
 .quotation-modal .quote-comment-box {
@@ -367,9 +382,9 @@
 }
 
 .quotation-modal .quote-comment-box.extra {
-    margin: 0 0 0 30px;
-    height: 51px;
-    width: 488px;
+    margin: 0 0 0 28px;
+    height: 49px;
+    width: 486px;
 }
 
 .quotation-modal .price-box {
@@ -379,13 +394,15 @@
     width: 56px;
     display: inline-block;
     vertical-align: middle;
-    text-align: center;
+    /*text-align: center;*/
     padding: 0 0 0 2px;
 }
 
+.quotation-modal .quotation-service .price-box,
 .quotation-modal .extra-block-options .price-box {
-    margin: 0 0 0 30px;
+    padding: 0 0 0 8px;
 }
+
 
 .quotation-modal .extra-select-type {
     border: 2px solid rgba(229, 229, 229, 1);
@@ -393,12 +410,24 @@
     height: 26px;
     width: 193px;
 }
-
 .quotation-modal .extra-block-options {
-    display: inline;
-    width: 100%;
+    display: inline-block;
+    margin: 0 0 0 0;
+}
+.quotation-modal .extra-block-options .price-box {
+    margin: 0 0 0 35px;
+}
+.quotation-modal .extra-block-options span[quot-edit-option] {
+    display: inline-block;
 }
 
+.quotation-modal .price-box-container > span:nth-of-type(1) {
+    vertical-align: middle;
+    margin: 0 11px 0 5px;
+}
+.quotation-modal .price-box-container > span[act-delete] > i {
+    vertical-align: middle;
+}
 .quotation-modal .additional-info {
     height: 100px;
     width: 100%;
@@ -412,31 +441,68 @@
     border: none;
     resize: none;
 }
-
 .quotation-modal .multiplier {
-    color: rgba(0, 0, 0, 1);
     font-family: LucidaGrande;
     font-size: 14px;
+    color: rgba(0, 0, 0, 1);
     height: 17px;
     width: 9px;
 }
 .quotation-modal .minutes {
-    color: rgba(0, 0, 0, 1);
     font-family: LatoRegular;
     font-size: 14px;
-    padding: 0 2px 0 0px;
+    color: rgba(0, 0, 0, 1);
+    padding: 0 2px 0 2px;
 }
-
 .quotation-modal .custom-checkbox label:after {
-    margin: -8px -6px;
-    left: 50%;
-    top: 50%;
     width: 5px;
     height: 9px;
 }
+.quotation-modal .modal-title > span {
+    font-family: LatoBold;
+    font-size: 21px;
+    font-weight: 400;
+    color: rgba(61, 66, 72, 0.87);
+}
+.quotation-modal .quotation-performance {
+    margin: 0 0 33px 0;
+}
+.quotation-modal .quotation-performance .row.package {
+    margin: 17px 0 0 12px;
+}
+.quotation-modal .quotation-extra-performance .row.package {
+    margin: 8px 0 0 12px;
+}
+.quotation-modal .quotation-service .row[package-block] {
+    margin: 8px 3px 14px 39px;
+}
+.quotation-modal .quotation-service .row.package {
+    display: inline-block;
+    margin: 3px 0 0 0;
+}
+.quotation-modal .quotation-service .act-info label {
+    vertical-align:  middle;
+}
 
-.quotation-modal div[act-id] {
-    padding: 0 0 14px 0;
+.quotation-modal .request-from-title,
+.quotation-modal .request-from-name {
+    display: inline-block;
+}
+
+.quotation-modal .price-box-container ,
+.quotation-modal .quotation-service .price-box-container {
+    display: inline-block;
+}
+.quotation-modal .quotation-service .price-box-container {
+    float: right;
+}
+
+.quotation-modal select {
+    margin: 0;
+}
+
+.quotation-modal .payment-deposit-info {
+    margin: 0 0 25px 36px;
 }
 
 @media screen and (max-width: 960px) {
@@ -449,7 +515,81 @@
         width: 560px;
     }
 }
+@media screen and (max-width: 768px) {
+    .quotation-modal .modal-dialog {
+        width: 100%;
+        margin: 0;
+    }
+    .quotation-modal .modal-header {
+        text-align: center;
+        padding: 19px 73px 18px 73px;
+        border-bottom: none;
+    }
+    .quotation-modal .modal-content {
+        border-radius: 0;
+        border: none;
+        outline: 0;
+        box-shadow: none;
+    }
+    .quotation-modal .modal-content .close {
+        background: transparent;
+        height: 18px;
+        width: 18px;
+        top: 19px;
+        right: 19px;
+    }
+    .quotation-modal .act-info {
+        padding: 0;
+    }
+    .quotation-modal .place-info {
+        padding: 8px 32px 10px 25px;
+    }
+    .quotation-modal .form-group {
+        padding: 0;
+    }
+    .quotation-modal .act-option {
+        padding: 0 0 0 12px;
+    }
+    .quotation-modal .extra-select-type {
+        height: 26px;
+        width: 135px;
+    }
+    .quotation-modal .quantity-select {
+        height: 26px;
+        width: 46px;
+    }
+    .quotation-modal input[quot-edit-duration] {
+        height: 26px;
+        width: 44px;
+    }
+    .quotation-modal .extra-block-options {
+        display: inline;
+    }
+    .quotation-modal .quote-comment-box.extra {
+        height: 61px;
+        width: 244px;
+    }
+    .quotation-modal .quotation-service .row[package-block] {
+        margin: 8px 0px 14px 39px;
+    }
+    .quotation-modal .price-box-container > span:nth-of-type(1) {
+        margin: 0 9px 0 5px;
+    }
+    .quotation-modal .extra-block-options .price-box {
+        margin: 0 0 0 27px;
+    }
+    .quotation-modal .quotation-extra-performance .price-box-container,
+    .quotation-modal .quotation-extra-performance .quotation-service .price-box-container {
+        margin: 9px 0 0 0;
+    }
 
+
+    .quotation-modal .place-info label {
+        font-size: 14px;
+        margin-bottom: 9px;
+    }
+
+}
 @media screen and (max-width: 560px) {
     .quotation-modal .modal-dialog {
         width: auto;

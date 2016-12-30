@@ -3,30 +3,33 @@
 }
 .categories-menu {
     list-style: none;
-    margin: 0;
+    margin-top: 19px;
     padding: 0;
     display: flex;
     display: -ms-flexbox;
     justify-content: space-between;
     margin-bottom: 10px;
 }
-
 .categories-menu li {
     display: inline-block;
 }
-
-.categories-menu li>a {
+.categories-menu li:nth-of-type(1) {
+    margin: 0 0 0 22px;
+}
+.categories-menu li:nth-last-of-type(1) {
+    margin: 0 22px 0 0;
+}
+.categories-menu li > a {
     font-family: LatoRegular;
     font-size: 14px;
     color: #3d4248;
     line-height: 14px;
     text-decoration: none;
-    padding-bottom: 12px;
+    padding-bottom: 21px;
     position: relative;
     cursor: pointer;
     display: block;
 }
-
 .categories-menu li>a:after {
     content: "";
     position: absolute;
@@ -48,14 +51,15 @@
     -o-transition: width 0.3s;
     transition: width 0.3s;
 }
-
 .categories-menu li>a:hover {
     color: #ff793e;
 }
-
 .categories-menu li>a.active:after {
     /*.categories-menu li>a:hover::after {*/
     width: 65px;
+}
+.search .categories-menu li>a.active:after {
+    width: 100%;
 }
 .categories-menu li.active {
     border-bottom: 4px solid #ff793e;
@@ -64,7 +68,15 @@
 }
 .categories-menu li > a {
     font-size: 16px;
-    padding: 23px 23px 22px 22px;
+    /*padding: 23px 23px 22px 22px;*/
+}
+
+/** --- HOW IT WORKS CATEGORIES MENU --- **/
+.how-it-works .categories-menu li.active {
+    width: 71px;
+}
+.how-it-works .categories-menu li.menu-block {
+    padding: 0;
 }
 
 /** --- FEEDBACK CLIENT --- **/
@@ -72,7 +84,6 @@
     list-style-type: none;
     margin: 0 0 0 50px;
 }
-
 .dashboard.client .options-menu ul,
 .dashboard.client .options-menu li {
     display: inline-block;
@@ -87,7 +98,6 @@
 .dashboard.client .options-menu li:hover > a {
     text-decoration: none;
 }
-
 /** --- EVENTS MENU --- **/
 .dashboard.client .events-menu {
     margin: 21px 0 21px 0;
@@ -247,9 +257,9 @@
     }
 }
 @media screen and (max-width: 768px) {
-    .container {
-        padding: 0 !important;
-    }
+    /*.container {*/
+        /*padding: 0 !important;*/
+    /*}*/
     .dashboard.client .options-menu li a {
         color: #FFF;
     }

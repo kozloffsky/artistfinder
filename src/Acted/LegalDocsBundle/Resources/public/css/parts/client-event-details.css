@@ -1,5 +1,6 @@
 .client_event_details {
     box-sizing: border-box;
+    margin: 0 auto 87px auto;
 }
 .client_event_details .right_column {
     width: 650px;
@@ -44,6 +45,7 @@
     box-shadow: none;
     -webkit-box-shadow: none;
     background-position: calc(100% - 12px) 12px, calc(100% - 7px) 12px, 100% 0;
+    color: rgba(18, 18, 18, 0.87);
 }
 .client_event_details .row textarea {
     height: 77px;

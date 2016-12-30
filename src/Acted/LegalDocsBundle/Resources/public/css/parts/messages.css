@@ -35,7 +35,7 @@
 }
 .messages .select2 {
     width: 243px !important;
-    margin: 18px 0 30px 17px;
+    margin: 0 0 30px 17px;
 }
 /*.messages .dialogs {*/
     /*display: inline-block;*/
@@ -209,7 +209,8 @@
     font-size: 15px;
     font-family: LatoRegular;
     color: rgba(0, 0, 0, 0.87);
-    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .user-info .time {
@@ -357,7 +358,6 @@
         font-family: LatoRegular;
         font-size: 14px;
         color: rgba(0, 0, 0, 0.87);
-        display: inline-block;
     }
     .user-info .time {
         line-height: 15px;

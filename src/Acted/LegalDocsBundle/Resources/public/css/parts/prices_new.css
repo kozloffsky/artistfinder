@@ -48,14 +48,17 @@ i.invisible-acts {
     font-size: 14px;
     color: rgba(255, 255, 255, 0.87);
 }
+.prices .categories-menu {
+    margin: 22px 0 22px 0;
+}
 .prices .performance-helper-container {
     margin: 10px 0 13px 0;
 }
 .prices .performance-container {
-    padding: 12px 0 0 23px;
+    padding: 4px 0 0 20px;
 }
 .prices .performance-container .row {
-    margin: 0 0 15px 0;
+    margin: 0 0 10px 0;
 }
 .prices .performance-container .act-title {
     font-family: LatoBold;
@@ -70,10 +73,10 @@ i.invisible-acts {
 .prices .performance-container .add-sets,
 .prices .performance-container .package-set,
 .prices .performance-container .package-price {
-    margin: 0 0 15px 0;
+    margin: 0 0 10px 0;
 }
 .prices .performance-container .package-name {
-    margin: 0 0 5px 0;
+    margin: 0 0 20px 0;
 }
 .prices .performance-container .package-cross {
     font-family: LucidaGrande;
@@ -81,8 +84,7 @@ i.invisible-acts {
     font-size: 14px;
     color: rgba(0, 0, 0, 1);
 
-    margin: 0 7px 2px 6px;
-    vertical-align: middle;
+    margin: 0 7px 0 6px;
     display: inline-block;
 }
 .prices .performance-container .package-min {
@@ -92,7 +94,6 @@ i.invisible-acts {
     color: rgba(0, 0, 0, 1);
 
     margin: 0 10px 0px 4px;
-    vertical-align: text-top;
     /*display: inline-block;*/
 }
 
@@ -102,7 +103,7 @@ i.invisible-acts {
     font-weight: 400;
     color: rgba(0, 0, 0, 0.87);
 
-    margin: 0 8px 0 0;
+    /*margin: 0 8px 0 0;*/
 }
 .prices .performance-container .package-crncy {
     font-family: LatoRegular;
@@ -112,12 +113,14 @@ i.invisible-acts {
 
     margin: 0 2px 0 2px;
 }
-.prices .performance-container input {
+.prices .performance-container input,
+.prices .performance-container select {
     height: 26px;
     padding: 0;
 }
 .prices .performance-container .block-1 {
     padding: 3px 0 12px 0;
+    width: 181px;
 }
 .prices .performance-container .block-2 {
     padding: 5px 0 0px 11px;
@@ -195,6 +198,7 @@ i.invisible-acts {
     text-align: left;
     padding: 2px 0 4px 8.5px;
 }
+.prices .performance-container select,
 .prices .performance-container .block-1 input {
     width: 44px;
 }
@@ -202,7 +206,8 @@ i.invisible-acts {
 .prices .performance-container .block-3 input {
     width: 56px;
 }
-.prices .performance-container input {
+.prices .performance-container input,
+.prices .performance-container select {
     background-color: rgba(255, 255, 255, 1);
     border-radius: 5px;
     text-align: center;
@@ -210,6 +215,11 @@ i.invisible-acts {
     font-family: LatoRegular;
     font-size: 13px;
     color: rgba(0, 0, 0, 0.87);
+
+    margin: 0;
+}
+.prices .performance-container select {
+    padding: 0 0 0 12px;
 }
 .prices .custom-checkbox {
     margin: 0;
@@ -255,6 +265,7 @@ i.invisible-acts {
     box-shadow: none;
     -webkit-box-shadow: none;
 }
+
 .prices .button-gradient.add-btn {
     background: rgb(88,149,243);
     background-image: -moz-linear-gradient(left, rgba(88,149,243,1) 0%, rgba(73,79,199,1) 100%);
@@ -268,11 +279,16 @@ i.invisible-acts {
     background-image: linear-gradient(to right,  rgba(255,173,108,1) 0%,rgba(255,117,58,1) 100%);
 }
 
-/* --- VISIBLE ACTS SECTION --- */
-.prices .visible-acts {
-
+.prices .price-box {
+    display: inline-block;
 }
-.prices .visible-acts .performance-container input {
+.prices .performance-container .set-block {
+    margin: 0 0 4px 0;
+}
+/* --- VISIBLE ACTS SECTION --- */
+.prices .visible-acts {}
+.prices .visible-acts .performance-container input,
+.prices .visible-acts .performance-container select {
     border: 2px solid rgba(228, 241, 255, 1);
 }
 
@@ -288,7 +304,8 @@ i.invisible-acts {
 .prices .hidden-acts {
 
 }
-.prices .hidden-acts .performance-container input {
+.prices .hidden-acts .performance-container input,
+.prices .hidden-acts .performance-container select {
     border: 2px solid rgba(255, 241, 228, 1);
 }
 .prices .hidden-acts .performance-container:nth-of-type(odd) {
@@ -298,9 +315,76 @@ i.invisible-acts {
     margin: 11px 0 0 0;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1800px) {
     .prices .container {
         margin: 0 380px 139px 380px;
         width: 1160px;
+        padding: 0;
     }
 }
+
+
+
+
+
+
+
+
+
+
+/* --- MOBILE STYLES --- */
+@media screen and (max-width: 1200px) {
+    .prices .price-box {
+        margin: 0 0 12px 0;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .prices .price-box {
+        display: block;
+    }
+    .prices .categories-dropdown {
+        margin: 0;
+    }
+    .prices .performance-container {
+        padding: 14px 0 0 14px;
+    }
+    .prices .performance-container .package-name {
+        width: 240px;
+        margin: 0 0 12px 0;
+    }
+    .prices .performance-container .package-cross {
+        margin: 0 3px 0 2px;
+    }
+    .prices .performance-container .package-min {
+        margin: 0 5px 0px 8px;
+    }
+    .prices .custom-checkbox label {
+        margin: 0;
+    }
+    .prices .performance-container .price-box input {
+        margin: 0 0 0 11px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

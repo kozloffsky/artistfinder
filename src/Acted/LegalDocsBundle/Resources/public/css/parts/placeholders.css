@@ -1,9 +1,9 @@
 .placeholder_with_image_area {
-    border: 2px dashed rgba(61, 66, 72, 1);;
+    border: 2px dashed rgba(61, 66, 72, 0.22);
     border-radius: 23px;
     box-sizing: border-box;
     font-family: "LatoRegular";
-    margin: 10px auto;
+    margin: 30px auto 146px auto;
     width: 562px;
     padding: 16px 65px 0;
 }
@@ -26,9 +26,9 @@
     color: rgba(24, 31, 161, .87);
     font-family: "LatoRegular";
     font-size: 14px;
-    padding: 0px 36px;
-    width: auto;
-    height: auto;
+    padding: 0px 0;
+    width: 130px;
+    height: 24px;
 }
 .placeholder_with_image_area .background {
     position: relative;
@@ -48,6 +48,55 @@
     background-size: cover;
     background-image: url(../../assets/images/rocket.png);
 }
+
+.client.feedback .placeholder_with_image_area {
+    padding: 40px 65px 0;
+}
+.client.events .placeholder_with_image_area {
+    padding: 16px 65px 0;
+}
+.client.payments .placeholder_with_image_area {
+    padding: 40px 65px 0;
+}
+.client.messages .placeholder_area {
+    font-family: LatoRegular;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(18, 18, 18, 0.87);
+    padding: 20px 0 0 0;
+}
+
+.artist.bookings .no-bookings {
+    font-family: LatoRegular;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(18, 18, 18, 0.87);
+    padding: 22px 0 200px 0;
+}
+
+.artist.messages .placeholder_area {
+    font-family: LatoRegular;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(18, 18, 18, 0.87);
+    padding: 44px 0 200px 0;
+}
+
+.artist.feedback .placeholder_area { 
+    font-family: LatoRegular;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(18, 18, 18, 0.87);
+    padding: 30px 0 200px 0;
+}
+
+.artist.prices .placeholder_with_image_area {  }
+.artist.enquiries .placeholder_with_image_area {  }
+
 @media (max-width: 767px) {
     .placeholder_with_image_area {
         width: 73.2%;

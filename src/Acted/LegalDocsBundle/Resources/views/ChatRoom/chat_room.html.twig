@@ -69,8 +69,8 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
-                                <input id="details_agree" name="details_agree" value="" type="checkbox" v-model="detailsAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable">
-                                <label for="details_agree">I agree with these details</label>
+                                <input id="details_agree_desktop" name="details_agree_desktop" value="" type="checkbox" v-model="detailsAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable">
+                                <label for="details_agree_desktop">I agree with these details</label>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
@@ -95,14 +95,15 @@
                                 <div class="performance-time">
                                     <span class="info">The performance starts at:</span>
                                     {#<span class="time">{{ order.performanceStartTime }}</span>#}
-                                    <input type="text" class="edit-time" placeholder="{{ order.performanceStartTime }}" value="{{ order.performanceStartTime }}" @input="saveDetails" v-bind:disabled="userRole == 'ROLE_ARTIST' || !editable">
+                                    <span v-if="userRole == 'ROLE_ARTIST' || !editable" class="time">6:30 PM</span>
+                                    <input type="text" class="edit-time" placeholder="{{ order.performanceStartTime }}" value="{{ order.performanceStartTime }}" @input="saveDetails" v-if="userRole != 'ROLE_ARTIST' || editable">
                                 </div>
                                 <div class="performance-info">
                                     Additional info <i>(This will be included in the booking agreement)</i>
                                 </div>
                                 <div class="performance-info-desc">
-                                    {#<p>{{ order.event.comments }}</p>#}
-                                    <textarea class="edit-time" @input="saveDetails" v-bind:disabled="userRole == 'ROLE_ARTIST' || !editable">{{ order.additionalInfo }}</textarea>
+                                    <p v-if="userRole == 'ROLE_ARTIST' || !editable">{{ order.event.comments }}</p>
+                                    <textarea class="edit-time" @input="saveDetails" v-if="userRole != 'ROLE_ARTIST' || editable">{{ order.additionalInfo }}</textarea>
                                 </div>
                             </div>
                             <div class="row section-info-footer hidden-sm hidden-md hidden-lg">

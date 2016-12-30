@@ -105,6 +105,9 @@
 }
 
 @media (max-width: 580px) {
+    .modal-backdrop.in {
+        opacity: 0;
+    }
     .login-modal .modal-dialog {
         width: 100%;
         height: 100%;
@@ -114,8 +117,9 @@
 
     .login-modal .modal-content {
         border: none;
+        border-radius: 0;
         height: 100%;
-        padding-top: 53px;
+        margin: 53px 0 0 0;
     }
 
     .login-modal .modal-title {
@@ -146,7 +150,7 @@
     }
 
     .login-modal .modal-content .close {
-        top: 74px;
+        top: 15px;
         right: 15px;
         background: transparent;
     }
@@ -189,7 +193,7 @@
     }
 
     .login-modal .modal-content .close {
-        top: 74px;
+        top: 15px;
         right: 15px;
         background: transparent;
     }

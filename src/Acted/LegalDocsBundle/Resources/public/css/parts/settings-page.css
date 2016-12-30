@@ -177,11 +177,15 @@
 .settings .custom-checkbox{
     margin: 9px 5px 0 0;
 }
-.settings .custom-checkbox label:before,
-.settings .custom-checkbox label:after{
+.settings .custom-checkbox label:before {
     width: 20px;
     height: 20px;
-    top: -2px;
+}
+.settings .custom-checkbox label:after {
+    left: 7px;
+    top: 3px;
+    width: 6px;
+    height: 11px;
 }
 .settings .custom-checkbox label{
     font-size: 12px;

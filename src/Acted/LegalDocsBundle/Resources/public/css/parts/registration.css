@@ -134,6 +134,7 @@
 
 .registration-modal .modal-body .controls > .button-gradient .btn {
     width: auto;
+    padding: 0 10px 0 10px;
 }
 
 .registration-modal .modal-body .category-header.divider {

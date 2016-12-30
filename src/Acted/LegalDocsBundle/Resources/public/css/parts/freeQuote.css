@@ -134,7 +134,7 @@
 
 .free-quote-modal .custom-checkbox {
     margin-right: 15px;
-    margin-bottom: 2px;
+    margin-bottom: 8px;
 }
 
 .free-quote-modal .form-group {
@@ -189,30 +189,21 @@
 .free-quote-modal.request .col-1 input,
 .free-quote-modal.request .col-1 .select2{margin-left: -1px;}
 .select2-container--open .select2-dropdown--below{
-    /*overflow: hidden;*/
     border-radius: 0 0 20px;
     -webkit-border-radius: 0 0 20px;
 }
-
 .free-quote-modal .profile-categories {
-    list-style: none;
-    margin: 0;
-    position: relative;
-    width: 100%;
-    /*-webkit-column-count: 3;*/
-    /*-moz-column-count: 3;*/
-    /*column-count: 3;*/
-    /*-moz-column-gap: 0;*/
-    /*-webkit-column-gap: 0;*/
-    /*column-gap: 0;*/
-    padding: 0;
     background-color: rgba(97, 109, 197, 0.06);
-    padding: 0 0 2px 0;
+    display: inline-block;
+    position: relative;
+    list-style: none;
+    width: 100%;
+    padding: 0 0 18px 16px;
+    margin: 0;
 }
 .padd_bottom_15px {
     padding-bottom: 15px;
 }
-
 .free-quote-modal .profile-categories li{
     float: left;
     margin-right: 0;
@@ -222,14 +213,12 @@
     padding-left: 15px;
     width: 33%;
 }
-
 .free-quote-modal .profile-categories .custom-checkbox label:before {
     height: 19px;
     width: 20px;
     border-radius: 4px;
     vertical-align: initial;
 }
-
 .free-quote-modal .profile-categories .custom-checkbox label:after {
     margin: 6px 5px;
     left: 3px;
@@ -241,19 +230,17 @@
     transform: rotate(45deg);
 
 }
-
 .free-quote-modal .profile-categories .custom-checkbox label:before {
     background: white;
 }
-
 .free-quote-modal .custom-checkbox label {
     font-size: 14px;
     font-weight: 400;
     color: rgba(0, 0, 0, 0.87);
-
+    padding-left: 31px;
 }
 .free-quote-modal .popup_artist_info {
-    padding: 15px 15px 15px 25px;
+    padding: 15px 15px 21px 25px;
 }
 .free-quote-modal .quote-profile-info p.quote-profile-info__residence {
     margin-top: -5px;
@@ -267,7 +254,6 @@
     float: left;
     margin-right: 22px;
 }
-
 .free-quote-modal .quote-profile-info {
     display: inline-block;
     float: left;
@@ -300,7 +286,7 @@
     position: absolute;
     font-family: LatoRegular;
     right: 35px;
-    top: -20px;
+    top: 0px;
     font-size: 14px;
 }
 .free-quote-modal .quote-profile-desc {
@@ -412,6 +398,11 @@ h4.eventChooseRequest select:active {
 }
 .free-quote-modal .add-comment-btn a {
     text-decoration: underline;
+    font-family: LatoRegular;
+    font-size: 14px;
+    color: rgba(127, 169, 255, 1);
+    text-align: center;
+    line-height: 22px;
 }
 .free-quote-modal .add-comment-btn p {
     font-family: LatoRegular;
@@ -448,7 +439,8 @@ h4.eventChooseRequest select:active {
 .free-quote-modal.request .modal-header h3{
     color: #3d4248;
     color: rgba(61, 66, 72, .87);
-    font: 22px UbuntuBold, Serif, sans-serif;
+    font: 22px Ubuntu, Serif, sans-serif;
+    font-weight: 600;
 }
 .free-quote-modal.request .title{
     font: 15px LatoBold, Serif, sans-serif;
@@ -647,14 +639,21 @@ h4.eventChooseRequest select:active {
     background: rgba(255, 255, 255, 0);
     color: white;
 }
+.free-quote-modal .button-gradient.blue,
+.free-quote-modal .button-gradient.orange {
+    height: 26px;
+    width: 126px;
+    padding: 0;
+}
 .free-quote-modal .button-gradient.blue button.btn,
 .free-quote-modal .button-gradient.orange button.btn{
-    background: #fff;
-    color: #000;
-    font-size: 15px !important;
-    height: 30px;
-    font-family: LatoRegular, Serif, sans-serif;
-    padding-top: 4px;
+    height: 26px;
+    width: 126px;
+    border-radius: 13px;
+    font-family: LatoRegular;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 1);
+    line-height: 20px;
 }
 .free-quote-modal.request h4{
     margin: 16px 0;

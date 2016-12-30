@@ -30,7 +30,7 @@ $(function(){
                         get: function () {
                             return this._requirementsAccepted;
                         },
-                        
+
                         set: function (val) {
                             var self = this;
                             this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().technicalRequirements, Number(val), function () {
@@ -99,7 +99,6 @@ $(function(){
                     }
                 },
                 created: function () {
-                    console.log('WWWWWWWWWWWWWWWWW');
                     this.fetchTechnicalRequirements();
                     this.userRole = window.userRole;
                     this._requirementsAccepted = window.order.technicalRequirementsAccepted;
@@ -125,13 +124,13 @@ $(function(){
                     console.log(window.order);
 
                 },
-                
+
                 methods: {
                     showConfirmModal: function () {
                         $('#confirmBookingModal').modal('show');
                         console.log('Showing modal');
                     },
-                    
+
                     fetchTechnicalRequirements: function () {
                         var self = this;
                         console.log("fetching tech reqs");
@@ -157,7 +156,7 @@ $(function(){
                             }
                         });
                     },
-                    
+
                     setDetails: function (data) {
                         this.contactEmail = data.email;
                         this.contactName = data.name;

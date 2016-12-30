@@ -72,16 +72,8 @@ i.star-icon {
     display: inline-block;
     width: 22px;
     height: 21px;
-    margin: 0 10px 0 0;
-}
-/*.feedback i.star-icon:nth-of-type(1) {
-    margin: 0 10px 0 10px !important;
-}*/
-i.star-icon.unfilled {
-    background: url('/assets/images/star_unfilled_feedback.png') no-repeat;
-}
-i.star-icon.filled {
-    background: url('/assets/images/star_feedback.png') no-repeat;
+    margin: 0 5px 0 0;
+    vertical-align: middle;
 }
 
 .feedback .rating-wrapper .rating-stars,
@@ -99,7 +91,7 @@ i.star-icon.filled {
     color: #000;
 }
 .feedback .rating-wrapper .rating-reach span {
-    display: inline-block;
+    /*display: inline-block;*/
     vertical-align: middle;
     font-family: LatoRegular;
     font-size: 14px;
@@ -127,12 +119,14 @@ i.star-icon.filled {
     text-align: center;
 }
 .dashboard.client .tip-box .text {
-    color: rgba(0, 0, 0, 0.87);
     padding: 10px 96px 12px 96px;
     display: inline-block;
+    text-align: justify;
     font-family: LatoRegular;
     font-size: 14px;
-    text-align: justify;
+    color: rgba(0, 0, 0, 0.87);
+    letter-spacing: 0.0286em;
+
 }
 .dashboard.client .comment-area {
     margin: 14px 0 0 0;
@@ -151,6 +145,11 @@ i.star-icon.filled {
 }
 .dashboard.client .comment-area .user-info {
     margin: 0 0 0 13px;
+    width: calc(100% - 200px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
 }
 .dashboard.client .comment-area .user-info .user-name {
     font-family: LatoRegular;
@@ -205,6 +204,7 @@ i.star-icon.filled {
 }
 .dashboard.client .comment-area .submit[disabled] {
     background: #DBDBDB;
+    cursor: not-allowed;
 }
 
 @media screen and (min-width: 768px ){
@@ -229,5 +229,10 @@ i.star-icon.filled {
         padding: 0 15px;
     }
     /** --- --- --- **/
-    
+    .feedback .artist-feedback .comment {
+        margin: 0 0 20px 13px;
+    }
+    .feedback .artist-feedback .comment p {
+        text-align: justify;
+    }
 }

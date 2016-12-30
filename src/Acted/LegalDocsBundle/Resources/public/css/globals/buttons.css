@@ -35,16 +35,16 @@
     height: 27px;
     border-radius: 16px;
     background: #fff;
-    font-size: 11px;
+    font-size: 14px;
     font-family: LatoRegular;
     color: #4b4b4b;
     transition-property: all;
     transition-duration: 0.2s;
 }
 
-.controls>.button-gradient.filled {
-    padding: 0;
-}
+/*.controls>.button-gradient.filled {*/
+    /*padding: 0;*/
+/*}*/
 
 .controls .button-gradient.filled .btn {
     background: transparent;
@@ -85,6 +85,10 @@
     /*background: -webkit-linear-gradient(left,  rgba(255,173,108,1) 0%,rgba(255,117,58,1) 100%); !* Chrome10-25,Safari5.1-6 *!*/
     /*background: linear-gradient(to right,  rgba(255,173,108,1) 0%,rgba(255,117,58,1) 100%); !* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ *!*/
 /*}*/
+.controls .button-gradient.filled {
+    padding: 0;
+}
+
 
 .btn {
     padding: 0;

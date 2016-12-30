@@ -18,8 +18,8 @@
 /*}*/
 
 .enq-icon {
-    width: 14px;
-    height: 14px;
+    width: 18px;
+    height: 18px;
     display: inline-block;
     vertical-align: middle;
     margin-top: -4px;
@@ -46,7 +46,7 @@
 }
 
 .act-request-data li span {
-    font-size: 13px;
+    font-size: 14px;
     font-family: LatoBold;
     color: rgba(0, 0, 0, 0.86);
 }
@@ -82,41 +82,17 @@
     margin: 0 15px!important;
 }
 
-.enq-icon.icon-date {
-    background: url("../../assets/images/date.png") no-repeat center;
-    background-size: cover;
-}
-
-.enq-icon.icon-timing {
-    background: url("../../assets/images/timing.png") no-repeat center;
-    background-size: cover;
-}
-
-.enq-icon.icon-location {
-    background: url("../../assets/images/location.png") no-repeat center;
-    background-size: cover;
-}
-
-.enq-icon.icon-event {
-    background: url("../../assets/images/event.png") no-repeat center;
-    background-size: cover;
-}
-
-.enq-icon.icon-client {
-    background: url("../../assets/images/client.png") no-repeat center;
-    background-size: cover;
-}
-
 .act-request-title {
     font-family: LatoRegular;
-    font-size: 12px;
+    font-size: 14px;
     color: rgba(0, 0, 0, 0.68);
     display: inline;
 }
 
 .act-request-title .bold-title {
     font-family: LatoBold;
-    color: rgba(0, 0, 0, 0.86);
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.82);
 }
 
 .act-request-title .see-more {
@@ -147,7 +123,7 @@
 
 .act-request-message span.text {
     font-family: LatoRegular;
-    font-size: 12px;
+    font-size: 14px;
     color: rgba(0, 0, 0, 0.87);
     line-height: 17px;
     max-height: 34px;
@@ -155,8 +131,8 @@
 }
 
 .act-request-message span.title {
-    font-size: 11px;
-    color: rgba(0, 0, 0, 0.69);
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.68);
 }
 
 .act-request .show-more-btn {
@@ -167,8 +143,8 @@
 
 .received-time {
     font-family: LatoRegular;
-    font-size: 12px;
-    color: rgba(0, 0, 0, 0.68);
+    font-size: 13px;
+    color: rgba(131, 131, 131, 1);
     position: absolute;
     right: 0;
 }
@@ -251,45 +227,23 @@
     .act-request .controls .button-gradient:not(:last-of-type) {
         margin-bottom: 11px!important;
     }
-
     .act-request {
         padding: 0 0 105px;
     }
-
     .enquiries {
         padding-bottom: 11px;
         min-height: 338px;
     }
-
-    .act-request-title,
-    .received-time,
-    .act-request-message span.title,
-    .act-request-data li span,
-    .act-request-data li {
-        font-size: 10px;
-    }
-
     .act-request-data {
         margin-bottom: 23px!important;
     }
-
     .act-request-title {
         margin-bottom: 23px;
     }
-
-    .act-request-message span.text {
-        font-size: 11px;
-    }
-    .bookings .select2 .select2-selection__rendered,
-    #select2-booking-results{
-        font-size: 11px !important;
-    }
-
     .bookings .act-request{padding: 0 0 85px;}
     .bookings .act-request .controls{text-align: center;}
     .bookings .act-request .controls .btn{min-width: 150px;}
     .bookings .act-request .button-gradient{margin: 0 20px !important;}
-
     .act-request-list dt{
         float: none;
         max-width: 100%;
