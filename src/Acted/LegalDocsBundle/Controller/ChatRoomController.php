@@ -565,6 +565,10 @@ class ChatRoomController extends Controller
         $baseDir = $this->get('kernel')->getRootDir() . '/../web/';
         $fullPathTechnicalRequirementsDirectory = $baseDir . $technicalRequirementsDirectory;
 
+        if (!file_exists($fullPathTechnicalRequirementsDirectory)) {
+            mkdir($fullPathTechnicalRequirementsDirectory, 0777, true);
+        }
+
         $serializer = $this->get('jms_serializer');
 
         $chatRoomCustomTechnicalRequirementsCustomCreateForm = $this->createForm(ChatRoomTechnicalRequirementsCustomCreateType::class, null, ['method' => 'POST']);

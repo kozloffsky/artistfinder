@@ -56,7 +56,11 @@ class FileUploader
 
     public function __construct(EntityManager $em, RequestStack $requestStack, Kernel $kernel, $documentTechnicalRequirementsDir)
     {
-        //document_technical_requirements_dir
+
+        if (!file_exists($documentTechnicalRequirementsDir)) {
+            mkdir($documentTechnicalRequirementsDir, 0777, true);
+        }
+
         $this->em = $em;
         $this->request = $requestStack->getCurrentRequest();
         $validator = Validation::createValidator();
