@@ -111,7 +111,7 @@ class OrderManager
         $order->setPaymentExpirationDate(new \DateTime());
         $order->setDepositAmount(0);
 
-        $order->setPerformanceStartTime("6.pm");
+        $order->setPerformanceStartTime($event->getTiming());
         $order->setAdditionalInfo("");
         $order->setGuaranteedBalanceTerm(20);
         $order->setGuaranteedDepositTerm(80);

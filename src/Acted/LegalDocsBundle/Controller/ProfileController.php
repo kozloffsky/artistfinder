@@ -35,7 +35,7 @@ class ProfileController extends Controller
         foreach($performances->getItems() as &$performance) {
             $packages = $performance->getPackages()->getValues();
             $amountArray = [];
-            $currentPerformancePrice = 3000;
+            $currentPerformancePrice = 0;
 
             foreach($packages as $package) {
                 $options = $package->getOptions()->getValues();

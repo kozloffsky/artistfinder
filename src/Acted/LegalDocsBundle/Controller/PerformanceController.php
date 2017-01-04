@@ -51,7 +51,7 @@ class PerformanceController extends Controller
 
             $duration = 1;
             $qty = 1;
-            $priceAmount = 3000;
+            $priceAmount = 0;
 
             $profile = $artist->getUser()->getProfile();
             $package = new Package();
@@ -64,6 +64,7 @@ class PerformanceController extends Controller
             $option->setPackage($package);
             $option->setQty($qty);
             $option->setDuration($duration);
+            $option->setPriceOnRequest(true);
             $em->persist($option);
 
             $price = new Price();
