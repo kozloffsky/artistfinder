@@ -331,6 +331,9 @@ header.small .navbar {
 .navbar-default .navbar-right>li.profile .dropdown-menu{
     right: 0;
 }
+.nav.navbar-nav.navbar-right > li {
+    margin: 0 9px;
+}
 .nav.navbar-nav.navbar-right > li.mail {
     margin: 4px 0 0 9px;
 }
@@ -422,9 +425,6 @@ header.small .navbar {
     border-right: 6px solid transparent;
     border-left: 6px solid transparent;
 }
-.nav.navbar-nav.navbar-right > li {
-    margin: 0 9px;
-}
 
 @media (max-width: 1200px) {
     .navbar-default .navbar-left>li>a {
@@ -438,7 +438,6 @@ header.small .navbar {
 }
 
 @media (max-width: 849px) {
-
     header {
         height: 300px;
     }
@@ -577,6 +576,16 @@ header.small .navbar {
     .navbar-default .navbar-nav li a:focus {
         color: grey!important;
         font-size: 11px;
+    }
+
+    .nav.navbar-nav.navbar-right > li {
+        margin: 0;
+    }
+    .nav.navbar-nav.navbar-right > li.mail {
+        margin: 4px 0 0 0;
+    }
+    .nav.navbar-nav.navbar-right > li.profile-dropdown.dropdown {
+        margin: 0;
     }
 }
 

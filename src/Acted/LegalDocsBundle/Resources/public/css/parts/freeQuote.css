@@ -741,7 +741,7 @@ h4.eventChooseRequest select:active {
 }
 
 .free-quote-modal .modal-footer label:before {
-    border: 2px solid #c6c6c6;
+    border: 1px solid #c6c6c6;
     width: 20px;
     height: 20px;
 }
