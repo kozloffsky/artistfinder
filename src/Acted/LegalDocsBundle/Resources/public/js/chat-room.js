@@ -81,10 +81,21 @@ $(function(){
                         }
                     },
 
+                    sendingAllowed: {
+                        cache: false,
+                        get: function () {
+                            if(window.userRole == 'ROLE_ARTIST'){
+                                return false;
+                            }
+
+                            return true;
+                        }
+                    },
+
                     bookingAllowed: {
                         cache: false,
                         get: function () {
-                            if(window.userRole == 'ROLE_ACTOR'){
+                            if(window.userRole == 'ROLE_ARTIST'){
                                 return false;
                             }
                         if(this._actsExtrasAccepted == true &&

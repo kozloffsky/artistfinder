@@ -294,7 +294,7 @@
                         </div>
                         <div class="controls">
                             <div class="button-gradient filled orange">
-                                <button class="btn " id="sendMsg" type="submit" chatMessageSending>Send</button>
+                                <button class="btn " id="sendMsg" type="submit" v-bind:disabled="sendingAllowed" chatMessageSending>Send</button>
                             </div>
                         </div>
                     </div>
