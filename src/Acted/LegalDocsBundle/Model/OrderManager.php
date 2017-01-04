@@ -248,9 +248,9 @@ class OrderManager
 
     public function checkOrderForBooking($orderId){
         $order = $this->orderRepository->find($orderId);
-        if (empty($order)){
+        if ($order == null) {
             return false;
-
+        }
 
         if ($order->getDetailsAccepted() != true ||
             $order->getTechnicalRequirementsAccepted() != true ||
@@ -273,7 +273,7 @@ class OrderManager
 
         return true;
     }
-    }
+
 
     public function bookOrder($orderId){
         $order = $this->orderRepository->find($orderId);
