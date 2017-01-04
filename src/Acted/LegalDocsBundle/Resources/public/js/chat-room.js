@@ -200,11 +200,11 @@ $(function(){
                     },
 
                     proceedToPayment: function(){
-                        //if(this.termsConditionsAccepted == true) {
-                        console.log("proceeding to payment");
-                        window.location = "/order/pay/" + window.getOrderId();
+                        if(this.termsConditionsAccepted == true) {
+                            console.log("proceeding to payment");
+                            window.location = "/order/pay/" + window.getOrderId();
 
-                        //}
+                        }
                     },
 
                     saveDetails: _.debounce(function(e){
