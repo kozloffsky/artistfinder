@@ -38,7 +38,6 @@
 </script>
 
 <main class="chat-room {% if user.client is not empty %} dashboard client {% endif %}">
-    {% include '@ActedLegalDocs/Default/confirmBookingModal.html.twig' %}
     <div class="container">
         {% if user.client is not empty %}
             {% include 'ActedLegalDocsBundle:Profile:client/client_menu.html.twig' %}
@@ -344,7 +343,7 @@
 
 </main>
 
-
+{% include '@ActedLegalDocs/Default/confirmBookingModal.html.twig' %}
 
 
 
