@@ -760,7 +760,7 @@ select.full-width + .select2{
     margin: 0 0 0 23px;
 }
 /*.chat-room .comments-list li.active .img-holder{*/
-    /*border: 2px solid #ff735a;*/
+/*border: 2px solid #ff735a;*/
 /*}*/
 .chat-room .comments-list p{
     margin: 0 0 10px;
@@ -1329,7 +1329,7 @@ select.full-width + .select2{
         margin: 0 0 0 35px;
     }
     .chat-room .section-three .booking-confirm-list {
-         padding: 0 64px 0 0 !important;
+        padding: 0 64px 0 0 !important;
     }
     .chat-room .tr-container .col-sm-6:nth-of-type(1) .row:nth-of-type(1) {
         margin: 0;
@@ -1552,7 +1552,7 @@ select.full-width + .select2{
         width: 100%;
     }
     /*.chat-room .section-one .section-info-footer {*/
-        /*margin: 0 32px 0 25px;*/
+    /*margin: 0 32px 0 25px;*/
     /*}*/
     .chat-room .contacts-info {
         border-bottom: 2px solid rgba(0, 0, 0, 0.05);
@@ -1803,14 +1803,14 @@ select.full-width + .select2{
 }
 .booking-modal .section-2 > div {
     padding: 13px 31px 20px 16px;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: hidden;
 }
 .booking-modal .section-2 p {
     font-family: LatoRegular;
     font-size: 12px;
     color: rgba(0, 0, 0, 0.54);
     text-align: justify;
+    word-break: break-all;
 }
 
 .booking-modal .agreement-title {
@@ -1819,39 +1819,39 @@ select.full-width + .select2{
     font-weight: 400;
     color: rgba(0, 0, 0, 0.75);
 }
-.booking-modal .quote-section {
+.booking-modal .quotation-section {
     height: 317px;
     overflow-x: hidden;
     overflow-y: scroll;
 }
-.booking-modal .quote-section article.service > ul {
+.booking-modal .quotation-section article.service > ul {
     margin: 0 28px 9px 25px;
 }
-.booking-modal .quote-section article.service > ul > li {
+.booking-modal .quotation-section article.service > ul > li {
     margin: 11px 0 0 0;
 }
-.booking-modal .quote-section article.service > ul > li > strong {
+.booking-modal .quotation-section article.service > ul > li > strong {
     font-family: LatoBold;
     font-size: 16px;
     font-weight: 400;
     color: rgba(0, 0, 0, 0.87);
 }
-.booking-modal .quote-section article.service > ul > li > div > div {
+.booking-modal .quotation-section article.service > ul > li > div > div {
     font-family: LatoRegular;
     font-size: 12px;
     color: rgba(0, 0, 0, 0.87);
 }
-.booking-modal .quote-section article.service > ul > li > div > div > span.cross {
+.booking-modal .quotation-section article.service > ul > li > div > div > span.cross {
     font-family: LucidaGrande;
 }
-.booking-modal .quote-section article.service > ul > li span.short {
+.booking-modal .quotation-section article.service > ul > li span.short {
     margin: 0 4px 0 0;
 }
-.booking-modal .quote-section article.service > ul > li > div.row {
+.booking-modal .quotation-section article.service > ul > li > div.row {
     margin: 15px 0 0 0;
 }
 
-.booking-modal .quote-section .package-name {
+.booking-modal .quotation-section .package-name {
     font-family: LatoBold;
     font-size: 18px;
     font-weight: 400;
@@ -1859,6 +1859,17 @@ select.full-width + .select2{
     margin: 0;
     padding: 5px 0 8px 25px;
 }
+.booking-modal .quotation-section article .package-name {
+    background: #ffad6c;
+    background-image: -webkit-linear-gradient(left,rgba(255,173,108,1) 0,rgba(255,117,58,1) 100%);
+    background-image: linear-gradient(to right,rgba(255,173,108,1) 0,rgba(255,117,58,1) 100%);
+}
+.booking-modal .quotation-section article.act-extras .package-name {
+    background: #5895f3;
+    background: -webkit-linear-gradient(left,rgba(88,149,243,1) 0,rgba(73,79,199,1) 100%);
+    background: linear-gradient(to right,rgba(88,149,243,1) 0,rgba(73,79,199,1) 100%);
+}
+
 .booking-modal .payment-info {
     padding: 10px 28px 11px 28px;
     border-top: 2px solid rgba(243, 243, 243, 1);
