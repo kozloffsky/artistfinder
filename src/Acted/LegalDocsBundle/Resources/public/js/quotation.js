@@ -834,8 +834,8 @@
         newServices = prepareServicePerformance(services, 'service');
         newExtraPerformances = prepareExtraPerformance(extraPerformances);
 
-        var balancePercent = $("[edit-quotation-payment-percent]").find("option:selected").val();
-        var depositPercent = 100 - balancePercent;
+        var depositPercent = $("[edit-quotation-payment-percent]").find("option:selected").val();
+        var balancePercent = 100 - depositPercent;
 
         var data = {
             performances: newBasePerformances,
@@ -1227,9 +1227,9 @@
 
     /** --- EDITING FUNCTIONAL --- **/
     function editPaymentPercent() {
-        var balancePercent = $(this).find("option:selected").val();
-        var depositPercent = 100 - balancePercent;
-        $(".payment-deposit-amount").html(depositPercent + '%');
+        var depositPercent = $(this).find("option:selected").val();
+        var balancePercent = 100 - depositPercent;
+        $(".payment-balance-amount").html(balancePercent + '%');
     }
     function editPerformanceComment() {
 
