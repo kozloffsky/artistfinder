@@ -3,9 +3,14 @@ Acted\LegalDocsBundle\Entity\Profile:
     properties:
         user:
             groups: [getEvent]
-
         performances:
-            groups: [order]
-
+            groups: []
         services:
-            groups: [order]
+            groups: []
+    virtual_properties:
+        getPerformances:
+          serialized_name: performances
+          groups: [order]
+        getServices:
+          serialized_name: services
+          groups: [order]

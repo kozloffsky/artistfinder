@@ -500,7 +500,7 @@ class Profile
     {
         return $this->performances->filter(
             function($entry) {
-                return !$entry->getIsQuotation();
+                return (!$entry->getIsQuotation() && is_null($entry->getDeletedTime()));
             }
         );
     }
@@ -543,7 +543,7 @@ class Profile
     {
         return $this->services->filter(
             function($entry) {
-                return !$entry->getIsQuotation();
+                return (!$entry->getIsQuotation() && is_null($entry->getDeletedTime()));
             }
         );
     }
