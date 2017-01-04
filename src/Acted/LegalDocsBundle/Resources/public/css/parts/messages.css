@@ -38,7 +38,7 @@
     margin: 0 0 30px 17px;
 }
 /*.messages .dialogs {*/
-    /*display: inline-block;*/
+/*display: inline-block;*/
 /*}*/
 .dialog-section {
     background: white;
@@ -211,6 +211,8 @@
     color: rgba(0, 0, 0, 0.87);
     overflow: hidden;
     text-overflow: ellipsis;
+    display: inline-block;
+    width: 130px;
 }
 
 .user-info .time {
