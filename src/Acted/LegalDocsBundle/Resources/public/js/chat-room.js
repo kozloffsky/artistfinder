@@ -200,7 +200,9 @@ $(function(){
                     },
 
                     proceedToPayment: function(){
-                            window.location = "/order/pay/"+window.getOrderId();
+                        if(this.termsConditionsAccepted == true) {
+                            window.location = "/order/pay/" + window.getOrderId();
+                        }
                     },
 
                     saveDetails: _.debounce(function(e){
