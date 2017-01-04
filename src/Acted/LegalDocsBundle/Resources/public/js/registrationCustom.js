@@ -126,10 +126,10 @@ $(function () {
     }
 
     function showFinishPage() {
-        $('.stage').hide();
+        /*$('.stage').hide();
         $('.modal-header').hide();
         $('#stage-4').show();
-        $('#completionTime').hide();
+        $('#completionTime').hide();*/
     }
 
 
