@@ -201,7 +201,9 @@ $(function(){
 
                     proceedToPayment: function(){
                         //if(this.termsConditionsAccepted == true) {
-                            window.location = "/order/pay/" + window.getOrderId();
+                        console.log("proceeding to payment");
+                        window.location = "/order/pay/" + window.getOrderId();
+
                         //}
                     },
 
