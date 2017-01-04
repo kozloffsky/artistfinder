@@ -396,12 +396,12 @@
 
                     var data = {
                         option: option.id,
-                        price: 3000
+                        price: 0
                     };
 
                     pricesApi.endpoints.rate.post(this.data.type, { price_rate_create: data });
                     pricesApi.send(function(resp) {
-                        html += "<li price_comp>"+this.priceComp({ id: resp.price.id, price: { amount: 3000 } }, { i: 1 });
+                        html += "<li price_comp>"+this.priceComp({ id: resp.price.id, price: { amount: 0 } }, { i: 1 });
                         html +='<div class="add">\
                                     <a add_price href="#">Add price</a><a class="ico-box" href="#"><i class="ico question">?</i></a>\
                                 </div>\
@@ -708,12 +708,12 @@
 
             var data = {
                 option: optId,
-                price: 3000
+                price: 0
             };
 
             pricesApi.endpoints.rate.post(comp, { price_rate_create: data });
             pricesApi.send(function(resp) {
-                _this.closest("li").before("<li price_comp>"+temp.priceComp({ id: resp.price.id, price: { amount: 3000 } }, { i: i })+"</li>");
+                _this.closest("li").before("<li price_comp>"+temp.priceComp({ id: resp.price.id, price: { amount: 0 } }, { i: i })+"</li>");
 
                 if(lic.length >= 2) {
                     _this.closest("ul").find("a[add_price]").closest("li").hide();
@@ -743,7 +743,7 @@
 
             var pricedata = {
                 option: 0,
-                price: 3000
+                price: 0
             };
 
             function rateCallback(resp) {
@@ -751,7 +751,7 @@
                 temp.data.currentPackage.options = [{
                     id: pricedata.option,
                     rates: [
-                        { id: resp.price.id, price: { amount: 3000 } }
+                        { id: resp.price.id, price: { amount: 0 } }
                     ]
                 }];
 
@@ -797,7 +797,7 @@
                 options: [{
                     qty: 1,
                     duration: 0,
-                    price1: 3000
+                    price1: 0
                 }],
                 performance: id
             };
@@ -1072,7 +1072,7 @@
             artist: artist,
             options: [
                 {
-                    price1: 3000,
+                    price1: 0,
                     duration: 0,
                     qty: 1
                 }
@@ -1093,7 +1093,7 @@
             title: "Service template",
             package_name: "package template",
             artist: artist,
-            price: 3000,
+            price: 0,
             duration: 0,
             qty: 1
         };
