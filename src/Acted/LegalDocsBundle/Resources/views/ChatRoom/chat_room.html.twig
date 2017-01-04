@@ -112,7 +112,7 @@
                                     Additional info <i>(This will be included in the booking agreement)</i>
                                 </div>
                                 <div class="performance-info-desc">
-                                    <p v-if="userRole == 'ROLE_ARTIST'">{{ order.event.comments }}</p>
+                                    <p v-if="userRole == 'ROLE_ARTIST'">{{ order.additionalInfo }}</p>
                                     <textarea class="edit-time" @input="saveDetails" v-if="userRole != 'ROLE_ARTIST'">{{ order.additionalInfo }}</textarea>
                                 </div>
                             </div>
