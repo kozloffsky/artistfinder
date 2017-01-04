@@ -7,7 +7,7 @@
         <div class="row artist-block" style="display: none;" v-for="order in orders" v-if="order.id != 10" v-bind:data-chatroom-id="order.chat.chat_id" :data-order-id="order.id">
             <div class="col-sm-1 col-xs-1 no-pad avatar-block">
                 <div class="avatar">
-                    <img v-if="order.artist.avatar" src="order.artist.avatar">
+                    <img v-if="order.artist.user.avatar" v-bind:src="order.artist.user.avatar">
                     <img v-else src="/assets/images/noAvatar.png">
                 </div>
             </div>
@@ -42,7 +42,7 @@
 
                 <div class="row controls-area controls">
                     <a class="btn button-gradient blue" v-bind:href="'/dashboard/chat/'+ order.chat.chat_id">Chatroom</a>
-                    <div class="button-gradient follow">
+                    <div class="button-gradient follow orange">
                         <a class="btn" v-bind:href="'/profile/'+ order.artist.slug">Profile</a>
                     </div>
                 </div>
