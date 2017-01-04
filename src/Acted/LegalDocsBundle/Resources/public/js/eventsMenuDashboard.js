@@ -441,7 +441,7 @@ $(function () {
                     },
                     setVenueType: function () {
                         var _this = this;
-                        cosnole.log(this.eventObj.selectedVenueType);
+                        console.log(this.eventObj.selectedVenueType);
                     }
                 },
                 filters: {},

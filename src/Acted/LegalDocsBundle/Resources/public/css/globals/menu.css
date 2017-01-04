@@ -205,6 +205,9 @@
     transform: rotate(180deg);
     right: 0;
 }
+.dashboard.client .owl-item {
+    display: inline-block;
+}
 .dashboard.client .owl-item:hover,
 .dashboard.client .events-menu .arrows .left:hover,
 .dashboard.client .events-menu .arrows .right:hover {
