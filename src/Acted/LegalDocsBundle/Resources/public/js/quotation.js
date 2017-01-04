@@ -1402,7 +1402,7 @@
             $(this).hide();
             var inputCustomPrice = $(this).find("[edit-custom-price]");
             if (typeof(inputCustomPrice) != 'undefined') {
-                $(this).after('<input edit-custom-price type="text" class="custom-price" onkeypress="return isNumberKey(event);">');
+                $(this).after('<input edit-custom-price type="text" class="price-box" onkeypress="return isNumberKey(event);">');
             } else {
                 inputCustomPrice.show();
             }

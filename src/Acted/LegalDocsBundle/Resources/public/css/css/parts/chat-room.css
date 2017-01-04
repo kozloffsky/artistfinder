@@ -254,6 +254,9 @@ body {
 .chat-room .custom-checkbox label:before {
     height: 18px;
     width: 18px;
+    background-color: rgba(255, 255, 255, 1);
+    border: 0.156rem solid rgba(0, 0, 0, 0.32);
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.17);
     border-radius: 4px;
 }
 .chat-room .custom-checkbox label:after {

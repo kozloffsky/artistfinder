@@ -113,7 +113,6 @@
 </div>
 
 <!-- // NEW QUOTATION MODAL -->
-
 <script type="text/template" id="quot-modal-tmp">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true"></span>
@@ -149,7 +148,6 @@
         <%= payment %>
     </form>
 </script>
-
 <!-- New Quotation event section -->
 <script type="text/template" id="quot-event-tmp">
     <%
@@ -225,6 +223,38 @@
         </div>
     </div>
 </script>
+<!-- NEW Quotation payment section -->
+<script type="text/template" id="quot-payment-tmp">
+    <%
+    var balancePercent = data.model.balancePercent;
+    if (typeof(balancePercent) == 'undefined') {
+    balancePercent = 50;
+    }
+    %>
+    <div class="row">
+        <label>Payment terms</label>
+    </div>
+    <div class="row payment-deposit">
+        <select edit-quotation-payment-percent name="quotation-payment-percent">
+            <option <% if(balancePercent == 20) { %> selected <% } %> value="20">20%</option>
+            <option <% if(balancePercent == 30) { %> selected <% } %> value="30">30%</option>
+            <option <% if(balancePercent == 50) { %> selected <% } %> value="50">50%</option>
+        </select>
+        <span>guaranteed Deposit payment on <b>Escrow Account</b></span>
+        <div class="custom-checkbox">
+            <input id="non-refund" name="non-refund" type="checkbox" checked>
+            <label for="non-refund">Non - refundable</label>
+        </div>
+    </div>
+    <div class="row payment-deposit-info">
+        <span class="payment-deposit-amount"><%depositPercent = 100-balancePercent%><%=depositPercent%>%</span><span> guaranteed Balance payment on <b>Escrow Account</b></span>
+    </div>
+    <div style="text-align: center;">
+        <button quotation-send class="btn btn-quotation-send">Save</button>
+    </div>
+</script>
+
+
 
 
 
@@ -278,7 +308,7 @@
         var itemId = curPerf.itemId;
 
         %>
-        <div act-id="<%=perfId%>" item-id="<%=itemId%>" base-type="true" act-type="<%=type%>">
+        <div act-id="<%=perfId%>" item-id="<%=itemId%>" base-type="true" act-type="<%=type%>" class="quotation-performance">
             <div class="row">
                 <div class="act-title">
                     <div class="custom-checkbox">
@@ -368,8 +398,6 @@
     <% } %>
 
 </script>
-
-
 <!-- Quotation extra performance section -->
 <script type="text/template" id="quot-extra-performance-tmp">
     <%
@@ -409,7 +437,7 @@
         var price = rate.price;
         var amount = new Number(price.amount).toFixed();
     %>
-    <div act-id="<%=perfId%>" item-id="<%=itemId%>" act-type="<%=type%>">
+    <div act-id="<%=perfId%>" item-id="<%=itemId%>" act-type="<%=type%>" class="quotation-extra-performance">
         <div package-id="<%=package.id%>" class="row">
             <div class="row package">
                 <div class="custom-checkbox">
@@ -468,40 +496,6 @@
     <% } %>
 
 </script>
-
-
-<!-- NEW Quotation payment section -->
-<script type="text/template" id="quot-payment-tmp">
-    <%
-        var balancePercent = data.model.balancePercent;
-        if (typeof(balancePercent) == 'undefined') {
-            balancePercent = 50;
-        }
-    %>
-    <div class="row">
-        <label>Payment terms</label>
-    </div>
-
-    <div class="row payment-deposit">
-        <select edit-quotation-payment-percent name="quotation-payment-percent">
-            <option <% if(balancePercent == 20) { %> selected <% } %> value="20">20%</option>
-            <option <% if(balancePercent == 30) { %> selected <% } %> value="30">30%</option>
-            <option <% if(balancePercent == 50) { %> selected <% } %> value="50">50%</option>
-        </select>
-
-        <span>guaranteed Deposit payment on <b>Escrow Account</b></span>
-    </div>
-
-    <div class="row payment-deposit-info">
-        <span class="payment-deposit-amount"><%depositPercent = 100-balancePercent%><%=depositPercent%>%</span><span> guaranteed Balance payment on <b>Escrow Account</b></span>
-    </div>
-
-    <div style="text-align: center;">
-        <button quotation-send="" class="btn btn-quotation-send">Send quotation</button>
-    </div>
-</script>
-
-
 <script type="text/template" id="quot-new-performance">
     <%
     var curPerf = data.performance;
@@ -574,7 +568,6 @@
         </div>
     </div>
 </script>
-
 <script type="text/template" id="quot-set-template">
 
     <!-- Set options -->
@@ -604,7 +597,6 @@
     </div>
 
 </script>
-
 <script type="text/template" id="quot-package-template">
     <div package-id="<%=package.id%>" class="row">
         <div class="row package">

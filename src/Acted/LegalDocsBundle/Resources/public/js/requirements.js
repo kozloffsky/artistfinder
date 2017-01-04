@@ -325,12 +325,13 @@
 
         });
         input.bind('fileuploadfail', function (e, data) {
+            console.log(e, data)
+
             alert(e, data.response().responseJSON.errors[0])
         });
     }
 
-        window.applyUploader = applyUploader;
-
+    window.applyUploader = applyUploader;
 
     function thumbGenerator(files) {
         var html = '',

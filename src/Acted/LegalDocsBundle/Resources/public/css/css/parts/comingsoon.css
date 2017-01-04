@@ -1,0 +1,141 @@
+.coming-soon {
+    overflow: hidden;
+}
+
+.coming-soon header {
+	height: 88px;
+	background-color: rgba(0, 0, 0, 0.15);
+}
+
+.coming-soon .logo {
+	display: inline-block;
+    vertical-align: middle;  /* vertical alignment of the inline element */
+    height: 100%;
+    width: 100%;
+}
+
+.coming-soon .logo span.helper {
+	display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.coming-soon .logo img {
+    vertical-align: middle;
+    height: 62px;
+    width: 136px;
+}
+
+.coming-soon .section-font {
+	font-family: Ubuntu;
+	font-weight: 600;
+	text-align: center;
+	font-size: 5.625em;
+	color: #FFF;
+	margin-top:  110px;
+	margin-bottom: 134px;
+}
+
+.coming-soon .section-email .title-div {
+	font-family: Ubuntu;
+	font-weight: 600;
+	text-align: center;
+	font-size: 1.5em;
+	color: #FFF;
+    margin: 0 0 26px 0;
+}
+
+.coming-soon .section-email .email-div {
+    height: 100%;
+	width: 538px;
+	background-color: #FFF;
+	border-radius: 8px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.coming-soon .section-email .email-div input[type="email"],
+.coming-soon .section-email .email-div input[type="email"]:focus,
+.coming-soon .section-email .email-div input[type="email"]:visited {
+	border: none;
+	outline: none;
+	border-radius: 0;
+	box-shadow: none;
+	margin: 20px 0 21px 25px;
+	height: 27px;
+    width: 66%;
+	font-family: LatoRegular;
+	font-size: 1.375em;
+	color: rgba(0, 0, 0, 1);
+	text-align: left;
+}
+
+.coming-soon .section-email .email-div input.button {
+	border-radius: 8px;
+	outline: none;
+	box-shadow: none;
+	border: none;
+	background: rgba(255, 175, 48, 1);
+	padding: 16px 42px;
+	color: #FFF;
+	position: absolute;
+    top: 50%;
+    right: 6px;
+    margin-top: -27px;
+}
+
+.coming-soon input[type="email"].mce_inline_error {
+	color: #ff5f5f !important;
+}
+
+.coming-soon input[type="email"].mce_inline_error + label.error {
+	display: block !important;
+	color: #ff5f5f;
+}
+
+.coming-soon label.error {
+	position: absolute;
+	font-weight: 100;
+	display: none;
+    bottom: -2px;
+    left: 25px;
+}    
+
+
+@media screen and (max-width: 768px) {
+	.coming-soon .section-font {
+	    font-size: 2.625em;
+        margin-top: 1em;
+    	margin-bottom: 1em;
+	}
+
+	.coming-soon .section-email .email-div input[type="email"], 
+	.coming-soon .section-email .email-div input[type="email"]:focus, 
+	.coming-soon .section-email .email-div input[type="email"]:visited{
+	    margin: 20px !important;
+	    height: 27px !important;
+	    width: 66%;
+	}
+
+	.coming-soon .section-email .email-div {
+		width: 100% !important;
+	}
+}
+
+@media screen and (max-width: 425px) {
+
+
+	.coming-soon .section-email .email-div input[type="email"], 
+	.coming-soon .section-email .email-div input[type="email"]:focus, 
+	.coming-soon .section-email .email-div input[type="email"]:visited {
+		width: 220px !important;
+	}
+
+	.coming-soon .section-email .email-div input.button {
+		position: relative;
+		top: 0;
+    	right: 0;
+    	margin-top: 0;
+		width: 100% !important;
+	}
+}
