@@ -143,11 +143,21 @@ $(function(){
                                 var empty = {
                                     "title": "None",
                                     "description":"",
+                                    "id":0,
                                     "documentTechnicalRequirements":[]
                                 };
                                 self.technicalRequirements.push(empty)
-                                if(self.technicalRequirements.length > 0) {
-                                    self.selectedRequirement = empty;
+                                if(window.selectedRequirement != undefined){
+                                    for (var r in self.technicalRequirements){
+                                        if(self.technicalRequirements[r].id == window.selectedRequirement.id){
+                                            self.selectedRequirement = self.technicalRequirements[r];
+                                            break;
+                                        }
+                                    }
+                                }else {
+                                    if (self.technicalRequirements.length > 0) {
+                                        self.selectedRequirement = empty;
+                                    }
                                 }
                             },
                             error: function (r) {
@@ -222,7 +232,21 @@ $(function(){
                             data:data,
                             url: "/order/save_details/"+window.getOrderId()
                         })
-                    }, 300)
+                    }, 300),
+
+                    saveTechReqs: function () {
+                        var data = {
+                            'id': this.selectedRequirement.id,
+                            'title': this.selectedRequirement.title,
+                            'description': this.selectedRequirement.description
+                        }
+
+                        $.ajax({
+                            method:"POST",
+                            data: data,
+                            url: "/order/save_techreqs/"+window.getOrderId()
+                        });
+                    }
                 },
                 filters: {
                     removeExt: function (value) {

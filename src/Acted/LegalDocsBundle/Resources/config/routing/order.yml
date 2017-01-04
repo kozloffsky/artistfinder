@@ -32,3 +32,8 @@ order_cancel:
     methods:  DELETE
     requirements:
       orderId: \d+
+
+order_set_tech_reqs:
+    path:    /save_techreqs/{orderId}
+    methods: POST
+    defaults: {_controller:ActedLegalDocsBundle:Order:saveTechReqs, _format: json }

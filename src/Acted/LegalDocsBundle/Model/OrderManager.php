@@ -261,7 +261,7 @@ class OrderManager
             return false;
         }
 
-        if(empty($order->getActorDetails()) || empty($order->getClientDetails())){
+        if($order->getActorDetails() == null || $order->getClientDetails() == null){
             echo "details are empty";
             return false;
         }
@@ -331,6 +331,16 @@ class OrderManager
 
         $order->setAdditionalInfo($additionalInfo);
 
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
+    }
+
+    public function setTechReqs($orderId, $data){
+        $order = $this->orderRepository->find($orderId);
+        if(!$order){
+            throw new EntityNotFoundException("Order Not Found with id ".$orderId);
+        }
+        $order->setTechnicalRequirements($data);
         $this->entityManager->persist($order);
         $this->entityManager->flush();
     }

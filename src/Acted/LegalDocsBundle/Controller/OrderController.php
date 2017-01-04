@@ -156,6 +156,21 @@ class OrderController extends Controller
         return new JsonResponse(['status'=>'ok']);
     }
 
+    public function saveTechReqsAction(Request $request, $orderId){
+        $data = [
+            'title' => $request->get('title'),
+            'description' => $request->get('description'),
+            'id' => $request->get('id')
+        ];
+
+        try{
+            $this->orderManager->setTechReqs($orderId, ['requirement'=>$data]);
+        }catch(\Exception $e){
+            return new JsonResponse(['error'=>$e->getMessage(), 500]);
+        }
+        return new JsonResponse(['status'=>'ok'], 200);
+    }
+
     /**
      * @ApiDoc(
      *  description="Cancel order",

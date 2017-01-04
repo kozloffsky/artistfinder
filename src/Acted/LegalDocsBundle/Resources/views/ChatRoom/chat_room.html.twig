@@ -35,6 +35,12 @@
         'name': '{{ order.clientDetails.name|default('')  }}',
         'person': '{{ order.clientDetails.person|default('')  }}',
     }
+
+    {% if order.technicalRequirements is not null and order.technicalRequirements.requirement is not empty  %}
+    window.selectedRequirement = {
+        'id': '{{ order.technicalRequirements.requirement.id }}'
+    }
+    {% endif %}
 </script>
 
 <main class="chat-room {% if user.client is not empty %} dashboard client {% endif %}">
