@@ -67,13 +67,13 @@
     <ul>
         <li v-for="doc in selectedRequirement.documentTechnicalRequirements">
             <i class="fa fa-file-pdf-o icon icon-pdf" aria-hidden="true"></i>
-            ${doc.originalName | removeExt }
-            <i class="icon icon-delete-attached" aria-hidden="true" @click="deleteAttachment(doc.id)"></i>
+            <a href="${doc.file}"> ${doc.originalName | removeExt }</a>
+            <!--<i class="icon icon-delete-attached" aria-hidden="true" @click="deleteAttachment(doc.id)"></i>-->
         </li>
     </ul>
-    <div class="attach-file-btn">
+    <!--<div class="attach-file-btn">
         <i class="icon icon-attach"></i>
         <label for="attach_file">Attach</label>
         <input id="attach_file" type="file" hidden name="tech_requ_files[]">
-    </div>
+    </div>-->
 </div>
