@@ -506,9 +506,7 @@
                 _this.addMarker();
             }
 
-
-            var event = document.createEvent('Event');
-            event.initEvent('googlePlaceChanged', true, true);
+            var event = new CustomEvent('googlePlaceChanged', { data: _this.currentStore });
             document.dispatchEvent(event);
         };
         this.addAutocomplete = function(elem) {
