@@ -279,7 +279,7 @@ class OrderManager
         $order = $this->orderRepository->find($orderId);
 
         if (!$this->checkOrderForBooking($orderId)){
-            $this->createNotFoundException("Bad Order");
+            return false;
         }
 
         $order->setStatus(Order::STATUS_BOOKED);
@@ -311,7 +311,7 @@ class OrderManager
         $this->entityManager->flush();
     }
 
-    public function setPerformanceStartTime($orderId, $performanceStartTime, $userRole){
+    public function setPerformanceStartTime($orderId, $performanceStartTime, $userRole=null){
         $order = $this->orderRepository->find($orderId);
         if(!$order){
             throw new EntityNotFoundException("Order Not Found with id".$orderId);

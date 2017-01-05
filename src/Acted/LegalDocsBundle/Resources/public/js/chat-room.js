@@ -2,6 +2,26 @@ $(function(){
     'use strict';
     if (document.querySelector('.chat-room')) {
         try {
+            Vue.component('time-picker',{
+                props: ['value'],
+                template:"#timepicker-template",
+                mounted:function () {
+                    $(this.$el)
+                        .val(this.value)
+                        .timepicker();
+
+                    $(this.$el).on('change', function () {
+                        vue.$emit('timepicker-input', this.value)
+                    });
+
+
+                },
+                watch: {
+                    value: function () {
+                        $(this.$el).val(this.value);
+                    }
+                }
+            });
 
             var vue = new Vue({
                 el: '.chat-room',
@@ -22,7 +42,8 @@ $(function(){
                     contactPerson:"",
                     contactPhone:"",
                     contactEmail:"",
-                    editable:true
+                    editable:true,
+                    eventStartTime:"6.pm"
                 },
 
                 computed:{
@@ -116,6 +137,7 @@ $(function(){
                     this._timingAccepted = window.order.timingAccepted;
                     this._actsExtrasAccepted = window.order.actsExtrasAccepted;
                     this._detailsAccepted = window.order.detailsAccepted;
+                    this.eventStartTime = window.order.eventStartTime;
                     var data = {}
                     if(window.order.status > 1){
                         this.editable = false;
@@ -133,6 +155,16 @@ $(function(){
                     }
                     this.setDetails(data);
                     console.log(window.order);
+
+                    this.$on('timepicker-input', function (data) {
+                        this.eventStartTime = data;
+                        $.ajax({
+                            method:"POST",
+                            data:{"performance-start-time":data},
+                            url: "/order/save_start_time/"+window.getOrderId()
+                        })
+                    })
+
 
                 },
 
@@ -187,6 +219,10 @@ $(function(){
 
                     setTypesForFiles: function () {
 
+                    },
+
+                    saveStartTime: function(){
+                        console.log('tesfdsdf');
                     },
 
                     acceptField: function (orderId, fieldId, value, callback) {
@@ -541,4 +577,7 @@ console.log('connected to socket');
     }
 
     $().ready(chekUserReadedMessage);
+    $().ready(function(){
+        $('#eventStartTime').timepicker();
+    });
 });

@@ -1,5 +1,8 @@
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
 {# dump(order.performances) #}
+<script type="text/x-template" id="timepicker-template">
+    <input type="text" class="edit-time" />
+</script>
 <script type="text/javascript">
     window.getOrderId = function(){ return {{ order.id }}};
 
@@ -19,7 +22,8 @@
         timingAccepted: Boolean({{ order.timingAccepted }}),
         actsExtrasAccepted: Boolean({{ order.actsExtrasAccepted }}),
         detailsAccepted: Boolean({{ order.detailsAccepted }}),
-        status: {{ order.status }}
+        status: {{ order.status }},
+        eventStartTime: "{{ order.performanceStartTime }}"
     }
 
     window.actorDetails = {
@@ -106,7 +110,8 @@
                                     <span class="info">The performance starts at:</span>
                                     {#<span class="time">{{ order.performanceStartTime }}</span>#}
                                     <span v-if="userRole == 'ROLE_ARTIST'" class="time">{{ order.performanceStartTime }}</span>
-                                    <input type="text" class="edit-time" placeholder="{{ order.performanceStartTime }}" value="{{ order.performanceStartTime }}" @input="saveDetails" v-if="userRole != 'ROLE_ARTIST'">
+                                    <time-picker v-on:input="saveStartTime()" v-model="eventStartTime" v-if="userRole != 'ROLE_ARTIST'"/>
+                                    <!--<input id="eventStartTime" type="text" @change.native="saveStartTime" v-model="eventStartTime" class="edit-time" placeholder="{{ order.performanceStartTime }}" value="{{ order.performanceStartTime }}" @input="saveDetails" v-if="userRole != 'ROLE_ARTIST'">-->
                                 </div>
                                 <div class="performance-info">
                                     Additional info <i>(This will be included in the booking agreement)</i>

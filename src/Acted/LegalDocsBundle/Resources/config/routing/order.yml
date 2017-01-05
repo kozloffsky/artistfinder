@@ -37,3 +37,8 @@ order_set_tech_reqs:
     path:    /save_techreqs/{orderId}
     methods: POST
     defaults: {_controller:ActedLegalDocsBundle:Order:saveTechReqs, _format: json }
+
+order_set_start_time:
+    path:    /save_start_time/{orderId}
+    methods: POST
+    defaults: {_controller:ActedLegalDocsBundle:Order:saveStartTime, _format: json }

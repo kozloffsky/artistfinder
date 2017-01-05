@@ -177,6 +177,20 @@ class OrderController extends Controller
         return new JsonResponse(['status'=>'ok'], 200);
     }
 
+
+    public function saveStartTimeAction(Request $request, $orderId){
+        $data = $request->get('performance-start-time');
+
+        try{
+            $this->orderManager->setPerformanceStartTime($orderId, $data);
+        }catch(\Exception $e){
+            return new JsonResponse(['error'=>$e->getMessage(), 500]);
+        }
+        return new JsonResponse(['status'=>'ok'], 200);
+    }
+
+
+
     /**
      * @ApiDoc(
      *  description="Cancel order",
