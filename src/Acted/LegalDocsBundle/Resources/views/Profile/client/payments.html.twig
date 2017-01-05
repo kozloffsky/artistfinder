@@ -9,6 +9,10 @@
                     <div v-if="showNotification(event.starting_date, event.ending_date) && orderIsLoaded" class="notification">
                         <p>To avoid a booking cancellation, please make sure the balance payment is received in escrow by no later than a day prior to the event. Kindly keep in mind bank transfers may take up to 3 days. The payment is automatically transferred from the escrow account to the artist account 3 days after the event if you haven’t manually released the funds or ask a refund.</p>
                     </div>
+                    <span v-if="showNotification(event.starting_date, event.ending_date) && orderIsLoaded">
+                        <br/>
+                        <br/>
+                    </span>
                 </div>
             </div>
             <div v-for="paymentOrder in paymentOrders" class="row client-payments-block">
