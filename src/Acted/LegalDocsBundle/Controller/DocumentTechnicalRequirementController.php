@@ -74,15 +74,13 @@ class DocumentTechnicalRequirementController extends Controller
     }
 
     /**
-     * @Secure(roles="ROLE_ACTOR")
+     * @Secure(roles="ROLE_ARTIST")
      * @param Request $request
      * @param DocumentTechnicalRequirement|null $documentTechnicalRequirement
      * @return JsonResponse
      */
     public function removeAction(Request $request, DocumentTechnicalRequirement $documentTechnicalRequirement = null)
     {
-
-        //$this->denyAccessUnlessGranted('ROLE_ACTOR');
         if (empty($documentTechnicalRequirement)) {
             return new JsonResponse([
                 'status' => 'error',
