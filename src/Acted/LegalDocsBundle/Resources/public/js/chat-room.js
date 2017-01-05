@@ -105,6 +105,7 @@ $(function(){
                     sendingAllowed: {
                         cache: false,
                         get: function () {
+                            if(window.order.status == 0) return false;
                             if(window.userRole == 'ROLE_ARTIST'){
                                 return false;
                             }
