@@ -258,6 +258,7 @@
                             window.chatMessages.push({
                                 msg:"{{ chatMessage.message_text }}",
                                 send_date:"{{ chatMessage.time_from_get }}",
+                                role:"{{ chatMessage.sender_user.role_name }}",
                             {%  if chatMessage.sender_user.avatar is defined  %}
                                 avatar: "{{ chatMessage.sender_user.avatar }}",
                             {%  else %}
@@ -272,7 +273,7 @@
                         </script>
                     {% endfor %}
 
-                    <li v-for="message in chatMessages" >
+                    <li v-for="message in chatMessages" v-bind:class="[{right : message.role=='Client'}, {active : message.role=='Client'}]">
                         <a href="#" class="img-holder">
                             <img :src="message.avatar" alt="image description">
                         </a>
