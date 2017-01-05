@@ -11,32 +11,68 @@
                         <div class="col-sm-6 no-pad section-1">
                             <div class="quotation-section">
                                 <div class="holder">
-                                    <!--service start-->
-                                    {% for p in order.performances %}
-                                    <article class="service">
-                                        <h3 class="package-name">{{ p.data['title'] }}</h3>
-                                        <ul class="ul-reset">
-                                            {% for package in p.data.packages %}
-                                            <li>
-                                                <strong class="sub-title">{{  package['name'] }}</strong>
-                                                <div class="row">
-                                                    <div class="col-md-12 no-pad">
-                                                        <span class="short" name="currency1" id="currency1">1</span>
-                                                        <span class="">x</span>
-                                                        <span class="short" name="currency11" id="currency11">45 min</span>
-                                                        <div class="pull-right">
-                                                            <span class="short">3.000</span>
-                                                            <span class="pull-right">GBP</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            {% endfor %}
+                                    {#<!--service start-->#}
+                                    {#{% for p in order.performances %}#}
+                                    {#<article class="service">#}
+                                        {#<h3 class="package-name">{{ p.data['title'] }}</h3>#}
+                                        {#<ul class="ul-reset">#}
+                                            {#{% for package in p.data.packages %}#}
+                                            {#<li>#}
+                                                {#<strong class="sub-title">{{  package['name'] }}</strong>#}
+                                                {#<div class="row">#}
+                                                    {#<div class="col-md-12 no-pad">#}
+                                                        {#<span class="short" name="currency1" id="currency1">1</span>#}
+                                                        {#<span class="">x</span>#}
+                                                        {#<span class="short" name="currency11" id="currency11">45 min</span>#}
+                                                        {#<div class="pull-right">#}
+                                                            {#<span class="short">3.000</span>#}
+                                                            {#<span class="pull-right">GBP</span>#}
+                                                        {#</div>#}
+                                                    {#</div>#}
+                                                {#</div>#}
+                                            {#</li>#}
+                                            {#{% endfor %}#}
 
-                                        </ul>
-                                    </article>
+                                        {#</ul>#}
+                                    {#</article>#}
+                                    {#{% endfor %}#}
+                                    {% for p in order.performances %}
+                                        {% set performanceClass = 'service' %}
+                                        {% if p.data.type > 0 %}
+                                            {% set performanceClass = 'service act-extras' %}
+                                        {% endif %}
+                                        <article class="{{ performanceClass }}">
+                                            <h3 class="package-name">{{ p.data['title'] }}</h3>
+                                            <ul class="ul-reset">
+                                                {% for package in p.data.packages %}
+                                                    <li>
+                                                        <strong class="sub-title">{{ package['name'] }}</strong>
+                                                        <div class="row">
+                                                            {% for option in package['options'] %}
+                                                                <div class="col-md-12 no-pad">
+                                                                    {% if p.data.type < 2 %}
+                                                                        <span class="short" name="currency1" id="currency1">{{ option['qty'] }}</span>
+                                                                        <span class="">x</span>
+                                                                        <span class="short" name="currency11" id="currency11">{{ option['duration'] }} min</span>
+                                                                    {% endif %}
+                                                                    <div class="pull-right">
+                                                                        <span class="short">{{ option['rates'][0]["price"]['amount'] }}</span>
+                                                                        <span class="pull-right">GBP</span>
+                                                                    </div>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                        {% if p.data.type > 0 %}
+                                                            <div class="row">
+                                                                <span class="extra-descr">{{ p.data.comment }}</span>
+                                                            </div>
+                                                        {% endif %}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </article>
                                     {% endfor %}
-                                    <article class="service act-extras">
+                                    <!--<article class="service act-extras">
                                         <h3 class="package-name">Extra - 1</h3>
                                         <ul class="ul-reset">
                                             <li>
@@ -57,7 +93,7 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                    </article>
+                                    </article>-->
                                     <!--service end-->
                                 </div>
                             </div>
