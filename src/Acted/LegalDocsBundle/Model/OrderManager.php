@@ -57,6 +57,8 @@ class OrderManager
      */
     private $entityManager;
 
+    private $lastError;
+
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -249,6 +251,7 @@ class OrderManager
     public function checkOrderForBooking($orderId){
         $order = $this->orderRepository->find($orderId);
         if ($order == null) {
+            $this->lastError = "Order with id ".$orderId." not found";
             return false;
         }
 
@@ -257,17 +260,17 @@ class OrderManager
             $order->getActsExtrasAccepted() != true ||
             $order->getTimingAccepted() != true
             ){
-            echo "details not accepted";
+            $this->lastError =  "details not accepted";
             return false;
         }
 
         if($order->getActorDetails() == null || $order->getClientDetails() == null){
-            echo "details are empty";
+            $this->lastError = "details are empty";
             return false;
         }
 
         if($order->getStatus() > Order::STATUS_ACCEPTED){
-            echo "wrong status";
+            $this->lastError = "wrong status";
             return false;
         }
 
@@ -533,5 +536,15 @@ class OrderManager
         $this->entityManager->persist($order);
         $this->entityManager->flush();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getLastError()
+    {
+        return $this->lastError;
+    }
+
+
 
 }

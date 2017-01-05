@@ -80,9 +80,11 @@ class OrderController extends Controller
      * TODO: Here will be mongopay, right now faking this and manually create payment transaction and book order
      * @param $orderId
      */
-    public function payAction($orderId){
+    public function payAction(Request $request, $orderId){
         if (!$this->orderManager->checkOrderForBooking($orderId)){
-            $this->createNotFoundException("Bad Order");
+
+            $this->addFlash("warning", $this->orderManager->getLastError());
+            return $this->redirect($request->headers->get('referer'));
         }
         return $this->render("@ActedLegalDocs/Order/payment.html.twig",['order'=>$orderId]);
     }

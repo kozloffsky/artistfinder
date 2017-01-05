@@ -61,10 +61,22 @@
                 <h2 class="main-title">Chatroom #{{ chat.chat_id }}</h2>
                 <div class="hidden" id="chatId">{{ chat.chat_id }}</div>
 
+                {% if app.session.flashBag.has('warning') %}
+                {% for msg in app.session.flashBag.get('warning') %}
                 <div class="tooltip-message warning">
                     <i class="notification-bell" aria-hidden="true"></i>
-                    <span>The client has updated the event details, please validate them!</span>
+                    <span>{{ msg }}</span>
                 </div>
+                {% endfor %}
+                {% endif %}
+                {% if app.session.flashBag.has('info') %}
+                {% for msg in app.session.flashBag.get('info') %}
+                    <div class="tooltip-message info">
+                        <i class="notification-bell" aria-hidden="true"></i>
+                        <span>{{ msg }}</span>
+                    </div>
+                {% endfor %}
+                {% endif %}
                 <!--<div class="tooltip-message info">
                     <i class="notification-bell" aria-hidden="true"></i>
                     <span>The client has updated the performance time, please confirm you are fine with this change</span>
