@@ -329,7 +329,7 @@
                     {% endif %}
                     <div class="controls">
                         <div class="button-gradient filled orange">
-                            <button edit-order order-id="{{ order.id }}" v-bind:disabled="sendingAllowed" class="btn" type="submit">Edit Quotation</button>
+                            <button edit-order order-id="{{ order.id }}" v-bind:disabled="sendingAllowed" class="btn" type="submit">{% if order.status == 0 %}Send Quotation{% else %}Edit Quotation{% endif %}</button>
                         </div>
                     </div>
                 </div>
