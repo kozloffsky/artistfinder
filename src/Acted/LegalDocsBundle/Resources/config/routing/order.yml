@@ -33,6 +33,13 @@ order_cancel:
     requirements:
       orderId: \d+
 
+order_not_available:
+    path:     /{orderId}
+    defaults: { _controller: ActedLegalDocsBundle:Order:setNotAvailable, _format: json }
+    methods:  PATCH
+    requirements:
+      orderId: \d+
+
 order_set_tech_reqs:
     path:    /save_techreqs/{orderId}
     methods: POST

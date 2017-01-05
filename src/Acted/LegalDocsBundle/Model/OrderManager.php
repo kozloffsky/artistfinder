@@ -545,6 +545,15 @@ class OrderManager
         return $this->lastError;
     }
 
+    public function setNotAvailableOrder($orderId)
+    {
+        $order = $this->orderRepository->find($orderId);
+        if (!$order) {
+            throw new EntityNotFoundException("Order Not Found with id: " . $orderId);
+        }
 
-
+        $order->setStatus(Order::STATUS_NOT_AVAILABLE);
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
+    }
 }

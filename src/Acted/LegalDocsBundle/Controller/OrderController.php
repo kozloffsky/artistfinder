@@ -191,8 +191,6 @@ class OrderController extends Controller
         return new JsonResponse(['status'=>'ok'], 200);
     }
 
-
-
     /**
      * @ApiDoc(
      *  description="Cancel order",
@@ -228,5 +226,33 @@ class OrderController extends Controller
         }
 
         return new JsonResponse($response);
+    }
+
+    /**
+     * @ApiDoc(
+     *  description="Set not available order",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param $orderId
+     * @return JsonResponse
+     */
+    public function setNotAvailableAction($orderId)
+    {
+        $response = ['status'=>'success'];
+
+        try{
+            $this->orderManager->setNotAvailableOrder($orderId);
+        }catch (EntityNotFoundException $e){
+
+            $response['status']  = 'error';
+            $response['error'] = $e->getMessage();
+
+            return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
+        }
+
+        return new JsonResponse($response, Response::HTTP_OK);
     }
 }

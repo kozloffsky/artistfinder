@@ -12,6 +12,7 @@ class Order
     const STATUS_ACCEPTED = 1;
     const STATUS_BOOKED = 2;
     const STATUS_ARCHIVED  = 3;
+    const STATUS_NOT_AVAILABLE  = 4;
 
     const STATUS_CANCELED = 10;
 

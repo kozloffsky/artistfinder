@@ -33,6 +33,7 @@
                         <div class="row color-kelly available-flag text-left" v-if="order.status == 0">Enquiry</div>
                         <div class="row color-kelly available-flag text-left" v-else-if="order.status == 1">Available</div>
                         <div class="row color-kelly available-flag text-left" v-else-if="order.status == 2">Confirmed</div>
+                        <div class="row color-kelly available-flag text-left" v-else-if="order.status == 4">Not available</div>
                         <div class="row text-left price-from" v-if="order.status == 1">From &pound; ${order.minPrice}</div>
                         <div class="row text-left price-from" v-else>&nbsp;</div>
                         <div class="row text-left"><i v-on:click="reject" class="fa fa-trash"></i> Remove</div>

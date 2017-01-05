@@ -4,6 +4,7 @@ $(function () {
     var AWAITING = 0;
     var AVAILABLE = 1;
     var BOOKED = 2;
+    var NOT_AVAILABLE = 4;
 
     try {
         if ($('.artist-selection').length > 0) {
@@ -82,6 +83,15 @@ $(function () {
             sortedOrders.push(item);
         });
         awaiting.forEach(function (item) {
+            sortedOrders.push(item);
+        });
+
+        var notAvailable = _.toArray(_.pickBy(orders, function (order) {
+            return order.status == NOT_AVAILABLE;
+        }));
+
+        notAvailable = sortAll(notAvailable);
+        notAvailable.forEach(function (item) {
             sortedOrders.push(item);
         });
 

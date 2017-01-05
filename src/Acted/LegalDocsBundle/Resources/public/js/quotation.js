@@ -474,6 +474,21 @@
         });
     }
 
+    function setNotAvailable(id) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/order/'+ id,
+                method: 'PATCH',
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
+
     // TODO
 
     // function sendChatMessage(message) {
@@ -655,6 +670,11 @@
 
     ///
     /** ------------------------------------------------------- **/
+    function setNotAvailableHandler() {
+        var orderId = $(this).attr("order-id");
+        setNotAvailable(orderId);
+    }
+
     function openQuotationModal() {
         var orderId = $(this).attr("order-id");
 
@@ -1592,6 +1612,7 @@
 
     $("body")
         .on("click",    ".enquiries .quotationSendbtn", openQuotationModal)
+        .on("click",    ".enquiries .rejectRequest", setNotAvailableHandler)
         .on("click",    ".quotation-modal button[quotation-send]", quotationSend)
         .on("click",    ".quotation-modal input[select-performance]", selectPerformanceSend)
         .on("click",    ".quotation-modal input[select-extra-performance]", selectExtraPerformanceSend)

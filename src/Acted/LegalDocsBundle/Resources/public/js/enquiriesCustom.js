@@ -13,12 +13,12 @@ $(function() {
         }
     }
 
-    $('.rejectRequest').on('click',function(){
+    /*$('.rejectRequest').on('click',function(){
         var eventId = $(this).parents('article').attr('id');
         rejectRequest(eventId)
-    })
+    })*/
 
-    function rejectRequest(id){
+    /*function rejectRequest(id){
         console.log(id)
         $.ajax({
             type:'GET',
@@ -31,7 +31,7 @@ $(function() {
 
             }
         })
-    }
+    }*/
 
     $(document).on('click','.archiveMessage',function(){
         var messageId = $(this).parents('article').attr('id');
