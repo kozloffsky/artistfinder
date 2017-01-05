@@ -760,7 +760,7 @@ select.full-width + .select2{
     margin: 0 0 0 23px;
 }
 /*.chat-room .comments-list li.active .img-holder{*/
-/*border: 2px solid #ff735a;*/
+    /*border: 2px solid #ff735a;*/
 /*}*/
 .chat-room .comments-list p{
     margin: 0 0 10px;
@@ -1329,7 +1329,7 @@ select.full-width + .select2{
         margin: 0 0 0 35px;
     }
     .chat-room .section-three .booking-confirm-list {
-        padding: 0 64px 0 0 !important;
+         padding: 0 64px 0 0 !important;
     }
     .chat-room .tr-container .col-sm-6:nth-of-type(1) .row:nth-of-type(1) {
         margin: 0;
@@ -1552,7 +1552,7 @@ select.full-width + .select2{
         width: 100%;
     }
     /*.chat-room .section-one .section-info-footer {*/
-    /*margin: 0 32px 0 25px;*/
+        /*margin: 0 32px 0 25px;*/
     /*}*/
     .chat-room .contacts-info {
         border-bottom: 2px solid rgba(0, 0, 0, 0.05);

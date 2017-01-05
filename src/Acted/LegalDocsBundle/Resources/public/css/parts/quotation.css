@@ -75,6 +75,7 @@
 }
 .quotation-modal .payment-deposit > span {
     padding: 5px 0;
+    margin: 0 0 0 7px;
 }
 .quotation-modal .payment-deposit > .custom-checkbox {
     margin: 0 0 0 17px;
@@ -85,9 +86,18 @@
     font-weight: 400;
     color: rgba(0, 0, 0, 0.87);
 }
-.quotation-modal .payment-deposit-info > span {
-    margin: 0 0 23px 0;
+
+.quotation-modal .payment-deposit-info {
+    margin: 0 0 25px 5px;
 }
+.quotation-modal .payment-deposit-info > span {
+    margin: 0 0 0 68px;
+}
+.quotation-modal .payment-deposit-info > span.payment-deposit-amount {
+    margin: 0;
+    position: absolute;
+}
+
 .quotation-modal .act-title {
     padding: 8px 0 10px 12px;
     display: inline-block;
@@ -500,10 +510,6 @@
 
 .quotation-modal select {
     margin: 0;
-}
-
-.quotation-modal .payment-deposit-info {
-    margin: 0 0 25px 36px;
 }
 
 @media screen and (max-width: 960px) {

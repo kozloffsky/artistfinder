@@ -422,8 +422,8 @@ main.prices .note{
     font-size: 13px;
     color: #000;
 }
-.prices .custom-checkbox label:before,
-.prices .custom-checkbox label:after {
+
+.prices .custom-checkbox label:before {
     height: 20px;
     width: 20px;
 }

@@ -43,20 +43,13 @@
 
                             {% endfor %}
                         </span>
-                        <!--<span class="see-more">(<a href="#">See more</a>)</span>-->
                     </p>
 
                     {% if order.event.published_request is defined %}
-
-                            <p {% if not order.event.published_request %} style="display: none;" {% endif %}class="act-request-quotation-label">
-                                Quote sent
-                            </p>
-
-
-
-
+                        <p {% if not order.event.published_request %} style="display: none;" {% endif %}class="act-request-quotation-label">
+                            Quote sent
+                        </p>
                     {% endif %}
-
 
                     <p class="act-request-message" data-max-chars-desktop="150" data-max-chars-mobile="70">
                         <span class="title">Message from client:</span>
