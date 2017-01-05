@@ -1,13 +1,12 @@
 
             {% for performance in performances|reverse if performance.status == "published" %}
-
                 <article class="item clearfix">
                     <header class="heading">
                         <h2>{{ performance.title }} </h2>
                         {% if performance.priceOnRequest %}
                             <div class="price pull-right">Price on request</div>
                         {% else %}
-                            <div class="price pull-right">Price: from {{ performance.minPrice|number_format(0) }} GBP</div> <!--<input class="set-price" type="text" placeholder="0,00">-->
+                            <div class="price pull-right">Price: from {{ performance.minPrice|number_format(0) }} {{ artist.country.refCurrency.isoCode }}</div> <!--<input class="set-price" type="text" placeholder="0,00">-->
                         {% endif %}
                     </header>
 

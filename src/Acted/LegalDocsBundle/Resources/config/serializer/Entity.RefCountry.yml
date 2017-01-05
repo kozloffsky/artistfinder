@@ -1,0 +1,7 @@
+Acted\LegalDocsBundle\Entity\RefCountry:
+    exclusion_policy: NONE
+    properties:
+        name:
+            groups: [Default, block]
+        id:
+            groups: [Default, block]
