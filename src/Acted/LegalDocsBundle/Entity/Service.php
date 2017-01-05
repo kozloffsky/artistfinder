@@ -97,6 +97,20 @@ class Service
     }
 
     /**
+     * Get existed packages
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExistedPackages()
+    {
+        return $this->packages->filter(
+            function ($entry) {
+                return is_null($entry->getDeletedTime());
+            }
+        );
+    }
+
+    /**
      * Set profile
      *
      * @param \Acted\LegalDocsBundle\Entity\Profile $profile

@@ -14,6 +14,10 @@ Acted\LegalDocsBundle\Entity\Performance:
         type:
           groups: [order]
         packages:
-          groups: [order]
+          groups: []
         deletedTime:
+          groups: [order]
+    virtual_properties:
+        getExistedPackages:
+          serialized_name: packages
           groups: [order]

@@ -7,4 +7,8 @@ Acted\LegalDocsBundle\Entity\Option:
     duration:
       groups: [order]
     rates:
+      groups: []
+  virtual_properties:
+    getExistedRates:
+      serialized_name: rates
       groups: [order]

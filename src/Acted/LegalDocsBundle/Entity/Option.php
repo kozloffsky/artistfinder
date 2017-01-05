@@ -82,6 +82,20 @@ class Option
     }
 
     /**
+     * Get existed rates
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExistedRates()
+    {
+        return $this->rates->filter(
+            function ($entry) {
+                return is_null($entry->getDeletedTime());
+            }
+        );
+    }
+
+    /**
      * Set package
      *
      * @param \Acted\LegalDocsBundle\Entity\Package $package

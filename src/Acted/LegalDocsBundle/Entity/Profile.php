@@ -492,6 +492,34 @@ class Profile
     }
 
     /**
+     * Get existed performances
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExistedPerformances()
+    {
+        return $this->performances->filter(
+            function ($entry) {
+                return (!$entry->getIsQuotation() && is_null($entry->getDeletedTime()));
+            }
+        );
+    }
+
+    /**
+     * Get existed services
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExistedServices()
+    {
+        return $this->services->filter(
+            function($entry) {
+                return (!$entry->getIsQuotation() && is_null($entry->getDeletedTime()));
+            }
+        );
+    }
+
+    /**
      * Get performances
      *
      * @return \Doctrine\Common\Collections\Collection

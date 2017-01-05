@@ -6,8 +6,11 @@ Acted\LegalDocsBundle\Entity\Service:
     title:
       groups: [price_service, order]
     packages:
-      groups: [order]
+      groups: []
   virtual_properties:
     getPackages:
       serialized_name: packages
       groups: [price_service]
+    getExistedPackages:
+      serialized_name: packages
+      groups: [order]

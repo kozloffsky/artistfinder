@@ -96,6 +96,20 @@ class Package
     }
 
     /**
+     * Get existed options
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExistedOptions()
+    {
+        return $this->options->filter(
+            function ($entry) {
+                return is_null($entry->getDeletedTime());
+            }
+        );
+    }
+
+    /**
      * Set performance
      *
      * @param \Acted\LegalDocsBundle\Entity\Performance $performance

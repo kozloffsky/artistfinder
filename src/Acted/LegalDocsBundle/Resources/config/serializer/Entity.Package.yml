@@ -2,9 +2,11 @@ Acted\LegalDocsBundle\Entity\Package:
   properties:
     id:
       groups: [order]
-
     name:
       groups: [order]
-
     options:
-      groups: [order]
+      groups: []
+  virtual_properties:
+      getExistedOptions:
+        serialized_name: options
+        groups: [order]
