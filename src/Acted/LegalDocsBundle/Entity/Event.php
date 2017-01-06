@@ -744,15 +744,11 @@ class Event
                 $value = \DateTime::createFromFormat('d/m/Y', $value);
             }
 
-            if(stripos($key, 'venue') !== false){
-
-            }
-
             $method = 'set' . ucfirst($key);
             if (in_array($method, $_classMethods)) {
                 $this->$method($value);
             } else {
-                throw new \Exception('Invalid method name');
+                throw new \Exception("Invalid method name {$method}");
             }
         }
         return $this;

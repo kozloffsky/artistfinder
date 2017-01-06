@@ -499,6 +499,9 @@
                     console.log("CITY COORDS: ", _this.currentStore.city, res);
                     _this.coords.city = res;
                     _this.currentStore.placeId = res.place_id;
+
+                    var event = new CustomEvent('googlePlaceChanged', { detail: {common: _this.currentStore, coords: _this.coords}});
+                    document.dispatchEvent(event);
                 }
             });
 
@@ -506,8 +509,7 @@
                 _this.addMarker();
             }
 
-            var event = new CustomEvent('googlePlaceChanged', { data: _this.currentStore });
-            document.dispatchEvent(event);
+
         };
         this.addAutocomplete = function(elem) {
             var _this = this;

@@ -65,10 +65,10 @@ $(function () {
                         return;
                     }
 
-                    if (wasChanged(newVal, oldVal)) {
-                        toSend = {data: {address: newVal}};
-                        sendData(eventsVue.event.id, toSend);
-                    }
+                    // if (wasChanged(newVal, oldVal)) {
+                    //     toSend = {data: {address: newVal}};
+                    //     sendData(eventsVue.event.id, toSend);
+                    // }
                 },
                 selectedVenue: function (newVal, oldVal) {
                     if (checkEmptyFormFields() || eventsVue.restrictModelChange) {
@@ -205,7 +205,7 @@ $(function () {
                     var orders = response.orders;
                     orders.forEach(function (order, index) {
                         var items = order.items;
-                        var sum = _.sumBy(items, function(i){
+                        var sum = _.sumBy(items, function (i) {
                             return i.data.total;
                         });
                         orders[index].sumPrice = sum;
@@ -269,12 +269,25 @@ $(function () {
 
     //TODO refracture googleplace ID
     document.addEventListener('googlePlaceChanged', function (e) {
-        try{
+        try {
             var eventId = window.getCurrentEvent().id;
             var address = $(e.target).find('#event_address').val();
-            var data = {data: {address: address}};
+            var data = {
+                data: {
+                    location: {
+                        country: e.detail.common.country,
+                        city: e.detail.common.city,
+                        city_lat: e.detail.coords.city.lat,
+                        city_lng: e.detail.coords.city.lng,
+                        region_name: e.detail.common.region,
+                        region_lat: e.detail.coords.region.lat,
+                        region_lng: e.detail.coords.region.lng,
+                        place_id: e.detail.common.placeId
+                    }, address: address
+                }
+            };
             sendData(eventId, data)
-        }catch (e){
+        } catch (e) {
 
         }
     }, false);

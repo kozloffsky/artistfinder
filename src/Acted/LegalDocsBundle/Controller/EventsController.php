@@ -24,8 +24,10 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\DiExtraBundle\Annotation as DI;
+use Acted\LegalDocsBundle\Form\LocationType;
 
 use JMS\Serializer\SerializationContext;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class EventsController extends Controller
 {
@@ -343,7 +345,6 @@ class EventsController extends Controller
     {
         $eventId = $request->get('event');
         $data = $request->get('data');
-
         /**
          * @var EntityManager $em
          */
@@ -362,23 +363,56 @@ class EventsController extends Controller
             }
             $data['venueType'] = $venue;
         }
+        $validator = $this->get('validator');
+
         /**
          * @var Event $event
          */
         $event = $repo->find($eventId);
+        if (key_exists('location', $data)) {
+            $constraint = new NotBlank();
+            $location = $data['location'];
+            foreach ($location as $item) {
+                $error = $validator->validate($item, $constraint);
+                if (0 !== count($error)) {
+                    $message = 'Location error';
+                    $response = ['status' => 'error', "message" => $message];
 
-        if ($event) {
-            $validator = $this->get('validator');
-            $event->setOptions($data);
-            $errors = $validator->validate($event);
-
-            if (count($errors) > 0) {
-                //Debug. Can be removed.
-                $response = ['status' => 'error', 'errors' => $errors];
-
-                return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
+                    return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
+                }
             }
+            $country = $em->getRepository('ActedLegalDocsBundle:RefCountry')->findOneBy(array(
+                'name' => $location['country']
+            ));
+            $refRegionRepo = $em->getRepository('ActedLegalDocsBundle:RefRegion');
+            $regionId = $refRegionRepo->createRegion(
+                $location['region_name'],
+                $country,
+                $location['region_lat'],
+                $location['region_lng']
+            );
 
+            $region = $em->getRepository('ActedLegalDocsBundle:RefRegion')->findOneBy(array(
+                'id' => $regionId
+            ));
+
+            $refCityRepo = $em->getRepository('ActedLegalDocsBundle:RefCity');
+            $cityId = $refCityRepo->createCity(
+                $location['city'],
+                $region,
+                $location['city_lat'],
+                $location['city_lng'],
+                $location['place_id']
+            );
+
+            $city = $em->getRepository('ActedLegalDocsBundle:RefCity')->findOneBy(array(
+                'id' => $cityId
+            ));
+//
+            $data = ['address' => $data['address'], 'cityId'=> $city->getId()];
+        }
+        if ($event) {
+            $event->setOptions($data);
             $em->persist($event);
             $em->flush();
 
