@@ -117,6 +117,7 @@
                     <div class="row" v-for="item in order.items">
                         <div class="col-md-4">
                             <p>${item.data.title}</p>
+                            <ul class="list-unstyled"><li v-for="package in item.data.packages">${package.name} <span v-for="option in package.options">${option.duration}x${option.qty}&nbsp;<span v-for="rate in option.rates">£ ${rate.price.amount}</span></span></li></ul>
                         </div>
                     </div>
                 </div>
