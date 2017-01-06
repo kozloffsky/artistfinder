@@ -132,6 +132,7 @@ class OrderManager
             $orderItemPerformance = new OrderItemPerformance();
             $performanceData = [];
             $performanceData['performance'] = $performance->getId();
+            $performanceData['objId'] = null;
             $performanceData['title'] = $performance->getTitle();
             $performanceData['type'] = $performance->getType();
             $orderItemPerformance->setPerformance($performance);
@@ -142,11 +143,13 @@ class OrderManager
 
                 $packageData = [];
                 $packageData['id'] = $package->getId();
+                $packageData['objId'] = null;
                 $packageData['name'] = $package->getName();
                 $packageData['options'] = [];
                 foreach ($package->getOptions() as $option) {
                     $optionData = [];
                     $optionData['id'] = $option->getId();
+                    $optionData['objId'] = null;
                     $optionData['duration'] = $option->getDuration();
                     $optionData['qty'] = $option->getQty();
                     $optionData['rates'] = [];
@@ -407,6 +410,7 @@ class OrderManager
             $orderItemService = new OrderItemService();
             $serviceData = [];
             $serviceData['service'] = $service['id'];
+            $serviceData['objId'] = $service['objId'];
             $serviceData['title'] = $service['title'];
             $serviceData['packages'] = [];
 
@@ -415,6 +419,7 @@ class OrderManager
             foreach ($packages as $package) {
                 $packageData = [];
                 $packageData['id'] = $package['id'];
+                $packageData['objId'] = $package['objId'];
                 $packageData['name'] = $package['title'];
                 $packageData['options'] = [];
                 $optionData['rates'] = array();
@@ -422,6 +427,7 @@ class OrderManager
                     $currentAmount = $option['price'];
                     $optionData = [];
                     $optionData['id'] = $option['id'];
+                    $optionData['objId'] = $option['objId'];
                     $optionData['duration'] = null;
                     $optionData['qty'] = null;
 
@@ -465,6 +471,7 @@ class OrderManager
             $orderItemPerformance = new OrderItemPerformance();
             $performanceData = [];
             $performanceData['performance'] = $performance['id'];
+            $performanceData['objId'] = $performance['objId'];
             $performanceData['title'] = $performance['title'];
             $performanceData['type'] = $performance['type'];
 
@@ -479,6 +486,7 @@ class OrderManager
             foreach ($packages as $package) {
                 $packageData = [];
                 $packageData['id'] = $package['id'];
+                $packageData['objId'] = $package['objId'];
                 $packageData['name'] = $package['title'];
 
                 if ($isExtra) {
@@ -491,6 +499,7 @@ class OrderManager
                     $currentAmount = $option['price'];
                     $optionData = [];
                     $optionData['id'] = $option['id'];
+                    $optionData['objId'] = $option['objId'];
                     $optionData['duration'] = $option['duration'];
                     $optionData['qty'] = $option['qty'];
 

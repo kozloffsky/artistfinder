@@ -927,6 +927,7 @@
 
             var option = {
                 id: null,
+                objId: 'extra_option_' + objectIndex,
                 price: price
             };
             if (type == standardPerformanceType) {
@@ -936,12 +937,14 @@
 
             currentObject = {
                 id: null,
+                objId: 'extra_performance_' + objectIndex,
                 title: 'extra performance',
                 itemId: itemId,
                 type: type,
                 comment: comment,
                 packages: [{
                     id: null,
+                    objId: 'extra_performance_package_' + objectIndex,
                     title: 'extra package',
                     isSelected: isSelected,
                     options: [option]
@@ -977,13 +980,16 @@
 
                 currentObject = {
                     id: actId,
+                    objId: 'service_' + objectIndex,
                     itemId: itemId,
                     title: actTitle,
                     packages: [{
                         id: packageId,
+                        objId: 'service_package_' + objectIndex,
                         title: packageName,
                         options: [{
                             id: optionId,
+                            objId: 'service_option_' + objectIndex,
                             price: price
                         }]
                     }]
@@ -1022,6 +1028,7 @@
 
                     currentOption = {
                         id: optionId,
+                        objId: 'performance_' + objectIndex + '_package_' + packageIndex + '_option_' + optionIndex,
                         price: price,
                         qty: qty,
                         duration: duration
@@ -1031,12 +1038,14 @@
                 });
 
                 currentPackage["id"] = packageId;
+                currentPackage["objId"] = 'performance_' + objectIndex + '_package_' + packageIndex;
                 currentPackage["title"] = packageName;
                 currentPackage["options"] = newOptions;
                 newPackages.push(currentPackage);
             });
 
             currentNewBaseObject["id"] = actId;
+            currentNewBaseObject["objId"] = 'performance_' + objectIndex;
             currentNewBaseObject["title"] = actTitle;
             currentNewBaseObject["type"] = basePerformanceType;
             currentNewBaseObject["itemId"] = itemId;

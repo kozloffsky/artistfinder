@@ -175,6 +175,44 @@ $(function(){
                         console.log('Showing modal');
                     },
 
+                    checkOption: function (e) {
+                        var performanceId = $(e.target).attr("performance-id");
+                        var packageId = $(e.target).attr("package-id");
+                        var optionId = $(e.target).attr("id");
+                        var packageContainer = $(e.target).closest("li");
+
+                        var currentOption = $(e.target),
+                            currentOptionChecked = currentOption.prop('checked');
+
+                        console.log(currentOption.prop('checked'))
+
+                        packageContainer.find("input").prop("checked", false);
+
+                        if (!currentOptionChecked) {
+                            currentOption.prop('checked', false);
+                        } else {
+                            currentOption.prop('checked', true);
+                        }
+
+
+
+                        /*$.ajax({
+                            type: 'PATCH',
+                            url: '/order/client/select/' + window.getOrderId(),
+                            data: {
+                                performanceId: performanceId,
+                                packageId: packageId,
+                                optionId: optionId
+                            },
+                            success: function (r) {
+                            },
+                            error: function (r) {
+                                console.error(r);
+                            }
+                        });*/
+
+                    },
+
                     fetchTechnicalRequirements: function () {
                         var self = this;
                         console.log("fetching tech reqs");

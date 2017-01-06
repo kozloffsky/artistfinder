@@ -265,7 +265,7 @@
                                 {% set performanceClass = 'service' %}
                             {% endif %}
 
-                            {% set userColumnClass = 'col-md-6' %}
+                            {% set userColumnClass = 'col-md-6 currency-box' %}
                             {% set userAlignCurrencyClass = 'set-currency' %}
 
                             {% if user.roles[0] == 'ROLE_ARTIST'%}
@@ -280,17 +280,17 @@
                             <article class="{{ performanceClass }}">
                                 <h3 class="package-name">{{ p.data['title'] }}</h3>
                                 <ul class="">
-                                    {% for package in p.data.packages %}
+                                    {% for packageKey,package in p.data.packages %}
                                         <li>
                                             <strong class="sub-title">{{ package['name'] }}</strong>
                                             <div class="row">
-                                                {% for option in package['options'] %}
+                                                {% for key,option in package['options'] %}
 
-                                                    <div class="{{ userColumnClass }} no-pad currency-box">
+                                                    <div class="{{ userColumnClass }} no-pad">
                                                         {% if user.roles[0] == 'ROLE_CLIENT'%}
                                                             <div class="custom-checkbox">
-                                                                <input id="currency_checkbox_1" name="currency_checkbox_1" value="" type="checkbox" checked>
-                                                                <label for="currency_checkbox_1"></label>
+                                                                <input id="{{ option.objId }}" performance-id="{{ p.data.objId }}" package-id="{{ package.objId }}" name="{{ option.objId }}" v-on:click="checkOption($event)" value="" type="checkbox">
+                                                                <label for="{{ option.objId }}"></label>
                                                             </div>
                                                         {% endif %}
                                                         {% if p.data.type < 2 %}
