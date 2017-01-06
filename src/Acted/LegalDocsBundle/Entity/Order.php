@@ -27,7 +27,8 @@ class Order
         Order::STATUS_ACCEPTED => "Confirmed",
         Order::STATUS_BOOKED => "Booked",
         Order::STATUS_CANCELED => "Canceled",
-        Order::STATUS_ARCHIVED => "Archived"
+        Order::STATUS_ARCHIVED => "Archived",
+        Order::STATUS_NOT_AVAILABLE => "Not available",
     ];
 
     /**
