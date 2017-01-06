@@ -119,6 +119,7 @@ $(function () {
             method: "DELETE",
             success: function (response) {
                 console.log(response);
+                $("div[data-order-id='" + orderId +"']").remove();
             },
             error: function (error) {
                 console.log(error);
