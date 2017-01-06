@@ -27,14 +27,14 @@
     }
 
     window.actorDetails = {
-        'email': '{{ order.actorDetails.email|default('') }}',
+        'email': '{{ order.artist.user.email }}',
         'phone': '{{ order.actorDetails.phone|default('')  }}',
         'name': '{{ order.actorDetails.name|default('')  }}',
         'person': '{{ order.actorDetails.person|default('')  }}',
     }
 
     window.clientDetails = {
-        'email': '{{ order.clientDetails.email|default('')  }}',
+        'email': '{{ order.client.user.email  }}',
         'phone': '{{ order.clientDetails.phone|default('')  }}',
         'name': '{{ order.clientDetails.name|default('')  }}',
         'person': '{{ order.clientDetails.person|default('')  }}',
@@ -256,7 +256,7 @@
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-3 no-pad">
                         <label for="e-address">Email address</label>
-                        <input type="text" id="e-address" placeholder="***************" v-model="contactEmail" value="" v-bind:disabled="!editable" @input="saveDetails">
+                        <input type="text" id="e-address" placeholder="***************" v-model="contactEmail" value="" disabled>
                     </div>
                 </div>
             </section>
