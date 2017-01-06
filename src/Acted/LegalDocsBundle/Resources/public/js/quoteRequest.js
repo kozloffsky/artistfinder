@@ -292,7 +292,6 @@ $(function () {
         $('#requestQuoteForm #event_location').val(userEvents[selectedEvent].location);
         $('#requestQuoteForm #event_type option[value='+userEvents[selectedEvent].event_type.id+']').attr('selected','selected');
         $('#requestQuoteForm #venue_type option[value='+userEvents[selectedEvent].venue_type.id+']').attr('selected','selected');
-        //$('#requestQuoteForm .guests-num input[value="'+userEvents[selectedEvent].event.number_of_guests+'"]').prop('checked',true);
         $('#requestQuoteForm .guests-number option[value='+userEvents[selectedEvent].number_of_guests+']').attr('selected','selected');
     }
 

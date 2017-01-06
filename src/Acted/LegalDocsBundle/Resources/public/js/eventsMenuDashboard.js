@@ -241,7 +241,7 @@ $(function () {
     window.getUserId = getUserId;
     window.getUserRole = getUserRole;
 
-    $('.new-client-event').click(function () {
+    $('body').on('click', '.new-client-event', function () {
         var countDays = 1;
         var eventNumberOfGuests = 'less_then_50';
         var venueType = 1;
