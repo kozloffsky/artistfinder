@@ -258,10 +258,17 @@
                 <div class="holder">
                     {% if order.status > 0 %}
                         {% for p in order.performances %}
-                            {% set performanceClass = 'service' %}
+
+                            {% if p.data.performance is defined %}
+                                {% set performanceClass = 'performance' %}
+                            {% else %}
+                                {% set performanceClass = 'service' %}
+                            {% endif %}
+
                             {% if p.data.type > 0 %}
                                 {% set performanceClass = 'service act-extras' %}
                             {% endif %}
+
                             <article class="{{ performanceClass }}">
                                 <h3 class="package-name">{{ p.data['title'] }}</h3>
                                 <ul class="">
@@ -270,13 +277,17 @@
                                             <strong class="sub-title">{{ package['name'] }}</strong>
                                             <div class="row">
                                                 {% for option in package['options'] %}
-                                                    <div class="col-md-12 no-pad">
+                                                    <div class="col-md-6 no-pad currency-box">
+                                                        <div class="custom-checkbox">
+                                                            <input id="currency_checkbox_1" name="currency_checkbox_1" value="" type="checkbox" checked>
+                                                            <label for="currency_checkbox_1"></label>
+                                                        </div>
                                                         {% if p.data.type < 2 %}
                                                             <span class="short" name="currency1" id="currency1">{{ option['qty'] }}</span>
                                                             <span class="">x</span>
                                                             <span class="short" name="currency11" id="currency11">{{ option['duration'] }} min</span>
                                                         {% endif %}
-                                                        <div class="pull-right">
+                                                        <div class="set-currency">
                                                             <span class="short">{{ option['rates'][0]["price"]['amount'] }}</span>
                                                             <span class="pull-right">GBP</span>
                                                         </div>

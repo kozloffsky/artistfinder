@@ -47,7 +47,7 @@
     {% endif %}
 </script>
 
-<main class="chat-room {% if user.client is not empty %} dashboard client {% endif %}">
+<main class="chat-room {% if user.client is not empty %} dashboard client {% endif %} quote-received">
     <div class="container">
         {% if user.client is not empty %}
             {% include 'ActedLegalDocsBundle:Profile:client/client_menu.html.twig' %}
