@@ -867,4 +867,67 @@ class ChatRoomController extends Controller
     {
         return $this->render('ActedLegalDocsBundle:Profile:client/payments.html.twig');
     }
+
+
+    /**
+     * Archive chatroom.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    function archiveChatRoomAction(Request $request)
+    {
+        $user = $this->getUser();
+        $chatRoomId = $request->get('chatRoom');
+        $em = $this->getEM();
+        $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
+        $userId = $user->getId();
+        $findBy = ['receiverUser' => $userId, 'chatRoom' => $chatRoomId];
+        $messages = $messagesRepo->findBy($findBy);
+        if (count($messages)) {
+            foreach ($messages as $message){
+                $message->setArchived(true);
+                $em->flush($message);
+            }
+            $response = ['status' => 'success'];
+
+            return new JsonResponse($response);
+        }
+        $msg = 'Message not found';
+        $response = ['status' => 'error', 'error' => $msg];
+
+        return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
+    }
+
+    /**
+     * Don't display chatroom.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    function hideChatRoomAction(Request $request)
+    {
+        $user = $this->getUser();
+        $chatRoomId = $request->get('chatRoom');
+        $em = $this->getEM();
+        $messagesRepo = $em->getRepository('ActedLegalDocsBundle:Message');
+        $userId = $user->getId();
+        $findBy = ['receiverUser' => $userId, 'chatRoom' => $chatRoomId];
+        $messages = $messagesRepo->findBy($findBy);
+        if (count($messages)) {
+            foreach ($messages as $message){
+                $message->setHidden(true);
+                $em->flush($message);
+            }
+            $response = ['status' => 'success'];
+
+            return new JsonResponse($response);
+        }
+        $msg = 'Message not found';
+        $response = ['status' => 'error', 'error' => $msg];
+
+        return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
+    }
 }
