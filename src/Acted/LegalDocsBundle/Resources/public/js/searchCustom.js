@@ -409,7 +409,7 @@ $(function () {
                     '<div class="talents">' + artistCatString + '</div>' +
                     '<div class="controls">' +
                     '<div class="button-gradient blue filled">' +
-                    '<button data-dismiss="modal" class="btn"><a href="/profile/' + this.slug + '">Profile</a></button>' +
+                    '<a href="/profile/' + this.slug + '" class="btn register">Profile</a>' +
                     '</div>' +
                     '<div class="button-gradient blue ">' +
                     '<button data-dismiss="modal" class="btn askQuoteFromSearch" value="' + this.slug + '">Ask a free quote</button>' +
@@ -445,7 +445,7 @@ $(function () {
                     '<div class="talents">' + artistCatString + '</div>' +
                     '<div class="controls">' +
                     '<div class="button-gradient blue filled">' +
-                    '<button data-dismiss="modal" class="btn"><a href="/profile/' + this.slug + '">Profile</a></button>' +
+                    '<a href="/profile/' + this.slug + '" class="btn register">Profile</a>' +
                     '</div>' +
                     '<div class="button-gradient blue ">' +
                     '<button data-dismiss="modal" class="btn askQuoteFromSearch" value="' + this.slug + '">Ask a free quote</button>' +
@@ -610,7 +610,7 @@ $(function () {
                     '<div class="talents">' + artistCatString + '</div>' +
                     '<div class="controls">' +
                     '<div class="button-gradient blue filled">' +
-                    '<button data-dismiss="modal" class="btn"><a href="/profile/' + this.slug + '">Profile</a></button>' +
+                    '<a href="/profile/' + this.slug + '" class="btn register">Profile</a>' +
                     '</div>' +
                     '<div class="button-gradient blue ">' +
                     '<button data-dismiss="modal" class="btn askQuoteFromSearch" value="' + this.slug + '">Ask a free quote</button>' +
@@ -646,7 +646,7 @@ $(function () {
                     '<div class="talents">' + artistCatString + '</div>' +
                     '<div class="controls">' +
                     '<div class="button-gradient blue filled">' +
-                    '<button data-dismiss="modal" class="btn"><a href="/profile/' + this.slug + '">Profile</a></button>' +
+                    '<a href="/profile/' + this.slug + '" class="btn register">Profile</a>' +
                     '</div>' +
                     '<div class="button-gradient blue ">' +
                     '<button data-dismiss="modal" class="btn askQuoteFromSearch" value="' + this.slug + '">Ask a free quote</button>' +
