@@ -22,6 +22,14 @@ class Order
     const FIELD_TECHNICAL_REQUIREMENTS = 3;
     const FIELD_ACTS_EXTRAS = 4;
 
+    private $statusMap = [
+        Order::STATUS_NEW => "New",
+        Order::STATUS_ACCEPTED => "Confirmed",
+        Order::STATUS_BOOKED => "Booked",
+        Order::STATUS_CANCELED => "Canceled",
+        Order::STATUS_ARCHIVED => "Archived"
+    ];
+
     /**
      * @var integer
      */
@@ -899,6 +907,10 @@ class Order
 
     public function getBalanceToPay(){
         return $this->getTotalPrice() * ($this->getGuaranteedBalanceTerm() / 100);
+    }
+
+    public function getStringStatus(){
+        return $this->statusMap[$this->getStatus()];
     }
 
 

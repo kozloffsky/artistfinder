@@ -288,7 +288,7 @@ class OrderManager
         $order->setStatus(Order::STATUS_BOOKED);
 
         //Amount of money sent to escrow as deposit
-        $order->setDepositBallance($order->getDepositToPay());
+        $order->setDepositAmount($order->getDepositToPay());
         //Amount of money left to pay
         $order->setDepositBallance($order->getBalanceToPay());
 
