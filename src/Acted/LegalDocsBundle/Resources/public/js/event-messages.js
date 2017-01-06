@@ -45,6 +45,7 @@ $(function () {
                 value.send_date_time = createdAt.format('DD/MM/YYYY');
             }
             var eventDate = value.chat_room.event.starting_date;
+            console.log('ORDER: ', value.chat_room.order.status);
             value.chat_room.event.starting_date = moment(eventDate, 'DD/MM/YYYY').format('DD MMM YY');
             prepared.push(value);
         });

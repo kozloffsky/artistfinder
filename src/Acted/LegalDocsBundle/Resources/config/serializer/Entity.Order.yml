@@ -28,7 +28,7 @@ Acted\LegalDocsBundle\Entity\Order:
       groups: [order]
 
     status:
-      groups: [order]
+      groups: [order, all_messages]
 
     chat:
       groups: [order]

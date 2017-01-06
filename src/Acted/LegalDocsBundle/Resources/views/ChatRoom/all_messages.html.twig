@@ -51,7 +51,11 @@
                             </div>
                             <div class="col-lg-2 col-sm-2 message-controls no-pad">
                                 <ul class="ul-reset">
-                                    <li class="status confirmed"><i class="confirmed"></i> Confirmed</li>
+                                    <li class="status enquiry" v-if="message.chat_room.order.status == 0"><i class="confirmed" ></i> Enquiry</li>
+                                    <li class="status confirmed" v-else-if="message.chat_room.order.status == 1"><i class="confirmed" ></i> Available</li>
+                                    <li class="status confirmed" v-else-if="message.chat_room.order.status == 2"><i class="confirmed" ></i> Confirmed</li>
+                                    <li class="status not-avaliable" v-else-if="message.chat_room.order.status == 4"><i class="confirmed" ></i> Not available</li>
+
                                     <li v-on:click="archive" v-if="!message.archived" class="archive hidden-xs"><a href="#"><i class="archive"></i> Archive</a></li>
                                     <li v-on:click="remove" class="delete hidden-xs"><a href="#"><i class="delete"></i> Delete</a></li>
                                 </ul>
