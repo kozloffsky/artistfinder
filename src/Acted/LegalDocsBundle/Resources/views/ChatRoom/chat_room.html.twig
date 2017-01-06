@@ -121,7 +121,7 @@
                                 <div class="performance-time">
                                     <span class="info">The performance starts at:</span>
                                     {#<span class="time">{{ order.performanceStartTime }}</span>#}
-                                    <span v-if="userRole == 'ROLE_ARTIST'" class="time">{{ order.performanceStartTime }}</span>
+                                    <span v-if="userRole == 'ROLE_ARTIST' && eventStartTime != ''" class="time">{{ order.performanceStartTime }}</span>
                                     <time-picker v-on:input="saveStartTime()" v-model="eventStartTime" v-if="userRole != 'ROLE_ARTIST'"/>
                                     <!--<input id="eventStartTime" type="text" @change.native="saveStartTime" v-model="eventStartTime" class="edit-time" placeholder="{{ order.performanceStartTime }}" value="{{ order.performanceStartTime }}" @input="saveDetails" v-if="userRole != 'ROLE_ARTIST'">-->
                                 </div>
