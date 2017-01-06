@@ -36,6 +36,9 @@ Acted\LegalDocsBundle\Entity\Order:
     performance_start_time:
       groups: [order]
 
+    additional_info:
+      groups: [order]
+
     deposit_amount:
       groups: [order]
 
