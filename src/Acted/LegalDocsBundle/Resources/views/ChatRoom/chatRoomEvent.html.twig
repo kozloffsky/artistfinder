@@ -195,7 +195,7 @@
                     <div class="col-lg-6 col-md-6 col-sm-6 col-custom-size">
                         <div class="frame">
                             <label for="datetimepicker">Date</label>
-                            <input id="datetimepicker" disabled type="text" class="custom-size" placeholder="{{ order.event.startingDate | date("d/m/Y") }}" value="{{ order.event.startingDate | date("d/m/Y")}}">
+                            <input id="datetimepicker" disabled type="text" class="custom-size" placeholder="{{ order.event.startingDate | date("Y:M:d") }}" value="{{ order.event.startingDate | date("Y:M:d")}}">
                         </div>
                         <div class="frame">
                             <label for="event_time">Event timing</label>
