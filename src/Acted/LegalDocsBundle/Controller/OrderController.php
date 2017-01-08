@@ -255,4 +255,44 @@ class OrderController extends Controller
 
         return new JsonResponse($response, Response::HTTP_OK);
     }
+
+    /**
+     * @ApiDoc(
+     *  description="Client select options",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param $request
+     * @return JsonResponse
+     */
+    public function clientSelectAction(Request $request)
+    {
+        $orderId = $request->get('orderId');
+        $objectId = $request->get('objectId');
+        $packageObjectId = $request->get('packageObjectId');
+        $optionObjectId = $request->get('optionObjectId');
+        $value = $request->get('value');
+
+        $response = ['status'=>'success'];
+
+        try{
+            $this->orderManager->clientSelect(
+                $orderId,
+                $objectId,
+                $packageObjectId,
+                $optionObjectId,
+                $value
+            );
+        }catch (EntityNotFoundException $e){
+
+            $response['status']  = 'error';
+            $response['error'] = $e->getMessage();
+
+            return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
+        }
+
+        return new JsonResponse($response, Response::HTTP_OK);
+    }
 }

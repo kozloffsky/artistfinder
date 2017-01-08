@@ -565,4 +565,39 @@ class OrderManager
         $this->entityManager->persist($order);
         $this->entityManager->flush();
     }
+
+    public function clientSelect($orderId, $objectId, $packageObjectId, $optionObjectId, $value)
+    {
+        $order = $this->orderRepository->find($orderId);
+
+        if (is_null($order)) {
+            throw new \Exception('order is not exist');
+        }
+
+        $orderItems = $order->getItems();
+
+        foreach ($orderItems as &$orderItem) {
+            $data = $orderItem->getData();
+            if ($data['objId'] != $objectId)
+                continue;
+
+            foreach ($data['packages'] as &$package) {
+                if ($package['objId'] != $packageObjectId)
+                    continue;
+
+                foreach ($package['options'] as &$option) {
+                    if ($option['objId'] == $optionObjectId) {
+                        $option['clientSelect'] = $value;
+                    } else {
+                        $option['clientSelect'] = false;
+                    }
+                }
+
+            }
+
+            $orderItem = $orderItem->setData($data);
+            $this->entityManager->persist($orderItem);
+            $this->entityManager->flush();
+        }
+    }
 }

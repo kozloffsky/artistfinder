@@ -288,8 +288,13 @@
 
                                                     <div class="{{ userColumnClass }} no-pad">
                                                         {% if user.roles[0] == 'ROLE_CLIENT'%}
+                                                            {% set optionChecked = '' %}
+                                                            {% if option.clientSelect is defined and option.clientSelect == "true" %}
+                                                                {% set optionChecked = 'checked' %}
+                                                            {% endif %}
+
                                                             <div class="custom-checkbox">
-                                                                <input id="{{ option.objId }}" performance-id="{{ p.data.objId }}" package-id="{{ package.objId }}" name="{{ option.objId }}" v-on:click="checkOption($event)" value="" type="checkbox">
+                                                                <input id="{{ option.objId }}" object-id="{{ p.data.objId }}" package-id="{{ package.objId }}" name="{{ option.objId }}" v-on:click="checkOption($event)" value="" type="checkbox" {{ optionChecked }}>
                                                                 <label for="{{ option.objId }}"></label>
                                                             </div>
                                                         {% endif %}

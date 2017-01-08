@@ -49,3 +49,8 @@ order_set_start_time:
     path:    /save_start_time/{orderId}
     methods: POST
     defaults: {_controller:ActedLegalDocsBundle:Order:saveStartTime, _format: json }
+
+order_client_select:
+    path:     /client/select
+    defaults: { _controller: ActedLegalDocsBundle:Order:clientSelect, _format: json }
+    methods:  POST

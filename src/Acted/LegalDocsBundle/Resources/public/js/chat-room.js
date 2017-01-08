@@ -176,7 +176,7 @@ $(function(){
                     },
 
                     checkOption: function (e) {
-                        var performanceId = $(e.target).attr("performance-id");
+                        var objectId = $(e.target).attr("object-id");
                         var packageId = $(e.target).attr("package-id");
                         var optionId = $(e.target).attr("id");
                         var packageContainer = $(e.target).closest("li");
@@ -184,32 +184,32 @@ $(function(){
                         var currentOption = $(e.target),
                             currentOptionChecked = currentOption.prop('checked');
 
-                        console.log(currentOption.prop('checked'))
-
+                        var value = false;
                         packageContainer.find("input").prop("checked", false);
 
                         if (!currentOptionChecked) {
                             currentOption.prop('checked', false);
                         } else {
+                            value = true;
                             currentOption.prop('checked', true);
                         }
 
-
-
-                        /*$.ajax({
-                            type: 'PATCH',
-                            url: '/order/client/select/' + window.getOrderId(),
+                        $.ajax({
+                            type: 'POST',
+                            url: '/order/client/select',
                             data: {
-                                performanceId: performanceId,
-                                packageId: packageId,
-                                optionId: optionId
+                                orderId: window.getOrderId(),
+                                objectId: objectId,
+                                packageObjectId: packageId,
+                                optionObjectId: optionId,
+                                value: value
                             },
                             success: function (r) {
                             },
                             error: function (r) {
                                 console.error(r);
                             }
-                        });*/
+                        });
 
                     },
 
