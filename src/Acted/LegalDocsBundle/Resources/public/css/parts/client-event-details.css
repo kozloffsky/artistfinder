@@ -189,14 +189,6 @@
     border-bottom: 2px solid rgba(240, 240, 240, 1);
     margin-bottom: 22px;
 }
-
-.client_event_details .event-details-set {
-    display: block;
-}
-.client_event_details .event-details-set-rate {
-    float: right;
-}
-
 @media (max-width: 1199px) {
     .client_event_details .right_column,
     .client_event_details .left_column {
