@@ -277,7 +277,7 @@ $(function(){
 
                     acceptTiming:function (event) {
                         var value = event.target.checked;
-                        this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().timig, Number(value), function () {
+                        this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().timing, Number(value), function () {
                             console.log('accepted');
                         });
                     },
