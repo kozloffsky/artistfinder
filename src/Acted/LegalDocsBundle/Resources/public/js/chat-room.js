@@ -492,8 +492,8 @@ $(function(){
     }
 
     function chatSocket(chatId){
-        //var webSocket = WS.connect("ws://51.254.217.4:8686");
-        var webSocket = WS.connect("ws://192.168.33.12:8686");
+        var webSocket = WS.connect("ws://51.254.217.4:8686");
+        //var webSocket = WS.connect("ws://192.168.33.12:8686");
 
         /**
          * connect
