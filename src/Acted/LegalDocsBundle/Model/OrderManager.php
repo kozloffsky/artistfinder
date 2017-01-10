@@ -22,11 +22,13 @@ use Acted\LegalDocsBundle\Repository\OrderRepository;
 use Acted\LegalDocsBundle\Repository\PerformanceRepository;
 use Acted\LegalDocsBundle\Repository\TechnicalRequirementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\Orm\Query;
+use Gos\Bundle\WebSocketBundle\Pusher\AbstractPusher;
 
 class OrderManager
 {
@@ -59,9 +61,12 @@ class OrderManager
 
     private $lastError;
 
-    public function __construct(EntityManager $entityManager)
+    private $pusher;
+
+    public function __construct(EntityManager $entityManager, AbstractPusher $pusher)
     {
         $this->entityManager = $entityManager;
+        $this->pusher = $pusher;
         $this->orderItemRepository = $entityManager->getRepository("ActedLegalDocsBundle:OrderItem");
         $this->orderRepository = $entityManager->getRepository("ActedLegalDocsBundle:Order");
         $this->technicalRequirementsRepository = $entityManager->getRepository("ActedLegalDocsBundle:TechnicalRequirement");
@@ -336,6 +341,8 @@ class OrderManager
         }
 
         $order->setAdditionalInfo($additionalInfo);
+        $order->setTimingAccepted(false);
+        $this->pushClientServiceMessage($order, '_timingAccepted', false);
 
         $this->entityManager->persist($order);
         $this->entityManager->flush();
@@ -347,6 +354,7 @@ class OrderManager
             throw new EntityNotFoundException("Order Not Found with id ".$orderId);
         }
         $order->setTechnicalRequirements($data);
+
         $this->entityManager->persist($order);
         $this->entityManager->flush();
     }
@@ -566,6 +574,24 @@ class OrderManager
         $this->entityManager->flush();
     }
 
+
+    public function postPersist(LifecycleEventArgs $args){
+        if($args->getObject() instanceof Event){
+            $this->processEventChange($args->getObject());
+        }
+
+        $this->entityManager->flush();
+    }
+
+    private function processEventChange(Event $event){
+        $orders = $this->getOrdersForEvent($event);
+        foreach ($orders as $order){
+            $order->setDetailsAccepted(false);
+            $this->entityManager->persist($order);
+            $this->pushClientServiceMessage($order, '_detailsAccepted', false);
+        }
+    }
+
     public function clientSelect($orderId, $objectId, $packageObjectId, $optionObjectId, $value)
     {
         $order = $this->orderRepository->find($orderId);
@@ -599,5 +625,15 @@ class OrderManager
             $this->entityManager->persist($orderItem);
             $this->entityManager->flush();
         }
+    }
+
+    private function pushClientServiceMessage(Order $order, $field, $value){
+        $this->pusher->push(
+            [
+                'type'=>'service',
+                'role'=>'CLIENT'
+            ],
+            'acted_topic_chat',
+            ['room' => $order->getChat()->getId()]);
     }
 }

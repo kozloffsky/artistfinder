@@ -562,6 +562,10 @@ console.log('connected to socket');
 
             function postMessage(messageChat){
                 console.log(messageChat);
+                if(messageChat.type == 'service'){
+                    vue.$data[messageChat.field]=messageChat.value;
+                    return;
+                }
                 if(messageChat.role){
                     var chatMessageFiles = '';
                     if(messageChat.file){

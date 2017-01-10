@@ -475,6 +475,7 @@ class Order
     public function setPerformanceStartTime($performanceStartTime)
     {
         $this->performance_start_time = $performanceStartTime;
+        $this->setTimingAccepted(false);
 
         return $this;
     }
@@ -500,6 +501,7 @@ class Order
     {
         $this->additional_info = $additionalInfo;
 
+
         return $this;
     }
 
@@ -523,6 +525,7 @@ class Order
     public function setTechnicalRequirements($technicalRequirements)
     {
         $this->technical_requirements = $technicalRequirements;
+        $this->setTechnicalRequirementsAccepted(false);
 
         return $this;
     }
