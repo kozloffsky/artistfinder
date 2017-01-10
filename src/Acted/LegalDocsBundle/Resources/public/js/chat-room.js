@@ -585,13 +585,13 @@ console.log('connected to socket');
                     vue.userRole = '';
                     if(messageChat.field == 'timingAccepted' && role ==userRole){
                         console.log('recieved message from server '+ role);
-                        vue._timingAccepted = Boolean(messageChat.value);
+                        vue._timingAccepted = Boolean(parseInt(messageChat.value));
                     }else if(field == 'detailsAccepted' && role ==userRole) {
                         vue._detailsAccepted = Boolean(parseInt(messageChat.value));
                     }else if(field == 'techReqsAccepted' && role ==userRole) {
-                        vue._requirementsAccepted = Boolean(messageChat.value);
+                        vue._requirementsAccepted = Boolean(parseInt(messageChat.value));
                     }else if(field == 'actsExtrasAccepted' && role ==userRole){
-                        vue._actsExtrasAccepted = messageChat.value;
+                        vue._actsExtrasAccepted = Boolean(parseInt(messageChat.value));
                     }else if(field == 'order.status'){
                         window.order.status = messageChat.value;
                         vue.created();

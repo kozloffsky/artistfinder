@@ -418,7 +418,7 @@ class OrderManager
 
         $this->entityManager->persist($order);
 
-        $this->pushArtistServiceMessage($order, 'actsExtrasAccepted');
+        $this->pushArtistServiceMessage($order, 'actsExtrasAccepted', false);
 
         $this->entityManager->flush();
     }
