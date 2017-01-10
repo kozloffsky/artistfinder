@@ -336,6 +336,8 @@ class OrderManager
 
         $order->setPerformanceStartTime($performanceStartTime);
 
+        $this->pushClientServiceMessage($order, 'timingAccepted', false);
+
         $this->entityManager->persist($order);
         $this->entityManager->flush();
     }
