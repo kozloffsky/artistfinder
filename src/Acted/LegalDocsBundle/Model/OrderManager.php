@@ -63,7 +63,7 @@ class OrderManager
 
     private $pusher;
 
-    public function __construct(EntityManager $entityManager, AbstractPusher $pusher)
+    public function __construct(EntityManager $entityManager, $pusher)
     {
         $this->entityManager = $entityManager;
         $this->pusher = $pusher;
