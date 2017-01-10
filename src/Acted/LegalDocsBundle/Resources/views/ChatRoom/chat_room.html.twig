@@ -95,13 +95,13 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
-                                <input id="details_agree_desktop" name="details_agree_desktop" value="" type="checkbox" v-model="detailsAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable">
+                                <input id="details_agree_desktop" name="details_agree_desktop" value="" type="checkbox" v-on:change="acceptDetails" v-model="_detailsAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable">
                                 <label for="details_agree_desktop">I agree with these details</label>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
-                                <input id="extra_provide_acts" name="extra_provide_acts" value="" type="checkbox" v-model="actsExtrasAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable">
+                                <input id="extra_provide_acts" name="extra_provide_acts" value="" type="checkbox" v-on:change="acceptActs" v-model="_actsExtrasAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable">
                                 <label for="extra_provide_acts">I can provide the acts & extras selected</label>
                             </div>
                         </div>
@@ -151,13 +151,13 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
-                                <input id="timing_agree" name="timing_agree" value="" type="checkbox" v-model="timingAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable">
+                                <input id="timing_agree" name="timing_agree" value="" type="checkbox" v-model="_timingAccepted" v-on:change="acceptTiming" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable">
                                 <label for="timing_agree">I agree with this timing</label>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
-                                <input id="requirements_agree" name="requirements_agree" value="" type="checkbox" v-model="requirementsAccepted" v-bind:disabled="userRole == 'ROLE_ARTIST' || !editable" >
+                                <input id="requirements_agree" name="requirements_agree" value="" type="checkbox" v-on:change="acceptReqs" v-model="_requirementsAccepted" v-bind:disabled="userRole == 'ROLE_ARTIST' || !editable" >
                                 <label for="requirements_agree">I agree to provide these requirements</label>
                             </div>
                         </div>

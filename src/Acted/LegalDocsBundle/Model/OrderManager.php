@@ -234,18 +234,22 @@ class OrderManager
         switch ($fieldId){
             case Order::FIELD_TECHNICAL_REQUIREMENTS:
                 $order->setTechnicalRequirementsAccepted($value);
+                $this->pushArtistServiceMessage($order, 'techReqsAccepted', $value);
                 break;
 
             case Order::FIELD_ACTS_EXTRAS:
                 $order->setActsExtrasAccepted($value);
+                $this->pushClientServiceMessage($order, 'actsExtrasAccepted', $value);
                 break;
 
             case Order::FIELD_TIMING:
                 $order->setTimingAccepted($value);
+                $this->pushClientServiceMessage($order, 'timingAccepted', $value);
                 break;
 
             case Order::FIELD_DETAILS:
                 $order->setDetailsAccepted($value);
+                $this->pushClientServiceMessage($order, 'detailsAccepted', $value);
                 break;
             default:
                 throw new \Exception("Wrong field");
@@ -303,6 +307,8 @@ class OrderManager
         $this->entityManager->persist($order);
         $this->entityManager->flush();
 
+        $this->pushArtistServiceMessage($order, 'order.status', Order::STATUS_BOOKED);
+
         return $order;
     }
 
@@ -342,7 +348,7 @@ class OrderManager
 
         $order->setAdditionalInfo($additionalInfo);
         $order->setTimingAccepted(false);
-        $this->pushClientServiceMessage($order, '_timingAccepted', false);
+        $this->pushClientServiceMessage($order, 'timingAccepted', false);
 
         $this->entityManager->persist($order);
         $this->entityManager->flush();
@@ -354,6 +360,8 @@ class OrderManager
             throw new EntityNotFoundException("Order Not Found with id ".$orderId);
         }
         $order->setTechnicalRequirements($data);
+
+        $this->pushClientServiceMessage($order, 'techReqsAccepted', false);
 
         $this->entityManager->persist($order);
         $this->entityManager->flush();
@@ -407,6 +415,8 @@ class OrderManager
         $order->setGuaranteedBalanceTerm($paymentDetails['balancePercent']);
 
         $this->entityManager->persist($order);
+
+        $this->pushArtistServiceMessage($order, 'actsExtrasAccepted');
 
         $this->entityManager->flush();
     }
@@ -628,10 +638,22 @@ class OrderManager
     }
 
     private function pushClientServiceMessage(Order $order, $field, $value){
+        $this->pushServerMessage('ROLE_CLIENT', $order, $field, $value);
+    }
+
+    private function pushArtistServiceMessage(Order $order, $field, $value){
+        $this->pushServerMessage('ROLE_ARTIST', $order, $field, $value);
+    }
+
+
+
+    private function pushServerMessage($role, Order $order, $field, $value){
         $this->pusher->push(
             [
                 'type'=>'service',
-                'role'=>'CLIENT'
+                'role'=>$role,
+                'field' => $field,
+                'value' => $value
             ],
             'acted_topic_chat',
             ['room' => $order->getChat()->getId()]);

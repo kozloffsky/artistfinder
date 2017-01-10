@@ -89,19 +89,6 @@ $(function(){
                         }
                     },
 
-                    detailsAccepted: {
-                        get: function () {
-                            return this._detailsAccepted;
-                        },
-
-                        set: function (val) {
-                            var self = this;
-                            this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().details, Number(val), function () {
-                                self._detailsAccepted = val;
-                            });
-                        }
-                    },
-
                     sendingAllowed: {
                         cache: false,
                         get: function () {
@@ -278,6 +265,34 @@ $(function(){
                                 }
                             }
 
+                        });
+                    },
+
+                    acceptDetails:function (event) {
+                        var value = event.target.checked;
+                        this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().details, Number(value), function () {
+                            console.log('accepted');
+                        });
+                    },
+
+                    acceptTiming:function (event) {
+                        var value = event.target.checked;
+                        this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().timig, Number(value), function () {
+                            console.log('accepted');
+                        });
+                    },
+
+                    acceptActs:function (event) {
+                        var value = event.target.checked;
+                        this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().actsExtras, Number(value), function () {
+                            console.log('accepted');
+                        });
+                    },
+
+                    acceptReqs:function (event) {
+                        var value = event.target.checked;
+                        this.acceptField(window.getOrderId(), window.getAcceptFieldTypes().technicalRequirements, Number(value), function () {
+                            console.log('accepted');
                         });
                     },
 
@@ -477,8 +492,8 @@ $(function(){
     }
 
     function chatSocket(chatId){
-        var webSocket = WS.connect("ws://51.254.217.4:8686");
-        //var webSocket = WS.connect("ws://192.168.33.12:8686");
+        //var webSocket = WS.connect("ws://51.254.217.4:8686");
+        var webSocket = WS.connect("ws://192.168.33.12:8686");
 
         /**
          * connect
@@ -563,7 +578,26 @@ console.log('connected to socket');
             function postMessage(messageChat){
                 console.log(messageChat);
                 if(messageChat.type == 'service'){
-                    vue.$data[messageChat.field]=messageChat.value;
+                    var field = messageChat.field;
+                    var role = messageChat.role;
+                    var userRole = window.getUserRole();
+                    //enable boxes to be able to edit them, Vuejs! what are your doing?? stooop!!!
+                    vue.userRole = '';
+                    if(messageChat.field == 'timingAccepted' && role ==userRole){
+                        console.log('recieved message from server '+ role);
+                        vue._timingAccepted = Boolean(messageChat.value);
+                    }else if(field == 'detailsAccepted' && role ==userRole) {
+                        vue._detailsAccepted = Boolean(parseInt(messageChat.value));
+                    }else if(field == 'techReqsAccepted' && role ==userRole) {
+                        vue._requirementsAccepted = Boolean(messageChat.value);
+                    }else if(field == 'actsExtrasAccepted' && role ==userRole){
+                        vue._actsExtrasAccepted = messageChat.value;
+                    }else if(field == 'order.status'){
+                        window.order.status = messageChat.value;
+                        vue.created();
+                    }
+                    //disable again
+                    vue.userRole = userRole;
                     return;
                 }
                 if(messageChat.role){
