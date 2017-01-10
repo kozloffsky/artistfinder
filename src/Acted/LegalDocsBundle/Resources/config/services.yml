@@ -27,8 +27,8 @@ services:
     acted_legal_docs.model.order_manager:
         class: Acted\LegalDocsBundle\Model\OrderManager
         arguments: ["@doctrine.orm.entity_manager","@gos_web_socket.zmq.pusher"]
-        tags:
-          - { name: doctrine.event_listener, event: postPersist }
+        #tags:
+          #- { name: doctrine.event_listener, event: postPersist }
 
     ####### RPC #############
     socket_chat.rpc_server:
