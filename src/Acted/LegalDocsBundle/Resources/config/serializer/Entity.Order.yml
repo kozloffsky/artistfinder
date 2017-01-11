@@ -4,7 +4,7 @@ Acted\LegalDocsBundle\Entity\Order:
       groups: [order]
 
     items:
-      groups: [order]
+      groups: [order, chat_room]
 
     artist:
       groups: [order]

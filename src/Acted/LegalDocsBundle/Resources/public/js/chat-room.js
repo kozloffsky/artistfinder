@@ -1,5 +1,8 @@
 $(function(){
     'use strict';
+
+    var vueBookingModal;
+
     if (document.querySelector('.chat-room')) {
         try {
             Vue.component('time-picker',{
@@ -43,7 +46,13 @@ $(function(){
                     contactPhone:"",
                     contactEmail:"",
                     editable:true,
-                    eventStartTime:"6.pm"
+                    eventStartTime:"6.pm",
+                    orderOptions: window.orderOptions,
+                    totalPrice: window.totalPrice,
+                    guaranteedDepositTerm: window.guaranteedDepositTerm,
+                    guaranteedBalanceTerm: window.guaranteedBalanceTerm,
+                    balanceToPay: (window.totalPrice * window.guaranteedBalanceTerm) / 100,
+                    depositToPay: (window.totalPrice * window.guaranteedDepositTerm) / 100
                 },
 
                 computed:{
@@ -157,12 +166,29 @@ $(function(){
                 },
 
                 methods: {
-                    showConfirmModal: function () {
+                    showConfirmModal: function (e) {
+                        e.preventDefault();
+
+                        this.countPayments();
+
                         $('#confirmBookingModal').modal('show');
                         console.log('Showing modal');
                     },
 
+                    countPayments: function () {
+                        this.totalPrice = 0;
+                        for (var optionIndex in window.orderOptions) {
+                            if (window.orderOptions[optionIndex].clientSelect) {
+                                this.totalPrice = this.totalPrice + window.orderOptions[optionIndex].amount;
+                            }
+                        }
+
+                        this.balanceToPay = (this.totalPrice * this.guaranteedBalanceTerm) / 100;
+                        this.depositToPay = (this.totalPrice * this.guaranteedDepositTerm) / 100;
+                    },
+
                     checkOption: function (e) {
+
                         var objectId = $(e.target).attr("object-id");
                         var packageId = $(e.target).attr("package-id");
                         var optionId = $(e.target).attr("id");
@@ -174,12 +200,32 @@ $(function(){
                         var value = false;
                         packageContainer.find("input").prop("checked", false);
 
+                        var options = packageContainer.find("input");
+                        var optionIds = [];
+                        $(options).each(function () {
+                            optionIds.push($(this).attr("id"));
+                        });
+
                         if (!currentOptionChecked) {
                             currentOption.prop('checked', false);
                         } else {
                             value = true;
                             currentOption.prop('checked', true);
                         }
+
+                        for (var optionIndex in window.orderOptions) {
+                            if (optionIds.indexOf(window.orderOptions[optionIndex].objId) != -1) {
+                                window.orderOptions[optionIndex].clientSelect = false;
+                            }
+
+                            if (window.orderOptions[optionIndex].objId == optionId && value) {
+                                window.orderOptions[optionIndex].clientSelect = true;
+                            }
+                        }
+
+                        this.countPayments();
+
+
 
                         $.ajax({
                             type: 'POST',

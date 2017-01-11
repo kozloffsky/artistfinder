@@ -4,4 +4,13 @@ Acted\LegalDocsBundle\Entity\OrderItem:
       groups: [order]
 
     data:
-      groups: [order]
+      groups: [order, chat_room]
+
+  virtual_properties:
+    getSelectedOptions:
+      serialized_name: selected_options
+      groups: [chat_room, order]
+
+    getOptions:
+      serialized_name: options
+      groups: [chat_room, order]

@@ -10,7 +10,7 @@
                     <div class="row clearfix">
                         <div class="col-sm-6 no-pad section-1">
                             <div class="quotation-section">
-                                <div class="holder">
+                                <div class="holder">{#{{ dump(order) }}#}
                                     {#<!--service start-->#}
                                     {#{% for p in order.performances %}#}
                                     {#<article class="service">#}
@@ -36,7 +36,35 @@
                                         {#</ul>#}
                                     {#</article>#}
                                     {#{% endfor %}#}
-                                    {% for p in order.performances %}
+
+                                    <div class="row" v-for="orderOption in orderOptions">
+                                        <article v-if="orderOption.clientSelect" v-bind:class="{ service: orderOption.type > 0 }" v-bind:class="{ act-extras: orderOption.type > 0 }">
+                                            <h3 class="package-name">${ orderOption.objectName }</h3>
+                                            <ul class="ul-reset">
+                                                <li>
+                                                    <strong class="sub-title">${orderOption.packageName}</strong>
+                                                    <div class="row">
+                                                        <div class="col-md-12 no-pad">
+                                                            <span v-if="orderOption.type < 2">
+                                                                <span class="short" name="currency1" id="currency1">${orderOption.qty}</span>
+                                                                <span class="">x</span>
+                                                                <span class="short" name="currency11" id="currency11">${orderOption.duration} min</span>
+                                                            </span>
+                                                            <div class="pull-right">
+                                                                <span class="short">${orderOption.amount}</span>
+                                                                <span class="pull-right">GBP</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" v-if="orderOption.type > 0">
+                                                        <span class="extra-descr">comment</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </article>
+                                    </div>
+
+                                    {#{% for p in order.performances %}
                                         {% set performanceClass = 'service' %}
                                         {% if p.data.type > 0 %}
                                             {% set performanceClass = 'service act-extras' %}
@@ -71,7 +99,8 @@
                                                 {% endfor %}
                                             </ul>
                                         </article>
-                                    {% endfor %}
+                                    {% endfor %}#}
+
                                     <!--<article class="service act-extras">
                                         <h3 class="package-name">Extra - 1</h3>
                                         <ul class="ul-reset">
@@ -99,17 +128,17 @@
                             </div>
                             <div class="payment-info">
                                 <span class="total-title">Total:</span>
-                                <span class="total-cost">{{ order.totalPrice }} <i>GBR</i></span>
+                                <span class="total-cost">${ totalPrice } <i>GBP</i></span>
                             </div>
                             <div class="payment-additional-info">
                                 <span>Payment terms:</span>
 
                                 <div class="row list">
                                     <div class="col-xs-12 col-sm-12 no-pad">
-                                        <div class="col-xs-9 col-sm-6 no-pad">Deposit ({{ order.guaranteedDepositTerm }}%) to be paid now</div><div class="col-xs-3 col-sm-6 no-pad">: {{ order.depositToPay }} <i>GBP</i></div>
+                                        <div class="col-xs-9 col-sm-6 no-pad">Deposit (${ guaranteedDepositTerm }%) to be paid now</div><div class="col-xs-3 col-sm-6 no-pad">: ${ depositToPay } <i>GBP</i></div>
                                     </div>
                                     <div class="col-xs-12 col-sm-12 no-pad">
-                                        <div class="col-xs-9 col-sm-6 no-pad">Balance ({{ order.guaranteedBalanceTerm }}%) to be paid on Act</div><div class="col-xs-3 col-sm-6 no-pad">: {{ order.balanceToPay }} <i>GBP</i></div>
+                                        <div class="col-xs-9 col-sm-6 no-pad">Balance (${ guaranteedBalanceTerm }%) to be paid on Act</div><div class="col-xs-3 col-sm-6 no-pad">: ${ balanceToPay } <i>GBP</i></div>
                                     </div>
                                 </div>
 

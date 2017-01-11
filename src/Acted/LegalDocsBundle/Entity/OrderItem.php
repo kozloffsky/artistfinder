@@ -11,8 +11,6 @@ namespace Acted\LegalDocsBundle\Entity;
 
 class OrderItem
 {
-
-
     /**
      * @var string
      */
@@ -62,6 +60,16 @@ class OrderItem
      * @var Order
      */
     private $order;
+
+    /**
+     * @var array
+     */
+    private $selectedOptions;
+
+    /**
+     * @var array
+     */
+    private $options;
 
     /**
      * Constructor
@@ -346,5 +354,55 @@ class OrderItem
         $this->order = $order;
     }
 
+    /**
+     * Get selected options
+     *
+     * @return array
+     */
+    public function getSelectedOptions()
+    {
+        $this->selectedOptions = array();
+        foreach ($this->data['packages'] as $package) {
+            foreach ($package['options'] as $option) {
+                if (!empty($option['clientSelect']) && $option['clientSelect'])
+                    $this->selectedOptions[] = $option;
+            }
+        }
+
+        return $this->selectedOptions;
+    }
+
+    /**
+     * Get all options
+     *
+     * @return array
+     */
+    public function getOptions()
+    {
+        $this->options = array();
+        foreach ($this->data['packages'] as $package) {
+            foreach ($package['options'] as $option) {
+                foreach ($option['rates'] as $rate) {
+                    $option['amount'] = $rate['price']['amount'];
+                }
+
+                $option['objectType'] = 'service';
+                if (!empty($this->data['performance'])) {
+                    $option['objectType'] = 'performance';
+                }
+
+                $option['type'] = 0;
+                if (!empty($option['type'])) {
+                    $option['type'] = $this->data['type'];
+                }
+
+                $option['objectName'] = $this->data['title'];
+                $option['packageName'] = $package['name'];
+                $this->options[] = $option;
+            }
+        }
+
+        return $this->options;
+    }
 
 }

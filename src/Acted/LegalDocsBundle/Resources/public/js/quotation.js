@@ -700,7 +700,7 @@
             var payment      = {
                 balancePercent: order.guaranteed_balance_term,
                 depositPercent: order.guaranteed_deposit_term
-        };
+            };
 
             var newPerformances = [];
             var newServices = [];
@@ -709,6 +709,8 @@
             for (performanceIndex in performances) {
                 var currentPerformanceId = performances[performanceIndex]["data"]["performance"];
                 var itemId = performances[performanceIndex]["id"];
+
+
                 var currentPerformance = {
                     performance: {
                         itemId: itemId,
@@ -722,11 +724,13 @@
                 };
 
                 preSelectedPerformanceIds.push(currentPerformanceId);
+
                 newPerformances.push(currentPerformance);
             }
 
             if (orderStatuses.newOrder == currentOrderStatus) {
                 for (artistPerformanceIndex in artistPerformances) {
+                    
                     if (preSelectedPerformanceIds.indexOf(artistPerformances[artistPerformanceIndex]["id"]) != -1) {
                         continue;
                     }

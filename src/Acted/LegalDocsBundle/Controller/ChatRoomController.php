@@ -254,8 +254,15 @@ class ChatRoomController extends Controller
 
         $order = $chatRoom->getOrder();
 
+        $orderOptions = array();
+        foreach ($order->getItems() as $item) {
+            foreach ($item->getOptions() as $option) {
+                $orderOptions[] = $option;
+            }
+        }
+
         return $this->render('ActedLegalDocsBundle:ChatRoom:chat_room.html.twig',
-            compact('chat', 'quotationLink', 'chatRoom', 'performances', 'files', 'order', 'user'));
+            compact('chat', 'quotationLink', 'chatRoom', 'performances', 'files', 'order', 'user', 'orderOptions'));
     }
 
     /**

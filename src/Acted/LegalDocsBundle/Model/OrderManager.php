@@ -607,6 +607,7 @@ class OrderManager
     public function clientSelect($orderId, $objectId, $packageObjectId, $optionObjectId, $value)
     {
         $order = $this->orderRepository->find($orderId);
+        $total = 0;
 
         if (is_null($order)) {
             throw new \Exception('order is not exist');
@@ -626,6 +627,12 @@ class OrderManager
                 foreach ($package['options'] as &$option) {
                     if ($option['objId'] == $optionObjectId) {
                         $option['clientSelect'] = $value;
+                        if ($value) {
+                            foreach ($option['rates'] as $rate) {
+                                $amount = $rate['price']['amount'];
+                                $total = $total + $amount;
+                            }
+                        }
                     } else {
                         $option['clientSelect'] = false;
                     }
@@ -637,6 +644,13 @@ class OrderManager
             $this->entityManager->persist($orderItem);
             $this->entityManager->flush();
         }
+
+        $order->setTotalPrice($total);
+        $order->setDepositAmount($order->getDepositToPay());
+        $order->setDepositBallance($order->getBalanceToPay());
+
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
     }
 
     private function pushClientServiceMessage(Order $order, $field, $value){
