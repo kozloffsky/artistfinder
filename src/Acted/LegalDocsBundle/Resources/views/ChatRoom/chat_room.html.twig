@@ -34,10 +34,7 @@
 
     {% for orderOption in orderOptions %}
         var currentOption = {
-            id: {{ orderOption.id }},
             objId: "{{ orderOption.objId }}",
-            duration: {{ orderOption.duration }},
-            qty: {{ orderOption.qty }},
             amount: {{ orderOption.amount }},
             objectName: "{{ orderOption.objectName }}",
             packageName: "{{ orderOption.packageName }}",
@@ -45,6 +42,17 @@
             type: {{ orderOption.type }}
         };
 
+            {% if orderOption.id is defined %}
+                currentOption.id = {{ orderOption.id }}
+            {% endif %}
+
+        {% if orderOption.duration is defined %}
+            currentOption.duration = {{ orderOption.duration }}
+        {% endif %}
+
+        {% if orderOption.qty is defined %}
+            currentOption.qty = {{ orderOption.qty }}
+        {% endif %}
 
         {% set clientSelect = 0 %}
         {% if orderOption.clientSelect is defined %}
