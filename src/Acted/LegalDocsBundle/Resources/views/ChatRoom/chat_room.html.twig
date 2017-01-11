@@ -304,20 +304,20 @@
                         window.chatMessages = []
                         window.artistId = "{{ chatRoom.artist.artist.id }}"
                     </script>
-                    {% for chatMessage in chat.message |reverse %}
+                    {% for chatMessage in chatRoom.message |reverse %}
                         <script>
                             window.chatMessages.push({
-                                msg:"{{ chatMessage.message_text }}",
-                                send_date:"{{ chatMessage.time_from_get }}",
-                                role:"{{ chatMessage.sender_user.role_name }}",
-                            {%  if chatMessage.sender_user.avatar is defined  %}
-                                avatar: "{{ chatMessage.sender_user.avatar }}",
+                                msg:"{{ chatMessage.messageText }}",
+                                send_date:"{{ chatMessage.timeFromGet }}",
+                                role:"{{ chatMessage.senderUser.roleName }}",
+                            {%  if chatMessage.senderUser.avatar is defined  %}
+                                avatar: "{{ chatMessage.senderUser.avatar }}",
                             {%  else %}
                                 avatar: "/assets/images/noAvatar.png",
                             {%  endif %}
                                 file: [
                                     {% for file in chatMessage.files %}
-                                    { path:"{{ file.file_name }}"},
+                                    { path:"{{ file.fileName }}"},
                                     {% endfor %}
                                 ]
                             })
