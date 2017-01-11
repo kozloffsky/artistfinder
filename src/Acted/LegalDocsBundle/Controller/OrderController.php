@@ -93,7 +93,7 @@ class OrderController extends Controller
     {
         $order = $this->orderManager->bookOrder($orderId);
         if ($order == false) {
-            throw $this->createNotFoundException("Error while booking");
+            throw $this->createNotFoundException($this->orderManager->getLastError());
         }
 
         return $this->redirect($this->generateUrl('chat_room_item',['chat'=>$order->getChat()->getId()]));
