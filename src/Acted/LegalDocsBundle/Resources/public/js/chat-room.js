@@ -52,7 +52,8 @@ $(function(){
                     guaranteedDepositTerm: window.guaranteedDepositTerm,
                     guaranteedBalanceTerm: window.guaranteedBalanceTerm,
                     balanceToPay: (window.totalPrice * window.guaranteedBalanceTerm) / 100,
-                    depositToPay: (window.totalPrice * window.guaranteedDepositTerm) / 100
+                    depositToPay: (window.totalPrice * window.guaranteedDepositTerm) / 100,
+                    orderStatus: window.order.status
                 },
 
                 computed:{

@@ -141,7 +141,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
-                                <input id="extra_provide_acts" name="extra_provide_acts" value="" type="checkbox" v-on:change="acceptActs" v-model="_actsExtrasAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable">
+                                <input id="extra_provide_acts" name="extra_provide_acts" value="" type="checkbox" v-on:change="acceptActs" v-model="_actsExtrasAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable || orderStatus < 1">
                                 <label for="extra_provide_acts">I can provide the acts & extras selected</label>
                             </div>
                         </div>
@@ -191,7 +191,7 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-pad">
                             <div class="custom-checkbox">
-                                <input id="timing_agree" name="timing_agree" value="" type="checkbox" v-model="_timingAccepted" v-on:change="acceptTiming" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable">
+                                <input id="timing_agree" name="timing_agree" value="" type="checkbox" v-model="_timingAccepted" v-on:change="acceptTiming" v-bind:disabled="userRole == 'ROLE_CLIENT' || !editable || eventStartTime == ''">
                                 <label for="timing_agree">I agree with this timing</label>
                             </div>
                         </div>
