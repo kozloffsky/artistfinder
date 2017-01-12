@@ -526,7 +526,7 @@ class OrderManager
                     }
 
                     if (!empty($option['qty'])) {
-                        $optionData['qty'] = $option['duration'];
+                        $optionData['qty'] = $option['qty'];
                     }
 
 
