@@ -270,25 +270,29 @@ $(function () {
     //TODO refracture googleplace ID
     document.addEventListener('googlePlaceChanged', function (e) {
         try {
-            var eventId = window.getCurrentEvent().id;
-            var address = $(e.target).find('#event_address').val();
-            var data = {
-                data: {
-                    location: {
-                        country: e.detail.common.country,
-                        city: e.detail.common.city,
-                        city_lat: e.detail.coords.city.lat,
-                        city_lng: e.detail.coords.city.lng,
-                        region_name: e.detail.common.region,
-                        region_lat: e.detail.coords.region.lat,
-                        region_lng: e.detail.coords.region.lng,
-                        place_id: e.detail.common.placeId
-                    }, address: address
-                }
-            };
-            sendData(eventId, data)
-        } catch (e) {
+            if (window.location.pathname == '/dashboard/events') {
 
+                var eventId = window.getCurrentEvent().id;
+                var address = $(e.target).find('#event_address').val();
+                var data = {
+                    data: {
+                        location: {
+                            country: e.detail.common.country,
+                            city: e.detail.common.city,
+                            city_lat: e.detail.coords.city.lat,
+                            city_lng: e.detail.coords.city.lng,
+                            region_name: e.detail.common.region,
+                            region_lat: e.detail.coords.region.lat,
+                            region_lng: e.detail.coords.region.lng,
+                            place_id: e.detail.common.placeId
+                        }, address: address
+                    }
+                };
+
+                sendData(eventId, data);
+            }
+        } catch (e) {
+            console.warn(e);
         }
     }, false);
 
