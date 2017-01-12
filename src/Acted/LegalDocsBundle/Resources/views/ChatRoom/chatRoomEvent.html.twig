@@ -406,7 +406,7 @@
                             {% if user.roles[0] == 'ROLE_CLIENT' and order.status < 2 %}
                                 <button class="btn" type="submit" v-on:click="showConfirmModal" v-bind:disabled="bookingAllowed">Book now</button>
                             {% elseif user.roles[0] == 'ROLE_ARTIST' and order.status < 2 %}
-                            <button edit-order order-id="{{ order.id }}" v-bind:disabled="sendingAllowed" class="btn" type="submit">{% if order.status == 0 %}Send Quotation{% else %}Edit Quotation{% endif %}</button>
+                            <button edit-order order-id="{{ order.id }}" v-bind:disabled="sendingAllowed($event)" class="btn" type="submit">{% if order.status == 0 %}Send Quotation{% else %}Edit Quotation{% endif %}</button>
                             {% endif %}
                         </div>
                     </div>
