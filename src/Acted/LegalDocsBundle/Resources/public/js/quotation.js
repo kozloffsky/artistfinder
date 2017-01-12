@@ -282,6 +282,21 @@
         });
     }
 
+    function removeOrderItem(itemId) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: '/order/'+ itemId,
+                method: 'DELETE',
+                success: function(resp) {
+                    resolve(resp);
+                },
+                error: function(err) {
+                    reject(err);
+                }
+            });
+        });
+    }
+
     // Send a extra performance create request
     function createExtraPerformanceSend(performance) {
         return new Promise(function(resolve, reject) {
@@ -1597,16 +1612,12 @@
         })*/
     }
     function removeAct(e) {
-        var actContainer = $(this).closest('div[act-id]');
-        var actId = actContainer.attr('act-id');
-        var actType = $(this).closest('div[act-type]').attr('act-type');
+        var actContainer = $(this).closest('div[item-id]');
+        //var itemId = actContainer.attr('item-id');
+        actContainer.remove();
 
-        var act = {
-            id: actId,
-            type: actType
-        };
 
-       /* removeActSend(act)
+        /*removeOrderItem(itemId)
         .then(function(res) {
             actContainer.remove();
             console.log(res)

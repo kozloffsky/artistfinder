@@ -54,3 +54,10 @@ order_client_select:
     path:     /client/select
     defaults: { _controller: ActedLegalDocsBundle:Order:clientSelect, _format: json }
     methods:  POST
+
+order_item_remove:
+    path:     /{orderItemId}
+    defaults: { _controller: ActedLegalDocsBundle:Order:deleteOrderItem, _format: json}
+    methods:  DELETE
+    requirements:
+      orderItemId: \d+

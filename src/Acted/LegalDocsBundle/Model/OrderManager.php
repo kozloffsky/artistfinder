@@ -520,8 +520,15 @@ class OrderManager
                     $optionData = [];
                     $optionData['id'] = $option['id'];
                     $optionData['objId'] = $option['objId'];
-                    $optionData['duration'] = $option['duration'];
-                    $optionData['qty'] = $option['qty'];
+
+                    if (!empty($option['duration'])) {
+                        $optionData['duration'] = $option['duration'];
+                    }
+
+                    if (!empty($option['qty'])) {
+                        $optionData['duration'] = $option['duration'];
+                    }
+
 
                     $rateData = array(
                         "id" => null,
@@ -673,5 +680,12 @@ class OrderManager
             ],
             'acted_topic_chat',
             ['room' => $order->getChat()->getId()]);
+    }
+
+    public function removeOrderItem($orderItemId)
+    {
+        $orderItem = $this->orderItemRepository->find($orderItemId);
+        $this->entityManager->remove($orderItem);
+        $this->entityManager->flush();
     }
 }

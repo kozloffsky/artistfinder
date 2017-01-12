@@ -9,6 +9,7 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Entity\Order;
+use Acted\LegalDocsBundle\Entity\OrderItem;
 use Acted\LegalDocsBundle\Entity\OrderItemService;
 use Acted\LegalDocsBundle\Model\OrderManager;
 use Doctrine\ORM\EntityNotFoundException;
@@ -291,6 +292,39 @@ class OrderController extends Controller
             $response['error'] = $e->getMessage();
 
             return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
+        }
+
+        return new JsonResponse($response, Response::HTTP_OK);
+    }
+
+    /**
+     * @ApiDoc(
+     *  description="Delete order item",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when the form has validation errors",
+     *     }
+     * )
+     * @param $orderItemId
+     * @return JsonResponse
+     */
+    public function deleteOrderItemAction(OrderItem $orderItemId)
+    {
+        $response = ['status'=>'success'];
+
+        $this->entityManager->getConnection()->beginTransaction();
+
+        try{
+            $this->orderManager->removeOrderItem($orderItemId);
+            $this->entityManager->getConnection()->commit();
+        } catch (EntityNotFoundException $e) {
+
+            $this->entityManager->getConnection()->rollBack();
+
+            $response['status']  = 'error';
+            $response['error'] = $e->getMessage();
+
+            return new JsonResponse($response, Response::HTTP_NOT_IMPLEMENTED);
         }
 
         return new JsonResponse($response, Response::HTTP_OK);
