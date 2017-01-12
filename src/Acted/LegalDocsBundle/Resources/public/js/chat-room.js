@@ -100,8 +100,7 @@ $(function(){
 
                     sendingAllowed: {
                         cache: false,
-                        get: function ($event) {
-                            $event.preventDefault();
+                        get: function () {
 
                             if(window.order.status == 0) return false;
                             if(window.userRole == 'ROLE_ARTIST'){
