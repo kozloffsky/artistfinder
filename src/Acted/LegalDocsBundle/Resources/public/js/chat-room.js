@@ -102,7 +102,7 @@ $(function(){
                         cache: false,
                         get: function ($event) {
                             $event.preventDefault();
-                            
+
                             if(window.order.status == 0) return false;
                             if(window.userRole == 'ROLE_ARTIST'){
                                 return false;

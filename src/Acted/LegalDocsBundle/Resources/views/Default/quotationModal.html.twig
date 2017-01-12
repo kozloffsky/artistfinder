@@ -247,7 +247,7 @@
         </div>
     </div>
     <div class="row payment-deposit-info">
-        <span class="payment-balance-amount"><%balancePercent = 100-depositPercent%><%=balancePercent%>%</span><span> guaranteed Balance payment on <b>Escrow Account</b></span>
+        <span class="payment-deposit-amount"><%balancePercent = 100-depositPercent%><%=balancePercent%>%</span><span> guaranteed Balance payment on <b>Escrow Account</b></span>
     </div>
     <div style="text-align: center;">
         <button quotation-send class="btn btn-quotation-send">Save</button>
@@ -476,7 +476,7 @@
                         <span>min</span>
                     </span>
 
-                    <div class="pull-right">
+                    <div class="price-box-container">
                         <input edit-extra-custom-price custom-extra-price class="price-box" placeholder="<%=amount%>" rate-id="<%=rate.id%>" value="<%=amount%>">
                         <span>GBP</span>
                         <span act-delete class="pull-right"><i class="fa fa-trash"></i></span>
@@ -510,7 +510,7 @@
     var perfId = curPerf.id;
     %>
 
-    <div act-id="<%=perfId%>" act-type="<%=type%>">
+    <div act-id="<%=perfId%>" act-type="<%=type%>" class="quotation-extra-performance">
         <div package-id="<%=package.id%>" class="row">
             <div class="row package">
                 <div class="custom-checkbox">
