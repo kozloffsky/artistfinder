@@ -91,6 +91,7 @@ class EventsController extends Controller
                 $this->entityManager->persist($event);
 
                 if (!$data->getPerformance()->isEmpty()) {
+                    $data->setUser($this->getUser());
                     /** Add Offer */
                     $performances = $data->getPerformance();
                     $userArtist = $data->getPerformance()->first()->getProfile()->getUser();
