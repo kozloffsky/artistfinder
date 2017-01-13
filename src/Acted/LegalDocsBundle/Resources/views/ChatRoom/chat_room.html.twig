@@ -313,13 +313,13 @@
                         window.chatMessages = []
                         window.artistId = "{{ chatRoom.artist.artist.id }}"
                     </script>
-                    {% for chatMessage in chatRoom.message |reverse %}
+                        {% for chatMessage in chatRoom.message |reverse %}
                         <script>
                             window.chatMessages.push({
                                 msg:"{{ chatMessage.messageText }}",
                                 send_date:"{{ chatMessage.timeFromGet }}",
                                 role:"{{ chatMessage.senderUser.roleName }}",
-                            {%  if chatMessage.senderUser.avatar is empty  %}
+                            {%  if chatMessage.senderUser.avatar is "/"  %}
                                 avatar: "/assets/images/noAvatar.png",
                             {%  else %}
                                 avatar: "{{ chatMessage.senderUser.avatar }}",
