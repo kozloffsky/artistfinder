@@ -590,7 +590,7 @@ class EventsController extends Controller
             $eventOfferData->setPerformance($data['performance']);
             $eventOfferData->setComment($data['comment']);
             $eventOfferData->setEventTime($event->getTiming());
-            $eventOfferData->setUser($userArtist);
+            $eventOfferData->setUser($this->getUser());
 
             $eventOfferData->setType($event->getEventType());
             //$eventOfferData->setCountry();
