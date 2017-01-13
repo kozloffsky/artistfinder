@@ -319,7 +319,7 @@
                                 msg:"{{ chatMessage.messageText }}",
                                 send_date:"{{ chatMessage.timeFromGet }}",
                                 role:"{{ chatMessage.senderUser.roleName }}",
-                            {%  if chatMessage.senderUser.avatar is "/"  %}
+                            {%  if chatMessage.senderUser.avatar == "/"  %}
                                 avatar: "/assets/images/noAvatar.png",
                             {%  else %}
                                 avatar: "{{ chatMessage.senderUser.avatar }}",
