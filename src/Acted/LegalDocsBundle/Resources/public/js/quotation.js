@@ -690,7 +690,8 @@
         setNotAvailable(orderId);
     }
 
-    function openQuotationModal() {
+    function openQuotationModal(e) {
+        e.preventDefault();
         var orderId = $(this).attr("order-id");
 
         Promise.props({
