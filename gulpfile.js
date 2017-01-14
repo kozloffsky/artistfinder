@@ -61,4 +61,12 @@ gulp.task('watch-all', function() {
   ], ['admin']);
   gulp.watch('src/Acted/LegalDocsBundle/Resources/public/css/**/*.css', ['css']);
 });
+
+gulp.task('watch-script', function() {
+    gulp.watch('src/Acted/LegalDocsBundle/Resources/public/js/**/*.js', ['js']);
+});
+gulp.task('watch-style', function() {
+    gulp.watch('src/Acted/LegalDocsBundle/Resources/public/css/**/*.css', ['css']);
+});
+
 gulp.task('default', ['js', 'admin', 'css']);

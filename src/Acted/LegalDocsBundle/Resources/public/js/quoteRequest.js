@@ -409,7 +409,8 @@ $(function () {
             cityLng = quoteRequestAutocompService.coords.city.lng,
             region = quoteRequestAutocompService.currentStore.region,
             placeId = quoteRequestAutocompService.currentStore.placeId,
-            city = quoteRequestAutocompService.currentStore.city;
+            city = quoteRequestAutocompService.currentStore.city,
+            country = quoteRequestAutocompService.currentStore.country;
 
         //todo: remove type in event, we use venue_type
         var eventType = 1;
@@ -420,7 +421,7 @@ $(function () {
         data += "&region_lat=" + regionLat;
         data += "&region_lng=" + regionLng;
         data += "&place_id=" + placeId;
-        data += "&country=United Kingdom";
+        data += "&country=" + country;
         data += "&city=" + city;
         data += "&type=" + eventType;
 

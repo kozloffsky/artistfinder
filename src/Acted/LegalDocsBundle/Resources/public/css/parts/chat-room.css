@@ -75,6 +75,7 @@
     color: rgba(72, 91, 189, 1);
 }
 
+.chat-room select.custom-size,
 .chat-room input[type="text"],
 .chat-room input[type="email"],
 .chat-room input[type="password"] {
@@ -83,6 +84,7 @@
     color: rgba(18, 18, 18, 0.87);
 }
 
+.chat-room select.custom-size,
 .chat-room input[type="text"],
 .chat-room input[type="email"],
 .chat-room input[type="password"] {
@@ -91,6 +93,7 @@
     height: 30px;
 }
 
+.chat-room select.custom-size,
 .chat-room input[type="text"].custom-size,
 .chat-room input[type="email"].custom-size,
 .chat-room input[type="password"].custom-size {

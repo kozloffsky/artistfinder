@@ -11,6 +11,7 @@
         PLACE_ID = 4;
 
     window.GoogleAutocompleteService = function() {
+        var self = this;
         /**
          * Constants
          */
@@ -286,6 +287,7 @@
 
             return 0;
         };
+
         /**
          * Some variables
          */
@@ -361,10 +363,10 @@
             this.currentStore.country = this.findCountryByCode(userCountry);
 
             // TODO: Warning, HACK! Remove it!!!
-            if(this.inputs[CITY].length != 0) {
-                var city_id = _this.inputs[CITY].attr("id").trim();
+            if(self.inputs[CITY].length != 0) {
+                var city_id = self.inputs[CITY].attr("id").trim();
                 if(city_id != 'quot_city')
-                    _this.unlock(_this.inputs[CITY]);
+                    self.unlock(self.inputs[CITY]);
             }
 
             //----------------------
@@ -396,12 +398,13 @@
             });
         };
         this.countryChangeEvent = function(context) {
-            var name  = this.inputs[COUNTRY].find("option:selected").val(),
-                code = this.findCountryByName(name);
+            var name  = self.inputs[COUNTRY].find("option:selected").val(),
+                code = self.findCountryByName(name);
 
-            this.setAutocompleteCountry(context, code);
+            this.setAutocompleteCountry(context.target.name, code);
 
             // Clear inputs after change country
+            this.currentStore.country = name;
             this.currentStore.city = '';
             this.currentStore.region = '';
             this.currentStore.post_code = "";
@@ -417,7 +420,7 @@
          * @param element (input)
          */
         this.setAutocompleteCountry = function(context, country) {
-            this.autocomplete[context].setComponentRestrictions({ country: country });
+            self.autocomplete.location.setComponentRestrictions({ country: country });
         };
         this.placeChangeEvent = function(name) {
             var _this = this;

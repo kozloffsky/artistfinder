@@ -335,7 +335,6 @@ $(function () {
                         e.preventDefault();
 
                         var _this = this;
-                        var country = 'United Kingdom';
 
                         //todo - need to do with vuejs without jquery
                         var eventDate = $('.event-modal').find('input[name=event_date]').val();
@@ -351,7 +350,8 @@ $(function () {
                             cityLng = eventAutocompService.coords.city.lng,
                             region = eventAutocompService.currentStore.region,
                             placeId = eventAutocompService.currentStore.placeId,
-                            city = eventAutocompService.currentStore.city;
+                            city = eventAutocompService.currentStore.city,
+                            country = eventAutocompService.currentStore.country;
 
                         var data = {
                             user: getUserId(),

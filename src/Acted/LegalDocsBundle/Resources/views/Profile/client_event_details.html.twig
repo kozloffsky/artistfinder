@@ -65,8 +65,13 @@
                 </div>
                 <div class="col-lg-6 col-md-6 no-pad-right">
                     <label for="event-country">Country</label>
-                    <input disabled type="text" class="form-control" id="event-country" placeholder="United Kingdom"
-                           name="country" value="United Kingdom">
+                    {#<input disabled type="text" class="form-control" id="event-country" placeholder="United Kingdom"
+                           name="country" value="United Kingdom">#}
+                    <select class="select_width_101 enable_toggler" name="country" id="event-country">
+                        <option value="United Kingdom" v-bind:selected="event.countryId == 1" >United Kingdom</option>
+                        <option value="Germany" v-bind:selected="event.countryId == 2" >Germany</option>
+                        <option value="France" v-bind:selected="event.countryId == 3" >France</option>
+                    </select>
                 </div>
             </div>
             <div class="row">
