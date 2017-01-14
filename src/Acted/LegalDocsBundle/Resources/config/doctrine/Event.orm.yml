@@ -9,6 +9,9 @@ Acted\LegalDocsBundle\Entity\Event:
             generator:
                 strategy: AUTO
     fields:
+        cityId:
+          type: integer(11)
+          nullable: false
         eventRef:
           type: string(64)
           unique: true
