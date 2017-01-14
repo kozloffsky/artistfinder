@@ -15,6 +15,7 @@ use Acted\LegalDocsBundle\Model\EventsManager;
 use Acted\LegalDocsBundle\Model\OrderManager;
 use Acted\LegalDocsBundle\Repository\EventRepository;
 use Acted\LegalDocsBundle\Popo\EventOfferData;
+use Acted\LegalDocsBundle\Service\SystemLogService;
 use Doctrine\ORM\EntityManager;
 use Acted\LegalDocsBundle\Form\ArtistEventCreateType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -55,6 +56,12 @@ class EventsController extends Controller
      * @var EventsManager
      */
     private $chatManager;
+
+    /**
+     * @DI\Inject("system_log")
+     * @var SystemLogService
+     */
+    private $systemLog;
 
     /**
      * Create event
@@ -418,6 +425,8 @@ class EventsController extends Controller
             $em->flush();
 
             $response = ['status' => 'success'];
+
+            $this->systemLog->postPersist($event);
 
             return new JsonResponse($response);
         }

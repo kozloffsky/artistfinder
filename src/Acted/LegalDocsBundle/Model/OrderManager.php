@@ -437,7 +437,7 @@ class OrderManager
         $this->entityManager->persist($order);
 
         $this->pushArtistServiceMessage($order, 'actsExtrasAccepted', false);
-        $this->systemLog->log($order->getArtist()->getUser(), 'Client changed selected acts');
+        $this->systemLog->log($order->getClient()->getUser(), 'Artist send quote reply');
 
         $this->entityManager->flush();
     }

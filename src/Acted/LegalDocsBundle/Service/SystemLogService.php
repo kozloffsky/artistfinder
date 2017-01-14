@@ -25,10 +25,15 @@ class SystemLogService
      */
     private $entityManager;
 
+    /**
+     * @var PusherInterface
+     */
+    private $pusher;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManager $entityManager, PusherInterface $pusher)
     {
         $this->entityManager = $entityManager;
+        $this->pusher = $pusher;
     }
 
     public function log(User $target, $message){
@@ -61,6 +66,21 @@ class SystemLogService
         $this->entityManager->flush();
 
         return $notifications;
+    }
+
+    public function postPersist(Event $event){
+        foreach ($event->getChatRooms() as $chat){
+            $this->log($chat->getArtist(), 'Client change event details');
+            $this->pusher->push(
+                [
+                    'type'=>'service',
+                    'role'=>'ROLE_ARTIST',
+                    'field' => 'actsExtrasAccepted',
+                    'value' => 'false'
+                ],
+                'acted_topic_chat',
+                ['room' => $chat->getId()]);
+        }
     }
 
 }

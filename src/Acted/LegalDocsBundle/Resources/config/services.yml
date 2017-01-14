@@ -56,4 +56,6 @@ services:
 
     system_log:
         class: Acted\LegalDocsBundle\Service\SystemLogService
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: [@doctrine.orm.entity_manager, @gos_web_socket.zmq.pusher]
+        #tags:
+                  #- { name: doctrine.event_listener, event: postPersist }
