@@ -373,7 +373,7 @@ $(function(){
                             'c-phone': this.contactPhone,
                             'c-person': this.contactPerson
                         }
-                        if(e.target.id == 'timepicker'){
+                        if(e.target.id == 'time_picker'){
                             data.performance_start_time = $('.performance-time').find('input').val();
                         }
                         if(e.target.id == 'additional_info'){
