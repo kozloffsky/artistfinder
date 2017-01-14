@@ -44,7 +44,7 @@
                                            <!-- SET -->
                                            <div class="row" v-for="option in package.options" v-if="option.clientSelect">
                                                <div class="col-sm-12 no-pad">
-                                                   <div class="client-order-act-info time">${ option.qty } x ${ option.duration }</div>
+                                                   <div class="client-order-act-info time" v-if="option.qty == '' || option.duration == ''">${ option.qty } x ${ option.duration }</div>
                                                </div>
                                            </div>
                                        </div>
