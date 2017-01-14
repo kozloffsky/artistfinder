@@ -104,7 +104,7 @@
     color: rgba(0, 0, 0, 0.87);
 }
 .artist-selection .artist-block .right-panel {
-    padding: 0 0 0 58px;
+    padding: 0;
 }
 .artist-selection .artist-block .controls-area {
     position: absolute;
@@ -147,9 +147,15 @@
     margin: 0 8px 0 0;
 }
 
-@media screen and (max-width: 1199px) {
+/*@media screen and (max-width: 1199px) {
     .artist-selection .artist-block .right-panel {
         padding: 0;
+    }
+}*/
+@media screen and (min-width: 768px) {
+    .artist-selection .artist-block .right-panel {
+        width: 100%;
+        position: absolute;
     }
 }
 
@@ -705,14 +711,15 @@
         position: absolute;
         top: -22px;
         left: 226px;
+        width: 100%;
     }
     .artist-selection .artist-block .right-panel {
         position: absolute;
         top: 0;
-        right: 16px;
+        right: 30px;
     }
     .artist-selection .artist-block .controls-area {
-        margin: 16px 0 0 12px;
+        margin: 30px 0 0 12px;
         position: relative;
         top: 0;
     }
@@ -721,7 +728,7 @@
     }
     .artist-selection .artist-block .available-flag {
         position: absolute;
-        top: -90px;
+        top: -100px;
     }
     .artist-selection .remove-artist {
         position: absolute;
