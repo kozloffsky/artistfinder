@@ -65,9 +65,14 @@
                                 <label class="info-label">Country</label>
                             </div>
                             <div class="box active form-group">
-                                <input hidden type="text" placeholder="{{ country }}" name="country" value="{{ country }}">
-                                <h2>{{ country }}</h2>
+                                {#<input hidden type="text" placeholder="{{ country }}" name="country" value="{{ country }}">#}
+                                {#<h2>{{ country }}</h2>#}
                                 {#<input id="settings_country" type="text" placeholder="{{ artist.country }}" name="country" value="{{ artist.country }}">#}
+                                <select class="select_width_101 enable_toggler" name="country" id="settings_country">
+                                    <option value="United Kingdom" {% if artist.country == 'United Kingdom' %} selected {% endif %}>United Kingdom</option>
+                                    <option value="Germany" {% if artist.country == 'Germany' %} selected {% endif %}>Germany</option>
+                                    <option value="France" {% if artist.country == 'France' %} selected {% endif %}>France</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row">

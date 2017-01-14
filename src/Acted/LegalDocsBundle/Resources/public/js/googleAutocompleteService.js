@@ -420,7 +420,11 @@
          * @param element (input)
          */
         this.setAutocompleteCountry = function(context, country) {
-            self.autocomplete.location.setComponentRestrictions({ country: country });
+            var autocompleteComponent = self.autocomplete.city || self.autocomplete.location;
+
+            if(!_.isEmpty(autocompleteComponent)) {
+                autocompleteComponent.setComponentRestrictions({ country: country });
+            }
         };
         this.placeChangeEvent = function(name) {
             var _this = this;

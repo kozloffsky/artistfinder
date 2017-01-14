@@ -133,10 +133,12 @@ $(function () {
         }
     }
 
-    $('#country').on('change', function(){
-        var selectedCountruOption = $(this).find('option:selected').val();
-        chooseCity(selectedCountruOption);
-    });
+    if($("main.search").length) {
+        $('#country').on('change', function(){
+            var selectedCountruOption = $(this).find('option:selected').val();
+            chooseCity(selectedCountruOption);
+        });
+    }
 
     $(document).ready(function() {
         //var selectedCountruOption = $('#country').find('option:selected').val();
