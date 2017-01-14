@@ -10,6 +10,7 @@ use Acted\LegalDocsBundle\Form\ChatRoomTechnicalRequirementsCreateType;
 use Acted\LegalDocsBundle\Form\ChatRoomTechnicalRequirementsCustomCreateType;
 use Acted\LegalDocsBundle\Model\EventsManager;
 use Acted\LegalDocsBundle\Model\OrderManager;
+use Acted\LegalDocsBundle\Service\SystemLogService;
 use Doctrine\ORM\EntityManager;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -46,6 +47,12 @@ class ChatRoomController extends Controller
      * @var OrderManager
      */
     private $orderManager;
+
+    /**
+     * @Di\Inject("system_log")
+     * @var SystemLogService
+     */
+    private $systemLog;
 
     /**
      * List of chatRooms
@@ -261,8 +268,10 @@ class ChatRoomController extends Controller
             }
         }
 
+        $notifications = $this->systemLog->getNotifications($this->getUser());
+
         return $this->render('ActedLegalDocsBundle:ChatRoom:chat_room.html.twig',
-            compact('chat', 'quotationLink', 'chatRoom', 'performances', 'files', 'order', 'user', 'orderOptions'));
+            compact('notifications','chat', 'quotationLink', 'chatRoom', 'performances', 'files', 'order', 'user', 'orderOptions'));
     }
 
     /**

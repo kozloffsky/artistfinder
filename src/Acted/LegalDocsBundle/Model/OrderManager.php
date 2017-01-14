@@ -21,6 +21,7 @@ use Acted\LegalDocsBundle\Repository\OrderItemRepository;
 use Acted\LegalDocsBundle\Repository\OrderRepository;
 use Acted\LegalDocsBundle\Repository\PerformanceRepository;
 use Acted\LegalDocsBundle\Repository\TechnicalRequirementRepository;
+use Acted\LegalDocsBundle\Service\SystemLogService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -63,7 +64,12 @@ class OrderManager
 
     private $pusher;
 
-    public function __construct(EntityManager $entityManager, $pusher)
+    /**
+     * @var SystemLogService
+     */
+    private $systemLog;
+
+    public function __construct(EntityManager $entityManager, $pusher, SystemLogService $systemLog)
     {
         $this->entityManager = $entityManager;
         $this->pusher = $pusher;
@@ -71,6 +77,7 @@ class OrderManager
         $this->orderRepository = $entityManager->getRepository("ActedLegalDocsBundle:Order");
         $this->technicalRequirementsRepository = $entityManager->getRepository("ActedLegalDocsBundle:TechnicalRequirement");
         $this->performanceRepository = $entityManager->getRepository("ActedLegalDocsBundle:Performance");
+        $this->systemLog = $systemLog;
     }
 
     /**
@@ -235,21 +242,25 @@ class OrderManager
             case Order::FIELD_TECHNICAL_REQUIREMENTS:
                 $order->setTechnicalRequirementsAccepted($value);
                 $this->pushArtistServiceMessage($order, 'techReqsAccepted', $value);
+                $this->systemLog->log($order->getArtist()->getUser(), 'Client change technical requirements acception');
                 break;
 
             case Order::FIELD_ACTS_EXTRAS:
                 $order->setActsExtrasAccepted($value);
                 $this->pushClientServiceMessage($order, 'actsExtrasAccepted', $value);
+                $this->systemLog->log($order->getClient()->getUser(), 'Artist change acts and extras acception');
                 break;
 
             case Order::FIELD_TIMING:
                 $order->setTimingAccepted($value);
                 $this->pushClientServiceMessage($order, 'timingAccepted', $value);
+                $this->systemLog->log($order->getClient()->getUser(), 'Artist change timing acception');
                 break;
 
             case Order::FIELD_DETAILS:
                 $order->setDetailsAccepted($value);
                 $this->pushClientServiceMessage($order, 'detailsAccepted', $value);
+                $this->systemLog->log($order->getClient()->getUser(), 'Artist change details acception');
                 break;
             default:
                 throw new \Exception("Wrong field");
@@ -309,6 +320,8 @@ class OrderManager
 
         $this->pushArtistServiceMessage($order, 'order.status', Order::STATUS_BOOKED);
 
+        $this->systemLog->log($order->getArtist()->getUser(), 'Client booked order #'.$order->getId());
+
         return $order;
     }
 
@@ -337,6 +350,7 @@ class OrderManager
         $order->setPerformanceStartTime($performanceStartTime);
 
         $this->pushClientServiceMessage($order, 'timingAccepted', false);
+        $this->systemLog->log($order->getArtist()->getUser(), 'Client changed performance start time to '.$performanceStartTime);
 
         $this->entityManager->persist($order);
         $this->entityManager->flush();
@@ -352,6 +366,8 @@ class OrderManager
         $order->setTimingAccepted(false);
         $this->pushClientServiceMessage($order, 'timingAccepted', false);
 
+        $this->systemLog->log($order->getArtist()->getUser(), 'Client changed additional info');
+
         $this->entityManager->persist($order);
         $this->entityManager->flush();
     }
@@ -364,6 +380,8 @@ class OrderManager
         $order->setTechnicalRequirements($data);
 
         $this->pushClientServiceMessage($order, 'techReqsAccepted', false);
+
+        $this->systemLog->log($order->getClient()->getUser(), 'Artist change technical requirements');
 
         $this->entityManager->persist($order);
         $this->entityManager->flush();
@@ -419,6 +437,7 @@ class OrderManager
         $this->entityManager->persist($order);
 
         $this->pushArtistServiceMessage($order, 'actsExtrasAccepted', false);
+        $this->systemLog->log($order->getArtist()->getUser(), 'Client changed selected acts');
 
         $this->entityManager->flush();
     }
@@ -571,6 +590,7 @@ class OrderManager
         $order->setStatus(Order::STATUS_CANCELED);
         $this->entityManager->persist($order);
         $this->entityManager->flush();
+        $this->systemLog->log($order->getArtist()->getUser(), 'Client has canceled order');
     }
 
     /**

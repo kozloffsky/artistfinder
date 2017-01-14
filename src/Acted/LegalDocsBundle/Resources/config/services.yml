@@ -26,7 +26,7 @@ services:
 
     acted_legal_docs.model.order_manager:
         class: Acted\LegalDocsBundle\Model\OrderManager
-        arguments: ["@doctrine.orm.entity_manager","@gos_web_socket.zmq.pusher"]
+        arguments: ["@doctrine.orm.entity_manager","@gos_web_socket.zmq.pusher", "@system_log"]
         #tags:
           #- { name: doctrine.event_listener, event: postPersist }
 
@@ -53,3 +53,7 @@ services:
     file_uploader:
         class: Acted\LegalDocsBundle\Service\FileUploader
         arguments: [ @doctrine.orm.entity_manager, @request_stack, @kernel, "%document_technical_requirements_dir%" ]
+
+    system_log:
+        class: Acted\LegalDocsBundle\Service\SystemLogService
+        arguments: [@doctrine.orm.entity_manager]

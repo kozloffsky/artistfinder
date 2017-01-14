@@ -328,4 +328,14 @@ class Message
     {
         $this->hidden = $hidden;
     }
+
+    /**
+     * Get hidden
+     *
+     * @return boolean
+     */
+    public function getHidden()
+    {
+        return $this->hidden;
+    }
 }

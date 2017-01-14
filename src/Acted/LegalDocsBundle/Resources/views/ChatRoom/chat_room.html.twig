@@ -101,6 +101,13 @@
                 <h2 class="main-title">Chatroom #{{ chat.chat_id }}</h2>
                 <div class="hidden" id="chatId">{{ chat.chat_id }}</div>
 
+                {% for n in notifications %}
+                    <div class="tooltip-message warning">
+                        <i class="notification-bell" aria-hidden="true"></i>
+                        <span>{{ n.message }}</span>
+                    </div>
+                {% endfor %}
+
                 {% if app.session.flashBag.has('warning') %}
                 {% for msg in app.session.flashBag.get('warning') %}
                 <div class="tooltip-message warning">

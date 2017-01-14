@@ -1,0 +1,19 @@
+Acted\LegalDocsBundle\Entity\SystemLog:
+    type: entity
+    table: SystemLog
+    repositoryClass: Acted\LegalDocsBundle\Repository\SystemLogRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        message:
+            type: string
+        logDate:
+            type: datetime
+        targetUserId:
+            type: integer
+        isReaded:
+            type: boolean
