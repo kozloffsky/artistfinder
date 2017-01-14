@@ -152,7 +152,7 @@ class FileUploader
     }
 
     // Get full file path
-    private function getUploadRootDir()
+    public function getUploadRootDir()
     {
         return $this->kernel->getRootDir() . '/../'. $this->directory;
     }

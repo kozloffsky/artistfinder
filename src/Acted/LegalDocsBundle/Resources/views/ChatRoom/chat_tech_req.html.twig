@@ -67,7 +67,7 @@
     <ul>
         <li v-for="doc in selectedRequirement.documentTechnicalRequirements">
             <i class="fa fa-file-pdf-o icon icon-pdf" aria-hidden="true"></i>
-            <a :href="'/'+doc.file"> ${doc.originalName | removeExt }</a>
+            <a :href="'/technical_requirement/document/'+doc.id" target="_blank"> ${doc.originalName | removeExt }</a>
             <!--<i class="icon icon-delete-attached" aria-hidden="true" @click="deleteAttachment(doc.id)"></i>-->
         </li>
     </ul>

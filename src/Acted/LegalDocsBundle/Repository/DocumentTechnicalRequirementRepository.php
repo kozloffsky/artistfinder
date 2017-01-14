@@ -29,4 +29,13 @@ class DocumentTechnicalRequirementRepository extends \Doctrine\ORM\EntityReposit
 
         return $qb->getQuery()->getArrayResult();
     }
+
+    public function getDocumentFile($docId){
+        $document = $this->find($docId);
+        if($document == null){
+            throw new \Exception("Document $docId not found");
+        }
+
+        return $document->getName();
+    }
 }

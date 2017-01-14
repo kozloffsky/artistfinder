@@ -27,3 +27,8 @@ technical_requirement_artist_get:
     path: /artist/{id}
     defaults: { _controller: ActedLegalDocsBundle:TechnicalRequirement:getByArtist }
     methods:  GET
+
+document_technical_requirement_get_file:
+    path: /document/{documentId}
+    defaults: { _controller: ActedLegalDocsBundle:TechnicalRequirement:getDocument }
+    methods:  GET

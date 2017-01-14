@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Controller;
 
 use Acted\LegalDocsBundle\Form\TechnicalRequirementType;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -124,5 +125,16 @@ class TechnicalRequirementController extends Controller
         $technicalRequirements = $repository->getFullTechnicalRequirementsByIds($technicalRequirementIds);
 
        return new JsonResponse(array('technicalRequirements' => $technicalRequirements), Response::HTTP_OK);
+    }
+
+    public function getDocumentAction($documentId){
+        $this->denyAccessUnlessGranted(array('ROLE_CLIENT','ROLE_ARTIST'));
+        $uploader = $this->get('file_uploader');
+
+        $response = new BinaryFileResponse($uploader->getUploadRootDir() . '/'
+            .$this->getEM()
+                ->getRepository('ActedLegalDocsBundle:DocumentTechnicalRequirement')
+                ->getDocumentFile($documentId));
+        return $response;
     }
 }
