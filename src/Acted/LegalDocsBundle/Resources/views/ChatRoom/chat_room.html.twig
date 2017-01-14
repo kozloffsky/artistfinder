@@ -1,7 +1,7 @@
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
 {# dump(order.performances) #}
 <script type="text/x-template" id="timepicker-template">
-    <input type="text" class="edit-time" />
+    <input type="text" class="edit-time" id="timepicker" />
 </script>
 <script type="text/javascript">
     window.getOrderId = function(){ return {{ order.id }}};
@@ -170,7 +170,7 @@
                                 </div>
                                 <div class="performance-info-desc">
                                     <p v-if="userRole == 'ROLE_ARTIST'">{{ order.additionalInfo }}</p>
-                                    <textarea class="edit-time" @input="saveDetails" v-if="userRole != 'ROLE_ARTIST'">{{ order.additionalInfo }}</textarea>
+                                    <textarea class="edit-time" id="additional_info" @input="saveDetails" v-if="userRole != 'ROLE_ARTIST'">{{ order.additionalInfo }}</textarea>
                                 </div>
                             </div>
                             <div class="row section-info-footer hidden-sm hidden-md hidden-lg">

@@ -371,11 +371,16 @@ $(function(){
                             'c-email': this.contactEmail,
                             'c-name': this.contactName,
                             'c-phone': this.contactPhone,
-                            'c-person': this.contactPerson,
-                            'performance_start_time': $('.performance-time').find('input').val(),
-                            'additional_info': $('.performance-info-desc').find('textarea').val()
+                            'c-person': this.contactPerson
+                        }
+                        if(e.target.id == 'timepicker'){
+                            data.performance_start_time = $('.performance-time').find('input').val();
+                        }
+                        if(e.target.id == 'additional_info'){
+                            data.additional_info = $('.performance-info-desc').find('textarea').val();
                         }
                         console.log(data);
+                        console.log(e);
                         $.ajax({
                             method:"POST",
                             data:data,
