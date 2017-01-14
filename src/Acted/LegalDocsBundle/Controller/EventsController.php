@@ -389,9 +389,11 @@ class EventsController extends Controller
                     return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
                 }
             }
-            $country = $em->getRepository('ActedLegalDocsBundle:RefCountry')->findOneBy(array(
-                'name' => $location['country']
-            ));
+
+            $refCountryRepo = $em->getRepository('ActedLegalDocsBundle:RefCountry');
+            $countryId = $refCountryRepo->createCountry($location['country']);
+            $country = $em->getRepository('ActedLegalDocsBundle:RefCountry')->find($countryId);
+        
             $refRegionRepo = $em->getRepository('ActedLegalDocsBundle:RefRegion');
             $regionId = $refRegionRepo->createRegion(
                 $location['region_name'],
@@ -518,7 +520,7 @@ class EventsController extends Controller
             /**
              * @var Order $order
              */
-            $chatRoomId = $order->getChat()->getId();
+            $chatRoomId = $order->getChat()->gesetCountrytId();
             $message = $messagesRepo->getChatRoomMessage($userId, $chatRoomId, $filter);
             if (count($message)) {
                 $messages[] = $message[0];

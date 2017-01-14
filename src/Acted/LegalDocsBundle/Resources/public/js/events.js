@@ -38,6 +38,15 @@ $(function () {
                 showEvents();
                 this.loadedData = true;
             },
+            methods: {
+                countrySaveHandler: function(event) {
+                    var idx = $(event.target).find('option:selected').attr('countryId');
+                    var selectedContry = $(event.target).find('option:selected').val();
+
+                    toSend = {data: {country: newVal}};
+                    sendData(eventsVue.event.id, toSend);
+                }
+            },
             watch: {
                 "event.title": function (newVal, oldVal) {
                     console.log('restrictModelChange', eventsVue.restrictModelChange);
