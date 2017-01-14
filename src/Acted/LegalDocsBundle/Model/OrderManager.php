@@ -621,9 +621,11 @@ class OrderManager
         }
 
         $orderItems = $order->getItems();
+        $newOrderItems = [];
 
-        foreach ($orderItems as &$orderItem) {
+        foreach ($orderItems as $key => &$orderItem) {
             $data = $orderItem->getData();
+
             if ($data['objId'] != $objectId)
                 continue;
 
@@ -634,12 +636,6 @@ class OrderManager
                 foreach ($package['options'] as &$option) {
                     if ($option['objId'] == $optionObjectId) {
                         $option['clientSelect'] = $value;
-                        if ($value) {
-                            foreach ($option['rates'] as $rate) {
-                                $amount = $rate['price']['amount'];
-                                $total = $total + $amount;
-                            }
-                        }
                     } else {
                         $option['clientSelect'] = false;
                     }
@@ -650,6 +646,23 @@ class OrderManager
             $orderItem = $orderItem->setData($data);
             $this->entityManager->persist($orderItem);
             $this->entityManager->flush();
+        }
+
+        $newOrderItems = $order->getItems();
+
+        foreach ($newOrderItems as $newOrderItem) {
+            $data = $newOrderItem->getData();
+            foreach ($data['packages'] as $newPackage) {
+                foreach ($newPackage['options'] as $newOption) {
+                    if (!empty($newOption['clientSelect']) && filter_var($newOption['clientSelect'], FILTER_VALIDATE_BOOLEAN)) {
+                        foreach ($newOption['rates'] as $rate) {
+                            $amount = $rate['price']['amount'];
+                            $total = $total + $amount;
+                        }
+                    }
+                }
+
+            }
         }
 
         $order->setTotalPrice($total);

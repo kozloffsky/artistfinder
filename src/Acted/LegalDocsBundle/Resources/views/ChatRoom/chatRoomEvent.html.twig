@@ -258,7 +258,6 @@
                 <div class="holder">
                     {% if order.status > 0 %}
                         {% for p in order.performances %}
-
                             {% if p.data.performance is defined %}
                                 {% set performanceClass = 'performance' %}
                             {% else %}
@@ -294,7 +293,7 @@
                                                             {% endif %}
 
                                                             <div class="custom-checkbox">
-                                                                <input id="{{ option.objId }}" object-id="{{ p.data.objId }}" package-id="{{ package.objId }}" name="{{ option.objId }}" v-on:click="checkOption($event)" value="" type="checkbox" {{ optionChecked }}>
+                                                                <input id="{{ option.objId }}" object-id="{{ p.data.objId }}" package-id="{{ package.objId }}" name="{{ option.objId }}" v-on:click="checkOption($event)" value="" type="checkbox" {{ optionChecked }} v-bind:disabled="orderStatus > 1">
                                                                 <label for="{{ option.objId }}"></label>
                                                             </div>
                                                         {% endif %}

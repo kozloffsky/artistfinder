@@ -24,10 +24,49 @@ $(function () {
                             continue;
                         }
 
-                        orders.push(response.orders[orderIndex]);
+                        var currentOrder = response.orders[orderIndex];
+
+                        //todo: from two cycles(for performances and services) which wrote bellow need to do one
+                        if (typeof (currentOrder['services']) != 'undefined') {
+                            for (var serviceIndex in currentOrder['services']) {
+                                var service = currentOrder['services'][serviceIndex];
+                                var packages = service['data']['packages'];
+                                for (var packageIndex in packages) {
+                                    var options = packages[packageIndex]['options'];
+                                    for (var optionIndex in options) {
+                                        if (typeof(options[optionIndex]['clientSelect']) != 'undefined' && options[optionIndex]['clientSelect'] == "true") {
+                                            currentOrder['services'][serviceIndex]['data']["clientSelect"] = true;
+                                            currentOrder['services'][serviceIndex]['data']['packages'][packageIndex]["clientSelect"] = true;
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+
+                        if (typeof (currentOrder['performances']) != 'undefined') {
+                            for (var performanceIndex in currentOrder['performances']) {
+                                var performance = currentOrder['performances'][performanceIndex];
+                                var packages = performance['data']['packages'];
+                                for (var packageIndex in packages) {
+                                    var options = packages[packageIndex]['options'];
+                                    for (var optionIndex in options) {
+                                        if (typeof(options[optionIndex]['clientSelect']) != 'undefined' && options[optionIndex]['clientSelect'] == "true") {
+                                            currentOrder['performances'][performanceIndex]['data']["clientSelect"] = true;
+                                            currentOrder['performances'][performanceIndex]['data']['packages'][packageIndex]["clientSelect"] = true;
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+
+                        orders.push(currentOrder);
                     }
 
+
                     vueEventPayments.paymentOrders = orders;
+
                     if (response.orders.length > 0) {
                         vueEventPayments.event = response.orders[0].event;
                     }
