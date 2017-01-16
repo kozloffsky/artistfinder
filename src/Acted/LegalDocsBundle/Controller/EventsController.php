@@ -419,7 +419,7 @@ class EventsController extends Controller
                 'id' => $cityId
             ));
 //
-            $data = ['address' => $data['address'], 'cityId'=> $city->getId()];
+            $data = ['address' => $data['address'], 'cityId'=> $city->getId(), 'placeId' => $location['place_id'] ];
         }
         if ($event) {
             $event->setOptions($data);

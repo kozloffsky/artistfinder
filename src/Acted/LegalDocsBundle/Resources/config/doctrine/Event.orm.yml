@@ -50,6 +50,9 @@ Acted\LegalDocsBundle\Entity\Event:
           nullable: true
           options:
             unsigned: true
+        place_id:
+          type: string(256)
+          nullable: true
     manyToOne:
           user:
             targetEntity: Acted\LegalDocsBundle\Entity\User

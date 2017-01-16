@@ -816,4 +816,33 @@ class Event
     {
         return $this->eventOffer;
     }
+    /**
+     * @var string
+     */
+    private $place_id;
+
+
+    /**
+     * Set placeId
+     *
+     * @param string $placeId
+     *
+     * @return Event
+     */
+    public function setPlaceId($placeId)
+    {
+        $this->place_id = $placeId;
+
+        return $this;
+    }
+
+    /**
+     * Get placeId
+     *
+     * @return string
+     */
+    public function getPlaceId()
+    {
+        return $this->place_id;
+    }
 }

@@ -106,6 +106,7 @@ class EventsManager
         $event->setNumberOfGuests($eventOfferData->getNumberOfGuests());
         $event->setComments($eventOfferData->getAdditionalInfo());
         $event->setCountDays($eventOfferData->getCountDays());
+        $event->setPlaceId($eventOfferData->getPlaceId());
 
         return $event;
     }
