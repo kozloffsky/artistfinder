@@ -273,12 +273,14 @@ class ChatRoomController extends Controller
         $now = new \DateTime('today');
         $tomorrow = new \DateTime('tomorrow');
         $paymentNotify = false;
-        if($order->getEvent()->getStartingDate() > $now && $order->getEvent()->getStartingDate() < $tomorrow){
-            $paymentNotify = true;
-        }
+
 
         $paymentDeadline = clone $order->getEvent()->getStartingDate();
         $paymentDeadline->modify("-1 day");
+
+        if($$paymentDeadline > $now && $paymentDeadline < $tomorrow){
+            $paymentNotify = true;
+        }
 
         return $this->render('ActedLegalDocsBundle:ChatRoom:chat_room.html.twig',
             compact('paymentDeadline','paymentNotify','notifications','chat', 'quotationLink', 'chatRoom', 'performances', 'files', 'order', 'user', 'orderOptions'));
