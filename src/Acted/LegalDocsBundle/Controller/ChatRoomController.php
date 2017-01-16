@@ -271,7 +271,7 @@ class ChatRoomController extends Controller
         $notifications = $this->systemLog->getNotifications($this->getUser());
 
         $now = new \DateTime('today');
-        $tomorrow = new \DateTime('tomorrow');
+        $tomorrow = new \DateTime('today +2 day');
         $paymentNotify = false;
 
 
