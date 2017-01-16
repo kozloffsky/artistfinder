@@ -34,7 +34,7 @@ Acted\LegalDocsBundle\Entity\Artist:
       groups: [profile_settings]
     getCountryName:
       serialized_name: country
-      groups: [Default, block, profile_settings, quote_request]
+      groups: [Default, block, profile_settings, quote_request, order]
     getRating:
       serialized_name: rating
       groups: [Default, block]
