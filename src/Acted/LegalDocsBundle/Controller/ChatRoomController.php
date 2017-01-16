@@ -277,8 +277,11 @@ class ChatRoomController extends Controller
             $paymentNotify = true;
         }
 
+        $paymentDeadline = clone $order->getEvent()->getStartingDate();
+        $paymentDeadline->modify("-1 day");
+
         return $this->render('ActedLegalDocsBundle:ChatRoom:chat_room.html.twig',
-            compact('paymentNotify','notifications','chat', 'quotationLink', 'chatRoom', 'performances', 'files', 'order', 'user', 'orderOptions'));
+            compact('paymentDeadline','paymentNotify','notifications','chat', 'quotationLink', 'chatRoom', 'performances', 'files', 'order', 'user', 'orderOptions'));
     }
 
     /**
