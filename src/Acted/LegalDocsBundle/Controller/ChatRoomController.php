@@ -270,8 +270,15 @@ class ChatRoomController extends Controller
 
         $notifications = $this->systemLog->getNotifications($this->getUser());
 
+        $now = new \DateTime('today');
+        $tomorrow = new \DateTime('tomorrow');
+        $paymentNotify = false;
+        if($order->getEvent()->getStartingDate() > $now && $order->getEvent()->getStartingDate() < $tomorrow){
+            $paymentNotify = true;
+        }
+
         return $this->render('ActedLegalDocsBundle:ChatRoom:chat_room.html.twig',
-            compact('notifications','chat', 'quotationLink', 'chatRoom', 'performances', 'files', 'order', 'user', 'orderOptions'));
+            compact('paymentNotify','notifications','chat', 'quotationLink', 'chatRoom', 'performances', 'files', 'order', 'user', 'orderOptions'));
     }
 
     /**

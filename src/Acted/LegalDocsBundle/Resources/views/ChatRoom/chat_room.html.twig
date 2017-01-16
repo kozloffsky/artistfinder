@@ -219,7 +219,12 @@
                             <p>Confirm the booking</p>
                         </div>
                         <div class="col-sm-6 col-xs-5 no-pad">
-                            <p class="booking-status">Status: <b>{{ order.stringStatus }}</b></p>
+
+                            {% if paymentNotify == true and is_granted('ROLE_CLIENT') %}
+                                <p class="booking-status">Status: <b style="color:red">PAY DEADLINE!</b></p>
+                            {% else %}
+                                <p class="booking-status">Status: <b>{{ order.stringStatus }}</b></p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
