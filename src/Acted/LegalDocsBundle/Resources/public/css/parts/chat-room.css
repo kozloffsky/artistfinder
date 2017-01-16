@@ -68,7 +68,8 @@
 }
 
 .chat-room .paymentAlert {
-    animation: smooth-blink 0.5s ease-in-out 0s infinite alternate;
+    animation: smooth-blink 1s ease-in-out 0s infinite alternate;
+    color: #FF4D4D;
 }
 
 @keyframes smooth-blink {
@@ -76,7 +77,7 @@
 	20% {
 		opacity: 1;
 	}
-	60%,
+	90%,
 	100% {
 		opacity: 0;
 	}
