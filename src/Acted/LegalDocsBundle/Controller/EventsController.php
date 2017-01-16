@@ -520,7 +520,7 @@ class EventsController extends Controller
             /**
              * @var Order $order
              */
-            $chatRoomId = $order->getChat()->gesetCountrytId();
+            $chatRoomId = $order->getChat()->getId();
             $message = $messagesRepo->getChatRoomMessage($userId, $chatRoomId, $filter);
             if (count($message)) {
                 $messages[] = $message[0];
