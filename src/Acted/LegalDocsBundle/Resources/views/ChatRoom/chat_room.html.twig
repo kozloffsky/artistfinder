@@ -220,7 +220,7 @@
                         </div>
                         <div class="col-sm-6 col-xs-5 no-pad">
                             {% set alert = "" %}
-                            {% if paymentNotify == true and is_granted('ROLE_CLIENT') and order.status > 1 %}
+                            {% if paymentNotify == true and order.status > 1 %}
                                 {% set alert='paymentAlert color-red' %}
                             {% endif %}
                             <p class="booking-status">Status: <b>{{ order.stringStatus }}</b></p>
