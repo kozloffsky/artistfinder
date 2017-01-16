@@ -11,7 +11,6 @@ Acted\LegalDocsBundle\Entity\Event:
     fields:
         cityId:
           type: integer(11)
-          nullable: false
         eventRef:
           type: string(64)
           unique: true
