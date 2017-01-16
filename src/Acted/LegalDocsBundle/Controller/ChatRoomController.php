@@ -278,7 +278,7 @@ class ChatRoomController extends Controller
         $paymentDeadline = clone $order->getEvent()->getStartingDate();
         $paymentDeadline->modify("-1 day");
 
-        if($$paymentDeadline > $now && $paymentDeadline < $tomorrow){
+        if($paymentDeadline > $now && $paymentDeadline < $tomorrow){
             $paymentNotify = true;
         }
 
