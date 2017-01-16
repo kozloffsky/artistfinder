@@ -219,12 +219,12 @@
                             <p>Confirm the booking</p>
                         </div>
                         <div class="col-sm-6 col-xs-5 no-pad">
-
+                            {% set alert = "" %}
                             {% if paymentNotify == true and is_granted('ROLE_CLIENT') and order.status > 1 %}
-                                <p class="booking-status">Status: <b style="color:red">PAY DEADLINE!</b></p>
-                            {% else %}
-                                <p class="booking-status">Status: <b>{{ order.stringStatus }}</b></p>
+                                {% set alert='paymentAlert' %}
                             {% endif %}
+                            <p class="booking-status">Status: <b>{{ order.stringStatus }}</b></p>
+
                         </div>
                     </div>
                 </div>
@@ -232,7 +232,7 @@
                     <div class="col-sm-6">
                         {% if order.status == 2 %}
                             <p class="deposit-info"><b>Deposit:</b> {{ order.depositAmount }} GBP received via secured payment <b class="non-refundable-info">(Non - refundable)</b></p>
-                            <p class="deposit-info"><b>Balance:</b> {{ order.depositBallance }} - GBP unpaid due to  <span class="color-carrot"> {{paymentDeadline | date('d/m/Y')}}</span></p>
+                            <p class="deposit-info"><b>Balance:</b> {{ order.depositBallance }} - GBP unpaid due to  <span class="color-carrot {{ paymentAlert }}"> {{paymentDeadline | date('d/m/Y')}}</span></p>
                         {% elseif order.status == 0 %}
                             <p class="deposit-info"><b>Deposit:</b> 0 GBP will be paid <b class="non-refundable-info">(Non - refundable)</b></p>
                             <p class="deposit-info"><b>Balance:</b> 0 GBP will left to pay</p>
