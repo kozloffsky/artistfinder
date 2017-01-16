@@ -9,6 +9,7 @@
 namespace Acted\LegalDocsBundle\Command;
 
 
+use Acted\LegalDocsBundle\Entity\Message;
 use Acted\LegalDocsBundle\Entity\SystemLog;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -65,17 +66,27 @@ class CheckPaymentStatusesCommand extends ContainerAwareCommand
             $log->setMessage($key.':'.$order->getId());
             $log->setLogDate(new \DateTime());
             $log->setTargetUserId($order->getClient()->getUser()->getId());
+
             $em->persist($log);
-            $em->flush($log);
+
 
             try {
                 $this->sendNotificationEmail(
                     $order->getClient()->getUser()->getEmail(),
                     $mailMessage,
                     $mailSubject . $order->getId());
+
+                $chatMessage = new Message();
+                $chatMessage->setChatRoom($order->getChat());
+                $chatMessage->setReceiverUser($order->getClient()->getUser());
+                $chatMessage->setSenderUser($order->getArtist()->getUser());
+                $chatMessage->setMessageText($mailMessage);
+                $em->persist($chatMessage);
             }catch(\Exception $e){
                 echo $e->getMessage().PHP_EOL;
             }
+
+            $em->flush();
         }
     }
 

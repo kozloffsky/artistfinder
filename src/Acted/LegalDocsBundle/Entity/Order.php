@@ -893,7 +893,7 @@ class Order
     /**
      * @param Order $order
      */
-    public function setChat(\Acted\LegalDocsBundle\Entity\Order $chat)
+    public function setChat(\Acted\LegalDocsBundle\Entity\ChatRoom $chat)
     {
         $this->chat = $chat;
     }
