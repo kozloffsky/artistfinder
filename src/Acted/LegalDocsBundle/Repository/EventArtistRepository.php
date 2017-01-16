@@ -65,8 +65,9 @@ class EventArtistRepository extends \Doctrine\ORM\EntityRepository
 
         $qb = $em->createQueryBuilder();
         $qb->from('ActedLegalDocsBundle:Artist', 'a')
-            ->select('a, f')
+            ->select('a, f, u')
             ->leftJoin('a.feedbacks', 'f')
+            ->leftJoin('a.user', 'u')
             ->where($whereCriteria)
             ->setParameters($params);
 

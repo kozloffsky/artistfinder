@@ -81,8 +81,8 @@ $(function () {
             html += "<section class='col-md-12'>";
             html += "<div>";
 
-            if (typeof item.avatar !== 'undefined') {
-                avatar = item.avatar;
+            if (typeof item.user.avatar !== 'undefined') {
+                avatar = item.user.avatar;
             }
 
             html += "<div class='avatar'><img src='" + avatar + "'></div>";
