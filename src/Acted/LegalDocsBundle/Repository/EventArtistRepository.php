@@ -35,7 +35,7 @@ class EventArtistRepository extends \Doctrine\ORM\EntityRepository
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
 
-        $qb->from('ActedLegalDocsBundle:EventArtist', 'ea')
+        $qb->from('ActedLegalDocsBundle:Order', 'ea')
             ->select('IDENTITY(ea.artist)')
             ->where($whereCriteria)
             ->setFirstResult($offset)
