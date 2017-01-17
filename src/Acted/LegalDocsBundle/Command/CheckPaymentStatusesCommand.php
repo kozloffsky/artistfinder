@@ -34,7 +34,7 @@ class CheckPaymentStatusesCommand extends ContainerAwareCommand
             );
 
         $this->notifyOrders(
-            '1_day_deadline',
+            '2_weeks_deadline',
             new \DateTime('- 2 weeks'),
             new \DateTime('yesterday'),
             '2 weeks pay ballance notify',
