@@ -81,6 +81,7 @@ class CheckPaymentStatusesCommand extends ContainerAwareCommand
                 $chatMessage->setReceiverUser($order->getClient()->getUser());
                 $chatMessage->setSenderUser($order->getArtist()->getUser());
                 $chatMessage->setMessageText($mailMessage);
+                $chatMessage->setSendDateTime(new \DateTime());
                 $em->persist($chatMessage);
             }catch(\Exception $e){
                 echo $e->getMessage().PHP_EOL;
