@@ -10,6 +10,7 @@ namespace Acted\LegalDocsBundle\Command;
 
 
 use Acted\LegalDocsBundle\Entity\Message;
+use Acted\LegalDocsBundle\Entity\Order;
 use Acted\LegalDocsBundle\Entity\SystemLog;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -60,7 +61,7 @@ class CheckPaymentStatusesCommand extends ContainerAwareCommand
             $oldLog = $em->getRepository('ActedLegalDocsBundle:SystemLog')
                 ->findBy(['message' => $key.':'.$order->getId()]);
 
-            if(!empty($oldLog)) continue;
+            if(!empty($oldLog) || $order->getStatus() != Order::STATUS_BOOKED) continue;
             $log = new SystemLog();
             $log->setIsReaded(true);
             $log->setMessage($key.':'.$order->getId());
