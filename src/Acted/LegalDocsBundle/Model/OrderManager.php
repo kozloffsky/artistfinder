@@ -141,7 +141,7 @@ class OrderManager
         $total = 0;
 
         foreach($performances as $performance){
-            if($performance->isDeleted()) continue;
+            if (!empty($performance->getDeletedTime())) continue;
             $orderItemPerformance = new OrderItemPerformance();
             $performanceData = [];
             $performanceData['performance'] = $performance->getId();
@@ -153,14 +153,14 @@ class OrderManager
             $packages = $performance->getPackages();
             $price = 0;
             foreach ($packages as $package) {
-                if($package->isDeleted()) continue;
+                if (!empty($package->getDeletedTime())) continue;
                 $packageData = [];
                 $packageData['id'] = $package->getId();
                 $packageData['objId'] = null;
                 $packageData['name'] = $package->getName();
                 $packageData['options'] = [];
                 foreach ($package->getOptions() as $option) {
-                    if($option->isDeleted()) continue;
+                    if (!empty($option->getDeletedTime())) continue;
                     $optionData = [];
                     $optionData['id'] = $option->getId();
                     $optionData['objId'] = null;
