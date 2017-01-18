@@ -38,7 +38,7 @@
                                     {#{% endfor %}#}
 
                                     <div class="row" v-for="orderOption in orderOptions">
-                                        <article v-if="orderOption.clientSelect" v-bind:class="{ service: orderOption.type > 0 }" v-bind:class="{ act-extras: orderOption.type > 0 }">
+                                        <article v-if="orderOption.clientSelect" v-bind:class="{ 'act-extras': orderOption.type > 0 }" class="service">
                                             <h3 class="package-name">${ orderOption.objectName }</h3>
                                             <ul class="ul-reset">
                                                 <li>
