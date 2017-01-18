@@ -42,8 +42,10 @@ $(function () {
                 packages.forEach(function (iPackage, index) {
                     var options = iPackage.options;
                     options.forEach(function (option, index) {
-                        var price = option.rates[0].price.amount;
-                        prices.push(price);
+                        if(typeof option.duration !=='undefined'){
+                            var price = option.rates[0].price.amount;
+                            prices.push(price);
+                        }
                     });
                 });
             });
