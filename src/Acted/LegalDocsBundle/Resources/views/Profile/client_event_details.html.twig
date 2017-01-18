@@ -119,11 +119,11 @@
                             <h3>£ ${order.sumPrice}</h3>
                         </div>
                     </div>
-                    <div class="row" v-for="item in order.items">
+                    <div class="row" v-for="performance in order.performances">
                         <div class="col-sm-12">
-                            <p>${item.data.title}</p>
+                            <p>${performance.data.title}</p>
                             <ul class="list-unstyled">
-                                <li v-for="package in item.data.packages">${package.name}<span v-for="option in package.options" class="event-details-set">${option.qty} x ${option.duration} min<span v-for="rate in option.rates" class="event-details-set-rate">£ ${rate.price.amount}</span></span>
+                                <li v-for="package in performance.data.packages">${package.name}<span v-for="option in package.options" class="event-details-set">${option.qty} x ${option.duration} min<span v-for="rate in option.rates" class="event-details-set-rate">£ ${rate.price.amount}</span></span>
                                 </li>
                             </ul>
                         </div>
