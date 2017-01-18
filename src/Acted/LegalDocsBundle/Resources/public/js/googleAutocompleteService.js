@@ -448,6 +448,8 @@
 
             console.log("PLACE: ", place, _this.coords.region);
 
+            _this.currentStore.placeId = place.place_id;
+
             //Location details
             for (var i = 0; i < place.address_components.length; i++) {
                 var type             = place.address_components[i].types[0];
@@ -505,7 +507,7 @@
                 if(res !== null) {
                     console.log("CITY COORDS: ", _this.currentStore.city, res);
                     _this.coords.city = res;
-                    _this.currentStore.placeId = res.place_id;
+                    //_this.currentStore.placeId = res.place_id;
 
                     var event = new CustomEvent('googlePlaceChanged', { detail: {common: _this.currentStore, coords: _this.coords}});
                     document.dispatchEvent(event);

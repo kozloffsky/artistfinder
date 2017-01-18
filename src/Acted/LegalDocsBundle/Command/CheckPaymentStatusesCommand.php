@@ -69,6 +69,7 @@ class CheckPaymentStatusesCommand extends ContainerAwareCommand
             $log->setTargetUserId($order->getClient()->getUser()->getId());
 
             $em->persist($log);
+            $em->flush();
 
 
             try {
@@ -84,11 +85,12 @@ class CheckPaymentStatusesCommand extends ContainerAwareCommand
                 $chatMessage->setMessageText($mailMessage);
                 $chatMessage->setSendDateTime(new \DateTime());
                 $em->persist($chatMessage);
+                $em->flush();
             }catch(\Exception $e){
                 echo $e->getMessage().PHP_EOL;
             }
 
-            $em->flush();
+
         }
     }
 
