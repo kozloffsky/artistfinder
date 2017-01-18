@@ -540,11 +540,11 @@ class OrderManager
                     $optionData['id'] = $option['id'];
                     $optionData['objId'] = $option['objId'];
 
-                    if (!empty($option['duration'])) {
+                    if (isset($option['duration'])) {
                         $optionData['duration'] = $option['duration'];
                     }
 
-                    if (!empty($option['qty'])) {
+                    if (isset($option['qty'])) {
                         $optionData['qty'] = $option['qty'];
                     }
 
