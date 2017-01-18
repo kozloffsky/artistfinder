@@ -37,7 +37,9 @@ $(function () {
         orders.forEach(function (order, index) {
             var items = order.items;
             var minItem = _.minBy(items, function (i) {
-                return i.data.total;
+                if (typeof i.data.service == 'undefined') {
+                    return i.data.total;
+                }
             });
 
             orders[index]['minPrice'] = minItem.data.total;
@@ -119,7 +121,7 @@ $(function () {
             method: "DELETE",
             success: function (response) {
                 console.log(response);
-                $("div[data-order-id='" + orderId +"']").remove();
+                $("div[data-order-id='" + orderId + "']").remove();
             },
             error: function (error) {
                 console.log(error);
