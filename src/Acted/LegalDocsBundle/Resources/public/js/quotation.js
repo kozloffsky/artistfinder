@@ -751,8 +751,21 @@
                         continue;
                     }
 
-                    var currentPerformance = {
+                    /*var currentPerformance = {
                         performance: artistPerformances[artistPerformanceIndex]
+                    };*/
+
+                    var packages = $.map(artistPerformances[artistPerformanceIndex]["packages"], function(value, index) {
+                        return [value];
+                    });
+
+                    var currentPerformance = {
+                        performance: {
+                            packages: packages,
+                            title: artistPerformances[artistPerformanceIndex]["title"],
+                            type: artistPerformances[artistPerformanceIndex]["type"],
+                            id: artistPerformances[artistPerformanceIndex]["id"]
+                        }
                     };
 
                     newPerformances.push(currentPerformance);
