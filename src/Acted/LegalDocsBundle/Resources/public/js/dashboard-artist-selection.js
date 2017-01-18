@@ -35,14 +35,19 @@ $(function () {
 
     function sortByPrice(orders) {
         orders.forEach(function (order, index) {
-            var items = order.items;
-            var minItem = _.minBy(items, function (i) {
-                if (typeof i.data.service == 'undefined') {
-                    return i.data.total;
-                }
+            var performances = order.performances;
+            var prices = [];
+            performances.forEach(function (performance, index) {
+                var packages = performance.data.packages;
+                packages.forEach(function (iPackage, index) {
+                    var options = iPackage.options;
+                    options.forEach(function (option, index) {
+                        var price = option.rates[0].price.amount;
+                        prices.push(price);
+                    });
+                });
             });
-
-            orders[index]['minPrice'] = minItem.data.total;
+            orders[index]['minPrice'] = _.min(prices);
         });
 
         return _.sortBy(orders, function (order) {
