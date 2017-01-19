@@ -37,6 +37,13 @@
     width: 243px !important;
     margin: 0 0 30px 17px;
 }
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    color: #ec8f29 !important;
+    background: #fff2d9 !important;
+}
+.select2-container--open .select2-dropdown--below {
+    border: none !important;
+}
 /*.messages .dialogs {*/
     /*display: inline-block;*/
 /*}*/
