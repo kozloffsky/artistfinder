@@ -1,0 +1,12 @@
+Acted\LegalDocsBundle\Entity\ServiceRequestQuotation:
+    exclusion_policy: NONE
+    properties:
+        isSelected:
+            groups: []
+    virtual_properties:
+        getRequestQuotation:
+            serialized_name: requestQuotation
+            groups: []
+        getService:
+            serialized_name: service
+            groups: []

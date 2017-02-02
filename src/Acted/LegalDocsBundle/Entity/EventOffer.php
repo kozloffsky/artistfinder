@@ -13,6 +13,11 @@ class EventOffer
     const EVENT_OFFER_STATUS_PROPOSE = 'propose';
     const EVENT_OFFER_STATUS_REJECT = 'reject';
 
+    const PROP_TECH_REQ = 'TechnicalRequirement';
+    const PROP_DETAILS = 'Detail';
+    const PROP_TIMING = 'Timing';
+    const PROP_ACTS_EXTRAS = 'ActsExtras';
+
     /**
      * @var integer
      */
@@ -353,5 +358,152 @@ class EventOffer
         $period = $now->diff($this->getSendDateTime());
 
         return $period->format('%d days %H hours %i minutes');
+    }
+    /**
+     * @var boolean
+     */
+    private $detailsAccepted;
+
+
+    /**
+     * @var boolean
+     */
+    private $timingAccepted;
+
+    /**
+     * @var boolean
+     */
+    private $technicalRequirementsAccepted;
+
+
+    /**
+     * Set detailsAccepted
+     *
+     * @param boolean $detailsAccepted
+     *
+     * @return EventOffer
+     */
+    public function setDetailsAccepted($detailsAccepted)
+    {
+        $this->detailsAccepted = $detailsAccepted;
+
+        return $this;
+    }
+
+    /**
+     * Get detailsAccepted
+     *
+     * @return boolean
+     */
+    public function getDetailsAccepted()
+    {
+        return $this->detailsAccepted;
+    }
+
+
+    /**
+     * Set timingAccepted
+     *
+     * @param boolean $timingAccepted
+     *
+     * @return EventOffer
+     */
+    public function setTimingAccepted($timingAccepted)
+    {
+        $this->timingAccepted = $timingAccepted;
+
+        return $this;
+    }
+
+    /**
+     * Get timingAccepted
+     *
+     * @return boolean
+     */
+    public function getTimingAccepted()
+    {
+        return $this->timingAccepted;
+    }
+
+    /**
+     * Set technicalRequirementsAccepted
+     *
+     * @param boolean $technicalRequirementsAccepted
+     *
+     * @return EventOffer
+     */
+    public function setTechnicalRequirementsAccepted($technicalRequirementsAccepted)
+    {
+        $this->technicalRequirementsAccepted = $technicalRequirementsAccepted;
+
+        return $this;
+    }
+
+    /**
+     * Get technicalRequirementsAccepted
+     *
+     * @return boolean
+     */
+    public function getTechnicalRequirementsAccepted()
+    {
+        return $this->technicalRequirementsAccepted;
+    }
+    /**
+     * @var boolean
+     */
+    private $actsExtrasAccepted;
+
+
+    /**
+     * Set actsExtrasAccepted
+     *
+     * @param boolean $actsExtrasAccepted
+     *
+     * @return EventOffer
+     */
+    public function setActsExtrasAccepted($actsExtrasAccepted)
+    {
+        $this->actsExtrasAccepted = $actsExtrasAccepted;
+
+        return $this;
+    }
+
+    /**
+     * Get actsExtrasAccepted
+     *
+     * @return boolean
+     */
+    public function getActsExtrasAccepted()
+    {
+        return $this->actsExtrasAccepted;
+    }
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\Artist
+     */
+    private $artist;
+
+
+    /**
+     * Set artist
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Artist $artist
+     *
+     * @return EventOffer
+     */
+    public function setArtist(\Acted\LegalDocsBundle\Entity\Artist $artist = null)
+    {
+        $this->artist = $artist;
+
+        return $this;
+    }
+
+    /**
+     * Get artist
+     *
+     * @return \Acted\LegalDocsBundle\Entity\Artist
+     */
+    public function getArtist()
+    {
+        return $this->artist;
     }
 }

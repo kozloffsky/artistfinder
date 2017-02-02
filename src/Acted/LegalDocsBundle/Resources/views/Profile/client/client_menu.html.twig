@@ -1,0 +1,41 @@
+<div class="row events-menu">
+    <ul class="ul-reset">
+    </ul>
+
+    <div class="arrows">
+        <div>
+            <i class="left"></i>
+        </div>
+        <div>
+            <i class="right"></i>
+        </div>
+    </div>
+</div>
+<div class="new-event new-client-event">
+    <span class="hidden-xs hidden-sm">Add Event</span>
+    <i class="fa fa-plus"></i>
+</div>
+<div class="row options-menu">
+    <input id="options-menu-open" name="options-menu-open" type="checkbox" class="hidden">
+    <label for="options-menu-open" class="active-tab">
+        <i class="fa fa-sort-desc hidden-md hidden-lg pull-right" aria-hidden="true"></i>
+        <i class="fa fa-sort-asc hidden-md hidden-lg pull-right" aria-hidden="true"></i>
+    </label>
+    <ul class="ul-reset">
+        <li class="active-item">
+            <a href="{{ path('events') }}">Event details</a>
+        </li>
+        <li>
+            <a href="{{ path('event_messages') }}" class="active-item">Messages</a>
+        </li>
+        <li>
+            <a href="{{ path('artist_selection') }}">Artist selection</a>
+        </li>
+        <li>
+            <a href="{{ path('client_payments') }}">Payments</a>
+        </li>
+        <li>
+            <a href="{{ path('feedbacks') }}">Feedback</a>
+        </li>
+    </ul>
+</div>

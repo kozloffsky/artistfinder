@@ -23,10 +23,6 @@ class ChatRoom
      */
     private $event;
 
-    /**
-     * @var Offer
-     */
-    private $offer;
 
     /**
      * @var Message
@@ -42,6 +38,11 @@ class ChatRoom
      * @var User
      */
     private $client;
+
+    /**
+     * @var Order
+     */
+    private $order;
 
     /**
      * Get id
@@ -71,22 +72,6 @@ class ChatRoom
     public function getEvent()
     {
         return $this->event;
-    }
-
-    /**
-     * @return Offer
-     */
-    public function getOffer()
-    {
-        return $this->offer;
-    }
-
-    /**
-     * @param Offer $offer
-     */
-    public function setOffer(Offer $offer)
-    {
-        $this->offer = $offer;
     }
 
     /**
@@ -154,4 +139,83 @@ class ChatRoom
     {
         $this->client = $client;
     }
+
+    /**
+     * @var string
+     */
+    private $technicalRequirements;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->message = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set technicalRequirements
+     *
+     * @param string $technicalRequirements
+     *
+     * @return ChatRoom
+     */
+    public function setTechnicalRequirements($technicalRequirements)
+    {
+        $this->technicalRequirements = $technicalRequirements;
+
+        return $this;
+    }
+
+    /**
+     * Get technicalRequirements
+     *
+     * @return string
+     */
+    public function getTechnicalRequirements()
+    {
+        return $this->technicalRequirements;
+    }
+
+    /**
+     * Add message
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Message $message
+     *
+     * @return ChatRoom
+     */
+    public function addMessage(\Acted\LegalDocsBundle\Entity\Message $message)
+    {
+        $this->message[] = $message;
+
+        return $this;
+    }
+
+    /**
+     * Remove message
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Message $message
+     */
+    public function removeMessage(\Acted\LegalDocsBundle\Entity\Message $message)
+    {
+        $this->message->removeElement($message);
+    }
+
+    /**
+     * @return Order
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param Order $order
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+    }
+
+
 }

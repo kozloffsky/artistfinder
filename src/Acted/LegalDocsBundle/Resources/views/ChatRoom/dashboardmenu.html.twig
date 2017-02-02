@@ -1,12 +1,10 @@
 <ul class="categories-menu">
-    <li class="menu-block"><a href="/dashboard/messages/{{ app.user.id }}">Messages</a></li>
-    <li class="menu-block"><a href="/dashboard/enquiries/{{ app.user.id }}">Enquiries</a></li>
-    <li class="menu-block"><a href="/dashboard/bookings/{{ app.user.id }}">Bookings</a></li>
-    <li class="menu-block"><a href="/agenda">Agenda</a></li>
-    <li class="menu-block"><a href="/prices">Prices</a></li>
-    <li class="menu-block"><a href="/payment">Payment & Accounts</a></li>
-    <li class="menu-block"><a href="/reports">Reports</a></li>
-    <li class="menu-block"><a href="/feedbacks">Feedbacks</a></li>
+    <li class="menu-block"><a href="{{ path('all_messages_user') }}">Messages</a></li>
+    <li class="menu-block"><a href="{{ path('chat_room_list') }}">Enquiries</a></li>
+    <li class="menu-block"><a href="{{ path('bookings') }}">Bookings</a></li>
+    <li class="menu-block"><a href="{{ path('prices') }}">Prices</a></li>
+    <li class="menu-block"><a href="/dashboard/technicalreq">Technical Requirements</a></li>
+    <li class="menu-block"><a href="/dashboard/feedbacks">Feedbacks</a></li>
 </ul>
 
 <!-- THIS DROPDOWN VISIBLE ONLY ON SM SCREEN-->
@@ -14,13 +12,11 @@
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Enquiries
         <span class="caret"></span></button>
     <ul class="dropdown-menu">
-        <li class="menu-block"><a href="/dashboard/messages/{{ app.user.id }}" class="active">Messages</a></li>
-        <li class="menu-block"><a href="/dashboard/enquiries/{{ app.user.id }}">Enquiries</a></li>
-        <li class="menu-block"><a href="/dashboard/bookings/{{ app.user.id }}">Bookings</a></li>
-        <li class="menu-block"><a href="/agenda">Agenda</a></li>
-        <li class="menu-block"><a href="/prices">Prices</a></li>
-        <li class="menu-block"><a href="/payment">Payment & Accounts</a></li>
-        <li class="menu-block"><a href="/reports">Reports</a></li>
-        <li class="menu-block"><a href="/feedbacks">Feedbacks</a></li>
+        <li class="menu-block"><a href="{{ path('all_messages_user') }}" class="active">Messages</a></li>
+        <li class="menu-block"><a href="{{ path('chat_room_list') }}">Enquiries</a></li>
+        <li class="menu-block"><a href="{{ path('bookings') }}">Bookings</a></li>
+        <li class="menu-block"><a href="{{ path('prices') }}">Prices</a></li>
+        <li class="menu-block"><a href="/dashboard/technicalreq">Technical Requirements</a></li>
+        <li class="menu-block"><a href="/dashboard/feedbacks">Feedbacks</a></li>
     </ul>
 </div>

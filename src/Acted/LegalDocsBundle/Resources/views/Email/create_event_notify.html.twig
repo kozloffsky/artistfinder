@@ -5,43 +5,20 @@
 {% endblock %}
 {% block body_html %}
     {% autoescape false %}
-        <p>I would like to enquire about your availability and price for our upcoming event in {{ event.city.name }}.</p>
+        <p>I would like to enquire about your availability and price for our upcoming event in {{ event.city }}.</p>
         <p>lease kindly find below more information about our event:</p>
         <br />
-        <table>
-            <tr>
-                <td><b>- Event:</b></td>
-                <td>{{ event.name }}</td>
-                <td></td>
-                <td></td>
-                <td><b>- Timing:</b></td>
-                <td>{{ event.eventTime }}</td>
-            </tr>
-            <tr>
-                <td><b>- Date:</b></td>
-                <td>{{ event.eventDate|date('Y/m/d') }}</td>
-                <td></td>
-                <td></td>
-                <td><b>- Venue:</b></td>
-                <td>{{ event.venueType.venueType }}</td>
-            </tr>
-            <tr>
-                <td><b>- Location:</b></td>
-                <td>{{ event.location }}</td>
-                <td></td>
-                <td></td>
-                <td><b>- Number of guests:</b></td>
-                <td>{{ event.numberOfGuests }}</td>
-            </tr>
-            <tr>
-                <td><b>- Event type:</b></td>
-                <td>{{ event.type.eventType }}</td>
-                <td></td>
-                <td></td>
-                <td><b>- Additional comment:</b></td>
-                <td>{{ event.comment }}</td>
-            </tr>
-        </table>
+        <div>
+            <div><b>- Event:</b> {{ event.name }}</div>
+            <div><b>- Timing:</b> {{ event.eventTime }}</div>
+            <div><b>- Date:</b> {{ event.eventDate|date('Y/m/d') }}</div>
+            <div><b>- Venue:</b> {{ event.venueType.venueType }}</div>
+            <div><b>- Location:</b> {{ event.location }}</div>
+            <div><b>- Number of guests:</b> {{ event.numberOfGuests|replace({"_": " "}) }}</div>
+            <div><b>- Event type:</b> {{ event.type.eventType }}</div>
+            <div><b>- Count days:</b> {{ event.countDays }}</div>
+            <div><b>- Additional comment:</b> {{ event.additionalInfo }}</div>
+        </div>
         <p><b>I am interested in the following acts:</b></p>
         <ul>
             {% for act in event.performance %}
@@ -50,9 +27,9 @@
         </ul>
         <p>
             You can reply instantly to this enquiry, or message me through our
-            <a href="{{ url('chat_room_list', {'userId': artist.id } ) }}">chatroom</a>.
+            <a href="{{ url('chat_room_list') }}">chatroom</a>.
             If you are not available, you just need to
-            <a href="{{ url('reject_offer', {'id': offer.id}) }}">click here</a>. </p>
+            <a href="{{ url('order_cancel', {'orderId': order.id}) }}">click here</a>. </p>
         <p>Many thanks & kind regards,</p>
         <p>{{ event.user.firstname }}</p>
     {% endautoescape %}

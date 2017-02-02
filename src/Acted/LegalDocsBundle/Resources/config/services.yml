@@ -17,6 +17,18 @@ services:
         calls:
             - [setSavePath, ['%quotation_dir%']]
         folder: %kernel.root_dir%
+    request_quotation_type:
+        class: Acted\LegalDocsBundle\Services\RequestQuotationTypeService
+        arguments: ["@service_container", "@tfox.mpdfport", "request_quotation"]
+        calls:
+            - [setSavePath, ['%request_quotation_dir%']]
+        folder: %kernel.root_dir%
+
+    acted_legal_docs.model.order_manager:
+        class: Acted\LegalDocsBundle\Model\OrderManager
+        arguments: ["@doctrine.orm.entity_manager","@gos_web_socket.zmq.pusher", "@system_log"]
+        #tags:
+          #- { name: doctrine.event_listener, event: postPersist }
 
     ####### RPC #############
     socket_chat.rpc_server:
@@ -37,3 +49,13 @@ services:
             - { name: kernel.event_listener, event: 'gos_web_socket.client_error', method: onClientError }
             - { name: kernel.event_listener, event: 'gos_web_socket.server_launched', method: onServerStart }
             - { name: kernel.event_listener, event: 'gos_web_socket.client_rejected', method: onClientRejected }
+
+    file_uploader:
+        class: Acted\LegalDocsBundle\Service\FileUploader
+        arguments: [ @doctrine.orm.entity_manager, @request_stack, @kernel, "%document_technical_requirements_dir%" ]
+
+    system_log:
+        class: Acted\LegalDocsBundle\Service\SystemLogService
+        arguments: [@doctrine.orm.entity_manager, @gos_web_socket.zmq.pusher]
+        #tags:
+                  #- { name: doctrine.event_listener, event: postPersist }

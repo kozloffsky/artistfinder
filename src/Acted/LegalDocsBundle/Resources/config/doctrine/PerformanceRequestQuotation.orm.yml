@@ -1,0 +1,29 @@
+Acted\LegalDocsBundle\Entity\PerformanceRequestQuotation:
+    type: entity
+    table: PerformanceRequestQuotation
+    repositoryClass: Acted\LegalDocsBundle\Repository\PerformanceRequestQuotationRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        isSelected:
+            type: boolean
+            options:
+              default: false
+    manyToOne:
+        requestQuotation:
+            targetEntity: Acted\LegalDocsBundle\Entity\RequestQuotation
+            inversedBy: performanceRequestQuotations
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+        performance:
+            targetEntity: Acted\LegalDocsBundle\Entity\Performance
+            inversedBy: performanceRequestQuotations
+            joinColumn:
+                referencedColumnName: id
+                onDelete: RESTRICT
+    lifecycleCallbacks: {  }

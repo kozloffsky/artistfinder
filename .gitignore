@@ -1,4 +1,5 @@
 /.idea
+/.vagrant
 /web/bundles/
 /web/docs/
 /app/bootstrap.php.cache
@@ -11,6 +12,7 @@
 /vendor/
 /bin/
 /composer.phar
+/composer.lock
 /error_log
 /.htaccess
 /web/.htaccess
@@ -69,3 +71,6 @@ project
 .idea
 *.idea/*
 /web/uploads/*
+/web/css
+/web/js
+/.vagrant/

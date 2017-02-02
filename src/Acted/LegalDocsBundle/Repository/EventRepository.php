@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Repository;
 
+use Acted\LegalDocsBundle\Entity\User;
 /**
  * EventRepository
  *
@@ -10,4 +11,78 @@ namespace Acted\LegalDocsBundle\Repository;
  */
 class EventRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+     * @param int $userId
+     * @return array
+     */
+    public function getEventsByUserId($userId)
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e', 'eo', 'o')
+            ->leftJoin('e.eventOffer', 'eo')
+            ->leftJoin('eo.offer', 'o')
+            ->where('e.user = :userId')
+            ->groupBy('e.id')
+            ->orderBy('eo.sendDateTime', 'DESC')
+            ->setParameter('userId', $userId)
+            ->getQuery()->getResult();
+    }
+
+    /**
+     * Get client events
+     * @param User $user
+     * @param integer $page
+     * @param integer $size
+     * @return array
+     */
+    public function getClientEvents($user, $page, $size)
+    {
+        $offset = null;
+
+        if (!empty($page) && !empty($size)) {
+            if ($page == 1) {
+                $offset = 0;
+            } else {
+                $offset = $page * $size;
+                $offset -= $size;
+            }
+        }
+
+        //$whereCriteria = "e.user = :user AND e.startingDate < :datetime";
+        $whereCriteria = "e.user = :user";
+
+        $params = array('user' => $user/*, 'datetime' => new \DateTime('+12 hour')*/);
+
+        $qb = $this->createQueryBuilder('e')
+            ->select('e')
+            ->where($whereCriteria)
+            ->orderBy('e.id', 'DESC')
+            ->setParameters($params);
+
+        if (!is_null($offset) && !is_null($size)) {
+            $qb->setFirstResult($offset);
+            $qb->setMaxResults($size);
+        }
+
+
+        $events = $qb->getQuery()->getArrayResult();
+        $qb = $this->createQueryBuilder('e')
+            ->select('count(e.id) as countRows')
+            ->where($whereCriteria)
+            ->setParameters($params);
+
+        if (!is_null($offset) && !is_null($size)) {
+            $qb->setFirstResult($offset);
+            $qb->setMaxResults($size);
+        }
+
+
+        $eventCount = $qb->getQuery()->getOneOrNullResult();
+
+        return array(
+            'events' => $events,
+            'countRows' => $eventCount['countRows']
+        );
+    }
 }

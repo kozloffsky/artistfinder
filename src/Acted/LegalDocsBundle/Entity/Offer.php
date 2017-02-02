@@ -304,7 +304,11 @@ class Offer
      */
     public function getPerformances()
     {
-        return $this->performances;
+        return $this->performances->filter(
+            function($entry) {
+                return !$entry->getIsQuotation();
+            }
+        );
     }
 
     /**
@@ -324,4 +328,28 @@ class Offer
     }
 
 
+
+    /**
+     * Add eventOffer
+     *
+     * @param \Acted\LegalDocsBundle\Entity\EventOffer $eventOffer
+     *
+     * @return Offer
+     */
+    public function addEventOffer(\Acted\LegalDocsBundle\Entity\EventOffer $eventOffer)
+    {
+        $this->eventOffer[] = $eventOffer;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventOffer
+     *
+     * @param \Acted\LegalDocsBundle\Entity\EventOffer $eventOffer
+     */
+    public function removeEventOffer(\Acted\LegalDocsBundle\Entity\EventOffer $eventOffer)
+    {
+        $this->eventOffer->removeElement($eventOffer);
+    }
 }

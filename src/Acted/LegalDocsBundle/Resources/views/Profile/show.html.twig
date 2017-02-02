@@ -9,12 +9,12 @@
 {% include 'ActedLegalDocsBundle:Profile:ordersSection.html.twig' %}
     </section>
 {% include 'ActedLegalDocsBundle:Profile:biographySection.html.twig' %}
-
+    {% if artist.user.profile.showFeedbacks or artist.feedbacks | length > 4 %}
     <section id="feedbacks" class="profile-block feedbacks">
         <div class="title">
                 <span>
-                    {{ artist.ratings|length }}
-                    {% if artist.ratings|length <= 1 %}
+                    {{ artist.feedbacks|length }}
+                    {% if artist.feedbacks|length <= 1 %}
                     Feedback
                     {% else %}
                     Feedbacks
@@ -25,6 +25,7 @@
 {% include 'ActedLegalDocsBundle:Profile:feedbacksSection.html.twig' %}
         </div>
     </section>
+    {% endif %}
 
 {% include 'ActedLegalDocsBundle:Profile:mediaSection.html.twig' %}
 

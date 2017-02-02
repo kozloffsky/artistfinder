@@ -3,24 +3,38 @@ Acted\LegalDocsBundle\Entity\Artist:
   custom_accessor_order: [name, slug, rating]
   properties:
     id:
-      groups: [recommend_artist, spotlight_artist]
+      groups: [recommend_artist, spotlight_artist, order]
     name:
-      groups: [Default, block, quote_request, recommend_artist, spotlight_artist]
+      groups: [Default, order, block, quote_request, recommend_artist, spotlight_artist, profile_settings]
     slug:
-      groups: [Default, block, quote_request, recommend_artist, spotlight_artist, users_list]
+      groups: [Default, block, quote_request, recommend_artist, spotlight_artist, users_list, profile_settings, order]
     user:
-      groups: [quote_request, recommend_artist, spotlight_artist]
+      groups: [order, quote_request, recommend_artist, spotlight_artist, profile_settings]
     recommends:
       groups: [recommend_artist]
     spotlight:
       groups: [spotlight_artist]
+    workAbroad:
+      groups: [profile_settings]
+    searchImage:
+      groups: [profile_settings, block]
+    averageRating:
+      groups: [order]
+    totalRatings:
+      groups: [order]
   virtual_properties:
+    getCityProfileId:
+      serialized_name: city_id
+      groups: [profile_settings]
     getCityName:
       serialized_name: city
-      groups: [Default, block]
+      groups: [Default, block, profile_settings, quote_request, order]
+    getCountryId:
+      serialized_name: country_id
+      groups: [profile_settings]
     getCountryName:
       serialized_name: country
-      groups: [Default, block]
+      groups: [Default, block, profile_settings, quote_request, order]
     getRating:
       serialized_name: rating
       groups: [Default, block]
@@ -29,10 +43,31 @@ Acted\LegalDocsBundle\Entity\Artist:
       groups: [block]
     getCategoriesNames:
       serialized_name: categories
-      groups: [block, quote_request]
+      groups: [block, quote_request, order]
     getLastPerformanceMedia:
       serialized_name: media
       groups: [block]
     getAllPerformance:
       serialized_name: allPerformance
       groups: [quote_request]
+    getCurrency:
+      serialized_name: currency
+      groups: [profile_settings]
+    getCityLat:
+      serialized_name: city_lat
+      groups: [profile_settings]
+    getCityLng:
+      serialized_name: city_lng
+      groups: [profile_settings]
+    getRegLat:
+      serialized_name: reg_lat
+      groups: [profile_settings]
+    getRegLng:
+      serialized_name: reg_lng
+      groups: [profile_settings]
+    getRegName:
+      serialized_name: reg_name
+      groups: [profile_settings]
+    getPlaceId:
+      serialized_name: place_id
+      groups: [profile_settings]

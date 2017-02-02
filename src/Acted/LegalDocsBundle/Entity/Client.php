@@ -8,6 +8,21 @@ namespace Acted\LegalDocsBundle\Entity;
 class Client
 {
     /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+    /**
      * @var integer
      */
     private $id;
@@ -41,6 +56,11 @@ class Client
      * @var integer
      */
     private $cityId;
+
+    /**
+     * @var User
+     */
+    private $user;
 
 
     /**

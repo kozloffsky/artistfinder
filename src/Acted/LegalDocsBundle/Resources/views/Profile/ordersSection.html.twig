@@ -1,13 +1,12 @@
 
             {% for performance in performances|reverse if performance.status == "published" %}
-
                 <article class="item clearfix">
                     <header class="heading">
                         <h2>{{ performance.title }} </h2>
-                        {% if performance.offerMinPrice %}
-                            <span class="price">Price: from {{ performance.offerMinPrice|number_format(2, '.', ',') }} EUR</span>
+                        {% if performance.priceOnRequest %}
+                            <div class="price pull-right">Price on request</div>
                         {% else %}
-                            <span class="price">Price: on request</span>
+                            <div class="price pull-right">Price: from {{ performance.minPrice|number_format(0) }} {{ artist.country.refCurrency.isoCode }}</div> <!--<input class="set-price" type="text" placeholder="0,00">-->
                         {% endif %}
                     </header>
 
@@ -40,13 +39,9 @@
                             </div>
 
                             <div class="controls">
-                                <div class="button-gradient follow">
+                                <div class="button-gradient follow orange">
                                     <button class="btn requestQuotePerformance" value="{{ performance.id }}">REQUEST FREE QUOTE</button>
                                 </div>
-
-                                <p>
-                                    <a href="#">Technical requirements</a>
-                                </p>
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,142 @@
+{% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
+
+<main class="dashboard client client-payments">
+    <div class="container">
+        {% include 'ActedLegalDocsBundle:Profile:client/client_menu.html.twig' %}
+        <div class="client-payments-main-block" style="display:none">
+            <div class="row">
+                <div class="">
+                    <div v-if="showNotification(event.starting_date, event.ending_date) && orderIsLoaded" class="notification">
+                        <p>To avoid a booking cancellation, please make sure the balance payment is received in escrow by no later than a day prior to the event. Kindly keep in mind bank transfers may take up to 3 days. The payment is automatically transferred from the escrow account to the artist account 3 days after the event if you haven’t manually released the funds or ask a refund.</p>
+                    </div>
+                    <span v-if="showNotification(event.starting_date, event.ending_date) && orderIsLoaded">
+                        <br/>
+                        <br/>
+                    </span>
+                </div>
+            </div>
+            <div v-for="paymentOrder in paymentOrders" class="row client-payments-block">
+               <div class="col-md-1 col-sm-1 col-xs-12 no-pad">
+                   <div class="avatar">
+                       {#<img src="../../images/client_payment_profile.jpg">#}
+                       <img v-bind:src="paymentOrder.artist.user.avatar | check_avatar" />
+                   </div>
+               </div>
+               <div class="col-md-11 col-sm-11 col-xs-12 ">
+                   <div class="row">
+                       <div class="col-md-12 client-name">
+                           <span>${paymentOrder.artist.user.firstname} ${paymentOrder.artist.user.lastname}</span>
+                       </div>
+
+                       <div class="col-md-12 act-info-block">
+                           <!-- PERFORMANCE -->
+                           <div class="row" v-for="performance in paymentOrder.performances" v-if="paymentOrder.performances && performance.data.clientSelect">
+                               <div class="col-sm-2 no-pad">
+                                   <div class="client-order-act-info title">${ performance.data.title }</div>
+                               </div>
+                               <div class="col-sm-4 no-pad">
+                                   <!-- PACKAGE -->
+                                   <div class="row order-package" v-for="package in performance.data.packages" v-if="package.clientSelect">
+                                       <div class="col-sm-6 no-pad">
+                                           <div class="client-order-act-info description">${ package.name }</div>
+                                       </div>
+                                       <div class="col-sm-6 no-pad">
+                                           <!-- SET -->
+                                           <div class="row" v-for="option in package.options" v-if="option.clientSelect">
+                                               <div class="col-sm-12 no-pad">
+                                                   <div class="client-order-act-info time" v-if="option.qty == '' || option.duration == ''">${ option.qty } x ${ option.duration }</div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="row" v-for="service in paymentOrder.services" v-if="paymentOrder.services && service.data.clientSelect">
+                               <div class="col-sm-2 no-pad">
+                                   <div class="client-order-act-info title">${ service.data.title }</div>
+                               </div>
+                               <div class="col-sm-4 no-pad">
+                                   <!-- PACKAGE -->
+                                   <div class="row order-package" v-for="package in service.data.packages" v-if="package.clientSelect">
+                                       <div class="col-sm-6 no-pad">
+                                           <div class="client-order-act-info description">${ service.name }</div>
+                                       </div>
+                                       <div class="col-sm-6 no-pad">
+                                           <!-- SET -->
+                                           <div class="row" v-for="option in package.options" v-if="option.clientSelect">
+                                               <div class="col-sm-12 no-pad">
+                                                   <div class="client-order-act-info time"></div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+
+                       </div>
+                   </div>
+
+                   <div class="row payment-info-block">
+                       <div class="col-md-8 col-sm-12">
+                           <div class="row deposit">
+                               <div class="col-md-7 no-pad">
+                                   <span class="color-pistachio">Deposit (${paymentOrder.guaranteed_deposit_term}%): ${paymentOrder.deposit_amount} GBP received in escrow</span>
+                               </div>
+                               <div class="col-md-5 no-pad">
+                                   <span class="color-pistachio">- ${event.starting_date | event_date}</span>
+                                   <span class="non-refundable">Non - refundable</span>
+                               </div>
+                           </div>
+                           <div class="row balance">
+                               <div class="col-md-7 no-pad">
+                                   <span class="color-carrot">Balance (${paymentOrder.guaranteed_balance_term}%): ${paymentOrder.deposit_ballance} GBP unpaid</span>
+                               </div>
+                               <div class="col-md-5 no-pad">
+                                   <span class="color-carrot">- due to ${event.starting_date | event_date}</span>
+                               </div>
+                           </div>
+                       </div>
+
+                       <div class="col-md-4 col-sm-12 options-list">
+                           <div class="row info-row">
+                               <p class="info-item">Quotation</p>
+                               <a class="info-item" href="">See</a>
+                               <a class="info-item" href="">Download</a>
+                           </div>
+                           <div class="row info-row">
+                               <p class="info-item">Invoice</p>
+                               <a class="info-item" href="">See</a>
+                               <a class="info-item" href="">Download</a>
+                           </div>
+                           <div class="row info-row">
+                               <p class="info-item">Booking Agreement</p>
+                               <a class="info-item" href="">See</a>
+                               <a class="info-item" href="">Download</a>
+                           </div>
+                       </div>
+                   </div>
+
+                   <div class="row control-list">
+                       <div class="col-md-12">
+                           <div class="control-item">
+                               <button v-if="paymentOrder.status == statuses.booked" class="btn button-gradient blue">Balance Payment</button>
+                               <button v-if="paymentOrder.status == statuses.archived" class="btn button-gradient blue">Release Payment</button>
+                           </div>
+                           <div class="control-item">
+                               <button class="btn button-gradient orange">Ask a refund</button>
+                           </div>
+                           <div class="control-item controls">
+                               <div class="button-gradient orange add-btn">
+                                   <button type="button" class="btn border-gradient">Cancellation policy</button>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+        </div>
+    </div>
+</main>
+
+{% include 'ActedLegalDocsBundle:Default:footer.html.twig' %}

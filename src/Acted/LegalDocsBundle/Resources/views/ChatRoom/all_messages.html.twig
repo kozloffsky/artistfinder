@@ -1,10 +1,21 @@
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
-<main class="messages">
+
+{% if app.user is not empty %}
+    {% if app.user.roles[0] == "ROLE_CLIENT"  %}
+        <main class="dashboard client messages">
+    {% else %}
+        <main class="messages">
+    {% endif %}
+{% endif %}
 
     <div class="container">
-        <!-- THIS MENU VISIBLE ONLY ON DESCTIOP SCREEN-->
-        {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
-
+        {% if app.user is not empty %}
+            {% if app.user.roles[0] == "ROLE_CLIENT"  %}
+                {% include 'ActedLegalDocsBundle:Profile:client/client_menu.html.twig' %}
+            {% else %}
+                {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
+            {% endif %}
+        {% endif %}
         <div>
             <select data-class="selections-white" name="sortMessages" id="sortMessages">
                 <option value="all">All messages</option>
@@ -12,63 +23,195 @@
                 <option value="archived">Archived</option>
             </select>
 
-
-            <div class="dialogs">
-                {% for message in messages|reverse %}
-                <article class="col-xs-12 dialog-section noselect" data-longtap-duration="500" id="{{ message.id }}">
+            <div class="dialogs" style="display: none;" >
+                <article v-if="message.send_date_time"  v-for="message in messages" v-bind:data-chatroom-id="message.chat_room.chat_id" class="col-xs-12 dialog-section noselect" data-longtap-duration="500">
                     <div class="wrap clearfix">
+                        <div class="message-info" :class="!message.read_date_time ? 'active' : ''"></div>
                         <div class="avatar">
-                            {% if message.sender_user.avatar is defined %}
-                                <img src="{{ message.sender_user.avatar }}" alt=""/>
-                            {% else %}
-                                <img src="/assets/images/noAvatar.png" alt=""/>
-                            {% endif %}
+                            <img v-if="message.sender_user.avatar" v-bind:src="message.sender_user.avatar" alt=""/>
+                            <img v-else src="/assets/images/noAvatar.png" alt=""/>
                         </div>
                         <div class="user-info">
-                            <span class="user-name">{{ message.sender_user.firstname }}</span>
-                            <span class="time">{{ message.time_from_get }}</span>
+                            <span class="user-name">${message.sender_user.firstname} ${message.sender_user.lastname}</span>
+                            <span class="time">${message.send_date_time}</span>
                         </div>
                         <div class="message-block">
-                            <div class="col-lg-10 col-sm-10 text-block">
-                                <p class="message-heading hidden-xs">Enquiry for {{ message.chat_room.event.title }} / {{ message.chat_room.event.city.name }} / {{ message.chat_room.event.starting_date }}</p>
+                            <div class="col-lg-9 col-sm-9 text-block">
+                                <p class="message-heading hidden-xs"> ${message.chat_room.event.title} / ${message.chat_room.event.city.name} / ${message.chat_room.event.starting_date}</p>
 
                                 <div class="text">
-                                    {% if message.message_text is defined %}
-                                    {{ message.message_text }}
-                                    {% endif %}
+                                    ${message.message_text}
                                 </div>
 
                                 <div class="controls hidden-xs">
                                     <div class="button-gradient filled blue">
-                                        <a href="/dashboard/chat/{{ message.chat_room.chat_id }}" class="btn register">See Conversation</a>
+                                        <a v-bind:href="'/dashboard/chat/' + message.chat_room.chat_id" class="btn register">Chatroom</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-sm-2  message-controls no-pad">
+                            <div class="col-lg-2 col-sm-2 message-controls no-pad">
                                 <ul class="ul-reset">
-                                    <li class="status confirmed"><i class="confirmed"></i> {{ message.chat_room.offer.event_offer[0].status }}</li>
-                                    {% if message.archived == false %}
-                                    <li class="archive hidden-xs"><a class="archiveMessage"><i class="archive"></i> Archive</a></li>
-                                    {% endif %}
+                                    <li class="status enquiry" v-if="message.chat_room.order.status == 0"><i class="confirmed" ></i> Enquiry</li>
+                                    <li class="status confirmed" v-else-if="message.chat_room.order.status == 1"><i class="confirmed" ></i> Available</li>
+                                    <li class="status confirmed" v-else-if="message.chat_room.order.status == 2"><i class="confirmed" ></i> Confirmed</li>
+                                    <li class="status not-avaliable" v-else-if="message.chat_room.order.status == 4"><i class="confirmed" ></i> Not available</li>
+
+                                    <li v-on:click="archive" v-if="!message.archived" class="archive hidden-xs"><a href="#"><i class="archive"></i> Archive</a></li>
+                                    <li v-on:click="remove" class="delete hidden-xs"><a href="#"><i class="delete"></i> Delete</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
 
                     <ul class="clearfix message-controls controls-mobile ul-reset">
-                        {% if message.archived == false %}
-                            <li class="archive"><a class="archiveMessage"><i class="archive"></i> Archive</a></li>
-                        {% endif %}
+                        <li v-on:click="archive" v-if="!message.archived" class="archive"><a href="#"><i class="archive"></i> Archive</a></li>
+                        <li v-on:click="remove" class="delete"><a href="#"><i class="delete"></i> Delete</a></li>
                     </ul>
+
+                    <div class="message-controls message-options hidden-lg hidden-md hidden-sm">
+                        <li v-on:click="archive" v-if="!message.archived" class="archive">
+                            <i class="archive"></i>
+                            <a href="#">Archived</a>
+                        </li>
+                        <li  v-on:click="remove" class="delete">
+                            <i class="delete"></i>
+                            <a href="#">Delete</a>
+                        </li>
+                    </div>
+                </article>
+                    <article v-else class="col-xs-12 dialog-rating-container noselect" data-longtap-duration="500">
+                    <div class="wrap clearfix">
+                        <div class="message-info">
+                            <span class="pull-right">${message.created_at}</span>
+                            <span>Congratulations! You have received new rating!</span>
+                        </div>
+                        <div class="avatar">
+                            <img v-if="message.event.user.avatar" v-bind:src="message.event.user.avatar" alt=""/>
+                            <img v-else src="/assets/images/noAvatar.png" alt=""/>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name"></span>
+                        </div>
+                        <div class="rating">
+                            <i v-for="i in message.rating" class="star-icon filled"></i>
+                            <i v-for="i in 5-message.rating" class="star-icon unfilled"></i>
+                        </div>
+                        <div class="message-block">
+                            <p>${message.feedback} </p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            {#<div class="dialogs">
+                {% for message in messages|reverse %}
+                    <article class="col-xs-12 dialog-section noselect" data-longtap-duration="500" id="{{ message.id }}">
+                        <div class="wrap clearfix">
+                            <div class="message-info active"></div>
+                            <div class="avatar">
+                                {% if message.sender_user.avatar is defined %}
+                                    <img src="/{{ message.sender_user.avatar }}" alt=""/>
+                                {% else %}
+                                    <img src="/assets/images/noAvatar.png" alt=""/>
+                                {% endif %}
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name">{{ message.sender_user.firstname }}</span>
+                                <span class="time">{{ message.time_from_get }}</span>
+                            </div>
+                            <div class="message-block">
+                                <div class="col-lg-9 col-sm-9 text-block">
+                                    <p class="message-heading hidden-xs">Enquiry for {{ message.chat_room.event.title }} / {{ message.chat_room.event.city.name }} / {{ message.chat_room.event.starting_date }}</p>
+
+                                    <div class="text">
+                                        {% if message.message_text is defined %}
+                                            {{ message.message_text }}
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="controls hidden-xs">
+                                        <div class="button-gradient filled blue">
+                                            <a href="/dashboard/chat/{{ message.chat_room.chat_id }}" class="btn register">Chatroom</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-sm-2 message-controls no-pad">
+                                    <ul class="ul-reset">
+                                        <li class="status confirmed">
+                                            <i class="confirmed"></i>
+                                            {{ message.chat_room.offer.event_offer[0].status }}
+                                        </li>
+
+                                        {% if message.archived == false %}
+                                            <li class="archive hidden-xs">
+                                                <a class="archiveMessage">
+                                                    <i class="archive"></i> Archive</a>
+                                            </li>
+                                        {% endif %}
+
+
+                                        #}{# <li class="status confirmed"><i class="confirmed"></i> Confirmed</li>
+                                        <li class="archive hidden-xs"><a href="#"><i class="archive"></i> Archive</a></li>
+                                        <li class="delete hidden-xs"><a href="#"><i class="delete"></i> Delete</a></li> #}{#
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="clearfix message-controls controls-mobile ul-reset">
+                            {% if message.archived == false %}
+                                <li class="archive"><a class="archiveMessage"><i class="archive"></i> Archive</a></li>
+                            {% endif %}
+                            #}{# <li class="archive"><a href="#"><i class="archive"></i> Archive</a></li>
+                            <li class="de #}{#lete"><a href="#"><i class="delete"></i> Delete</a></li>
+                        </ul>
+
+                        <div class="message-controls message-options hidden-lg hidden-md hidden-sm">
+                            <li class="archive">
+                                <i class="archive"></i>
+                                <a href="#">Archive</a>
+                            </li>
+                            <li class="delete">
+                                <i class="delete"></i>
+                                <a href="#">Delete</a>
+                            </li>
+                        </div>
+                    </article>
+                {% endfor %}
+                {% for feedback in feedbacks %}
+                <article class="col-xs-12 dialog-rating-container noselect" data-longtap-duration="500">
+                    <div class="wrap clearfix">
+                        <div class="message-info">
+                            <span class="pull-right">{{ feedback.createdAt | date('d-m-Y') }}</span>
+                            <span>Congratulations! You have received new rating!</span>
+                        </div>
+                        <div class="avatar">
+                            <img src="/assets/images/noAvatar.png" alt=""/>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">{{ feedback.event.user.firstname }}</span>
+                        </div>
+                        <div class="rating">
+                            {% for i in 1..feedback.rating %}
+                            <i class="star-icon filled"></i>
+                            {% endfor %}
+                            {% if  5-feedback.rating > 0  %}
+                                {% for i in 1..(5-feedback.rating) %}
+                                <i class="star-icon unfilled"></i>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="message-block">
+                           <p>{{ feedback.feedback }}</p>
+                        </div>
+                    </div>
                 </article>
                 {% endfor %}
-            </div>
+            </div>#}
         </div>
     </div>
 
-
-    </div>
-
 </main>
+
 
 {% include 'ActedLegalDocsBundle:Default:footer.html.twig' %}

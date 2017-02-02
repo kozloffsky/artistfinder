@@ -3,6 +3,11 @@ create_event:
     defaults: { _controller: ActedLegalDocsBundle:Events:addEvent, _format: json }
     methods:  [POST]
 
+update_event:
+    path: /update
+    defaults: { _controller: ActedLegalDocsBundle:Events:updateEvent, _format: json }
+    methods: [PATCH]
+
 get_events_type:
     path:     /list_events_type
     defaults: { _controller: ActedLegalDocsBundle:Events:getListEventsType, _format: json }
@@ -27,3 +32,24 @@ check_exist_offer:
     path: /check_exist_offer
     defaults: { _controller: ActedLegalDocsBundle:Events:checkExistOffer, _format: json }
     methods: POST
+
+event_artists:
+    path: /artists/{event}/{page}/{size}
+    requirements:
+      page: \d+
+      size: \d+
+    defaults: { _controller: ActedLegalDocsBundle:Events:getEventArtists, page: 1, size: 10 }
+    methods:  GET
+
+event_artists_add:
+    path: /artist
+    defaults: { _controller: ActedLegalDocsBundle:Events:addArtistToEvent}
+    methods:  POST
+
+get_client_events:
+    path: /client/{user}/{page}/{size}
+    requirements:
+      page: \d+
+      size: \d+
+    defaults: { _controller: ActedLegalDocsBundle:Events:getClientEvents, page: null, size: null }
+    methods:  GET

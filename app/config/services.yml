@@ -10,6 +10,12 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
+    gedmo.listener.timestampable:
+        class: Gedmo\Timestampable\TimestampableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
     app.twig_extension:
         class: Acted\LegalDocsBundle\Twig\Extension\AppExtension
         public: false
@@ -30,6 +36,10 @@ services:
           - "@templating.engine.twig"
           - "@router"
           - "%mailer_from_address%"
+          - "@liip_imagine.controller"
+          - "%avatar_dir%"
+          - "%search_image_dir%"
+          - %kernel.root_dir%
 
     app.event.manager:
         class: Acted\LegalDocsBundle\Model\EventsManager
@@ -54,6 +64,22 @@ services:
             - "%file_formats%"
             - "%max_file_size%"
             - "%chat_upload_dir%"
+
+    app.request_quotation.manager:
+        class: Acted\LegalDocsBundle\Model\RequestQuotationManager
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@mailer"
+            - "%mailer_from_address%"
+            - "@templating.engine.twig"
+            - "@app.user.manager"
+
+    app.feedback.manager:
+        class: Acted\LegalDocsBundle\Model\FeedbackManager
+        arguments:
+            - "@templating.engine.twig"
+            - "@app.user.manager"
+            - "@doctrine.orm.entity_manager"
 
     app.form_errors_serializer:
         class: Acted\LegalDocsBundle\FormErrors\FormErrorsSerializer
@@ -85,3 +111,8 @@ services:
           - "@doctrine.orm.default_entity_manager"
         tags:
           - { name: jms_serializer.event_subscriber }
+
+    app.form.type.boolean:
+        class: Acted\LegalDocsBundle\Form\Type\BooleanType
+        tags:
+            - { name: form.type, alias: boolean }

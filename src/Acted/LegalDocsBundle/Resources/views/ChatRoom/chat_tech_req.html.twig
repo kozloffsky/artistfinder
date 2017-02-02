@@ -1,0 +1,79 @@
+{#<span class="tr-title">Technical requirements</span>#}
+{#<div class="tr-select-container">#}
+    {#<select class="tr-select" v-model="selectedRequirement">#}
+        {#<option v-for="tr in technicalRequirements" v-bind:value="tr">${ tr.title }</option>#}
+        {#<!--<option>Technical requirement 2</option>#}
+        {#<option>Technical requirement 3</option>#}
+        {#<option>Technical requirement 4</option>#}
+        {#<option>Technical requirement 5</option>#}
+        {#<option>Technical requirement 6</option>#}
+        {#<option>Technical requirement 7</option>#}
+        {#<option>Technical requirement 8</option>-->#}
+    {#</select>#}
+    {#<div>#}
+        {#<span></span>#}
+        {#<span></span>#}
+    {#</div>#}
+{#</div>#}
+{#<div class="tr-desc">#}
+    {#<!--<span class="tr-desc-title">Music system</span>-->#}
+    {#<p class="tr-desc-text">${selectedRequirement.description}</p>#}
+{#</div>#}
+{#<div class="tr-files">#}
+    {#<ul>#}
+        {#<li v-for="doc in selectedRequirement.documentTechnicalRequirements">#}
+            {#<i class="fa fa-file-pdf-o icon icon-pdf" aria-hidden="true"></i>#}
+            {#${doc.originalName | removeExt }#}
+            {#<i class="icon icon-delete-attached" @click="deleteAttachment(doc.id)" aria-hidden="true"></i>#}
+        {#</li>#}
+        {#<!--<li>#}
+            {#<i class="fa fa-file-pdf-o icon icon-pdf" aria-hidden="true"></i>#}
+            {#Event_2#}
+            {#<i class="icon icon-delete-attached" aria-hidden="true"></i>#}
+        {#</li>#}
+        {#<li>#}
+            {#<i class="fa fa-file-pdf-o icon icon-pdf" aria-hidden="true"></i>#}
+            {#Event_3#}
+            {#<i class="icon icon-delete-attached" aria-hidden="true"></i>#}
+        {#</li>#}
+        {#<li>#}
+            {#<i class="fa fa-file-pdf-o icon icon-pdf" aria-hidden="true"></i>#}
+            {#Event_4#}
+            {#<i class="icon icon-delete-attached" aria-hidden="true"></i>#}
+        {#</li>-->#}
+    {#</ul>#}
+    {#<div class="attach-file-btn">#}
+        {#<i class="icon icon-attach"></i>#}
+        {#<label for="attach_file">Attach</label>#}
+        {#<input id="attach_file" type="file" hidden name="tech_requ_files[]">#}
+    {#</div>#}
+{#</div>#}
+
+<span class="tr-title">Technical requirements</span>
+<div class="tr-select-container">
+    <select v-bind:disabled="userRole == 'ROLE_CLIENT' || editable == false" class="tr-select" v-model="selectedRequirement" v-bind:disabled="!editable" v-on:change="saveTechReqs">
+        <option v-for="tr in technicalRequirements" v-bind:value="tr">${ tr.title }</option>
+    </select>
+    <div>
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<div class="tr-desc">
+    <!--<span class="tr-desc-title">Music system</span>-->
+    <p class="tr-desc-text">${selectedRequirement.description}</p>
+</div>
+<div class="tr-files">
+    <ul>
+        <li v-for="doc in selectedRequirement.documentTechnicalRequirements">
+            <i class="fa fa-file-pdf-o icon icon-pdf" aria-hidden="true"></i>
+            <a :href="'/technical_requirement/document/'+doc.id" target="_blank"> ${doc.originalName | removeExt }</a>
+            <!--<i class="icon icon-delete-attached" aria-hidden="true" @click="deleteAttachment(doc.id)"></i>-->
+        </li>
+    </ul>
+    <!--<div class="attach-file-btn">
+        <i class="icon icon-attach"></i>
+        <label for="attach_file">Attach</label>
+        <input id="attach_file" type="file" hidden name="tech_requ_files[]">
+    </div>-->
+</div>

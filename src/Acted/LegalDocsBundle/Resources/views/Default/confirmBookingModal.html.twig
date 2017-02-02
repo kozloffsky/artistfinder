@@ -1,0 +1,182 @@
+<div class="modal booking-modal fade" id="confirmBookingModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+                <h4 class="modal-title">Confirm your booking</h4>
+            </div>
+            <form class="" name="booking-confirmation-form">
+                <div class="modal-body">
+                    <div class="row clearfix">
+                        <div class="col-sm-6 no-pad section-1">
+                            <div class="quotation-section">
+                                <div class="holder">{#{{ dump(order) }}#}
+                                    {#<!--service start-->#}
+                                    {#{% for p in order.performances %}#}
+                                    {#<article class="service">#}
+                                        {#<h3 class="package-name">{{ p.data['title'] }}</h3>#}
+                                        {#<ul class="ul-reset">#}
+                                            {#{% for package in p.data.packages %}#}
+                                            {#<li>#}
+                                                {#<strong class="sub-title">{{  package['name'] }}</strong>#}
+                                                {#<div class="row">#}
+                                                    {#<div class="col-md-12 no-pad">#}
+                                                        {#<span class="short" name="currency1" id="currency1">1</span>#}
+                                                        {#<span class="">x</span>#}
+                                                        {#<span class="short" name="currency11" id="currency11">45 min</span>#}
+                                                        {#<div class="pull-right">#}
+                                                            {#<span class="short">3.000</span>#}
+                                                            {#<span class="pull-right">GBP</span>#}
+                                                        {#</div>#}
+                                                    {#</div>#}
+                                                {#</div>#}
+                                            {#</li>#}
+                                            {#{% endfor %}#}
+
+                                        {#</ul>#}
+                                    {#</article>#}
+                                    {#{% endfor %}#}
+
+                                    <div class="row" v-for="orderOption in orderOptions">
+                                        <article v-if="orderOption.clientSelect" v-bind:class="{ 'act-extras': orderOption.type > 0 }" class="service">
+                                            <h3 class="package-name">${ orderOption.objectName }</h3>
+                                            <ul class="ul-reset">
+                                                <li>
+                                                    <strong class="sub-title">${orderOption.packageName}</strong>
+                                                    <div class="row">
+                                                        <div class="col-md-12 no-pad">
+                                                            <span v-if="orderOption.type < 2">
+                                                                <span class="short" name="currency1" id="currency1">${orderOption.qty}</span>
+                                                                <span class="">x</span>
+                                                                <span class="short" name="currency11" id="currency11">${orderOption.duration} min</span>
+                                                            </span>
+                                                            <div class="pull-right">
+                                                                <span class="short">${orderOption.amount}</span>
+                                                                <span class="pull-right">GBP</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" v-if="orderOption.type > 0">
+                                                        <span class="extra-descr">comment</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </article>
+                                    </div>
+
+                                    {#{% for p in order.performances %}
+                                        {% set performanceClass = 'service' %}
+                                        {% if p.data.type > 0 %}
+                                            {% set performanceClass = 'service act-extras' %}
+                                        {% endif %}
+                                        <article class="{{ performanceClass }}">
+                                            <h3 class="package-name">{{ p.data['title'] }}</h3>
+                                            <ul class="ul-reset">
+                                                {% for package in p.data.packages %}
+                                                    <li>
+                                                        <strong class="sub-title">{{ package['name'] }}</strong>
+                                                        <div class="row">
+                                                            {% for option in package['options'] %}
+                                                                <div class="col-md-12 no-pad">
+                                                                    {% if p.data.type < 2 %}
+                                                                        <span class="short" name="currency1" id="currency1">{{ option['qty'] }}</span>
+                                                                        <span class="">x</span>
+                                                                        <span class="short" name="currency11" id="currency11">{{ option['duration'] }} min</span>
+                                                                    {% endif %}
+                                                                    <div class="pull-right">
+                                                                        <span class="short">{{ option['rates'][0]["price"]['amount'] }}</span>
+                                                                        <span class="pull-right">GBP</span>
+                                                                    </div>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                        {% if p.data.type > 0 %}
+                                                            <div class="row">
+                                                                <span class="extra-descr">{{ p.data.comment }}</span>
+                                                            </div>
+                                                        {% endif %}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </article>
+                                    {% endfor %}#}
+
+                                    <!--<article class="service act-extras">
+                                        <h3 class="package-name">Extra - 1</h3>
+                                        <ul class="ul-reset">
+                                            <li>
+                                                <div class="row">
+                                                    <div class="col-md-12 no-pad">
+                                                        <strong class="sub-title">Standart Act</strong>
+                                                        <span class="short" name="currency1" id="currency1">2</span>
+                                                        <span class="cross">x</span>
+                                                        <span class="short" name="currency11" id="currency11">45 min</span>
+                                                        <div class="pull-right">
+                                                            <span class="short">3.000</span>
+                                                            <span class="pull-right">GBP</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <span class="extra-descr">Description of extra is really nice singe. and I’m writing it for fill this place</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </article>-->
+                                    <!--service end-->
+                                </div>
+                            </div>
+                            <div class="payment-info">
+                                <span class="total-title">Total:</span>
+                                <span class="total-cost">${ totalPrice } <i>GBP</i></span>
+                            </div>
+                            <div class="payment-additional-info">
+                                <span>Payment terms:</span>
+
+                                <div class="row list">
+                                    <div class="col-xs-12 col-sm-12 no-pad">
+                                        <div class="col-xs-9 col-sm-6 no-pad">Deposit (${ guaranteedDepositTerm }%) to be paid now</div><div class="col-xs-3 col-sm-6 no-pad">: ${ depositToPay } <i>GBP</i></div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 no-pad">
+                                        <div class="col-xs-9 col-sm-6 no-pad">Balance (${ guaranteedBalanceTerm }%) to be paid on Act</div><div class="col-xs-3 col-sm-6 no-pad">: ${ balanceToPay } <i>GBP</i></div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <a>download quatation</a>
+                                    <a>download invoice</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 no-pad section-2 text-center">
+                            <span class="agreement-title">Booking Agreement</span>
+                            <div class="agreement-section">
+                                <p>This agreement is made on MM/DD/YY between _________________________ (hereafter "Presenter") and (hereafter "Performer"), represented in this matter by ____________________ (hereafter "Manager") acting as Performer's agent. Presenter hereby engages Performer to provide the Performance generally described below under the following terms:</p>
+                                <p>All persons engaged to provide the Performance are named in Attachment A. </p>
+                                <p>The Manager's name, address, telephone number(s), and email address are:</p>
+                                <p>The Presenter's name, address, telephone number(s), and email address are:</p>
+                                <p>The date and time of the Performance are: _________________________________ </p>
+                                <p>The Performance shall take place at: _______________________________________________________ </p>
+                                <p>The Performance shall commence at HH:MM am/pm and end at HH:MM am/pm. An intermission lasting X minutes shall be taken by Performer approximately Y minutes after the Performance commences.</p>
+                                <p>The general description of the Performance is:
+                                    ________________________________________________________________________________________________________________________________________________________ </p>
+                                <p>Presenter shall pay to Performer or Manager the sum of $X immediately following the end of the Performance. Paym</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer text-center">
+                    <div class="custom-checkbox">
+                        <input id="details_agree" name="package-check" value="" type="checkbox" v-model="termsConditionsAccepted">
+                        <label for="details_agree">I agree with these terms & condition</label>
+                    </div>
+                    <div class="button-gradient filled orange">
+                        <button type="button" class="btn register quotationSendbtn" v-on:click="proceedToPayment()">Proceed to payment</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

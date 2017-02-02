@@ -30,11 +30,26 @@ Acted\LegalDocsBundle\Entity\Artist:
         vatRate:
           type: float
           nullable: true
+        averageRating:
+          type: float
+          options:
+            default: 0
+        totalRatings:
+          type: integer
+          options:
+            default: 0
         comments:
           type: string(512)
           nullable: true
         spotlight:
           type: integer
+          nullable: true
+        workAbroad:
+          type: boolean
+          options:
+            default: false
+        searchImage:
+          type: string(256)
           nullable: true
     manyToOne:
         city:
@@ -57,5 +72,20 @@ Acted\LegalDocsBundle\Entity\Artist:
             targetEntity: Acted\LegalDocsBundle\Entity\Recommend
             mappedBy: artist
             cascade: ["remove", "persist"]
+        technicalRequirements:
+            targetEntity: Acted\LegalDocsBundle\Entity\TechnicalRequirement
+            mappedBy: artist
+        feedbacks:
+            targetEntity: Acted\LegalDocsBundle\Entity\Feedback
+            mappedBy: artist
+        eventArtists:
+            targetEntity: Acted\LegalDocsBundle\Entity\EventArtist
+            mappedBy: artist
+        eventOffer:
+            targetEntity: Acted\LegalDocsBundle\Entity\EventOffer
+            mappedBy: artist
+        requestQuotations:
+            targetEntity: Acted\LegalDocsBundle\Entity\RequestQuotation
+            mappedBy: artist
 
     lifecycleCallbacks: {  }

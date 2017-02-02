@@ -1,0 +1,14 @@
+Acted\LegalDocsBundle\Entity\PerformanceRequestQuotation:
+    exclusion_policy: NONE
+    properties:
+        isSelected:
+            groups: []
+        performance:
+            groups: [chat_room]
+    virtual_properties:
+        getRequestQuotation:
+            serialized_name: requestQuotation
+            groups: []
+        getPerformance:
+            serialized_name: performance
+            groups: []

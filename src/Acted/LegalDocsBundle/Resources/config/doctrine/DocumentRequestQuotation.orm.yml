@@ -1,0 +1,21 @@
+Acted\LegalDocsBundle\Entity\DocumentRequestQuotation:
+    type: entity
+    table: DocumentRequestQuotation
+    repositoryClass: Acted\LegalDocsBundle\Repository\DocumentRequestQuotationRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        path:
+            type: string(255)
+    manyToOne:
+        requestQuotation:
+            targetEntity: Acted\LegalDocsBundle\Entity\RequestQuotation
+            inversedBy: documentRequestQuotations
+            joinColumn:
+                referencedColumnName: id
+                onDelete: RESTRICT
+    lifecycleCallbacks: {  }

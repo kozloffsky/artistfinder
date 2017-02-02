@@ -7,12 +7,12 @@ $(function () {
     var optionsSlider = {
         photoSettings: {
             adaptiveHeight: true,
-            mode          : 'fade',
-            pagerCustom   : '#photo-pager',
-            nextSelector  : '#nextSlide',
-            prevSelector  : '#prevSlide',
-            nextText      : '<i class="right fa fa-3x fa-angle-right"></i>',
-            prevText      : '<i class="left fa fa-3x fa-angle-left"></i>',
+            mode: 'fade',
+            pagerCustom: '#photo-pager',
+            nextSelector: '#nextSlide',
+            prevSelector: '#prevSlide',
+            nextText: '<i class="right fa fa-3x fa-angle-right"></i>',
+            prevText: '<i class="left fa fa-3x fa-angle-left"></i>',
             onSlideAfter: function (currentSlideNumber, totalSlideQty, currentSlideHtmlObject) {
                 // console.log(currentSlideHtmlObject);
                 $('.active-slide').removeClass('active-slide');
@@ -41,10 +41,10 @@ $(function () {
     $('.media-content .bxslider').bxSlider(optionsSlider.photoSettings);
     $('.bxVideoSlider').bxSlider(optionsSlider.videoSettings);
 
-    $('select').each(function () {
+    $('.profile select').each(function () {
         var placeholder = $(this).attr('data-placeholder');
-        var $select2    = $(this).select2({
-            placeholder            : placeholder || '',
+        var $select2 = $(this).select2({
+            placeholder: placeholder || '',
             minimumResultsForSearch: -1
         });
 
@@ -81,7 +81,7 @@ $(function () {
     resizeThumbs();
     changeHeaderColorOnScroll();
 
-    $(window).bind('resize', $.throttle(250, function(){
+    $(window).bind('resize', $.throttle(250, function () {
         resizeThumbs();
     }));
     $(window).scroll($.throttle(100, changeHeaderColorOnScroll));
@@ -115,8 +115,8 @@ $(function () {
     (function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
-        js     = d.createElement(s);
-        js.id  = id;
+        js = d.createElement(s);
+        js.id = id;
         js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.5";
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
@@ -133,11 +133,6 @@ $(function () {
         $('#freeQuoteModalRegisterd .modal-body').toggle();
     });
 
-    $('#comment_toggle').click(function (e) {
-        e.preventDefault();
-        $('#comment_area').toggle();
-    });
-
     $('#r_comment_toggle').click(function (e) {
         e.preventDefault();
         $('#r_comment_area').toggle();
@@ -150,11 +145,11 @@ $(function () {
 
     // Feedback block text toggle
     $('.feedback-block .text').each(function () {
-        var $element  = $(this);
-        var $toggler  = $element.find('.more');
+        var $element = $(this);
+        var $toggler = $element.find('.more');
         var $gradient = $element.find('.gradient');
-        var $text     = $element.find('.feedback-text');
-        var text      = $text.html();
+        var $text = $element.find('.feedback-text');
+        var text = $text.html();
 
         var maxLength = 0;
         if ($(window).width() < 768) {
@@ -185,8 +180,6 @@ $(function () {
                     $gradient.show();
                 }
             });
-
-
         } else {
             $toggler.hide();
             $gradient.hide();
@@ -196,17 +189,17 @@ $(function () {
     // Pagination script
     $('.paginate-section').each(function () {
         var $element = $(this);
-        var buttons  = [];
+        var buttons = [];
 
-        var $showMoreBtn          = $element.find('.show-more-info');
-        var $paginationControls   = $element.find('.pagination');
+        var $showMoreBtn = $element.find('.show-more-info');
+        var $paginationControls = $element.find('.pagination');
         var $paginationPrevButton = $paginationControls.find('.prev-page');
         var $paginationNextButton = $paginationControls.find('.next-page');
 
 
         var itemsPerPage = $element.attr('data-items-per-page');
-        var itemClass    = $element.attr('data-item-class');
-        var currentPage  = -1;
+        var itemClass = $element.attr('data-item-class');
+        var currentPage = -1;
 
         var $items = $element.find('.' + itemClass);
         if ($items.length < itemsPerPage) {
@@ -300,13 +293,13 @@ $(function () {
         }
 
         function createButtons(count) {
-            var $button       = $paginationControls.find('.pagination-button');
+            var $button = $paginationControls.find('.pagination-button');
             var currentButton = $button;
 
             buttons.push($button);
 
             for (var i = 1; i < count; i++) {
-                var element   = $button.clone();
+                var element = $button.clone();
                 currentButton.after(element);
                 buttons.push(element);
                 currentButton = element;
@@ -315,7 +308,7 @@ $(function () {
             }
 
             buttons.forEach(function (item) {
-                var button     = $(item).find('a');
+                var button = $(item).find('a');
                 var pageNumber = parseInt(button.attr('data-page-number'));
                 button.click(function (e) {
                     e.preventDefault();
@@ -350,7 +343,6 @@ $(function () {
         $paginationPrevButton.click(prevPage);
     });
 
-
     // function initialize() {
     //     var myLatlng = new google.maps.LatLng(-34.397, 150.644);
     //     var myOptions = {
@@ -378,7 +370,29 @@ $(function () {
         format: 'DD/MM/YYYY'
     });
 
+    function removeFeedbackHtml(id) {
+        $("article[data-feedback-id='" + id + "']").remove();
+    }
 
+    function deleteFeedback() {
+        var $this = $(this);
+        if (confirm('Are you sure?')) {
+            var id = $this.parents('.feedback-block').data('feedbackId');
+            $.ajax({
+                url: "/dashboard/feedbacks/" + id,
+                method: "DELETE",
+                success: function (data) {
+                    removeFeedbackHtml(id);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            })
+        }
+    }
+
+    $(".remove-feedback").click(deleteFeedback);
+    
     // var disableLabel = $('.free-quote-modal.request .custom-checkbox.small label');
     //
     // disableLabel.on('click', function(){

@@ -51,7 +51,7 @@ class SearchController extends Controller
 
         //TODO: refactor this
         $uk = $em->getRepository('ActedLegalDocsBundle:RefCountry')->findOneByName('United Kingdom');
-        $regions = $em->getRepository('ActedLegalDocsBundle:RefRegion')->findByCountry($uk);
+        $regions = $em->getRepository('ActedLegalDocsBundle:RefCity')->findByCountry($uk);
 
         return $this->render('ActedLegalDocsBundle:Default:search.html.twig', compact('categories', 'recommended', 'regions'));
     }

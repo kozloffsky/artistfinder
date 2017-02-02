@@ -202,16 +202,23 @@
 
                             <div class="slider-wrapper searchRecomendationWrapper">
                                 {% for recomendedArtist in recommendation.artists %}
-
                                 <div class="profile-card bordered">
 
                                     {% if recomendedArtist.video_media %}
                                         <div class="video-icon"></div>
                                     {% endif %}
 
-                                    <img class="header" src="{{ asset(recomendedArtist.media.link)|imagine_filter
-                                    ('small')
-                                    }}"/>
+                                    {% if recomendedArtist.search_image is defined %}
+                                        <img class="header" src="{{ asset(recomendedArtist.search_image)|imagine_filter
+                                        ('small')
+                                        }}"/>
+                                    {% else %}
+                                        {% if recomendedArtist.media %}
+                                            <img class="header" src="{{ asset(recomendedArtist.media.link)|imagine_filter
+                                            ('small')
+                                            }}"/>
+                                        {% endif %}
+                                    {% endif %}
 
                                     <p class="card-title">{{ recomendedArtist.name }}</p>
 
@@ -238,8 +245,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="rating">{{ recomendedArtist.rating }}/5.0 ({{ recomendedArtist.votes_count }} Votes)</div>
-                                        <span class="raitingValRecomend hidden">{{ recomendedArtist.rating }}</span>
+                                        <div class="rating" data-attr="test">{{ recomendedArtist.rating }}/5.0 ({{ recomendedArtist.votes_count }} Votes)</div>
+                                        <span class="raitingValRecomend hidden">{{ recomendedArtist.rating | round }}</span>
                                     </div>
 
                                     <div class="location">{{ recomendedArtist.country }}, {{ recomendedArtist.city }}</div>
@@ -252,13 +259,9 @@
 
                                     <div class="controls">
                                         <div class="button-gradient blue filled">
-
-                                            <button data-dismiss="modal" class="btn">
-                                                <a href="{{ path('profile_show', {'slug' : recomendedArtist.slug}) }}">
-                                                     Profile
-                                                </a>
-                                            </button>
-
+                                            <a href="{{ path('profile_show', {'slug' : recomendedArtist.slug}) }}" class="btn register">
+                                                 Profile
+                                            </a>
                                         </div>
 
                                         <div class="button-gradient blue ">
@@ -308,7 +311,7 @@
                     <div class="row">
 
                         <div class="controls show-more">
-                            <div class="button-gradient">
+                            <div class="button-gradient orange">
                                 <button data-dismiss="modal" class="btn">Show more</button>
                             </div>
                         </div>

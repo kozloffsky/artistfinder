@@ -1,9 +1,9 @@
 
-<div class="modal registration-modal fade" id="registrationModal" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+<div class="modal registration-modal registration-admin-modal fade" id="registrationModal" tabindex="-1" role="dialog" aria-labelledby="modal-title">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true"></span>
             </button>
             <div class="modal-header" style="display: block">
                 <div id="step-counter">
@@ -17,7 +17,7 @@
                         <img id="entertainerImg" class="category-img" src="{{ asset('assets/images/pers1.png') }}" alt="">
 
                         <div class="controls category-controls">
-                            <div class="button-gradient follow">
+                            <div class="button-gradient follow orange">
                                 <button id="entertainerBtn" class="btn">I am an entertainer</button>
                             </div>
                         </div>
@@ -26,7 +26,7 @@
                         <img id="customerImg" class="category-img" src="{{ asset('assets/images/Group23.png') }}" alt="">
 
                         <div class="controls category-controls">
-                            <div class="button-gradient follow">
+                            <div class="button-gradient follow orange orange">
                                 <button id="customerBtn" class="btn">I want to book entertainment</button>
                             </div>
                         </div>
@@ -85,8 +85,8 @@
                                 </div>
 
                                 <div class="controls">
-                                    <div class="button-gradient filled">
-                                        <button id="stageThreeNextCustomer" type="submit" class="btn register submit">Register Now</button>
+                                    <div class="button-gradient filled orange">
+                                        <button id="stageThreeNextCustomerAdmin" type="submit" class="btn register submit">Register Now</button>
                                     </div>
 
                                     <button type="button" style="width: 100%; margin-top: 10px;" class="btn-back back-button">Back</button>
@@ -117,21 +117,19 @@
                             </div>
                             <div class="form-group">
                                 <label for="country">Country</label>
-                                <select name="country" id="country">
-                                    {% for country in countries() %}
-                                        {% if country.name == 'United Kingdom' %}
-                                            <option value="{{ country.id }}" name="country" selected="selected">{{ country.name }}</option>
-                                        {% else %}
-                                            <option value="{{ country.id }}" name="country">{{ country.name }}</option>
-                                        {% endif %}
-                                    {% endfor %}
+
+                                <select class="form-control" id="country" name="country">
+                                    <option value="United Kingdom" selected>United Kingdom</option>
+                                    <option value="Germany">Germany</option>
+                                    <option value="France">France</option>
                                 </select>
+
+                                {#<input type="text" name="country" id="country" class="form-control">#}
                             </div>
 
                             <div class="form-group">
                                 <label for="cityReg">City</label>
-                                <select name="city" id="cityReg">
-                                </select>
+                                <input disabled type="text" name="city" id="cityReg" class="form-control">
                             </div>
 
                             <div class="form-group emailAdminDash">
@@ -156,8 +154,8 @@
                             </div>
 
                             <div class="controls">
-                                <div class="button-gradient filled">
-                                    <button  id="stageThreeNext" type="submit" class="btn register submit">Register Now</button>
+                                <div class="button-gradient filled orange">
+                                    <button  id="stageThreeNextAdmin" type="submit" class="btn register submit">Register Now</button>
                                 </div>
 
                                 <p class="hint">After registration you can start editing your profile</p>
@@ -192,7 +190,7 @@
                             </p>
 
                             <div class="controls">
-                                <div class="button-gradient filled">
+                                <div class="button-gradient filled orange">
                                     <button data-dismiss="modal" class="btn">Have a nice journey on ACTED</button>
                                 </div>
                             </div>
@@ -212,7 +210,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
                 <h4 class="modal-title">Log In</h4>
             </div>
 
@@ -230,7 +228,7 @@
                     </div>
 
                     <div class="controls">
-                        <div class="button-gradient filled">
+                        <div class="button-gradient filled orange">
                             <button class="btn submit" id="loginBtn">Login</button>
                         </div>
                     </div>
@@ -246,7 +244,7 @@
                     </div>
 
                     <div class="controls">
-                        <div class="button-gradient filled">
+                        <div class="button-gradient filled orange">
                             <button style="width: 220px;" class="btn" id="passwordRecovery">Send new password</button>
                         </div>
                     </div>

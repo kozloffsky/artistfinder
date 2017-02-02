@@ -1,42 +1,37 @@
-.how-it-works {  }
-
 .how-it-works h2 {
     color: #3d4248;
     font-size: 40px;
-    font-family: UbuntuBold;
-    text-transform: uppercase;
+    font-family: Ubuntu;
     font-weight: 600;
-    margin-top: 30px;
+    text-transform: uppercase;
+    margin-top: 20px;
 }
-
 .how-it-works .container {
     margin-bottom: 83px;
+    padding: 0 0 0 15px;
 }
-
 .how-it-works .categories-menu {
     display: inline-block;
 }
-
+.how-it-works .categories-menu li > a {
+    padding-bottom: 20px;
+}
 .how-it-works .tabs ul li {
-    margin: 0 38px;
+    margin: 0 36px;
     display: inline-block;
 }
-
 .how-it-works .tabs ul li > a {
     font-size: 15px;
     color: #3d4248;
 }
-
 .how-it-works .tabs ul {
     padding:0px;
-    margin: 32px 0 52px 0;
+    margin: 24px 0 0 0;
     display:inline-block;
 }
-
 .how-it-works .menu-block.active {
     border-bottom: 4px solid #ff793e;
 }
-
 .how-it-works .img-n {
     height: 250px;
     background-repeat:no-repeat;
@@ -44,11 +39,9 @@
     background-position:center;
     background-size: contain !important;
 }
-
 .how-it-works .text-block {
-    margin-top: 60px;
+    margin-top: 50px;
 }
-
 .how-it-works .text-block p:nth-of-type(1) {
     font-family: LatoBold;
     font-size: 16px;
@@ -56,7 +49,6 @@
     text-align: left;
     margin: 0 0 12px;
 }
-
 .how-it-works .text-block p:nth-of-type(2) {
     font-family: LatoRegular;
     font-size: 14px;
@@ -64,7 +56,6 @@
     line-height: 24px;
     text-align: justify;
 }
-
 .how-it-works .img-1 {
     background: url("/assets/images/Artboard 1.png") no-repeat center;
 }
@@ -95,7 +86,6 @@
 .how-it-works .img-10 {
     background: url("/assets/images/Artboard 10.png") no-repeat center;
 }
-
 @media
 only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 320px),
 only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 320px),
@@ -135,7 +125,6 @@ only screen and (                min-resolution: 2dppx)  and (min-width: 320px) 
         background: url("/assets/images/Artboard 10@2x.png") no-repeat center;
     }
 }
-
 @media (min-width: 768px) {
     .how-it-works {
         text-align: center;
@@ -149,20 +138,14 @@ only screen and (                min-resolution: 2dppx)  and (min-width: 320px) 
         margin-left: -50px;
     }
 }
-
 @media (max-width: 768px) {
-
     .how-it-works {
         text-align: center;
     }
-
     .how-it-works .img-n {
         text-align: center;
     }
-}
-
-@media (max-width: 1200px) {
-    .how-it-works .text-block {
-        margin-top: 0;
+    .how-it-works .container {
+        padding: 0 15px 0 15px;
     }
 }

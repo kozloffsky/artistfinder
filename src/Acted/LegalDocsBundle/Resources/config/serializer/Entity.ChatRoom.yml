@@ -2,13 +2,15 @@ Acted\LegalDocsBundle\Entity\ChatRoom:
     exclusion_policy: NONE
     properties:
         id:
-            groups: [chat_list, all_messages, chat_room]
+            groups: [chat_list, all_messages, chat_room, order]
             serialized_name: chat_id
         event:
             groups: [chat_room, chat_list, all_messages]
-        offer:
+        order:
             groups: [chat_list, chat_room, all_messages]
         message:
+            groups: [chat_room]
+        technicalRequirements:
             groups: [chat_room]
     virtual_properties:
         getLastMessage:

@@ -21,7 +21,7 @@
         "incenteev/composer-parameter-handler": "2.1.2",
         "doctrine/doctrine-migrations-bundle": "1.1.1",
         "tfox/mpdf-port-bundle": "1.3.1",
-        "stfalcon/tinymce-bundle": "dev-master",
+        "stfalcon/tinymce-bundle": "2.1",
         "cocur/slugify": "v2.0",
         "davidbadura/faker-bundle": "1.1.0",
         "knplabs/knp-paginator-bundle": "2.5.1",
@@ -38,7 +38,10 @@
         "misd/phone-number-bundle": "^1.1",
         "tweedegolf/swiftmailer-logger-bundle": "dev-master",
         "react/zmq": "^0.3.0",
-        "gos/web-socket-bundle": "v1.8.1"
+        "gos/web-socket-bundle": "v1.8.1",
+        "sentry/sentry-symfony": "0.7.x-dev",
+        "jms/di-extra-bundle": "~1.3",
+        "jms/security-extra-bundle": "~1.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "3.0.6",

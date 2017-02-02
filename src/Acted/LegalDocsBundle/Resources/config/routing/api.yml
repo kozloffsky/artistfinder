@@ -1,0 +1,43 @@
+api_event:
+  path: /events/{event}
+  defaults: { _controller: ActedLegalDocsBundle:Events:getEventDataById }
+  methods: [GET]
+  requirements:
+    event: \d+
+
+api_event_messages:
+  path: /events/{event}/messages/{filter}
+  defaults: {_controller: ActedLegalDocsBundle:Events:getMessages, filter: false}
+  methods: GET
+  requirements:
+    event: \d+
+
+api_event_edit:
+  path: /events/{event}/edit
+  defaults: { _controller: ActedLegalDocsBundle:Events:updateEvent }
+  methods: [PATCH]
+
+api_venue:
+  path: /venues
+  methods: [GET]
+  defaults: { _controller: ActedLegalDocsBundle:Events:showVenues }
+
+api_chatroom_hide:
+  path: /chatroom/{chatroom}/hide
+  methods: DELETE
+  defaults: {_controller: ActedLegalDocsBundle:ChatRoom:hideChatRoom}
+  requirements:
+    chatroom: \d+
+
+api_artist_new_feedbacks:
+  path: /feedbacks/artist
+  methods: GET
+  defaults: {_controller: ActedLegalDocsBundle:Feedback:getMonthFeedbacks}
+
+api_event_orders:
+  path: /events/{eventId}/orders/status/{status}
+  methods: GET
+  defaults: {_controller: ActedLegalDocsBundle:Events:getOrdersByEvent, status: null}
+  requirements:
+    event: \d+
+    status: \d+

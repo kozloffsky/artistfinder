@@ -3,47 +3,54 @@
  */
 $(function () {
     //$('#phone_number').cleanVal(); to get phone number.
-
     //Enabling form validation.
+    var registrationAutocompService = new GoogleAutocompleteService(),
+        isAvailable = registrationAutocompService.getFormElements('.registration-modal form[id="artistForm"]');
 
+    if(isAvailable)
+        registrationAutocompService.initAutoComplete();
 
-    var customerValidate =  $("#customerRegForm").validate();
+    var passwordRules = {
+        rules: {
+            'password[first]': {
+                required: true,
+                pwcheck: true,
+                minlength: 8
+            },
+            'password[second]': {
+                required: true,
+                equalTo: '#password',
+            }
+        },
+        messages: {
+            'password[first]': {
+                pwcheck: "Password must contain uppercase, lowercase letters and digit!",
+                minlength: "Password must contain 8 letters!"
+            },
+            'password[second]': {
+                required: "You need to provide password confirmation!",
+                equalTo: "Confirmation password need to be equal password!"
+            }
+        }
+    };
 
-    var artistValidation =  $("#artistForm").validate();
+    var artistValidation =  $("#artistForm").validate(passwordRules);
+
+    passwordRules.rules['password[second]'].equalTo = '#customerPasswordConfirm';
+
+    var customerValidate =  $("#customerRegForm").validate(passwordRules);
 
     $("#recoveryForm").validate();
 
-    //Initializing phone mask.
-    /*$('#phone_number').mask('+44 (000) 000-0000', {placeholder: "+44 (___) ___-____"});
+    $.validator.addMethod("pwcheck", function(value) {
+        return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/.test(value);
+    });
 
-
-     var $select2 = $("#country").select2({
-     placeholder: "Select Country",
-     minimumResultsForSearch: -1
-     }).on("change", function (e) {
-     //Change mask here... Example:
-     var selectedCountry = $('#country').find('option:selected').text();
-     $('#phone_number').val('');
-
-     switch (selectedCountry) {
-     case 'France':
-     $('#phone_number').mask('+33 (00) 0000-0000', {placeholder: "+33 (0_) ____-____"});
-     break;
-     case  'Germany':
-     $('#phone_number').mask('+49 (0000) 0000-0000', {placeholder: "+49 (0___) ____-____"});
-     break;
-     //Default country Uk
-     case 'United Kingdom':
-     default:
-     $('#phone_number').mask('+44 (000) 000-0000', {placeholder: "+44 (___) ___-____"});
-     break;
-     }
-
-
-     });*/
-
-    //$select2.data('select2').$results.addClass($select2.attr('data-class'));
-
+    $("#password").on("focusout", function() {
+        $("#customerRegForm").valid();
+        $("#artistForm").valid();
+        $("#recoveryForm").valid();
+    });
 
     var currentState = 1;
     var userIsArtist = true;
@@ -119,10 +126,10 @@ $(function () {
     }
 
     function showFinishPage() {
-        $('.stage').hide();
+        /*$('.stage').hide();
         $('.modal-header').hide();
         $('#stage-4').show();
-        $('#completionTime').hide();
+        $('#completionTime').hide();*/
     }
 
 
@@ -144,7 +151,6 @@ $(function () {
     $('#customerBtn, #customerImg').click(function() {
         chageState(2, false);
     });
-
 
     $('#stageTwoNext').click(function () {
         checkCategories();
@@ -176,7 +182,6 @@ $(function () {
         }
     }
 
-
     $('.back-button').click(function () {
         if (currentState - 1 == 2) {
             chageState(currentState - 1, userIsArtist);
@@ -184,7 +189,6 @@ $(function () {
             chageState(currentState - 1);
         }
     });
-
 
     function finishRegistration()
     {
@@ -245,10 +249,26 @@ $(function () {
     });
 
     function registerArtist(userInformation, categoriesForm, userRole) {
+        var data = userRole + '&' + userInformation + '&' + categoriesForm;
+
+        var regionLat = registrationAutocompService.coords.region.lat,
+            regionLng = registrationAutocompService.coords.region.lng,
+            cityLat = registrationAutocompService.coords.city.lat,
+            cityLng = registrationAutocompService.coords.city.lng,
+            region = registrationAutocompService.currentStore.region;
+            placeId = registrationAutocompService.currentStore.placeId;
+
+            data += "&city_lat=" + cityLat;
+            data += "&city_lng=" + cityLng;
+            data += "&region_name=" + region;
+            data += "&region_lat=" + regionLat;
+            data += "&region_lng=" + regionLng;
+            data += "&place_id=" + placeId;
+
         $.ajax({
             type: "POST",
             url: '/register',
-            data: userRole + '&' + userInformation + '&' + categoriesForm,
+            data: data,
             success: function(){
                 console.log('successReg');
                 finishRegistration()
@@ -305,33 +325,6 @@ $(function () {
         })
     }
 
-    $(document).ready(function() {
-        var selectedCountruOption = $('.form-group #country').find('option:selected').val();
-        chooseCityReg(selectedCountruOption);
-    });
-
-    $('.form-group #country').on('change',function(){
-        var selectedCountruOption = $('.form-group #country').find('option:selected').val();
-        chooseCityReg(selectedCountruOption);
-    })
-
-    function chooseCityReg(selectedCountruOption) {
-        if (selectedCountruOption){
-            $.ajax({
-                type: 'GET',
-                url: '/geo/city?_format=json&country=' + selectedCountruOption,
-                success: function (response) {
-                    $('#cityReg').empty();
-                    $('#cityReg').append('<option value="" name="city">select a city</option>');
-                    $(response).each(function () {
-                        $('#cityReg').append('<option value="' + this.id + '" name="city">' + this.name + '</option>');
-                    });
-                    $("#cityReg").select2();
-                }
-            })
-        }
-    }
-
     function customerRegister(){
         var customerValues = $('.customerRegForm').serialize();
         var customerRole = 'role=ROLE_CLIENT';
@@ -375,7 +368,6 @@ $(function () {
 
     function sendQuoteIfExist(userData){
         var quote = localStorage.getItem('quoteRequest');
-        console.log(quote)
         if(quote){
             $.ajax({
                 type:'POST',
@@ -443,5 +435,4 @@ $(function () {
             }
         })
     }
-
 });

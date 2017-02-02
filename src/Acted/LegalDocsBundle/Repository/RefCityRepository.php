@@ -2,6 +2,8 @@
 
 namespace Acted\LegalDocsBundle\Repository;
 use Acted\LegalDocsBundle\Entity\RefCountry;
+use Acted\LegalDocsBundle\Entity\RefCity;
+use Acted\LegalDocsBundle\Entity\RefRegion;
 
 /**
  * RefCityRepository
@@ -23,4 +25,34 @@ class RefCityRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
+    public function createCity($cityName, RefRegion $region, $lat, $lng, $placeId)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $params = array('cityName' => $cityName);
+
+        $qb->from('ActedLegalDocsBundle:RefCity', 'city');
+        $qb->select('city');
+        $qb->where($qb->expr()->eq('city.name', ':cityName'));
+
+        $qb->setParameters($params);
+
+        $city = $qb->getQuery()->getOneOrNullResult();
+        if (!empty($city) && !empty($city->getName())) {
+            return $city->getId();
+        }
+
+        $cityObj = new RefCity();
+        $cityObj->setRegion($region);
+        $cityObj->setName($cityName);
+        $cityObj->setLatitude($lat);
+        $cityObj->setLongitude($lng);
+        $cityObj->setPlaceId($placeId);
+        $em->persist($cityObj);
+
+        $em->flush();
+
+        return $cityObj->getId();
+    }
 }

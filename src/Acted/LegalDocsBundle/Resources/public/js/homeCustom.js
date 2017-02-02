@@ -42,6 +42,7 @@ $(function () {
     });
 
     $('#logOut').on('click',function(){
+        localStorage.removeItem('currentEvent');
         localStorage.removeItem('user');
     });
 });

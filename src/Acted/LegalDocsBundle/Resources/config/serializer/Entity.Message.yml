@@ -7,11 +7,14 @@ Acted\LegalDocsBundle\Entity\Message:
             groups: [chat_list, chat_room, message, all_messages]
         sendDateTime:
             groups: [chat_list, chat_room, message, all_messages]
+            type: "DateTime<'D, d M Y H:i:s O'>"
         readDateTime:
             groups: [chat_list, chat_room, message, all_messages]
         receiverUser:
             groups: [chat_list, message, chat_room, all_messages]
         archived:
+            groups: [chat_list, message, chat_room, all_messages]
+        hidden:
             groups: [chat_list, message, chat_room, all_messages]
         senderUser:
             groups: [chat_room, message, all_messages]

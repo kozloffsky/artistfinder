@@ -23,6 +23,9 @@ Acted\LegalDocsBundle\Entity\RefCity:
           scale: 12
           precision: 18
           nullable: true
+        placeId:
+          type: text
+          nullable: true
     manyToOne:
         region:
           targetEntity: Acted\LegalDocsBundle\Entity\RefRegion

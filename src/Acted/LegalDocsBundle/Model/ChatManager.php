@@ -3,6 +3,7 @@
 namespace Acted\LegalDocsBundle\Model;
 
 use Acted\LegalDocsBundle\Entity\ChatRoom;
+use Acted\LegalDocsBundle\Entity\Media;
 use Acted\LegalDocsBundle\Entity\MessageFile;
 use Doctrine\ORM\EntityManagerInterface;
 use Acted\LegalDocsBundle\Entity\Event;
@@ -44,13 +45,11 @@ class ChatManager
      * @param Event $event
      * @param User $receiver
      * @param EventOfferData $data
-     * @param Offer $offer
      */
-    public function createChat($event, $receiver, $data, $offer)
+    public function createChat($event, $receiver, $data)
     {
         $chatRoom = new ChatRoom();
         $chatRoom->setEvent($event);
-        $chatRoom->setOffer($offer);
         $chatRoom->setArtist($receiver);
         $chatRoom->setClient($event->getUser());
         $this->entityManager->persist($chatRoom);
@@ -59,6 +58,8 @@ class ChatManager
             $this->entityManager->persist($message);
             $this->entityManager->flush();
         }
+
+        return $chatRoom;
     }
 
     /**
@@ -111,5 +112,11 @@ class ChatManager
         }
 
         return $message;
+    }
+
+    public function createMediaForFile(MessageFile $file){
+        $media = new Media();
+        $file->setMedia($media);
+
     }
 }

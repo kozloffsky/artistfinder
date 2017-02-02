@@ -1,6 +1,187 @@
+/* --- COLORS SECTION --- */
+.color-kelly { color: #6eb421; }
+.color-india { color: rgba(219, 98, 85, 1); }
+
+/* --- ARTIST SECTION -- */
+.artist-selection {
+    font-family: LatoRegular;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.87);
+}
+.artist-selection .right-panel {
+    display: inline-block;
+}
+.artist-selection .artist-block .avatar img {
+    height: 74px;
+    width: 74px;
+    border-radius: 50%;
+}
+.artist-selection ul.artist-categories {
+    margin: 1px 0 4px 0;
+}
+.artist-selection ul.artist-categories li {
+    position: relative;
+    display: inline;
+    padding: 0;
+}
+.artist-selection ul.artist-categories li:nth-of-type(1) {
+    margin: 0 8px 0 0;
+}
+.artist-selection ul.artist-categories li:not(:nth-of-type(1)) {
+    padding: 0 6px 0 5px;
+    margin: 0px 2px;
+}
+.artist-selection ul.artist-categories li:not(:nth-of-type(1)):after {
+    background-color: rgba(181, 181, 181, 1);
+    border-radius: 50%;
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: -4px;
+    height: 4px;
+    width: 4px;
+    margin: -2px -2px;
+}
+.artist-selection .artist-block {
+    padding: 9px 0 24px 0;
+    border-bottom: 2px solid #e9e9e9;
+    min-height: 149px;
+}
+.artist-selection .artist-block:nth-of-type(1) {
+    padding: 9px 0 24px 0;
+}
+.artist-selection .artist-block:nth-last-of-type(1) {
+    margin: 0 0 84px 0;
+}
+.artist-selection .artist-block .name {
+    font-family: Ubuntu;
+    font-size: 18px;
+    font-weight: 500;
+}
+.artist-selection .artist-block .avatar-block {
+    margin: 7px 12px 0 37px;
+}
+.artist-selection .artist-block .available-flag {
+    font-family: LatoBold;
+    font-size: 16px;
+    font-weight: 400;
+
+    margin: 0 0px 22px 0;
+}
+.artist-selection .artist-block .price-from {
+    margin: 0 0 29px 0;
+}
+.artist-selection .artist-block .artist-categories li {
+    font-family: LatoBold;
+    font-size: 14px;
+}
+.artist-selection .artist-block .stars {
+    margin: 0 0 0 6px;
+}
+.artist-selection .artist-block .stars .star {
+    background: url(../../assets/images/star_unfilled_feedback.png);
+    background-size: cover;
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    margin: 0 2px;
+    vertical-align: text-top;
+}
+.artist-selection .artist-block .stars .star.filled {
+    background: url(../../assets/images/star_feedback.png);
+    background-size: cover;
+}
+.artist-selection .artist-block .rate i,
+.artist-selection .artist-block .rate-count i {
+    font-style: normal;
+}
+.artist-selection .artist-block .rate-count span {
+    font-family: LucidaGrande;
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+    color: rgba(0, 0, 0, 0.87);
+}
+.artist-selection .artist-block .right-panel {
+    padding: 0;
+}
+.artist-selection .artist-block .controls-area {
+    position: absolute;
+    top: 82px;
+    margin: 0 0 0 15px;
+    padding: 0;
+}
+.artist-selection .artist-block .controls-area > button {
+    margin: 0 30px 0 0;
+}
+.artist-selection .artist-block .controls-area .btn.blue,
+.artist-selection .artist-block .controls-area .btn.orange {
+    width: 130px;
+}
+.artist-selection .artist-block .controls-area .border-gradient {
+    color: rgba(0, 0, 0, 0.87);
+}
+.artist-selection .controls .button-gradient.follow {
+    margin: 0;
+    width: 130px;
+    height: 26px;
+}
+
+.artist-selection .controls .button-gradient.follow > .btn {
+    width: 126px;
+    height: 22px;
+}
+
+.artist-selection .controls button {
+    height: 26px;
+    width: 130px;
+    font-size: 14px !important;
+}
+.artist-selection .remove-artist {
+    font-family: LatoRegular;
+    font-size: 14px;
+    font-weight: 400;
+}
+.artist-selection .remove-artist i {
+    margin: 0 8px 0 0;
+}
+
+/*@media screen and (max-width: 1199px) {
+    .artist-selection .artist-block .right-panel {
+        padding: 0;
+    }
+}*/
+@media screen and (min-width: 768px) {
+    .artist-selection .artist-block .right-panel {
+        width: 100%;
+        position: absolute;
+    }
+}
+
+@media screen and (max-width: 696px) {
+    .artist-selection .artist-block .avatar-block {
+        margin: 6px 30px 0 12px;
+    }
+}
+
+@media screen and (max-width: 567px) {
+    .artist-selection .artist-block:nth-of-type(1) {
+        padding: 35px 0 24px 0;
+    }
+}
+
+@media screen and (max-width: 340px) {
+    .artist-selection .artist-block .controls-area > button {
+        margin: 0;
+    }
+}
+
+/** TODO Need to remove unused styles at bottom code!!! */
+
 /*artist selection styles start*/
 .artist-selection{
-    padding: 30px 0 70px;
+    /*padding: 30px 0 70px;*/
     min-height: 550px;
 }
 .tabs-block .slider{
@@ -295,12 +476,6 @@
     height: 28px !important;
     padding: 0 12px;
 }
-.category-tab .button-gradient.blue {
-    background: rgb(88,149,243);
-    background: -moz-linear-gradient(left, rgba(88,149,243,1) 0%, rgba(73,79,199,1) 100%);
-    background: -webkit-linear-gradient(left, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
-    background: linear-gradient(to right, rgba(88,149,243,1) 0%,rgba(73,79,199,1) 100%);
-}
 .category-tab .btn-remove{
     background: none;
     border: none;
@@ -424,7 +599,7 @@
 .info-frame .controls .button-gradient{margin: 0 !important;}
 /*detail form styles end*/
 /*media styles start*/
-@media (max-width: 1199px){
+@media (max-width: 1199px) {
     .category-tab .options-list li span{font-size: 14px;}
     .category-tab .controls{text-align: center;}
     .category-tab .controls .button-gradient{margin: 0 17px 17px 0;}
@@ -433,7 +608,7 @@
         height: 130px;
     }
 }
-@media (max-width: 991px){
+@media (max-width: 991px) {
     .category-tab .artists-list > li{padding-bottom: 1px;}
     .category-tab .controls{text-align: center;}
     .category-tab .options-list{margin-left: -38px;}
@@ -455,7 +630,7 @@
         float: none !important;
     }
 }
-@media (max-width: 767px){
+@media (max-width: 767px) {
     .artist-selection{padding: 0 0 40px;}
     .artist-selection .container{padding: 0;}
     .detail-form.main-form{padding: 20px 15px;}
@@ -504,10 +679,68 @@
     .category-tab .artists-list .star{width: 14px;}
     .category-tab .artists-list .rating{margin: 0;}
     .category-tab .artists-list > li{border-top: 1px solid #d8d8d8;}
+
+
+    .artist-selection .artist-block .avatar-block {
+        margin: 7px 12px 0 14px;
+    }
+    .artist-selection .artist-block {
+        padding: 38px 0 24px 0;
+    }
+    .artist-selection .artist-block .avatar img {
+        width: 54px;
+        height: 54px;
+    }
+    .artist-selection .artist-block .name {
+        position: absolute;
+        top: -50px;
+        left: 75px;
+    }
+    .artist-selection .artist-block .stars {
+        margin: 0;
+        position: absolute;
+        top: -20px;
+        left: 75px;
+    }
+    .artist-selection .artist-block .rate {
+        position: absolute;
+        top: -22px;
+        left: 175px;
+    }
+    .artist-selection .artist-block .rate-count {
+        position: absolute;
+        top: -22px;
+        left: 226px;
+        width: 100%;
+    }
+    .artist-selection .artist-block .right-panel {
+        position: absolute;
+        top: 0;
+        right: 30px;
+    }
+    .artist-selection .artist-block .controls-area {
+        margin: 30px 0 0 12px;
+        position: relative;
+        top: 0;
+    }
+    .artist-selection .artist-block .price-from {
+        margin: 25px 0 0 0;
+    }
+    .artist-selection .artist-block .available-flag {
+        position: absolute;
+        top: -100px;
+    }
+    .artist-selection .remove-artist {
+        position: absolute;
+        top: -50px;
+    }
+    .artist-selection .artist-block .controls-area > button {
+        margin: 0 30px 0 0;
+    }
 }
-@media (max-width: 399px){
-    .artist-selection .controls>.button-gradient:not(.filled)>.btn{width: 127px !important;}
-    .artist-selection .controls>.button-gradient.filled>.btn{width: 132px !important;}
+@media (max-width: 399px) {
+    /*.artist-selection .controls>.button-gradient:not(.filled)>.btn{width: 127px !important;}*/
+    /*.artist-selection .controls>.button-gradient.filled>.btn{width: 132px !important;}*/
     .category-tab .artists-list .resolve,
     .category-tab .holder .options,
     .category-tab .request-title-list,

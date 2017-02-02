@@ -54,10 +54,45 @@ class EventsManager
      */
     public function createEvent(EventOfferData $eventOfferData)
     {
+        $em = $this->entityManager;
+        $refCountryRepo = $em->getRepository('ActedLegalDocsBundle:RefCountry');
+        $countryId = $refCountryRepo->createCountry($eventOfferData->getCountry());
+
+        $country = $em->getRepository('ActedLegalDocsBundle:RefCountry')->findOneBy(array(
+            'id' => $countryId
+        ));
+
+        $refRegionRepo = $em->getRepository('ActedLegalDocsBundle:RefRegion');
+        $regionId = $refRegionRepo->createRegion(
+            $eventOfferData->getRegionName(),
+            $country,
+            $eventOfferData->getRegionLat(),
+            $eventOfferData->getRegionLng()
+        );
+
+        $region = $em->getRepository('ActedLegalDocsBundle:RefRegion')->findOneBy(array(
+            'id' => $regionId
+        ));
+
+        $refCityRepo = $em->getRepository('ActedLegalDocsBundle:RefCity');
+        $cityId = $refCityRepo->createCity(
+            $eventOfferData->getCity(),
+            $region,
+            $eventOfferData->getCityLat(),
+            $eventOfferData->getCityLng(),
+            $eventOfferData->getPlaceId()
+        );
+
+        $city = $em->getRepository('ActedLegalDocsBundle:RefCity')->findOneBy(array(
+            'id' => $cityId
+        ));
+
+        $countSeconds = $eventOfferData->getCountDays() * 86400;
+
         $event = new Event();
         $date = $eventOfferData->getEventDate();
-        $nextDate = new \DateTime(date('Y-m-d h:i:s', strtotime($date->format('Y-m-d h:i:s'))+86400));
-        $event->setCity($eventOfferData->getCity());
+        $nextDate = new \DateTime(date('Y-m-d h:i:s', strtotime($date->format('Y-m-d h:i:s')) + $countSeconds));
+        $event->setCity($city);
         $event->setEventRef(uniqid());
         $event->setEventType($eventOfferData->getType());
         $event->setVenueType($eventOfferData->getVenueType());
@@ -69,6 +104,9 @@ class EventsManager
         $event->setAddress($eventOfferData->getLocation());
         $event->setTiming($eventOfferData->getEventTime());
         $event->setNumberOfGuests($eventOfferData->getNumberOfGuests());
+        $event->setComments($eventOfferData->getAdditionalInfo());
+        $event->setCountDays($eventOfferData->getCountDays());
+        $event->setPlaceId($eventOfferData->getPlaceId());
 
         return $event;
     }
@@ -112,12 +150,12 @@ class EventsManager
      * @param $artist
      * @param $offer
      */
-    public function createEventNotify($eventData, $artist, $offer)
+    public function createEventNotify($eventData, $artist, $order)
     {
         $rendered = $this->templating->render('@ActedLegalDocs/Email/create_event_notify.html.twig', [
             'event' => $eventData,
             'artist' => $artist,
-            'offer' => $offer
+            'order' => $order
         ]);
 
         $this->userManager->sendEmailMessage($rendered, $this->mailFrom, $artist->getEmail());

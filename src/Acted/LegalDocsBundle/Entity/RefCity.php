@@ -23,6 +23,11 @@ class RefCity implements Geo
      */
     private $countryId;
 
+    /**
+     * @var string
+     */
+    private $placeId;
+
     public function __toString()
     {
         return $this->getName();
@@ -171,5 +176,29 @@ class RefCity implements Geo
     public function getRegion()
     {
         return $this->region;
+    }
+
+    /**
+     * Set placeId
+     *
+     * @param string $placeId
+     *
+     * @return RefCity
+     */
+    public function setPlaceId($placeId)
+    {
+        $this->placeId = $placeId;
+
+        return $this;
+    }
+
+    /**
+     * Get placeId
+     *
+     * @return string
+     */
+    public function getPlaceId()
+    {
+        return $this->placeId;
     }
 }

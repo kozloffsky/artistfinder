@@ -1,0 +1,42 @@
+Acted\LegalDocsBundle\Entity\Feedback:
+    type: entity
+    table: Feedback
+    repositoryClass: Acted\LegalDocsBundle\Repository\FeedbackRepository
+    uniqueConstraints:
+        uniq_event_id_artist_id:
+            columns: [event_id, artist_id]
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        rating:
+            type: integer(1)
+            nullable: true
+        feedback:
+            type: text
+            nullable: true
+        viewed:
+            type: boolean
+            nullable: false
+            options:
+              default: false
+        createdAt:
+            type: datetime
+            nullable: true
+    manyToOne:
+        event:
+           targetEntity: Acted\LegalDocsBundle\Entity\Event
+           inversedBy: feedbacks
+           joinColumn:
+               referencedColumnName: id
+               onDelete: CASCADE
+        artist:
+           targetEntity: Acted\LegalDocsBundle\Entity\Artist
+           inversedBy: feedbacks
+           joinColumn:
+               referencedColumnName: id
+               onDelete: CASCADE
+    lifecycleCallbacks: {  }

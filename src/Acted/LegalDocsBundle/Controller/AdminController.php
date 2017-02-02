@@ -293,6 +293,44 @@ class AdminController extends Controller
                 $profile->setActive(true);
                 $validationErrors->addAll($validator->validate($profile));
 
+
+                $refCountryRepo = $em->getRepository('ActedLegalDocsBundle:RefCountry');
+                $countryId = $refCountryRepo->createCountry($data->getCountry());
+
+                $country = $em->getRepository('ActedLegalDocsBundle:RefCountry')->findOneBy(array(
+                    'id' => $countryId
+                ));
+
+                $refRegionRepo = $em->getRepository('ActedLegalDocsBundle:RefRegion');
+                $regionId = $refRegionRepo->createRegion(
+                    $data->getRegionName(),
+                    $country,
+                    $data->getRegionLat(),
+                    $data->getRegionLng()
+                );
+
+                $region = $em->getRepository('ActedLegalDocsBundle:RefRegion')->findOneBy(array(
+                    'id' => $regionId
+                ));
+
+                $refCityRepo = $em->getRepository('ActedLegalDocsBundle:RefCity');
+                $cityId = $refCityRepo->createCity(
+                    $data->getCity(),
+                    $region,
+                    $data->getCityLat(),
+                    $data->getCityLng(),
+                    $data->getPlaceId()
+                );
+
+                $city = $em->getRepository('ActedLegalDocsBundle:RefCity')->findOneBy(array(
+                    'id' => $cityId
+                ));
+
+                $data->setCity($city);
+                $data->setCountry($country);
+
+
+
                 $artist = $userManager->newArtist($data);
                 $artist->setUser($user);
                 $validationErrors->addAll($validator->validate($artist));
@@ -426,7 +464,28 @@ class AdminController extends Controller
             $messageFileRepo = $em->getRepository('ActedLegalDocsBundle:MessageFile');
             $messageFiles = $messageFileRepo->getFileByUser($user);
             if ($user->getRoles()[0] === 'ROLE_ARTIST'){
+                $em->remove($user->getArtist());
                 $mediaManager->removeFiles($user, $messageFiles);
+            }else {
+                if ($user->getClient() != null) {
+                    $em->remove($user->getClient());
+                }
+
+                $events = $em->getRepository('ActedLegalDocsBundle:Event')->createQueryBuilder('e')
+                    ->where("e.user = ?1")->setParameter(1, $user)
+                    ->getQuery()->getResult();
+
+                foreach ($events as $event) {
+                    $rqs = $em->getRepository("ActedLegalDocsBundle:RequestQuotation")->createQueryBuilder("r")
+                        ->where("r.event = ?1")->setParameter(1, $event)
+                        ->getQuery()->getResult();
+
+                    foreach ($rqs as $quotation) {
+                        $em->remove($quotation);
+
+                    }
+
+                }
             }
             $em->remove($user);
             $em->flush();

@@ -1,0 +1,6 @@
+Acted\LegalDocsBundle\Entity\Rate:
+  properties:
+    id:
+      groups: [order]
+    price:
+      groups: [order]

@@ -43,6 +43,8 @@ twig:
       performancecontract_dir: "%performancecontract_dir%"
       quotation_dir: "%quotation_dir%"
       invoice_dir: "%invoice_dir%"
+      googlemaps:
+        key: AIzaSyDLK8SupBcU-H0H0SF0PIar5UP-y-DCrTI
 
 # Doctrine Configuration
 doctrine:
@@ -78,6 +80,11 @@ doctrine:
                 type: annotation
                 alias: Gedmo
                 prefix: Gedmo\Tree\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
+            tree:
+                type: annotation
+                alias: Gedmo
+                prefix: Gedmo\Timestampable\Entity
                 dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
 
 # Swiftmailer Configuration
@@ -144,6 +151,14 @@ liip_imagine:
             filters:
                 strip: ~
                 downscale: { max: [300, 200] }
+        search_image_thumbnail:
+            quality: 100
+            filters:
+                relative_resize: { widen: 320, mode: outbound }
+        avatar_thumbnail:
+            quality: 100
+            filters:
+                relative_resize: { widen: 320, mode: outbound }
         small:
             quality: 100
             filters:
@@ -178,3 +193,9 @@ tweede_golf_swiftmailer_logger:
     loggers:
         entity_logger:
             enabled: true
+
+#sentry:
+#    dsn: "%sentry_dsn%"
+
+jms_security_extra:
+        secure_all_services: false

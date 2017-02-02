@@ -2,6 +2,7 @@
 
 namespace Acted\LegalDocsBundle\Repository;
 
+use Acted\LegalDocsBundle\Entity\ChatRoom;
 use Acted\LegalDocsBundle\Entity\User;
 
 /**
@@ -26,5 +27,14 @@ class MessageFileRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult()
             ;
+    }
+
+    public function getChatRoomFiles(ChatRoom $room){
+        return $this->createQueryBuilder('f')
+            ->join('f.message','m')
+            ->where('m.chatRoom = :room')
+            ->setParameter('room', $room)
+            ->getQuery()
+            ->getResult();
     }
 }

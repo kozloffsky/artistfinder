@@ -9,6 +9,8 @@ Acted\LegalDocsBundle\Entity\Event:
             generator:
                 strategy: AUTO
     fields:
+        cityId:
+          type: integer(11)
         eventRef:
           type: string(64)
           unique: true
@@ -42,6 +44,14 @@ Acted\LegalDocsBundle\Entity\Event:
         numberOfGuests:
           type: string(64)
           nullable: true
+        countDays:
+          type: integer(1)
+          nullable: true
+          options:
+            unsigned: true
+        place_id:
+          type: string(256)
+          nullable: true
     manyToOne:
           user:
             targetEntity: Acted\LegalDocsBundle\Entity\User
@@ -57,6 +67,18 @@ Acted\LegalDocsBundle\Entity\Event:
     oneToMany:
         chatRooms:
           targetEntity: Acted\LegalDocsBundle\Entity\ChatRoom
+          mappedBy: event
+        requestQuotations:
+          targetEntity: Acted\LegalDocsBundle\Entity\RequestQuotation
+          mappedBy: event
+        feedbacks:
+          targetEntity: Acted\LegalDocsBundle\Entity\Feedback
+          mappedBy: event
+        eventArtists:
+          targetEntity: Acted\LegalDocsBundle\Entity\EventArtist
+          mappedBy: event
+        eventOffer:
+          targetEntity: Acted\LegalDocsBundle\Entity\EventOffer
           mappedBy: event
 
     lifecycleCallbacks: {  }

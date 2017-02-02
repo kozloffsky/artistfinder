@@ -1,0 +1,335 @@
+{% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
+
+{% set country = artist.country_id %}
+
+{% if country == 1 %}
+    {% set country = "United Kingdom" %}
+{% elseif country == 2 %}
+    {% set country = "Germany" %}
+{% elseif country == 3 %}
+    {% set country = "France" %}
+{% endif %}
+
+<main class="settings">
+    <div class="container">
+
+        <div class="clearfix">
+            <div class="sidebar no-pad col-lg-2 col-sm-2 col-md-2">
+                <ul class="tabs-list">
+                    <li role="presentation" data-toggle="contact_details" class="active">
+                        <a href="#contact_details" aria-controls="contact_details" role="tab" data-toggle="tab">Contact details</a>
+                    </li>
+                    <li role="presentation" data-toggle="profile-settings">
+                        <a href="#profile_settings" aria-controls="profile_settings" role="tab" data-toggle="tab">Profile settings</a>
+                    </li>
+                    <li role="presentation" data-toggle="contact_details">
+                        <a href="#payment_settings" aria-controls="payment_settings" role="tab" data-toggle="tab">Payment settings</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content col-lg-10 col-sm-10 col-md-10">
+                <article role="tabpanel-category" class="tab active" id="contact_details">
+                    <form action="#" class="main-form" name="contactForm" novalidate>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">First name</label>
+                            </div>
+                            <div class="box form-group">
+                                <label error class="error">Error!</label>
+                                <input type="text" placeholder="{{ artist.user.firstname }}" name="first_name" value="{{ artist.user.firstname }}">
+                                <h2>{{ artist.user.firstname }}</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Last name</label>
+                            </div>
+                            <div class="box form-group">
+                                <label error class="error">Error!</label>
+                                <input type="text" placeholder="{{ artist.user.lastname }}" name="last_name" value="{{ artist.user.lastname }}">
+                                <h2>{{ artist.user.lastname }}</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Artist name</label>
+                            </div>
+                            <div class="box active form-group">
+                                <label error class="error">Error!</label>
+                                <input hidden type="text" placeholder="{{ artist.name }}" name="name" value="{{ artist.name }}">
+                                <h2>{{ artist.name }}</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Country</label>
+                            </div>
+                            <div class="box active form-group">
+                                {#<input hidden type="text" placeholder="{{ country }}" name="country" value="{{ country }}">#}
+                                {#<h2>{{ country }}</h2>#}
+                                {#<input id="settings_country" type="text" placeholder="{{ artist.country }}" name="country" value="{{ artist.country }}">#}
+                                <select class="select_width_101 enable_toggler" name="country" id="settings_country">
+                                    <option value="United Kingdom" {% if artist.country == 'United Kingdom' %} selected {% endif %}>United Kingdom</option>
+                                    <option value="Germany" {% if artist.country == 'Germany' %} selected {% endif %}>Germany</option>
+                                    <option value="France" {% if artist.country == 'France' %} selected {% endif %}>France</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Location (city)</label>
+                            </div>
+                            <div class="box form-group">
+                                {% if artist.city is defined %}
+                                    <input type="text" name="city" id="settings_city" class="form-control" value=" {{ artist.city }}"/>
+                                    <h2>{{ artist.city }}</h2>
+                                {% else %}
+                                    <input disabled type="text" name="city" id="settings_city" class="form-control" value=" {{ artist.city }}"/>
+                                    <h2>{{ artist.city }}</h2>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right form-group">
+                                <label class="info-label">Post code</label>
+                            </div>
+                            <div class="box">
+                                <label error class="error">Error!</label>
+                                {% if artist.user.postcode is defined %}
+                                    <input type="text" placeholder="{{ artist.user.postcode }}" name="post_code" value="{{ artist.user.postcode }}">
+                                    <h2>{{ artist.user.postcode }}</h2>
+                                {% else %}
+                                    <input disabled type="text" placeholder="Post code" name="post_code" value="">
+                                    <h2></h2>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Email</label>
+                            </div>
+                            <div class="form-group box">
+                                <h2 class="email-title">{{ artist.user.email }}</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Mobile phone number</label>
+                            </div>
+                            <div class="form-group box">
+                                <label error class="error">Error!</label>
+                                {% if artist.user is defined %}
+                                    <input type="tel" placeholder="{{ artist.user.primary_phone }}" name="phone" value="{{ artist.user.primary_phone }}">
+                                    <h2>{{ artist.user.primary_phone }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="phone" value="">
+                                    <h2></h2>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                </article>
+                <article role="tabpanel-category" class="tab" id="profile_settings">
+                    <form action="#" class="main-form" name="profileForm" novalidate>
+                        <div class="row">
+                            <h2 class="title">Upload profile picture for search engine</h2>
+
+                            {% if artist.search_image is defined %}
+                                <div class="img-box" style="background: url('{{ artist.search_image }}') no-repeat;"></div>
+                            {% else %}
+                                <div class="img-box"></div>
+                            {% endif %}
+
+                            <div class="btn-upload">
+                                <input type="file" class="file" name="photo">
+                                <span>Select-file</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Your URL:</label>
+                            </div>
+                            <div class="box">
+                                <h2 class="show"><a href="{{ domain }}/profile/{{ artist.slug }}">{{ domain }}/profile/{{ artist.slug }}</a></h2>
+                            </div>
+                        </div>
+                        {# TODO: Add tinyurl service #}
+                        {#<div class="row">#}
+                            {#<div class="box text-right">#}
+                                {#<label class="info-label">Your tiny URL:</label>#}
+                            {#</div>#}
+                            {#<div class="box">#}
+                                {#<h2 class="show">{{ domain }}/{{ artist.name }}</h2>#}
+                            {#</div>#}
+                        {#</div>#}
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Are you ready to work abroad?</label>
+                            </div>
+                            <div class="box">
+                                <div class="custom-checkbox big">
+                                    <input id="ready_1" type="radio" name="work_abroad" {% if artist.work_abroad == true %} checked="checked"{% endif %}>
+                                    <label for="ready_1">Yes</label>
+                                </div>
+                                <div class="custom-checkbox big">
+                                    <input id="ready_2" type="radio" name="work_abroad" {% if artist.work_abroad == false %} checked="checked"{% endif %}>
+                                    <label for="ready_2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </article>
+                <article role="tabpanel-category" class="tab" id="payment_settings">
+                    <form action="#" class="main-form" name="paymentForm" novalidate>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Billing adress</label>
+                            </div>
+                            <div class="box">
+                                <label error class="error">Error!</label>
+                                {% if artist.user.payment_settings is defined %}
+                                    <input type="text" placeholder="{{ artist.user.payment_settings.billing_address }}" name="billing_address" value="{{ artist.user.payment_settings.billing_address }}">
+                                    <h2>{{ artist.user.payment_settings.billing_address }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="billing_address" value="">
+                                    <h2></h2>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Account name</label>
+                            </div>
+                            <div class="box">
+                                <label error class="error">Error!</label>
+                                {% if artist.user.payment_settings is defined %}
+                                    <input type="text" placeholder="{{ artist.user.payment_settings.account_name }}" name="account_name" value="{{ artist.user.payment_settings.account_name }}">
+                                    <h2>{{ artist.user.payment_settings.account_name }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="account_name" value="">
+                                    <h2></h2>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Account number</label>
+                            </div>
+                            <div class="box">
+                                <label error class="error">Error!</label>
+                                {% if artist.user.payment_settings is defined %}
+                                    <input type="text" placeholder="{{ artist.user.payment_settings.account_number }}" name="account_number" value="{{ artist.user.payment_settings.account_number }}">
+                                    <h2>{{ artist.user.payment_settings.account_number }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="account_number" value="">
+                                    <h2></h2>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">IBAN</label>
+                            </div>
+                            <div class="box">
+                                <label error class="error">Error!</label>
+                                {% if artist.user.payment_settings is defined %}
+                                    <input type="text" placeholder="{{ artist.user.payment_settings.iban }}" name="iban" value="{{ artist.user.payment_settings.iban }}">
+                                    <h2>{{ artist.user.payment_settings.iban }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="iban" value="">
+                                    <h2></h2>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Bank name</label>
+                            </div>
+                            <div class="box">
+                                <label error class="error">Error!</label>
+                                {% if artist.user.payment_settings is defined %}
+                                    <input type="text" placeholder="{{ artist.user.payment_settings.bank_name }}" name="bank_name" value="{{ artist.user.payment_settings.bank_name }}">
+                                    <h2>{{ artist.user.payment_settings.bank_name }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="bank_name" value="">
+                                    <h2></h2>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Swift code</label>
+                            </div>
+                            <div class="box">
+                                <label error class="error">Error!</label>
+                                {% if artist.user.payment_settings is defined %}
+                                    <input type="text" placeholder="{{ artist.user.payment_settings.swift_code }}" name="swift_code" value="{{ artist.user.payment_settings.swift_code }}">
+                                    <h2>{{ artist.user.payment_settings.swift_code }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="swift_code" value="">
+                                    <h2></h2>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">VAT number</label>
+                            </div>
+                            <div class="box">
+                                <label error class="error">Error!</label>
+                                {% if artist.user.payment_settings is defined %}
+                                    <input type="text" placeholder="{{ artist.user.payment_settings.vat_number }}" name="vat_number" value="{{ artist.user.payment_settings.vat_number }}">
+                                    <h2>{{ artist.user.payment_settings.vat_number }}</h2>
+                                {% else %}
+                                    <input type="text" placeholder="" name="vat_number" value="">
+                                    <h2></h2>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box text-right">
+                                <label class="info-label">Your currency</label>
+                            </div>
+                            <div class="box active">
+                                <label error class="error">Error!</label>
+                                <input type="text" placeholder="{{ artist.currency.iso_code }}" name="currency" value="{{ artist.currency.iso_code }}">
+                                <h2>{{ artist.currency.iso_code }}</h2>
+                            </div>
+                        </div>
+
+                        <div>
+                            <input name="city_lat" hidden type="text" value="{{ artist.city_lat }}">
+                            <input name="city_lng" hidden type="text" value="{{ artist.city_lng }}">
+                            <input name="region_lat" hidden type="text" value="{{ artist.reg_lat }}">
+                            <input name="region_lng" hidden type="text" value="{{ artist.reg_lng }}">
+                            <input name="region_name" hidden type="text" value="{{ artist.reg_name }}">
+                            <input name="place_id" hidden type="text" value="{% if artist.place_id is defined %} {{ artist.place_id }}{% endif %}">
+                        </div>
+                    </form>
+                </article>
+                <div class="save-button">
+                    <button class="btn btn-default btn-edit register pull-right">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div class="modal registration-modal fade" id="settingsPageModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"></span>
+            </button>
+            <div class="changeImageContiner"></div>
+            <div class="actions">
+                <a class="btn file-btn">
+                    <input type="file" id="uploadNewMedia" value="Choose a file" accept="image/*" />
+                </a>
+                <button class="upload-NewMedia">Upload Image</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'ActedLegalDocsBundle:Default:footer.html.twig' %}

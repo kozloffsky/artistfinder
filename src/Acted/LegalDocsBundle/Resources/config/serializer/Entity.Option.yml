@@ -1,0 +1,14 @@
+Acted\LegalDocsBundle\Entity\Option:
+  properties:
+    id:
+      groups: [order]
+    qty:
+      groups: [order]
+    duration:
+      groups: [order]
+    rates:
+      groups: []
+  virtual_properties:
+    getExistedRates:
+      serialized_name: rates
+      groups: [order]

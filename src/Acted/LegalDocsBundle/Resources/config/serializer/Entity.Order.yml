@@ -1,0 +1,46 @@
+Acted\LegalDocsBundle\Entity\Order:
+  properties:
+    id:
+      groups: [order]
+
+    items:
+      groups: [order, chat_room]
+
+    artist:
+      groups: [order]
+
+    event:
+      groups: [order]
+
+    client:
+      groups: [order]
+
+    performances:
+      groups: [order]
+
+    services:
+      groups: [order]
+
+    guaranteed_balance_term:
+      groups: [order]
+
+    guaranteed_deposit_term:
+      groups: [order]
+
+    status:
+      groups: [order, all_messages]
+
+    chat:
+      groups: [order]
+
+    performance_start_time:
+      groups: [order]
+
+    additional_info:
+      groups: [order]
+
+    deposit_amount:
+      groups: [order]
+
+    deposit_ballance:
+      groups: [order]

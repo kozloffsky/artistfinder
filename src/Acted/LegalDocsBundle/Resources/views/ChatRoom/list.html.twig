@@ -6,30 +6,30 @@
         {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
 
         <div class="enquiries-wrap">
-            {% for chat in chats|reverse %}
-                {#{% if chat.last_message %}#}
-                {% if chat.offer.event_offer[0].status == "propose" %}
-            <article class="enq-block clearfix" id="{{ chat.offer.id }}">
+            {% for order in orders|reverse %}
+                {#{% if order.last_message %}#}
+                {% if order.status != 333 %}{# 333 is temp for rejected status#}
+            <article class="enq-block clearfix" id="{{ order.id }}">
                 <span class="received-time">
-                     <i class="enq-icon icon-timing"></i> Received {{ chat.offer.event_offer[0].time_from_add }} ago
+                     <i class="enq-icon icon-timing"></i> Received {{ order.timeFromAdd}} ago
                 </span>
 
                 <div class="col-lg-3 no-pad">
 
                     <ul class="act-request-data ul-reset">
-                        <li><i class="enq-icon icon-date"></i> Date: <span class="value">{{ chat.event.starting_date }}</span></li>
+                        <li><i class="enq-icon icon-date"></i> Date: <span class="value">{{ order.event.startingDate | date("m/d/Y") }}</span></li>
                         <li><i class="enq-icon icon-timing"></i> Timing: <span class="value">
-                                {% if chat.event.timing is defined %}
-                                {{ chat.event.timing }}
+                                {% if order.event.timing is defined %}
+                                {{ order.event.timing }}
                                 {% endif %}
                             </span></li>
                         <li><i class="enq-icon icon-location"></i> Location: <span class="value">
-                            {% if chat.event.city.name is defined %}
-                                {{ chat.event.city.name }}
+                            {% if order.event.city.name is defined %}
+                                {{ order.event.city.name }}
                             {% endif %}
                             </span></li>
-                        <li><i class="enq-icon icon-event"></i> Event: <span class="value">{{ chat.event.title }}</span></li>
-                        <li><i class="enq-icon icon-client"></i> Client: <span class="value">{{ chat.event.user.firstname }}</span>
+                        <li><i class="enq-icon icon-event"></i> Event: <span class="value">{{ order.event.title }}</span></li>
+                        <li><i class="enq-icon icon-client"></i> Client: <span class="value">{{ order.event.user.firstname }}</span>
                         </li>
                     </ul>
 
@@ -38,38 +38,49 @@
 
                     <p class="act-request-title">
                         Act request: <span class="bold-title">
-                            {% for chatOffer in chat.offer.performances %}
-                                {{ chatOffer.title }},
+                            {% for orderItem in order.items %}
+                                {{ orderItem.data['title'] }},
+
                             {% endfor %}
                         </span>
-                        <!--<span class="see-more">(<a href="#">See more</a>)</span>-->
                     </p>
+
+                    {% if order.event.published_request is defined %}
+                        <p {% if not order.event.published_request %} style="display: none;" {% endif %}class="act-request-quotation-label">
+                            Quote sent
+                        </p>
+                    {% endif %}
 
                     <p class="act-request-message" data-max-chars-desktop="150" data-max-chars-mobile="70">
                         <span class="title">Message from client:</span>
 
                         <span class="text">
-                            {%  if chat.offer.comments is defined %}
-                            {{ chat.offer.comments }}
+                            {%  if order.offer.comments is defined %}
+                                {{ order.offer.comments }}
                             {% else %}
-                            There's no message from client.
+                                There's no message from client.
                             {% endif %}
                         </span>
                         <a class="show-more-btn" href="#">+more</a>
                     </p>
 
                     <div class="controls">
-                        <div class="button-gradient filled">
-                            <button type="button" class="btn register quotationSendbtn">Send Quotation</button>
-                        </div>
-
+                        {% if order.status > 0%}
+                            <div class="button-gradient filled orange">
+                                <button type="button" class="btn register quotationSendbtn" order-id="{{ order.id }}">Edit Quotation</button>
+                            </div>
+                        {% else %}
+                            <div class="button-gradient filled orange">
+                                <button type="button" class="btn register quotationSendbtn" order-id="{{ order.id }}">Send Quotation</button>
+                            </div>
+                        {% endif %}
 
                         <div class="button-gradient filled blue">
-                            <button type="button" class="btn register"><a href="/dashboard/chat/{{ chat.chat_id }}">Send Message</a></button>
+                            <a href="/dashboard/chat/{{ order.chat.id }}" class="btn register">Send Message</a>
                         </div>
 
-                        <div class="button-gradient">
-                            <button type="button" class="btn register rejectRequest">Not available</button>
+                        <div class="button-gradient orange">
+                            <button type="button" order-id="{{ order.id }}" class="btn register rejectRequest">Not available</button>
                         </div>
                     </div>
 
@@ -78,30 +89,30 @@
             {% endif %}
             {% endfor %}
 
-            {% for chat in chats|reverse %}
-                {#{% if chat.last_message %}#}
-                {% if chat.offer.event_offer[0].status == "reject" %}
-                    <article class="enq-block clearfix" id="{{ chat.offer.id }}">
+            {% for order in orders|reverse %}
+                {#{% if order.last_message %}#}
+                {% if order.status == 333 %}
+                    <article class="enq-block clearfix" id="{{ order.id }}">
                 <span class="received-time">
-                     <i class="enq-icon icon-timing"></i> Received {{ chat.offer.event_offer[0].time_from_add }} ago
+                     <i class="enq-icon icon-timing"></i> Received {{ order.timeFromAdd }} ago
                 </span>
 
                         <div class="col-lg-3 no-pad">
 
                             <ul class="act-request-data ul-reset">
-                                <li><i class="enq-icon icon-date"></i> Date: <span class="value">{{ chat.event.starting_date }}</span></li>
+                                <li><i class="enq-icon icon-date"></i> Date: <span class="value">{{ order.event.starting_date }}</span></li>
                                 <li><i class="enq-icon icon-timing"></i> Timing: <span class="value">
-                                {% if chat.event.timing is defined %}
-                                    {{ chat.event.timing }}
+                                {% if order.event.timing is defined %}
+                                    {{ order.event.timing }}
                                 {% endif %}
                             </span></li>
                                 <li><i class="enq-icon icon-location"></i> Location: <span class="value">
-                            {% if chat.event.city.name is defined %}
-                                {{ chat.event.city.name }}
+                            {% if order.event.city.name is defined %}
+                                {{ order.event.city.name }}
                             {% endif %}
                             </span></li>
-                                <li><i class="enq-icon icon-event"></i> Event: <span class="value">{{ chat.event.title }}</span></li>
-                                <li><i class="enq-icon icon-client"></i> Client: <span class="value">{{ chat.event.user.firstname }}</span>
+                                <li><i class="enq-icon icon-event"></i> Event: <span class="value">{{ order.event.title }}</span></li>
+                                <li><i class="enq-icon icon-client"></i> Client: <span class="value">{{ order.event.user.firstname }}</span>
                                 </li>
                             </ul>
 
@@ -110,8 +121,8 @@
 
                             <p class="act-request-title">
                                 Act request: <span class="bold-title">
-                            {% for chatOffer in chat.offer.performances %}
-                                {{ chatOffer.title }},
+                            {% for item in order.items %}
+                                {{ item.data['title'] }},
                             {% endfor %}
                         </span>
                                 <!--<span class="see-more">(<a href="#">See more</a>)</span>-->
@@ -121,8 +132,8 @@
                                 <span class="title">Message from client:</span>
 
                         <span class="text">
-                            {%  if chat.offer.comments is defined %}
-                                {{ chat.offer.comments }}
+                            {%  if order.offer.comments is defined %}
+                                {{ order.offer.comments }}
                             {% else %}
                                 There's no message from client.
                             {% endif %}
@@ -131,16 +142,15 @@
                             </p>
 
                             <div class="controls">
-                                <div class="button-gradient filled">
+                                <div class="button-gradient filled orange">
                                     <button type="button" class="btn register quotationSendbtn" disabled>Send Quotation</button>
                                 </div>
 
-
                                 <div class="button-gradient filled blue">
-                                    <button type="button" class="btn register"><a href="/dashboard/chat/{{ chat.chat_id }}">Send Message</a></button>
+                                    <a href="/dashboard/chat/{{ order.chat_id }}" class="btn register">Send Message</a>
                                 </div>
 
-                                <div class="button-gradient">
+                                <div class="button-gradient orange">
                                     <button type="button" class="btn register rejectRequest" disabled>Rejected</button>
                                 </div>
                             </div>

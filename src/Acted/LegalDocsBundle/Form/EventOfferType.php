@@ -20,6 +20,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Acted\LegalDocsBundle\Form\Type\BooleanType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class EventOfferType extends AbstractType
 {
@@ -43,16 +46,6 @@ class EventOfferType extends AbstractType
                 'constraints' => [new NotBlank()],
                 'description' => 'Type of event'
             ])
-            ->add('country', EntityType::class, [
-                'class' => RefCountry::class,
-                'constraints' => [new NotBlank()],
-                'description' => 'Country ID',
-            ])
-            ->add('city', EntityType::class, [
-                'class' => RefCity::class,
-                'constraints' => [new NotBlank()],
-                'description' => 'City ID',
-            ])
             ->add('location', TextType::class, [
                 'constraints' => [new NotBlank()],
             ])
@@ -74,7 +67,7 @@ class EventOfferType extends AbstractType
             ->add('performance', EntityType::class, [
                 'class' => Performance::class,
                 'multiple' => true,
-                'constraints' => [new Count(['min' => 1])],
+                'constraints' => [],
                 'description' => 'Array of Performances IDs'
             ])
             ->add('event', EntityType::class, [
@@ -88,9 +81,39 @@ class EventOfferType extends AbstractType
             ])
             ->add('comment', TextType::class, [
                 'constraints' => [
-                        new Length(['max' => 500])
+                    new Length(['max' => 450])
                 ]
             ])
+            ->add('additional_info', TextType::class, [
+                'constraints' => [
+                    new Length(['max' => 450])
+                ]
+            ])
+            ->add('details_accepted', BooleanType::class, [
+                'constraints' => [
+                ], 'description' => 'details_accepted'])
+            ->add('acts_extras_accepted', BooleanType::class, [
+                'constraints' => [
+                ], 'description' => 'acts_extras_accepted'])
+            ->add('timing_accepted', BooleanType::class, [
+                'constraints' => [
+                ], 'description' => 'timing_accepted'])
+            ->add('technical_requirements_accepted', BooleanType::class, [
+                'constraints' => [
+                ], 'description' => 'technical_requirements_accepted'])
+            ->add('count_days', IntegerType::class, [
+                'constraints' => [
+                    new Length(['max' => 30, 'min' => 1])
+                ], 'description' => 'Count days'])
+
+            ->add('country', TextType::class,      ['constraints' => [new NotBlank()], 'description' => 'Country'])
+            ->add('city', TextType::class,         ['constraints' => [new NotBlank()], 'description' => 'City'])
+            ->add('city_lat', NumberType::class,   ['constraints' => [new NotBlank()], 'description' => 'City latitude'])
+            ->add('city_lng', NumberType::class,   ['constraints' => [new NotBlank()], 'description' => 'City longitude'])
+            ->add('region_name', TextType::class,  ['constraints' => [new NotBlank()], 'description' => 'Name of region'])
+            ->add('region_lat', NumberType::class, ['constraints' => [new NotBlank()], 'description' => 'Region latitude'])
+            ->add('region_lng', NumberType::class, ['constraints' => [new NotBlank()], 'description' => 'Region longitude'])
+            ->add('place_id', TextType::class,     ['constraints' => [new NotBlank()], 'description' => 'Place id'])
         ;
     }
 

@@ -303,11 +303,6 @@ a.disabled {
 {
     border-color: #ff735a;
 }
-.user-info .user-name
-{
-    float: left;
-    width: 115px;
-}
 .archiveMessage
 {
     cursor: pointer;
@@ -442,6 +437,25 @@ a.disabled {
 {
     right: 0 !important;
 }
+
+
+
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    font-size: 14px !important;
+}
+
+i.fa.fa-trash:hover {
+    cursor: pointer;
+}
+/*.fa.fa-trash:before {
+    content: url("/assets/images/delete.png");
+}*/
+
+/**
+ *  Prices page and Profile page fixes
+ */
+
 /*@media (min-width: 992px) and (max-width: 1200px){
     .price-list .video iframe {
         height: 255px;
@@ -450,6 +464,13 @@ a.disabled {
         height: auto;
     }
 }*/
+/** HIDE 'Powered by Google' in autocomplete menu **/
+.pac-container:after {
+    background-image: none !important;
+    height: 0px;
+}
+
+
 @media (max-width: 720px) {
     .price-list .holder {
         width: 100%;

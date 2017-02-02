@@ -8,6 +8,7 @@
 
 namespace Acted\LegalDocsBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 use Symfony\Component\Form\Form;
 
@@ -25,8 +26,12 @@ class Controller extends BaseController
         return $data;
     }
 
+    /**
+     * @return EntityManager
+     */
     protected function getEM()
     {
         return $this->getDoctrine()->getManager();
     }
+
 }

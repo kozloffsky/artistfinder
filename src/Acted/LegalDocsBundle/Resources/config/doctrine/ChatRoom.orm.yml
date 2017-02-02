@@ -8,6 +8,10 @@ Acted\LegalDocsBundle\Entity\ChatRoom:
             id: true
             generator:
                 strategy: AUTO
+    fields:
+        technicalRequirements:
+            type: text
+            nullable: true
     oneToMany:
         message:
             targetEntity: Acted\LegalDocsBundle\Entity\Message
@@ -32,9 +36,14 @@ Acted\LegalDocsBundle\Entity\ChatRoom:
                 referencedColumnName: id
                 onDelete: CASCADE
     oneToOne:
-        offer:
-            targetEntity: Acted\LegalDocsBundle\Entity\Offer
+        #offer:
+        #    targetEntity: Acted\LegalDocsBundle\Entity\Offer
+        #    joinColumn:
+        #        referencedColumnName: id
+        #        onDelete: CASCADE
+
+        order:
+            targetEntity: Acted\LegalDocsBundle\Entity\Order
             joinColumn:
                 referencedColumnName: id
-                onDelete: CASCADE
     lifecycleCallbacks: {  }

@@ -1,0 +1,47 @@
+Acted\LegalDocsBundle\Entity\Package:
+    type: entity
+    table: Package
+    repositoryClass: Acted\LegalDocsBundle\Repository\PackageRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+      name:
+        type: string(128)
+      isSelected:
+        type: boolean
+        options:
+          default: false
+      deletedTime:
+        type: datetime
+        nullable: true
+    manyToOne:
+      performance:
+        targetEntity: Acted\LegalDocsBundle\Entity\Performance
+        inversedBy: packages
+        joinColumn:
+          name: performance_id
+          referencedColumnName: id
+          onDelete: "SET NULL"
+      service:
+        targetEntity: Acted\LegalDocsBundle\Entity\Service
+        inversedBy: packages
+        joinColumn:
+          name: service_id
+          referencedColumnName: id
+          onDelete: "SET NULL"
+      profile:
+        targetEntity: Acted\LegalDocsBundle\Entity\Profile
+        inversedBy: packages
+        joinColumn:
+          name: profile_id
+          referencedColumnName: id
+          onDelete: "SET NULL"
+    oneToMany:
+      options:
+        targetEntity: Acted\LegalDocsBundle\Entity\Option
+        mappedBy: package
+    lifecycleCallbacks: {  }

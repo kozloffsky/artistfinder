@@ -4,6 +4,7 @@ namespace Acted\LegalDocsBundle\Entity;
 
 use Acted\LegalDocsBundle\Entity\RefVenueType;
 use Acted\LegalDocsBundle\Entity\RefEventType;
+use Faker\Provider\cs_CZ\DateTime;
 
 /**
  * Event
@@ -95,6 +96,15 @@ class Event
      */
     private $numberOfGuests;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $eventArtists;
+
+    /**
+     * @var integer
+     */
+    private $countDays;
 
     /**
      * Get id
@@ -540,6 +550,7 @@ class Event
     public function __construct()
     {
         $this->chatRooms = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->requestQuotations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -602,5 +613,236 @@ class Event
     {
         return ($this->city && $this->city->getRegion()->getCountry()) ? $this->city->getRegion()->getCountry()->getName
         () : null;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $requestQuotations;
+
+
+    /**
+     * Add requestQuotation
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation
+     *
+     * @return Event
+     */
+    public function addRequestQuotation(\Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation)
+    {
+        $this->requestQuotations[] = $requestQuotation;
+
+        return $this;
+    }
+
+    /**
+     * Remove requestQuotation
+     *
+     * @param \Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation
+     */
+    public function removeRequestQuotation(\Acted\LegalDocsBundle\Entity\RequestQuotation $requestQuotation)
+    {
+        $this->requestQuotations->removeElement($requestQuotation);
+    }
+
+    /**
+     * Get requestQuotations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRequestQuotations()
+    {
+        return $this->requestQuotations;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $feedbacks;
+
+
+    /**
+     * Add feedback
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Feedback $feedback
+     *
+     * @return Event
+     */
+    public function addFeedback(\Acted\LegalDocsBundle\Entity\Feedback $feedback)
+    {
+        $this->feedbacks[] = $feedback;
+
+        return $this;
+    }
+
+    /**
+     * Remove feedback
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Feedback $feedback
+     */
+    public function removeFeedback(\Acted\LegalDocsBundle\Entity\Feedback $feedback)
+    {
+        $this->feedbacks->removeElement($feedback);
+    }
+
+    /**
+     * Get feedbacks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFeedbacks()
+    {
+        return $this->feedbacks;
+    }
+
+    /**
+     * Add eventArtist
+     *
+     * @param \Acted\LegalDocsBundle\Entity\eventArtist $eventArtist
+     *
+     * @return Event
+     */
+    public function addEventArtist(\Acted\LegalDocsBundle\Entity\eventArtist $eventArtist)
+    {
+        $this->eventArtists[] = $eventArtist;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventArtist
+     *
+     * @param \Acted\LegalDocsBundle\Entity\eventArtist $eventArtist
+     */
+    public function removeEventArtist(\Acted\LegalDocsBundle\Entity\eventArtist $eventArtist)
+    {
+        $this->eventArtists->removeElement($eventArtist);
+    }
+
+    /**
+     * Get eventArtists
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventArtists()
+    {
+        return $this->eventArtists;
+    }
+
+    /**
+     * Set entity properties dynamically.
+     *
+     * @param array $option
+     *
+     * @return $this
+     *
+     * @throws \Exception
+     */
+    public function setOptions(array $options)
+    {
+        $_classMethods = get_class_methods($this);
+        foreach ($options as $key => $value) {
+            if(stripos($key, 'date') !== false){
+                $value = \DateTime::createFromFormat('d/m/Y', $value);
+            }
+
+            $method = 'set' . ucfirst($key);
+            if (in_array($method, $_classMethods)) {
+                $this->$method($value);
+            } else {
+                throw new \Exception("Invalid method name {$method}");
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Set countDays
+     *
+     * @param integer $countDays
+     *
+     * @return Event
+     */
+    public function setCountDays($countDays)
+    {
+        $this->countDays = $countDays;
+
+        return $this;
+    }
+
+    /**
+     * Get countDays
+     *
+     * @return integer
+     */
+    public function getCountDays()
+    {
+        return $this->countDays;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $eventOffer;
+
+
+    /**
+     * Add eventOffer
+     *
+     * @param \Acted\LegalDocsBundle\Entity\EventOffer $eventOffer
+     *
+     * @return Event
+     */
+    public function addEventOffer(\Acted\LegalDocsBundle\Entity\EventOffer $eventOffer)
+    {
+        $this->eventOffer[] = $eventOffer;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventOffer
+     *
+     * @param \Acted\LegalDocsBundle\Entity\EventOffer $eventOffer
+     */
+    public function removeEventOffer(\Acted\LegalDocsBundle\Entity\EventOffer $eventOffer)
+    {
+        $this->eventOffer->removeElement($eventOffer);
+    }
+
+    /**
+     * Get eventOffer
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventOffer()
+    {
+        return $this->eventOffer;
+    }
+    /**
+     * @var string
+     */
+    private $place_id;
+
+
+    /**
+     * Set placeId
+     *
+     * @param string $placeId
+     *
+     * @return Event
+     */
+    public function setPlaceId($placeId)
+    {
+        $this->place_id = $placeId;
+
+        return $this;
+    }
+
+    /**
+     * Get placeId
+     *
+     * @return string
+     */
+    public function getPlaceId()
+    {
+        return $this->place_id;
     }
 }

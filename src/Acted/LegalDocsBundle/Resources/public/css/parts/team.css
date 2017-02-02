@@ -1,7 +1,5 @@
-body { background: #f5f5f5; }
-
 .team-section { margin-bottom: 210px; }
-.team-section h2 { font-size: 30px; color: #000; margin: 35px 0 0 0; font-family: 'Ubuntu', sans-serif; font-weight: 500; }
+.team-section h2 { font-size: 30px; color: #000; margin: 35px 0 0 0; font-family: Ubuntu, sans-serif; font-weight: 500; }
 .team-item-block { margin-top: 30px; }
 .team-item-container { position: relative; }
 .team-item-avatar { width: 100%; }
@@ -14,7 +12,10 @@ body { background: #f5f5f5; }
 }
 .team-item-h p { margin: 0; padding: 0; font-family: Lato-Regular;  font-size: 14px;  color: #ffffff; }
 .team-item-h p:nth-of-type(1) { padding-top: 12px; }
-.team-item-h p.name { font-family: 'Ubuntu', sans-serif; font-weight: 500; }
+.team-item-h p.name {
+    font-family: Ubuntu;
+    font-weight: 500;
+}
 .team-item-h p.post { font-family: 'Lato', sans-serif;   font-weight: 400; }
 
 .team-item-description {
@@ -41,7 +42,7 @@ body { background: #f5f5f5; }
 
 .team-item-description p { padding: 15px;
     margin: 0;
-    font-family: 'Lato', sans-serif;
+    font-family: LatoRegular;
     font-weight: 400;
     font-size: 16px;
     color: #000000;
@@ -63,7 +64,7 @@ body { background: #f5f5f5; }
     .team-item-description p {
         padding: 10px;
         margin: 0;
-        font-family: 'Lato', sans-serif;
+        font-family: LatoRegular;
         font-weight: 400;
         font-size: 14px;
         color: #000000;
@@ -76,7 +77,7 @@ body { background: #f5f5f5; }
     .team-item-description p {
         padding: 15px;
         margin: 0;
-        font-family: 'Lato', sans-serif;
+        font-family: LatoRegular;
         font-weight: 400;
         font-size: 14px;
         color: #000000;

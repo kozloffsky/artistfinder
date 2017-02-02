@@ -1,17 +1,17 @@
-<form action="#" class="detail-form">
+{#<form action="#" class="detail-form">
     <div class="row clearfix">
         {% if not app.user.artist %}
             <div class="col-lg-6 col-md-6 col-sm-6 no-padding">
             <h2 class="title">Event details</h2>
             <div class="frame">
                 <label for="name_event">Name event</label>
-                <input type="text" id="name_event" placeholder="{{ chat.event.title }}" value="{{ chat.event.title }}">
+                <input type="text" id="name_event" placeholder="{{ order.event.title }}" value="{{ order.event.title }}">
             </div>
             <div class="frame">
                 <label for="country-select">Country</label>
                 <select data-class="main-select" class="full-width" name="main-select" id="country-select">
                     {% for country in countries() %}
-                        {% if country.name == chat.event.countryName %}
+                        {% if country.name == order.event.countryName %}
                             <option value="{{ country.id }}" name="country" selected="selected">{{ country.name }}</option>
                         {% else %}
                             <option value="{{ country.id }}" name="country">{{ country.name }}</option>
@@ -23,7 +23,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="frame">
                         <label for="datetimepicker">Date</label>
-                        <input id="datetimepicker" placeholder="{{ chat.event.starting_date }}" type="text" value="{{ chat.event.starting_date }}">
+                        <input id="datetimepicker" placeholder="{{ order.event.starting_date }}" type="text" value="{{ order.event.starting_date }}">
                     </div>
                     <div class="frame">
                         <label for="performance">Performance time</label>
@@ -35,11 +35,11 @@
                     </div>
                     <div class="frame">
                         <label for="guests">Number of guests</label>
-                        <input type="text" id="guests" placeholder="{{ chat.event.number_of_guests }}" value="{{ chat.event.number_of_guests }}">
+                        <input type="text" id="guests" placeholder="{{ order.event.number_of_guests }}" value="{{ order.event.number_of_guests }}">
                     </div>
                     <div class="frame">
                         <label for="vanue">Vanue type</label>
-                        <input type="text" id="vanue" placeholder="{{ chat.event.venue_type.venue_type }}" value="{{ chat.event.venue_type.venue_type }}">
+                        <input type="text" id="vanue" placeholder="{{ order.event.venue_type.venue_type }}" value="{{ order.event.venue_type.venue_type }}">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 pull-right">
@@ -48,8 +48,9 @@
                         <input type="text" id="adress" placeholder="Sr Regis">
                     </div>
                     <div class="frame">
-                        <label for="city">City</label>
+                        <label for="cityEvent">City</label>
                         <select data-class="main-select" class="full-width" name="main-select" id="cityEvent">
+                            <option value="{{ order.event.city.id }}" name="country" selected="selected">{{ order.event.city.name }}</option>
                         </select>
                     </div>
                     <div class="frame">
@@ -61,9 +62,9 @@
                         <em class="note">Pin your location on the map</em>
                     </div>
                     <div class="hidden" id="eventLocationCoordinates">
-                        <span class="eventCityId">{{ chat.event.city.id }}</span>
-                        <span class="latitude">{{ chat.event.city.latitude }}</span>
-                        <span class="longitude">{{ chat.event.city.longitude }}</span>
+                        <span class="eventCityId">{{ order.event.city.id }}</span>
+                        <span class="latitude">{{ order.event.city.latitude }}</span>
+                        <span class="longitude">{{ order.event.city.longitude }}</span>
                     </div>
                 </div>
             </div>
@@ -73,56 +74,56 @@
                     <h2 class="title">Event details</h2>
                     <div class="frame">
                         <label for="name_event">Name event</label>
-                        <div class="eventArtist">{{ chat.event.title }}</div>
+                        <input type="text" placeholder="{{ order.event.title }}" value="{{ order.event.title }}" disabled>
                     </div>
                     <div class="frame">
                         <label for="country-select">Country</label>
-                        <div class="eventArtist">{{ chat.event.countryName }}</div>
+                        <input type="text" placeholder="{{ order.event.countryName }}" value="{{ order.event.countryName }}" disabled>
                     </div>
                     <div class="row holder border-b clearfix">
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="frame">
                                 <label for="datetimepicker">Date</label>
-                                <div class="eventArtist">{{ chat.event.starting_date }}</div>
+                                <input type="text" placeholder="{{ order.event.starting_date }}" value="{{ order.event.starting_date }}" disabled>
                             </div>
                             <div class="frame">
                                 <label for="performance">Performance time</label>
-                                <input type="text" id="performance" placeholder="10 p.m.">
+                                <input type="text" placeholder="{{ order.event.timing }}" value="{{ order.event.timing }}" disabled>
                             </div>
                             <div class="frame">
                                 <label for="arrival">Arrival time</label>
-                                <input type="text" id="arrival" placeholder="6 p.m.">
+                                <input type="text" placeholder="" value="" disabled>
                             </div>
                             <div class="frame">
                                 <label for="guests">Number of guests</label>
-                                <div class="eventArtist">{{ chat.event.number_of_guests }}</div>
+                                <input type="text" placeholder="{{ order.event.number_of_guests }}" value="{{ order.event.number_of_guests }}" disabled>
                             </div>
                             <div class="frame">
                                 <label for="vanue">Vanue type</label>
-                                <div class="eventArtist">{{ chat.event.venue_type.venue_type }}</div>
+                                <input type="text" placeholder="{{ order.event.venue_type.venue_type }}" value="{{ order.event.venue_type.venue_type }}" disabled>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 pull-right">
                             <div class="frame">
                                 <label for="adress">Adress</label>
-                                <input type="text" id="adress" placeholder="Sr Regis">
+                                <input type="text" placeholder="{{ order.event.location }}" value="{{ order.event.location }}" disabled>
                             </div>
                             <div class="frame">
                                 <label for="city">City</label>
-                                <div class="eventArtist">{{ chat.event.city.name }}</div>
+                                <input type="text" placeholder="{{ order.event.city.name }}" value="{{ order.event.city.name }}" disabled>
                             </div>
                             <div class="frame">
                                 <label for="p-code">Post code</label>
-                                <input type="text" id="p-code" placeholder="Sr Regis">
+                                <input type="text" placeholder="" value="" disabled>
                             </div>
                             <div class="map-holder">
-                                <div id="map"></div>
-                                <em class="note">Pin your location on the map</em>
+                                <img src="https://maps.googleapis.com/maps/api/staticmap?center={{ order.event.location|url_encode }}&zoom=14&key={{googlemaps.key}}&size=196x106&markers=size:mid|color:blue|label:E%7C{{ order.event.location|url_encode }}
+">
                             </div>
                             <div class="hidden" id="eventLocationCoordinates">
-                                <span class="eventCityId">{{ chat.event.city.id }}</span>
-                                <span class="latitude">{{ chat.event.city.latitude }}</span>
-                                <span class="longitude">{{ chat.event.city.longitude }}</span>
+                                <span class="eventCityId">{{ order.event.city.id }}</span>
+                                <span class="latitude">{{ order.event.city.latitude }}</span>
+                                <span class="longitude">{{ order.event.city.longitude }}</span>
                             </div>
                         </div>
                     </div>
@@ -132,146 +133,6 @@
             {% if app.user.artist %}
                 <h2 class="title">Quote</h2>
             <div class="free-quote-modal request quotationDetailsChat">
-                <ul class="price-list">
-                    <li>
-                        <div class="custom-checkbox">
-                            <input id="req_checkbox_1" type="checkbox">
-                            <label for="req_checkbox_1">Beautiful Acts</label>
-                        </div>
-                        <div class="row">
-                            <div class="col pull-left">
-                                <div class="row">
-                                    <div class="custom-checkbox small">
-                                        <input id="req_checkbox_11" type="checkbox">
-                                        <label for="req_checkbox_11">2x45 min</label>
-                                    </div>
-                                    <select data-class="selections-white currency" name="currency1" id="currency1">
-                                        <option value="0">3.000 GBP</option>
-                                        <option value="1">3.001 GBP</option>
-                                        <option value="2">3.002 GBP</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col pull-right">
-                                <div class="row">
-                                    <div class="custom-checkbox small">
-                                        <input id="req_checkbox_12" type="checkbox">
-                                        <label for="req_checkbox_12">2x45 min</label>
-                                    </div>
-                                    <select data-class="selections-white currency" name="currency2" id="currency2">
-                                        <option value="0">3.000 GBP</option>
-                                        <option value="1">3.001 GBP</option>
-                                        <option value="2">3.002 GBP</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="custom-checkbox">
-                            <input id="req_checkbox_2" type="checkbox">
-                            <label for="req_checkbox_2">Beautiful Acts</label>
-                        </div>
-                        <div class="row">
-                            <div class="col pull-left">
-                                <div class="row">
-                                    <div class="custom-checkbox small">
-                                        <input id="req_checkbox_21" type="checkbox">
-                                        <label for="req_checkbox_21">2x45 min</label>
-                                    </div>
-                                    <select data-class="selections-white currency" name="currency4" id="currency4">
-                                        <option value="0">3.000 GBP</option>
-                                        <option value="1">3.001 GBP</option>
-                                        <option value="2">3.002 GBP</option>
-                                    </select>
-                                </div>
-                                <div class="row">
-                                    <div class="custom-checkbox small">
-                                        <input id="req_checkbox_22" type="checkbox">
-                                        <label for="req_checkbox_22">2x45 min</label>
-                                    </div>
-                                    <select data-class="selections-white currency" name="currency5" id="currency5">
-                                        <option value="0">3.000 GBP</option>
-                                        <option value="1">3.001 GBP</option>
-                                        <option value="2">3.002 GBP</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col pull-right">
-                                <div class="row">
-                                    <div class="custom-checkbox small">
-                                        <input id="req_checkbox_23" type="checkbox">
-                                        <label for="req_checkbox_23">2x45 min</label>
-                                    </div>
-                                    <select data-class="selections-white currency" name="currency6" id="currency6">
-                                        <option value="0">3.000 GBP</option>
-                                        <option value="1">3.001 GBP</option>
-                                        <option value="2">3.002 GBP</option>
-                                    </select>
-                                </div>
-                                <div class="row">
-                                    <select data-class="selections-white currency" name="currency7" id="currency7">
-                                        <option value="0">3.000 GBP</option>
-                                        <option value="1">3.001 GBP</option>
-                                        <option value="2">3.002 GBP</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="custom-checkbox">
-                            <input id="req_checkbox_3" type="checkbox">
-                            <label for="req_checkbox_3">Beautiful Acts</label>
-                        </div>
-                        <div class="row">
-                            <div class="col pull-left">
-                                <div class="row">
-                                    <div class="custom-checkbox small">
-                                        <input id="req_checkbox_31" type="checkbox">
-                                        <label for="req_checkbox_31">2x45 min</label>
-                                    </div>
-                                    <select data-class="selections-white currency" name="currency8" id="currency8">
-                                        <option value="0">3.000 GBP</option>
-                                        <option value="1">3.001 GBP</option>
-                                        <option value="2">3.002 GBP</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col pull-right">
-                                <div class="row">
-                                    <div class="custom-checkbox small">
-                                        <input id="req_checkbox_32" type="checkbox">
-                                        <label for="req_checkbox_32">2x45 min</label>
-                                    </div>
-                                    <select data-class="selections-white currency" name="currency9" id="currency9">
-                                        <option value="0">3.000 GBP</option>
-                                        <option value="1">3.001 GBP</option>
-                                        <option value="2">3.002 GBP</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <div class="row">
-                    <div class="controls">
-                        <div class="button-gradient blue">
-                            <button type="button" class="btn register">Add Extra Service</button>
-                        </div>
-                    </div>
-                </div>
-                <h4>Includes travel expanses</h4>
-                <div>
-                    <div class="custom-checkbox">
-                        <input id="req_radio_1" type="radio" name="req_radio">
-                        <label for="req_radio_1">Yes</label>
-                    </div>
-                    <div class="custom-checkbox">
-                        <input id="req_radio_2" type="radio" name="req_radio">
-                        <label for="req_radio_2">No</label>
-                    </div>
-                </div>
             </div>
             {% else %}
             <h2 class="title">Quote</h2>
@@ -308,5 +169,258 @@
             <input type="text" id="e-address" placeholder="smth@gmail.com">
         </div>
 
+    </div>
+</form>#}
+
+<form action="#" class="detail-form">
+    <div class="row">
+        <div class="col-sm-12 no-pad">
+            <a href="#" class="pull-right print-act">
+                <i class="icon icon-print" aria-hidden="true"></i>
+                Print
+            </a>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-lg-6 col-md-6 col-sm-6 container-custom no-padding">
+            <div class="row event-details-section">
+                <h2 class="title event">Event details</h2>
+
+                <div class="frame">
+                    <label for="name_event">Event name</label>
+                    <input id="name_event" disabled type="text" placeholder="{{ order.event.title }}" value="{{ order.event.title }}">
+                </div>
+
+                <div class="row holder clearfix">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-custom-size">
+                        <div class="frame">
+                            <label for="datetimepicker">Date</label>
+                            <input id="datetimepicker" disabled type="text" class="custom-size" placeholder="{{ order.event.startingDate | date("d/m/Y") }}" value="{{ order.event.startingDate | date("d/m/Y")}}">
+                        </div>
+                        <div class="frame">
+                            <label for="event_time">Event timing</label>
+                            <input id="event_time" disabled type="text" class="custom-size" placeholder="{{ order.event.timing }}" value="{{ order.event.timing }}">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 pull-right col-custom-size">
+                        <div class="frame">
+                            <label for="performance">1 day/multiple days</label>
+                            <input id="performance" disabled type="text" class="custom-size" placeholder="2-day event" value="{{ order.event.countDays }}-day event">
+                        </div>
+                        <div class="frame">
+                            <label for="country">Country</label>
+                            <input id="country" type="text" class="custom-size" placeholder="{{ order.event.countryName }}" value="{{ order.event.countryName }}" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="frame">
+                    <label for="address">Address</label>
+                    <input id="address" disabled type="text" placeholder="{{ order.event.address }}" value="{{ order.event.address }}">
+                </div>
+
+                <div class="row holder clearfix">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-custom-size">
+                        <div class="frame">
+                            <label for="venue_type">Venue type</label>
+                            <input id="venue_type" disabled type="text" class="custom-size" placeholder="{{ order.event.venueType.venueType }}" value="{{ order.event.venueType.venueType }}">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 pull-right col-custom-size">
+                        <div class="frame">
+                            <label for="guests_count">Number of guests</label>
+                            <input id="guests_count" disabled type="text" class="custom-size" placeholder="{{ order.event.numberOfGuests }}" value="{{ order.event.numberOfGuests|replace({"_": " "}) }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="frame">
+                    <label for="extra_info">Additional info</label>
+                    <textarea id="extra_info" placeholder="{{ order.event.comments }}">{{ order.event.comments }}</textarea>
+                </div>
+            </div>
+            <div class="row section-info-footer hidden-sm hidden-md hidden-lg">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-pad">
+                    <div class="custom-checkbox">
+                        <input id="details_agree_mobile" name="details_agree_mobile" value="" type="checkbox" v-model="_detailsAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT'">
+                        <label for="details_agree_mobile">I agree with these details</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--quote section sta~rt-->
+        <div class="col-lg-6 col-md-6 col-sm-6 no-padding">
+
+            <div class="row quote-section">
+                <h2 class="title quot">Quote #{{ order.id }}</h2>
+                <!--quote section holder start-->
+
+                <div class="holder">
+                    {% if order.status > 0 %}
+                        {% for p in order.performances %}
+                            {% if p.data.performance is defined %}
+                                {% set performanceClass = 'performance' %}
+                            {% else %}
+                                {% set performanceClass = 'service' %}
+                            {% endif %}
+
+                            {% set userColumnClass = 'col-md-6 currency-box' %}
+                            {% set userAlignCurrencyClass = 'set-currency' %}
+
+                            {% if user.roles[0] == 'ROLE_ARTIST'%}
+                                {% set userColumnClass = 'col-md-12' %}
+                                {% set userAlignCurrencyClass = 'pull-right' %}
+                            {% endif %}
+
+                            {% if p.data.type > 0 %}
+                                {% set performanceClass = 'service act-extras' %}
+                            {% endif %}
+
+                            <article class="{{ performanceClass }}">
+                                <h3 class="package-name">{{ p.data['title'] }}</h3>
+                                <ul class="">
+                                    {% for packageKey,package in p.data.packages %}
+                                        <li>
+                                            <strong class="sub-title">{{ package['name'] }}</strong>
+                                            <div class="row">
+                                                {% for key,option in package['options'] %}
+
+                                                    <div class="{{ userColumnClass }} no-pad">
+                                                        {% if user.roles[0] == 'ROLE_CLIENT'%}
+                                                            {% set optionChecked = '' %}
+                                                            {% if option.clientSelect is defined and option.clientSelect == "true" %}
+                                                                {% set optionChecked = 'checked' %}
+                                                            {% endif %}
+
+                                                            <div class="custom-checkbox">
+                                                                <input id="{{ option.objId }}" object-id="{{ p.data.objId }}" package-id="{{ package.objId }}" name="{{ option.objId }}" v-on:click="checkOption($event)" value="" type="checkbox" {{ optionChecked }} v-bind:disabled="orderStatus > 1">
+                                                                <label for="{{ option.objId }}"></label>
+                                                            </div>
+                                                        {% endif %}
+                                                        {% if p.data.type < 2 %}
+                                                            <span class="short" name="currency1" id="currency1">{{ option['qty'] }}</span>
+                                                            <span class="">x</span>
+                                                            <span class="short" name="currency11" id="currency11">{{ option['duration'] }} min</span>
+                                                        {% endif %}
+                                                        <div class="{{ userAlignCurrencyClass }}">
+                                                            <span class="short">{{ option['rates'][0]["price"]['amount'] }}</span>
+                                                            <span class="pull-right">GBP</span>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                            {% if p.data.type > 0 %}
+                                                <div class="row">
+                                                    <span class="extra-descr">{{ p.data.comment }}</span>
+                                                </div>
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </article>
+                        {% endfor %}
+
+
+                        {% for p in order.services %}
+
+                            {% set performanceClass = 'service' %}
+
+                            {% set userColumnClass = 'col-md-6 currency-box' %}
+                            {% set userAlignCurrencyClass = 'set-currency' %}
+
+                            {% if user.roles[0] == 'ROLE_ARTIST'%}
+                                {% set userColumnClass = 'col-md-12' %}
+                                {% set userAlignCurrencyClass = 'pull-right' %}
+                            {% endif %}
+
+                            <article class="{{ performanceClass }}">
+                                <h3 class="package-name">{{ p.data['title'] }}</h3>
+                                <ul class="">
+                                    {% for packageKey,package in p.data.packages %}
+                                        <li>
+                                            <strong class="sub-title">{{ package['name'] }}</strong>
+                                            <div class="row">
+                                                {% for key,option in package['options'] %}
+
+                                                    <div class="{{ userColumnClass }} no-pad">
+                                                        {% if user.roles[0] == 'ROLE_CLIENT'%}
+                                                            {% set optionChecked = '' %}
+                                                            {% if option.clientSelect is defined and option.clientSelect == "true" %}
+                                                                {% set optionChecked = 'checked' %}
+                                                            {% endif %}
+
+                                                            <div class="custom-checkbox">
+                                                                <input id="{{ option.objId }}" object-id="{{ p.data.objId }}" package-id="{{ package.objId }}" name="{{ option.objId }}" v-on:click="checkOption($event)" value="" type="checkbox" {{ optionChecked }}>
+                                                                <label for="{{ option.objId }}"></label>
+                                                            </div>
+                                                        {% endif %}
+                                                        <div class="{{ userAlignCurrencyClass }}">
+                                                            <span class="short">{{ option['rates'][0]["price"]['amount'] }}</span>
+                                                            <span class="pull-right">GBP</span>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </article>
+                        {% endfor %}
+
+                        {#<article class="service act-extras">
+                            <h3 class="package-name">Extra - 1</h3>
+                            <ul class="">
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-12 no-pad">
+                                            <strong class="sub-title">Standart Act</strong>
+                                            <span class="short" name="currency1" id="currency1">2</span>
+                                            <span class="">x</span>
+                                            <span class="short" name="currency11" id="currency11">45 min</span>
+                                            <div class="pull-right">
+                                                <span class="short">3.000</span>
+                                                <span class="pull-right">GBP</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <span class="extra-descr">Description of extra is really nice singe. and I’m writing it for fill this place</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </article>#}
+                    {% endif %}
+                </div>
+                <!--quote section holder end-->
+                <div class="row">
+                    {% if order.status > 0 %}
+                    <div class="text-box">
+                        <h3>Payment terms</h3>
+                        <p><span class="percent">{{ order.guaranteedDepositTerm }}%</span> guaranteed Deposit payment on <b>Escrow Account</b></p>
+                        <p><span class="percent">{{ order.guaranteedBalanceTerm }}%</span> guaranteed Balance payment on <b>Escrow Account</b></p>
+                    </div>
+                    {% endif %}
+                    <div class="controls">
+                        <div class="button-gradient filled orange">
+                            {% if user.roles[0] == 'ROLE_CLIENT' and order.status < 2 %}
+                                <button class="btn" v-on:click="showConfirmModal" v-bind:disabled="bookingAllowed">Book now</button>
+                            {% elseif user.roles[0] == 'ROLE_ARTIST' and order.status < 2 %}
+                            <button edit-order order-id="{{ order.id }}" v-bind:disabled="sendingAllowed" class="btn">{% if order.status == 0 %}Send Quotation{% else %}Edit Quotation{% endif %}</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row section-info-footer hidden-sm hidden-md hidden-lg">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-pad">
+                    <div class="custom-checkbox">
+                        <input id="details_agree_mobile_1" name="details_agree_mobile_1" value="" type="checkbox" v-model="actsExtrasAccepted" v-bind:disabled="userRole == 'ROLE_CLIENT'">
+                        <label for="details_agree_mobile_1">I can provide the acts & extras selected</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--quote section end-->
     </div>
 </form>

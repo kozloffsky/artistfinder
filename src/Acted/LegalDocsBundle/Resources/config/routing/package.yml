@@ -1,0 +1,9 @@
+service_create:
+    path: /create
+    defaults: { _controller: ActedLegalDocsBundle:Service:create }
+    methods:  POST
+
+service_edit:
+    path: /{id}/edit
+    defaults: { _controller: ActedLegalDocsBundle:Service:edit }
+    methods:  PATCH

@@ -5,9 +5,13 @@ namespace Acted\LegalDocsBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use Acted\LegalDocsBundle\Entity\Profile;
 
 class PerformanceType extends AbstractType
 {
@@ -23,7 +27,10 @@ class PerformanceType extends AbstractType
             ])
             ->add('techRequirement')
             ->add('profile')
+            ->add('isVisible')
             ->add('media')
+            ->add('type')
+            ->add('comment')
             ->add('status', ChoiceType::class, [
                 'choices_as_values' => true,
                 'choices' => ['draft', 'published'],

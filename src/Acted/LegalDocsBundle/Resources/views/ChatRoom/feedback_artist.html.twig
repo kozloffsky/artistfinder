@@ -1,0 +1,79 @@
+<main class="dashboard feedback">
+    <div class="container">
+        {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
+
+        <div class="row average-rating">
+            <span>Your average rating is:</span>
+        </div>
+
+        <div class="row rating-wrapper">
+            <div class="rating-stars">
+                {% if rating.averageRating | round(0, 'floor') > 0   %}
+                {% for i in 1..rating.averageRating | round(0, 'floor')%}
+                    <i class="star-icon filled"></i>
+                {% endfor %}
+                {% endif %}
+                {% if  5-rating.averageRating | round(0,'floor') > 0  %}
+                    {% for i in 1..(5-rating.averageRating) | round(0, 'ceil') %}
+                        <i class="star-icon unfilled"></i>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="rating-rate">
+                <span>{{ rating.averageRating | round(1)}}/5.0 ({{ feedbacks | length }} votes)</span>
+            </div>
+            {% if feedbacks | length < 5 %}
+            <div class="rating-reach">
+                <div class="custom-checkbox">
+                    <input id="rating-accept-appear" name="package-check" value="" {% if app.user.profile.showFeedbacks is empty %} checked="checked" {% endif %} type="checkbox">
+                    <label for="rating-accept-appear"></label>
+                </div>
+                <span>Until you reach 5 feedbacks, you can decide if they should appear on your profile or not. Simply tick this box if you want to hide them</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="row">
+            <span class="feedback-list-title">
+                {{ feedbacks|length }}
+                {% if feedbacks|length <= 1 %}
+                    Feedback
+                {% else %}
+                    Feedbacks
+                {% endif %}
+             </span>
+        </div>
+
+        <div class="row">
+            <hr>
+        </div>
+        {% for feedback in feedbacks %}
+        <div class="row artist-feedback">
+            <div class="avatar">
+                {% if feedback.event.user.avatar is defined and feedback.event.user.avatar| length > 1 %}
+                    <img src="{{ feedback.event.user.avatar }}">
+                {% else %}
+                    <img src="/assets/images/noAvatar.png">
+                {% endif %}
+            </div>
+            <div class="info">
+                <div><i>{{ feedback.event.user.firstname }} {{ feedback.event.user.lastname }}</i></div>
+                <div>
+                    {% for i in 1..feedback.rating %}
+                        <i class="star-icon filled"></i>
+                    {% endfor %}
+                    {% if  5-feedback.rating > 0  %}
+                        {% for i in 1..(5-feedback.rating) %}
+                            <i class="star-icon unfilled"></i>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="date"><i>{{ feedback.createdAt | date("d F Y") }}</i></div>
+            </div>
+            <div class="comment">
+                <p>{{ feedback.feedback }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</main>

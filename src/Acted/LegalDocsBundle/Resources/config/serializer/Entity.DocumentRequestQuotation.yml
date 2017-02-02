@@ -1,0 +1,9 @@
+Acted\LegalDocsBundle\Entity\DocumentRequestQuotation:
+    exclusion_policy: NONE
+    properties:
+        path:
+            groups: []
+    virtual_properties:
+        getRequestQuotation:
+            serialized_name: requestQuotation
+            groups: []

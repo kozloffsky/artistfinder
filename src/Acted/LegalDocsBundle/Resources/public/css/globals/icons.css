@@ -1,0 +1,69 @@
+i.icon {
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+i.icon.icon-attach {
+    background-image: url(/assets/images/attach.png);
+}
+i.icon.icon-checkmark {
+    background-image: url(/assets/images/checkmark.png);
+}
+i.icon.icon-close {
+    background-image: url(/assets/images/close.png);
+}
+i.icon.icon-delete-attached {
+    background-image: url(/assets/images/delete_attached.png);
+}
+i.icon.icon-notifications {
+    background-image: url(/assets/images/notifications.png);
+}
+i.icon.icon-picture {
+    background-image: url(/assets/images/picture.png);
+}
+i.icon.icon-print {
+    background-image: url(/assets/images/print.png);
+}
+i.icon.icon-share {
+    background-image: url(/assets/images/share.png);
+}
+i.icon.icon-white-cross {
+    background-image: url(/assets/images/cross.png);
+}
+i.icon.icon-question-mark {
+    background-image: url(/assets/images/question_ic.png);
+
+    height: 16px;
+    width: 16px;
+    vertical-align: middle;
+}
+
+i.icon.icon-quotation-sent {
+    background-image: url(/assets/images/success.png);
+}
+i.star-icon.unfilled {
+    background: url('/assets/images/star_unfilled_feedback.png') no-repeat;
+}
+i.star-icon.filled {
+    background: url('/assets/images/star_feedback.png') no-repeat;
+}
+.enq-icon.icon-date {
+    background: url("../../assets/images/date.png") no-repeat center;
+    background-size: cover;
+}
+.enq-icon.icon-timing {
+    background: url("../../assets/images/timing.png") no-repeat center;
+    background-size: cover;
+}
+.enq-icon.icon-location {
+    background: url("../../assets/images/location.png") no-repeat center;
+    background-size: cover;
+}
+.enq-icon.icon-event {
+    background: url("../../assets/images/event.png") no-repeat center;
+    background-size: cover;
+}
+.enq-icon.icon-client {
+    background: url("../../assets/images/client.png") no-repeat center;
+    background-size: cover;
+}

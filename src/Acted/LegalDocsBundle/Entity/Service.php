@@ -15,7 +15,7 @@ class Service
     /**
      * @var integer
      */
-    private $performanceId;
+    public $profileId;
 
     /**
      * @var string
@@ -23,34 +23,140 @@ class Service
     private $title;
 
     /**
-     * @var float
+     * @var boolean
+     */
+    private $isVisible = true;
+
+    /**
+     * @var \DateTime
+     */
+    private $deletedTime;
+
+    /**
+     * @var \Acted\LegalDocsBundle\Entity\Price
      */
     private $price;
 
     /**
-     * @var integer
+     * @var \Acted\LegalDocsBundle\Entity\Profile
      */
-    private $currencyId;
+    private $profile;
 
     /**
-     * @var float
+     * @var \Doctrine\Common\Collections\Collection
      */
-    private $depositValue;
+    private $packages;
 
     /**
-     * @var string
+     * @var \Doctrine\Common\Collections\Collection
      */
-    private $depositType;
+    private $serviceRequestQuotations;
 
     /**
-     * @var string
+     * @var boolean
      */
-    private $paymentTerms;
+    private $isQuotation = false;
+
+    public function __construct() {
+        $this->packages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->serviceRequestQuotations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
-     * @var string
+     * Add package
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Package $package
+     *
+     * @return Service
      */
-    private $comments;
+    public function addPackage(\Acted\LegalDocsBundle\Entity\Package $package)
+    {
+        $this->packages[] = $package;
+        return $this;
+    }
+
+    /**
+     * Remove package
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Package $package
+     */
+    public function removePackage(\Acted\LegalDocsBundle\Entity\Package $package)
+    {
+        $this->packages->removeElement($package);
+    }
+
+
+    /**
+     * Get packages
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPackages()
+    {
+        return $this->packages;
+    }
+
+    /**
+     * Get existed packages
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExistedPackages()
+    {
+        return $this->packages->filter(
+            function ($entry) {
+                return is_null($entry->getDeletedTime());
+            }
+        );
+    }
+
+    /**
+     * Set profile
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Profile $profile
+     *
+     * @return Service
+     */
+    public function setProfile(\Acted\LegalDocsBundle\Entity\Profile $profile = null)
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    /**
+     * Get profile
+     *
+     * @return \Acted\LegalDocsBundle\Entity\Profile
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+    /**
+     * Set price
+     *
+     * @param \Acted\LegalDocsBundle\Entity\Price $price
+     *
+     * @return Service
+     */
+    public function setPrice(\Acted\LegalDocsBundle\Entity\Price $price = null)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return \Acted\LegalDocsBundle\Entity\Price
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
 
 
     /**
@@ -64,27 +170,27 @@ class Service
     }
 
     /**
-     * Set performanceId
+     * Set profileId
      *
-     * @param integer $performanceId
+     * @param integer $profileId
      *
      * @return Service
      */
-    public function setPerformanceId($performanceId)
+    public function setProfileId($profileId)
     {
-        $this->performanceId = $performanceId;
+        $this->profileId = $profileId;
 
         return $this;
     }
 
     /**
-     * Get performanceId
+     * Get profileId
      *
      * @return integer
      */
-    public function getPerformanceId()
+    public function getProfileId()
     {
-        return $this->performanceId;
+        return $this->profileId;
     }
 
     /**
@@ -112,146 +218,108 @@ class Service
     }
 
     /**
-     * Set price
+     * Set isVisible
      *
-     * @param float $price
+     * @param string $isVisible
      *
      * @return Service
      */
-    public function setPrice($price)
+    public function setIsVisible($isVisible)
     {
-        $this->price = $price;
+        $this->isVisible = $isVisible;
 
         return $this;
     }
 
     /**
-     * Get price
-     *
-     * @return float
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    /**
-     * Set currencyId
-     *
-     * @param integer $currencyId
-     *
-     * @return Service
-     */
-    public function setCurrencyId($currencyId)
-    {
-        $this->currencyId = $currencyId;
-
-        return $this;
-    }
-
-    /**
-     * Get currencyId
-     *
-     * @return integer
-     */
-    public function getCurrencyId()
-    {
-        return $this->currencyId;
-    }
-
-    /**
-     * Set depositValue
-     *
-     * @param float $depositValue
-     *
-     * @return Service
-     */
-    public function setDepositValue($depositValue)
-    {
-        $this->depositValue = $depositValue;
-
-        return $this;
-    }
-
-    /**
-     * Get depositValue
-     *
-     * @return float
-     */
-    public function getDepositValue()
-    {
-        return $this->depositValue;
-    }
-
-    /**
-     * Set depositType
-     *
-     * @param string $depositType
-     *
-     * @return Service
-     */
-    public function setDepositType($depositType)
-    {
-        $this->depositType = $depositType;
-
-        return $this;
-    }
-
-    /**
-     * Get depositType
+     * Get isVisible
      *
      * @return string
      */
-    public function getDepositType()
+    public function getIsVisible()
     {
-        return $this->depositType;
+        return $this->isVisible;
     }
 
     /**
-     * Set paymentTerms
+     * Set deletedTime
      *
-     * @param string $paymentTerms
+     * @param \DateTime $deletedTime
      *
      * @return Service
      */
-    public function setPaymentTerms($paymentTerms)
+    public function setDeletedTime($deletedTime)
     {
-        $this->paymentTerms = $paymentTerms;
+        $this->deletedTime = $deletedTime;
 
         return $this;
     }
 
     /**
-     * Get paymentTerms
+     * Get deletedTime
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getPaymentTerms()
+    public function getDeletedTime()
     {
-        return $this->paymentTerms;
+        return $this->deletedTime;
     }
 
     /**
-     * Set comments
+     * Add serviceRequestQuotation
      *
-     * @param string $comments
+     * @param \Acted\LegalDocsBundle\Entity\ServiceRequestQuotation $serviceRequestQuotation
      *
      * @return Service
      */
-    public function setComments($comments)
+    public function addServiceRequestQuotation(\Acted\LegalDocsBundle\Entity\ServiceRequestQuotation $serviceRequestQuotation)
     {
-        $this->comments = $comments;
+        $this->serviceRequestQuotations[] = $serviceRequestQuotation;
 
         return $this;
     }
 
     /**
-     * Get comments
+     * Remove serviceRequestQuotation
      *
-     * @return string
+     * @param \Acted\LegalDocsBundle\Entity\ServiceRequestQuotation $serviceRequestQuotation
      */
-    public function getComments()
+    public function removeServiceRequestQuotation(\Acted\LegalDocsBundle\Entity\ServiceRequestQuotation $serviceRequestQuotation)
     {
-        return $this->comments;
+        $this->serviceRequestQuotations->removeElement($serviceRequestQuotation);
+    }
+
+    /**
+     * Get serviceRequestQuotations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getServiceRequestQuotations()
+    {
+        return $this->serviceRequestQuotations;
+    }
+
+    /**
+     * Set isQuotation
+     *
+     * @param boolean $isQuotation
+     *
+     * @return Service
+     */
+    public function setIsQuotation($isQuotation)
+    {
+        $this->isQuotation = $isQuotation;
+
+        return $this;
+    }
+
+    /**
+     * Get isQuotation
+     *
+     * @return boolean
+     */
+    public function getIsQuotation()
+    {
+        return $this->isQuotation;
     }
 }

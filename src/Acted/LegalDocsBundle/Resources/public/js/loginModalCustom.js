@@ -35,13 +35,13 @@ $(function () {
                             localStorage.removeItem('quoteRequest');
                             $('#loginModal').modal('hide');
                             $('#offerSuccess').modal('show');
-                            setTimeout(function(){
-                                window.location.replace(window.location.href);
-                            }, 2000);
+                            // setTimeout(function(){
+                            //     window.location.replace(window.location.href);
+                            // }, 2000);
                         },
                         error: function(response){
-                            console.log(response.responseJSON)
-                            $('#userInformation').text()
+                            console.log(response.responseJSON);
+                            $('#userInformation').text();
                             $('#loadSpinner').fadeOut(500);
                             $('#loginModal').modal('hide');
                             $('#freeQuoteModal').modal('show');
@@ -63,18 +63,17 @@ $(function () {
                     localStorage.removeItem('quoteRequest');
                     $('#loginModal').modal('hide');
                     $('#offerErrorModal').modal('show');
-                    setTimeout(function(){
-                        window.location.replace(window.location.href);
-                    }, 2500);
+                    // setTimeout(function(){
+                    //     window.location.replace(window.location.href);
+                    // }, 2500);
                 } else {
-                    console.log(response)
-                    if (response.tempUserToken.length > 0){
-                        var redirectUrl = window.location.protocol + "//" + window.location.host + '/resend_token/reset/' + tempUserToken;
-                        window.location.replace(redirectUrl);
-                    } else {
-                        window.location.replace(window.location.href);
-                    }
+                    // console.log(response)
+                    // if (response.tempUserToken.length > 0){
+                    //     var redirectUrl = window.location.protocol + "//" + window.location.host + '/resend_token/reset/' + tempUserToken;
+                    //     window.location.replace(redirectUrl);
                 }
+
+                window.location.reload();
             },
             error: function(response){
                 var responseTextLogIn = response.responseJSON;
