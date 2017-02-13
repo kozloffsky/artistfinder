@@ -19,7 +19,7 @@ $(function () {
             },
             'password[second]': {
                 required: true,
-                equalTo: '#password',
+                equalTo: '#password'
             }
         },
         messages: {
@@ -126,12 +126,11 @@ $(function () {
     }
 
     function showFinishPage() {
-        /*$('.stage').hide();
+        $('.stage').hide();
         $('.modal-header').hide();
         $('#stage-4').show();
-        $('#completionTime').hide();*/
+        $('#completionTime').hide();
     }
-
 
     function resetModal() {
         $('#registrationModal [type="checkbox"]').prop('checked', false);
@@ -226,9 +225,9 @@ $(function () {
         var userInformation = $('.artistRegForm').serialize();
         var categoriesForm = $('.artistCategoriesChoose > #categoriesForm').serialize();
         var userRole = 'role=ROLE_ARTIST';
-        console.log(categoriesForm)
+        console.log(categoriesForm);
         registerArtist(userInformation, categoriesForm, userRole);
-    };
+    }
 
     $('#artistForm #stageThreeNext').prop('disabled',true);
 
@@ -255,7 +254,7 @@ $(function () {
             regionLng = registrationAutocompService.coords.region.lng,
             cityLat = registrationAutocompService.coords.city.lat,
             cityLng = registrationAutocompService.coords.city.lng,
-            region = registrationAutocompService.currentStore.region;
+            region = registrationAutocompService.currentStore.region,
             placeId = registrationAutocompService.currentStore.placeId;
 
             data += "&city_lat=" + cityLat;
@@ -387,7 +386,7 @@ $(function () {
                     }, 2500);
                 },
                 error: function(response){
-                    $('#userInformation').text()
+                    $('#userInformation').text();
                     $('#loadSpinner').fadeOut(500);
                     $('#registrationModal').modal('hide');
                     $('#freeQuoteModal').modal('show');
