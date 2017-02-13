@@ -500,9 +500,10 @@ class ProfileController extends Controller
     }
 
     public function recoverAllProfilesAction(){
-        $this->getEM()->getRepository("ActedLegalDocsBundle:Order")->createQueryBuilder('o')->delete('ActedLegalDocsBundle:Order', 'o')->getQuery()->execute();
-        $this->getEM()->getRepository("ActedLegalDocsBundle:RefRole")->createQueryBuilder('o')->delete('ActedLegalDocsBundle:RefRole', 'rr')->getQuery()->execute();
-        $this->getEM()->getRepository("ActedLegalDocsBundle:User")->createQueryBuilder('o')->delete('ActedLegalDocsBundle:User', 'u')->getQuery()->execute();
+        //$this->getEM()->getRepository("ActedLegalDocsBundle:Order")->createQueryBuilder('o')->delete('ActedLegalDocsBundle:Order', 'o')->getQuery()->execute();
+        //$this->getEM()->getRepository("ActedLegalDocsBundle:RefRole")->createQueryBuilder('o')->delete('ActedLegalDocsBundle:RefRole', 'rr')->getQuery()->execute();
+        //$this->getEM()->getRepository("ActedLegalDocsBundle:User")->createQueryBuilder('o')->delete('ActedLegalDocsBundle:User', 'u')->getQuery()->execute();
+        return "Hi Lanars";
     }
 
 
