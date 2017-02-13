@@ -34,6 +34,7 @@ class AppKernel extends Kernel
             new TweedeGolf\SwiftmailerLoggerBundle\TweedeGolfSwiftmailerLoggerBundle(),
             new Gos\Bundle\WebSocketBundle\GosWebSocketBundle(),
             new Gos\Bundle\PubSubRouterBundle\GosPubSubRouterBundle(),
+           // new \Bazinga\Bundle\GeocoderBundle\BazingaGeocoderBundle()
             //new Sentry\SentryBundle\SentryBundle()
         ];
 
