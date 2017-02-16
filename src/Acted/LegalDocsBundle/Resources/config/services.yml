@@ -59,3 +59,8 @@ services:
         arguments: [@doctrine.orm.entity_manager, @gos_web_socket.zmq.pusher]
         #tags:
                   #- { name: doctrine.event_listener, event: postPersist }
+
+    performance_prepresist_listener:
+        class: Acted\LegalDocsBundle\EventListener\PerformancePrePersistListener
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }

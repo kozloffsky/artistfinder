@@ -118,12 +118,13 @@
                                 <!--<button data-toggle="modal" data-target="#freeQuoteModalRegisterd" class="btn">REQUEST FREE QUOTE
                                 </button>-->
                             </div>
-                            <div class="button-gradient white blue follow">
-                                {% if performance.status == "draft" %}
-                                    <button type="submit" class="btn publishOfferPerf">Publish now</button>
-                                {% else %}
-                                    <button type="submit" class="btn makeDraft">Make draft now</button>
-                                {% endif %}
+                            <div class=" follow">
+                                {#{% if performance.status == "draft" %}#}
+                                    {#<button type="submit" class="btn publishOfferPerf">Publish now</button>#}
+                                {#{% else %}#}
+                                    {#<button type="submit" class="btn makeDraft">Make draft now</button>#}
+                                {#{% endif %}#}
+                                {{ performance.status }}
                             </div>
                         </div>
                     </div>

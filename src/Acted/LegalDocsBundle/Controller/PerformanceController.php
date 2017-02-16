@@ -101,6 +101,7 @@ class PerformanceController extends Controller
                     return new JsonResponse(['error' => 'Performance can not be published without media'], 400);
                 }
             }
+
             $em->persist($performance);
 
             $performance->setIsVisible(true);
