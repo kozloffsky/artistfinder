@@ -16,7 +16,9 @@ class PerformancePrePersistListener
 {
     public function prePersist(LifecycleEventArgs $args){
         $performance = $args->getEntity();
-        $this->validatePerformance($performance);
+        if ($performance instanceof Performance) {
+            $this->validatePerformance($performance);
+        }
     }
 
     protected function validatePerformance(Performance $performance){
