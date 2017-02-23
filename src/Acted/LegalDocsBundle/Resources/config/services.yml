@@ -62,5 +62,6 @@ services:
 
     performance_prepresist_listener:
         class: Acted\LegalDocsBundle\EventListener\PerformancePrePersistListener
+        arguments: ['@logger']
         tags:
-            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: postPersist }

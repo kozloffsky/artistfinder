@@ -88,6 +88,21 @@ class PerformanceController extends Controller
         return new JsonResponse($this->formErrorResponse($performanceForm));
     }
 
+    protected function validatePerformance(Performance $performance){
+        $performance->setStatus(Performance::STATUS_DRAFT);
+        if (strlen($performance->getTitle()) < 4) return false;
+
+        //TODO: Here is actual description! so we check this. needs to be refactored
+        if (strlen($performance->getTechRequirement()) < 10) return false;
+
+        if($performance->getMedia()->count() < 2) return false;
+
+        $performance->setStatus(Performance::STATUS_PUBLISHED);
+
+        //$entityManager->persist($performance);
+        //$entityManager->flush();
+    }
+
     public function editAction(Request $request, Performance $performance)
     {
         $mediaForm = $this->createForm(PerformanceType::class, $performance, ['method' => 'PATCH']);
@@ -102,6 +117,7 @@ class PerformanceController extends Controller
                 }
             }
 
+            $this->validatePerformance($performance);
             $em->persist($performance);
 
             $performance->setIsVisible(true);
