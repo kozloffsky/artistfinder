@@ -334,9 +334,9 @@ header.small .navbar {
 .nav.navbar-nav.navbar-right > li {
     margin: 0 9px;
 }
-.nav.navbar-nav.navbar-right > li.mail {
+/*.nav.navbar-nav.navbar-right > li.mail {
     margin: 4px 0 0 9px;
-}
+}*/
 .nav.navbar-nav.navbar-right > li.profile-dropdown.dropdown {
     margin: 0 0 0 17px;
 }

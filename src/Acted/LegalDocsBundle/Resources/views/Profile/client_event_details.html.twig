@@ -1,5 +1,33 @@
 {% include 'ActedLegalDocsBundle:Default:header.html.twig' %}
 
+<div class="container no-pad forSpinner">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+</div>
+
+<main class="dashboard feedback client" id="no-client-event-details">
+    <div class="container no-pad client_event_details">
+        <div class="new-event new-client-event">
+            <span class="hidden-xs hidden-sm">Add Event</span>
+            <i class="fa fa-plus"></i>
+        </div>
+
+        <div class="col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2 image-no-event">
+            <p>Hey!<br>Seems you don’t have any events yet.<br>Create your first event and start looking for great talents around you!</p>
+            <p class="new-event new-client-event">Let's go</p>
+            <img class="hidden-xs hidden-sm" src="{{ asset('assets/images/rocket.png') }}" alt="Event">
+            <img class="visible-xs visible-sm" src="{{ asset('assets/images/rocket_sm.png') }}" alt="Event">
+        </div>
+
+    </div>
+</main>
+
+
+
+
+
+
+
+
 <main class="dashboard feedback client" id="client-event-details">
     <div class="container no-pad client_event_details">
         {% include 'ActedLegalDocsBundle:Profile:client/client_menu.html.twig' %}

@@ -189,6 +189,35 @@
     border-bottom: 2px solid rgba(240, 240, 240, 1);
     margin-bottom: 22px;
 }
+#no-client-event-details, #client-event-details{
+    display: none;
+}
+.forSpinner{
+    text-align: center;
+    line-height: 670px;
+}
+.image-no-event{
+    margin-top:70px;
+    text-align: center;
+    border:2px dashed #d4d5d6;
+    border-radius: 25px;
+    padding: 20px;
+}
+.image-no-event p.new-event.new-client-event{
+    width: 130px;
+    line-height: 26px;
+    float: none;
+    margin: 0;
+    left: auto;
+    border-radius: 15px;
+    border: 2px solid #ff7c41;
+    position: static;
+}
+.image-no-event img{
+    display: block;
+    padding: 15px 0 0 0;
+    margin: 0 auto;
+}
 @media (max-width: 1199px) {
     .client_event_details .right_column,
     .client_event_details .left_column {
@@ -196,11 +225,11 @@
         padding: 0 10px;
     }
     .client_event_details .no-pad-right {
-        margin-top: 0px;
+        margin-top: 0;
         padding-left: 10px;
     }
     .client_event_details .no-pad-left {
-        margin-top: 0px;
+        margin-top: 0;
         padding-right: 10px;
     }
     .client_event_details .info_block+.payment_details .non-refundable {
@@ -273,7 +302,9 @@
         width: 50%;
         float: left;
     }
-
+    .forSpinner{
+        line-height: 330px;
+    }
 }
 @media (max-width: 520px) {
     .client_event_details .no-pad-right,

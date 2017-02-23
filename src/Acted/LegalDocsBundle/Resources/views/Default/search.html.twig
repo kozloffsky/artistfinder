@@ -58,7 +58,11 @@
                 {% endfor %}
             </select>
 
-            <select name="user_city" id="region">
+            <select name="user_region" id="region">
+                <option value="" name="user_region">select a city</option>
+                <!--{% for region in regions %}
+                    <option value="{{ region.id }}" name="user_region">{{ region.name }}</option>
+                {% endfor %}-->
             </select>
             </form>
         </div>
