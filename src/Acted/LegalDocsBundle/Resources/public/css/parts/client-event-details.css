@@ -148,7 +148,6 @@
     margin-bottom: 4px;
 }
 .client_event_details .info_block+.payment_details .non-refundable {
-    padding-right: 0;
     padding-left: 0;
     text-align: right;
     padding-right: 12px;
@@ -171,7 +170,7 @@
 .client_event_details .controls {
     text-align: center;
     float: none;
-    padding: 0px 0 12px;
+    padding: 0 0 12px;
 }
 .client_event_details .controls .button-gradient.filled {
     margin: 0 auto;
@@ -218,6 +217,7 @@
     padding: 15px 0 0 0;
     margin: 0 auto;
 }
+
 @media (max-width: 1199px) {
     .client_event_details .right_column,
     .client_event_details .left_column {

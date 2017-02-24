@@ -4,7 +4,7 @@
     <div class="container">
         {% include 'ActedLegalDocsBundle:Profile:client/client_menu.html.twig' %}
 
-        <div class="row artist-block" style="display: none;" v-for="order in orders" v-if="order.id != 10" v-bind:data-chatroom-id="order.chat.chat_id" :data-order-id="order.id">
+        <div class="row artist-block" style="display: none" v-for="order in orders" v-if="order.id != 10" v-bind:data-chatroom-id="order.chat.chat_id" :data-order-id="order.id">
             <div class="col-sm-1 col-xs-1 no-pad avatar-block">
                 <div class="avatar">
                     <img v-if="order.artist.user.avatar" v-bind:src="order.artist.user.avatar">

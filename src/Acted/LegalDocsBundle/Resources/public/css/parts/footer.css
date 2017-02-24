@@ -109,6 +109,8 @@ footer .menus ul>li>a:hover {
 
 footer.footer-dark {
     background-color: #222428;
+    height: 266px;
+    margin-top: -266px;
 }
 
 footer.footer-dark .social-icons ul>li {

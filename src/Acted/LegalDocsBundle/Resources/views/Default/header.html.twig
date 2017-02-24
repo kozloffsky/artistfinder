@@ -16,6 +16,7 @@
         {% elseif app.request.get('_route') == 'profile_show' or app.request.get('_route') == 'profile_edit' or app.request.get('_route') == 'profile_edit_page' %}
         <header class="headerProfile">
             {% else %}
+            <div  id="wrapDontTouch">
             <header class="small">
                 {% endif %}
                 <nav class="navbar navbar-default navbar-fixed-top">

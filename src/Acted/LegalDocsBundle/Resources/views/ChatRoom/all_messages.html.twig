@@ -16,7 +16,17 @@
                 {% include 'ActedLegalDocsBundle:ChatRoom:dashboardmenu.html.twig' %}
             {% endif %}
         {% endif %}
-        <div>
+
+
+        <div id="sortMessagesSpinner">
+            <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+        </div>
+
+
+        <p id="no-sortMessages">You haven't received any message yet</p>
+
+
+        <div class="checkMessages">
             <select data-class="selections-white" name="sortMessages" id="sortMessages">
                 <option value="all">All messages</option>
                 <option value="unread">Unread</option>

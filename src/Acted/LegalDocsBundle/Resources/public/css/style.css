@@ -37,6 +37,7 @@ html, body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    height: 100%;
 }
 
 body{
@@ -45,7 +46,10 @@ body{
 html {
     overflow-x: initial;
 }
-
+#wrapDontTouch{
+    min-height: 100%;
+    padding-bottom:  266px;
+}
 main {
     position: relative;
 }
