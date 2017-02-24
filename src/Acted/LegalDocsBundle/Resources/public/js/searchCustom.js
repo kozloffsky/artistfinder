@@ -141,8 +141,8 @@ $(function () {
     }
 
     $(document).ready(function() {
-        //var selectedCountruOption = $('#country').find('option:selected').val();
-        //chooseCity(selectedCountruOption);
+        var selectedCountruOption = $('#country').find('option:selected').val();
+        chooseCity(selectedCountruOption);
         /**
          * FIX:
          * AC-189

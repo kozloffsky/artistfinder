@@ -56,8 +56,13 @@ $(function () {
             method: "GET",
             url: "/event/client/" + userId,
             success: function (data) {
-                if (typeof data.events !== 'undefined') {
+                if ($.isEmptyObject(data.events)) {
+                    $('.forSpinner').css('display','none');
+                    $('#no-client-event-details').css('display','block');
+                } else if (typeof data.events !== 'undefined'){
                     showEvents(data.events, reinit);
+                    $('.forSpinner').css('display','none');
+                    $('#client-event-details').css('display','block');
                 }
             }
         });

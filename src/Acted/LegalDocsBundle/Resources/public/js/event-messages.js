@@ -65,8 +65,13 @@ $(function () {
         $.ajax({
             url: '/api/events/' + eventId + '/messages' + filter,
             success: function (response) {
-                if (typeof response.messages !== 'undefined') {
+                if (response.messages.length === 0) {
+                    $('#sortMessagesSpinner').css('display', 'none');
+                    $("#no-sortMessages").css('display', 'block');
+                } else if(typeof response.messages !== 'undefined' && response.messages.length){
                     messagesVue.messages = prepareMessages(response.messages.reverse());
+                    $('#sortMessagesSpinner').css('display', 'none');
+                    $('.checkMessages').css('display', 'block');
                 }
             },
             error: function (error) {
