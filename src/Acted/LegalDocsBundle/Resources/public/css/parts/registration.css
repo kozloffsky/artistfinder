@@ -102,15 +102,15 @@
     /*-o-transform: translateX(-50%);*/
     /*transform: translateX(-50%);*/
     display: block;
-    margin: 26px auto 0;
+    margin: 40px auto 0;
     width: auto;
-    height: 203px;
-    max-width: 260px;
+    height: 210px;
+    max-width: 265px;
 }
 
 .registration-modal .modal-body .controls {
     position: relative;
-    margin: 47px 0 15px;
+    margin: 22px 0 25px;
     padding: 0;
 }
 
@@ -133,7 +133,9 @@
 }
 
 .registration-modal .modal-body .controls > .button-gradient .btn {
+    font-weight: bold;
     width: auto;
+    min-width: 210px;
     padding: 0 10px 0 10px;
 }
 
@@ -224,8 +226,8 @@
     font-size: 14px;
     color: #afafaf;
     position: absolute;
-    bottom: 21px;
-    right: 23px;
+    bottom: 10px;
+    right: 10px;
 }
 
 .category-header {
@@ -275,7 +277,7 @@
     background: linear-gradient(to right, rgba(255, 157, 92, 1) 0%, rgba(255, 129, 66, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
-.contact-details {
+#stage-3 .contact-details {
     padding: 0 23px 0 14px;
 }
 
@@ -303,11 +305,12 @@
 .contact-details .form-group label {
     font-family: LatoRegular;
     font-size: 15px;
-    color: #808080;
     font-weight: normal;
     width: 100%;
     position: relative;
     margin-bottom: 0;
+    color: #6070c5;
+    padding-left: 7px;
 }
 
 .contact-details .form-group label:last-child::after {
@@ -387,8 +390,21 @@
 .registration-modal .modal-body .contact-details .controls {
     margin-top: 4px;
     margin-bottom: 8px;
-    width: 293px;
     text-align: center;
+    width: 100%;
+    border-top: 2px solid #f5f5f5;
+}
+
+form#customerRegForm {
+    margin: 0 15px;
+}
+#customerBlock .back-button{
+    width: 39%;
+    margin-top: 10px;
+}
+#customerBlock .wrapForButton{
+    width: 60%;
+    display: inline-block;
 }
 
 .registration-modal .modal-body .contact-details .controls .button-gradient {
@@ -666,6 +682,8 @@
     color: #8BA8FF;
 }
 /*categories list styles end*/
+
+
 
 @media (max-width: 767px) {
 
